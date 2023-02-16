@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+html {
+  background-color: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: Lato, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 18px;
+  font-stretch: normal;
+  line-height: 1.5;
+  background-color: #ffffff !important; /* needed important to fight the nhs styling */
+}
+
+/* Styles for Pushing footer to bottom */
+:root {
+  --space: 1.5em 0;
+  --space: 2em 0;
+}
+
+.Site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.Site-content {
+  flex: 1 0 auto;
+  padding: var(--space) var(--space) 0;
+  width: 100%;
+}
+
+.Site-content:after {
+  content: '\00a0';
+  display: block;
+  margin-top: var(--space);
+  height: 0;
+  visibility: hidden;
+}
+
+header {
+  border-bottom: 1px solid #acbcc3;
+}
+
+header div.logo-section,
+header div.beta-section {
+  display: flex;
+  align-items: center;
+  font-family: Lato, sans-serif;
+}
+
+header div.logo-section,
+header div.beta-section {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+@media(min-width: 40.0625em) {
+  header div.logo-section,
+  header div.beta-section {
+      margin-left: 10%;
+      margin-right: 10%;
+  }
+}
+
+div.logo-section {
+  justify-content: space-between;
+  height: 100px;
+}
+
+div.logo-section a {
+  height: 95px;
+  display: block;
+  border: 3px solid transparent;
+  margin: -8px;
+  padding: 8px;
+}
+
+div.logo-section a:focus {
+  background-color: transparent;
+  box-shadow: none;
+  border: 3px solid #193e72;
+  text-decoration: none;
+}
+
+div.logo-section .bpor {
+  display: block;
+  padding: 8px;
+  height: 92px;
+  line-height: 92px;
+}
+
+div.logo-section .bpor img {
+  height: 70px;
+}
+
+div.logo-section .nhs {
+  display: block;
+  padding: 8px;
+  height: 92px;
+  line-height: 92px;
+}
+
+div.logo-section .nhs img {
+  height: 36px;
+}
+
+div.beta-section {
+  justify-content: flex-start;
+  height: 50px;
+}
+
+div.beta-section .chip {
+  background-color: #1D70B8;
+  color: #FFFFFF;
+  padding: 0.2em 0.5em;
+  margin-right: 0.5em;
+}
+
+.inset-text {
+  color: #0b0c0c;
+  padding: 15px;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  clear: both;
+  border-left: 10px solid #ACBCC3
+}
+
+@media(min-width: 40.0625em) {
+  .inset-text {
+      margin-left: 10%;
+      margin-right: 10%;
+      margin-top:30px;
+      margin-bottom:30px;
+  }
+}
+
+.inset-text>:first-child {
+  margin-top: 0;
+}
+
+.inset-text>:only-child,.inset-text>:last-child {
+  margin-bottom: 0;
+}
+
+div.beta-section a,
+.inset-text a {
+  color: #1d70b8;
+  text-underline-offset: 2.5px;
+  text-decoration-color: #1d70b8;
+}
+
+div.beta-section a:focus,
+.inset-text a:focus {
+color: #193e72;
+text-decoration: none;
+background-color: #fed47a;
+box-shadow: 0 -2px #fed47a, 0 4px #212b32;
+}
+
+div.beta-section a:focus-visible,
+.inset-text a:focus-visible {
+  outline-style: none;
+}
+
+div.beta-section a:hover,
+.inset-text a:hover {
+  color: #193e72;
+  text-decoration-color: #193e72;
+  text-decoration-line: underline;
+  text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
+}
+
+div.beta-section a:hover:focus,
+.inset-text a:hover:focus {
+text-decoration-line: none;
+text-decoration-thickness: none;
+}
+
+div.beta-section a:visited,
+.inset-text a:visited {
+color: #1d70b8;
+}
+
+div.beta-section a:visited:focus,
+.inset-text a:visited:focus {
+color: #193e72;
+}
+
+div.beta-section a:visited:hover,
+.inset-text a:visited:hover {
+color: #193e72;
+}

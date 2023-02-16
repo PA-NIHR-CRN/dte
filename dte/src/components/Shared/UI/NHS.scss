@@ -1,0 +1,17 @@
+@import 'node_modules/nhsuk-frontend/packages/nhsuk';
+@import '~nhsuk-react-components-extensions/css/components.css';
+
+.GDSCookieBanner {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.govuk-button-group {
+    justify-content: space-around;
+    margin: 40px 0;
+}
+
+.cookie-button {
+    margin: 10px 0;
+}

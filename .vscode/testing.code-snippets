@@ -1,0 +1,28 @@
+{
+  "test-boilerplate": {
+    "prefix": "it",
+    "body": [
+      "it(\"${1:description}\", async () => {",
+      "  const { container } = render(<${2:${TM_FILENAME_BASE}} />)",
+      "  const results = await axe(container);",
+      "  expect(results).toHaveNoViolations();",
+      "});",
+      "$0"
+    ],
+    "description": "Create test"
+  },
+  "test-imports": {
+    "prefix": "import",
+    "body": [
+      "import { axe, toHaveNoViolations } from \"jest-axe\";",
+      "import { render } from \"${1:../../../../Helper/test-utils}\";",
+      "import ${2:${TM_FILENAME_BASE}} from \"./${2:${TM_FILENAME_BASE}}\";",
+      "",
+      "expect.extend(toHaveNoViolations);",
+      "",
+      "describe(\"${2:${TM_FILENAME_BASE}}\", () => {",
+      "  $0",
+      "});"
+    ]
+  }
+}
