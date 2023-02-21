@@ -76,7 +76,7 @@ const Studies = () => {
 
   return (
     <>
-      <PaddedContainer maxWidth="lg" role="main">
+      <PaddedContainer maxWidth="lg" role="main" id="main">
         <DTEHeader as="h1" $color="blue">
           Studies
         </DTEHeader>

@@ -112,7 +112,7 @@ const AccountSettings = () => {
 
   return (
     <DocumentTitle title={pageTitle}>
-      <StyledWrapper role="main" ref={containerRef}>
+      <StyledWrapper role="main" id="main" ref={containerRef}>
         {loading && <LoadingIndicator />}
         <Container>
           {currentPage === "main" && <DTEBackLink href="/" linkText="Back" />}

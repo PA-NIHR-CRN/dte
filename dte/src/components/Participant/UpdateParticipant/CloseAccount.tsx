@@ -92,88 +92,91 @@ const CloseAccount = () => {
   return (
     <DocumentTitle title="Close your account - Volunteer Account - Be Part of Research">
       <Container>
-        <DTEBackLink href="/" linkText="Back" />
-        <DTEHeader as="h1" $variant={headerVariant}>
-          Close your account
-        </DTEHeader>
-        <DTEContent $marginBottom="medium">
-          If you have changed your mind and wish to close your account, you are
-          withdrawing your consent for Be Part of Research to process and store
-          your personal information.
-        </DTEContent>
-        <DTEContent $marginBottom="medium">
-          Be Part of Research will no longer contact you about areas of research
-          you have expressed an interest in.
-        </DTEContent>
-        <DTEContent $marginBottom="medium">
-          When closing your account Be Part of Research will keep some anonymous
-          data to help improve the service. To find out more please read the{" "}
-          <DTERouteLink
-            external
-            target="_blank"
-            renderStyle="standard"
-            to="https://bepartofresearch.nihr.ac.uk/site-policies/privacy-policy/"
-          >
-            Be Part of Research Privacy Policy
-          </DTERouteLink>
-          .
-        </DTEContent>
-        <DTEContent $marginBottom="medium">
-          To take part in the future you can register again.
-        </DTEContent>
-        {requireConf ? (
-          <DTEButton onClick={() => setRequireConf(false)}>
+        <div role="main" id="main">
+          <DTEBackLink href="/" linkText="Back" />
+          <DTEHeader as="h1" $variant={headerVariant}>
             Close your account
-          </DTEButton>
-        ) : (
-          <>
-            {closeUserAccountLoading && (
-              <LoadingIndicator text="Closing your account..." />
-            )}
-            {(closeUserAccountError ||
-              Utils.ConvertResponseToDTEResponse(closeUserAccountResponse)
-                ?.errors) && (
-              <ErrorMessageContainer
-                axiosErrors={[closeUserAccountError]}
-                DTEAxiosErrors={[
-                  Utils.ConvertResponseToDTEResponse(closeUserAccountResponse)
-                    ?.errors,
-                ]}
-              />
-            )}
+          </DTEHeader>
+          <DTEContent $marginBottom="medium">
+            If you have changed your mind and wish to close your account, you
+            are withdrawing your consent for Be Part of Research to process and
+            store your personal information.
+          </DTEContent>
+          <DTEContent $marginBottom="medium">
+            Be Part of Research will no longer contact you about areas of
+            research you have expressed an interest in.
+          </DTEContent>
+          <DTEContent $marginBottom="medium">
+            When closing your account Be Part of Research will keep some
+            anonymous data to help improve the service. To find out more please
+            read the{" "}
+            <DTERouteLink
+              external
+              target="_blank"
+              renderStyle="standard"
+              to="https://bepartofresearch.nihr.ac.uk/site-policies/privacy-policy/"
+            >
+              Be Part of Research Privacy Policy
+            </DTERouteLink>
+            .
+          </DTEContent>
+          <DTEContent $marginBottom="medium">
+            To take part in the future you can register again.
+          </DTEContent>
+          {requireConf ? (
+            <DTEButton onClick={() => setRequireConf(false)}>
+              Close your account
+            </DTEButton>
+          ) : (
+            <>
+              {closeUserAccountLoading && (
+                <LoadingIndicator text="Closing your account..." />
+              )}
+              {(closeUserAccountError ||
+                Utils.ConvertResponseToDTEResponse(closeUserAccountResponse)
+                  ?.errors) && (
+                <ErrorMessageContainer
+                  axiosErrors={[closeUserAccountError]}
+                  DTEAxiosErrors={[
+                    Utils.ConvertResponseToDTEResponse(closeUserAccountResponse)
+                      ?.errors,
+                  ]}
+                />
+              )}
 
-            <StyledErrorSummary>
-              <DTEContent as="b" $marginBottom="small">
-                Confirm if you want to close your account
-              </DTEContent>
-              <Grid
-                container
-                direction="row"
-                justifyContent="flex-start"
-                alignItems="center"
-                spacing={1}
-              >
-                <Grid item>
-                  <DTEButton
-                    $danger
-                    onClick={() => handleConfirmCloseAccount()}
-                  >
-                    Confirm
-                  </DTEButton>
+              <StyledErrorSummary>
+                <DTEContent as="b" $marginBottom="small">
+                  Confirm if you want to close your account
+                </DTEContent>
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  spacing={1}
+                >
+                  <Grid item>
+                    <DTEButton
+                      $danger
+                      onClick={() => handleConfirmCloseAccount()}
+                    >
+                      Confirm
+                    </DTEButton>
+                  </Grid>
+                  <Grid item>
+                    <DTELinkButton
+                      type="button"
+                      padded
+                      onClick={() => setRequireConf(true)}
+                    >
+                      Cancel
+                    </DTELinkButton>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <DTELinkButton
-                    type="button"
-                    padded
-                    onClick={() => setRequireConf(true)}
-                  >
-                    Cancel
-                  </DTELinkButton>
-                </Grid>
-              </Grid>
-            </StyledErrorSummary>
-          </>
-        )}
+              </StyledErrorSummary>
+            </>
+          )}
+        </div>
       </Container>
     </DocumentTitle>
   );
