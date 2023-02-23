@@ -74,10 +74,20 @@ const SexForm = (props: GenderFormProps) => {
                   error={error?.message}
                   onChange={onChange}
                 >
-                  <Radios.Radio value="yes" defaultChecked={value === "yes"}>
+                  <Radios.Radio
+                    value="yes"
+                    defaultChecked={value === "yes"}
+                    aria-label="Yes, the gender I identify with is the same as my registered sex at birth"
+                    aria-labelledby=""
+                  >
                     Yes
                   </Radios.Radio>
-                  <Radios.Radio value="no" defaultChecked={value === "no"}>
+                  <Radios.Radio
+                    value="no"
+                    defaultChecked={value === "no"}
+                    aria-label="No, the gender I identify with is not the same as my registered sex at birth"
+                    aria-labelledby=""
+                  >
                     No
                   </Radios.Radio>
                   <DTEContent $radioList>or</DTEContent>

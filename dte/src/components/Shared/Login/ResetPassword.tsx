@@ -249,6 +249,8 @@ function ResetPassword() {
                                   required
                                   autocomplete="new-password"
                                   spellcheck={false}
+                                  buttonAriaLabelHide="Hide the entered password on screen"
+                                  buttonAriaLabelShow="Show the entered password on screen"
                                 />
                               )}
                               rules={{
@@ -368,6 +370,8 @@ function ResetPassword() {
                                   }
                                   required
                                   spellcheck={false}
+                                  buttonAriaLabelHide="Hide the entered password confirmation on screen"
+                                  buttonAriaLabelShow="Show the entered password confirmation on screen"
                                 />
                               )}
                               rules={{

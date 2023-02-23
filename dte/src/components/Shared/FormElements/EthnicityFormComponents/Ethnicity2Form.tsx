@@ -157,6 +157,8 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
                               value={backgroundName}
                               defaultChecked={value === backgroundName}
                               key={backgroundName}
+                              aria-label={`My background is most closely described as ${backgroundName}`}
+                              aria-labelledby=""
                             >
                               {backgroundName}
                             </Radios.Radio>

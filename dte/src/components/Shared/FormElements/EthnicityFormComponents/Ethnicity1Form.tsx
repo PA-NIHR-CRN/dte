@@ -103,6 +103,8 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
                         value={ethnicity.shortName}
                         defaultChecked={value === ethnicity.shortName}
                         key={ethnicity.shortName}
+                        aria-label={`The ethnic group I most closely identify as is ${ethnicity.longName}`}
+                        aria-labelledby=""
                       >
                         {ethnicity.longName}
                       </Radios.Radio>
