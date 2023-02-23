@@ -66,7 +66,7 @@ jobs:
         shell: bash
         run: |
           aws s3 sync ./build/ s3://$AWS_S3_BUCKET --delete
-          aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == 'nihr-dev.dte-pilot.net'].Id" --output text) --paths '/*'
+          aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == '${{ secrets.VS_NIHR_URL_DEV }}'].Id" --output text) --paths '/*'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_DEV_BUCKET_NAME }}
 
