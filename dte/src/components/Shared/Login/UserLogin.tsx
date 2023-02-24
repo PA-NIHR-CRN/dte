@@ -233,6 +233,8 @@ const UserLogin = () => {
                         disabled={loadingLogin}
                         spellcheck={false}
                         autocomplete="current-password"
+                        buttonAriaLabelHide="Hide the entered password on screen"
+                        buttonAriaLabelShow="Show the entered password on screen"
                       />
                     )}
                     rules={{

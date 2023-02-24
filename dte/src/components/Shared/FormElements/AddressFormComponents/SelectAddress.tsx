@@ -94,6 +94,7 @@ const SelectAddress = (props: SelectAddressProps) => {
                 changePostcode: true,
               });
             }}
+            ariaLabel="Change the postcode entered"
           >
             Change
           </DTELinkButton>
