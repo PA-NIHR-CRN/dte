@@ -94,6 +94,8 @@ const SexForm = (props: GenderFormProps) => {
                   <Radios.Radio
                     value="noSay"
                     defaultChecked={value === "noSay"}
+                    aria-label="I prefer not to say whether the gender I identify with is the same as my registered sex at birth "
+                    aria-labelledby=""
                   >
                     Prefer not to say
                   </Radios.Radio>

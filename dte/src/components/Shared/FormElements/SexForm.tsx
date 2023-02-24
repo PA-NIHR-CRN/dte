@@ -91,7 +91,7 @@ const SexForm = (props: SexFormProps) => {
                   <Radios.Radio
                     value="female"
                     defaultChecked={value === "female"}
-                    aria-label="I am a Female radio button"
+                    aria-label="I am Female"
                     aria-labelledby=""
                   >
                     Female
@@ -99,7 +99,7 @@ const SexForm = (props: SexFormProps) => {
                   <Radios.Radio
                     value="male test"
                     defaultChecked={value === "male"}
-                    aria-label="I am a Male radio button"
+                    aria-label="I am Male"
                     aria-labelledby=""
                   >
                     Male
