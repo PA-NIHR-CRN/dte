@@ -1,6 +1,4 @@
 import { Grid } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
 import { ReactNode } from "react";
@@ -34,10 +32,7 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
     instructionText,
     referenceDataEthnicities,
   } = props;
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+
   let labelElement: ReactNode;
   const resolvedEthnicities: Ethnicities =
     referenceDataEthnicities || ethnicitiesStatic;
@@ -65,11 +60,7 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
   };
 
   if (!hideHeader) {
-    labelElement = (
-      <DTEHeader as="h1" $variant={headerVariant}>
-        What is your ethnic group?
-      </DTEHeader>
-    );
+    labelElement = <DTEHeader as="h1">What is your ethnic group?</DTEHeader>;
   } else {
     labelElement = instructionText;
   }

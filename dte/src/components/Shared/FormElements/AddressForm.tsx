@@ -1,6 +1,4 @@
 import { Grid } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import FormBaseProps from "./FormBaseProps";
@@ -50,10 +48,7 @@ const AddressForm = (props: AddressFormProps) => {
     onCancel,
     hideInfo,
   } = props;
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+
   const [formStage, setFormStage] = useState("postcodeLookup");
 
   const [addressData, setAddressData] = useState<AddressFormState>({
@@ -172,11 +167,7 @@ const AddressForm = (props: AddressFormProps) => {
 
   return (
     <>
-      {!hideHeader && (
-        <DTEHeader as="h1" $variant={headerVariant}>
-          What is your home address?
-        </DTEHeader>
-      )}
+      {!hideHeader && <DTEHeader as="h1">What is your home address?</DTEHeader>}
       {instructionText}
       <Grid container>
         <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>

@@ -1,5 +1,3 @@
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { Controller, useForm } from "react-hook-form";
 import DTEInput from "../UI/DTEInput/DTEInput";
 import DTEDetails from "../UI/DTEDetails/DTEDetails";
@@ -30,10 +28,7 @@ const MobileNumberForm = (props: MobileNumberFormProps) => {
     onCancel,
     instructionText,
   } = props;
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+
   const {
     control,
     handleSubmit,
@@ -61,9 +56,7 @@ const MobileNumberForm = (props: MobileNumberFormProps) => {
   return (
     <>
       {!hideHeader && (
-        <DTEHeader as="h1" $variant={headerVariant}>
-          What is your phone number? (optional)
-        </DTEHeader>
+        <DTEHeader as="h1"> What is your phone number? (optional)</DTEHeader>
       )}
       {instructionText || (
         <>

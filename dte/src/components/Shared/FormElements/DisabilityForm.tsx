@@ -1,5 +1,3 @@
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
 import { ReactNode } from "react";
@@ -31,10 +29,7 @@ const DisabilityForm = (props: DisabilityFormProps) => {
     showCancelButton: disabilityShowCancelButton,
     onCancel,
   } = props;
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+
   const { control, handleSubmit } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -45,7 +40,7 @@ const DisabilityForm = (props: DisabilityFormProps) => {
 
   if (!hideHeader) {
     labelElement = (
-      <DTEHeader as="h1" $variant={headerVariant}>
+      <DTEHeader as="h1">
         Do you have any physical or mental health conditions or illness lasting
         or expected to last 12 months or more?
       </DTEHeader>

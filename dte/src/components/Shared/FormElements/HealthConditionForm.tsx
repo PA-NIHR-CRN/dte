@@ -1,6 +1,4 @@
 import { Grid } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { Controller, useForm } from "react-hook-form";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
@@ -34,10 +32,7 @@ const HealthConditionForm = (props: HealthConditionFormProps) => {
     onCancel,
     instructionText,
   } = props;
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+
   const [
     {
       response: healthConditionsResponse,
@@ -63,7 +58,7 @@ const HealthConditionForm = (props: HealthConditionFormProps) => {
   return (
     <>
       {!hideHeader && (
-        <DTEHeader as="h1" $variant={headerVariant}>
+        <DTEHeader as="h1">
           Which areas of research are you interested in?
         </DTEHeader>
       )}

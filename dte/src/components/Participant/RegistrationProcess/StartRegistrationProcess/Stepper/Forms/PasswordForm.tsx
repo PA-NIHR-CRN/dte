@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { Grid } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { Controller, useForm } from "react-hook-form";
 import useAxiosFetch from "../../../../../../hooks/useAxiosFetch";
 import Utils from "../../../../../../Helper/Utils";
@@ -43,10 +41,6 @@ const PasswordForm = (props: PasswordFormProps) => {
   let includesStatement = "";
   const [policyBuilder, setPolicyBuilder] = useState("");
   const [passwordPolicy, setPasswordPolicy] = useState<PasswordPolicy>();
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
   const {
     control,
     handleSubmit,
@@ -177,7 +171,7 @@ const PasswordForm = (props: PasswordFormProps) => {
       />
       {passwordPolicy && (
         <>
-          <DTEHeader as="h1" $variant={headerVariant}>
+          <DTEHeader as="h1">
             Create a password for your Be Part of Research account
           </DTEHeader>
           <DTEContent>{policyBuilder}</DTEContent>

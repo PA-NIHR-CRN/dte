@@ -1,8 +1,6 @@
 import { Grid } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Fieldset } from "nhsuk-react-components";
 import styled from "styled-components";
-import { useTheme } from "@material-ui/core/styles";
 import { Controller, useForm } from "react-hook-form";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEDetails from "../UI/DTEDetails/DTEDetails";
@@ -37,10 +35,7 @@ const DOBForm = (props: DOBFormProps) => {
     onCancel,
     instructionText,
   } = props;
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+
   const {
     control,
     handleSubmit,
@@ -79,9 +74,7 @@ const DOBForm = (props: DOBFormProps) => {
             <StyledFieldset aria-describedby="date-of-birth-legend date-of-birth-hint">
               <StyledFieldsetLegend id="date-of-birth-legend">
                 {!hideHeader && (
-                  <DTEHeader as="h1" $variant={headerVariant}>
-                    What is your date of birth?
-                  </DTEHeader>
+                  <DTEHeader as="h1">What is your date of birth?</DTEHeader>
                 )}
               </StyledFieldsetLegend>
               <div id="date-of-birth-hint">

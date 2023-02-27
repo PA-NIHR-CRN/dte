@@ -8,8 +8,6 @@ import React, {
 import ReactGA from "react-ga";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { AuthContext } from "../../../context/AuthContext";
 import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import ErrorMessageContainer from "../../Shared/ErrorMessageContainer/ErrorMessageContainer";
@@ -88,10 +86,6 @@ const UpdateParticipant = () => {
   const [userData, setUserData] = React.useState<UserDataState>();
   const [cancelData, setCancelData] = React.useState<UserDataState>();
   const { authenticatedUserId } = useContext(AuthContext);
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
 
   const getDetailsURL = `${process.env.REACT_APP_BASE_API}/participants/${authenticatedUserId}/details`;
   const [{ response, loading, error }] = useAxiosFetch(
@@ -620,9 +614,7 @@ const UpdateParticipant = () => {
           {currentPage === "main" && <DTEBackLink href="/" linkText="Back" />}
           {currentPage === "main" && (
             <>
-              <DTEHeader as="h1" $variant={headerVariant}>
-                Personal details
-              </DTEHeader>
+              <DTEHeader as="h1">Personal details</DTEHeader>
               {userData &&
                 ethnicityResponse &&
                 !(
@@ -995,7 +987,7 @@ const UpdateParticipant = () => {
               showCancelButton
               instructionText={
                 <>
-                  <DTEHeader as="h1" $variant={headerVariant}>
+                  <DTEHeader as="h1">
                     Do you have any physical or mental health conditions or
                     illness lasting or expected to last 12 months or more?
                   </DTEHeader>
@@ -1058,9 +1050,7 @@ const UpdateParticipant = () => {
               hideHeader
               instructionText={
                 <>
-                  <DTEHeader as="h1" $variant={headerVariant}>
-                    What is your ethnic group?
-                  </DTEHeader>
+                  <DTEHeader as="h1">What is your ethnic group?</DTEHeader>
                   <DTEContent as="span" $displayMode="block">
                     If you change your ethnic group you will also need to change
                     your ethnic background in the next question.

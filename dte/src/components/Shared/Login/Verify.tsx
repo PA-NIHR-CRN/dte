@@ -1,8 +1,6 @@
 import { ReactNode, useContext, useEffect } from "react";
 import ReactGA from "react-ga";
 import { Grid } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { useLocation, useHistory } from "react-router-dom";
 import DocumentTitle from "react-document-title";
 import useAxiosFetch from "../../../hooks/useAxiosFetch";
@@ -22,10 +20,6 @@ const Verify = () => {
   const { logOutToken } = useContext(AuthContext);
   const history = useHistory();
   const { search } = useLocation();
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
 
   const code = new URLSearchParams(search).get("code");
   const email = new URLSearchParams(search).get("email");
@@ -118,7 +112,7 @@ const Verify = () => {
           ?.isSuccess && (
           <DocumentTitle title="Your email address has been verified - Volunteer Registration - Be Part of Research">
             <>
-              <DTEHeader as="h1" $variant={headerVariant}>
+              <DTEHeader as="h1">
                 Your email address has been verified
               </DTEHeader>
               <Grid item xs={12} sm={10}>
@@ -136,7 +130,7 @@ const Verify = () => {
           Utils.ConvertResponseToDTEResponse(confirmationResponse)?.errors && (
             <DocumentTitle title="Unable to verify your email address - Volunteer Registration - Be Part of Research">
               <>
-                <DTEHeader as="h1" $variant={headerVariant}>
+                <DTEHeader as="h1">
                   Unable to verify your email address
                 </DTEHeader>
                 {convertErrorsToResponse(

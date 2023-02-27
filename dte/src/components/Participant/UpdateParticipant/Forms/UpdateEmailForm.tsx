@@ -2,8 +2,6 @@ import { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { Grid } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { AuthContext } from "../../../../context/AuthContext";
 import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import Utils, { EmailRegex } from "../../../../Helper/Utils";
@@ -25,10 +23,6 @@ export type UpdateEmailFormData = {
 const UpdateEmailForm = ({ onCancel }: FormBaseProps) => {
   const history = useHistory();
   const { accessToken, logOutToken } = useContext(AuthContext);
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
   const {
     control,
     handleSubmit,
@@ -81,9 +75,7 @@ const UpdateEmailForm = ({ onCancel }: FormBaseProps) => {
 
   return (
     <>
-      <DTEHeader as="h1" $variant={headerVariant}>
-        What is your new email address?
-      </DTEHeader>
+      <DTEHeader as="h1">What is your new email address?</DTEHeader>
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
       {(updateUserEmailPostError ||
         Utils.ConvertResponseToDTEResponse(updateUserEmailPostResponse)

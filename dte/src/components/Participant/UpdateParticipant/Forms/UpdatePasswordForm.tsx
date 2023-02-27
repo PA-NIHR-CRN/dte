@@ -1,7 +1,5 @@
 import { useEffect, useState, useContext } from "react";
 import { Grid } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { AuthContext } from "../../../../context/AuthContext";
@@ -44,10 +42,6 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
   const history = useHistory();
   const [policyBuilder, setPolicyBuilder] = useState("");
   const [passwordPolicy, setPasswordPolicy] = useState<PasswordPolicy>();
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
 
   const {
     control,
@@ -204,9 +198,7 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
       {policyLoading && <LoadingIndicator text="Loading password policy..." />}
       {passwordPolicy && (
         <>
-          <DTEHeader as="h1" $variant={headerVariant}>
-            Change your password
-          </DTEHeader>
+          <DTEHeader as="h1">Change your password</DTEHeader>
           <ErrorMessageSummary
             renderSummary={!isSubmitting}
             errors={formErrors}

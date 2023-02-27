@@ -1,6 +1,4 @@
 import { Grid } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { Controller, useForm } from "react-hook-form";
 import Utils from "../../../Helper/Utils";
 import DTEInput from "../UI/DTEInput/DTEInput";
@@ -28,10 +26,7 @@ const NameForm = (props: NameFormProps) => {
     showCancelButton,
     onCancel,
   } = props;
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+
   const {
     control,
     setValue,
@@ -52,11 +47,7 @@ const NameForm = (props: NameFormProps) => {
 
   return (
     <>
-      {!hideHeader && (
-        <DTEHeader as="h1" $variant={headerVariant}>
-          What is your name?
-        </DTEHeader>
-      )}
+      {!hideHeader && <DTEHeader as="h1">What is your name?</DTEHeader>}
       {instructionText}
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
       <Grid container>

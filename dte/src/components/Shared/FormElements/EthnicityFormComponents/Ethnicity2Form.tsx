@@ -1,6 +1,4 @@
 import { Grid } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
 import { ReactNode, useState, ChangeEvent, useEffect } from "react";
@@ -57,10 +55,7 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
   let labelElement: ReactNode;
   const resolvedEthnicities: Ethnicities =
     referenceDataEthnicities || ethnicitiesStatic;
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+
   const [otherText, setOtherText] = useState<string | undefined>(
     !resolvedEthnicities.asian.backgrounds
       .concat(
@@ -112,10 +107,7 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
 
   if (!hideHeader) {
     labelElement = (
-      <DTEHeader
-        as="h1"
-        $variant={headerVariant}
-      >{`Which of the following best describes your ${resolvedEthnicities[ethnicity].longName} background?`}</DTEHeader>
+      <DTEHeader as="h1">{`Which of the following best describes your ${resolvedEthnicities[ethnicity].longName} background?`}</DTEHeader>
     );
   } else if (instructionText) {
     labelElement = instructionText;

@@ -1,9 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
-import { useTheme } from "@material-ui/core/styles";
 import { ErrorSummary } from "nhsuk-react-components";
 import { Grid } from "@material-ui/core";
 import ReactGA from "react-ga";
@@ -39,10 +37,6 @@ const CloseAccount = () => {
   const history = useHistory();
   const { accessToken, logOutToken } = useContext(AuthContext);
   const [requireConf, setRequireConf] = useState(true);
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
 
   const [
     {
@@ -94,9 +88,7 @@ const CloseAccount = () => {
       <Container>
         <div role="main" id="main">
           <DTEBackLink href="/" linkText="Back" />
-          <DTEHeader as="h1" $variant={headerVariant}>
-            Close your account
-          </DTEHeader>
+          <DTEHeader as="h1">Close your account</DTEHeader>
           <DTEContent $marginBottom="medium">
             If you have changed your mind and wish to close your account, you
             are withdrawing your consent for Be Part of Research to process and

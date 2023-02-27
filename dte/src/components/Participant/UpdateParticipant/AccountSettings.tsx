@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import ReactGA from "react-ga";
 import { AuthContext } from "../../../context/AuthContext";
 import useAxiosFetch from "../../../hooks/useAxiosFetch";
@@ -45,12 +43,8 @@ const AccountSettings = () => {
     "Account settings - Volunteer Account - Be Part of Research"
   );
   const [gaURL, setGaURL] = useState("/AccountSettings");
-  const theme = useTheme();
   const [userData, setUserData] = useState<UserDataState>();
   const { authenticatedUserId } = useContext(AuthContext);
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
   const [{ response, loading, error }] = useAxiosFetch(
     {
       url: `${process.env.REACT_APP_BASE_API}/participants/${authenticatedUserId}/details`,
@@ -118,9 +112,7 @@ const AccountSettings = () => {
           {currentPage === "main" && <DTEBackLink href="/" linkText="Back" />}
           {currentPage === "main" && (
             <>
-              <DTEHeader as="h1" $variant={headerVariant}>
-                Account settings
-              </DTEHeader>
+              <DTEHeader as="h1">Account settings</DTEHeader>
               {userData && (
                 <dl className="govuk-summary-list">
                   <div className="govuk-summary-list__row">

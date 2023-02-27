@@ -1,6 +1,5 @@
 import { Controller, useForm } from "react-hook-form";
 import { Grid } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { EmailRegex } from "../../../../../../Helper/Utils";
 import DTEInput from "../../../../../Shared/UI/DTEInput/DTEInput";
@@ -24,9 +23,6 @@ const EmailForm = (props: EmailFormProps) => {
   const { onDataChange, initialStateData } = props;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
   const {
     control,
     handleSubmit,
@@ -41,9 +37,7 @@ const EmailForm = (props: EmailFormProps) => {
 
   return (
     <>
-      <DTEHeader as="h1" $variant={headerVariant}>
-        What is your email address?
-      </DTEHeader>
+      <DTEHeader as="h1">What is your email address?</DTEHeader>
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
       <Grid container>
         <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>

@@ -1,5 +1,3 @@
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
 import { ReactNode } from "react";
@@ -32,10 +30,7 @@ const Disability2Form = (props: Disability2FormProps) => {
     showCancelButton: disability2ShowCancelButton,
     onCancel,
   } = props;
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+
   const { control, handleSubmit } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -55,7 +50,7 @@ const Disability2Form = (props: Disability2FormProps) => {
   if (!hideHeader) {
     labelElement = (
       <>
-        <DTEHeader as="h1" $variant={headerVariant}>
+        <DTEHeader as="h1">
           Do any of your conditions or illnesses reduce your ability to carry
           out day to day activities?
         </DTEHeader>

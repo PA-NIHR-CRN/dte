@@ -1,6 +1,4 @@
 import { Grid } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
 import { ReactNode } from "react";
@@ -32,10 +30,7 @@ const SexForm = (props: GenderFormProps) => {
     onCancel,
     instructionText,
   } = props;
-  const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+
   const { control, handleSubmit } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -46,7 +41,7 @@ const SexForm = (props: GenderFormProps) => {
 
   if (!hideHeader) {
     labelElement = (
-      <DTEHeader as="h1" $variant={headerVariant}>
+      <DTEHeader as="h1">
         Is the gender you identify with the same as your sex registered at
         birth?
       </DTEHeader>
