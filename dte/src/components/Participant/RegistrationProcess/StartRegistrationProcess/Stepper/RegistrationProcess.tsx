@@ -272,6 +272,7 @@ const RegsitrationProcess = () => {
                   <DTEBackLink
                     title="Return to previous page"
                     linkText="Back"
+                    ariaLabel="Return to previous page"
                     onClick={handleBack}
                   />
                 )}
