@@ -128,6 +128,7 @@ const YouAreNowRegisteredForm = (props: YouAreNowRegisteredFormProps) => {
           <DTERouteLink
             to="https://nihr.us14.list-manage.com/subscribe?u=299dc02111e8a68172029095f&id=3b030a1027"
             external
+            aria-label="Sign up to our newsletter"
             target="_blank"
           >
             Sign up now

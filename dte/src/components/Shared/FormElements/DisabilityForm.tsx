@@ -68,10 +68,20 @@ const DisabilityForm = (props: DisabilityFormProps) => {
               onChange={onChange}
               error={error?.message}
             >
-              <Radios.Radio value="yes" defaultChecked={value === "yes"}>
+              <Radios.Radio
+                value="yes"
+                defaultChecked={value === "yes"}
+                aria-label="Yes, I have a physical or mental health condition that has, or is expected to last more than 12 months"
+                aria-labelledby=""
+              >
                 Yes
               </Radios.Radio>
-              <Radios.Radio value="no" defaultChecked={value === "no"}>
+              <Radios.Radio
+                value="no"
+                defaultChecked={value === "no"}
+                aria-label="No, I do not have a physical or mental health condition that has, or is expected to last more than 12 months"
+                aria-labelledby=""
+              >
                 No
               </Radios.Radio>
               <DTEContent $radioList>or</DTEContent>

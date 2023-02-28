@@ -91,10 +91,17 @@ const SexForm = (props: SexFormProps) => {
                   <Radios.Radio
                     value="female"
                     defaultChecked={value === "female"}
+                    aria-label="I am Female"
+                    aria-labelledby=""
                   >
                     Female
                   </Radios.Radio>
-                  <Radios.Radio value="male" defaultChecked={value === "male"}>
+                  <Radios.Radio
+                    value="male test"
+                    defaultChecked={value === "male"}
+                    aria-label="I am Male"
+                    aria-labelledby=""
+                  >
                     Male
                   </Radios.Radio>
                 </DTERadio>

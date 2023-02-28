@@ -96,7 +96,7 @@ function ViewStudyDetails() {
   const classes = useStyles();
 
   return (
-    <Grid container spacing={2} className={classes.paper} role="main">
+    <Grid container spacing={2} className={classes.paper} role="main" id="main">
       <Grid item xs={12}>
         <DTEHeader as="h1" $color="blue">
           Study Details

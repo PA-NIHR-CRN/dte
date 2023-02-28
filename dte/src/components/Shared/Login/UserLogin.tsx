@@ -159,7 +159,13 @@ const UserLogin = () => {
         {resendLoading && (
           <LoadingIndicator text="Resending verification email..." />
         )}
-        <Grid container justifyContent="center" alignItems="center" role="main">
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          role="main"
+          id="main"
+        >
           <LoginWrapper item xs={12} sm={8} md={6} lg={5} xl={4}>
             {!loadingLogin && !resendLoading && !resendDTEResponse?.isSuccess && (
               <>
@@ -227,6 +233,8 @@ const UserLogin = () => {
                         disabled={loadingLogin}
                         spellcheck={false}
                         autocomplete="current-password"
+                        buttonAriaLabelHide="Hide the entered password on screen"
+                        buttonAriaLabelShow="Show the entered password on screen"
                       />
                     )}
                     rules={{
@@ -238,6 +246,7 @@ const UserLogin = () => {
                     <DTERouteLink
                       to="/ForgottenPassword"
                       renderStyle="standard"
+                      aria-label="reset you password here"
                     >
                       reset it here.
                     </DTERouteLink>

@@ -7,6 +7,8 @@ import { baseButton } from "../UI/DTEButton/DTEButton";
 
 type Props = {
   id?: string;
+  buttonAriaLabelShow?: string;
+  buttonAriaLabelHide?: string;
   name?: string;
   label?: string;
   error?: string;
@@ -50,6 +52,8 @@ const StyledButton = styled(Button)`
 
 const PasswordShowHide = ({
   id,
+  buttonAriaLabelShow,
+  buttonAriaLabelHide,
   name,
   label,
   error,
@@ -95,6 +99,7 @@ const PasswordShowHide = ({
         type="button"
         className="nhsuk-button--secondary"
         onClick={handleClickShowPassword}
+        aria-label={showPassword ? buttonAriaLabelHide : buttonAriaLabelShow}
       >
         {showPassword ? "Hide" : "Show"}
       </StyledButton>

@@ -246,6 +246,8 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
                       required
                       autocomplete="current-password"
                       spellcheck={false}
+                      buttonAriaLabelShow="Show the entered current password on screen"
+                      buttonAriaLabelHide="Hide the entered current password on screen"
                     />
                   )}
                   rules={{
@@ -269,6 +271,8 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
                       required
                       autocomplete="new-password"
                       spellcheck={false}
+                      buttonAriaLabelHide="Hide the entered password on screen"
+                      buttonAriaLabelShow="Show the entered password on screen"
                     />
                   )}
                   rules={{
@@ -390,6 +394,8 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
                       label="Confirm new password"
                       required
                       spellcheck={false}
+                      buttonAriaLabelHide="Hide the entered password confirmation on screen"
+                      buttonAriaLabelShow="Show the entered password confirmation on screen"
                     />
                   )}
                   rules={{
