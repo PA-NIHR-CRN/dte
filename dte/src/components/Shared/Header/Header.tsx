@@ -26,7 +26,7 @@ const StyledGridElementRight = styled(Grid)`
 `;
 
 const StyledLink = styled.a`
-  & {
+  &&& {
     margin: -6px;
     padding: 3px;
     border: 3px solid transparent;
