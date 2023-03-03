@@ -13,6 +13,7 @@ import FormBaseProps from "../FormBaseProps";
 import { Ethnicities } from "../../../../types/ReferenceData/Ethnicities";
 import EthnicityInformation from "./EthnicityInformation";
 import FormNavigationButtons from "../CommonElements/FormNavigationButtons";
+import Utils from "../../../../Helper/Utils";
 
 export type Ethnicity2FormData = {
   background: string;
@@ -76,7 +77,12 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
       : undefined
   );
 
-  const { control, handleSubmit, setValue } = useForm({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { isSubmitting },
+  } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
@@ -124,6 +130,12 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
       <DTEContent>Studies may need this information for [reason].</DTEContent>
     );
   }
+
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
 
   return (
     <>
