@@ -166,6 +166,12 @@ const PasswordForm = (props: PasswordFormProps) => {
     }
   }, [policyResponse]);
 
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
+
   return (
     <>
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
