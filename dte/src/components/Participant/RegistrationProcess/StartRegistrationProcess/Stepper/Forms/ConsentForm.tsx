@@ -97,6 +97,7 @@ const ConsentForm = (props: ConsentFormProps) => {
                 id="checkbox"
                 name="checkbox"
                 onValueChange={(e) => onChange(e[0].checked)}
+                escKeyPressed={() => {}}
                 error={error?.message}
                 values={[
                   {

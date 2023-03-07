@@ -1,5 +1,5 @@
 import { Checkboxes, Fieldset } from "nhsuk-react-components";
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, KeyboardEvent, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import ICheckBoxElement from "./ICheckBoxElement";
 
@@ -11,6 +11,7 @@ type Props = {
   error?: string;
   values: ICheckBoxElement[];
   onValueChange: (values: ICheckBoxElement[]) => void;
+  escKeyPressed: (event: KeyboardEvent<HTMLDivElement>) => void;
 };
 
 const StyledFieldset = styled(Fieldset)``;
@@ -38,7 +39,16 @@ const StyledCheckboxes = styled(Checkboxes)`
 `;
 
 const DTECheckList = memo(
-  ({ id, name, label, hint, error, values, onValueChange }: Props) => {
+  ({
+    id,
+    name,
+    label,
+    hint,
+    error,
+    values,
+    onValueChange,
+    escKeyPressed,
+  }: Props) => {
     const [checkBoxList, setCheckBoxList] = useState<ICheckBoxElement[]>([]);
     const [renderToggle, setRenderToggle] = useState(false);
     useMemo(() => {}, [renderToggle]);
@@ -77,14 +87,25 @@ const DTECheckList = memo(
     return error !== "" && error !== undefined ? (
       <StyledFieldset>
         <StyledFieldsetLegend>{label}</StyledFieldsetLegend>
-        <StyledCheckboxes name={name} id={id} hint={hint} error={error}>
+        <StyledCheckboxes
+          name={name}
+          id={id}
+          hint={hint}
+          error={error}
+          onKeyDown={(e) => escKeyPressed(e)}
+        >
           {checkBoxElements}
         </StyledCheckboxes>
       </StyledFieldset>
     ) : (
       <StyledFieldset>
         <StyledFieldsetLegend>{label}</StyledFieldsetLegend>
-        <StyledCheckboxes name={name} id={id} hint={hint}>
+        <StyledCheckboxes
+          name={name}
+          id={id}
+          hint={hint}
+          onKeyDown={(e) => escKeyPressed(e)}
+        >
           {checkBoxElements}
         </StyledCheckboxes>
       </StyledFieldset>
