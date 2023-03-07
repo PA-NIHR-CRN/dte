@@ -32,7 +32,7 @@ const StyledButton = styled(Button)`
   display: block;
   right: 0;
   bottom: 0;
-  height: 40px;
+  height: 2.15em;
   padding: 0;
   &&:active {
     width: 95px;
@@ -46,6 +46,10 @@ const StyledButton = styled(Button)`
     ${baseButton}
   }
   && {
+    min-height: 40pxpx;
+    padding-left: 0;
+    padding-right: 0;
+    margin-inline: auto;
     width: 95px;
   }
 `;
