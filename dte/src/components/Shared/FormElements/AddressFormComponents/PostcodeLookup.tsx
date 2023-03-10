@@ -164,6 +164,12 @@ const PostcodeLookup = (props: PostcodeLookupProps) => {
     if (addresses) onDataChange({ postcode, addresses });
   }, [addresses]);
 
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
+
   return (
     <>
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />

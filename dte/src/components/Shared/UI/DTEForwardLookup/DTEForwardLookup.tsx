@@ -209,6 +209,13 @@ const DTEForwardLookup = ({
     setCheckBoxDataList(e);
   };
 
+  const DropdownEsc = (e: any) => {
+    if (e.code === "Escape") {
+      setCheckBoxDataList(buildCheckBoxList(buildCheckBoxFilteredList("")));
+      document.getElementById(id)?.focus();
+    }
+  };
+
   useEffect(() => {}, [checkBoxDataList]);
 
   useEffect(() => {
@@ -304,6 +311,7 @@ const DTEForwardLookup = ({
             label={`${id} options`}
             onValueChange={handleCheckBoxValuesChanged}
             data-testid={`${id}-checklist`}
+            escKeyPressed={DropdownEsc}
           />
         </StyledCheckGrid>
       ) : (

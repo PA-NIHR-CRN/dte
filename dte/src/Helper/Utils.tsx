@@ -72,6 +72,22 @@ export default class Utils {
     });
     return updatedFormData;
   };
+
+  static FocusOnError = () => {
+    const inputWithError = document.getElementsByClassName(
+      "nhsuk-error-message"
+    )[0];
+    const errorId = inputWithError.id.replaceAll("--error-message", "");
+    const errorElement = document.getElementById(errorId);
+    if (
+      errorElement?.tagName === "INPUT" ||
+      errorElement?.tagName === "SELECT"
+    ) {
+      errorElement.focus();
+    } else {
+      errorElement?.getElementsByTagName("input")[0].focus();
+    }
+  };
 }
 export const EmailRegex = new RegExp(
   // eslint-disable-next-line no-useless-escape

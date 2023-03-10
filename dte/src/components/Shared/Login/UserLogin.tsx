@@ -128,6 +128,12 @@ const UserLogin = () => {
     }
   }, [resendResponse]);
 
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
+
   const injectCallIntoError = (errors: (DTEAxiosError[] | undefined)[]) => {
     return errors.map((error) => {
       if (error) {

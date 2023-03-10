@@ -3,13 +3,14 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import DTERadio from "../UI/DTERadio/DTERadio";
 import DTEDetails from "../UI/DTEDetails/DTEDetails";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
+import Utils from "../../../Helper/Utils";
 
 export type SexFormData = {
   sexAtBirth: string;
@@ -38,7 +39,11 @@ const SexForm = (props: SexFormProps) => {
   const headerVariant = useMediaQuery(theme.breakpoints.down("sm"))
     ? "h2"
     : "h1";
-  const { control, handleSubmit } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
@@ -62,6 +67,12 @@ const SexForm = (props: SexFormProps) => {
       </DTEContent>
     );
   }
+
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
 
   return (
     <>

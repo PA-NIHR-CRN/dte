@@ -2,13 +2,14 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import DTERadio from "../UI/DTERadio/DTERadio";
 import DTEDetails from "../UI/DTEDetails/DTEDetails";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import FormBaseProps from "./FormBaseProps";
+import Utils from "../../../Helper/Utils";
 
 export type Disability2FormData = {
   disability: string;
@@ -36,7 +37,11 @@ const Disability2Form = (props: Disability2FormProps) => {
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
     ? "h2"
     : "h1";
-  const { control, handleSubmit } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
@@ -67,6 +72,12 @@ const Disability2Form = (props: Disability2FormProps) => {
   } else {
     labelElement = instructionText;
   }
+
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
 
   return (
     <>

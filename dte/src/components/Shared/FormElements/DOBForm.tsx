@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Fieldset } from "nhsuk-react-components";
@@ -11,6 +12,7 @@ import DTEDateInput from "../UI/DTEDateInput/DTEDateInput";
 import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
+import Utils from "../../../Helper/Utils";
 
 export type DOBFormData = {
   day: string;
@@ -57,6 +59,12 @@ const DOBForm = (props: DOBFormProps) => {
       },
     },
   });
+
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
 
   const interceptSubmit = (data: any) => {
     onDataChange({

@@ -32,6 +32,10 @@ const StartRegistrationProcess = () => {
           <li>are 18 or over</li>
           <li>live in the UK</li>
         </ul>
+        <DTEContent>
+          ( Please note that unless otherwise stated, all registration questions
+          are mandatory )
+        </DTEContent>
         <ButtonWrapper>
           <DTERouteLink to="/Participants/Register/Questions">
             Register now

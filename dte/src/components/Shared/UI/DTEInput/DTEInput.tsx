@@ -22,9 +22,11 @@ type Props = {
 
 const StyledInput = styled(Input)`
   border-radius: 0.3rem;
+  padding: 1em;
   border-color: ${(Props) =>
     Props.error ? Props.theme.NIHR.ErrorRed : Props.theme.NIHR.Grey};
   &:focus {
+    padding: 0.9em;
     border: 4px solid ${(Props) => Props.theme.NIHR.Blue};
     box-shadow: none;
     outline: 4px solid ${(Props) => Props.theme.NIHR.Yellow};
