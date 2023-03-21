@@ -7,7 +7,7 @@ import App from "../../../App";
 
 describe.each([
   [
-    "valid@domain.com",
+    "v1234-5678-9101",
     {
       content: null,
       isSuccess: true,
@@ -21,7 +21,7 @@ describe.each([
     "/Participants/Register/Continue/Questions",
   ],
   [
-    "invalidemail@domain.com",
+    "1234-5678-9101",
     {
       content: null,
       isSuccess: false,
@@ -46,7 +46,7 @@ describe.each([
     "/UserLogin",
   ],
   [
-    "invalidcode@domain.com",
+    "1234-5678-9101",
     {
       content: null,
       isSuccess: false,
@@ -71,7 +71,7 @@ describe.each([
     "/UserLogin",
   ],
   [
-    "validated@domain.com",
+    "1234-5678-9101",
     {
       content: null,
       isSuccess: false,
@@ -115,7 +115,7 @@ describe.each([
       );
 
       render(<Verify />, {}, [
-        { pathname: "/verify", search: `?code=123456&email=${email}` },
+        { pathname: "/verify", search: `?code=123456&userId=${email}` },
       ]);
       server.pretender.handledRequest = async (path) => {
         expect(path).toBe(
@@ -137,15 +137,15 @@ describe.each([
 
 describe.each([
   ["", "/Participants/Register/Continue/Questions"],
-  ["?email=", "/Participants/Register/Continue/Questions"],
-  ["?email=email@domain.com", "/Participants/Register/Continue/Questions"],
+  ["?userId=", "/Participants/Register/Continue/Questions"],
+  ["?userId=1234-5678-9101", "/Participants/Register/Continue/Questions"],
   [
-    "?code=&email=email@domain.com",
+    "?code=&userId=1234-5678-9101",
     "/Participants/Register/Continue/Questions",
   ],
   ["?code=1234", "/Participants/Register/Continue/Questions"],
-  ["?code=1234&email=", "/Participants/Register/Continue/Questions"],
-  ["?code=1234&email=email@domain.com", "/verify"],
+  ["?code=1234&userId=", "/Participants/Register/Continue/Questions"],
+  ["?code=1234&userId=1234-5678-9101", "/verify"],
 ])("Page Load tests", (urlParams, redirectUrl) => {
   let server: Server;
   beforeEach(() => {

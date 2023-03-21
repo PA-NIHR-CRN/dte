@@ -28,8 +28,8 @@ const Verify = () => {
     : "h1";
 
   const code = new URLSearchParams(search).get("code");
-  const email = new URLSearchParams(search).get("email");
-  if (!code || !email) {
+  const userId = new URLSearchParams(search).get("userId");
+  if (!code || !userId) {
     history.push("/Participants/Register/Continue/Questions");
   }
   const confirmurl = `${process.env.REACT_APP_BASE_API}/users/confirmsignup`;
@@ -45,7 +45,7 @@ const Verify = () => {
       method: "POST",
       data: {
         code,
-        email,
+        userId,
       },
     },
     {
@@ -79,7 +79,7 @@ const Verify = () => {
                   This verification link has expired. We can send you the email
                   again.
                 </DTEContent>
-                <ResendEmail emailAddress={email || ""} />
+                <ResendEmail userId={userId || ""} />
               </>
             );
             break;

@@ -6,10 +6,10 @@ import DTEButton from "../../UI/DTEButton/DTEButton";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 
 type ResendEmailProps = {
-  emailAddress?: string;
+  userId?: string;
 };
 
-const ResendEmail = ({ emailAddress }: ResendEmailProps) => {
+const ResendEmail = ({ userId }: ResendEmailProps) => {
   const [
     { response: resendResponse, loading: resendLoading, error: resendError },
     resend,
@@ -18,12 +18,12 @@ const ResendEmail = ({ emailAddress }: ResendEmailProps) => {
       url: `${process.env.REACT_APP_BASE_API}/users/resendverificationemail`,
       method: "POST",
       data: {
-        email: emailAddress,
+        email: userId,
       },
     },
     { useCache: false, manual: true }
   );
-  return emailAddress ? (
+  return userId ? (
     <>
       {resendLoading && <LoadingIndicator text="Resending Email..." />}
       {!resendLoading && (
