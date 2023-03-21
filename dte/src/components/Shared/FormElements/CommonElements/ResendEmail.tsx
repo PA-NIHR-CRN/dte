@@ -18,7 +18,7 @@ const ResendEmail = ({ userId }: ResendEmailProps) => {
       url: `${process.env.REACT_APP_BASE_API}/users/resendverificationemail`,
       method: "POST",
       data: {
-        email: userId,
+        userId,
       },
     },
     { useCache: false, manual: true }
