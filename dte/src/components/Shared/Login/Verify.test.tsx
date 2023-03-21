@@ -139,10 +139,7 @@ describe.each([
   ["", "/Participants/Register/Continue/Questions"],
   ["?userId=", "/Participants/Register/Continue/Questions"],
   ["?userId=1234-5678-9101", "/Participants/Register/Continue/Questions"],
-  [
-    "?code=&userId=1234-5678-9101",
-    "/Participants/Register/Continue/Questions",
-  ],
+  ["?code=&userId=1234-5678-9101", "/Participants/Register/Continue/Questions"],
   ["?code=1234", "/Participants/Register/Continue/Questions"],
   ["?code=1234&userId=", "/Participants/Register/Continue/Questions"],
   ["?code=1234&userId=1234-5678-9101", "/verify"],
