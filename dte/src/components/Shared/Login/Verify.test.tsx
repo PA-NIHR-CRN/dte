@@ -7,7 +7,7 @@ import App from "../../../App";
 
 describe.each([
   [
-    "v1234-5678-9101",
+    "1234-5678-9101",
     {
       content: null,
       isSuccess: true,
