@@ -24,7 +24,7 @@ export type UpdateEmailFormData = {
 
 const UpdateEmailForm = ({ onCancel }: FormBaseProps) => {
   const history = useHistory();
-  const { accessToken, logOutToken } = useContext(AuthContext);
+  const { logOutToken } = useContext(AuthContext);
   const theme = useTheme();
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
     ? "h2"
@@ -62,7 +62,6 @@ const UpdateEmailForm = ({ onCancel }: FormBaseProps) => {
       url: `${process.env.REACT_APP_BASE_API}/users/changeemail`,
       method: "POST",
       data: {
-        accessToken,
         newEmail: data.emailAddress,
       },
     }).catch(() => {

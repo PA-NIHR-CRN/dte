@@ -28,25 +28,22 @@ beforeAll(() => {
 beforeEach(() => {
   server = createServer({
     routes() {
-      this.get(
-        `${process.env.REACT_APP_BASE_API}/participants/:userID/details`,
-        () => {
-          return {
-            content: {
-              firstname: "firstname",
-              lastname: "lastname",
-              email: "first.last@domain.com",
-              consentRegistration: false,
-              consentRegistrationAtUtc: null,
-              hasDemographics: true,
-            },
-            isSuccess: true,
-            errors: [],
-            conversationId: null,
-            version: 1,
-          };
-        }
-      );
+      this.get(`${process.env.REACT_APP_BASE_API}/participants/details`, () => {
+        return {
+          content: {
+            firstname: "firstname",
+            lastname: "lastname",
+            email: "first.last@domain.com",
+            consentRegistration: false,
+            consentRegistrationAtUtc: null,
+            hasDemographics: true,
+          },
+          isSuccess: true,
+          errors: [],
+          conversationId: null,
+          version: 1,
+        };
+      });
       this.get(`${process.env.REACT_APP_BASE_API}/users/passwordpolicy`, () => {
         return {
           minimumLength: 12,
@@ -520,7 +517,6 @@ describe("Update Password must handle valid user operations", () => {
       expect(path).toContain("/users/changepassword");
       expect(requestBody).toBe(
         JSON.stringify({
-          accessToken: null,
           oldPassword: "V4l1dP4ssW0rd!",
           newPassword: "L0ngV4l1dP4ssW0rd!",
         })

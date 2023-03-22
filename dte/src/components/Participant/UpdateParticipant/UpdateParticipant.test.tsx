@@ -24,24 +24,21 @@ beforeEach(() => {
   ReactGA.testModeAPI.resetCalls();
   server = createServer({
     routes() {
+      this.get(`${process.env.REACT_APP_BASE_API}/participants/details`, () => {
+        return {
+          content: {
+            firstname: "Miles",
+            lastname: "Budden",
+            email: "miles.budden@nihr.ac.uk",
+          },
+          isSuccess: true,
+          errors: [],
+          conversationId: null,
+          version: 1,
+        };
+      });
       this.get(
-        `${process.env.REACT_APP_BASE_API}/participants/:userID/details`,
-        () => {
-          return {
-            content: {
-              firstname: "Miles",
-              lastname: "Budden",
-              email: "miles.budden@nihr.ac.uk",
-            },
-            isSuccess: true,
-            errors: [],
-            conversationId: null,
-            version: 1,
-          };
-        }
-      );
-      this.get(
-        `${process.env.REACT_APP_BASE_API}/participants/:userID/demographics`,
+        `${process.env.REACT_APP_BASE_API}/participants/demographics`,
         () => {
           return {
             content: {
@@ -910,7 +907,7 @@ describe("Update participant Sex", () => {
     const femaleOption = await screen.findByLabelText("Female");
     const maleOption = await screen.findByLabelText("Male");
     const nextQuestion = screen.queryByText(
-      "The next question asks about your gender"
+      "We’ll ask about your gender on the next screen. This question is about your sex registered at birth."
     );
     const extraInfoDetails = await screen.findByText(
       "Why we are asking this question"
@@ -1087,7 +1084,7 @@ describe("Update participant Long Term Illness", () => {
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
     expect(header).toHaveTextContent(
-      "Do you have any physical or mental health conditions or illness lasting or expected to last 12 months or more?"
+      "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more?"
     );
     expect(
       await screen.findByText(

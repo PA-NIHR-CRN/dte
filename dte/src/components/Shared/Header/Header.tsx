@@ -42,6 +42,24 @@ const StyledLink = styled.a`
   }
 `;
 
+const StyledLogoLink = styled.a`
+  &&& {
+    margin: 0;
+    padding: 0;
+    border: 3px solid transparent;
+    left: 20px;
+    position: relative;
+    text-decoration: none;
+    &:focus,
+    &:hover {
+      background-color: transparent;
+      border-color: ${(Props) => Props.theme.NIHR.Yellow};
+      box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.75);
+      text-decoration: none;
+    }
+  }
+`;
+
 const BPORLogo = styled.img.attrs({
   src: `${bporlogo}`,
   alt: "Be Part Of Research Logo",
@@ -52,6 +70,7 @@ const NHSLogo = styled.img.attrs({
   src: `${nhslogo}`,
   alt: "NHS Logo",
   height: "36",
+  width: "100%",
 })``;
 
 export default function Header() {
@@ -78,19 +97,21 @@ export default function Header() {
                 target="_blank"
                 href="https://bepartofresearch.nihr.ac.uk/"
                 rel="noreferrer"
+                id="styledLogoLink"
               >
                 <BPORLogo />
               </StyledLink>
             )}
           </StyledGridElementLeft>
           <StyledGridElementRight item xs={4} sm={3} md={3}>
-            <StyledLink
+            <StyledLogoLink
               rel="noreferrer"
+              id="styledLogoLink"
               target="_blank"
               href=" https://nhs.uk/"
             >
-              <NHSLogo />
-            </StyledLink>
+              <NHSLogo id="NHSLogo" />
+            </StyledLogoLink>
           </StyledGridElementRight>
           <Grid item sm={1} md={1} />
           <Grid item sm={2} md={1} />

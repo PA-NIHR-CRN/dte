@@ -22,6 +22,14 @@ interface CheckEmailFormProps {
 const CheckEmailForm = (props: CheckEmailFormProps) => {
   const { initialStateData, setLoadingText, setLoading } = props;
   const history = useHistory();
+
+  const dob = new Date(
+    parseInt(initialStateData.dobFormData.year, 10),
+    parseInt(initialStateData.dobFormData.month, 10) - 1,
+    parseInt(initialStateData.dobFormData.day, 10),
+    12
+  ).toISOString();
+
   const [{ response, loading, error }] = useAxiosFetch(
     {
       url: `${process.env.REACT_APP_BASE_API}/users/signup`,
@@ -31,6 +39,7 @@ const CheckEmailForm = (props: CheckEmailFormProps) => {
         lastname: initialStateData?.nameFormData?.lastName,
         email: initialStateData?.emailFormData?.emailAddress,
         password: initialStateData?.passwordFormData?.password,
+        dateOfBirth: dob,
         consentRegistration: true,
       },
     },

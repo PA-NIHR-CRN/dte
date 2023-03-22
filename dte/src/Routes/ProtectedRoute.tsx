@@ -18,7 +18,7 @@ const generateAuthPath = (role: Role) => {
       path = "/ResearchLogin";
       break;
     case Role.Participant:
-      path = "/UserLogin";
+      path = "/Participants/Options";
       break;
     default:
       break;

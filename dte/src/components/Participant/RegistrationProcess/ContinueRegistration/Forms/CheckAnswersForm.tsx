@@ -134,31 +134,6 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
-            <DTEContent>Date of birth</DTEContent>
-          </dt>
-          <dd className="govuk-summary-list__value">
-            <DTEContent>
-              {new Date(
-                parseInt(initialStateData.dobFormData.year, 10),
-                parseInt(initialStateData.dobFormData.month, 10) - 1,
-                parseInt(initialStateData.dobFormData.day, 10),
-                12
-              ).toLocaleString("en-GB", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
-            </DTEContent>
-          </dd>
-          <dd className="govuk-summary-list__actions">
-            <DTELinkButton onClick={() => changeStep(2)}>
-              Change{" "}
-              <StyledCheckHiddenText>date of birth</StyledCheckHiddenText>
-            </DTELinkButton>
-          </dd>
-        </div>
-        <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">
             <DTEContent>Sex registered at birth</DTEContent>
           </dt>
           <dd className="govuk-summary-list__value">
@@ -168,7 +143,7 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
-            <DTELinkButton onClick={() => changeStep(3)}>
+            <DTELinkButton onClick={() => changeStep(2)}>
               Change{" "}
               <StyledCheckHiddenText>
                 sex registered at birth
@@ -191,7 +166,7 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
-            <DTELinkButton onClick={() => changeStep(4)}>
+            <DTELinkButton onClick={() => changeStep(3)}>
               Change{" "}
               <StyledCheckHiddenText>
                 gender identity same as sex registered at birth
@@ -218,7 +193,7 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
-            <DTELinkButton onClick={() => changeStep(5)}>
+            <DTELinkButton onClick={() => changeStep(4)}>
               Change <StyledCheckHiddenText>ethnic group</StyledCheckHiddenText>
             </DTELinkButton>
           </dd>
@@ -233,7 +208,7 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
-            <DTELinkButton onClick={() => changeStep(6)}>
+            <DTELinkButton onClick={() => changeStep(5)}>
               Change{" "}
               <StyledCheckHiddenText>ethnic background</StyledCheckHiddenText>
             </DTELinkButton>
@@ -253,7 +228,7 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
-            <DTELinkButton onClick={() => changeStep(7)}>
+            <DTELinkButton onClick={() => changeStep(6)}>
               Change{" "}
               <StyledCheckHiddenText>
                 long-term conditions or illness
@@ -274,7 +249,7 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
               </DTEContent>
             </dd>
             <dd className="govuk-summary-list__actions">
-              <DTELinkButton onClick={() => changeStep(8)}>
+              <DTELinkButton onClick={() => changeStep(7)}>
                 Change{" "}
                 <StyledCheckHiddenText>
                   reduced ability to carry out daily activities
@@ -305,7 +280,7 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
-            <DTELinkButton onClick={() => changeStep(9)}>
+            <DTELinkButton onClick={() => changeStep(8)}>
               Change{" "}
               <StyledCheckHiddenText>areas of research</StyledCheckHiddenText>
             </DTELinkButton>
@@ -318,7 +293,7 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
         Be Part of Research account.
       </DTEContent>
 
-      <DTEButton onClick={() => changeStep(11)}>
+      <DTEButton onClick={() => changeStep(10)}>
         Complete registration
       </DTEButton>
     </>

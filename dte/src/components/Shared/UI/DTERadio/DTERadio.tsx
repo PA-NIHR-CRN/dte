@@ -72,6 +72,11 @@ const DTERadio = memo(
         <StyledFieldsetLegend data-testid={`${id}-legend`} id={`${id}-legend`}>
           {label}
         </StyledFieldsetLegend>
+        {infoText && (
+          <StyledHiddenInfoText data-testid={`${id}-info`} id={`${id}-info`}>
+            {infoText}
+          </StyledHiddenInfoText>
+        )}
         <StyledRadio
           id={id}
           name={name}
@@ -82,11 +87,6 @@ const DTERadio = memo(
         >
           {children}
         </StyledRadio>
-        {infoText && (
-          <StyledHiddenInfoText data-testid={`${id}-info`} id={`${id}-info`}>
-            {infoText}
-          </StyledHiddenInfoText>
-        )}
       </StyledFieldset>
     ) : (
       <StyledFieldset
@@ -96,6 +96,11 @@ const DTERadio = memo(
         <StyledFieldsetLegend data-testid={`${id}-legend`} id={`${id}-legend`}>
           {label}
         </StyledFieldsetLegend>
+        {infoText && (
+          <StyledHiddenInfoText data-testid={`${id}-info`} id={`${id}-info`}>
+            {infoText}
+          </StyledHiddenInfoText>
+        )}
         <StyledRadio
           id={id}
           name={name}
@@ -105,11 +110,6 @@ const DTERadio = memo(
         >
           {children}
         </StyledRadio>
-        {infoText && (
-          <StyledHiddenInfoText data-testid={`${id}-info`} id={`${id}-info`}>
-            {infoText}
-          </StyledHiddenInfoText>
-        )}
       </StyledFieldset>
     );
   }

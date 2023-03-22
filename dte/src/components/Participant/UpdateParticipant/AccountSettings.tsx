@@ -1,10 +1,9 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import ReactGA from "react-ga";
-import { AuthContext } from "../../../context/AuthContext";
 import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import Utils from "../../../Helper/Utils";
 import ErrorMessageContainer from "../../Shared/ErrorMessageContainer/ErrorMessageContainer";
@@ -47,13 +46,12 @@ const AccountSettings = () => {
   const [gaURL, setGaURL] = useState("/AccountSettings");
   const theme = useTheme();
   const [userData, setUserData] = useState<UserDataState>();
-  const { authenticatedUserId } = useContext(AuthContext);
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
     ? "h2"
     : "h1";
   const [{ response, loading, error }] = useAxiosFetch(
     {
-      url: `${process.env.REACT_APP_BASE_API}/participants/${authenticatedUserId}/details`,
+      url: `${process.env.REACT_APP_BASE_API}/participants/details`,
       method: "GET",
     },
     {

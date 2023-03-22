@@ -14,7 +14,7 @@ import CloseAccount from "../components/Participant/UpdateParticipant/CloseAccou
 import UpdatePasswordSuccess from "../components/Participant/UpdateParticipant/Forms/UpdatePasswordSuccess";
 import AccountClosed from "../components/Participant/UpdateParticipant/AccountClosed";
 import Newsletter from "../components/Participant/UpdateParticipant/Newsletter";
-import NhsPreRegistration from "../pages/NhsPreRegistration";
+import NhsPreRegistration from "../pages/NHS/NhsPreRegistration";
 
 export default [
   <ProtectedRoute

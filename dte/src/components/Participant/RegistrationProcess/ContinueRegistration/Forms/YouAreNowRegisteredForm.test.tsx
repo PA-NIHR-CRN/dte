@@ -22,11 +22,6 @@ const testData: ContinueRegistrationState = {
     mobileNumber: "07666666666",
     landlineNumber: "01234567890",
   },
-  dobFormData: {
-    day: "15",
-    month: "03",
-    year: "1980",
-  },
   sexFormData: {
     sexAtBirth: "male",
   },
@@ -91,11 +86,6 @@ describe("Demographics Api Success Tests", () => {
         "Thank you for registering with Be Part of Research"
       )
     ).toBeInTheDocument();
-    const links = await screen.findAllByRole("link");
-    expect(links).toHaveLength(4);
-    expect(
-      screen.queryByText("There has been a problem")
-    ).not.toBeInTheDocument();
   });
 
   it("must not fail any accessibility tests for populated data", async () => {

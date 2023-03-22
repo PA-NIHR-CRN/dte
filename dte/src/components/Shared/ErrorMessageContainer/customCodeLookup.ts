@@ -19,7 +19,7 @@ const customCodeLookup = (code: string, detail?: string | ReactNode) => {
         case "Password attempts exceeded":
           return "Your user account is currently locked due to previous incorrect attempts to sign in - you can try again after a short wait.";
         case "Incorrect username or password.":
-          return "Enter the email address and password for a registered user account.";
+          return "Enter the email address and password for a registered user account. If you registered using NHS login you will need to use NHS login to sign in.";
         default:
           return defaultLoginErrorMessage;
       }

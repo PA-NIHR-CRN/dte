@@ -70,28 +70,23 @@ const HealthConditionForm = (props: HealthConditionFormProps) => {
       {instructionText || (
         <>
           <DTEContent>
-            Start typing in the search box, for example &apos;diabetes&apos;,
-            &apos;heart disease&apos; or &apos;COVID-19&apos;. Then you&apos;ll
-            see a range of matching research areas you can select from.
+            Start entering details below to see different areas of research. You
+            can select as many options as you like.
           </DTEContent>
           <DTEContent>
-            Please select all the areas you are interested in. You can choose
-            more than one.
-          </DTEContent>
-          <DTEContent>
-            In addition to studies for people with a diagnosis of a disease or
-            condition, lots of studies need healthy volunteers too. Type in
-            &apos;Healthy Volunteers&apos; and select it if you are interested
-            in taking part in research as a{" "}
+            For example, you can enter a health condition like
+            &apos;diabetes&apos;, &apos;heart disease&apos; or
+            &apos;COVID-19&apos;. You can take part whether you have a health
+            condition or not by entering &apos;
             <DTERouteLink
               to="https://bepartofresearch.nihr.ac.uk/taking-part/volunteering-without-a-condition/"
               external
               target="_blank"
               renderStyle="standard"
             >
-              healthy volunteer
+              healthy volunteers
             </DTERouteLink>
-            .
+            &apos;.
           </DTEContent>
         </>
       )}

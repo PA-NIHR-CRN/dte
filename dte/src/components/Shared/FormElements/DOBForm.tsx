@@ -101,7 +101,7 @@ const DOBForm = (props: DOBFormProps) => {
                   field: { value, onChange },
                   fieldState: { error },
                 }) =>
-                  error !== "" && error !== undefined ? (
+                  error !== undefined ? (
                     <DTEDateInput
                       id="dob"
                       error={

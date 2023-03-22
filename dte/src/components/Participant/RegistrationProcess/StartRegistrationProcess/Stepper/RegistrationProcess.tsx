@@ -9,6 +9,7 @@ import NameForm, {
   NameFormData,
 } from "../../../../Shared/FormElements/NameForm";
 import PasswordForm, { PasswordFormData } from "./Forms/PasswordForm";
+import DOBForm, { DOBFormData } from "../../../../Shared/FormElements/DOBForm";
 import EmailForm, { EmailFormData } from "./Forms/EmailForm";
 import DTEBackLink from "../../../../Shared/UI/DTEBackLink/DTEBackLink";
 import DTEStepper, {
@@ -43,6 +44,11 @@ const RegsitrationProcess = () => {
         firstName: "",
         lastName: "",
       },
+      dobFormData: {
+        day: "",
+        month: "",
+        year: "",
+      } as DOBFormData,
       emailFormData: {
         emailAddress: "",
       },
@@ -77,6 +83,7 @@ const RegsitrationProcess = () => {
   const handleRegistrationDataChange = (
     incommingFormData:
       | NameFormData
+      | DOBFormData
       | EmailFormData
       | PasswordFormData
       | ConsentFormData
@@ -89,6 +96,11 @@ const RegsitrationProcess = () => {
           return {
             ...oldRegistrationData,
             nameFormData: incommingFormData,
+          };
+        case "dobFormData":
+          return {
+            ...oldRegistrationData,
+            dobFormData: incommingFormData as DOBFormData,
           };
         case "emailFormData":
           return {
@@ -126,6 +138,11 @@ const RegsitrationProcess = () => {
 
   const handleNoConsent = () => {
     setRegistrationData({
+      dobFormData: {
+        day: "",
+        month: "",
+        year: "",
+      },
       nameFormData: {
         firstName: "",
         lastName: "",
@@ -142,7 +159,7 @@ const RegsitrationProcess = () => {
         consentContact: false,
       } as ConsentFormData,
     });
-    setActiveStep(5);
+    setActiveStep(6);
   };
 
   const getStepContent = (step: number) => {
@@ -158,6 +175,16 @@ const RegsitrationProcess = () => {
         );
       case 1:
         return (
+          <DOBForm
+            onDataChange={(data: DOBFormData) =>
+              handleRegistrationDataChange(data, "dobFormData")
+            }
+            initialStateData={registrationData.dobFormData}
+            nextButtonText="Continue"
+          />
+        );
+      case 2:
+        return (
           <EmailForm
             onDataChange={(data: EmailFormData) =>
               handleRegistrationDataChange(data, "emailFormData")
@@ -165,7 +192,7 @@ const RegsitrationProcess = () => {
             initialStateData={registrationData.emailFormData}
           />
         );
-      case 2:
+      case 3:
         return (
           <PasswordForm
             onDataChange={(data: PasswordFormData) =>
@@ -176,7 +203,7 @@ const RegsitrationProcess = () => {
             setLoadingText={setLoadingText}
           />
         );
-      case 3:
+      case 4:
         return (
           <ConsentForm
             onDataChange={(data: ConsentFormData) =>
@@ -186,7 +213,7 @@ const RegsitrationProcess = () => {
             handleNoConsent={handleNoConsent}
           />
         );
-      case 4:
+      case 5:
         return (
           <CheckEmailForm
             initialStateData={registrationData}
@@ -194,7 +221,7 @@ const RegsitrationProcess = () => {
             setLoadingText={setLoadingText}
           />
         );
-      case 5:
+      case 6:
         return <NoConsent />;
       default:
         return "Unknown step";
@@ -209,29 +236,35 @@ const RegsitrationProcess = () => {
     switch (step) {
       case 1:
         setRegistrationPageTitle(
+          "What is your date of birth? - Volunteer Registration - Be Part of Research"
+        );
+        setGaURL("/registration/dateofbirth");
+        break;
+      case 2:
+        setRegistrationPageTitle(
           "What is your email address? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/email");
         break;
-      case 2:
+      case 3:
         setRegistrationPageTitle(
           "Create a password - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/password");
         break;
-      case 3:
+      case 4:
         setRegistrationPageTitle(
           "Consent to process your data and be contacted - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/consent");
         break;
-      case 4:
+      case 5:
         setRegistrationPageTitle(
           "Registering your account - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/registering");
         break;
-      case 5:
+      case 6:
         setRegistrationPageTitle(
           "Your registration has been cancelled - Volunteer Registration - Be Part of Research"
         );
@@ -248,7 +281,7 @@ const RegsitrationProcess = () => {
   return (
     <DocumentTitle title={registrationPageTitle}>
       <>
-        {[0, 1, 2, 3].includes(activeStep) && (
+        {[0, 1, 2, 3, 4].includes(activeStep) && (
           <div role="complementary">
             <DTEStepper
               variant="progress"
@@ -268,7 +301,7 @@ const RegsitrationProcess = () => {
               container
             >
               <Grid item>
-                {!(activeStep === 4) && (
+                {activeStep !== 6 && (
                   <DTEBackLink
                     title="Return to previous page"
                     linkText="Back"

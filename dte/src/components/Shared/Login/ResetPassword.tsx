@@ -58,7 +58,7 @@ function ResetPassword() {
 
   const { search } = useLocation();
   const code = new URLSearchParams(search).get("code");
-  const email = new URLSearchParams(search).get("email");
+  const userId = new URLSearchParams(search).get("userId");
 
   const [submitResponse, setSubmitResponse] = useState<
     DTEAxiosResponse | undefined
@@ -170,7 +170,7 @@ function ResetPassword() {
       {
         url: `${process.env.REACT_APP_BASE_API}/users/confirmforgotpassword`,
         method: "POST",
-        data: { code, email, password: formData?.password },
+        data: { code, userId, password: formData?.password },
       },
       {
         manual: true,

@@ -1,20 +1,10 @@
 import { axe, toHaveNoViolations } from "jest-axe";
-import { render, screen } from "../../Helper/test-utils";
+import { render, screen } from "../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 
 import NhsPreRegistration from "./index";
 
 expect.extend(toHaveNoViolations);
-
-function textContentMatcher(textMatch: string | RegExp) {
-  return (content: string, node: HTMLElement) => {
-    const hasText = (_node: HTMLElement) => _node.textContent === textMatch;
-    const childrenDontHaveText = Array.from(node.children).every(
-      (child) => !hasText(child as HTMLElement)
-    );
-    return hasText(node) && childrenDontHaveText;
-  };
-}
 
 describe("NhsPreRegistration accessibility tests", () => {
   it("is accessible", async () => {
@@ -29,7 +19,7 @@ describe("NhsPreRegistration functionality tests", () => {
     render(<NhsPreRegistration />);
 
     expect(
-      screen.getByRole("heading", { name: "Be Part of Research" })
+      screen.getByRole("heading", { name: "Welcome to Be Part of Research" })
     ).toBeInTheDocument();
     expect(
       screen.getByText(
@@ -56,7 +46,7 @@ describe("NhsPreRegistration functionality tests", () => {
         "More information about registering with Be Part of Research"
       )
     ).toBeInTheDocument();
-    expect(screen.getByText("Continue")).toBeInTheDocument();
+    expect(screen.getByText("Register")).toBeInTheDocument();
     expect(screen.getByText("Already have an account?")).toBeInTheDocument();
     expect(screen.getByText("Sign in")).toBeInTheDocument();
   });
@@ -66,9 +56,13 @@ describe("NhsPreRegistration functionality tests", () => {
 
     expect(
       screen.getByText(
-        textContentMatcher(
-          "Find out more information about registering your account with Be Part of Research. Please use the back button on your device to return to this page."
-        )
+        /Find out more information about registering your account with/
+      )
+    ).not.toBeVisible();
+
+    expect(
+      screen.getByText(
+        /. Please use the back button on your device to return to this page./
       )
     ).not.toBeVisible();
 
@@ -78,10 +72,21 @@ describe("NhsPreRegistration functionality tests", () => {
 
     expect(
       screen.getByText(
-        textContentMatcher(
-          "Find out more information about registering your account with Be Part of Research. Please use the back button on your device to return to this page."
-        )
+        /Find out more information about registering your account with/
       )
     ).toBeVisible();
+
+    expect(
+      screen.getByText(
+        /. Please use the back button on your device to return to this page./
+      )
+    ).toBeVisible();
+    const links = await screen.findAllByRole("link");
+    expect(links).toHaveLength(1);
+    expect(links[0]).toHaveAttribute(
+      "href",
+      "https://bepartofresearch.nihr.ac.uk/volunteer-service/"
+    );
+    expect(links[0]).toHaveTextContent("Be Part of Research");
   });
 });

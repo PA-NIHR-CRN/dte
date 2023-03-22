@@ -10,7 +10,6 @@ import CheckAnswersForm from "./CheckAnswersForm";
 import { ContinueRegistrationState } from "../../../../../types/ParticipantTypes";
 import { AddressFormData } from "../../../../Shared/FormElements/AddressForm";
 import { MobileFormData } from "../../../../Shared/FormElements/MobileNumberForm";
-import { DOBFormData } from "../../../../Shared/FormElements/DOBForm";
 import { Ethnicity1FormData } from "../../../../Shared/FormElements/EthnicityFormComponents/Ethnicity1Form";
 import { Ethnicity2FormData } from "../../../../Shared/FormElements/EthnicityFormComponents/Ethnicity2Form";
 import { DisabilityFormData } from "../../../../Shared/FormElements/DisabilityForm";
@@ -36,11 +35,6 @@ const blankTestData: ContinueRegistrationState = {
     mobileNumber: undefined,
     landlineNumber: undefined,
   } as MobileFormData,
-  dobFormData: {
-    day: "",
-    month: "",
-    year: "",
-  } as DOBFormData,
   sexFormData: {
     sexAtBirth: "",
   } as SexFormData,
@@ -78,11 +72,6 @@ const populatedTestData: ContinueRegistrationState = {
   mobileFormData: {
     mobileNumber: "07666666666",
     landlineNumber: "01234567890",
-  },
-  dobFormData: {
-    day: "15",
-    month: "03",
-    year: "1980",
   },
   sexFormData: {
     sexAtBirth: "male",
@@ -139,19 +128,6 @@ describe("Check Answers Form displays data correctly", () => {
     expect(screen.getByText(/07666666666/)).toBeInTheDocument();
     expect(screen.getByText(/Landline/)).toBeInTheDocument();
     expect(screen.getByText(/01234567890/)).toBeInTheDocument();
-  });
-
-  it("Date of Birth must be rendered correctly", async () => {
-    const mockChangeStep = jest.fn();
-    render(
-      <CheckAnswersForm
-        initialStateData={populatedTestData}
-        changeStep={mockChangeStep}
-      />
-    );
-
-    expect(screen.getByText("Date of birth")).toBeInTheDocument();
-    expect(screen.getByText("15 March 1980")).toBeInTheDocument();
   });
 
   it("Sex registered at Birth must be rendered correctly", async () => {
@@ -281,22 +257,21 @@ describe("Check Answers Form Layout", () => {
     const changeButtons = await screen.findAllByRole("button");
     expect(changeButtons[0]).toHaveTextContent("Change home address");
     expect(changeButtons[1]).toHaveTextContent("Change phone number");
-    expect(changeButtons[2]).toHaveTextContent("Change date of birth");
-    expect(changeButtons[3]).toHaveTextContent(
+    expect(changeButtons[2]).toHaveTextContent(
       "Change sex registered at birth"
     );
-    expect(changeButtons[4]).toHaveTextContent(
+    expect(changeButtons[3]).toHaveTextContent(
       "Change gender identity same as sex registered at birth"
     );
-    expect(changeButtons[5]).toHaveTextContent("Change ethnic group");
-    expect(changeButtons[6]).toHaveTextContent("Change ethnic background");
-    expect(changeButtons[7]).toHaveTextContent(
+    expect(changeButtons[4]).toHaveTextContent("Change ethnic group");
+    expect(changeButtons[5]).toHaveTextContent("Change ethnic background");
+    expect(changeButtons[6]).toHaveTextContent(
       "Change long-term conditions or illness"
     );
-    expect(changeButtons[8]).toHaveTextContent(
+    expect(changeButtons[7]).toHaveTextContent(
       "Change reduced ability to carry out daily activities"
     );
-    expect(changeButtons[9]).toHaveTextContent("Change areas of research");
+    expect(changeButtons[8]).toHaveTextContent("Change areas of research");
   });
 
   it("must have the correct submit button", async () => {

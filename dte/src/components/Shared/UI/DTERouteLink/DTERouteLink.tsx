@@ -105,6 +105,9 @@ const StyledRouteLink = styled(Link)<RouteLinkProps>`
 
 const StyledExternalLink = styled.a<ExternalLinkProps>`
   ${CommonLinkStyle}
+  && {
+    cursor: pointer;
+  }
 `;
 
 const DTERouteLink = ({

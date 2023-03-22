@@ -11,7 +11,7 @@ import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import FormBaseProps from "./FormBaseProps";
 
 export type Disability2FormData = {
-  disability: string;
+  disability?: string;
   disabilityDescription?: string;
 };
 

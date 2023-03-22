@@ -15,7 +15,7 @@ beforeEach(() => {
   server = createServer({
     routes() {
       this.get(
-        `${process.env.REACT_APP_BASE_API}/participants/:userID/demographics`,
+        `${process.env.REACT_APP_BASE_API}/participants/demographics`,
         () => {
           return {
             content: {

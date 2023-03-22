@@ -1,4 +1,11 @@
-import { useEffect, createRef, useState, useMemo } from "react";
+import { useHistory } from "react-router-dom";
+import React, {
+  useEffect,
+  createRef,
+  useState,
+  useMemo,
+  useContext,
+} from "react";
 import ReactGA from "react-ga";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
@@ -20,7 +27,6 @@ import DisabilityForm, {
 import Disability2Form, {
   Disability2FormData,
 } from "../../../Shared/FormElements/Disability2Form";
-import DOBForm, { DOBFormData } from "../../../Shared/FormElements/DOBForm";
 import Ethnicity1Form, {
   Ethnicity1FormData,
 } from "../../../Shared/FormElements/EthnicityFormComponents/Ethnicity1Form";
@@ -39,9 +45,11 @@ import MobileNumberForm, {
 import SexForm, { SexFormData } from "../../../Shared/FormElements/SexForm";
 import YouAreNowRegisteredForm from "./Forms/YouAreNowRegisteredForm";
 import useAxiosFetch from "../../../../hooks/useAxiosFetch";
+import { AuthContext } from "../../../../context/AuthContext";
 import LoadingIndicator from "../../../Shared/LoadingIndicator/LoadingIndicator";
 import ErrorMessageContainer from "../../../Shared/ErrorMessageContainer/ErrorMessageContainer";
 import Utils from "../../../../Helper/Utils";
+import ConsentForm from "../StartRegistrationProcess/Stepper/Forms/ConsentForm";
 
 const PercentageGrid = styled(Grid)`
   && {
@@ -51,6 +59,9 @@ const PercentageGrid = styled(Grid)`
 `;
 
 const ContinueRegistration = () => {
+  const { isNhsLinkedAccount, isInNHSApp } = useContext(AuthContext);
+  const history = useHistory();
+  const [isUserConsented, setIsUserConsented] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState("");
   const [activeStep, setActiveStep] = useState(0);
@@ -60,11 +71,11 @@ const ContinueRegistration = () => {
   );
   const [gaURL, setGaURL] = useState("/registration/address");
   useEffect(() => {
-    if (activeStep === 10) {
+    if (activeStep === 9) {
       setChanging(true);
       return;
     }
-    if (activeStep === 11) {
+    if (activeStep === 10) {
       setChanging(false);
     }
   }, [activeStep]);
@@ -101,11 +112,6 @@ const ContinueRegistration = () => {
         mobileNumber: undefined,
         landlineNumber: undefined,
       } as MobileFormData,
-      dobFormData: {
-        day: "",
-        month: "",
-        year: "",
-      } as DOBFormData,
       ethnicity1FormData: {
         ethnicity: "",
       } as Ethnicity1FormData,
@@ -149,7 +155,6 @@ const ContinueRegistration = () => {
   const handleRegistrationDataChange = (
     incommingFormData:
       | AddressFormData
-      | DOBFormData
       | MobileFormData
       | Ethnicity1FormData
       | Ethnicity2FormData
@@ -172,11 +177,7 @@ const ContinueRegistration = () => {
             ...oldRegistrationData,
             mobileFormData: incommingFormData as MobileFormData,
           };
-        case "dobFormData":
-          return {
-            ...oldRegistrationData,
-            dobFormData: incommingFormData as DOBFormData,
-          };
+
         case "ethnicity1FormData":
           return {
             ...oldRegistrationData,
@@ -227,16 +228,16 @@ const ContinueRegistration = () => {
     if (registrationData.addressFormData.address.addressLine1) {
       if (
         changing &&
-        activeStep !== 5 &&
-        (activeStep !== 7 ||
+        activeStep !== 4 &&
+        (activeStep !== 6 ||
           registrationData.disabilityFormData.disability !== "yes")
       ) {
-        setActiveStep(10);
+        setActiveStep(9);
       } else {
         handleNext();
       }
     }
-    if (activeStep !== 5 && activeStep !== 7) {
+    if (activeStep !== 4 && activeStep !== 6) {
       setCancelData(registrationData);
     }
   }, [registrationData]);
@@ -245,7 +246,7 @@ const ContinueRegistration = () => {
     setActiveStep((prevActiveStep) => {
       if (
         registrationData.disabilityFormData.disability !== "yes" &&
-        activeStep === 7
+        activeStep === 6
       ) {
         return prevActiveStep + 2;
       }
@@ -257,7 +258,7 @@ const ContinueRegistration = () => {
     setActiveStep((prevActiveStep) => {
       if (
         registrationData.disabilityFormData.disability !== "yes" &&
-        activeStep === 9
+        activeStep === 8
       ) {
         return prevActiveStep - 2;
       }
@@ -269,7 +270,7 @@ const ContinueRegistration = () => {
     if (cancelData) {
       setRegistrationData(cancelData);
     }
-    setActiveStep(10);
+    setActiveStep(9);
   };
 
   const nextButtonText = useMemo(
@@ -305,18 +306,6 @@ const ContinueRegistration = () => {
         );
       case 2:
         return (
-          <DOBForm
-            onDataChange={(data: DOBFormData) =>
-              handleRegistrationDataChange(data, "dobFormData")
-            }
-            initialStateData={registrationData.dobFormData}
-            showCancelButton={changing}
-            onCancel={handleCancel}
-            nextButtonText={nextButtonText}
-          />
-        );
-      case 3:
-        return (
           <SexForm
             onDataChange={(data: SexFormData) =>
               handleRegistrationDataChange(data, "sexFormData")
@@ -327,7 +316,7 @@ const ContinueRegistration = () => {
             nextButtonText={nextButtonText}
           />
         );
-      case 4:
+      case 3:
         return (
           <GenderForm
             onDataChange={(data: GenderFormData) =>
@@ -339,7 +328,7 @@ const ContinueRegistration = () => {
             nextButtonText={nextButtonText}
           />
         );
-      case 5:
+      case 4:
         return changing ? (
           <Ethnicity1Form
             onDataChange={(data: Ethnicity1FormData) => {
@@ -378,7 +367,7 @@ const ContinueRegistration = () => {
             }
           />
         );
-      case 6:
+      case 5:
         return (
           <Ethnicity2Form
             onDataChange={(data: Ethnicity2FormData) =>
@@ -394,7 +383,7 @@ const ContinueRegistration = () => {
             nextButtonText={nextButtonText}
           />
         );
-      case 7:
+      case 6:
         return changing ? (
           <DisabilityForm
             onDataChange={(data: DisabilityFormData) => {
@@ -440,7 +429,7 @@ const ContinueRegistration = () => {
             nextButtonText={nextButtonText}
           />
         );
-      case 8:
+      case 7:
         return (
           <Disability2Form
             onDataChange={(data: Disability2FormData) =>
@@ -452,7 +441,7 @@ const ContinueRegistration = () => {
             nextButtonText={nextButtonText}
           />
         );
-      case 9:
+      case 8:
         return (
           <HealthConditionsForm
             onDataChange={(data: HealthConditionFormData) =>
@@ -464,14 +453,14 @@ const ContinueRegistration = () => {
             nextButtonText={nextButtonText}
           />
         );
-      case 10:
+      case 9:
         return (
           <CheckAnswersForm
             initialStateData={registrationData}
             changeStep={setActiveStep}
           />
         );
-      case 11:
+      case 10:
         return (
           <YouAreNowRegisteredForm
             data={registrationData}
@@ -499,59 +488,53 @@ const ContinueRegistration = () => {
         break;
       case 2:
         setPageTitle(
-          "What is your date of birth? - Volunteer Registration - Be Part of Research"
-        );
-        setGaURL("/registration/dateofbirth");
-        break;
-      case 3:
-        setPageTitle(
           "What is your sex? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/sex");
         break;
-      case 4:
+      case 3:
         setPageTitle(
           "Is the gender you identify with the same as your sex registered at birth? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/gender");
         break;
-      case 5:
+      case 4:
         setPageTitle(
           "What is your ethnic group? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/ethnicgroup");
         break;
-      case 6:
+      case 5:
         setPageTitle(
           "Which of the following best describes your ethnic background? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/ethnicbackground");
         break;
-      case 7:
+      case 6:
         setPageTitle(
-          "Do you have any physical or mental health conditions or illness lasting or expected to last 12 months or more? - Volunteer Registration - Be Part of Research"
+          "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/conditions");
         break;
-      case 8:
+      case 7:
         setPageTitle(
           "Do any of your conditions or illnesses reduce your ability to carry out day-to-day activities? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/reducedability");
         break;
-      case 9:
+      case 8:
         setPageTitle(
           "Which areas of research are you interested in? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/areasofresearch");
         break;
-      case 10:
+      case 9:
         setPageTitle(
           "Check your answers before completing your registration - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/checkyouranswers");
         break;
-      case 11:
+      case 10:
         setPageTitle(
           "Thank you for registering with Be Part of Research - Volunteer Account - Be Part of Research"
         );
@@ -565,7 +548,55 @@ const ContinueRegistration = () => {
     }
   };
 
-  return (
+  const [{ response: userDetailsResponse, loading: isUserDetailsLoading }] =
+    useAxiosFetch(
+      {
+        url: `${process.env.REACT_APP_BASE_API}/participants/details`,
+        method: "GET",
+      },
+      {
+        manual: false,
+        useCache: false,
+      }
+    );
+
+  useEffect(() => {
+    if (userDetailsResponse) {
+      const consent =
+        Utils.ConvertResponseToDTEResponse(userDetailsResponse)?.content;
+      if (consent) {
+        setIsUserConsented(consent.consentRegistration);
+      }
+    }
+  }, [userDetailsResponse]);
+
+  const [, postConsent] = useAxiosFetch(
+    {
+      url: `${process.env.REACT_APP_BASE_API}/users/nhssignup`,
+      method: "POST",
+      data: {
+        consentRegistration: true,
+      },
+    },
+    {
+      manual: true,
+      useCache: false,
+    }
+  );
+
+  // add a post request to the consent endpoint
+  const handleConsent = () => {
+    postConsent().then((res) =>
+      setIsUserConsented(res.data.content.userConsents)
+    );
+  };
+
+  // if consent is not given, redirect to the consent page
+  if (isUserDetailsLoading) {
+    return <LoadingIndicator />;
+  }
+
+  return isUserConsented || !isNhsLinkedAccount ? (
     <DocumentTitle title={pageTitle}>
       <>
         <ErrorMessageContainer
@@ -574,10 +605,32 @@ const ContinueRegistration = () => {
             Utils.ConvertResponseToDTEResponse(response)?.errors,
           ]}
         />
+        {isInNHSApp && (
+          <>
+            {!(activeStep === 0 || activeStep === 9 || activeStep === 10) && (
+              <div className="nhsuk-width-container ">
+                <DTEBackLink
+                  title="Return to previous page"
+                  linkText="Back"
+                  onClick={handleBack}
+                />
+              </div>
+            )}
+
+            <div className="nhs-app-provider-banner">
+              <div className="nhsuk-width-container">
+                <strong>
+                  This service is provided by the National Institute for Health
+                  and Care Research
+                </strong>
+              </div>
+            </div>
+          </>
+        )}
         {response && Utils.ConvertResponseToDTEResponse(response)?.isSuccess && (
           <>
             <div role="complementary">
-              {activeStep < 11 && (
+              {activeStep < 10 && (
                 <DTEStepper
                   variant="progress"
                   position="static"
@@ -586,7 +639,7 @@ const ContinueRegistration = () => {
                   steps={14}
                   LinearProgressProps={{
                     ...LinearProps,
-                    value: calculatePercentageComplete(activeStep + 4, 14),
+                    value: calculatePercentageComplete(activeStep + 5, 14),
                   }}
                   ref={stepperRef}
                 />
@@ -602,21 +655,22 @@ const ContinueRegistration = () => {
                   <Grid item>
                     {!(
                       activeStep === 0 ||
-                      activeStep === 10 ||
-                      activeStep === 11
-                    ) && (
-                      <DTEBackLink
-                        title="Return to previous page"
-                        linkText="Back"
-                        onClick={handleBack}
-                      />
-                    )}
+                      activeStep === 9 ||
+                      activeStep === 10
+                    ) &&
+                      !isInNHSApp && (
+                        <DTEBackLink
+                          title="Return to previous page"
+                          linkText="Back"
+                          onClick={handleBack}
+                        />
+                      )}
                   </Grid>
                 )}
                 <Grid item>
-                  {activeStep < 11 && (
+                  {activeStep < 10 && (
                     <DTEContent aria-hidden>
-                      {calculatePercentageComplete(activeStep + 4, 14)}%
+                      {calculatePercentageComplete(activeStep + 5, 14)}%
                       complete
                     </DTEContent>
                   )}
@@ -629,6 +683,31 @@ const ContinueRegistration = () => {
         )}
       </>
     </DocumentTitle>
+  ) : (
+    <>
+      {isInNHSApp && (
+        <div className="nhs-app-provider-banner">
+          <div className="nhsuk-width-container">
+            <strong>
+              This service is provided by the National Institute for Health and
+              Care Research
+            </strong>
+          </div>
+        </div>
+      )}
+      <StepWrapper>
+        <ConsentForm
+          onDataChange={handleConsent}
+          initialStateData={{
+            consent: false,
+            consentContact: false,
+          }}
+          handleNoConsent={() => {
+            history.push("/NhsNoVsConsent");
+          }}
+        />
+      </StepWrapper>
+    </>
   );
 };
 

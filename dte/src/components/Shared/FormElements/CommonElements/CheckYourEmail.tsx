@@ -23,7 +23,7 @@ const CheckYourEmail = ({ emailAddress }: CheckYourEmailProps) => {
       <DTEContent>Unable to find it? Check your spam folder.</DTEContent>
       <DTEContent>Still unable to find the email? </DTEContent>
 
-      <ResendEmail emailAddress={emailAddress} />
+      <ResendEmail userId={emailAddress} />
     </>
   );
 };
