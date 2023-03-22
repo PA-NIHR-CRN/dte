@@ -78,7 +78,8 @@ export default class Utils {
       "nhsuk-error-message"
     )[0];
     if (inputWithError && inputWithError.id) {
-      const errorId = inputWithError.id.replaceAll("--error-message", "");
+      const regex = /--error-message/g;
+      const errorId = inputWithError.id.replace(regex, "");
       const errorElement = document.getElementById(errorId);
       if (
         errorElement?.tagName === "INPUT" ||
