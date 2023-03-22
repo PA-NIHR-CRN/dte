@@ -613,6 +613,7 @@ const ContinueRegistration = () => {
                   title="Return to previous page"
                   linkText="Back"
                   onClick={handleBack}
+                  ariaLabel="Return to previous page"
                 />
               </div>
             )}

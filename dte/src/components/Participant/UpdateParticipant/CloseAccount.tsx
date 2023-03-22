@@ -89,53 +89,24 @@ const CloseAccount = () => {
   return (
     <DocumentTitle title="Close your account - Volunteer Account - Be Part of Research">
       <Container>
-    <div role="main" id="main">
-        <DTEBackLink href="/" linkText="Back" />
-        <DTEHeader as="h1" $variant={headerVariant}>
-          Close your account
-        </DTEHeader>
-        {isNhsLinkedAccount ? (
-          <DTEContent $marginBottom="medium">
-            If you have changed your mind and wish to withdraw your consent to
-            be contacted, this will have no effect on your NHS login account.
-          </DTEContent>
-        ) : (
-          <DTEContent $marginBottom="medium">
-            {" "}
-            If you have changed your mind and wish to close your account, you
-            are withdrawing your consent for Be Part of Research to process and
-            store your personal information.
-          </DTEContent>
-        )}
-        <DTEContent $marginBottom="medium">
-          Be Part of Research will no longer contact you about areas of research
-          you have expressed an interest in.
-        </DTEContent>
-        <DTEContent $marginBottom="medium">
-          When closing your account Be Part of Research will keep some anonymous
-          data to help improve the service. To find out more please read the{" "}
-          <DTERouteLink
-            external
-            target="_blank"
-            renderStyle="standard"
-            to="https://bepartofresearch.nihr.ac.uk/site-policies/privacy-policy/"
-          >
-            Be Part of Research Privacy Policy
-          </DTERouteLink>
-          .
-        </DTEContent>
-        <DTEContent $marginBottom="medium">
-          To take part in the future you can register again.
-        </DTEContent>
-        {requireConf ? (
-          <DTEButton onClick={() => setRequireConf(false)}>
+        <div role="main" id="main">
+          <DTEBackLink href="/" linkText="Back" />
+          <DTEHeader as="h1" $variant={headerVariant}>
             Close your account
           </DTEHeader>
-          <DTEContent $marginBottom="medium">
-            If you have changed your mind and wish to close your account, you
-            are withdrawing your consent for Be Part of Research to process and
-            store your personal information.
-          </DTEContent>
+          {isNhsLinkedAccount ? (
+            <DTEContent $marginBottom="medium">
+              If you have changed your mind and wish to withdraw your consent to
+              be contacted, this will have no effect on your NHS login account.
+            </DTEContent>
+          ) : (
+            <DTEContent $marginBottom="medium">
+              {" "}
+              If you have changed your mind and wish to close your account, you
+              are withdrawing your consent for Be Part of Research to process
+              and store your personal information.
+            </DTEContent>
+          )}
           <DTEContent $marginBottom="medium">
             Be Part of Research will no longer contact you about areas of
             research you have expressed an interest in.
