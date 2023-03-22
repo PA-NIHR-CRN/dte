@@ -163,6 +163,12 @@ function ResetPassword() {
     }
   }, [policyResponse]);
 
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
+
   const onSubmit = async (formData: any) => {
     // setInvalidCredentials(false);
     setSubmitResponse(undefined);
