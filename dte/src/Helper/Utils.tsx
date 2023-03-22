@@ -77,15 +77,17 @@ export default class Utils {
     const inputWithError = document.getElementsByClassName(
       "nhsuk-error-message"
     )[0];
-    const errorId = inputWithError.id.replaceAll("--error-message", "");
-    const errorElement = document.getElementById(errorId);
-    if (
-      errorElement?.tagName === "INPUT" ||
-      errorElement?.tagName === "SELECT"
-    ) {
-      errorElement.focus();
-    } else {
-      errorElement?.getElementsByTagName("input")[0].focus();
+    if (inputWithError && inputWithError.id) {
+      const errorId = inputWithError.id.replaceAll("--error-message", "");
+      const errorElement = document.getElementById(errorId);
+      if (
+        errorElement?.tagName === "INPUT" ||
+        errorElement?.tagName === "SELECT"
+      ) {
+        errorElement.focus();
+      } else {
+        errorElement?.getElementsByTagName("input")[0].focus();
+      }
     }
   };
 }
