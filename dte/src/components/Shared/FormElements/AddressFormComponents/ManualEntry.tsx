@@ -1,4 +1,5 @@
 import { Grid } from "@material-ui/core";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Utils from "../../../../Helper/Utils";
 import ErrorMessageSummary from "../../ErrorMessageSummary/ErrorMessageSummary";
@@ -55,6 +56,12 @@ const ManualEntry = (props: ManualEntryProps) => {
   const onSubmit = (data: ManualEntryData) => {
     return onDataChange(Utils.TrimFormDataFields(data) as ManualEntryData);
   };
+
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
 
   return (
     <>

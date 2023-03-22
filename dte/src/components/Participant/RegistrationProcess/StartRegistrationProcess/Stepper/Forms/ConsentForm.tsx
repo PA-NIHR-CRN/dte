@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import { ErrorMessage } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
@@ -8,6 +8,7 @@ import DTERouteLink from "../../../../../Shared/UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTELinkButton from "../../../../../Shared/UI/DTELinkButton/DTELinkButton";
+import Utils from "../../../../../../Helper/Utils";
 
 export type ConsentFormData = {
   consent: boolean;
@@ -22,7 +23,11 @@ interface ConsentFormProps {
 
 const ConsentForm = (props: ConsentFormProps) => {
   const { onDataChange, initialStateData, handleNoConsent } = props;
-  const { control, handleSubmit } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
@@ -30,6 +35,12 @@ const ConsentForm = (props: ConsentFormProps) => {
       consentContact: initialStateData.consentContact,
     },
   });
+
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
 
   return (
     <>
@@ -86,6 +97,7 @@ const ConsentForm = (props: ConsentFormProps) => {
                 id="checkbox"
                 name="checkbox"
                 onValueChange={(e) => onChange(e[0].checked)}
+                escKeyPressed={() => {}}
                 error={error?.message}
                 values={[
                   {

@@ -2,13 +2,14 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import DTERadio from "../UI/DTERadio/DTERadio";
 import DTEDetails from "../UI/DTEDetails/DTEDetails";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import FormBaseProps from "./FormBaseProps";
+import Utils from "../../../Helper/Utils";
 
 export type DisabilityFormData = {
   disability: string;
@@ -35,7 +36,11 @@ const DisabilityForm = (props: DisabilityFormProps) => {
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
     ? "h2"
     : "h1";
-  const { control, handleSubmit } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
@@ -54,6 +59,12 @@ const DisabilityForm = (props: DisabilityFormProps) => {
     labelElement = instructionText;
   }
 
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
+
   return (
     <>
       <form onSubmit={handleSubmit(onDataChange)} noValidate>
@@ -69,14 +80,20 @@ const DisabilityForm = (props: DisabilityFormProps) => {
               error={error?.message}
               infoText="This includes any physical and mental health conditions or illnesses."
             >
-              <DTEContent aria-hidden="true">
-                This includes any physical and mental health conditions or
-                illnesses.
-              </DTEContent>
-              <Radios.Radio value="yes" defaultChecked={value === "yes"}>
+              <Radios.Radio
+                value="yes"
+                defaultChecked={value === "yes"}
+                aria-label="Yes, I have a physical or mental health condition that has, or is expected to last more than 12 months"
+                aria-labelledby=""
+              >
                 Yes
               </Radios.Radio>
-              <Radios.Radio value="no" defaultChecked={value === "no"}>
+              <Radios.Radio
+                value="no"
+                defaultChecked={value === "no"}
+                aria-label="No, I do not have a physical or mental health condition that has, or is expected to last more than 12 months"
+                aria-labelledby=""
+              >
                 No
               </Radios.Radio>
               <DTEContent $radioList>or</DTEContent>

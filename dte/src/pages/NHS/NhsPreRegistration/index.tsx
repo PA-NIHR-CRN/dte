@@ -88,6 +88,7 @@ const NhsPreRegistration = () => {
                 label: "Register",
               });
             }}
+            ariaLabel="Continue to register for an account"
           >
             Register
           </DTEButton>

@@ -185,7 +185,7 @@ const AreasOfResearch = () => {
 
   return (
     <DocumentTitle title="Which areas of research are you interested in? - Volunteer Account - Be Part of Research">
-      <StyledWrapper role="main" ref={containerRef}>
+      <StyledWrapper role="main" id="main" ref={containerRef}>
         {demographicsLoading && (
           <LoadingIndicator text="Loading your details..." />
         )}

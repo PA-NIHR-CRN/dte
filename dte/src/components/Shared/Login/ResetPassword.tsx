@@ -163,6 +163,12 @@ function ResetPassword() {
     }
   }, [policyResponse]);
 
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
+
   const onSubmit = async (formData: any) => {
     // setInvalidCredentials(false);
     setSubmitResponse(undefined);
@@ -249,6 +255,8 @@ function ResetPassword() {
                                   required
                                   autocomplete="new-password"
                                   spellcheck={false}
+                                  buttonAriaLabelHide="Hide the entered password on screen"
+                                  buttonAriaLabelShow="Show the entered password on screen"
                                 />
                               )}
                               rules={{
@@ -368,6 +376,8 @@ function ResetPassword() {
                                   }
                                   required
                                   spellcheck={false}
+                                  buttonAriaLabelHide="Hide the entered password confirmation on screen"
+                                  buttonAriaLabelShow="Show the entered password confirmation on screen"
                                 />
                               )}
                               rules={{

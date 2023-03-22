@@ -78,7 +78,7 @@ const AccessList = () => {
 
   return (
     <>
-      <PaddedContainer maxWidth="lg" role="main">
+      <PaddedContainer maxWidth="lg" role="main" id="main">
         <DTEHeader as="h1">Access List Management</DTEHeader>
         <DTEFlourish />
         <Grid container justifyContent="center">

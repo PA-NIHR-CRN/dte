@@ -608,7 +608,7 @@ const UpdateParticipant = () => {
 
   return (
     <DocumentTitle title={pageTitle}>
-      <StyledWrapper role="main" ref={containerRef}>
+      <StyledWrapper role="main" id="main" ref={containerRef}>
         {(loading || demographicsLoading || ethnicityLoading) && (
           <LoadingIndicator />
         )}

@@ -7,6 +7,8 @@ import { baseButton } from "../UI/DTEButton/DTEButton";
 
 type Props = {
   id?: string;
+  buttonAriaLabelShow?: string;
+  buttonAriaLabelHide?: string;
   name?: string;
   label?: string;
   error?: string;
@@ -30,7 +32,7 @@ const StyledButton = styled(Button)`
   display: block;
   right: 0;
   bottom: 0;
-  height: 40px;
+  height: 2.15em;
   padding: 0;
   &&:active {
     width: 95px;
@@ -44,12 +46,18 @@ const StyledButton = styled(Button)`
     ${baseButton}
   }
   && {
+    min-height: 40pxpx;
+    padding-left: 0;
+    padding-right: 0;
+    margin-inline: auto;
     width: 95px;
   }
 `;
 
 const PasswordShowHide = ({
   id,
+  buttonAriaLabelShow,
+  buttonAriaLabelHide,
   name,
   label,
   error,
@@ -95,6 +103,7 @@ const PasswordShowHide = ({
         type="button"
         className="nhsuk-button--secondary"
         onClick={handleClickShowPassword}
+        aria-label={showPassword ? buttonAriaLabelHide : buttonAriaLabelShow}
       >
         {showPassword ? "Hide" : "Show"}
       </StyledButton>

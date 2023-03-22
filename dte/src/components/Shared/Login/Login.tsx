@@ -68,7 +68,13 @@ const Login = () => {
   }, [token]);
 
   return (
-    <Grid container justifyContent="center" alignItems="center" role="main">
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      role="main"
+      id="main"
+    >
       {idToken && process.env.REACT_APP_DEBUG_AUTH === "true" && (
         <Grid item xs={12}>
           <DTEPaper>
