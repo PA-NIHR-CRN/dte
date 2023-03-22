@@ -69,6 +69,18 @@ beforeEach(() => {
           };
         }
       );
+      this.get(`${process.env.REACT_APP_BASE_API}/participants/consent`, () => {
+        return {
+          content: true,
+        };
+      });
+      this.post(`${process.env.REACT_APP_BASE_API}/users/nhssignup`, () => {
+        return {
+          content: {
+            userConsent: true,
+          },
+        };
+      });
     },
   });
 });
@@ -91,7 +103,7 @@ describe("Accessibility test", () => {
   });
   test("progress bar marked as aria hidden", async () => {
     render(<ContinueRegistration />);
-    const progressText = await screen.findByText("29% complete");
+    const progressText = await screen.findByText("36% complete");
     expect(progressText).toBeInTheDocument();
     expect(progressText).toHaveAttribute("aria-hidden", "true");
   });

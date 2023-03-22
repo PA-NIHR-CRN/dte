@@ -18,7 +18,7 @@ const Newsletter = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   return (
     <DocumentTitle title="Be Part of Research Newsletter - Volunteer Account - Be Part of Research">
-      <StyledWrapper role="main" id="main" ref={containerRef}>
+      <StyledWrapper role="main" ref={containerRef}>
         <Container>
           <DTEBackLink href="/" linkText="Back" />
           <DTEHeader as="h1">Be Part of Research Newsletter</DTEHeader>

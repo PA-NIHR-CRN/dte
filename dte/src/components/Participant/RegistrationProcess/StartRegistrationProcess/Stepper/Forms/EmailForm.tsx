@@ -1,9 +1,8 @@
-import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Grid } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import Utils, { EmailRegex } from "../../../../../../Helper/Utils";
+import { EmailRegex } from "../../../../../../Helper/Utils";
 import DTEInput from "../../../../../Shared/UI/DTEInput/DTEInput";
 import DTEButton from "../../../../../Shared/UI/DTEButton/DTEButton";
 import DTEHeader from "../../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
@@ -39,12 +38,6 @@ const EmailForm = (props: EmailFormProps) => {
       emailAddress: initialStateData.emailAddress,
     },
   });
-
-  useEffect(() => {
-    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
-      Utils.FocusOnError();
-    }
-  }, [isSubmitting]);
 
   return (
     <>

@@ -65,5 +65,11 @@ module.exports = {
     // suppress errors for missing 'import React' in files
     "react/react-in-jsx-scope": "off",
     "no-empty-interface": "off",
+    'prettier/prettier': [
+      'error',
+      {
+        'endOfLine': 'auto',
+      }
+    ]
   },
 };

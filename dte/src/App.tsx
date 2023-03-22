@@ -17,6 +17,8 @@ import { AppRoot, styledComponentsTheme } from "./theme";
 import topLeftSplotch from "./images/topsplash.png";
 import bottomRightSplotch from "./images/bottomsplash.png";
 import CookieBanner from "./components/Shared/Footer/CookieBanner";
+import { NHSApp } from "./types/AuthTypes";
+import SessionTimeoutModal from "./components/Shared/SessionTimeout/SessionTimeoutModal";
 
 const TopLeftSplotch = styled.img.attrs({
   src: `${topLeftSplotch}`,
@@ -44,13 +46,19 @@ const SplotchContainer = styled.div.attrs({
   position: relative;
 `;
 
+declare global {
+  interface Window {
+    nhsapp: NHSApp;
+  }
+}
+
 function App() {
   const [theme, setTheme] = React.useState(Theme.Light);
   const [showHeader, setShowHeader] = React.useState(true);
   const [showSplotches, setShowSplotches] = React.useState(false);
   const [showBacklink, setShowBacklink] = React.useState(false);
   const location = useLocation();
-  const { persistLastUrl } = useContext(AuthContext);
+  const { persistLastUrl, isInNHSApp } = useContext(AuthContext);
   const MuiTheme = useTheme();
 
   // occurs on page change
@@ -82,12 +90,13 @@ function App() {
             }}
           >
             <div className="Site-content">
+              <CookieBanner />
               {showSplotches && (
                 <SplotchContainer aria-label="Top left splotch">
                   <TopLeftSplotch />
                 </SplotchContainer>
               )}
-              {showHeader && <Header />}
+              {!isInNHSApp && showHeader && <Header />}
               <Switch>
                 {/* <Route path="/" component={Home} exact strict /> */}
                 {AuthRoutes}
@@ -106,9 +115,9 @@ function App() {
                 <BottomRightSplotch />
               </SplotchContainer>
             )}
-            <Footer />
-            <CookieBanner />
+            {!isInNHSApp && <Footer />}
           </AppContext.Provider>
+          <SessionTimeoutModal />
         </div>
       </StyledComponentsThemeProvider>
     </StylesProvider>

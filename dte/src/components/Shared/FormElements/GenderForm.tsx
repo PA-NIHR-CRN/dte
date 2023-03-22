@@ -3,14 +3,13 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import DTERadio from "../UI/DTERadio/DTERadio";
 import DTEDetails from "../UI/DTEDetails/DTEDetails";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import FormBaseProps from "./FormBaseProps";
-import Utils from "../../../Helper/Utils";
 
 export type GenderFormData = {
   genderAtBirth: string;
@@ -37,11 +36,7 @@ const SexForm = (props: GenderFormProps) => {
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
     ? "h2"
     : "h1";
-  const {
-    control,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm({
+  const { control, handleSubmit } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
@@ -59,12 +54,6 @@ const SexForm = (props: GenderFormProps) => {
   } else {
     labelElement = instructionText;
   }
-
-  useEffect(() => {
-    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
-      Utils.FocusOnError();
-    }
-  }, [isSubmitting]);
 
   return (
     <>
@@ -85,28 +74,16 @@ const SexForm = (props: GenderFormProps) => {
                   error={error?.message}
                   onChange={onChange}
                 >
-                  <Radios.Radio
-                    value="yes"
-                    defaultChecked={value === "yes"}
-                    aria-label="Yes, the gender I identify with is the same as my registered sex at birth"
-                    aria-labelledby=""
-                  >
+                  <Radios.Radio value="yes" defaultChecked={value === "yes"}>
                     Yes
                   </Radios.Radio>
-                  <Radios.Radio
-                    value="no"
-                    defaultChecked={value === "no"}
-                    aria-label="No, the gender I identify with is not the same as my registered sex at birth"
-                    aria-labelledby=""
-                  >
+                  <Radios.Radio value="no" defaultChecked={value === "no"}>
                     No
                   </Radios.Radio>
                   <DTEContent $radioList>or</DTEContent>
                   <Radios.Radio
                     value="noSay"
                     defaultChecked={value === "noSay"}
-                    aria-label="I prefer not to say whether the gender I identify with is the same as my registered sex at birth "
-                    aria-labelledby=""
                   >
                     Prefer not to say
                   </Radios.Radio>

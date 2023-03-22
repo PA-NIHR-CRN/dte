@@ -166,12 +166,6 @@ const PasswordForm = (props: PasswordFormProps) => {
     }
   }, [policyResponse]);
 
-  useEffect(() => {
-    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
-      Utils.FocusOnError();
-    }
-  }, [isSubmitting]);
-
   return (
     <>
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
@@ -205,8 +199,6 @@ const PasswordForm = (props: PasswordFormProps) => {
                       required
                       autocomplete="new-password"
                       spellcheck={false}
-                      buttonAriaLabelHide="Hide the entered password on screen"
-                      buttonAriaLabelShow="Show the entered password on screen"
                     />
                   )}
                   rules={{
@@ -328,8 +320,6 @@ const PasswordForm = (props: PasswordFormProps) => {
                       label="Confirm your password"
                       required
                       spellcheck={false}
-                      buttonAriaLabelHide="Hide the entered password confirmation on screen"
-                      buttonAriaLabelShow="Show the entered password confirmation on screen"
                     />
                   )}
                   rules={{

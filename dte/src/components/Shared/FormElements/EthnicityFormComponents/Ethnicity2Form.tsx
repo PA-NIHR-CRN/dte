@@ -13,7 +13,6 @@ import FormBaseProps from "../FormBaseProps";
 import { Ethnicities } from "../../../../types/ReferenceData/Ethnicities";
 import EthnicityInformation from "./EthnicityInformation";
 import FormNavigationButtons from "../CommonElements/FormNavigationButtons";
-import Utils from "../../../../Helper/Utils";
 
 export type Ethnicity2FormData = {
   background: string;
@@ -77,12 +76,7 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
       : undefined
   );
 
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    formState: { isSubmitting },
-  } = useForm({
+  const { control, handleSubmit, setValue } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
@@ -131,12 +125,6 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
     );
   }
 
-  useEffect(() => {
-    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
-      Utils.FocusOnError();
-    }
-  }, [isSubmitting]);
-
   return (
     <>
       <Grid container>
@@ -169,8 +157,6 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
                               value={backgroundName}
                               defaultChecked={value === backgroundName}
                               key={backgroundName}
-                              aria-label={`My background is most closely described as ${backgroundName}`}
-                              aria-labelledby=""
                             >
                               {backgroundName}
                             </Radios.Radio>

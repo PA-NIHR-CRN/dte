@@ -1,42 +1,100 @@
-import React, { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 import jwtDecode from "jwt-decode";
-import { JWTDeCode, AuthContextProps, Role } from "../types/AuthTypes";
+import Cookies from "js-cookie";
+import {
+  JWTDeCode,
+  AuthContextProps,
+  Role,
+  SessionExpiryInfo,
+} from "../types/AuthTypes";
+import useAxiosFetch from "../hooks/useAxiosFetch";
 
 export const AuthContext = createContext<AuthContextProps>(
   {} as AuthContextProps
 );
 
+const sessionRefreshCheckInterval = 10 * 1000;
+
 export const AuthProvider = (props: { children: any }) => {
-  const [authenticatedEmail, setAuthenticatedEmail] = React.useState<
+  const [authenticatedEmail, setAuthenticatedEmail] = useState<string | null>(
+    null
+  );
+  const [authenticatedEmailVerified, setAuthenticatedEmailVerified] = useState<
+    boolean | null
+  >(null);
+  const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(
+    null
+  );
+  const [authenticatedFirstname, setAuthenticatedFirstname] = useState<
     string | null
   >(null);
-  const [authenticatedEmailVerified, setAuthenticatedEmailVerified] =
-    React.useState<boolean | null>(null);
-  const [authenticatedUserId, setAuthenticatedUserId] = React.useState<
-    string | null
-  >(null);
-  const [authenticatedFirstname, setAuthenticatedFirstname] = React.useState<
-    string | null
-  >(null);
-  const [authenticatedLastname, setAuthenticatedLastname] = React.useState<
+  const [authenticatedLastname, setAuthenticatedLastname] = useState<
     string | null
   >(null);
 
-  const [authenticatedExpiryTime, setAuthenticatedExpiryTime] = React.useState<
-    number | null
-  >(null);
-  const [authenticatedIsAdmin, setAuthenticatedIsAdmin] = React.useState<
+  const [authenticatedIsAdmin, setAuthenticatedIsAdmin] = useState<
     boolean | null
   >(null);
 
-  const [authenticatedIsParticipant, setAuthenticatedIsParticipant] =
-    React.useState<boolean | null>(null);
+  const [authenticatedIsParticipant, setAuthenticatedIsParticipant] = useState<
+    boolean | null
+  >(true);
 
-  const [authenticatedIsResearcher, setAuthenticatedIsResearcher] =
-    React.useState<boolean | null>(null);
-
-  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [authenticatedIsResearcher, setAuthenticatedIsResearcher] = useState<
+    boolean | null
+  >(null);
+  const [isNhsLinkedAccount, setIsNhsLinkedAccount] = useState<boolean>(false);
   const [token, setToken] = useState<string | null | undefined>(null);
+  const [isInNHSApp, setIsInNHSApp] = useState<boolean>(false);
+
+  const baseUrl = process.env.REACT_APP_BASE_API;
+
+  const [{ loading: logoutLoading }, logout] = useAxiosFetch(
+    {
+      method: "POST",
+      url: `${baseUrl}/users/logout`,
+      withCredentials: true,
+    },
+    { useCache: false, manual: true }
+  );
+
+  const [{ loading: refreshSessionTokenLoading }, refreshSessionToken] =
+    useAxiosFetch(
+      {
+        method: "GET",
+        url: `${baseUrl}/users/refreshsession`,
+        withCredentials: true,
+      },
+      { useCache: false, manual: true }
+    );
+
+  useEffect(() => {
+    if (window.nhsapp.tools.isOpenInNHSApp()) {
+      setIsInNHSApp(true);
+    } else {
+      setIsInNHSApp(false);
+    }
+
+    const interval = setInterval(() => {
+      const session = getSessionExpiry();
+      // eslint-disable-next-line no-console
+      console.debug(`refreshSession check: ${new Date().toISOString()}`);
+      // eslint-disable-next-line no-console
+      console.debug(`session.remaining: ${session.remaining}`);
+      if (
+        session &&
+        session.isLoggedIn &&
+        session.used >= session.remaining &&
+        !refreshSessionTokenLoading
+      ) {
+        refreshSessionToken();
+      }
+    }, sessionRefreshCheckInterval);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   const saveTokenValuesToMemory = (userToken: string) => {
     let decodedToken: JWTDeCode | null = null;
@@ -49,11 +107,14 @@ export const AuthProvider = (props: { children: any }) => {
       const epochNow = Math.floor(new Date().getTime() / 1000);
       const issuedAt = decodedToken?.iat;
       if (epochNow - issuedAt < 30) {
-        const userId = decodedToken?.["cognito:username"];
+        const userId = decodedToken?.["cognito:username"] || decodedToken?.sub;
         setAuthenticatedUserId(userId);
 
-        const expiresAt = decodedToken?.exp * 1000;
-        setAuthenticatedExpiryTime(expiresAt);
+        if (decodedToken?.identity_proofing_level) {
+          setIsNhsLinkedAccount(true);
+        } else {
+          setIsNhsLinkedAccount(false);
+        }
 
         const email = decodedToken?.email;
         setAuthenticatedEmail(email);
@@ -70,25 +131,22 @@ export const AuthProvider = (props: { children: any }) => {
         const admin = decodedToken?.["cognito:groups"]?.includes("Admin");
         setAuthenticatedIsAdmin(admin);
 
-        const participant =
-          !decodedToken?.["cognito:username"]?.includes("idg");
-        setAuthenticatedIsParticipant(participant);
-
         const researcher =
           !decodedToken?.["cognito:groups"]?.includes("Admin") &&
           decodedToken?.["cognito:username"]?.includes("idg");
         setAuthenticatedIsResearcher(researcher);
+
+        const participant =
+          !decodedToken?.["cognito:username"]?.includes("idg") ||
+          (!researcher && !admin);
+        setAuthenticatedIsParticipant(participant);
         return true;
       }
     }
     decodedToken = null;
-    setAccessToken(null);
-
     return false;
   };
-  const saveAccessToken = (passedAccessToken: string) => {
-    setAccessToken(passedAccessToken);
-  };
+
   const saveToken = (userToken: string) => {
     setToken(null);
     if (saveTokenValuesToMemory(userToken)) {
@@ -98,10 +156,10 @@ export const AuthProvider = (props: { children: any }) => {
     }
   };
 
-  const [lastUrl, setLastUrl] = React.useState<string | null>(
+  const [lastUrl, setLastUrl] = useState<string | null>(
     localStorage.getItem("currentUrl")
   );
-  const [prevUrl, setPrevUrl] = React.useState<string | null>(
+  const [prevUrl, setPrevUrl] = useState<string | null>(
     localStorage.getItem("previousUrl")
   );
 
@@ -113,7 +171,7 @@ export const AuthProvider = (props: { children: any }) => {
     setLastUrl(url || "/");
   };
 
-  const [lastNonLoginUrl, setLastNonLoginUrl] = React.useState(
+  const [lastNonLoginUrl, setLastNonLoginUrl] = useState(
     localStorage.getItem("lastNonLoginUrl")
   );
   const persistLastNonLoginUrl = (url: string) => {
@@ -128,7 +186,8 @@ export const AuthProvider = (props: { children: any }) => {
       url !== "/LoginRedirect" &&
       url !== "/Unauthorized" &&
       url !== "/Participants/Register/Ready" &&
-      url !== "/Participants/Register"
+      url !== "/Participants/Register" &&
+      url !== "/SessionExpired"
     ) {
       localStorage.setItem("lastNonLoginUrl", url || "/");
       setLastNonLoginUrl(url || "/");
@@ -136,10 +195,22 @@ export const AuthProvider = (props: { children: any }) => {
   };
 
   const isAuthenticated = () => {
-    if (authenticatedExpiryTime) {
-      return new Date().getTime() < authenticatedExpiryTime;
+    const sessionExpiryInfo = getSessionExpiry();
+
+    if (!sessionExpiryInfo || !sessionExpiryInfo.isLoggedIn) {
+      return false;
     }
+
+    if (sessionExpiryInfo?.expiresAt) {
+      return new Date() < sessionExpiryInfo?.expiresAt;
+    }
+
     return false;
+  };
+
+  const getSessionExpiry = () => {
+    const expiryCookie = Cookies.get(".BPOR.Session.Expiry");
+    return new SessionExpiryInfo(expiryCookie);
   };
 
   const isAuthenticatedRole = (role: Role) => {
@@ -162,43 +233,46 @@ export const AuthProvider = (props: { children: any }) => {
     return false;
   };
 
-  const logOutToken = (keepAccessToken?: boolean) => {
-    setToken(null);
-    setAuthenticatedExpiryTime(null);
-    setAuthenticatedUserId(null);
-    setAuthenticatedEmail(null);
-    setAuthenticatedEmailVerified(null);
-    setAuthenticatedFirstname(null);
-    setAuthenticatedLastname(null);
-    setLastNonLoginUrl(null);
-    setPrevUrl(null);
-    setLastUrl(null);
-    if (!keepAccessToken) {
-      setAccessToken(null);
+  const logOutToken = () => {
+    if (isAuthenticated() && !logoutLoading) {
+      logout().then(() => {
+        setToken(null);
+        setAuthenticatedUserId(null);
+        setAuthenticatedEmail(null);
+        setAuthenticatedEmailVerified(null);
+        setAuthenticatedFirstname(null);
+        setAuthenticatedLastname(null);
+        setLastNonLoginUrl(null);
+        setPrevUrl(null);
+        setLastUrl(null);
+        setIsNhsLinkedAccount(false);
+        setAuthenticatedIsParticipant(true);
+      });
     }
   };
 
   return (
     <AuthContext.Provider
       value={{
+        isNhsLinkedAccount,
         saveToken,
-        saveAccessToken,
         logOutToken,
         isAuthenticated,
         isAuthenticatedRole,
         persistLastUrl,
         persistLastNonLoginUrl,
+        setIsNhsLinkedAccount,
         token,
-        accessToken,
         lastUrl,
         prevUrl,
         lastNonLoginUrl,
         authenticatedEmail,
         authenticatedEmailVerified,
-        authenticatedExpiryTime,
         authenticatedUserId,
         authenticatedFirstname,
         authenticatedLastname,
+        isInNHSApp,
+        getSessionExpiry,
       }}
     >
       {/* eslint-disable-next-line react/destructuring-assignment */}

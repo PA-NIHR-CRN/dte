@@ -67,16 +67,18 @@ const CookieBanner = () => {
       {!cookieBannerHide && (
         <div className="govuk-cookie-banner__message govuk-width-container">
           <div className="govuk-grid-row">
-            <div className="govuk-grid-column">
-              <DTEHeader as="h1">Cookies on Be Part of Research</DTEHeader>
+            <div className="govuk-grid-column-two-thirds cookiesHeader">
+              <DTEHeader as="h3" $variant="h3">
+                Cookies on Be Part of Research
+              </DTEHeader>
               <div className="govuk-cookie-banner__content">
                 <DTEContent>
                   We use some essential cookies to make this service work.
                 </DTEContent>
                 <DTEContent>
-                  We&apos;d also like to use analytics cookies so we can
-                  understand how you use Be Part of Research, remember your
-                  settings and improve the service.
+                  We would like to use additional cookies to remember your
+                  settings, understand how you use Be Part of Research and
+                  improve the service.
                 </DTEContent>
                 <DTEContent>
                   We also use cookies set by other sites to help us deliver
@@ -86,17 +88,26 @@ const CookieBanner = () => {
             </div>
           </div>
           <div className="govuk-button-group">
-            <div className="cookie-button">
-              <DTEButton onClick={() => handleAcceptCookie()} type="button">
-                Accept analytics cookies
-              </DTEButton>
-            </div>
-            <div className="cookie-button">
-              <DTEButton onClick={() => handleRejectCookie()} type="button">
-                Reject analytics cookies
-              </DTEButton>
-            </div>
-            <DTERouteLink to="/cookies" renderStyle="standard">
+            <DTEButton
+              id="acceptCookies"
+              $small
+              onClick={() => handleAcceptCookie()}
+            >
+              Accept additional cookies
+            </DTEButton>
+            <DTEButton
+              id="rejectCookies"
+              $small
+              onClick={() => handleRejectCookie()}
+              type="button"
+            >
+              Reject additional cookies
+            </DTEButton>
+            <DTERouteLink
+              id="viewCookiesLink"
+              to="/cookies"
+              renderStyle="standard"
+            >
               View cookies
             </DTERouteLink>
           </div>
@@ -115,26 +126,30 @@ const CookieBanner = () => {
           >
             <div className="govuk-cookie-banner__message govuk-width-container">
               <div className="govuk-grid-row">
-                <div className="govuk-grid-column">
+                <div className="govuk-grid-column-two-thirds">
                   <div className="govuk-cookie-banner__content">
-                    <p className="govuk-body">
+                    <p className="govuk-body hideCookieMessage">
                       <DTEContent>
                         You’ve
                         {cookiesAccepted === "true" && <span> accepted </span>}
                         {cookiesAccepted === "false" && <span> rejected </span>}
                         additional cookies. You can{" "}
                         <DTERouteLink renderStyle="standard" to="/cookies">
-                          view your cookie settings
+                          View our cookie policy
                         </DTERouteLink>{" "}
-                        at any time. Your preference has been saved for 6
-                        months.
+                        for more information at any time.
                       </DTEContent>
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="govuk-button-group">
-                <DTEButton onClick={() => handleHideBanner()} type="button">
+              <div className="govuk-button-group hideCookieButtonGroup">
+                <DTEButton
+                  $small
+                  onClick={() => handleHideBanner()}
+                  type="button"
+                  id="hideCookieButton"
+                >
                   Hide cookie message
                 </DTEButton>
               </div>

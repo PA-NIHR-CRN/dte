@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { ContinueRegistrationState } from "../../../../../types/ParticipantTypes";
 import useAxiosFetch from "../../../../../hooks/useAxiosFetch";
@@ -8,6 +8,7 @@ import DTEHeader from "../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTERouteLink from "../../../../Shared/UI/DTERouteLink/DTERouteLink";
 import DTEHR from "../../../../Shared/UI/DTEHR/DTEHR";
+import { AuthContext } from "../../../../../context/AuthContext";
 
 interface YouAreNowRegisteredFormProps {
   data: ContinueRegistrationState;
@@ -15,18 +16,12 @@ interface YouAreNowRegisteredFormProps {
   setLoadingText: (text: string) => void;
 }
 const YouAreNowRegisteredForm = (props: YouAreNowRegisteredFormProps) => {
+  const { isInNHSApp } = useContext(AuthContext);
   const { data, setLoading, setLoadingText } = props;
 
   const StyledDTEHR = styled(DTEHR)`
     margin-top: 2.5em;
   `;
-
-  const dob = new Date(
-    parseInt(data.dobFormData.year, 10),
-    parseInt(data.dobFormData.month, 10) - 1,
-    parseInt(data.dobFormData.day, 10),
-    12
-  ).toISOString();
 
   let disability = false;
   switch (data.disabilityFormData.disability) {
@@ -67,7 +62,6 @@ const YouAreNowRegisteredForm = (props: YouAreNowRegisteredFormProps) => {
           town: data.addressFormData.address.town,
           postcode: data.addressFormData.postcode,
         },
-        dateOfBirth: dob,
         sexRegisteredAtBirth: data.sexFormData.sexAtBirth,
         genderIsSameAsSexRegisteredAtBirth:
           data.genderFormData.genderAtBirth === "noSay" ? null : gender,
@@ -109,55 +103,66 @@ const YouAreNowRegisteredForm = (props: YouAreNowRegisteredFormProps) => {
             We&apos;ll keep in touch with you about opportunities to take part
             in studies based on the information you have provided.
           </DTEContent>
+
           <DTEContent>
             You may hear from us in weeks or months or it may be longer
             depending on the areas of research you&apos;ve chosen.
           </DTEContent>
-          <DTEContent>From your account page you can:</DTEContent>
-          <ul>
-            <li>update your details</li>
-            <li>delete your account</li>
-          </ul>
-          <DTERouteLink to="/">Go to my account</DTERouteLink>
-          <StyledDTEHR />
-          <DTEContent>
-            Our newsletter covers a range of interesting news and opportunities
-            about research from around the UK, stay up to date by signing up
-            today!
-          </DTEContent>
-          <DTERouteLink
-            to="https://nihr.us14.list-manage.com/subscribe?u=299dc02111e8a68172029095f&id=3b030a1027"
-            external
-            aria-label="Sign up to our newsletter"
-            target="_blank"
-          >
-            Sign up now
-          </DTERouteLink>
-          <StyledDTEHR />
-          <DTEContent>
-            You can find more information about{" "}
-            <DTERouteLink
-              to="https://bepartofresearch.nihr.ac.uk/taking-part/How-to-take-part/?utm_source=vs-website&utm_medium=referral&utm_campaign=vs-registration-complete"
-              renderStyle="standard"
-              target="_blank"
-              external
-            >
-              taking part in research
-            </DTERouteLink>{" "}
-            by visiting our main website.
-          </DTEContent>
-          <DTEContent>
-            You can also search for research opportunities near you, hear about
-            the latest health and care discoveries and much more on{" "}
-            <DTERouteLink
-              to="https://bepartofresearch.nihr.ac.uk/?utm_source=vs-website&utm_medium=referral&utm_campaign=vs-registration-complete"
-              renderStyle="standard"
-              target="_blank"
-              external
-            >
-              Be Part of Research.
-            </DTERouteLink>
-          </DTEContent>
+          {!isInNHSApp ? (
+            <>
+              <DTEContent>From your account page you can:</DTEContent>
+              <ul>
+                <li>update your details</li>
+                <li>delete your account</li>
+              </ul>
+              <DTERouteLink to="/">Go to my account</DTERouteLink>
+              <StyledDTEHR />
+              <DTEContent>
+                Our newsletter covers a range of interesting news and
+                opportunities about research from around the UK, stay up to date
+                by signing up today!
+              </DTEContent>
+              <DTERouteLink
+                to="https://nihr.us14.list-manage.com/subscribe?u=299dc02111e8a68172029095f&id=3b030a1027"
+                external
+                target="_blank"
+              >
+                Sign up now
+              </DTERouteLink>
+              <StyledDTEHR />
+              <DTEContent>
+                You can find more information about{" "}
+                <DTERouteLink
+                  to="https://bepartofresearch.nihr.ac.uk/taking-part/How-to-take-part/?utm_source=vs-website&utm_medium=referral&utm_campaign=vs-registration-complete"
+                  renderStyle="standard"
+                  target="_blank"
+                  external
+                >
+                  taking part in research
+                </DTERouteLink>{" "}
+                by visiting our main website.
+              </DTEContent>
+              <DTEContent>
+                You can also search for research opportunities near you, hear
+                about the latest health and care discoveries and much more on{" "}
+                <DTERouteLink
+                  to="https://bepartofresearch.nihr.ac.uk/?utm_source=vs-website&utm_medium=referral&utm_campaign=vs-registration-complete"
+                  renderStyle="standard"
+                  target="_blank"
+                  external
+                >
+                  Be Part of Research.
+                </DTERouteLink>
+              </DTEContent>
+            </>
+          ) : (
+            <DTEContent>
+              You can make changes to the areas of research you have chosen by
+              using the NHS login option when accessing your account at
+              http://bepartofresearch.uk , you will also find more information
+              here about health research and other ways you can get involved.
+            </DTEContent>
+          )}
         </>
       )}
     </>

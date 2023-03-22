@@ -15,7 +15,6 @@ type Props = {
   type?: "button" | "submit" | "reset";
   dark?: boolean;
   padded?: boolean;
-  ariaLabel?: string;
 };
 
 const StyledButton = styled(Button)<
@@ -78,7 +77,6 @@ const DTELinkButton = ({
   type,
   dark,
   padded,
-  ariaLabel,
 }: Props) => {
   return (
     <StyledButton
@@ -92,7 +90,6 @@ const DTELinkButton = ({
       type={type}
       $dark={dark}
       $padded={padded}
-      aria-label={ariaLabel}
     >
       {children}
     </StyledButton>

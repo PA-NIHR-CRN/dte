@@ -222,7 +222,6 @@ const ContinueSelfReferral = () => {
             {!(activeStep === 0 || activeStep === 4) && (
               <DTEBackLink
                 title="Return to previous page"
-                ariaLabel="Return to previous page"
                 linkText="Back"
                 onClick={handleBack}
               />

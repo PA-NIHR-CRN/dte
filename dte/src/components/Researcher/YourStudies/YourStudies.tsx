@@ -11,7 +11,7 @@ const PaddedContainer = styled(Container)`
 
 const YourStudies = () => {
   return (
-    <PaddedContainer maxWidth="lg" role="main" id="main">
+    <PaddedContainer maxWidth="lg" role="main">
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <DTEHeader as="h1" $color="blue">

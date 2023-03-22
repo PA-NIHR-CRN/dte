@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
@@ -50,12 +49,6 @@ const NameForm = (props: NameFormProps) => {
   const onSubmit = (data: NameFormData) => {
     return onDataChange(Utils.TrimFormDataFields(data) as NameFormData);
   };
-
-  useEffect(() => {
-    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
-      Utils.FocusOnError();
-    }
-  }, [isSubmitting]);
 
   return (
     <>

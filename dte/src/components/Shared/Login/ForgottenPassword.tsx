@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Grid, Box } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -54,11 +54,6 @@ function ForgottenPassword() {
       "Check your email to reset password - Volunteer Account - Be Part of Research"
     );
   };
-  useEffect(() => {
-    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
-      Utils.FocusOnError();
-    }
-  }, [isSubmitting]);
 
   const [{ loading: loadingForgot, error: errorForgot }, forgotPasswordSubmit] =
     useAxiosFetch({}, { manual: true });

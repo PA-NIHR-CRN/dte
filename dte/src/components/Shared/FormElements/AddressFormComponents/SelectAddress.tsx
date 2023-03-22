@@ -1,11 +1,9 @@
-import { useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTESelect from "../../UI/DTESelect/DTESelect";
 import { Details, ContinueButton } from "./PostcodeLookup";
-import Utils from "../../../../Helper/Utils";
 
 type address = {
   addressLine1: string;
@@ -43,11 +41,7 @@ const SelectAddress = (props: SelectAddressProps) => {
     showCancelButton,
     onCancel,
   } = props;
-  const {
-    control,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm({
+  const { control, handleSubmit } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
@@ -66,12 +60,6 @@ const SelectAddress = (props: SelectAddressProps) => {
       });
     }
   };
-
-  useEffect(() => {
-    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
-      Utils.FocusOnError();
-    }
-  }, [isSubmitting]);
 
   return (
     <>
@@ -106,7 +94,6 @@ const SelectAddress = (props: SelectAddressProps) => {
                 changePostcode: true,
               });
             }}
-            ariaLabel="Change the postcode entered"
           >
             Change
           </DTELinkButton>

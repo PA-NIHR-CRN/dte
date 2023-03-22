@@ -255,7 +255,6 @@ function Testing() {
                     name="checkbox"
                     label="Checkbox group label"
                     hint="This is a hint"
-                    escKeyPressed={() => {}}
                     onValueChange={(e) => handleEventBubble(e)}
                     values={[
                       {

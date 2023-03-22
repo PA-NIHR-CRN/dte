@@ -135,7 +135,7 @@ const AddStudyInfo = () => {
   return (
     <>
       <StudyDetailsHeader studyid={studyid} title={location?.state?.title} />
-      <PaddedContainer maxWidth="xl" role="main" id="main">
+      <PaddedContainer maxWidth="xl" role="main">
         <DTEButton
           onClick={() => history.push(`/Researchers/Study/${studyid}`)}
           $outlined

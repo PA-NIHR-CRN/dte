@@ -3,7 +3,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import DTERadio from "../../UI/DTERadio/DTERadio";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
 import ethnicitiesStatic from "../../../../data/ethnicityData";
@@ -11,7 +11,6 @@ import FormBaseProps from "../FormBaseProps";
 import { Ethnicities } from "../../../../types/ReferenceData/Ethnicities";
 import EthnicityInformation from "./EthnicityInformation";
 import FormNavigationButtons from "../CommonElements/FormNavigationButtons";
-import Utils from "../../../../Helper/Utils";
 
 export type Ethnicity1FormData = {
   ethnicity: string;
@@ -43,11 +42,7 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
   const resolvedEthnicities: Ethnicities =
     referenceDataEthnicities || ethnicitiesStatic;
 
-  const {
-    control,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm({
+  const { control, handleSubmit } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
@@ -79,12 +74,6 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
     labelElement = instructionText;
   }
 
-  useEffect(() => {
-    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
-      Utils.FocusOnError();
-    }
-  }, [isSubmitting]);
-
   return (
     <>
       <Grid container>
@@ -114,8 +103,6 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
                         value={ethnicity.shortName}
                         defaultChecked={value === ethnicity.shortName}
                         key={ethnicity.shortName}
-                        aria-label={`The ethnic group I most closely identify as is ${ethnicity.longName}`}
-                        aria-labelledby=""
                       >
                         {ethnicity.longName}
                       </Radios.Radio>

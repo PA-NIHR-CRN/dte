@@ -13,6 +13,8 @@ export interface JWTDeCode {
   email_verified: boolean;
   token_use: string;
   "cognito:groups": string[];
+  sub: string;
+  identity_proofing_level: string;
 }
 
 export enum Role {
@@ -22,24 +24,25 @@ export enum Role {
   None,
 }
 export interface AuthContextProps {
-  saveAccessToken: (accessToken: string) => void;
+  isInNHSApp: boolean;
   saveToken: (token: string) => void;
-  logOutToken: (keepAccessToken?: boolean) => void;
+  logOutToken: () => void;
   isAuthenticated: () => boolean;
   isAuthenticatedRole: (role: Role) => boolean;
   persistLastUrl: (url: string) => void;
   persistLastNonLoginUrl: (url: string) => void;
   token: string | null | undefined;
-  accessToken: string | null;
   lastUrl: string | null;
   prevUrl: string | null;
   lastNonLoginUrl: string | null;
   authenticatedEmail: string | null;
   authenticatedEmailVerified: boolean | null;
-  authenticatedExpiryTime: number | null;
   authenticatedUserId: string | null;
   authenticatedFirstname: string | null;
   authenticatedLastname: string | null;
+  isNhsLinkedAccount: boolean;
+  setIsNhsLinkedAccount: (isNhsLinkedAccount: boolean) => void;
+  getSessionExpiry: () => SessionExpiryInfo;
 }
 
 export interface DTEAxiosResponse {
@@ -63,4 +66,60 @@ export interface DTEAxiosError {
     service: string;
     innerErrors: DTEAxiosError[];
   };
+}
+
+export interface NHSApp {
+  tools: {
+    isOpenInNHSApp: () => boolean;
+  };
+  navigation: {
+    goToHomepage: () => void;
+    goToPage: (page: number) => void;
+    openBrowserOverlay: (url: string) => void;
+    HOME_PAGE: number;
+  };
+}
+
+export class SessionExpiryInfo {
+  constructor(cookieValue: string | undefined) {
+    if (cookieValue === undefined || !cookieValue) {
+      return;
+    }
+
+    const cookie = JSON.parse(cookieValue);
+    this.issuedAt = new Date(cookie.issuedAt);
+    this.expiresAt = new Date(cookie.expiresAt);
+
+    const now = new Date();
+
+    if (this.expiresAt && this.issuedAt) {
+      this.isLoggedIn = true;
+
+      this.duration = Math.ceil(
+        (this.expiresAt.getTime() - this.issuedAt.getTime()) / 1000
+      );
+
+      this.remaining = Math.ceil(
+        Math.abs(now.getTime() - (this.expiresAt.getTime() ?? now.getTime())) /
+          1000
+      );
+
+      this.used = Math.ceil(
+        Math.abs(now.getTime() - (this.issuedAt.getTime() ?? now.getTime())) /
+          1000
+      );
+    }
+  }
+
+  issuedAt: Date | undefined;
+
+  expiresAt: Date | undefined;
+
+  remaining = 0;
+
+  used = 0;
+
+  duration = 0;
+
+  isLoggedIn = false;
 }

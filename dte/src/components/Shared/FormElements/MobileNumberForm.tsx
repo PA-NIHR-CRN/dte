@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Controller, useForm } from "react-hook-form";
@@ -9,7 +8,6 @@ import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
-import Utils from "../../../Helper/Utils";
 
 export type MobileFormData = {
   mobileNumber?: string;
@@ -59,12 +57,6 @@ const MobileNumberForm = (props: MobileNumberFormProps) => {
       landlineNumber: data.landlineNumber || "",
     });
   };
-
-  useEffect(() => {
-    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
-      Utils.FocusOnError();
-    }
-  }, [isSubmitting]);
 
   return (
     <>

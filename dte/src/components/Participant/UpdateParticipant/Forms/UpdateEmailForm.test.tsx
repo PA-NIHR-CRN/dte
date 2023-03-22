@@ -29,25 +29,22 @@ beforeAll(() => {
 beforeEach(() => {
   server = createServer({
     routes() {
-      this.get(
-        `${process.env.REACT_APP_BASE_API}/participants/:userID/details`,
-        () => {
-          return {
-            content: {
-              firstname: "firstname",
-              lastname: "lastname",
-              email: "first.last@domain.com",
-              consentRegistration: false,
-              consentRegistrationAtUtc: null,
-              hasDemographics: true,
-            },
-            isSuccess: true,
-            errors: [],
-            conversationId: null,
-            version: 1,
-          };
-        }
-      );
+      this.get(`${process.env.REACT_APP_BASE_API}/participants/details`, () => {
+        return {
+          content: {
+            firstname: "firstname",
+            lastname: "lastname",
+            email: "first.last@domain.com",
+            consentRegistration: false,
+            consentRegistrationAtUtc: null,
+            hasDemographics: true,
+          },
+          isSuccess: true,
+          errors: [],
+          conversationId: null,
+          version: 1,
+        };
+      });
       this.post(`${process.env.REACT_APP_BASE_API}/users/changeemail`, () => {
         return {
           content: null,
@@ -602,7 +599,6 @@ describe("Update Email must handle valid user operations", () => {
       expect(path).toContain("/users/changeemail");
       expect(requestBody).toBe(
         JSON.stringify({
-          accessToken: null,
           newEmail: "email2@domain.com",
         })
       );

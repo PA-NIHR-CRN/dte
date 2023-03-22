@@ -23,7 +23,6 @@ interface Props {
   onKeyDown?: (event: React.KeyboardEvent<HTMLElement>) => void;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
-  ariaLabel?: string;
 }
 
 export const baseButton = css<baseButtonProps>`
@@ -113,7 +112,6 @@ const DTEButton = ({
   name,
   label,
   children,
-  ariaLabel,
   $backArrow,
   $disabled,
   $outlined,
@@ -131,7 +129,6 @@ const DTEButton = ({
       id={id}
       name={name}
       label={label}
-      aria-label={ariaLabel}
       $disabled={$disabled}
       $outlined={$outlined}
       $fullwidth={$fullwidth}

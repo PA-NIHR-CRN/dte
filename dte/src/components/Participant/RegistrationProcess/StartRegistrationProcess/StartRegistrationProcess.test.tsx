@@ -30,7 +30,9 @@ describe("StartRegistrationProcess functionality tests", () => {
     expect(screen.getByText("have an email address")).toBeInTheDocument();
     expect(screen.getByText("are 18 or over")).toBeInTheDocument();
     expect(screen.getByText("live in the UK")).toBeInTheDocument();
-    expect(screen.getByText("Register now")).toBeInTheDocument();
+    expect(screen.getByText("Continue to NHS login")).toBeInTheDocument();
+    expect(screen.getByText("Register with email address")).toBeInTheDocument();
     expect(screen.getByText("Sign in")).toBeInTheDocument();
+    expect(screen.getByText("Already have an account?")).toBeInTheDocument();
   });
 });

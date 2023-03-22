@@ -6,7 +6,6 @@ type Props = {
   title?: string;
   href?: string;
   onClick?: () => void;
-  ariaLabel?: string;
 };
 
 const StyledBackLink = styled(Link)`
@@ -51,19 +50,12 @@ const StyledBackLink = styled(Link)`
   }
 `;
 
-const DTEBackLink = ({
-  linkText,
-  title,
-  ariaLabel,
-  href = "#",
-  onClick,
-}: Props) => {
+const DTEBackLink = ({ linkText, title, href = "#", onClick }: Props) => {
   return (
     <div className="nhsuk-back-link">
       <StyledBackLink
         to={href}
         title={title}
-        aria-label={ariaLabel}
         onClick={onClick}
         className="nhsuk-back-link__link"
       >

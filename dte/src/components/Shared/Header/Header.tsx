@@ -42,26 +42,20 @@ const StyledLink = styled.a`
   }
 `;
 
-const StyledSkipToMain = styled.a`
-  & {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
+const StyledLogoLink = styled.a`
+  &&& {
+    margin: 0;
     padding: 0;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-    &:focus {
-      clip: auto;
-      height: auto;
-      margin: 0;
-      overflow: visible;
-      position: static;
-      background: ${(Props) => Props.theme.NIHR.Yellow};
-      white-space: normal;
-      width: auto;
+    border: 3px solid transparent;
+    left: 20px;
+    position: relative;
+    text-decoration: none;
+    &:focus,
+    &:hover {
+      background-color: transparent;
+      border-color: ${(Props) => Props.theme.NIHR.Yellow};
+      box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.75);
+      text-decoration: none;
     }
   }
 `;
@@ -76,6 +70,7 @@ const NHSLogo = styled.img.attrs({
   src: `${nhslogo}`,
   alt: "NHS Logo",
   height: "36",
+  width: "100%",
 })``;
 
 export default function Header() {
@@ -83,7 +78,6 @@ export default function Header() {
   return (
     <>
       <StyledHeader>
-        <StyledSkipToMain href="#main"> Skip to Main Content</StyledSkipToMain>
         <Grid
           container
           alignItems="center"
@@ -103,19 +97,21 @@ export default function Header() {
                 target="_blank"
                 href="https://bepartofresearch.nihr.ac.uk/"
                 rel="noreferrer"
+                id="styledLogoLink"
               >
                 <BPORLogo />
               </StyledLink>
             )}
           </StyledGridElementLeft>
           <StyledGridElementRight item xs={4} sm={3} md={3}>
-            <StyledLink
+            <StyledLogoLink
               rel="noreferrer"
+              id="styledLogoLink"
               target="_blank"
               href=" https://nhs.uk/"
             >
-              <NHSLogo />
-            </StyledLink>
+              <NHSLogo id="NHSLogo" />
+            </StyledLogoLink>
           </StyledGridElementRight>
           <Grid item sm={1} md={1} />
           <Grid item sm={2} md={1} />
