@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Test Build, Test, Deploy - To QA 
+name: Test Build, Test, Deploy - To QA
 
 # Controls when the workflow will run
 on:
@@ -12,10 +12,16 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env: 
+env:
   REACT_APP_BASE_API: ${{secrets.REACT_APP_BASE_API_QA}}
   REACT_APP_LOGOUT_URL: ${{secrets.LOGOUT_URL_QA}}
   REACT_APP_RESEARCHER_AUTH_URL: ${{secrets.RESEARCHER_AUTH_URL_QA}}
+  REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL_QA}}
+  REACT_APP_NHS_SETTINGS_URL: ${{secrets.REACT_APP_NHS_SETTINGS_URL_SANDPIT}}
+  REACT_APP_NHS_LOGIN_URL: ${{secrets.REACT_APP_NHS_LOGIN_URL_SANDPIT}}
+  REACT_APP_NHS_LOGIN_CLIENT_ID: ${{secrets.REACT_APP_NHS_LOGIN_CLIENT_ID}}
+  REACT_APP_NHS_LOGIN_RESPONSE_TYPE: ${{secrets.REACT_APP_NHS_LOGIN_RESPONSE_TYPE}}
+  REACT_APP_NHS_LOGIN_SCOPE: ${{secrets.REACT_APP_NHS_LOGIN_SCOPE}}
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -32,13 +38,17 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'yarn'
+          cache-dependency-path: "dte/yarn.lock"
       - name: Configure AWS credentials - All
         # if: github.ref == 'refs/heads/master'
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         # aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-access-key-id: ${{ secrets.AWS_VS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_VS_ACCESS_KEY_SECRET }}
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Yarn Install
         run: yarn install
@@ -48,31 +58,11 @@ jobs:
         run: yarn build
       - name: Running Unit Tests
         run: yarn test
-     
 
       - name: Deploy to S3 - QA
         shell: bash
         run: |
           aws s3 sync ./build/ s3://$AWS_S3_BUCKET --delete
-          aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == '${{ secrets.VS_NIHR_URL_QA }}'].Id" --output text) --paths '/*'          
+          aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == '${{ secrets.VS_NIHR_URL_QA }}'].Id" --output text) --paths '/*'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_QA_BUCKET_NAME }}
-      # - name: Deploy to S3 - Dev
-      #   if: github.ref != 'refs/heads/master'
-      #   shell: bash
-      #   run: aws s3 sync ./build/ s3://$AWS_S3_BUCKET --acl public-read --delete
-      #   env:
-      #     AWS_S3_BUCKET: ${{ secrets.AWS_DEV_BUCKET_NAME }}
-
-      # - name: Deploy to S3
-      #   uses: jakejarvis/s3-sync-action@master
-      #   with:
-      #     args: --acl public-read --follow-symlinks --delete
-      #   env:
-      #     AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     AWS_SESSION_TOKEN: ${{ secrets.AWS_MFA_TOKEN }}
-      #     AWS_REGION: ${{ secrets.AWS_REGION }}
-      #     SOURCE_DIR: "dte"
-

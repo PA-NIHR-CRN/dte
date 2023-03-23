@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Test Build, Test, Deploy - To UAT 
+name: Test Build, Test, Deploy - To UAT
 
 # Controls when the workflow will run
 on:
@@ -12,10 +12,16 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env: 
+env:
   REACT_APP_BASE_API: ${{secrets.REACT_APP_BASE_API_UAT}}
   REACT_APP_LOGOUT_URL: ${{secrets.LOGOUT_URL_UAT}}
   REACT_APP_RESEARCHER_AUTH_URL: ${{secrets.RESEARCHER_AUTH_URL_UAT}}
+  REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL_UAT}}
+  REACT_APP_NHS_SETTINGS_URL: ${{secrets.REACT_APP_NHS_SETTINGS_URL_SANDPIT}}
+  REACT_APP_NHS_LOGIN_URL: ${{secrets.REACT_APP_NHS_LOGIN_URL_SANDPIT}}
+  REACT_APP_NHS_LOGIN_CLIENT_ID: ${{secrets.REACT_APP_NHS_LOGIN_CLIENT_ID}}
+  REACT_APP_NHS_LOGIN_RESPONSE_TYPE: ${{secrets.REACT_APP_NHS_LOGIN_RESPONSE_TYPE}}
+  REACT_APP_NHS_LOGIN_SCOPE: ${{secrets.REACT_APP_NHS_LOGIN_SCOPE}}
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -31,7 +37,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2    
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
@@ -44,6 +50,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_VS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_VS_ACCESS_KEY_SECRET }}
           aws-region: ${{ secrets.AWS_REGION }}
+      - uses: actions/setup-node@v2
       - name: Yarn Install
         run: yarn install
       - name: Runing  ESLint
@@ -52,7 +59,7 @@ jobs:
         run: yarn build
       - name: Running Unit Tests
         run: yarn test
-     
+
 
       - name: Deploy to S3 - UAT
         shell: bash
