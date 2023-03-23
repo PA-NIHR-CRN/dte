@@ -55,7 +55,9 @@ describe("User Login must render correctly", () => {
     render(<UserLogin />);
     const loginButton = screen.getAllByRole("button")[1];
     const links = screen.getAllByRole("link");
-    expect(screen.getByText("Welcome")).toBeInTheDocument();
+    expect(
+      screen.getByText("Sign in to Be Part of Research")
+    ).toBeInTheDocument();
     const email = screen.getByLabelText("Email address");
     expect(email).toBeInTheDocument();
     expect(email).toHaveValue("");
@@ -65,11 +67,13 @@ describe("User Login must render correctly", () => {
 
     expect(loginButton).toBeInTheDocument();
     expect(loginButton.textContent).toBe("Sign in");
-    expect(links).toHaveLength(2);
-    expect(links[0]).toHaveAttribute("href", "/ForgottenPassword");
-    expect(links[0]).toHaveTextContent("reset it here.");
-    expect(links[1]).toHaveAttribute("href", "/Participants/register");
-    expect(links[1]).toHaveTextContent("Register with Be Part of Research");
+    expect(links).toHaveLength(3);
+    expect(links[0]).toHaveAttribute("href", "/Participants/Options");
+    expect(links[0]).toHaveTextContent("Back");
+    expect(links[1]).toHaveAttribute("href", "/ForgottenPassword");
+    expect(links[1]).toHaveTextContent("reset it here.");
+    expect(links[2]).toHaveAttribute("href", "/Participants/register");
+    expect(links[2]).toHaveTextContent("Register with Be Part of Research");
   });
 });
 
@@ -424,10 +428,12 @@ describe("Unknown Account processes correctly", () => {
     const links = screen.getAllByRole("link");
     expect(buttons).toHaveLength(2);
     expect(buttons[1]).toHaveTextContent("Sign in");
-    expect(links).toHaveLength(2);
-    expect(links[0]).toHaveAttribute("href", "/ForgottenPassword");
-    expect(links[0]).toHaveTextContent("reset it here.");
-    expect(links[1]).toHaveAttribute("href", "/Participants/register");
-    expect(links[1]).toHaveTextContent("Register with Be Part of Research");
+    expect(links).toHaveLength(3);
+    expect(links[0]).toHaveAttribute("href", "/Participants/Options");
+    expect(links[0]).toHaveTextContent("Back");
+    expect(links[1]).toHaveAttribute("href", "/ForgottenPassword");
+    expect(links[1]).toHaveTextContent("reset it here.");
+    expect(links[2]).toHaveAttribute("href", "/Participants/register");
+    expect(links[2]).toHaveTextContent("Register with Be Part of Research");
   });
 });

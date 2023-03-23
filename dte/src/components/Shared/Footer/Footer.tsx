@@ -62,6 +62,7 @@ const BPORLink = styled.a<IsMobileProps>`
   }
 `;
 
+// eslint-disable-next-line
 const NIHRLogo = styled.img.attrs(() => {
   return {
     src: `${nihrlogo}`,
@@ -69,9 +70,9 @@ const NIHRLogo = styled.img.attrs(() => {
   };
 })<IsMobileProps>`
   width: 100%;
-  padding: 1rem;
 `;
 
+// eslint-disable-next-line
 const FooterImageLink = styled.a`
   border: 3px solid transparent;
   display: block;
@@ -84,6 +85,7 @@ const FooterImageLink = styled.a`
   }
 `;
 
+// eslint-disable-next-line
 const HSCLogo = styled.img.attrs(() => {
   return {
     src: `${HSClogo}`,
@@ -91,9 +93,9 @@ const HSCLogo = styled.img.attrs(() => {
   };
 })<IsMobileProps>`
   width: 100%;
-  padding: 5px;
 `;
 
+// eslint-disable-next-line
 const NHSScotlandLogo = styled.img.attrs(() => {
   return {
     src: `${nhsScotlandlogo}`,
@@ -101,9 +103,9 @@ const NHSScotlandLogo = styled.img.attrs(() => {
   };
 })<IsMobileProps>`
   width: 80%;
-  padding: 5px;
 `;
 
+// eslint-disable-next-line
 const HCRWales = styled.img.attrs(() => {
   return {
     src: `${HCRwaleslogo}`,
@@ -111,7 +113,6 @@ const HCRWales = styled.img.attrs(() => {
   };
 })<IsMobileProps>`
   width: 100%;
-  padding: 5px;
 `;
 
 const FollowUsText = styled.span<IsMobileProps>`
@@ -129,6 +130,7 @@ const FooterPanel = styled(Grid)<FooterPanelProps>`
   background-color: ${(Props) => Props.color ?? Props.theme.NIHR.Blue};
 `;
 
+// eslint-disable-next-line
 const StyledFooterPanel = styled(FooterPanel)`
   background-color: ${(Props) => Props.theme.NIHR.PrimaryWhite};
 `;
@@ -371,61 +373,67 @@ export default function Footer() {
           </Grid>
         </Grid>
       </FooterPanel>
-      <StyledFooterPanel
-        container
-        direction="row"
-        justifyContent="center"
-        alignContent="center"
-        alignItems="center"
-      >
-        <Grid
-          item
-          container
-          xs={12}
-          md={9}
-          direction="row"
-          justifyContent="center"
-          alignContent="center"
-          alignItems="center"
-        >
-          <Grid item xs={6} md={3} xl={2}>
-            <FooterImageLink
-              href="https://www.nihr.ac.uk/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <NIHRLogo isMobile={isMobile} />
-            </FooterImageLink>
-          </Grid>
-          <Grid item xs={6} md={3} xl={2}>
-            <FooterImageLink
-              href="https://www.research.hscni.net/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <HSCLogo isMobile={isMobile} />
-            </FooterImageLink>
-          </Grid>
-          <Grid item xs={6} md={3} xl={2}>
-            <FooterImageLink
-              href="https://www.nhsresearchscotland.org.uk/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <NHSScotlandLogo isMobile={isMobile} />
-            </FooterImageLink>
-          </Grid>
-          <Grid item xs={6} md={3} xl={2}>
-            <FooterImageLink
-              href="https://healthandcareresearchwales.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <HCRWales isMobile={isMobile} />
-            </FooterImageLink>
-          </Grid>
-        </Grid>
-      </StyledFooterPanel>
+      <div className="FooterImageWrapper">
+        <div className="regional-logos nihr-image" id="NIHRFooter">
+          <a
+            href="https://www.nihr.ac.uk/"
+            aria-label="National Institute for Health and Care Research"
+            className="footerImage"
+          >
+            <img
+              src={nihrlogo}
+              id="NihrLogo"
+              className="regional-logos img-responsive"
+              alt="National Insitute for Health Research"
+            />
+          </a>
+        </div>
+        <div className="regional-logos NI-logo">
+          <a
+            href="https://www.research.hscni.net/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Public Health Agency Northern Ireland"
+            className="footerImage NI-logo-link"
+          >
+            <img
+              src={HSClogo}
+              className="regional-logos img-responsive NI-logo-img"
+              alt="Public Health Agency Northern Ireland"
+            />
+          </a>
+        </div>
+        <div className="regional-logos Scot-logo">
+          <a
+            href="https://www.nhsresearchscotland.org.uk/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="NHS Scotland"
+            className="footerImage scot-logo-img"
+          >
+            <img
+              src={nhsScotlandlogo}
+              className="regional-logos img-responsive"
+              alt="NHS Scotland"
+            />
+          </a>
+        </div>
+        <div className="regional-logos HCW-logo">
+          <a
+            href="https://healthandcareresearchwales.org/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Health and Care Rearch Wales"
+            className="footerImage HCWLogoContainer"
+          >
+            <img
+              src={HCRwaleslogo}
+              className="regional-logos img-responsive"
+              alt="Health and Care Rearch Wales"
+            />
+          </a>
+        </div>
+      </div>
     </footer>
   );
 }

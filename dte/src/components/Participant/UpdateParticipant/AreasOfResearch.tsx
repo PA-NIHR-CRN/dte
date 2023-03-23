@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
-import { AuthContext } from "../../../context/AuthContext";
 import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import LoadingIndicator from "../../Shared/LoadingIndicator/LoadingIndicator";
 import Container from "../../Shared/Container/Container";
@@ -42,8 +41,7 @@ const AreasOfResearch = () => {
   const history = useHistory();
   const containerRef = useRef<HTMLDivElement>(null);
   const [userData, setUserData] = React.useState<UserDataState>();
-  const { authenticatedUserId } = useContext(AuthContext);
-  const getDemographicsURL = `${process.env.REACT_APP_BASE_API}/participants/${authenticatedUserId}/demographics`;
+  const getDemographicsURL = `${process.env.REACT_APP_BASE_API}/participants/demographics`;
   const [
     {
       response: demographicsResponse,

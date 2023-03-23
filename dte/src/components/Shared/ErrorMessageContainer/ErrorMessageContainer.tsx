@@ -19,6 +19,7 @@ interface ErrorMessageContainerProps {
   axiosError?: AxiosError<any>;
   axiosErrors?: (AxiosError<any> | undefined)[];
   children?: React.ReactNode;
+  nhsError?: string;
 }
 
 const StyledErrorSummary = styled(ErrorSummary)`
@@ -61,7 +62,22 @@ const ErrorMessageContainer = ({
   axiosError,
   axiosErrors,
   children,
+  nhsError,
 }: ErrorMessageContainerProps) => {
+  if (nhsError) {
+    return (
+      <div className="error-summary">
+        <StyledErrorSummary>
+          <StyledErrorSummary.Title key="title">
+            There is a problem
+          </StyledErrorSummary.Title>
+          <StyledErrorSummary.Body key="body">
+            {nhsError}
+          </StyledErrorSummary.Body>
+        </StyledErrorSummary>
+      </div>
+    );
+  }
   if (children) {
     return (
       <div className="error-summary">

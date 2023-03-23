@@ -55,5 +55,5 @@ test("gets data and renders", async () => {
     </Router>
   );
 
-  expect(mockedUseAxiosFetch).toHaveBeenCalledTimes(1);
+  expect(mockedUseAxiosFetch).toHaveBeenCalledTimes(3); // RefreshSession, Logout, StudyAPI
 });

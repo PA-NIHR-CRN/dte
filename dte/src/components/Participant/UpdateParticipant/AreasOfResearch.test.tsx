@@ -21,7 +21,7 @@ beforeEach(() => {
   server = createServer({
     routes() {
       this.get(
-        `${process.env.REACT_APP_BASE_API}/participants/:userID/demographics`,
+        `${process.env.REACT_APP_BASE_API}/participants/demographics`,
         () => {
           return {
             content: {
@@ -120,19 +120,14 @@ describe("Areas Of Research display tests", () => {
   it("must display the data retrieved from the server correctly", async () => {
     render(<AreasOfResearch />);
     const intro1 = await screen.findByText(
-      "Start typing in the search box, for example 'diabetes', 'heart disease' or 'COVID-19'. Then you'll see a range of matching research areas you can select from."
+      "Start entering details below to see different areas of research. You can select as many options as you like."
     );
     expect(intro1).toBeInTheDocument();
 
     const intro2 = await screen.findByText(
-      "Please select all the areas you are interested in. You can choose more than one."
+      /For example, you can enter a health condition like 'diabetes', 'heart disease' or 'COVID-19'. You can take part whether you have a health condition or not by entering '/
     );
     expect(intro2).toBeInTheDocument();
-
-    const intro3 = await screen.findByText(
-      /In addition to studies for people with a diagnosis of a disease or condition, lots of studies need healthy volunteers too. Type in 'Healthy Volunteers' and select it if you are interested in taking part in research as a/
-    );
-    expect(intro3).toBeInTheDocument();
     const links = screen.getAllByRole("link");
     expect(links).toHaveLength(1);
     expect(links[0]).toHaveAttribute(

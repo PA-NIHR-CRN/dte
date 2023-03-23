@@ -1,10 +1,9 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { Grid } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
-import { AuthContext } from "../../../../context/AuthContext";
 import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import Utils from "../../../../Helper/Utils";
 import DTEHeader from "../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
@@ -40,7 +39,6 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
   let validationSuccess = true;
   let includesStatement = "";
 
-  const { accessToken } = useContext(AuthContext);
   const history = useHistory();
   const [policyBuilder, setPolicyBuilder] = useState("");
   const [passwordPolicy, setPasswordPolicy] = useState<PasswordPolicy>();
@@ -192,7 +190,6 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
       url: `${process.env.REACT_APP_BASE_API}/users/changepassword`,
       method: "POST",
       data: {
-        accessToken,
         oldPassword: data.currentPassword,
         newPassword: data.newPassword,
       },

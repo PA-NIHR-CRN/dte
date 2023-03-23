@@ -1,11 +1,11 @@
 import React from "react";
-import { FieldErrors } from "react-hook-form";
+import { FieldErrors, FieldValues } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-type ErrorSummaryProps<T> = {
+type ErrorSummaryProps<T extends FieldValues> = {
   errors: FieldErrors<T>;
 };
-function ErrorSummary<T>({ errors }: ErrorSummaryProps<T>) {
+function ErrorSummary<T extends FieldValues>({ errors }: ErrorSummaryProps<T>) {
   if (Object.keys(errors).length === 0) {
     return null;
   }

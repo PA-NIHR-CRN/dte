@@ -14,20 +14,14 @@ const Login = () => {
     token,
     saveToken,
     authenticatedEmail,
-    authenticatedExpiryTime,
     authenticatedUserId,
     authenticatedEmailVerified,
-    lastNonLoginUrl,
     isAuthenticatedRole,
-    logOutToken,
+    isInNHSApp,
   } = useContext(AuthContext);
 
   const history = useHistory();
   useEffect(() => {
-    const currentUrl = localStorage.getItem("currentUrl");
-    if (currentUrl !== "/ResearchLogin") {
-      logOutToken(true);
-    }
     if (!idToken) {
       history.push("/");
     } else {
@@ -48,8 +42,11 @@ const Login = () => {
   );
 
   const returnToOriginatingPage = () => {
-    const path = lastNonLoginUrl || "/";
-    history.push(path);
+    if (isInNHSApp) {
+      history.push("/participants/introduction");
+    } else {
+      history.push("/");
+    }
   };
 
   useEffect(() => {
@@ -81,18 +78,10 @@ const Login = () => {
       {idToken && process.env.REACT_APP_DEBUG_AUTH === "true" && (
         <Grid item xs={12}>
           <DTEPaper>
-            <h3>Successfull Login </h3>
+            <h3>Successful Login </h3>
             <p>{`TOKEN: ${token}`}</p>
             <Chip label={`EMAIL: ${authenticatedEmail}`} />
             <Chip label={`ID: ${authenticatedUserId}`} />
-            <Chip
-              label={`EXPIRY: ${
-                authenticatedExpiryTime
-                  ? new Date(authenticatedExpiryTime)
-                  : "Error"
-              }
-              }`}
-            />
             <Chip label={`Email Verified: ${authenticatedEmailVerified}`} />
             {!loading && (
               <Chip

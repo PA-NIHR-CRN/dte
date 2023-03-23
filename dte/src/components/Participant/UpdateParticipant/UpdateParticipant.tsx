@@ -1,16 +1,15 @@
 import React, {
   ReactNode,
-  useContext,
   useEffect,
   useState,
   useRef,
+  useContext,
 } from "react";
 import ReactGA from "react-ga";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import { AuthContext } from "../../../context/AuthContext";
 import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import ErrorMessageContainer from "../../Shared/ErrorMessageContainer/ErrorMessageContainer";
 import LoadingIndicator from "../../Shared/LoadingIndicator/LoadingIndicator";
@@ -46,6 +45,7 @@ import Disability2Form, {
   Disability2FormData,
 } from "../../Shared/FormElements/Disability2Form";
 import { Ethnicities } from "../../../types/ReferenceData/Ethnicities";
+import { AuthContext } from "../../../context/AuthContext";
 
 interface UserDataState {
   address: AddressFormData;
@@ -79,6 +79,7 @@ const StyledHiddenText = styled.span`
 `;
 
 const UpdateParticipant = () => {
+  const { isNhsLinkedAccount } = useContext(AuthContext);
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState<string>("main");
   const [pageTitle, setPageTitle] = useState(
@@ -87,13 +88,12 @@ const UpdateParticipant = () => {
   const [gaURL, setGaURL] = useState("/MyAccount/PersonalDetails");
   const [userData, setUserData] = React.useState<UserDataState>();
   const [cancelData, setCancelData] = React.useState<UserDataState>();
-  const { authenticatedUserId } = useContext(AuthContext);
   const theme = useTheme();
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
     ? "h2"
     : "h1";
 
-  const getDetailsURL = `${process.env.REACT_APP_BASE_API}/participants/${authenticatedUserId}/details`;
+  const getDetailsURL = `${process.env.REACT_APP_BASE_API}/participants/details`;
   const [{ response, loading, error }] = useAxiosFetch(
     {
       url: getDetailsURL,
@@ -105,7 +105,7 @@ const UpdateParticipant = () => {
     }
   );
 
-  const getDemographicsURL = `${process.env.REACT_APP_BASE_API}/participants/${authenticatedUserId}/demographics`;
+  const getDemographicsURL = `${process.env.REACT_APP_BASE_API}/participants/demographics`;
   const [
     {
       response: demographicsResponse,
@@ -197,7 +197,7 @@ const UpdateParticipant = () => {
         break;
       case "disability":
         setPageTitle(
-          "Do you have any physical or mental health conditions or illness lasting or expected to last 12 months or more? - Volunteer Account - Be Part of Research"
+          "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more? - Volunteer Account - Be Part of Research"
         );
         setGaURL("/MyAccount/PersonalDetails/conditions");
         break;
@@ -405,7 +405,6 @@ const UpdateParticipant = () => {
     data: FormDataType
   ): MappedDataType => {
     if (!userData) return { data: undefined, screen: "main" };
-
     switch (source) {
       case "Address": {
         const addressData: AddressFormData = data as AddressFormData;
@@ -459,7 +458,7 @@ const UpdateParticipant = () => {
           data: {
             ...userData,
             disability: {
-              disability: disabilityDescriptionData.disability,
+              disability: disabilityDescriptionData.disability as string,
             },
             disabilityDescription: disabilityDescriptionData,
           },
@@ -631,24 +630,73 @@ const UpdateParticipant = () => {
                   ethnicityLoading
                 ) && (
                   <>
-                    <dl className="govuk-summary-list">
-                      <div className="govuk-summary-list__row">
-                        <dt className="govuk-summary-list__key">
-                          <DTEContent>Name</DTEContent>
-                        </dt>
-                        <dd className="govuk-summary-list__value">
+                    {isNhsLinkedAccount && (
+                      <>
+                        <dl className="govuk-summary-list">
+                          <div className="govuk-summary-list__row">
+                            <dt className="govuk-summary-list__key">
+                              <DTEContent>Name</DTEContent>
+                            </dt>
+                            <dd className="govuk-summary-list__value">
+                              <DTEContent>
+                                {userData.name.firstName}{" "}
+                                {userData.name.lastName}{" "}
+                              </DTEContent>
+                            </dd>
+                            <dd className="govuk-summary-list__actions" />
+                          </div>
+                          <div className="govuk-summary-list__row">
+                            <dt className="govuk-summary-list__key">
+                              <DTEContent>Date of birth</DTEContent>
+                            </dt>
+                            <dd className="govuk-summary-list__value">
+                              <DTEContent>
+                                {new Date(
+                                  parseInt(userData.dob.year, 10),
+                                  parseInt(userData.dob.month, 10) - 1,
+                                  parseInt(userData.dob.day, 10),
+                                  12
+                                ).toLocaleString("en-GB", {
+                                  day: "numeric",
+                                  month: "long",
+                                  year: "numeric",
+                                })}
+                              </DTEContent>
+                            </dd>
+                            <dd className="govuk-summary-list__actions" />
+                          </div>
+                        </dl>
+                        <div className="govuk-details__text">
                           <DTEContent>
-                            {userData.name.firstName} {userData.name.lastName}{" "}
+                            If your name or date of birth is incorrect or out of
+                            date, contact your GP surgery and ask them to update
+                            your details. They will then update your NHS record.
+                            Any changes made there will appear in your Be Part
+                            of Research account when you sign in.
                           </DTEContent>
-                        </dd>
-                        <dd className="govuk-summary-list__actions">
-                          <DTELinkButton
-                            onClick={() => setCurrentDisplayPage("name")}
-                          >
-                            Change <StyledHiddenText>name</StyledHiddenText>
-                          </DTELinkButton>
-                        </dd>
-                      </div>
+                        </div>
+                      </>
+                    )}
+                    <dl className="govuk-summary-list">
+                      {!isNhsLinkedAccount && (
+                        <div className="govuk-summary-list__row">
+                          <dt className="govuk-summary-list__key">
+                            <DTEContent>Name</DTEContent>
+                          </dt>
+                          <dd className="govuk-summary-list__value">
+                            <DTEContent>
+                              {userData.name.firstName} {userData.name.lastName}{" "}
+                            </DTEContent>
+                          </dd>
+                          <dd className="govuk-summary-list__actions">
+                            <DTELinkButton
+                              onClick={() => setCurrentDisplayPage("name")}
+                            >
+                              Change <StyledHiddenText>name</StyledHiddenText>
+                            </DTELinkButton>
+                          </dd>
+                        </div>
+                      )}
                       <div className="govuk-summary-list__row">
                         <dt className="govuk-summary-list__key">
                           <DTEContent>Home address</DTEContent>
@@ -701,33 +749,35 @@ const UpdateParticipant = () => {
                           </DTELinkButton>
                         </dd>
                       </div>
-                      <div className="govuk-summary-list__row">
-                        <dt className="govuk-summary-list__key">
-                          <DTEContent>Date of birth</DTEContent>
-                        </dt>
-                        <dd className="govuk-summary-list__value">
-                          <DTEContent>
-                            {new Date(
-                              parseInt(userData.dob.year, 10),
-                              parseInt(userData.dob.month, 10) - 1,
-                              parseInt(userData.dob.day, 10),
-                              12
-                            ).toLocaleString("en-GB", {
-                              day: "numeric",
-                              month: "long",
-                              year: "numeric",
-                            })}
-                          </DTEContent>
-                        </dd>
-                        <dd className="govuk-summary-list__actions">
-                          <DTELinkButton
-                            onClick={() => setCurrentDisplayPage("dob")}
-                          >
-                            Change{" "}
-                            <StyledHiddenText>date of birth</StyledHiddenText>
-                          </DTELinkButton>
-                        </dd>
-                      </div>
+                      {!isNhsLinkedAccount && (
+                        <div className="govuk-summary-list__row">
+                          <dt className="govuk-summary-list__key">
+                            <DTEContent>Date of birth</DTEContent>
+                          </dt>
+                          <dd className="govuk-summary-list__value">
+                            <DTEContent>
+                              {new Date(
+                                parseInt(userData.dob.year, 10),
+                                parseInt(userData.dob.month, 10) - 1,
+                                parseInt(userData.dob.day, 10),
+                                12
+                              ).toLocaleString("en-GB", {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric",
+                              })}
+                            </DTEContent>
+                          </dd>
+                          <dd className="govuk-summary-list__actions">
+                            <DTELinkButton
+                              onClick={() => setCurrentDisplayPage("dob")}
+                            >
+                              Change{" "}
+                              <StyledHiddenText>date of birth</StyledHiddenText>
+                            </DTELinkButton>
+                          </dd>
+                        </div>
+                      )}
                       <div className="govuk-summary-list__row">
                         <dt className="govuk-summary-list__key">
                           <DTEContent>Sex registered at birth</DTEContent>
@@ -996,8 +1046,8 @@ const UpdateParticipant = () => {
               instructionText={
                 <>
                   <DTEHeader as="h1" $variant={headerVariant}>
-                    Do you have any physical or mental health conditions or
-                    illness lasting or expected to last 12 months or more?
+                    Do you have any health conditions that have lasted, or are
+                    expected to last, for 12 months or more?
                   </DTEHeader>
                   <DTEContent as="span" $displayMode="block">
                     If Yes, we will ask you a further question about the impact

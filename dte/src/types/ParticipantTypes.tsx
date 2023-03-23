@@ -37,6 +37,7 @@ export interface DTECommand {
 
 export type RegistrationProcessState = {
   nameFormData: NameFormData;
+  dobFormData: DOBFormData;
   emailFormData: EmailFormData;
   passwordFormData: PasswordFormData;
   consentFormData: ConsentFormData;
@@ -45,7 +46,6 @@ export type RegistrationProcessState = {
 export type ContinueRegistrationState = {
   mobileFormData: MobileFormData;
   addressFormData: AddressFormData;
-  dobFormData: DOBFormData;
   sexFormData: SexFormData;
   genderFormData: GenderFormData;
   ethnicity1FormData: Ethnicity1FormData;

@@ -93,12 +93,18 @@ const SexForm = (props: SexFormProps) => {
                   error={error?.message}
                   infoText={
                     !hideNextQuestionText
-                      ? "The next question asks about your gender"
+                      ? "We’ll ask about your gender on the next screen. This question is about your sex registered at birth."
                       : ""
                   }
                   onChange={onChange}
                   onBlur={onBlur}
                 >
+                  {!hideNextQuestionText && (
+                    <DTEContent aria-hidden="true">
+                      We’ll ask about your gender on the next screen. This
+                      question is about your sex registered at birth.
+                    </DTEContent>
+                  )}
                   <Radios.Radio
                     value="female"
                     defaultChecked={value === "female"}
@@ -133,11 +139,6 @@ const SexForm = (props: SexFormProps) => {
                     you may be interested in.
                   </DTEContent>
                 </DTEDetails>
-                {!hideNextQuestionText && (
-                  <DTEContent aria-hidden="true">
-                    The next question asks about your gender
-                  </DTEContent>
-                )}
               </>
             )}
             <FormNavigationButtons

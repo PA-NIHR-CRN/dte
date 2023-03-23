@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import {
   AxiosError,
   AxiosResponse,
@@ -6,7 +6,6 @@ import {
   AxiosPromise,
 } from "axios";
 import useAxios, { Options } from "axios-hooks";
-import { AuthContext } from "../context/AuthContext";
 
 export interface AxiosFetchResponseValues {
   data?: any;
@@ -27,7 +26,6 @@ const useAxiosFetch = (
   config: AxiosRequestConfig,
   options?: Options | undefined
 ): UseAxiosFetchResult => {
-  const { token } = useContext(AuthContext);
   const [data, setData] = useState<any>(undefined);
   const [error, setError] = useState<AxiosError<any> | undefined>(undefined);
   const [loading, setLoading] = useState<undefined | boolean>(false);
@@ -36,14 +34,11 @@ const useAxiosFetch = (
   );
 
   let configSpread: AxiosRequestConfig = config;
-  if (token) {
-    configSpread = {
-      ...config,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    };
-  }
+
+  configSpread = {
+    ...config,
+    withCredentials: true,
+  };
 
   const [
     {

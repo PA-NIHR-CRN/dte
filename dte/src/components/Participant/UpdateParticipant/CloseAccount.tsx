@@ -37,7 +37,7 @@ const StyledErrorSummary = styled(ErrorSummary)`
 
 const CloseAccount = () => {
   const history = useHistory();
-  const { accessToken, logOutToken } = useContext(AuthContext);
+  const { logOutToken, isNhsLinkedAccount } = useContext(AuthContext);
   const [requireConf, setRequireConf] = useState(true);
   const theme = useTheme();
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
@@ -62,9 +62,6 @@ const CloseAccount = () => {
     await closeUserAccount({
       url: `${process.env.REACT_APP_BASE_API}/users/deleteparticipantaccount`,
       method: "DELETE",
-      data: {
-        accessToken,
-      },
     }).catch(() => {
       // console.log(err.message);
     });
@@ -97,11 +94,19 @@ const CloseAccount = () => {
           <DTEHeader as="h1" $variant={headerVariant}>
             Close your account
           </DTEHeader>
-          <DTEContent $marginBottom="medium">
-            If you have changed your mind and wish to close your account, you
-            are withdrawing your consent for Be Part of Research to process and
-            store your personal information.
-          </DTEContent>
+          {isNhsLinkedAccount ? (
+            <DTEContent $marginBottom="medium">
+              If you have changed your mind and wish to withdraw your consent to
+              be contacted, this will have no effect on your NHS login account.
+            </DTEContent>
+          ) : (
+            <DTEContent $marginBottom="medium">
+              {" "}
+              If you have changed your mind and wish to close your account, you
+              are withdrawing your consent for Be Part of Research to process
+              and store your personal information.
+            </DTEContent>
+          )}
           <DTEContent $marginBottom="medium">
             Be Part of Research will no longer contact you about areas of
             research you have expressed an interest in.

@@ -12,7 +12,7 @@ import FormBaseProps from "./FormBaseProps";
 import Utils from "../../../Helper/Utils";
 
 export type Disability2FormData = {
-  disability: string;
+  disability?: string;
   disabilityDescription?: string;
 };
 

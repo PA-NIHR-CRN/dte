@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { Grid } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
 import { AuthContext } from "../../../context/AuthContext";
@@ -22,9 +22,19 @@ import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import CheckYourEmail from "../FormElements/CommonElements/CheckYourEmail";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../Password/showHide";
+import DTEBackLink from "../UI/DTEBackLink/DTEBackLink";
+
+const StyledGridElementLeft = styled(Grid)`
+  padding-left: 1em;
+  && {
+    text-align: left;
+  }
+  padding-bottom: -1em;
+  margin-bottom: 0;
+`;
 
 export const LoginWrapper = styled(Grid)`
-  margin: 40px 10px;
+  margin: 0 10px 40px 10px;
 `;
 
 const ButtonWrapper = styled.div`
@@ -52,7 +62,6 @@ const UserLogin = () => {
     lastUrl,
     isAuthenticated,
     isAuthenticatedRole,
-    saveAccessToken,
     logOutToken,
     token,
   } = useContext(AuthContext);
@@ -66,10 +75,7 @@ const UserLogin = () => {
 
   const [email, setEmail] = useState<string>();
 
-  if (isAuthenticated() && isAuthenticatedRole(Role.Participant)) {
-    // redirect back as we are already logged in.
-    history.push(`/Login#id_token=${token}`);
-  }
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   useEffect(() => {
     setValue("password", "");
@@ -94,8 +100,7 @@ const UserLogin = () => {
     const result = Utils.ConvertResponseToDTEResponse(res);
     setLoginResponse(result);
     if (result?.isSuccess) {
-      saveAccessToken(result?.content?.accessToken);
-      history.push(`/Login#id_token=${result?.content?.idToken}`);
+      history.push(`/Login#id_token=${result?.content}`);
     }
   };
 
@@ -105,8 +110,13 @@ const UserLogin = () => {
   );
 
   useEffect(() => {
-    logOutToken();
-    persistLastNonLoginUrl(lastUrl ?? "");
+    if (isAuthenticated() && isAuthenticatedRole(Role.Participant)) {
+      // redirect back as we are already logged in.
+      setShouldRedirect(true);
+    } else {
+      logOutToken();
+      persistLastNonLoginUrl(lastUrl ?? "");
+    }
   }, []);
 
   const [
@@ -144,13 +154,27 @@ const UserLogin = () => {
               ? {
                   detail: (
                     <>
-                      Enter the email address and password for a registered user
-                      account.
+                      <p>
+                        Enter the email address and password for a registered
+                        user account.
+                      </p>
+                      <p>
+                        If you registered using NHS login you will need to use
+                        NHS login to sign in.
+                      </p>
                     </>
                   ),
                   customCode: "NO_CHANGE",
                 }
-              : {}),
+              : {
+                  detail: (
+                    <>
+                      You have not given permission to access your account.
+                      Please
+                    </>
+                  ),
+                  customCode: "NO_CHANGE",
+                }),
           };
         });
       }
@@ -161,9 +185,23 @@ const UserLogin = () => {
   return (
     <DocumentTitle title="Sign in or register - Volunteer Registration - Be Part of Research">
       <>
+        {shouldRedirect && <Redirect push to={`/Login#id_token=${token}`} />}
         {loadingLogin && <LoadingIndicator text="Signing In..." />}
         {resendLoading && (
           <LoadingIndicator text="Resending verification email..." />
+        )}
+        {!loadingLogin && !resendLoading && (
+          <Grid
+            container
+            alignItems="center"
+            direction="row"
+            justifyContent="flex-start"
+          >
+            <Grid item sm={2} md={1} />
+            <StyledGridElementLeft item xs={12} sm={10} md={11}>
+              <DTEBackLink href="/Participants/Options" linkText="Back" />
+            </StyledGridElementLeft>
+          </Grid>
         )}
         <Grid
           container
@@ -175,7 +213,7 @@ const UserLogin = () => {
           <LoginWrapper item xs={12} sm={8} md={6} lg={5} xl={4}>
             {!loadingLogin && !resendLoading && !resendDTEResponse?.isSuccess && (
               <>
-                <DTEHeader as="h1">Welcome</DTEHeader>
+                <DTEHeader as="h1">Sign in to Be Part of Research</DTEHeader>
                 <ErrorMessageSummary
                   renderSummary={!isSubmitting}
                   errors={formErrors}

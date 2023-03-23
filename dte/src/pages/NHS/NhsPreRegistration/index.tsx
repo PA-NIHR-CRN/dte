@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import ReactGA from "react-ga";
 import { useHistory } from "react-router-dom";
-import DTEContent from "../../components/Shared/UI/DTETypography/DTEContent/DTEContent";
-import DTEDetails from "../../components/Shared/UI/DTEDetails/DTEDetails";
-import DTEHeader from "../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
-import DTERouteLink from "../../components/Shared/UI/DTERouteLink/DTERouteLink";
-import StepWrapper from "../../components/Shared/StepWrapper/StepWrapper";
-import DTEButton from "../../components/Shared/UI/DTEButton/DTEButton";
+import DTEContent from "../../../components/Shared/UI/DTETypography/DTEContent/DTEContent";
+import DTEDetails from "../../../components/Shared/UI/DTEDetails/DTEDetails";
+import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTERouteLink from "../../../components/Shared/UI/DTERouteLink/DTERouteLink";
+import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
+import DTEButton from "../../../components/Shared/UI/DTEButton/DTEButton";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -31,7 +31,7 @@ const NhsPreRegistration = () => {
         ]}
       />
       <StepWrapper>
-        <DTEHeader as="h1">Be Part of Research</DTEHeader>
+        <DTEHeader as="h1">Welcome to Be Part of Research</DTEHeader>
         <DTEContent>
           Be Part of Research enables you to find and take part in a range of
           health and care research.
@@ -55,21 +55,23 @@ const NhsPreRegistration = () => {
           <DTEDetails summary="More information about registering with Be Part of Research">
             <DTEContent>
               Find out more information about registering your account with{" "}
-              <ReactGA.OutboundLink
-                eventLabel="Be Part of Research"
-                to="https://bepartofresearch.nihr.ac.uk/volunteer-service/"
+              <DTERouteLink
+                external
                 target="_blank"
-                style={{ color: "inherit", textDecoration: "inherit" }}
+                to="https://bepartofresearch.nihr.ac.uk/volunteer-service/"
+                renderStyle="standard"
+                onClick={() =>
+                  ReactGA.outboundLink(
+                    {
+                      label: "Be Part of Research",
+                    },
+                    () => {},
+                    ["https://bepartofresearch.nihr.ac.uk/volunteer-service/"]
+                  )
+                }
               >
-                <DTERouteLink
-                  external
-                  target="_blank"
-                  to="https://bepartofresearch.nihr.ac.uk/volunteer-service/"
-                  renderStyle="standard"
-                >
-                  Be Part of Research
-                </DTERouteLink>
-              </ReactGA.OutboundLink>
+                Be Part of Research
+              </DTERouteLink>
               . Please use the back button on your device to return to this
               page.
             </DTEContent>
@@ -83,12 +85,12 @@ const NhsPreRegistration = () => {
                 category: "Internal Link Clicks",
                 action:
                   "https://volunteer.bepartofresearch.nihr.ac.uk/Participants/Register",
-                label: "Continue",
+                label: "Register",
               });
             }}
             ariaLabel="Continue to register for an account"
           >
-            Continue
+            Register
           </DTEButton>
         </ButtonWrapper>
         <DTEContent>Already have an account?</DTEContent>
@@ -96,11 +98,11 @@ const NhsPreRegistration = () => {
           <DTEButton
             $outlined
             onClick={() => {
-              history.push("/UserLogin");
+              history.push("/Participants/Options");
               ReactGA.event({
                 category: "Internal Link Clicks",
                 action:
-                  "https://volunteer.bepartofresearch.nihr.ac.uk/UserLogin",
+                  "https://volunteer.bepartofresearch.nihr.ac.uk/Participants/Options",
                 label: "Sign in",
               });
             }}

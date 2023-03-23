@@ -51,8 +51,8 @@ const DisabilityForm = (props: DisabilityFormProps) => {
   if (!hideHeader) {
     labelElement = (
       <DTEHeader as="h1" $variant={headerVariant}>
-        Do you have any physical or mental health conditions or illness lasting
-        or expected to last 12 months or more?
+        Do you have any health conditions that have lasted, or are expected to
+        last, for 12 months or more?
       </DTEHeader>
     );
   } else {
@@ -78,6 +78,7 @@ const DisabilityForm = (props: DisabilityFormProps) => {
               label={labelElement}
               onChange={onChange}
               error={error?.message}
+              infoText="This includes any physical and mental health conditions or illnesses."
             >
               <Radios.Radio
                 value="yes"

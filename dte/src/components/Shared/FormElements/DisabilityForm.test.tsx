@@ -18,7 +18,7 @@ describe("DisabilityForm", () => {
     );
     expect(
       screen.getByText(
-        "Do you have any physical or mental health conditions or illness lasting or expected to last 12 months or more?"
+        "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more?"
       )
     ).toBeInTheDocument();
   });

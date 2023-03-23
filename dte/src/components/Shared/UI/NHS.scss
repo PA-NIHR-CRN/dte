@@ -1,17 +1,375 @@
-@import 'node_modules/nhsuk-frontend/packages/nhsuk';
-@import '~nhsuk-react-components-extensions/css/components.css';
+@import "node_modules/nhsuk-frontend/packages/nhsuk";
+@import "~nhsuk-react-components-extensions/css/components.css";
+
+.nhslogin-button {
+  font-weight: 400;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #005eb8;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 4px 0 #003087;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  margin-top: 0;
+  padding: 12px 16px;
+  position: relative;
+  text-align: center;
+  vertical-align: top;
+  width: auto;
+}
+@media (min-width: 40.0625em) {
+  .nhslogin-button {
+    font-size: 19px;
+    font-size: 1.1875rem;
+    line-height: 1.47368;
+  }
+}
+@media print {
+  .nhslogin-button {
+    font-size: 14pt;
+    line-height: 1.15;
+  }
+}
+@media (min-width: 40.0625em) {
+  .nhslogin-button {
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 40.0525em) {
+  .nhslogin-button {
+    padding: 8px 16px;
+  }
+}
+.nhslogin-button:link,
+.nhslogin-button:visited,
+.nhslogin-button:active,
+.nhslogin-button:hover {
+  color: #fff;
+  text-decoration: none;
+}
+.nhslogin-button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+.nhslogin-button:hover {
+  background-color: #1e569b;
+}
+.nhslogin-button:focus {
+  background: #fed47a;
+  box-shadow: 0 4px 0 #003087;
+  color: #003087;
+  outline: none;
+}
+.nhslogin-button:active {
+  background: #1e569b;
+  box-shadow: none;
+  color: #fff;
+  top: 4px;
+}
+.nhslogin-button::before {
+  background: transparent;
+  bottom: -6px;
+  content: "";
+  display: block;
+  left: -2px;
+  position: absolute;
+  right: -2px;
+  top: -2px;
+}
+.nhslogin-button:active::before {
+  top: -6px;
+}
+.nhslogin-button--reverse {
+  background-color: #fff;
+  box-shadow: 0 4px 0 #003087;
+  color: #005eb8;
+}
+.nhslogin-button--reverse:hover {
+  background-color: #f2f2f2;
+  color: #005eb8;
+}
+.nhslogin-button--reverse:focus {
+  background: #ffeb3b;
+  box-shadow: 0 4px 0 #003087;
+  color: #003087;
+  outline: 4px solid transparent;
+}
+.nhslogin-button--reverse:active {
+  background: #f2f2f2;
+  box-shadow: none;
+  color: #005eb8;
+  top: 4px;
+}
+.nhslogin-button--reverse:link {
+  color: #005eb8;
+}
+.nhslogin-button--reverse.nhsuk-button--disabled {
+  background-color: #fff;
+}
+.nhslogin-button--reverse.nhsuk-button--disabled:focus {
+  background-color: #fff;
+}
+.nhslogin-button--disabled,
+.nhslogin-button[disabled="disabled"],
+.nhslogin-button[disabled] {
+  background-color: #005eb8;
+  opacity: 0.5;
+  pointer-events: none;
+}
+.nhslogin-button--disabled:hover,
+.nhslogin-button[disabled="disabled"]:hover,
+.nhslogin-button[disabled]:hover {
+  background-color: #005eb8;
+  cursor: default;
+}
+.nhslogin-button--disabled:focus,
+.nhslogin-button[disabled="disabled"]:focus,
+.nhslogin-button[disabled]:focus {
+  background-color: #005eb8;
+  outline: none;
+}
+.nhslogin-button--disabled:active,
+.nhslogin-button[disabled="disabled"]:active,
+.nhslogin-button[disabled]:active {
+  box-shadow: 0 4px 0 #003087;
+  top: 0;
+}
+.nhslogin-button--reverse[disabled="disabled"],
+.nhslogin-button--reverse[disabled] {
+  background-color: #fff;
+  opacity: 0.5;
+}
+.nhslogin-button--reverse[disabled="disabled"]:hover,
+.nhslogin-button--reverse[disabled]:hover {
+  background-color: #fff;
+  cursor: default;
+}
+.nhslogin-button--reverse[disabled="disabled"]:focus,
+.nhslogin-button--reverse[disabled]:focus {
+  outline: none;
+}
+.nhslogin-button--reverse[disabled="disabled"]:active,
+.nhslogin-button--reverse[disabled]:active {
+  box-shadow: 0 4px 0 #003087;
+  top: 0;
+}
+.ie8 .nhslogin-button:focus {
+  outline: 1px dotted #003087;
+}
+
+.nhs-app-provider-banner {
+  @include nhsuk-typography-responsive(16);
+  background-color: $color_nhsuk-grey-5;
+  border-bottom: 1px solid $color_nhsuk-grey-4;
+  border-top: 1px solid $color_nhsuk-grey-4;
+  padding: nhsuk-spacing(2) 0;
+
+  @include mq($from: tablet) {
+    padding: 12px 0; // No spacing for 12px on tablet and desktop
+  }
+}
 
 .GDSCookieBanner {
     position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: 9999;
+}
+
+.govuk-cookie-banner__content > p{
+line-height: 30px;
+}
+
+#acceptCookies, #rejectCookies, #hideCookieButton {
+    font-size: 17px !important;
+    border-radius: 8px !important;
+    margin: 0 15px 0 0;
+    border: 1px solid #193e72;
+    padding: 5px;
+    font-weight: 600;
+
+    &:hover, &:active,&:focus {
+        box-shadow: 0px 4px 0px #002D18;
+    }
 }
 
 .govuk-button-group {
-    justify-content: space-around;
-    margin: 40px 0;
+    margin-bottom: 20px;
+    font-size: 18px !important;
 }
 
-.cookie-button {
-    margin: 10px 0;
+.govuk-button-group > a {
+    font-size: 19px;
 }
+
+
+
+@media(max-width: 640px)
+{
+    #acceptCookies, #rejectCookies, #hideCookieButton {
+        margin-bottom: 15px !important;
+    }
+
+    .govuk-cookie-banner__content > p{
+        line-height: 26px;
+        }
+
+        .govuk-button-group > a {
+            font-size: 16px;
+        }
+
+        .cookiesHeader > h3 {
+            font-size: 24px;
+        }
+
+        .hideCookieButtonGroup {
+            margin-bottom: 5px;
+          }
+  }
+
+
+  .hideCookieMessage {
+    line-height: 25px;
+  }
+
+  .hideCookieButtonGroup {
+    margin-bottom: 15px;
+  }
+
+  #styledLogoLink {
+    display: inline-block;
+
+  }
+
+
+  #NHSLogo {
+    height: 45px;
+    width: 112.5px;
+    margin: 30px;
+    position: relative;
+
+  }
+
+  @media(max-width: 640px){
+  #NHSLogo {
+    height: 36px;
+    margin: 15px;
+    width: 90px; 
+
+  }
+}
+
+  .Scot-logo{
+    flex: 0 0 20%;
+    display: flex;
+    justify-content: center;
+    left:4%;
+}
+.scot-logo-img{
+    width:65%;
+}
+.NI-logo{
+    left:2%;
+    flex: 0 0 18%;
+}
+.NI-logo-link{
+    width: 78%;
+}
+.NI-logo-img{
+    width: 100%;
+}
+.nihr-image{
+    flex: 0 0 35%;
+}
+.HCW-logo{
+    flex: 0 0 20%;
+}
+.HCWLogoContainer{
+    width: 90%;
+}
+#footerLogos{
+    width: 100%;
+    max-width: 75%;
+}
+
+.footerImage{
+    border: 3px solid #FFFFFF;
+    display: block;
+}
+
+.footerImage:hover,.footerImage:focus{
+    border-color: #fed47a;
+    box-shadow: none;
+    box-shadow: 0px 0px 3px 3px rgb(0 0 0 / 75%);
+    background-color: #ffffff;
+}
+
+ @media only screen and (max-width: 1550px){
+    #footerLogos{
+        width: 100%;
+        max-width: 85%;
+    }
+
+ }
+  @media only screen and (max-width: 1081px){
+    #footerLogos{
+        width: 100%;
+        max-width: 95%;
+    }
+ }
+  @media only screen and (max-width: 900px){
+    #footerLogos{
+        width: 100%;
+        max-width: 95%;
+    }
+    .Scot-logo{
+    flex: 0 0 40%;
+    display: flex;
+    justify-content: center;
+    left:4%;
+    }
+    .NI-logo{
+        flex: 0 0 30%;
+    }
+    .nihr-image{
+        padding-right: 5px;
+        flex: 0 0 55%;
+    }
+    .HCW-logo{
+        flex: 0 0 40%;
+    }
+    #NihrLogo{
+        width: 90%;
+    }
+}
+
+ .FooterImageWrapper {    
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 90%;    
+    margin: auto;
+    padding: 5px;
+    
+ }
+
+ .regional-logos {
+    margin: auto;
+    max-width: 100%;
+ }
+
+
+  @media only screen and (max-width: 767px){
+    .regional-logos {
+        width: 65%;
+        display: block;
+    }
+}
+
