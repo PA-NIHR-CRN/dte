@@ -16,7 +16,12 @@ env:
   REACT_APP_BASE_API: ${{secrets.REACT_APP_BASE_API_PROD}}
   REACT_APP_LOGOUT_URL: ${{secrets.LOGOUT_URL_PROD}}
   REACT_APP_RESEARCHER_AUTH_URL: ${{secrets.RESEARCHER_AUTH_URL_PROD}}
-  REACT_APP_FEEDBACK_LINK: ${{secrets.REACT_APP_FEEDBACK_LINK_PROD}}
+  REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL_PROD}}
+  REACT_APP_NHS_SETTINGS_URL: ${{secrets.REACT_APP_NHS_SETTINGS_URL_PROD}}
+  REACT_APP_NHS_LOGIN_URL: ${{secrets.REACT_APP_NHS_LOGIN_URL_PROD}}
+  REACT_APP_NHS_LOGIN_CLIENT_ID: ${{secrets.REACT_APP_NHS_LOGIN_CLIENT_ID}}
+  REACT_APP_NHS_LOGIN_RESPONSE_TYPE: ${{secrets.REACT_APP_NHS_LOGIN_RESPONSE_TYPE}}
+  REACT_APP_NHS_LOGIN_SCOPE: ${{secrets.REACT_APP_NHS_LOGIN_SCOPE}}
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
