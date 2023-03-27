@@ -36,8 +36,8 @@ const StartRegistrationProcess = () => {
         </ul>
         <NhsLoginButton />
         <DTEContent>
-          ( Please note that unless otherwise stated, all registration questions
-          are mandatory )
+          (Please note that unless otherwise stated, all registration questions
+          are mandatory)
         </DTEContent>
         <ButtonWrapper>
           <DTERouteLink to="/Participants/Register/Questions">
