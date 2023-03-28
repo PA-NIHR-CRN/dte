@@ -50,6 +50,7 @@ const NhsNoConsent = () => {
                   window.nhsapp.navigation.HOME_PAGE
                 )
               }
+              ariaLabel="go back"
             >
               go back
             </DTELinkButton>
