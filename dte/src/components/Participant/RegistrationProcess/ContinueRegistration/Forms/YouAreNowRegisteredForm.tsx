@@ -99,17 +99,35 @@ const YouAreNowRegisteredForm = (props: YouAreNowRegisteredFormProps) => {
           <DTEHeader as="h1">
             Thank you for registering with Be Part of Research
           </DTEHeader>
-          <DTEContent>
-            We&apos;ll keep in touch with you about opportunities to take part
-            in studies based on the information you have provided.
-          </DTEContent>
-
-          <DTEContent>
-            You may hear from us in weeks or months or it may be longer
-            depending on the areas of research you&apos;ve chosen.
-          </DTEContent>
-          {!isInNHSApp ? (
+          {isInNHSApp ? (
             <>
+              <DTEContent>
+                We will keep in touch with you directly by email about
+                opportunities to take part in studies based on the information
+                you have provided.
+              </DTEContent>
+              <DTEContent>
+                You may hear from us about a study in weeks or months or it may
+                take longer depending on the areas of research you&apos;ve
+                chosen.
+              </DTEContent>
+              <DTEContent>
+                You can make changes to the areas of research you have chosen by
+                using the NHS login option when accessing your account at Be
+                Part of Research, you will also find more information here about
+                health research and other ways you can get involved.
+              </DTEContent>
+            </>
+          ) : (
+            <>
+              <DTEContent>
+                We&apos;ll keep in touch with you about opportunities to take
+                part in studies based on the information you have provided.
+              </DTEContent>
+              <DTEContent>
+                You may hear from us in weeks or months or it may be longer
+                depending on the areas of research you&apos;ve chosen.
+              </DTEContent>
               <DTEContent>From your account page you can:</DTEContent>
               <ul>
                 <li>update your details</li>
@@ -156,13 +174,6 @@ const YouAreNowRegisteredForm = (props: YouAreNowRegisteredFormProps) => {
                 </DTERouteLink>
               </DTEContent>
             </>
-          ) : (
-            <DTEContent>
-              You can make changes to the areas of research you have chosen by
-              using the NHS login option when accessing your account at
-              http://bepartofresearch.uk , you will also find more information
-              here about health research and other ways you can get involved.
-            </DTEContent>
           )}
         </>
       )}

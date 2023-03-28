@@ -72,38 +72,44 @@ const DisabilityForm = (props: DisabilityFormProps) => {
           control={control}
           name="disability"
           render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <DTERadio
-              id="disabilityRadio"
-              name="disability"
-              label={labelElement}
-              onChange={onChange}
-              error={error?.message}
-              infoText="This includes any physical and mental health conditions or illnesses."
-            >
-              <Radios.Radio
-                value="yes"
-                defaultChecked={value === "yes"}
-                aria-label="Yes, I have a physical or mental health condition that has, or is expected to last more than 12 months"
-                aria-labelledby=""
+            <>
+              <DTEContent aria-hidden="true">
+                This includes any physical and mental health conditions or
+                illnesses.
+              </DTEContent>
+              <DTERadio
+                id="disabilityRadio"
+                name="disability"
+                label={labelElement}
+                onChange={onChange}
+                error={error?.message}
+                infoText="This includes any physical and mental health conditions or illnesses."
               >
-                Yes
-              </Radios.Radio>
-              <Radios.Radio
-                value="no"
-                defaultChecked={value === "no"}
-                aria-label="No, I do not have a physical or mental health condition that has, or is expected to last more than 12 months"
-                aria-labelledby=""
-              >
-                No
-              </Radios.Radio>
-              <DTEContent $radioList>or</DTEContent>
-              <Radios.Radio
-                value="notSaying"
-                defaultChecked={value === "notSaying"}
-              >
-                Prefer not to say
-              </Radios.Radio>
-            </DTERadio>
+                <Radios.Radio
+                  value="yes"
+                  defaultChecked={value === "yes"}
+                  aria-label="Yes, I have a physical or mental health condition that has, or is expected to last more than 12 months"
+                  aria-labelledby=""
+                >
+                  Yes
+                </Radios.Radio>
+                <Radios.Radio
+                  value="no"
+                  defaultChecked={value === "no"}
+                  aria-label="No, I do not have a physical or mental health condition that has, or is expected to last more than 12 months"
+                  aria-labelledby=""
+                >
+                  No
+                </Radios.Radio>
+                <DTEContent $radioList>or</DTEContent>
+                <Radios.Radio
+                  value="notSaying"
+                  defaultChecked={value === "notSaying"}
+                >
+                  Prefer not to say
+                </Radios.Radio>
+              </DTERadio>
+            </>
           )}
           rules={{
             validate: (value) => {
