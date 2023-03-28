@@ -290,7 +290,7 @@ const UserLogin = () => {
                     <DTERouteLink
                       to="/ForgottenPassword"
                       renderStyle="standard"
-                      ariaLabel="reset you password here"
+                      ariaLabel="reset your password here"
                     >
                       reset it here.
                     </DTERouteLink>
