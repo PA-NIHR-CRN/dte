@@ -34,11 +34,11 @@ const StartRegistrationProcess = () => {
           <li>are 18 or over</li>
           <li>live in the UK</li>
         </ul>
-        <NhsLoginButton />
         <DTEContent>
           (Please note that unless otherwise stated, all registration questions
           are mandatory)
         </DTEContent>
+        <NhsLoginButton />
         <ButtonWrapper>
           <DTERouteLink to="/Participants/Register/Questions">
             Register with email address
