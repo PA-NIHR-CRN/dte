@@ -1,64 +1,60 @@
-# Getting Started with DTE
+# Volunteer Service
 
-## Available Scripts
+## Table of Contents
+1. [Project's Title](#projects-title)
+2. [Project Description](#project-description)
+3. [How to Install and Run the Project](#how-to-install-and-run-the-project)
+4. [How to Use the Project](#how-to-use-the-project)
 
-In the project directory, you can run:
+## Project's Title
+**Volunteer Service**: A React-based platform for connecting volunteers with research opportunities.
 
-### `yarn lint`
-Runs eslint and prettier to resolve any code format issues 
+## Project Description
+Volunteer Service is a React application designed to help users register with "Be Part of Research" and discover research opportunities tailored to their interests. The main goal of this project is to streamline the registration process and facilitate connections between volunteers and relevant research projects.
 
-### `yarn fakeDB`
-Runs json-server and provides a fake api on [http://localhost:8000](http://localhost:8000)
+The application was developed using React due to its flexibility, scalability, and maintainability. React allows for the creation of reusable components, improving the overall development experience and making future updates easier to implement. Some challenges faced during the development process included handling user authentication and maintaining a responsive user interface. Future features to be implemented include MFA and integration with additional authentication providers.
 
+## How to Install and Run the Project
+Follow these steps to set up and run the Volunteer Service project locally:
 
-### `yarn start`
+1. Ensure you have Node.js and npm installed on your machine. If not, download and install them from [Node.js official website](https://nodejs.org/en/download/).
 
-Runs the app in the development mode.\ 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2. Clone the repository to your local machine:
+```
+git clone https://github.com/PA-NIHR-CRN/dte.git
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+3. Navigate to the project folder:
+```
+cd dte
+```
 
-### `yarn test`
+4. Install the required dependencies:
+```
+yarn install
+```
 
-Launches the test runner in the interactive watch mode.\
-Will run code coverage report generation both in the console and an html report will be added to the coverage/lcov-report folder
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+5. Start the development server:
+```
+yarn start
+```
+The application should now be accessible at `http://localhost:3000`.
 
-### `yarn run build`
+## How to Use the Project
+To use Volunteer Service, follow these steps:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Access the application at `http://localhost:3000`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Click on the "Register" button to begin the registration process. Fill in the required information, including your email address, and agree to be contacted about health conditions you're interested in.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Verify your email address. A verification email will be sent to the address you provided during registration. Click on the link in the email to complete the verification process.
 
-### Husky Git Hooks
+4. Once your email address is verified, you can log in using your credentials. You can then complete the second stage of registration and add areas of research that you are interested in.
 
-eslint is run as part of the precommit husky hook. Preventing the commit of badly formatted code.
+5. Once you have completed the registration process, you can access the "My Account" page to update your details and view your research interests.
 
-### Code Splitting
+Note: To use the application, you must meet the following requirements:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Have a valid email address
+- Be 18 years of age or older
+- Reside in the UK
