@@ -34,6 +34,7 @@ const StyledButton = styled(Button)`
   bottom: 0;
   height: 2.15em;
   padding: 0;
+  min-width: fit-content;
   &&:active {
     width: 95px;
     top: unset;
@@ -46,7 +47,7 @@ const StyledButton = styled(Button)`
     ${baseButton}
   }
   && {
-    min-height: 40pxpx;
+    min-height: 40px;
     padding-left: 0;
     padding-right: 0;
     margin-inline: auto;
