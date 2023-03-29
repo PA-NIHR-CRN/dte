@@ -98,8 +98,10 @@ const NhsAppLanding = () => {
             </DTEContent>
             <DTEHeader as="h2">When will you hear from us?</DTEHeader>
             <DTEContent>
-              You may hear from us about a study in weeks or months or it may
-              take longer depending on the areas of research you’ve chosen.
+              As you are registered with Be Part of Research, you may hear from
+              us in the coming weeks or months about opportunities to take part
+              in research. Some areas of research have more studies than others
+              and so how long this will be may vary.
             </DTEContent>
           </>
         )}
