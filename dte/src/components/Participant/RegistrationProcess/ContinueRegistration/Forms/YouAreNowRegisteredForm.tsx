@@ -97,7 +97,7 @@ const YouAreNowRegisteredForm = (props: YouAreNowRegisteredFormProps) => {
       {Utils.ConvertResponseToDTEResponse(response)?.isSuccess && (
         <>
           <DTEHeader as="h1">
-            Thank you for registering with Be Part of Research
+            Thank you for registering for Be Part of Research
           </DTEHeader>
           {isInNHSApp ? (
             <>
@@ -113,9 +113,9 @@ const YouAreNowRegisteredForm = (props: YouAreNowRegisteredFormProps) => {
               </DTEContent>
               <DTEContent>
                 You can make changes to the areas of research you have chosen by
-                using the NHS login option when accessing your account at Be
-                Part of Research, you will also find more information here about
-                health research and other ways you can get involved.
+                using the NHS login option when accessing your account at
+                http://bepartofresearch.uk, you will also find more information
+                here about health research and other ways you can get involved.
               </DTEContent>
             </>
           ) : (

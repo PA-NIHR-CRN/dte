@@ -96,6 +96,7 @@ const NhsAppLanding = () => {
               the NHS login option to change your preferences and personal
               details.
             </DTEContent>
+            <DTEHeader as="h2">When will you hear from us?</DTEHeader>
             <DTEContent>
               You may hear from us about a study in weeks or months or it may
               take longer depending on the areas of research you’ve chosen.

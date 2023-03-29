@@ -159,8 +159,8 @@ const UserLogin = () => {
                         user account.
                       </p>
                       <p>
-                        If you registered using NHS login you will need to use
-                        NHS login to sign in.
+                        If you registered using NHS login use the back button
+                        above and select NHS login to sign in.
                       </p>
                     </>
                   ),

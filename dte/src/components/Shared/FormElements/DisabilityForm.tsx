@@ -73,10 +73,6 @@ const DisabilityForm = (props: DisabilityFormProps) => {
           name="disability"
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <>
-              <DTEContent aria-hidden="true">
-                This includes any physical and mental health conditions or
-                illnesses.
-              </DTEContent>
               <DTERadio
                 id="disabilityRadio"
                 name="disability"
@@ -85,6 +81,10 @@ const DisabilityForm = (props: DisabilityFormProps) => {
                 error={error?.message}
                 infoText="This includes any physical and mental health conditions or illnesses."
               >
+                <DTEContent aria-hidden="true">
+                  This includes any physical and mental health conditions or
+                  illnesses.
+                </DTEContent>
                 <Radios.Radio
                   value="yes"
                   defaultChecked={value === "yes"}

@@ -83,7 +83,7 @@ describe("Demographics Api Success Tests", () => {
     );
     expect(
       await screen.findByText(
-        "Thank you for registering with Be Part of Research"
+        "Thank you for registering for Be Part of Research"
       )
     ).toBeInTheDocument();
   });
