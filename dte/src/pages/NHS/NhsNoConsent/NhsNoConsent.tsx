@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
-import styled from "styled-components";
 import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../../components/Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTERouteLink from "../../../components/Shared/UI/DTERouteLink/DTERouteLink";
