@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
+import styled from "styled-components";
 import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../../components/Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTERouteLink from "../../../components/Shared/UI/DTERouteLink/DTERouteLink";
@@ -8,7 +9,6 @@ import { AuthContext } from "../../../context/AuthContext";
 import DTEButton from "../../../components/Shared/UI/DTEButton/DTEButton";
 import DTEBackLink from "../../../components/Shared/UI/DTEBackLink/DTEBackLink";
 import DTELinkButton from "../../../components/Shared/UI/DTELinkButton/DTELinkButton";
-import styled from "styled-components";
 
 const StyledCheckHiddenText = styled.span`
   position: absolute;
