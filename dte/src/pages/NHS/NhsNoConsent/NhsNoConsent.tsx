@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
-import styled from "styled-components";
 import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../../components/Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTERouteLink from "../../../components/Shared/UI/DTERouteLink/DTERouteLink";
@@ -8,20 +7,6 @@ import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
 import { AuthContext } from "../../../context/AuthContext";
 import DTEButton from "../../../components/Shared/UI/DTEButton/DTEButton";
 import DTEBackLink from "../../../components/Shared/UI/DTEBackLink/DTEBackLink";
-import DTELinkButton from "../../../components/Shared/UI/DTELinkButton/DTELinkButton";
-
-const StyledCheckHiddenText = styled.span`
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  border: 0;
-  white-space: nowrap;
-`;
 
 const NhsNoConsent = () => {
   const { isInNHSApp } = useContext(AuthContext);
@@ -59,17 +44,18 @@ const NhsNoConsent = () => {
           Be Part of Research. You can{" "}
           {isInNHSApp ? (
             <>
-              <DTELinkButton
+              <DTERouteLink
+                to="/"
                 onClick={() =>
                   window.nhsapp.navigation.goToPage(
                     window.nhsapp.navigation.HOME_PAGE
                   )
                 }
                 ariaLabel="go back"
+                renderStyle="standard"
               >
                 go back
-              </DTELinkButton>
-              <StyledCheckHiddenText>go back</StyledCheckHiddenText>
+              </DTERouteLink>
             </>
           ) : (
             "go back"
