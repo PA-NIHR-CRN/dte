@@ -9,19 +9,6 @@ import { AuthContext } from "../../../context/AuthContext";
 import DTEButton from "../../../components/Shared/UI/DTEButton/DTEButton";
 import DTEBackLink from "../../../components/Shared/UI/DTEBackLink/DTEBackLink";
 
-const StyledCheckHiddenText = styled.span`
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  border: 0;
-  white-space: nowrap;
-`;
-
 const NhsNoConsent = () => {
   const { isInNHSApp } = useContext(AuthContext);
   const { search } = useLocation();
