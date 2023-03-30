@@ -8,7 +8,6 @@ import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
 import { AuthContext } from "../../../context/AuthContext";
 import DTEButton from "../../../components/Shared/UI/DTEButton/DTEButton";
 import DTEBackLink from "../../../components/Shared/UI/DTEBackLink/DTEBackLink";
-import DTELinkButton from "../../../components/Shared/UI/DTELinkButton/DTELinkButton";
 
 const StyledCheckHiddenText = styled.span`
   position: absolute;
@@ -57,19 +56,20 @@ const NhsNoConsent = () => {
         <DTEContent>
           You have chosen not to share your NHS login account information with
           Be Part of Research. You can{" "}
-          {isInNHSApp ? (
+          {!isInNHSApp ? (
             <>
-              <DTELinkButton
+              <DTERouteLink
+                to="/"
                 onClick={() =>
                   window.nhsapp.navigation.goToPage(
                     window.nhsapp.navigation.HOME_PAGE
                   )
                 }
                 ariaLabel="go back"
+                renderStyle="standard"
               >
                 go back
-              </DTELinkButton>
-              <StyledCheckHiddenText>go back</StyledCheckHiddenText>
+              </DTERouteLink>
             </>
           ) : (
             "go back"
