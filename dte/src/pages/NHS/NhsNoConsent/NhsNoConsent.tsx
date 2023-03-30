@@ -42,7 +42,7 @@ const NhsNoConsent = () => {
         <DTEContent>
           You have chosen not to share your NHS login account information with
           Be Part of Research. You can{" "}
-          {!isInNHSApp ? (
+          {isInNHSApp ? (
             <>
               <DTERouteLink
                 to="/"
