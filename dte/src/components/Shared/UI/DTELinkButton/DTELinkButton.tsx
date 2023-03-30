@@ -93,6 +93,7 @@ const DTELinkButton = ({
       $dark={dark}
       $padded={padded}
       aria-label={ariaLabel}
+      aria-labelledby=""
     >
       {children}
     </StyledButton>
