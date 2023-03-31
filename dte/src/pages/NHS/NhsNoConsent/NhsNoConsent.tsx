@@ -40,30 +40,32 @@ const NhsNoConsent = () => {
           <strong>Your data has not been stored.</strong>
         </DTEContent>
         <DTEContent
-          aria-label="You have chosen not to share your NHS login account information with
-          Be Part of Research. You can go back and change this decision if you wish."
+          aria-label="Important message about sharing NHS login account information with Be Part of Research"
+          aria-describedby="be-part-of-research-message"
         >
-          You have chosen not to share your NHS login account information with
-          Be Part of Research. You can{" "}
-          {isInNHSApp ? (
-            <>
-              <DTERouteLink
-                to="/"
-                onClick={() =>
-                  window.nhsapp.navigation.goToPage(
-                    window.nhsapp.navigation.HOME_PAGE
-                  )
-                }
-                ariaLabel="go back"
-                renderStyle="standard"
-              >
-                go back
-              </DTERouteLink>
-            </>
-          ) : (
-            "go back"
-          )}{" "}
-          and change this decision if you wish.
+          <span id="be-part-of-research-message">
+            You have chosen not to share your NHS login account information with
+            Be Part of Research. You can{" "}
+            {isInNHSApp ? (
+              <>
+                <DTERouteLink
+                  to="/"
+                  onClick={() =>
+                    window.nhsapp.navigation.goToPage(
+                      window.nhsapp.navigation.HOME_PAGE
+                    )
+                  }
+                  ariaLabel="go back"
+                  renderStyle="standard"
+                >
+                  go back
+                </DTERouteLink>
+              </>
+            ) : (
+              "go back"
+            )}{" "}
+            and change this decision if you wish.
+          </span>
         </DTEContent>
         <DTEContent>
           You can find out more about taking part in health and care research
