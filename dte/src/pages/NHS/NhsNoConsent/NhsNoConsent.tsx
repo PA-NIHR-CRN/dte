@@ -53,6 +53,7 @@ const NhsNoConsent = () => {
                 }
                 ariaLabel="go back"
                 renderStyle="standard"
+                role="alert"
               >
                 go back
               </DTERouteLink>
