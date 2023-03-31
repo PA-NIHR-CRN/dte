@@ -39,7 +39,10 @@ const NhsNoConsent = () => {
         <DTEContent>
           <strong>Your data has not been stored.</strong>
         </DTEContent>
-        <DTEContent>
+        <DTEContent
+          aria-label="You have chosen not to share your NHS login account information with
+          Be Part of Research. You can go back and change this decision if you wish."
+        >
           You have chosen not to share your NHS login account information with
           Be Part of Research. You can{" "}
           {isInNHSApp ? (
@@ -53,7 +56,6 @@ const NhsNoConsent = () => {
                 }
                 ariaLabel="go back"
                 renderStyle="standard"
-                role="alert"
               >
                 go back
               </DTERouteLink>
