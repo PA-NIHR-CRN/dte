@@ -39,34 +39,30 @@ const NhsNoConsent = () => {
         <DTEContent>
           <strong>Your data has not been stored.</strong>
         </DTEContent>
-        <DTEContent
-          aria-label="Important message about sharing NHS login account information with Be Part of Research"
-          aria-describedby="be-part-of-research-message"
-        >
-          <span id="be-part-of-research-message">
+        {isInNHSApp ? (
+          <DTEContent>
             You have chosen not to share your NHS login account information with
             Be Part of Research. You can{" "}
-            {isInNHSApp ? (
-              <>
-                <DTERouteLink
-                  to="/"
-                  onClick={() =>
-                    window.nhsapp.navigation.goToPage(
-                      window.nhsapp.navigation.HOME_PAGE
-                    )
-                  }
-                  ariaLabel="go back"
-                  renderStyle="standard"
-                >
-                  go back
-                </DTERouteLink>
-              </>
-            ) : (
-              "go back"
-            )}{" "}
+            <DTERouteLink
+              to="/"
+              onClick={() =>
+                window.nhsapp.navigation.goToPage(
+                  window.nhsapp.navigation.HOME_PAGE
+                )
+              }
+              renderStyle="standard"
+            >
+              go back
+            </DTERouteLink>{" "}
             and change this decision if you wish.
-          </span>
-        </DTEContent>
+          </DTEContent>
+        ) : (
+          <DTEContent>
+            You have chosen not to share your NHS login account information with
+            Be Part of Research. You can go back change this decision if you
+            wish.
+          </DTEContent>
+        )}
         <DTEContent>
           You can find out more about taking part in health and care research
           and register using your email address on the Be Part of Research
