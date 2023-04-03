@@ -51,7 +51,7 @@ const NhsNoConsent = () => {
                 )
               }
               renderStyle="standard"
-              ariaLabel="Click this link to return to the previous page"
+              ariaLabel="Go back to previous page"
             >
               go back
             </DTERouteLink>{" "}
