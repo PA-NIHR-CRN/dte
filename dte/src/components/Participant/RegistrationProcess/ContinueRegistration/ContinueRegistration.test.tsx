@@ -52,7 +52,8 @@ beforeEach(() => {
                 backgrounds: [
                   "British, English, Northern Irish, Scottish, or Welsh",
                   "Irish",
-                  "Irish Traveller or Gypsy",
+                  "Irish Traveller",
+                  "Roma",
                 ],
               },
               other: {
