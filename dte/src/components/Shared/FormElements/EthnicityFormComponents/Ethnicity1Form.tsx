@@ -20,7 +20,6 @@ export type Ethnicity1FormData = {
 interface Ethnicity1FormProps extends FormBaseProps {
   initialStateData: Ethnicity1FormData;
   onDataChange: (data: Ethnicity1FormData) => void;
-  referenceDataEthnicities?: Ethnicities;
 }
 
 const Ethnicity1Form = (props: Ethnicity1FormProps) => {
@@ -33,15 +32,13 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
     showCancelButton,
     onCancel,
     instructionText,
-    referenceDataEthnicities,
   } = props;
   const theme = useTheme();
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
     ? "h2"
     : "h1";
   let labelElement: ReactNode;
-  const resolvedEthnicities: Ethnicities =
-    referenceDataEthnicities || ethnicitiesStatic;
+  const ethnicities: Ethnicities = ethnicitiesStatic;
 
   const {
     control,
@@ -108,7 +105,7 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
                   error={error?.message}
                   onChange={onChange}
                 >
-                  {Object.values(resolvedEthnicities).map((ethnicity) => {
+                  {Object.values(ethnicities).map((ethnicity) => {
                     return (
                       <Radios.Radio
                         value={ethnicity.shortName}

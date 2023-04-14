@@ -123,20 +123,6 @@ const UpdateParticipant = () => {
     }
   );
 
-  const [
-    {
-      response: ethnicityResponse,
-      loading: ethnicityLoading,
-      error: ethnicityError,
-    },
-  ] = useAxiosFetch(
-    {
-      url: `${process.env.REACT_APP_BASE_API}/referencedata/demographics/ethnicity`,
-      method: "GET",
-    },
-    { useCache: true, manual: false }
-  );
-
   const setCurrentDisplayPage = (page: string) => {
     setCurrentPage(page);
     containerRef.current?.scrollIntoView({
@@ -609,9 +595,7 @@ const UpdateParticipant = () => {
   return (
     <DocumentTitle title={pageTitle}>
       <StyledWrapper role="main" id="main" ref={containerRef}>
-        {(loading || demographicsLoading || ethnicityLoading) && (
-          <LoadingIndicator />
-        )}
+        {(loading || demographicsLoading) && <LoadingIndicator />}
         {(detailsPostLoading || demographicsPostLoading) && (
           <LoadingIndicator text="Updating your details..." />
         )}
@@ -622,63 +606,11 @@ const UpdateParticipant = () => {
               <DTEHeader as="h1" $variant={headerVariant}>
                 Personal details
               </DTEHeader>
-              {userData &&
-                ethnicityResponse &&
-                !(
-                  detailsPostLoading ||
-                  demographicsPostLoading ||
-                  ethnicityLoading
-                ) && (
-                  <>
-                    {isNhsLinkedAccount && (
-                      <>
-                        <dl className="govuk-summary-list">
-                          <div className="govuk-summary-list__row">
-                            <dt className="govuk-summary-list__key">
-                              <DTEContent>Name</DTEContent>
-                            </dt>
-                            <dd className="govuk-summary-list__value">
-                              <DTEContent>
-                                {userData.name.firstName}{" "}
-                                {userData.name.lastName}{" "}
-                              </DTEContent>
-                            </dd>
-                            <dd className="govuk-summary-list__actions" />
-                          </div>
-                          <div className="govuk-summary-list__row">
-                            <dt className="govuk-summary-list__key">
-                              <DTEContent>Date of birth</DTEContent>
-                            </dt>
-                            <dd className="govuk-summary-list__value">
-                              <DTEContent>
-                                {new Date(
-                                  parseInt(userData.dob.year, 10),
-                                  parseInt(userData.dob.month, 10) - 1,
-                                  parseInt(userData.dob.day, 10),
-                                  12
-                                ).toLocaleString("en-GB", {
-                                  day: "numeric",
-                                  month: "long",
-                                  year: "numeric",
-                                })}
-                              </DTEContent>
-                            </dd>
-                            <dd className="govuk-summary-list__actions" />
-                          </div>
-                        </dl>
-                        <div className="govuk-details__text">
-                          <DTEContent>
-                            If your name or date of birth is incorrect or out of
-                            date, contact your GP surgery and ask them to update
-                            your details. They will then update your NHS record.
-                            Any changes made there will appear in your Be Part
-                            of Research account when you sign in.
-                          </DTEContent>
-                        </div>
-                      </>
-                    )}
-                    <dl className="govuk-summary-list">
-                      {!isNhsLinkedAccount && (
+              {userData && !(detailsPostLoading || demographicsPostLoading) && (
+                <>
+                  {isNhsLinkedAccount && (
+                    <>
+                      <dl className="govuk-summary-list">
                         <div className="govuk-summary-list__row">
                           <dt className="govuk-summary-list__key">
                             <DTEContent>Name</DTEContent>
@@ -688,68 +620,8 @@ const UpdateParticipant = () => {
                               {userData.name.firstName} {userData.name.lastName}{" "}
                             </DTEContent>
                           </dd>
-                          <dd className="govuk-summary-list__actions">
-                            <DTELinkButton
-                              onClick={() => setCurrentDisplayPage("name")}
-                            >
-                              Change <StyledHiddenText>name</StyledHiddenText>
-                            </DTELinkButton>
-                          </dd>
+                          <dd className="govuk-summary-list__actions" />
                         </div>
-                      )}
-                      <div className="govuk-summary-list__row">
-                        <dt className="govuk-summary-list__key">
-                          <DTEContent>Home address</DTEContent>
-                        </dt>
-                        <dd className="govuk-summary-list__value">
-                          {formatDisplayAddress(userData.address)}
-                        </dd>
-                        <dd className="govuk-summary-list__actions">
-                          <DTELinkButton
-                            onClick={() => setCurrentDisplayPage("address")}
-                          >
-                            Change{" "}
-                            <StyledHiddenText>home address</StyledHiddenText>
-                          </DTELinkButton>
-                        </dd>
-                      </div>
-                      <div className="govuk-summary-list__row">
-                        <dt className="govuk-summary-list__key">
-                          <DTEContent>Phone number</DTEContent>
-                        </dt>
-                        <dd className="govuk-summary-list__value">
-                          {userData.mobile.mobileNumber ||
-                          userData.mobile.landlineNumber ? (
-                            <>
-                              {userData.mobile.mobileNumber && (
-                                <DTEContent>
-                                  Mobile
-                                  <br />
-                                  {userData.mobile.mobileNumber}
-                                </DTEContent>
-                              )}
-                              {userData.mobile.landlineNumber && (
-                                <DTEContent>
-                                  Landline
-                                  <br />
-                                  {userData.mobile.landlineNumber}
-                                </DTEContent>
-                              )}
-                            </>
-                          ) : (
-                            <DTEContent>Not provided</DTEContent>
-                          )}
-                        </dd>
-                        <dd className="govuk-summary-list__actions">
-                          <DTELinkButton
-                            onClick={() => setCurrentDisplayPage("mobile")}
-                          >
-                            Change{" "}
-                            <StyledHiddenText>phone number</StyledHiddenText>
-                          </DTELinkButton>
-                        </dd>
-                      </div>
-                      {!isNhsLinkedAccount && (
                         <div className="govuk-summary-list__row">
                           <dt className="govuk-summary-list__key">
                             <DTEContent>Date of birth</DTEContent>
@@ -768,169 +640,262 @@ const UpdateParticipant = () => {
                               })}
                             </DTEContent>
                           </dd>
-                          <dd className="govuk-summary-list__actions">
-                            <DTELinkButton
-                              onClick={() => setCurrentDisplayPage("dob")}
-                            >
-                              Change{" "}
-                              <StyledHiddenText>date of birth</StyledHiddenText>
-                            </DTELinkButton>
-                          </dd>
+                          <dd className="govuk-summary-list__actions" />
                         </div>
-                      )}
+                      </dl>
+                      <div className="govuk-details__text">
+                        <DTEContent>
+                          If your name or date of birth is incorrect or out of
+                          date, contact your GP surgery and ask them to update
+                          your details. They will then update your NHS record.
+                          Any changes made there will appear in your Be Part of
+                          Research account when you sign in.
+                        </DTEContent>
+                      </div>
+                    </>
+                  )}
+                  <dl className="govuk-summary-list">
+                    {!isNhsLinkedAccount && (
                       <div className="govuk-summary-list__row">
                         <dt className="govuk-summary-list__key">
-                          <DTEContent>Sex registered at birth</DTEContent>
+                          <DTEContent>Name</DTEContent>
                         </dt>
                         <dd className="govuk-summary-list__value">
                           <DTEContent>
-                            {userData.sex.sexAtBirth.charAt(0).toUpperCase() +
-                              userData.sex.sexAtBirth.slice(1)}
+                            {userData.name.firstName} {userData.name.lastName}{" "}
                           </DTEContent>
                         </dd>
                         <dd className="govuk-summary-list__actions">
                           <DTELinkButton
-                            onClick={() => setCurrentDisplayPage("sex")}
+                            onClick={() => setCurrentDisplayPage("name")}
                           >
-                            Change{" "}
-                            <StyledHiddenText>
-                              sex registered at birth
-                            </StyledHiddenText>
+                            Change <StyledHiddenText>name</StyledHiddenText>
                           </DTELinkButton>
                         </dd>
                       </div>
+                    )}
+                    <div className="govuk-summary-list__row">
+                      <dt className="govuk-summary-list__key">
+                        <DTEContent>Home address</DTEContent>
+                      </dt>
+                      <dd className="govuk-summary-list__value">
+                        {formatDisplayAddress(userData.address)}
+                      </dd>
+                      <dd className="govuk-summary-list__actions">
+                        <DTELinkButton
+                          onClick={() => setCurrentDisplayPage("address")}
+                        >
+                          Change{" "}
+                          <StyledHiddenText>home address</StyledHiddenText>
+                        </DTELinkButton>
+                      </dd>
+                    </div>
+                    <div className="govuk-summary-list__row">
+                      <dt className="govuk-summary-list__key">
+                        <DTEContent>Phone number</DTEContent>
+                      </dt>
+                      <dd className="govuk-summary-list__value">
+                        {userData.mobile.mobileNumber ||
+                        userData.mobile.landlineNumber ? (
+                          <>
+                            {userData.mobile.mobileNumber && (
+                              <DTEContent>
+                                Mobile
+                                <br />
+                                {userData.mobile.mobileNumber}
+                              </DTEContent>
+                            )}
+                            {userData.mobile.landlineNumber && (
+                              <DTEContent>
+                                Landline
+                                <br />
+                                {userData.mobile.landlineNumber}
+                              </DTEContent>
+                            )}
+                          </>
+                        ) : (
+                          <DTEContent>Not provided</DTEContent>
+                        )}
+                      </dd>
+                      <dd className="govuk-summary-list__actions">
+                        <DTELinkButton
+                          onClick={() => setCurrentDisplayPage("mobile")}
+                        >
+                          Change{" "}
+                          <StyledHiddenText>phone number</StyledHiddenText>
+                        </DTELinkButton>
+                      </dd>
+                    </div>
+                    {!isNhsLinkedAccount && (
                       <div className="govuk-summary-list__row">
                         <dt className="govuk-summary-list__key">
-                          <DTEContent>
-                            Gender identity same as sex registered at birth
-                          </DTEContent>
+                          <DTEContent>Date of birth</DTEContent>
                         </dt>
                         <dd className="govuk-summary-list__value">
                           <DTEContent>
-                            {userData.gender.genderAtBirth === "noSay"
-                              ? "Prefer not to say"
-                              : userData.gender.genderAtBirth
-                                  .charAt(0)
-                                  .toUpperCase() +
-                                userData.gender.genderAtBirth.slice(1)}
+                            {new Date(
+                              parseInt(userData.dob.year, 10),
+                              parseInt(userData.dob.month, 10) - 1,
+                              parseInt(userData.dob.day, 10),
+                              12
+                            ).toLocaleString("en-GB", {
+                              day: "numeric",
+                              month: "long",
+                              year: "numeric",
+                            })}
                           </DTEContent>
                         </dd>
                         <dd className="govuk-summary-list__actions">
                           <DTELinkButton
-                            onClick={() => setCurrentDisplayPage("gender")}
+                            onClick={() => setCurrentDisplayPage("dob")}
                           >
                             Change{" "}
-                            <StyledHiddenText>
-                              gender identity same as sex registered at birth
-                            </StyledHiddenText>
+                            <StyledHiddenText>date of birth</StyledHiddenText>
                           </DTELinkButton>
                         </dd>
                       </div>
+                    )}
+                    <div className="govuk-summary-list__row">
+                      <dt className="govuk-summary-list__key">
+                        <DTEContent>Sex registered at birth</DTEContent>
+                      </dt>
+                      <dd className="govuk-summary-list__value">
+                        <DTEContent>
+                          {userData.sex.sexAtBirth.charAt(0).toUpperCase() +
+                            userData.sex.sexAtBirth.slice(1)}
+                        </DTEContent>
+                      </dd>
+                      <dd className="govuk-summary-list__actions">
+                        <DTELinkButton
+                          onClick={() => setCurrentDisplayPage("sex")}
+                        >
+                          Change{" "}
+                          <StyledHiddenText>
+                            sex registered at birth
+                          </StyledHiddenText>
+                        </DTELinkButton>
+                      </dd>
+                    </div>
+                    <div className="govuk-summary-list__row">
+                      <dt className="govuk-summary-list__key">
+                        <DTEContent>
+                          Gender identity same as sex registered at birth
+                        </DTEContent>
+                      </dt>
+                      <dd className="govuk-summary-list__value">
+                        <DTEContent>
+                          {userData.gender.genderAtBirth === "noSay"
+                            ? "Prefer not to say"
+                            : userData.gender.genderAtBirth
+                                .charAt(0)
+                                .toUpperCase() +
+                              userData.gender.genderAtBirth.slice(1)}
+                        </DTEContent>
+                      </dd>
+                      <dd className="govuk-summary-list__actions">
+                        <DTELinkButton
+                          onClick={() => setCurrentDisplayPage("gender")}
+                        >
+                          Change{" "}
+                          <StyledHiddenText>
+                            gender identity same as sex registered at birth
+                          </StyledHiddenText>
+                        </DTELinkButton>
+                      </dd>
+                    </div>
+                    <div className="govuk-summary-list__row">
+                      <dt className="govuk-summary-list__key">
+                        <DTEContent>Ethnic group</DTEContent>
+                      </dt>
+                      <dd className="govuk-summary-list__value">
+                        <DTEContent>
+                          [userData.ethnicity1.ethnicity].longName
+                        </DTEContent>
+                      </dd>
+                      <dd className="govuk-summary-list__actions">
+                        <DTELinkButton
+                          onClick={() => setCurrentDisplayPage("ethnicity1")}
+                        >
+                          Change{" "}
+                          <StyledHiddenText>ethnic group</StyledHiddenText>
+                        </DTELinkButton>
+                      </dd>
+                    </div>
+                    <div className="govuk-summary-list__row">
+                      <dt className="govuk-summary-list__key">
+                        <DTEContent>Ethnic background</DTEContent>
+                      </dt>
+                      <dd className="govuk-summary-list__value">
+                        <DTEContent>
+                          {userData.ethnicity2.background}
+                        </DTEContent>
+                      </dd>
+                      <dd className="govuk-summary-list__actions">
+                        <DTELinkButton
+                          onClick={() => setCurrentDisplayPage("ethnicity2")}
+                        >
+                          Change{" "}
+                          <StyledHiddenText>ethnic background</StyledHiddenText>
+                        </DTELinkButton>
+                      </dd>
+                    </div>
+                    <div className="govuk-summary-list__row">
+                      <dt className="govuk-summary-list__key">
+                        <DTEContent>Long-term conditions or illness</DTEContent>
+                      </dt>
+                      <dd className="govuk-summary-list__value">
+                        <DTEContent>
+                          {userData.disability.disability === "notSaying"
+                            ? "Prefer not to say"
+                            : userData.disability.disability
+                                .charAt(0)
+                                .toUpperCase() +
+                              userData.disability.disability.slice(1)}
+                        </DTEContent>
+                      </dd>
+                      <dd className="govuk-summary-list__actions">
+                        <DTELinkButton
+                          onClick={() => setCurrentDisplayPage("disability")}
+                        >
+                          Change{" "}
+                          <StyledHiddenText>
+                            long-term conditions or illness
+                          </StyledHiddenText>
+                        </DTELinkButton>
+                      </dd>
+                    </div>
+                    {userData.disability.disability === "yes" ? (
                       <div className="govuk-summary-list__row">
                         <dt className="govuk-summary-list__key">
-                          <DTEContent>Ethnic group</DTEContent>
+                          <DTEContent>
+                            Reduced ability to carry out daily activities
+                          </DTEContent>
                         </dt>
                         <dd className="govuk-summary-list__value">
                           <DTEContent>
                             {
-                              (
-                                Utils.ConvertResponseToDTEResponse(
-                                  ethnicityResponse
-                                )?.content as Ethnicities
-                              )[userData.ethnicity1.ethnicity].longName
+                              userData.disabilityDescription
+                                .disabilityDescription
                             }
                           </DTEContent>
                         </dd>
                         <dd className="govuk-summary-list__actions">
                           <DTELinkButton
-                            onClick={() => setCurrentDisplayPage("ethnicity1")}
-                          >
-                            Change{" "}
-                            <StyledHiddenText>ethnic group</StyledHiddenText>
-                          </DTELinkButton>
-                        </dd>
-                      </div>
-                      <div className="govuk-summary-list__row">
-                        <dt className="govuk-summary-list__key">
-                          <DTEContent>Ethnic background</DTEContent>
-                        </dt>
-                        <dd className="govuk-summary-list__value">
-                          <DTEContent>
-                            {userData.ethnicity2.background}
-                          </DTEContent>
-                        </dd>
-                        <dd className="govuk-summary-list__actions">
-                          <DTELinkButton
-                            onClick={() => setCurrentDisplayPage("ethnicity2")}
+                            onClick={() => setCurrentDisplayPage("disability2")}
                           >
                             Change{" "}
                             <StyledHiddenText>
-                              ethnic background
+                              reduced ability to carry out daily activities
                             </StyledHiddenText>
                           </DTELinkButton>
                         </dd>
                       </div>
-                      <div className="govuk-summary-list__row">
-                        <dt className="govuk-summary-list__key">
-                          <DTEContent>
-                            Long-term conditions or illness
-                          </DTEContent>
-                        </dt>
-                        <dd className="govuk-summary-list__value">
-                          <DTEContent>
-                            {userData.disability.disability === "notSaying"
-                              ? "Prefer not to say"
-                              : userData.disability.disability
-                                  .charAt(0)
-                                  .toUpperCase() +
-                                userData.disability.disability.slice(1)}
-                          </DTEContent>
-                        </dd>
-                        <dd className="govuk-summary-list__actions">
-                          <DTELinkButton
-                            onClick={() => setCurrentDisplayPage("disability")}
-                          >
-                            Change{" "}
-                            <StyledHiddenText>
-                              long-term conditions or illness
-                            </StyledHiddenText>
-                          </DTELinkButton>
-                        </dd>
-                      </div>
-                      {userData.disability.disability === "yes" ? (
-                        <div className="govuk-summary-list__row">
-                          <dt className="govuk-summary-list__key">
-                            <DTEContent>
-                              Reduced ability to carry out daily activities
-                            </DTEContent>
-                          </dt>
-                          <dd className="govuk-summary-list__value">
-                            <DTEContent>
-                              {
-                                userData.disabilityDescription
-                                  .disabilityDescription
-                              }
-                            </DTEContent>
-                          </dd>
-                          <dd className="govuk-summary-list__actions">
-                            <DTELinkButton
-                              onClick={() =>
-                                setCurrentDisplayPage("disability2")
-                              }
-                            >
-                              Change{" "}
-                              <StyledHiddenText>
-                                reduced ability to carry out daily activities
-                              </StyledHiddenText>
-                            </DTELinkButton>
-                          </dd>
-                        </div>
-                      ) : (
-                        <></>
-                      )}
-                    </dl>
-                  </>
-                )}
+                    ) : (
+                      <></>
+                    )}
+                  </dl>
+                </>
+              )}
               {error && (
                 <ErrorMessageContainer
                   axiosErrors={[error]}
@@ -962,15 +927,6 @@ const UpdateParticipant = () => {
                   axiosErrors={[detailsPostError]}
                   DTEAxiosErrors={[
                     Utils.ConvertResponseToDTEResponse(detailsPostResponse)
-                      ?.errors,
-                  ]}
-                />
-              )}
-              {ethnicityError && (
-                <ErrorMessageContainer
-                  axiosErrors={[ethnicityError]}
-                  DTEAxiosErrors={[
-                    Utils.ConvertResponseToDTEResponse(ethnicityResponse)
                       ?.errors,
                   ]}
                 />
@@ -1121,9 +1077,6 @@ const UpdateParticipant = () => {
                   </DTEContent>
                 </>
               }
-              referenceDataEthnicities={
-                Utils.ConvertResponseToDTEResponse(ethnicityResponse)?.content
-              }
             />
           </Container>
         )}
@@ -1153,9 +1106,6 @@ const UpdateParticipant = () => {
               nextButtonText="Save"
               showCancelButton
               ethnicity={userData?.ethnicity1.ethnicity || "other"}
-              referenceDataEthnicities={
-                Utils.ConvertResponseToDTEResponse(ethnicityResponse)?.content
-              }
             />
           </Container>
         )}
