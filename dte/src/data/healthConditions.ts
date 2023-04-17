@@ -1,4 +1,4 @@
-export const healthConditions = [
+const healthConditions = [
   "Acanthosis nigricans",
   "Achalasia",
   "Acid and chemical burns",
@@ -1233,3 +1233,5 @@ export const healthConditions = [
   "Smoking",
   "Supplements",
 ];
+
+export default healthConditions;

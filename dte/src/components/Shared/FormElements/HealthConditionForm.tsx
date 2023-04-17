@@ -9,7 +9,7 @@ import DTEDetails from "../UI/DTEDetails/DTEDetails";
 import FormBaseProps from "./FormBaseProps";
 import DTEForwardLookup from "../UI/DTEForwardLookup/DTEForwardLookup";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
-import { healthConditions } from "../../../data/healthConditions";
+import healthConditions from "../../../data/healthConditions";
 
 export type HealthConditionFormData = {
   conditions: string[];
