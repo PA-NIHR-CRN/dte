@@ -384,7 +384,7 @@ export default function Footer() {
               src={nihrlogo}
               id="NihrLogo"
               className="regional-logos img-responsive"
-              alt="National Insitute for Health Research"
+              alt="National Institute for Health and Care Research"
             />
           </a>
         </div>
@@ -423,13 +423,13 @@ export default function Footer() {
             href="https://healthandcareresearchwales.org/"
             target="_blank"
             rel="noreferrer"
-            aria-label="Health and Care Rearch Wales"
+            aria-label="Health and Care Research Wales"
             className="footerImage HCWLogoContainer"
           >
             <img
               src={HCRwaleslogo}
               className="regional-logos img-responsive"
-              alt="Health and Care Rearch Wales"
+              alt="Health and Care Research Wales"
             />
           </a>
         </div>
