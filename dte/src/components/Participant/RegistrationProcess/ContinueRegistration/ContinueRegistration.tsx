@@ -47,7 +47,6 @@ import YouAreNowRegisteredForm from "./Forms/YouAreNowRegisteredForm";
 import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import { AuthContext } from "../../../../context/AuthContext";
 import LoadingIndicator from "../../../Shared/LoadingIndicator/LoadingIndicator";
-import ErrorMessageContainer from "../../../Shared/ErrorMessageContainer/ErrorMessageContainer";
 import Utils from "../../../../Helper/Utils";
 import ConsentForm from "../StartRegistrationProcess/Stepper/Forms/ConsentForm";
 
@@ -531,7 +530,7 @@ const ContinueRegistration = () => {
     }
   };
 
-  const [{ response, loading: loadingDetails, error }] = useAxiosFetch(
+  const [{ response, loading: loadingDetails }] = useAxiosFetch(
     {
       url: `${process.env.REACT_APP_BASE_API}/participants/details`,
       method: "GET",
