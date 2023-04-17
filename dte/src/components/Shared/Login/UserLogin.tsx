@@ -64,6 +64,7 @@ const UserLogin = () => {
     isAuthenticatedRole,
     logOutToken,
     token,
+    saveToken,
   } = useContext(AuthContext);
 
   const [loginResponse, setLoginResponse] = useState<
@@ -100,7 +101,8 @@ const UserLogin = () => {
     const result = Utils.ConvertResponseToDTEResponse(res);
     setLoginResponse(result);
     if (result?.isSuccess) {
-      history.push(`/Login#id_token=${result?.content}`);
+      saveToken(result?.content);
+      history.push("/");
     }
   };
 
