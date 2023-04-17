@@ -580,12 +580,6 @@ const ContinueRegistration = () => {
   return isUserConsented || !isNhsLinkedAccount ? (
     <DocumentTitle title={pageTitle}>
       <>
-        <ErrorMessageContainer
-          axiosErrors={[error]}
-          DTEAxiosErrors={[
-            Utils.ConvertResponseToDTEResponse(response)?.errors,
-          ]}
-        />
         {isInNHSApp && (
           <>
             {!(activeStep === 0 || activeStep === 9 || activeStep === 10) && (
@@ -609,7 +603,7 @@ const ContinueRegistration = () => {
             </div>
           </>
         )}
-        {response && Utils.ConvertResponseToDTEResponse(response)?.isSuccess && (
+        {response && (
           <>
             <div role="complementary">
               {activeStep < 10 && (

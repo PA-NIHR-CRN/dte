@@ -44,7 +44,6 @@ import Utils from "../../../Helper/Utils";
 import Disability2Form, {
   Disability2FormData,
 } from "../../Shared/FormElements/Disability2Form";
-import { Ethnicities } from "../../../types/ReferenceData/Ethnicities";
 import { AuthContext } from "../../../context/AuthContext";
 
 interface UserDataState {
