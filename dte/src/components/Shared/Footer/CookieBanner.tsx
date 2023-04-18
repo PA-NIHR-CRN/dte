@@ -22,7 +22,7 @@ const CookieBanner = () => {
   const [cookieBannerHide, setCookieBannerHide] = useState(true);
 
   useEffect(() => {
-    if (cookiesAccepted === "true") {
+    if (cookiesAccepted != null && cookiesAccepted.includes("true")) {
       ReactGA.initialize("UA-125366174-4");
       reactGTMModule.initialize(tagManagerArgs);
       hotjar.initialize(3226374, 6);
@@ -35,8 +35,9 @@ const CookieBanner = () => {
   const handleAcceptCookie = () => {
     setCookiesAccepted("true");
 
-    Cookies.set("cookiesAccepted", "true", {
+    Cookies.set("cookiesAccepted", "true-20221221", {
       path: "/",
+      domain: ".bepartofresearch-dev.nihr.ac.uk",
       expires: 182.5,
     });
     setConfirmationBannerShow(true);
@@ -45,8 +46,9 @@ const CookieBanner = () => {
   const handleRejectCookie = () => {
     setCookiesAccepted("false");
 
-    Cookies.set("cookiesAccepted", "false", {
+    Cookies.set("cookiesAccepted", "false-20221221", {
       path: "/",
+      domain: ".bepartofresearch-dev.nihr.ac.uk",
       expires: 182.5,
     });
     setConfirmationBannerShow(true);
