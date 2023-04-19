@@ -45,6 +45,7 @@ import Disability2Form, {
   Disability2FormData,
 } from "../../Shared/FormElements/Disability2Form";
 import { AuthContext } from "../../../context/AuthContext";
+import ethnicities from "../../../data/ethnicityData";
 
 interface UserDataState {
   address: AddressFormData;
@@ -808,7 +809,7 @@ const UpdateParticipant = () => {
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
-                          [userData.ethnicity1.ethnicity].longName
+                          {ethnicities[userData.ethnicity1.ethnicity].longName}
                         </DTEContent>
                       </dd>
                       <dd className="govuk-summary-list__actions">
