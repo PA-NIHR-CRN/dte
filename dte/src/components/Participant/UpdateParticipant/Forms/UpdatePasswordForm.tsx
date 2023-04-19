@@ -365,7 +365,9 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
                         ` and$1`
                       );
 
-                      const isCommonPassword = commonPasswords.includes(value);
+                      const isCommonPassword = commonPasswords.includes(
+                        value.toLowerCase()
+                      );
                       if (isCommonPassword) {
                         finalErrorMessage +=
                           ". You cannot use a commonly used password";
