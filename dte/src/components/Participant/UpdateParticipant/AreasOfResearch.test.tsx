@@ -1,12 +1,6 @@
 import { axe, toHaveNoViolations } from "jest-axe";
 import { createServer, Server } from "miragejs";
-import {
-  render,
-  screen,
-  fireEvent,
-  waitForElementToBeRemoved,
-  waitFor,
-} from "../../../Helper/test-utils";
+import { render, screen, fireEvent, waitFor } from "../../../Helper/test-utils";
 import AreasOfResearch from "./AreasOfResearch";
 
 expect.extend(toHaveNoViolations);
@@ -156,9 +150,6 @@ describe("Areas Of Research display tests", () => {
 describe("Update Areas Of Research", () => {
   it("must remove an existing area of research", async () => {
     render(<AreasOfResearch />);
-    await waitForElementToBeRemoved(
-      await screen.findByText(/Loading health conditions.../)
-    );
     const editorButtons = await screen.findAllByRole("button");
     expect(editorButtons).toHaveLength(6);
     expect(editorButtons[0]).toHaveTextContent("Achalasia");
@@ -203,9 +194,6 @@ describe("Update Areas Of Research", () => {
   });
   it("must add a new area of research", async () => {
     render(<AreasOfResearch />);
-    await waitForElementToBeRemoved(
-      await screen.findByText(/Loading health conditions.../)
-    );
     const areaEditor = await screen.findByLabelText("Areas of research");
     await waitFor(() => {
       fireEvent.change(areaEditor, {

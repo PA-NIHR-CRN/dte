@@ -47,7 +47,6 @@ import YouAreNowRegisteredForm from "./Forms/YouAreNowRegisteredForm";
 import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import { AuthContext } from "../../../../context/AuthContext";
 import LoadingIndicator from "../../../Shared/LoadingIndicator/LoadingIndicator";
-import ErrorMessageContainer from "../../../Shared/ErrorMessageContainer/ErrorMessageContainer";
 import Utils from "../../../../Helper/Utils";
 import ConsentForm from "../StartRegistrationProcess/Stepper/Forms/ConsentForm";
 
@@ -139,18 +138,10 @@ const ContinueRegistration = () => {
     "aria-label": "Registration",
   };
 
-  const [{ response, loading: demographicsLoading, error }] = useAxiosFetch(
-    {
-      url: `${process.env.REACT_APP_BASE_API}/referencedata/demographics/ethnicity`,
-      method: "GET",
-    },
-    { useCache: true, manual: false }
-  );
-
   useEffect(() => {
     setLoadingText("Loading questions...");
-    setLoading(demographicsLoading || false);
-  }, [demographicsLoading, setLoadingText, setLoading]);
+    setLoading(loading || false);
+  }, [loading, setLoadingText, setLoading]);
 
   const handleRegistrationDataChange = (
     incommingFormData:
@@ -352,9 +343,6 @@ const ContinueRegistration = () => {
             initialStateData={registrationData.ethnicity1FormData}
             showCancelButton
             onCancel={handleCancel}
-            referenceDataEthnicities={
-              Utils.ConvertResponseToDTEResponse(response)?.content
-            }
           />
         ) : (
           <Ethnicity1Form
@@ -362,9 +350,6 @@ const ContinueRegistration = () => {
               handleRegistrationDataChange(data, "ethnicity1FormData")
             }
             initialStateData={registrationData.ethnicity1FormData}
-            referenceDataEthnicities={
-              Utils.ConvertResponseToDTEResponse(response)?.content
-            }
           />
         );
       case 5:
@@ -375,9 +360,6 @@ const ContinueRegistration = () => {
             }
             initialStateData={registrationData.ethnicity2FormData}
             ethnicity={registrationData.ethnicity1FormData.ethnicity}
-            referenceDataEthnicities={
-              Utils.ConvertResponseToDTEResponse(response)?.content
-            }
             showCancelButton={changing}
             onCancel={handleCancel}
             nextButtonText={nextButtonText}
@@ -548,27 +530,25 @@ const ContinueRegistration = () => {
     }
   };
 
-  const [{ response: userDetailsResponse, loading: isUserDetailsLoading }] =
-    useAxiosFetch(
-      {
-        url: `${process.env.REACT_APP_BASE_API}/participants/details`,
-        method: "GET",
-      },
-      {
-        manual: false,
-        useCache: false,
-      }
-    );
+  const [{ response, loading: loadingDetails }] = useAxiosFetch(
+    {
+      url: `${process.env.REACT_APP_BASE_API}/participants/details`,
+      method: "GET",
+    },
+    {
+      manual: false,
+      useCache: false,
+    }
+  );
 
   useEffect(() => {
-    if (userDetailsResponse) {
-      const consent =
-        Utils.ConvertResponseToDTEResponse(userDetailsResponse)?.content;
+    if (response) {
+      const consent = Utils.ConvertResponseToDTEResponse(response)?.content;
       if (consent) {
         setIsUserConsented(consent.consentRegistration);
       }
     }
-  }, [userDetailsResponse]);
+  }, [response]);
 
   const [, postConsent] = useAxiosFetch(
     {
@@ -592,19 +572,13 @@ const ContinueRegistration = () => {
   };
 
   // if consent is not given, redirect to the consent page
-  if (isUserDetailsLoading) {
+  if (loadingDetails) {
     return <LoadingIndicator />;
   }
 
   return isUserConsented || !isNhsLinkedAccount ? (
     <DocumentTitle title={pageTitle}>
       <>
-        <ErrorMessageContainer
-          axiosErrors={[error]}
-          DTEAxiosErrors={[
-            Utils.ConvertResponseToDTEResponse(response)?.errors,
-          ]}
-        />
         {isInNHSApp && (
           <>
             {!(activeStep === 0 || activeStep === 9 || activeStep === 10) && (
@@ -628,7 +602,7 @@ const ContinueRegistration = () => {
             </div>
           </>
         )}
-        {response && Utils.ConvertResponseToDTEResponse(response)?.isSuccess && (
+        {response && (
           <>
             <div role="complementary">
               {activeStep < 10 && (

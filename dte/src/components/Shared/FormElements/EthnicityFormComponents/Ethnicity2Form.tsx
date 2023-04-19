@@ -24,7 +24,6 @@ interface Ethnicity2FormProps extends FormBaseProps {
   initialStateData: Ethnicity2FormData;
   onDataChange: (data: Ethnicity2FormData) => void;
   ethnicity: string;
-  referenceDataEthnicities?: Ethnicities;
 }
 
 const ConditionalInput = (props: {
@@ -52,23 +51,21 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
     onCancel,
     ethnicity,
     instructionText,
-    referenceDataEthnicities,
   } = props;
 
   let labelElement: ReactNode;
-  const resolvedEthnicities: Ethnicities =
-    referenceDataEthnicities || ethnicitiesStatic;
+  const ethnicities: Ethnicities = ethnicitiesStatic;
   const theme = useTheme();
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
     ? "h2"
     : "h1";
   const [otherText, setOtherText] = useState<string | undefined>(
-    !resolvedEthnicities.asian.backgrounds
+    !ethnicities.asian.backgrounds
       .concat(
-        resolvedEthnicities.black.backgrounds,
-        resolvedEthnicities.mixed.backgrounds,
-        resolvedEthnicities.white.backgrounds,
-        resolvedEthnicities.other.backgrounds
+        ethnicities.black.backgrounds,
+        ethnicities.mixed.backgrounds,
+        ethnicities.white.backgrounds,
+        ethnicities.other.backgrounds
       )
       .includes(initialStateData.background) &&
       initialStateData.background !== "other" &&
@@ -87,12 +84,12 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
     reValidateMode: "onSubmit",
     defaultValues: {
       background:
-        !resolvedEthnicities.asian.backgrounds
+        !ethnicities.asian.backgrounds
           .concat(
-            resolvedEthnicities.black.backgrounds,
-            resolvedEthnicities.mixed.backgrounds,
-            resolvedEthnicities.white.backgrounds,
-            resolvedEthnicities.other.backgrounds
+            ethnicities.black.backgrounds,
+            ethnicities.mixed.backgrounds,
+            ethnicities.white.backgrounds,
+            ethnicities.other.backgrounds
           )
           .includes(initialStateData.background) &&
         initialStateData.background !== ""
@@ -121,7 +118,7 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
       <DTEHeader
         as="h1"
         $variant={headerVariant}
-      >{`Which of the following best describes your ${resolvedEthnicities[ethnicity].longName} background?`}</DTEHeader>
+      >{`Which of the following best describes your ${ethnicities[ethnicity].longName} background?`}</DTEHeader>
     );
   } else if (instructionText) {
     labelElement = instructionText;
@@ -160,9 +157,9 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
                   error={error?.message}
                   onChange={onChange}
                 >
-                  {resolvedEthnicities[ethnicity] && (
+                  {ethnicities[ethnicity] && (
                     <>
-                      {resolvedEthnicities[ethnicity].backgrounds.map(
+                      {ethnicities[ethnicity].backgrounds.map(
                         (backgroundName: string) => {
                           return (
                             <Radios.Radio
@@ -180,12 +177,12 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
                       <Radios.Radio
                         value="other"
                         defaultChecked={
-                          !resolvedEthnicities.asian.backgrounds
+                          !ethnicities.asian.backgrounds
                             .concat(
-                              resolvedEthnicities.black.backgrounds,
-                              resolvedEthnicities.mixed.backgrounds,
-                              resolvedEthnicities.white.backgrounds,
-                              resolvedEthnicities.other.backgrounds,
+                              ethnicities.black.backgrounds,
+                              ethnicities.mixed.backgrounds,
+                              ethnicities.white.backgrounds,
+                              ethnicities.other.backgrounds,
                               [""]
                             )
                             .includes(value)

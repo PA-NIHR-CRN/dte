@@ -8,11 +8,8 @@ import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEDetails from "../UI/DTEDetails/DTEDetails";
 import FormBaseProps from "./FormBaseProps";
 import DTEForwardLookup from "../UI/DTEForwardLookup/DTEForwardLookup";
-import useAxiosFetch from "../../../hooks/useAxiosFetch";
-import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
-import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContainer";
-import Utils from "../../../Helper/Utils";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
+import healthConditions from "../../../data/healthConditions";
 
 export type HealthConditionFormData = {
   conditions: string[];
@@ -38,20 +35,6 @@ const HealthConditionForm = (props: HealthConditionFormProps) => {
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
     ? "h2"
     : "h1";
-  const [
-    {
-      response: healthConditionsResponse,
-      loading: healthConditionsLoading,
-      error: healthConditionsError,
-    },
-  ] = useAxiosFetch(
-    {
-      url: `${process.env.REACT_APP_BASE_API}/referencedata/health/healthconditions`,
-    },
-    {
-      useCache: false,
-    }
-  );
 
   const { control, handleSubmit } = useForm({
     mode: "onTouched",
@@ -92,64 +75,43 @@ const HealthConditionForm = (props: HealthConditionFormProps) => {
       )}
       <Grid container>
         <Grid item xs={12} sm={10} md={9} lg={8} xl={8}>
-          {(healthConditionsError ||
-            Utils.ConvertResponseToDTEResponse(healthConditionsResponse)
-              ?.isSuccess === false) && (
-            <Grid item xs={12}>
-              <ErrorMessageContainer
-                DTEAxiosErrors={[
-                  Utils.ConvertResponseToDTEResponse(healthConditionsResponse)
-                    ?.errors,
-                ]}
-                axiosErrors={[healthConditionsError]}
-              />
-            </Grid>
-          )}
-          {healthConditionsLoading ? (
-            <LoadingIndicator text="Loading health conditions..." />
-          ) : (
-            <form onSubmit={handleSubmit(onDataChange)} noValidate>
-              <Controller
-                control={control}
-                name="conditions"
-                render={({ field: { value, onChange } }) => (
-                  <DTEForwardLookup
-                    id="healthConditions"
-                    values={value}
-                    data={
-                      Utils.ConvertResponseToDTEResponse(
-                        healthConditionsResponse
-                      )?.content
-                    }
-                    onSelectedValuesChange={onChange}
-                    label="Areas of research"
-                  />
-                )}
-              />
-              {!hideInfo && (
-                <DTEDetails summary="Why we are asking this question">
-                  <>
-                    <DTEContent>
-                      We will use this information to contact you about studies
-                      you may be interested in based on the areas of research
-                      you select here.
-                    </DTEContent>
-                    <DTEContent>
-                      If you do not select any areas of research we will only be
-                      able to let you know about a limited number of studies
-                      based on the other information you have given during your
-                      account creation.
-                    </DTEContent>
-                  </>
-                </DTEDetails>
+          <form onSubmit={handleSubmit(onDataChange)} noValidate>
+            <Controller
+              control={control}
+              name="conditions"
+              render={({ field: { value, onChange } }) => (
+                <DTEForwardLookup
+                  id="healthConditions"
+                  values={value}
+                  data={healthConditions}
+                  onSelectedValuesChange={onChange}
+                  label="Areas of research"
+                />
               )}
-              <FormNavigationButtons
-                nextButtonText={nextButtonText || "Continue"}
-                showCancelButton={showCancelButton || false}
-                onCancel={onCancel}
-              />
-            </form>
-          )}
+            />
+            {!hideInfo && (
+              <DTEDetails summary="Why we are asking this question">
+                <>
+                  <DTEContent>
+                    We will use this information to contact you about studies
+                    you may be interested in based on the areas of research you
+                    select here.
+                  </DTEContent>
+                  <DTEContent>
+                    If you do not select any areas of research we will only be
+                    able to let you know about a limited number of studies based
+                    on the other information you have given during your account
+                    creation.
+                  </DTEContent>
+                </>
+              </DTEDetails>
+            )}
+            <FormNavigationButtons
+              nextButtonText={nextButtonText || "Continue"}
+              showCancelButton={showCancelButton || false}
+              onCancel={onCancel}
+            />
+          </form>
         </Grid>
       </Grid>
     </>
