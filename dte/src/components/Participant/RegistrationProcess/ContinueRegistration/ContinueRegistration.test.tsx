@@ -17,59 +17,15 @@ beforeEach(() => {
   ReactGA.testModeAPI.resetCalls();
   server = createServer({
     routes() {
-      this.get(
-        `${process.env.REACT_APP_BASE_API}/referencedata/demographics/ethnicity`,
-        () => {
-          return {
-            content: {
-              asian: {
-                longName: "Asian or Asian British",
-                shortName: "asian",
-                description:
-                  "Includes any Asian background, for example, Bangladeshi, Chinese, Indian, Pakistani or other South or East Asian",
-                backgrounds: ["Bangladeshi", "Chinese", "Indian", "Pakistani"],
-              },
-              black: {
-                longName: "Black, African, Black British or Caribbean",
-                shortName: "black",
-                description: "Includes any Black background",
-                backgrounds: ["African", "Black British", "Caribbean"],
-              },
-              mixed: {
-                longName: "Mixed or multiple ethnic groups",
-                shortName: "mixed",
-                description: "Includes any Mixed background",
-                backgrounds: [
-                  "Asian and White",
-                  "Black African and White",
-                  "Black Caribbean and White",
-                ],
-              },
-              white: {
-                longName: "White",
-                shortName: "white",
-                description: "Includes any White background",
-                backgrounds: [
-                  "British, English, Northern Irish, Scottish, or Welsh",
-                  "Irish",
-                  "Irish Traveller",
-                  "Roma",
-                ],
-              },
-              other: {
-                longName: "Other ethnic group",
-                shortName: "other",
-                description: "Includes Arab",
-                backgrounds: ["Arab"],
-              },
-            },
-            isSuccess: true,
-            errors: [],
-            conversationId: null,
-            version: 1,
-          };
-        }
-      );
+      this.get(`${process.env.REACT_APP_BASE_API}/participants/details`, () => {
+        return {
+          content: {},
+          isSuccess: true,
+          errors: [],
+          conversationId: null,
+          version: 1,
+        };
+      });
       this.get(`${process.env.REACT_APP_BASE_API}/participants/consent`, () => {
         return {
           content: true,
