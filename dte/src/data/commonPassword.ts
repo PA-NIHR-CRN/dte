@@ -1,5 +1,6 @@
 const commonPasswords = [
   "password",
+  "000000",
   "123456",
   "12345678",
   "admin",
@@ -103,6 +104,7 @@ const commonPasswords = [
   "admin12345678",
   "admin123456789",
   "admin1234567890",
+  "1q2w3e4r5t",
 ];
 
 export default commonPasswords;
