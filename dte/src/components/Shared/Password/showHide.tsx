@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FocusEvent, useState } from "react";
 
+import { ButtonProps } from "@mui/material";
 import { Button } from "nhsuk-react-components";
 import styled from "styled-components";
 import DTEInput from "../UI/DTEInput/DTEInput";
@@ -23,15 +24,19 @@ type Props = {
   spellcheck?: boolean;
 };
 
+type StyledButtonProps = {
+  error?: string;
+} & ButtonProps;
+
 const StyledDiv = styled.div`
   position: relative;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(Button)<StyledButtonProps>`
   position: absolute;
   display: block;
   right: 0;
-  bottom: 0;
+  bottom: ${({ error }) => (error ? "1px" : "0")};
   height: 2.15em;
   padding: 0;
   min-width: fit-content;
@@ -105,6 +110,7 @@ const PasswordShowHide = ({
         className="nhsuk-button--secondary"
         onClick={handleClickShowPassword}
         aria-label={showPassword ? buttonAriaLabelHide : buttonAriaLabelShow}
+        error={error}
       >
         {showPassword ? "Hide" : "Show"}
       </StyledButton>
