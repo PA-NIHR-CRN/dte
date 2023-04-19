@@ -37,7 +37,7 @@ const CookieBanner = () => {
 
     Cookies.set("cookiesAccepted", "true-20221221", {
       path: "/",
-      domain: ".bepartofresearch-dev.nihr.ac.uk",
+      domain: ".bepartofresearch.nihr.ac.uk",
       expires: 182.5,
     });
     setConfirmationBannerShow(true);
@@ -48,7 +48,7 @@ const CookieBanner = () => {
 
     Cookies.set("cookiesAccepted", "false-20221221", {
       path: "/",
-      domain: ".bepartofresearch-dev.nihr.ac.uk",
+      domain: ".bepartofresearch.nihr.ac.uk",
       expires: 182.5,
     });
     setConfirmationBannerShow(true);
