@@ -12,6 +12,7 @@ import ErrorMessageContainer from "../../../../../Shared/ErrorMessageContainer/E
 import ErrorMessageSummary from "../../../../../Shared/ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../../../../../Shared/Password/showHide";
 import ThreeWords from "../../../../../Shared/Password/threeWords";
+import commonPasswords from "../../../../../../data/commonPassword";
 
 export type PasswordFormData = {
   password: string;
@@ -300,6 +301,13 @@ const PasswordForm = (props: PasswordFormProps) => {
                         /,([^,]*)$/,
                         ` and$1`
                       );
+
+                      const isCommonPassword = commonPasswords.includes(value);
+                      if (isCommonPassword) {
+                        finalErrorMessage +=
+                          ". You cannot use a commonly used password";
+                        validationSuccess = false;
+                      }
 
                       if (passwordPolicy.allowedPasswordSymbols) {
                         finalErrorMessage = finalErrorMessage.replace(
