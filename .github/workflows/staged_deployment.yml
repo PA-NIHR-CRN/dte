@@ -1,0 +1,186 @@
+name: Staged Deployment
+
+on:
+
+  workflow_dispatch:
+
+env:
+  REACT_APP_NHS_LOGIN_CLIENT_ID: ${{secrets.REACT_APP_NHS_LOGIN_CLIENT_ID}}
+  REACT_APP_NHS_LOGIN_RESPONSE_TYPE: ${{secrets.REACT_APP_NHS_LOGIN_RESPONSE_TYPE}}
+  REACT_APP_NHS_LOGIN_SCOPE: ${{secrets.REACT_APP_NHS_LOGIN_SCOPE}}
+jobs:
+  dev_build_test_deploy:
+    runs-on: ubuntu-latest
+    environment: DEV
+    env:
+      REACT_APP_BASE_API: ${{secrets.REACT_APP_BASE_API_DEV}}
+      REACT_APP_LOGOUT_URL: ${{secrets.LOGOUT_URL_DEV}}
+      REACT_APP_RESEARCHER_AUTH_URL: ${{secrets.RESEARCHER_AUTH_URL_DEV}}
+      REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL_DEV}}
+      REACT_APP_NHS_SETTINGS_URL: ${{secrets.REACT_APP_NHS_SETTINGS_URL_SANDPIT}}
+      REACT_APP_NHS_LOGIN_URL: ${{secrets.REACT_APP_NHS_LOGIN_URL_SANDPIT}}
+    steps:
+      # env variables are set here
+      - uses: actions/checkout@v2
+      - name: Configure AWS credentials - All
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_VS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_VS_ACCESS_KEY_SECRET }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: "yarn"
+          cache-dependency-path: "yarn.lock"
+      - name: Yarn Install
+        run: yarn install
+      - name: Runing  ESLint
+        run: yarn lintnofix
+      - name: Build Files
+        run: yarn build
+      - name: Running Unit Tests
+        run: yarn test
+
+      - name: Deploy to S3 - Dev
+        if: github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          aws s3 sync ./build/ s3://$AWS_S3_BUCKET --delete
+          aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == '${{ secrets.VS_NIHR_URL_DEV }}'].Id" --output text) --paths '/*'
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_DEV_BUCKET_NAME }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: build
+
+  QA_deploy:
+    runs-on: ubuntu-latest
+    needs: dev_build_test_deploy
+    environment: QA
+    env:
+      REACT_APP_BASE_API: ${{secrets.REACT_APP_BASE_API_QA}}
+      REACT_APP_LOGOUT_URL: ${{secrets.LOGOUT_URL_QA}}
+      REACT_APP_RESEARCHER_AUTH_URL: ${{secrets.RESEARCHER_AUTH_URL_QA}}
+      REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL_QA}}
+      REACT_APP_NHS_SETTINGS_URL: ${{secrets.REACT_APP_NHS_SETTINGS_URL_SANDPIT}}
+      REACT_APP_NHS_LOGIN_URL: ${{secrets.REACT_APP_NHS_LOGIN_URL_SANDPIT}}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+      - name: Configure AWS credentials - All
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy to S3 - QA
+        shell: bash
+        run: |
+          aws s3 sync ./build/ s3://$AWS_S3_BUCKET --delete
+          aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == '${{ secrets.VS_NIHR_URL_QA }}'].Id" --output text) --paths '/*'
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_QA_BUCKET_NAME }}
+
+  UAT_deploy:
+    runs-on: ubuntu-latest
+    needs: QA_deploy
+    environment: UAT
+    env:
+      REACT_APP_BASE_API: ${{secrets.REACT_APP_BASE_API_UAT}}
+      REACT_APP_LOGOUT_URL: ${{secrets.LOGOUT_URL_UAT}}
+      REACT_APP_RESEARCHER_AUTH_URL: ${{secrets.RESEARCHER_AUTH_URL_UAT}}
+      REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL_UAT}}
+      REACT_APP_NHS_SETTINGS_URL: ${{secrets.REACT_APP_NHS_SETTINGS_URL_SANDPIT}}
+      REACT_APP_NHS_LOGIN_URL: ${{secrets.REACT_APP_NHS_LOGIN_URL_SANDPIT}}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+      - name: Configure AWS credentials - All
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy to S3 - UAT
+        shell: bash
+        run: |
+          aws s3 sync ./build/ s3://$AWS_S3_BUCKET --delete
+          aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == '${{ secrets.VS_NIHR_URL_UAT }}'].Id" --output text) --paths '/*'
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_UAT_BUCKET_NAME }}
+
+  OAT_deploy:
+    runs-on: ubuntu-latest
+    needs: UAT_deploy
+    environment: OAT
+    env:
+      REACT_APP_BASE_API: ${{secrets.REACT_APP_BASE_API_OAT}}
+      REACT_APP_LOGOUT_URL: ${{secrets.LOGOUT_URL_OAT}}
+      REACT_APP_RESEARCHER_AUTH_URL: ${{secrets.RESEARCHER_AUTH_URL_OAT}}
+      REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL_OAT}}
+      REACT_APP_NHS_SETTINGS_URL: ${{secrets.REACT_APP_NHS_SETTINGS_URL_INTEGRATION}}
+      REACT_APP_NHS_LOGIN_URL: ${{secrets.REACT_APP_NHS_LOGIN_URL_INTEGRATION}}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+      - name: Configure AWS credentials - All
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy to S3 - OAT
+        shell: bash
+        run: |
+          aws s3 sync ./build/ s3://$AWS_S3_BUCKET --delete
+          aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == '${{ secrets.VS_NIHR_URL_OAT }}'].Id" --output text) --paths '/*'
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_OAT_BUCKET_NAME }}
+
+  PROD_deploy:
+    runs-on: ubuntu-latest
+    needs: OAT_deploy
+    environment: PROD
+    env:
+      REACT_APP_BASE_API: ${{secrets.REACT_APP_BASE_API_PROD}}
+      REACT_APP_LOGOUT_URL: ${{secrets.LOGOUT_URL_PROD}}
+      REACT_APP_RESEARCHER_AUTH_URL: ${{secrets.RESEARCHER_AUTH_URL_PROD}}
+      REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL_PROD}}
+      REACT_APP_NHS_SETTINGS_URL: ${{secrets.REACT_APP_NHS_SETTINGS_URL_PROD}}
+      REACT_APP_NHS_LOGIN_URL: ${{secrets.REACT_APP_NHS_LOGIN_URL_PROD}}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+      - name: Configure AWS credentials - All
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy to S3 - PROD
+        shell: bash
+        run: |
+          aws s3 sync ./build/ s3://$AWS_S3_BUCKET --delete
+          aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == '${{ secrets.VS_NIHR_URL_PROD }}'].Id" --output text) --paths '/*'
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_PROD_BUCKET_NAME }}
