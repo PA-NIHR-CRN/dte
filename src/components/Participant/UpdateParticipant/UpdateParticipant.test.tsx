@@ -988,9 +988,7 @@ describe("Update participant Gender Identification", () => {
     });
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
-    expect(header).toHaveTextContent(
-      "Sex and gender identity"
-    );
+    expect(header).toHaveTextContent("Sex and gender identity");
     const updateGroupButtons = await screen.findAllByRole("button");
     const yesOption = await screen.findByLabelText("Yes");
     const noOption = await screen.findByLabelText("No");

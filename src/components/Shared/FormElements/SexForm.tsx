@@ -25,7 +25,6 @@ interface SexFormProps extends FormBaseProps {
 
 const SexForm = (props: SexFormProps) => {
   let questionHeader: ReactNode;
-  let genderLabelElement: ReactNode;
   const {
     onDataChange,
     initialStateData,
