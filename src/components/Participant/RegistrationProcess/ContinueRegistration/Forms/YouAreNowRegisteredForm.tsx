@@ -36,7 +36,7 @@ const YouAreNowRegisteredForm = (props: YouAreNowRegisteredFormProps) => {
   }
 
   let gender = false;
-  switch (data.genderFormData.genderAtBirth) {
+  switch (data.sexFormData.genderAtBirth) {
     case "yes":
       gender = true;
       break;
@@ -64,7 +64,7 @@ const YouAreNowRegisteredForm = (props: YouAreNowRegisteredFormProps) => {
         },
         sexRegisteredAtBirth: data.sexFormData.sexAtBirth,
         genderIsSameAsSexRegisteredAtBirth:
-          data.genderFormData.genderAtBirth === "noSay" ? null : gender,
+          data.sexFormData.genderAtBirth === "noSay" ? null : gender,
         ethnicGroup: data.ethnicity1FormData.ethnicity,
         ethnicBackground: data.ethnicity2FormData.background,
         disability,

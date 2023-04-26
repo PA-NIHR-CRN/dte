@@ -159,14 +159,14 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
           </dt>
           <dd className="govuk-summary-list__value">
             <DTEContent>
-              {initialStateData.genderFormData.genderAtBirth === "no" && "No"}
-              {initialStateData.genderFormData.genderAtBirth === "yes" && "Yes"}
-              {initialStateData.genderFormData.genderAtBirth === "noSay" &&
+              {initialStateData.sexFormData.genderAtBirth === "no" && "No"}
+              {initialStateData.sexFormData.genderAtBirth === "yes" && "Yes"}
+              {initialStateData.sexFormData.genderAtBirth === "noSay" &&
                 "Prefer not to say"}
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
-            <DTELinkButton onClick={() => changeStep(3)}>
+            <DTELinkButton onClick={() => changeStep(2)}>
               Change{" "}
               <StyledCheckHiddenText>
                 gender identity same as sex registered at birth
