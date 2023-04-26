@@ -93,6 +93,7 @@ const DTECheckList = memo(
           hint={hint}
           error={error}
           onKeyDown={(e) => escKeyPressed(e)}
+          role="application"
         >
           {checkBoxElements}
         </StyledCheckboxes>
@@ -105,6 +106,7 @@ const DTECheckList = memo(
           id={id}
           hint={hint}
           onKeyDown={(e) => escKeyPressed(e)}
+          role="application"
         >
           {checkBoxElements}
         </StyledCheckboxes>
