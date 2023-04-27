@@ -153,7 +153,8 @@ const UpdateParticipant = () => {
         );
         setGaURL("/MyAccount/PersonalDetails/phonenumber");
         break;
-      case "sex" || "gender":
+      case "sex":
+      case "gender":
         setPageTitle(
           "What is your sex? - Volunteer Account - Be Part of Research"
         );
@@ -439,7 +440,8 @@ const UpdateParticipant = () => {
           updateCancelState: true,
         };
       }
-      case "Sex": {
+      case "Sex":
+      case "gender": {
         const sexData: SexFormData = data as SexFormData;
         return { data: { ...userData, sex: sexData }, screen: "main" };
       }

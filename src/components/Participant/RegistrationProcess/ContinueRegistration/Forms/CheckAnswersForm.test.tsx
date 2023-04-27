@@ -296,7 +296,7 @@ describe("Check Answers Form Layout", () => {
     const changeButton = screen.getAllByText("Change")[4];
     fireEvent.click(changeButton);
     await waitFor(() => {
-      expect(mockChangeStep).toHaveBeenCalledWith(4);
+      expect(mockChangeStep).toHaveBeenCalledWith(3);
     });
   });
 });
