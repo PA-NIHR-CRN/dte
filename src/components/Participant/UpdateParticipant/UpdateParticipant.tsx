@@ -440,7 +440,7 @@ const UpdateParticipant = () => {
           updateCancelState: true,
         };
       }
-      case "Sex":{
+      case "Sex": {
         const sexData: SexFormData = data as SexFormData;
         return { data: { ...userData, sex: sexData }, screen: "main" };
       }
