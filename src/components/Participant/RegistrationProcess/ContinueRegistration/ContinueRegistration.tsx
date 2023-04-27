@@ -286,7 +286,6 @@ const ContinueRegistration = () => {
         );
       case 2:
         return (
-          <div>
             <SexForm
               onDataChange={(data: SexFormData) =>
                 handleRegistrationDataChange(data, "sexFormData")
@@ -296,7 +295,6 @@ const ContinueRegistration = () => {
               onCancel={handleCancel}
               nextButtonText={nextButtonText}
             />
-          </div>
         );
       case 3:
         return changing ? (
