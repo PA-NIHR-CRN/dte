@@ -286,15 +286,15 @@ const ContinueRegistration = () => {
         );
       case 2:
         return (
-            <SexForm
-              onDataChange={(data: SexFormData) =>
-                handleRegistrationDataChange(data, "sexFormData")
-              }
-              initialStateData={registrationData.sexFormData}
-              showCancelButton={changing}
-              onCancel={handleCancel}
-              nextButtonText={nextButtonText}
-            />
+          <SexForm
+            onDataChange={(data: SexFormData) =>
+              handleRegistrationDataChange(data, "sexFormData")
+            }
+            initialStateData={registrationData.sexFormData}
+            showCancelButton={changing}
+            onCancel={handleCancel}
+            nextButtonText={nextButtonText}
+          />
         );
       case 3:
         return changing ? (
