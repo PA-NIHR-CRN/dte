@@ -1,7 +1,7 @@
 import { Grid } from "@material-ui/core";
 import { useContext } from "react";
 import styled from "styled-components";
-import bporlogo from "../../../images/BPoR_logo.svg";
+import bporlogo from "../../../images/BPoR_NIHR_colour-RGB.svg";
 import nhslogo from "../../../images/NHS_logo.svg";
 import { AppContext } from "../../../context/AppContext";
 import DTEBackLink from "../UI/DTEBackLink/DTEBackLink";
@@ -56,7 +56,9 @@ const StyledLogoLink = styled.a`
       border-color: ${(Props) => Props.theme.NIHR.Yellow};
       box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.75);
       text-decoration: none;
-      `;
+    }
+  }
+`;
 
 const StyledSkipToMain = styled.a`
   & {
@@ -85,8 +87,18 @@ const StyledSkipToMain = styled.a`
 const BPORLogo = styled.img.attrs({
   src: `${bporlogo}`,
   alt: "Be Part Of Research Logo",
-  height: "70",
-})``;
+})`
+  width: 411px;
+  @media (max-width: 767px) {
+    width: 320px;
+  }
+  @media (max-width: 576px) {
+    width: 280px;
+  }
+  @media (max-width: 440px) {
+    width: 216px;
+  }
+`;
 
 const NHSLogo = styled.img.attrs({
   src: `${nhslogo}`,

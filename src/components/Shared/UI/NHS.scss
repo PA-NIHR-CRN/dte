@@ -258,11 +258,19 @@ line-height: 30px;
 
   }
 
-  @media(max-width: 640px){
+  @media(max-width: 650px){
   #NHSLogo {
     height: 36px;
     margin: 15px;
     width: 90px; 
+
+  }
+}
+
+@media (max-width: 500px) {
+  #NHSLogo {
+    height: 30px;
+    margin: 15px;
 
   }
 }
