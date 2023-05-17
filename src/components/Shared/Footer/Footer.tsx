@@ -11,7 +11,7 @@ import {
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
-import bporlogo from "../../../images/BPoR-Landscape-WHITE.svg";
+import bporlogo from "../../../images/BPoR_logo_WO.svg";
 import HSClogo from "../../../images/HSCLogo.svg";
 import nihrlogo from "../../../images/NIHR-Logo.svg";
 import HCRwaleslogo from "../../../images/Health-and-Care-Research-Wales-full-colour-logo-CMYK.svg";
@@ -48,6 +48,7 @@ const BPORLogo = styled.img.attrs(() => {
   max-height: 200px;
   padding: 2.2rem;
   max-width: 100%;
+  width: 100%;
 `;
 
 const BPORLink = styled.a<IsMobileProps>`
