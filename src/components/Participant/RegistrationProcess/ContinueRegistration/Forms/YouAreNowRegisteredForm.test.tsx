@@ -24,8 +24,6 @@ const testData: ContinueRegistrationState = {
   },
   sexFormData: {
     sexAtBirth: "male",
-  },
-  genderFormData: {
     genderAtBirth: "noSay",
   },
   ethnicity1FormData: {

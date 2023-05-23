@@ -291,7 +291,7 @@ const RegsitrationProcess = () => {
               steps={14}
               LinearProgressProps={{
                 ...LinearProps,
-                value: calculatePercentageComplete(activeStep, 14),
+                value: calculatePercentageComplete(activeStep, 13),
               }}
               ref={stepperRef}
             />
@@ -312,7 +312,7 @@ const RegsitrationProcess = () => {
               </Grid>
               <Grid item>
                 <DTEContent aria-hidden>
-                  {calculatePercentageComplete(activeStep, 14)}% complete
+                  {calculatePercentageComplete(activeStep, 13)}% complete
                 </DTEContent>
               </Grid>
             </PercentageGrid>

@@ -10,7 +10,6 @@ import { DisabilityFormData } from "../../Shared/FormElements/DisabilityForm";
 import { DOBFormData } from "../../Shared/FormElements/DOBForm";
 import { Ethnicity1FormData } from "../../Shared/FormElements/EthnicityFormComponents/Ethnicity1Form";
 import { Ethnicity2FormData } from "../../Shared/FormElements/EthnicityFormComponents/Ethnicity2Form";
-import { GenderFormData } from "../../Shared/FormElements/GenderForm";
 import HealthConditionForm, {
   HealthConditionFormData,
 } from "../../Shared/FormElements/HealthConditionForm";
@@ -29,7 +28,6 @@ interface UserDataState {
   sex: SexFormData;
   ethnicity1: Ethnicity1FormData;
   ethnicity2: Ethnicity2FormData;
-  gender: GenderFormData;
   healthConditions: HealthConditionFormData;
 }
 
@@ -103,18 +101,16 @@ const AreasOfResearch = () => {
           },
           sex: {
             sexAtBirth: response.sexRegisteredAtBirth,
+            genderAtBirth: parseTriStateBoolean(
+              response.genderIsSameAsSexRegisteredAtBirth,
+              "noSay"
+            ),
           },
           ethnicity1: {
             ethnicity: response.ethnicGroup,
           },
           ethnicity2: {
             background: response.ethnicBackground,
-          },
-          gender: {
-            genderAtBirth: parseTriStateBoolean(
-              response.genderIsSameAsSexRegisteredAtBirth,
-              "noSay"
-            ),
           },
           healthConditions: {
             conditions: response.healthConditionInterests || [],
@@ -163,9 +159,9 @@ const AreasOfResearch = () => {
           ).toISOString(),
           sexRegisteredAtBirth: userData.sex.sexAtBirth,
           genderIsSameAsSexRegisteredAtBirth:
-            userData.gender.genderAtBirth === "noSay"
+            userData.sex.genderAtBirth === "noSay"
               ? null
-              : userData.gender.genderAtBirth === "yes",
+              : userData.sex.genderAtBirth === "yes",
           ethnicGroup: userData.ethnicity1.ethnicity,
           ethnicBackground: userData.ethnicity2.background,
           disability:

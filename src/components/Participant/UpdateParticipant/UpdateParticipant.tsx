@@ -31,9 +31,6 @@ import Ethnicity1Form, {
 import Ethnicity2Form, {
   Ethnicity2FormData,
 } from "../../Shared/FormElements/EthnicityFormComponents/Ethnicity2Form";
-import GenderForm, {
-  GenderFormData,
-} from "../../Shared/FormElements/GenderForm";
 import { HealthConditionFormData } from "../../Shared/FormElements/HealthConditionForm";
 import MobileNumberForm, {
   MobileFormData,
@@ -57,7 +54,6 @@ interface UserDataState {
   sex: SexFormData;
   ethnicity1: Ethnicity1FormData;
   ethnicity2: Ethnicity2FormData;
-  gender: GenderFormData;
   healthConditions: HealthConditionFormData;
 }
 
@@ -158,16 +154,11 @@ const UpdateParticipant = () => {
         setGaURL("/MyAccount/PersonalDetails/phonenumber");
         break;
       case "sex":
+      case "gender":
         setPageTitle(
           "What is your sex? - Volunteer Account - Be Part of Research"
         );
         setGaURL("/MyAccount/PersonalDetails/sex");
-        break;
-      case "gender":
-        setPageTitle(
-          "Is the gender you identify with the same as your sex registered at birth? - Volunteer Account - Be Part of Research"
-        );
-        setGaURL("/MyAccount/PersonalDetails/gender");
         break;
       case "ethnicity1":
         setPageTitle(
@@ -316,18 +307,16 @@ const UpdateParticipant = () => {
           },
           sex: {
             sexAtBirth: DTEDemographicsResponse.sexRegisteredAtBirth,
+            genderAtBirth: parseTriStateBoolean(
+              DTEDemographicsResponse.genderIsSameAsSexRegisteredAtBirth,
+              "noSay"
+            ),
           },
           ethnicity1: {
             ethnicity: DTEDemographicsResponse.ethnicGroup,
           },
           ethnicity2: {
             background: DTEDemographicsResponse.ethnicBackground,
-          },
-          gender: {
-            genderAtBirth: parseTriStateBoolean(
-              DTEDemographicsResponse.genderIsSameAsSexRegisteredAtBirth,
-              "noSay"
-            ),
           },
           healthConditions: {
             conditions: DTEDemographicsResponse.healthConditionInterests || [],
@@ -376,7 +365,6 @@ const UpdateParticipant = () => {
     | SexFormData
     | Ethnicity1FormData
     | Ethnicity2FormData
-    | GenderFormData
     | HealthConditionFormData;
 
   type MappedDataType = {
@@ -483,10 +471,6 @@ const UpdateParticipant = () => {
           updateCancelState: true,
         };
       }
-      case "Gender": {
-        const genderData: GenderFormData = data as GenderFormData;
-        return { data: { ...userData, gender: genderData }, screen: "main" };
-      }
       default: {
         return { data: userData, screen: "main" };
       }
@@ -542,9 +526,9 @@ const UpdateParticipant = () => {
             ).toISOString(),
             sexRegisteredAtBirth: mappedData.data.sex.sexAtBirth,
             genderIsSameAsSexRegisteredAtBirth:
-              mappedData.data.gender.genderAtBirth === "noSay"
+              mappedData.data.sex.genderAtBirth === "noSay"
                 ? null
-                : mappedData.data.gender.genderAtBirth === "yes",
+                : mappedData.data.sex.genderAtBirth === "yes",
             ethnicGroup: mappedData.data.ethnicity1.ethnicity,
             ethnicBackground: mappedData.data.ethnicity2.background,
             disability:
@@ -573,7 +557,6 @@ const UpdateParticipant = () => {
             address: mappedData.data.address,
             dob: mappedData.data.dob,
             sex: mappedData.data.sex,
-            gender: mappedData.data.gender,
             ethnicity1: mappedData.data.ethnicity1,
             ethnicity2: mappedData.data.ethnicity2,
             disability: mappedData.data.disability,
@@ -784,12 +767,12 @@ const UpdateParticipant = () => {
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
-                          {userData.gender.genderAtBirth === "noSay"
+                          {userData.sex.genderAtBirth === "noSay"
                             ? "Prefer not to say"
-                            : userData.gender.genderAtBirth
+                            : userData.sex.genderAtBirth
                                 .charAt(0)
                                 .toUpperCase() +
-                              userData.gender.genderAtBirth.slice(1)}
+                              userData.sex.genderAtBirth.slice(1)}
                         </DTEContent>
                       </dd>
                       <dd className="govuk-summary-list__actions">
@@ -1132,28 +1115,6 @@ const UpdateParticipant = () => {
             />
           </Container>
         )}
-        {currentPage === "gender" && (
-          <Container>
-            <GenderForm
-              onDataChange={(data) => {
-                const mappedData = mapDataToStateObject("Gender", data);
-                if (mappedData) {
-                  handleUpdateUserDemographics(mappedData);
-                }
-              }}
-              onCancel={() => {
-                setCurrentDisplayPage("main");
-              }}
-              initialStateData={
-                userData?.gender || {
-                  genderAtBirth: "",
-                }
-              }
-              nextButtonText="Save"
-              showCancelButton
-            />
-          </Container>
-        )}
         {currentPage === "dob" && (
           <Container>
             <DOBForm
@@ -1193,6 +1154,7 @@ const UpdateParticipant = () => {
               initialStateData={
                 userData?.sex || {
                   sexAtBirth: "",
+                  genderAtBirth: "",
                 }
               }
               nextButtonText="Save"

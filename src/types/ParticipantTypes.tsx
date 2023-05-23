@@ -10,7 +10,6 @@ import { Ethnicity2FormData } from "../components/Shared/FormElements/EthnicityF
 import { DisabilityFormData } from "../components/Shared/FormElements/DisabilityForm";
 import { Disability2FormData } from "../components/Shared/FormElements/Disability2Form";
 import { HealthConditionFormData } from "../components/Shared/FormElements/HealthConditionForm";
-import { GenderFormData } from "../components/Shared/FormElements/GenderForm";
 import { ConsentFormData } from "../components/Participant/RegistrationProcess/StartRegistrationProcess/Stepper/Forms/ConsentForm";
 
 export interface StudyInfo {
@@ -45,7 +44,6 @@ export type ContinueRegistrationState = {
   mobileFormData: MobileFormData;
   addressFormData: AddressFormData;
   sexFormData: SexFormData;
-  genderFormData: GenderFormData;
   ethnicity1FormData: Ethnicity1FormData;
   ethnicity2FormData: Ethnicity2FormData;
   disabilityFormData: DisabilityFormData;

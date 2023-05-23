@@ -16,7 +16,6 @@ import { DisabilityFormData } from "../../../../Shared/FormElements/DisabilityFo
 import { Disability2FormData } from "../../../../Shared/FormElements/Disability2Form";
 import { HealthConditionFormData } from "../../../../Shared/FormElements/HealthConditionForm";
 import { SexFormData } from "../../../../Shared/FormElements/SexForm";
-import { GenderFormData } from "../../../../Shared/FormElements/GenderForm";
 
 expect.extend(toHaveNoViolations);
 
@@ -38,9 +37,6 @@ const blankTestData: ContinueRegistrationState = {
   sexFormData: {
     sexAtBirth: "",
   } as SexFormData,
-  genderFormData: {
-    genderAtBirth: "",
-  } as GenderFormData,
   ethnicity1FormData: {
     ethnicity: "",
   } as Ethnicity1FormData,
@@ -75,8 +71,6 @@ const populatedTestData: ContinueRegistrationState = {
   },
   sexFormData: {
     sexAtBirth: "male",
-  },
-  genderFormData: {
     genderAtBirth: "noSay",
   },
   ethnicity1FormData: {
@@ -302,7 +296,7 @@ describe("Check Answers Form Layout", () => {
     const changeButton = screen.getAllByText("Change")[4];
     fireEvent.click(changeButton);
     await waitFor(() => {
-      expect(mockChangeStep).toHaveBeenCalledWith(4);
+      expect(mockChangeStep).toHaveBeenCalledWith(3);
     });
   });
 });

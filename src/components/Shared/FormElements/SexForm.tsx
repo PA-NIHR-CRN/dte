@@ -14,6 +14,7 @@ import Utils from "../../../Helper/Utils";
 
 export type SexFormData = {
   sexAtBirth: string;
+  genderAtBirth: string;
 };
 
 interface SexFormProps extends FormBaseProps {
@@ -23,7 +24,7 @@ interface SexFormProps extends FormBaseProps {
 }
 
 const SexForm = (props: SexFormProps) => {
-  let labelElement: ReactNode;
+  let questionHeader: ReactNode;
   const {
     onDataChange,
     initialStateData,
@@ -48,19 +49,26 @@ const SexForm = (props: SexFormProps) => {
     reValidateMode: "onSubmit",
     defaultValues: {
       sexAtBirth: initialStateData.sexAtBirth,
+      genderAtBirth: initialStateData.genderAtBirth,
     },
   });
 
+  const sexHeader = <DTEHeader as="h2">What is your sex?</DTEHeader>;
+  const genderHeader = (
+    <DTEHeader as="h2">
+      Is the gender you identify with the same as your sex registered at birth?
+    </DTEHeader>
+  );
   if (!hideHeader) {
-    labelElement = (
+    questionHeader = (
       <DTEHeader as="h1" $variant={headerVariant}>
-        What is your sex?
+        Sex and gender identity
       </DTEHeader>
     );
   } else if (instructionText) {
-    labelElement = instructionText;
+    questionHeader = instructionText;
   } else {
-    labelElement = (
+    questionHeader = (
       <DTEContent>
         Studies may need this information for [reason] - we respect that your
         identifying gender might be different.
@@ -78,6 +86,7 @@ const SexForm = (props: SexFormProps) => {
     <>
       <Grid container>
         <Grid item xs={12}>
+          {questionHeader}
           <form onSubmit={handleSubmit(onDataChange)} noValidate>
             <Controller
               control={control}
@@ -89,11 +98,11 @@ const SexForm = (props: SexFormProps) => {
                 <DTERadio
                   id="sexRadio"
                   name="SexAtBirth"
-                  label={labelElement}
+                  label={sexHeader}
                   error={error?.message}
                   infoText={
                     !hideNextQuestionText
-                      ? "We’ll ask about your gender on the next screen. This question is about your sex registered at birth."
+                      ? "This question is about your sex registered at birth."
                       : ""
                   }
                   onChange={onChange}
@@ -101,8 +110,7 @@ const SexForm = (props: SexFormProps) => {
                 >
                   {!hideNextQuestionText && (
                     <DTEContent aria-hidden="true">
-                      We’ll ask about your gender on the next screen. This
-                      question is about your sex registered at birth.
+                      This question is about your sex registered at birth.
                     </DTEContent>
                   )}
                   <Radios.Radio
@@ -130,16 +138,71 @@ const SexForm = (props: SexFormProps) => {
                 },
               }}
             />
+            <Controller
+              control={control}
+              name="genderAtBirth"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <DTERadio
+                  id="genderRadio"
+                  name="GenderAtBirth"
+                  label={genderHeader}
+                  error={error?.message}
+                  onChange={onChange}
+                >
+                  <Radios.Radio
+                    value="yes"
+                    defaultChecked={value === "yes"}
+                    aria-label="Yes, the gender I identify with is the same as my registered sex at birth"
+                    aria-labelledby=""
+                  >
+                    Yes
+                  </Radios.Radio>
+                  <Radios.Radio
+                    value="no"
+                    defaultChecked={value === "no"}
+                    aria-label="No, the gender I identify with is not the same as my registered sex at birth"
+                    aria-labelledby=""
+                  >
+                    No
+                  </Radios.Radio>
+                  <DTEContent $radioList>or</DTEContent>
+                  <Radios.Radio
+                    value="noSay"
+                    defaultChecked={value === "noSay"}
+                    aria-label="I prefer not to say whether the gender I identify with is the same as my registered sex at birth "
+                    aria-labelledby=""
+                  >
+                    Prefer not to say
+                  </Radios.Radio>
+                </DTERadio>
+              )}
+              rules={{
+                validate: (value) => {
+                  if (value === "")
+                    return "Select whether the gender you identify with is the same as your sex registered at birth";
+                  return true;
+                },
+              }}
+            />
             {!hideInfo && (
-              <>
-                <DTEDetails summary="Why we are asking this question">
-                  <DTEContent>
-                    Some studies can only include people of a specific sex, we
-                    may use this information when contacting you about studies
-                    you may be interested in.
-                  </DTEContent>
-                </DTEDetails>
-              </>
+              <DTEDetails summary="Why we are asking this question">
+                <DTEContent>
+                  Some studies can only include people of a specific sex, or may
+                  be focused on people whose gender differs from their assigned
+                  sex at birth. We may use this information when contacting you
+                  about studies you may be interested in.
+                </DTEContent>
+                <DTEContent>
+                  We&apos;re also asking this so we can make sure there is a mix
+                  of different people taking part in research. We want to make
+                  sure everyone 18 and over in the UK feels able to take part in
+                  research if they wish to and look to improve our service where
+                  our data shows this may not be the case.
+                </DTEContent>
+              </DTEDetails>
             )}
             <FormNavigationButtons
               nextButtonText={nextButtonText || "Continue"}

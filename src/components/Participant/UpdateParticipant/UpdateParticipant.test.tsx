@@ -903,12 +903,12 @@ describe("Update participant Sex", () => {
     });
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
-    expect(header).toHaveTextContent("What is your sex?");
+    expect(header).toHaveTextContent("Sex and gender identity");
     const updateGroupButtons = await screen.findAllByRole("button");
     const femaleOption = await screen.findByLabelText("Female");
     const maleOption = await screen.findByLabelText("Male");
     const nextQuestion = screen.queryByText(
-      "We’ll ask about your gender on the next screen. This question is about your sex registered at birth."
+      "This question is about your sex registered at birth."
     );
     const extraInfoDetails = await screen.findByText(
       "Why we are asking this question"
@@ -927,7 +927,7 @@ describe("Update participant Sex", () => {
 
     fireEvent.click(extraInfoDetails);
     const explanation1 = await screen.findByText(
-      /Some studies can only include people of a specific sex, we may use this information when contacting you about studies you may be interested in./
+      /Some studies can only include people of a specific sex, or may be focused on people whose gender differs from their assigned sex at birth./
     );
     expect(explanation1).toBeInTheDocument();
   });
@@ -984,13 +984,11 @@ describe("Update participant Gender Identification", () => {
     render(<UpdateParticipant />);
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
-      fireEvent.click(changeButtons[5]);
+      fireEvent.click(changeButtons[4]);
     });
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
-    expect(header).toHaveTextContent(
-      "Is the gender you identify with the same as your sex registered at birth?"
-    );
+    expect(header).toHaveTextContent("Sex and gender identity");
     const updateGroupButtons = await screen.findAllByRole("button");
     const yesOption = await screen.findByLabelText("Yes");
     const noOption = await screen.findByLabelText("No");
@@ -1015,17 +1013,13 @@ describe("Update participant Gender Identification", () => {
 
     fireEvent.click(extraInfoDetails);
     const explanation1 = await screen.findByText(
-      /We're asking this so we can make sure there is a mix of different people taking part in research./
+      /Some studies can only include people of a specific sex, or may be focused on people whose gender differs from their assigned sex at birth./
     );
     const explanation2 = await screen.findByText(
-      /We also want to make sure everyone 18 and over in the UK feels able to take part in research if they wish to./
-    );
-    const explanation3 = await screen.findByText(
-      /If we find that people, whose gender they identify with is not the same as the sex they were registered at birth, are not signing up to be contacted about research we will look at how to improve this./
+      /We're also asking this so we can make sure there is a mix of different people taking part in research./
     );
     expect(explanation1).toBeInTheDocument();
     expect(explanation2).toBeInTheDocument();
-    expect(explanation3).toBeInTheDocument();
   });
 
   // it("must correctly update a change to the Gender Identification", async () => {
@@ -1055,7 +1049,7 @@ describe("Update participant Gender Identification", () => {
     render(<UpdateParticipant />);
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
-      fireEvent.click(changeButtons[5]);
+      fireEvent.click(changeButtons[4]);
     });
 
     const updateGroupButtons = await screen.findAllByRole("button");
