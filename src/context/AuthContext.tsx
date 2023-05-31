@@ -81,7 +81,7 @@ export const AuthProvider = (props: { children: any }) => {
       console.debug(`refreshSession check: ${new Date().toISOString()}`);
       // eslint-disable-next-line no-console
       console.debug(`session.remaining: ${session.remaining}`);
-      if (session && session.isLoggedIn && !refreshSessionTokenLoading) {
+      if (session?.isLoggedIn && !refreshSessionTokenLoading) {
         refreshSessionToken();
       }
     }, sessionRefreshCheckInterval);
