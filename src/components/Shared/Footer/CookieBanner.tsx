@@ -37,7 +37,8 @@ const CookieBanner = () => {
 
     Cookies.set("cookiesAccepted", "true-20221221", {
       path: "/",
-      domain: ".bepartofresearch.nihr.ac.uk",
+      domain:
+        process.env.REACT_APP_COOKIE_DOMAIN || ".bepartofresearch.nihr.ac.uk",
       expires: 182.5,
     });
     setConfirmationBannerShow(true);
