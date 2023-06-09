@@ -72,7 +72,7 @@ describe("Home screen render tests", () => {
 
     expect(header).toBeInTheDocument();
     expect(header).toHaveTextContent("My account");
-    expect(links).toHaveLength(6);
+    expect(links).toHaveLength(7);
     expect(links[0]).toHaveAttribute("href", "/Participants/AccountSettings");
     expect(links[0]).toHaveTextContent("Account settings");
     expect(links[1]).toHaveAttribute("href", "/Participants/ResearchAreas");
@@ -81,12 +81,19 @@ describe("Home screen render tests", () => {
     expect(links[2]).toHaveTextContent("Personal details");
     expect(links[3]).toHaveAttribute(
       "href",
+      "https://bepartofresearch.nihr.ac.uk/results/search-results?query=&location="
+    );
+    expect(links[3]).toHaveTextContent(
+      "Search for studies on Be Part of Research"
+    );
+    expect(links[4]).toHaveAttribute(
+      "href",
       "/Participants/BePartOfResearchNewsletter"
     );
-    expect(links[3]).toHaveTextContent("Be Part of Research Newsletter");
-    expect(links[4]).toHaveAttribute("href", "/Participants/CloseAccount");
-    expect(links[4]).toHaveTextContent("Close your account");
-    expect(links[5]).toHaveAttribute("href", "/logout");
-    expect(links[5]).toHaveTextContent("Sign out");
+    expect(links[4]).toHaveTextContent("Be Part of Research Newsletter");
+    expect(links[5]).toHaveAttribute("href", "/Participants/CloseAccount");
+    expect(links[5]).toHaveTextContent("Close your account");
+    expect(links[6]).toHaveAttribute("href", "/logout");
+    expect(links[6]).toHaveTextContent("Sign out");
   });
 });
