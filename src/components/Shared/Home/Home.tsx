@@ -132,6 +132,23 @@ const Home = () => {
                 <DTEHR />
                 <StyledDTEHeader as="h2" $variant="h3">
                   <DTERouteLink
+                    to="https://bepartofresearch.nihr.ac.uk/results/search-results?query=&location="
+                    renderStyle="standard"
+                    external
+                    target="_blank"
+                  >
+                    Search for studies on Be Part of Research
+                    <ArrowForwardRoundedIcon />
+                  </DTERouteLink>
+                </StyledDTEHeader>
+                <StyledDTEContent>
+                  By clicking this link, you can search for trials and studies
+                  taking place for health conditions you are interested in, at
+                  locations that are easy for you to get to
+                </StyledDTEContent>
+                <DTEHR />
+                <StyledDTEHeader as="h2" $variant="h3">
+                  <DTERouteLink
                     to="/Participants/BePartOfResearchNewsletter"
                     renderStyle="standard"
                   >
