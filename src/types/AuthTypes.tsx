@@ -43,6 +43,8 @@ export interface AuthContextProps {
   isNhsLinkedAccount: boolean;
   setIsNhsLinkedAccount: (isNhsLinkedAccount: boolean) => void;
   getSessionExpiry: () => SessionExpiryInfo;
+  mfaDetails: string;
+  setMfaDetails: (mfaDetails: string) => void;
 }
 
 export interface DTEAxiosResponse {

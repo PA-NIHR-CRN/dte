@@ -16,6 +16,7 @@ import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContaine
 import Utils from "../../../Helper/Utils";
 import { DTEAxiosError } from "../../../types/AuthTypes";
 import ResendEmail from "../FormElements/CommonElements/ResendEmail";
+import UserLogin from "./UserLogin";
 
 // Component for the Redirect from IDG login
 const Verify = () => {
@@ -121,6 +122,7 @@ const Verify = () => {
               <DTEHeader as="h1" $variant={headerVariant}>
                 Your email address has been verified
               </DTEHeader>
+              <UserLogin />
               <Grid item xs={12} sm={10}>
                 <DTEContent>
                   Please sign in to continue registration.

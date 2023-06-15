@@ -65,6 +65,7 @@ const UserLogin = () => {
     logOutToken,
     token,
     saveToken,
+    setMfaDetails,
   } = useContext(AuthContext);
 
   const [loginResponse, setLoginResponse] = useState<
@@ -100,8 +101,26 @@ const UserLogin = () => {
     });
     const result = Utils.ConvertResponseToDTEResponse(res);
     setLoginResponse(result);
+    // check for MFA_Setup_Challenge error in the response
+    if (result?.errors?.some((e) => e.customCode === "Mfa_Setup_Challenge")) {
+      setMfaDetails(result?.errors[0]?.detail as string);
+      history.push("/MfaSmsSetup");
+    }
+    if (result?.errors?.some((e) => e.customCode === "Sms_Mfa_Challenge")) {
+      setMfaDetails(result?.errors[0]?.detail as string);
+      history.push("/MfaSmsChallenge");
+    }
+    if (
+      result?.errors?.some(
+        (e) => e.customCode === "Software_Token_Mfa_Challenge"
+      )
+    ) {
+      setMfaDetails(result?.errors[0]?.detail as string);
+      history.push("/MfaTokenChallenge");
+    }
     if (result?.isSuccess) {
       saveToken(result?.content);
+      setMfaDetails("");
       history.push("/");
     }
   };
@@ -150,33 +169,41 @@ const UserLogin = () => {
     return errors.map((error) => {
       if (error) {
         return error.map((e) => {
+          let detail;
+          const customCode = "NO_CHANGE";
+
+          if (e?.customCode === "Authentication_Not_Authorized") {
+            detail = (
+              <>
+                <p>
+                  Enter the email address and password for a registered user
+                  account.
+                </p>
+                <p>
+                  If you registered using NHS login use the back button above
+                  and select NHS login to sign in.
+                </p>
+              </>
+            );
+          } else if (e.customCode === "Mfa_Setup_Challenge") {
+            detail = (
+              <>
+                <p>You have not set up MFA for your account.</p>
+                <p>
+                  Please check your email for instructions on how to set up MFA.
+                </p>
+              </>
+            );
+          } else {
+            detail = (
+              <>You have not given permission to access your account. Please</>
+            );
+          }
+
           return {
             ...e,
-            ...(e?.customCode === "Authentication_Not_Authorized"
-              ? {
-                  detail: (
-                    <>
-                      <p>
-                        Enter the email address and password for a registered
-                        user account.
-                      </p>
-                      <p>
-                        If you registered using NHS login use the back button
-                        above and select NHS login to sign in.
-                      </p>
-                    </>
-                  ),
-                  customCode: "NO_CHANGE",
-                }
-              : {
-                  detail: (
-                    <>
-                      You have not given permission to access your account.
-                      Please
-                    </>
-                  ),
-                  customCode: "NO_CHANGE",
-                }),
+            detail,
+            customCode,
           };
         });
       }
@@ -220,15 +247,18 @@ const UserLogin = () => {
                   renderSummary={!isSubmitting}
                   errors={formErrors}
                 />
-                {!resendDTEResponse?.isSuccess && (
-                  <ErrorMessageContainer
-                    axiosErrors={[errorLogin, resendError]}
-                    DTEAxiosErrors={injectCallIntoError([
-                      loginResponse?.errors,
-                      resendDTEResponse?.errors,
-                    ])}
-                  />
-                )}
+                {!resendDTEResponse?.isSuccess &&
+                  !resendDTEResponse?.errors?.some(
+                    (e) => e.customCode === "Mfa_Setup_Challenge"
+                  ) && (
+                    <ErrorMessageContainer
+                      axiosErrors={[errorLogin, resendError]}
+                      DTEAxiosErrors={injectCallIntoError([
+                        loginResponse?.errors,
+                        resendDTEResponse?.errors,
+                      ])}
+                    />
+                  )}
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                   <Controller
                     control={control}

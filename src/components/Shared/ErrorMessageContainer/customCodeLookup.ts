@@ -67,6 +67,10 @@ const customCodeLookup = (code: string, detail?: string | ReactNode) => {
       return defaultErrorMessage;
     case "Unknown_Error_Getting_Addresses_From_LocationService_Error":
       return defaultErrorMessage;
+    case "MFA_Session_Expired":
+      return "Your session has expired. Please sign in again.";
+    case "MFA_Code_Mismatch":
+      return "The code you entered is incorrect. Please try again.";
     default:
       return defaultErrorMessage;
   }

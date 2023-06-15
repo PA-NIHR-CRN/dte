@@ -46,6 +46,7 @@ export const AuthProvider = (props: { children: any }) => {
   const [isNhsLinkedAccount, setIsNhsLinkedAccount] = useState<boolean>(false);
   const [token, setToken] = useState<string | null | undefined>(null);
   const [isInNHSApp, setIsInNHSApp] = useState<boolean>(false);
+  const [mfaDetails, setMfaDetails] = useState<string>("");
 
   const baseUrl = process.env.REACT_APP_BASE_API;
 
@@ -268,6 +269,8 @@ export const AuthProvider = (props: { children: any }) => {
         authenticatedLastname,
         isInNHSApp,
         getSessionExpiry,
+        mfaDetails,
+        setMfaDetails,
       }}
     >
       {/* eslint-disable-next-line react/destructuring-assignment */}
