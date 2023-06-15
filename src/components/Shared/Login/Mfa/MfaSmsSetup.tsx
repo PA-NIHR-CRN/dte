@@ -23,6 +23,9 @@ const MfaSmsSetup = () => {
   const history = useHistory();
   const [ukMobileChecked, setUkMobileChecked] = useState(false);
 
+  // if (!mfaDetails) {
+  //   history.push("/");
+  // }
   const {
     trigger,
     control,

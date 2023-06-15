@@ -108,6 +108,7 @@ const MfaTokenSetup = () => {
         <div>
           {qrSrc ? <img src={qrSrc} alt="qr code" /> : <LoadingIndicator />}
         </div>
+        <DTEContent>{}</DTEContent>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Controller
             control={control}
