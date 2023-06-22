@@ -122,15 +122,8 @@ const Verify = () => {
               <DTEHeader as="h1" $variant={headerVariant}>
                 Your email address has been verified
               </DTEHeader>
-              <UserLogin />
-              <Grid item xs={12} sm={10}>
-                <DTEContent>
-                  Please sign in to continue registration.
-                </DTEContent>
-                <DTERouteLink to="/Participants/Register/Continue/Questions">
-                  Sign in
-                </DTERouteLink>
-              </Grid>
+              <DTEContent>Please sign in to continue registration.</DTEContent>
+              <UserLogin nested />
             </>
           </DocumentTitle>
         )}

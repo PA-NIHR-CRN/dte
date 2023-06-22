@@ -41,7 +41,11 @@ const ButtonWrapper = styled.div`
   margin-top: 1rem;
 `;
 
-const UserLogin = () => {
+interface UserLoginProps {
+  nested?: boolean;
+}
+const UserLogin = (props: UserLoginProps) => {
+  const { nested } = props;
   const {
     control,
     handleSubmit,
@@ -212,143 +216,253 @@ const UserLogin = () => {
   };
 
   return (
-    <DocumentTitle title="Sign in or register - Volunteer Registration - Be Part of Research">
-      <>
-        {shouldRedirect && <Redirect push to={`/Login#id_token=${token}`} />}
-        {loadingLogin && <LoadingIndicator text="Signing In..." />}
-        {resendLoading && (
-          <LoadingIndicator text="Resending verification email..." />
-        )}
-        {!loadingLogin && !resendLoading && (
-          <Grid
-            container
-            alignItems="center"
-            direction="row"
-            justifyContent="flex-start"
-          >
-            <Grid item sm={2} md={1} />
-            <StyledGridElementLeft item xs={12} sm={10} md={11}>
-              <DTEBackLink href="/Participants/Options" linkText="Back" />
-            </StyledGridElementLeft>
-          </Grid>
-        )}
-        <Grid
-          container
-          justifyContent="center"
-          alignItems="center"
-          role="main"
-          id="main"
-        >
-          <LoginWrapper item xs={12} sm={8} md={6} lg={5} xl={4}>
-            {!loadingLogin && !resendLoading && !resendDTEResponse?.isSuccess && (
-              <>
-                <DTEHeader as="h1">Sign in to Be Part of Research</DTEHeader>
-                <ErrorMessageSummary
-                  renderSummary={!isSubmitting}
-                  errors={formErrors}
+    <>
+      {nested ? (
+        <>
+          {shouldRedirect && <Redirect push to={`/Login#id_token=${token}`} />}
+          {loadingLogin && <LoadingIndicator text="Signing In..." />}
+          {resendLoading && (
+            <LoadingIndicator text="Resending verification email..." />
+          )}
+          <ErrorMessageSummary
+            renderSummary={!isSubmitting}
+            errors={formErrors}
+          />
+          {!resendDTEResponse?.isSuccess &&
+            !resendDTEResponse?.errors?.some(
+              (e) => e.customCode === "Mfa_Setup_Challenge"
+            ) && (
+              <ErrorMessageContainer
+                axiosErrors={[errorLogin, resendError]}
+                DTEAxiosErrors={injectCallIntoError([
+                  loginResponse?.errors,
+                  resendDTEResponse?.errors,
+                ])}
+              />
+            )}
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <Controller
+              control={control}
+              name="email"
+              render={({
+                field: { value, onChange, onBlur },
+                fieldState: { error },
+              }) => (
+                <DTEInput
+                  id="email"
+                  value={value}
+                  onValueChange={onChange}
+                  onValueBlur={onBlur}
+                  error={error?.message}
+                  label="Email address"
+                  required
+                  disabled={loadingLogin}
+                  type="email"
+                  spellcheck={false}
+                  autocomplete="username"
                 />
-                {!resendDTEResponse?.isSuccess &&
-                  !resendDTEResponse?.errors?.some(
-                    (e) => e.customCode === "Mfa_Setup_Challenge"
-                  ) && (
-                    <ErrorMessageContainer
-                      axiosErrors={[errorLogin, resendError]}
-                      DTEAxiosErrors={injectCallIntoError([
-                        loginResponse?.errors,
-                        resendDTEResponse?.errors,
-                      ])}
-                    />
-                  )}
-                <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                  <Controller
-                    control={control}
-                    name="email"
-                    render={({
-                      field: { value, onChange, onBlur },
-                      fieldState: { error },
-                    }) => (
-                      <DTEInput
-                        id="email"
-                        value={value}
-                        onValueChange={onChange}
-                        onValueBlur={onBlur}
-                        error={error?.message}
-                        label="Email address"
-                        required
-                        disabled={loadingLogin}
-                        type="email"
-                        spellcheck={false}
-                        autocomplete="username"
-                      />
-                    )}
-                    rules={{
-                      required: {
-                        value: true,
-                        message: "Enter an email address",
-                      },
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "Enter an email address",
+                },
 
-                      pattern: {
-                        value: EmailRegex,
-                        message:
-                          "Enter an email address in the correct format, like name@example.com",
-                      },
-                    }}
-                  />
-                  <Controller
-                    control={control}
-                    name="password"
-                    render={({ fieldState: { error } }) => (
-                      <PasswordShowHide
-                        id="password"
-                        onValueChange={(e) =>
-                          setValue("password", e.target.value)
-                        }
-                        error={error?.message}
-                        label="Password"
-                        required
-                        disabled={loadingLogin}
-                        spellcheck={false}
-                        autocomplete="current-password"
-                        buttonAriaLabelHide="Hide the entered password on screen"
-                        buttonAriaLabelShow="Show the entered password on screen"
+                pattern: {
+                  value: EmailRegex,
+                  message:
+                    "Enter an email address in the correct format, like name@example.com",
+                },
+              }}
+            />
+            <Controller
+              control={control}
+              name="password"
+              render={({ fieldState: { error } }) => (
+                <PasswordShowHide
+                  id="password"
+                  onValueChange={(e) => setValue("password", e.target.value)}
+                  error={error?.message}
+                  label="Password"
+                  required
+                  disabled={loadingLogin}
+                  spellcheck={false}
+                  autocomplete="current-password"
+                  buttonAriaLabelHide="Hide the entered password on screen"
+                  buttonAriaLabelShow="Show the entered password on screen"
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "Enter a password",
+                },
+              }}
+            />
+            <DTEContent>
+              If you cannot remember your password, you can{" "}
+              <DTERouteLink
+                to="/ForgottenPassword"
+                renderStyle="standard"
+                ariaLabel="reset your password here"
+              >
+                reset it here.
+              </DTERouteLink>
+            </DTEContent>
+            <ButtonWrapper>
+              <DTEButton disabled={loadingLogin}>Sign in</DTEButton>
+            </ButtonWrapper>
+          </form>
+        </>
+      ) : (
+        <DocumentTitle title="Sign in or register - Volunteer Registration - Be Part of Research">
+          <>
+            {shouldRedirect && (
+              <Redirect push to={`/Login#id_token=${token}`} />
+            )}
+            {loadingLogin && <LoadingIndicator text="Signing In..." />}
+            {resendLoading && (
+              <LoadingIndicator text="Resending verification email..." />
+            )}
+            {!loadingLogin && !resendLoading && (
+              <Grid
+                container
+                alignItems="center"
+                direction="row"
+                justifyContent="flex-start"
+              >
+                <Grid item sm={2} md={1} />
+                <StyledGridElementLeft item xs={12} sm={10} md={11}>
+                  <DTEBackLink href="/Participants/Options" linkText="Back" />
+                </StyledGridElementLeft>
+              </Grid>
+            )}
+            <Grid
+              container
+              justifyContent="center"
+              alignItems="center"
+              role="main"
+              id="main"
+            >
+              <LoginWrapper item xs={12} sm={8} md={6} lg={5} xl={4}>
+                {!loadingLogin &&
+                  !resendLoading &&
+                  !resendDTEResponse?.isSuccess && (
+                    <>
+                      <DTEHeader as="h1">
+                        Sign in to Be Part of Research
+                      </DTEHeader>
+                      <ErrorMessageSummary
+                        renderSummary={!isSubmitting}
+                        errors={formErrors}
                       />
-                    )}
-                    rules={{
-                      required: { value: true, message: "Enter a password" },
-                    }}
-                  />
-                  <DTEContent>
-                    If you cannot remember your password, you can{" "}
-                    <DTERouteLink
-                      to="/ForgottenPassword"
-                      renderStyle="standard"
-                      ariaLabel="reset your password here"
-                    >
-                      reset it here.
-                    </DTERouteLink>
-                  </DTEContent>
-                  <ButtonWrapper>
-                    <DTEButton disabled={loadingLogin}>Sign in</DTEButton>
-                  </ButtonWrapper>
-                </form>
-                <ButtonWrapper>
-                  <DTERouteLink
-                    to="/Participants/register"
-                    disabled={loadingLogin}
-                    $outlined
-                  >
-                    Register with Be Part of Research
-                  </DTERouteLink>
-                </ButtonWrapper>
-              </>
-            )}
-            {resendDTEResponse?.isSuccess && (
-              <CheckYourEmail emailAddress={email} />
-            )}
-          </LoginWrapper>
-        </Grid>
-      </>
-    </DocumentTitle>
+                      {!resendDTEResponse?.isSuccess &&
+                        !resendDTEResponse?.errors?.some(
+                          (e) => e.customCode === "Mfa_Setup_Challenge"
+                        ) && (
+                          <ErrorMessageContainer
+                            axiosErrors={[errorLogin, resendError]}
+                            DTEAxiosErrors={injectCallIntoError([
+                              loginResponse?.errors,
+                              resendDTEResponse?.errors,
+                            ])}
+                          />
+                        )}
+                      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                        <Controller
+                          control={control}
+                          name="email"
+                          render={({
+                            field: { value, onChange, onBlur },
+                            fieldState: { error },
+                          }) => (
+                            <DTEInput
+                              id="email"
+                              value={value}
+                              onValueChange={onChange}
+                              onValueBlur={onBlur}
+                              error={error?.message}
+                              label="Email address"
+                              required
+                              disabled={loadingLogin}
+                              type="email"
+                              spellcheck={false}
+                              autocomplete="username"
+                            />
+                          )}
+                          rules={{
+                            required: {
+                              value: true,
+                              message: "Enter an email address",
+                            },
+
+                            pattern: {
+                              value: EmailRegex,
+                              message:
+                                "Enter an email address in the correct format, like name@example.com",
+                            },
+                          }}
+                        />
+                        <Controller
+                          control={control}
+                          name="password"
+                          render={({ fieldState: { error } }) => (
+                            <PasswordShowHide
+                              id="password"
+                              onValueChange={(e) =>
+                                setValue("password", e.target.value)
+                              }
+                              error={error?.message}
+                              label="Password"
+                              required
+                              disabled={loadingLogin}
+                              spellcheck={false}
+                              autocomplete="current-password"
+                              buttonAriaLabelHide="Hide the entered password on screen"
+                              buttonAriaLabelShow="Show the entered password on screen"
+                            />
+                          )}
+                          rules={{
+                            required: {
+                              value: true,
+                              message: "Enter a password",
+                            },
+                          }}
+                        />
+                        <DTEContent>
+                          If you cannot remember your password, you can{" "}
+                          <DTERouteLink
+                            to="/ForgottenPassword"
+                            renderStyle="standard"
+                            ariaLabel="reset your password here"
+                          >
+                            reset it here.
+                          </DTERouteLink>
+                        </DTEContent>
+                        <ButtonWrapper>
+                          <DTEButton disabled={loadingLogin}>Sign in</DTEButton>
+                        </ButtonWrapper>
+                      </form>
+                      <ButtonWrapper>
+                        <DTERouteLink
+                          to="/Participants/register"
+                          disabled={loadingLogin}
+                          $outlined
+                        >
+                          Register with Be Part of Research
+                        </DTERouteLink>
+                      </ButtonWrapper>
+                    </>
+                  )}
+                {resendDTEResponse?.isSuccess && (
+                  <CheckYourEmail emailAddress={email} />
+                )}
+              </LoginWrapper>
+            </Grid>
+          </>
+        </DocumentTitle>
+      )}
+    </>
   );
 };
 
