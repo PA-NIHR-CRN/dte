@@ -17,6 +17,8 @@ import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 
 const MfaSmsChallenge = () => {
+  const queryParameters = new URLSearchParams(window.location.search);
+  const mobilePhoneNumber = queryParameters.get("mobilePhoneNumber");
   const { mfaDetails, saveToken, setMfaDetails } = useContext(AuthContext);
   const history = useHistory();
   const {
@@ -62,7 +64,9 @@ const MfaSmsChallenge = () => {
         mfaDetails,
       },
     });
+    console.log(res);
     const result = Utils.ConvertResponseToDTEResponse(res);
+    console.log(result);
     if (result?.isSuccess) {
       setMfaDetails(result?.content);
     }
@@ -80,13 +84,18 @@ const MfaSmsChallenge = () => {
           ]}
         />
         <DTEContent>
-          Enter the 6 digit security code we&apos;ve sent to your mobile phone.
+          Enter the 6 digit security code we&apos;ve sent to {mobilePhoneNumber}{" "}
+          to confirm this is your mobile phone number.
+          <br />
+          <br />
+          You need to use this code within <strong>5 minutes</strong> or it will
+          expire.
         </DTEContent>
         <DTEDetails summary="Not received your security code?">
           <>
             <DTEContent>
-              We need your email address so we can contact you when we find a
-              suitable study
+              When we are really busy, it may take a bit longer for your code to
+              arrive.
             </DTEContent>
             <DTELinkButton
               onClick={handleResendCode}
@@ -116,7 +125,7 @@ const MfaSmsChallenge = () => {
                 spellcheck={false}
                 autocomplete="tel-national"
                 disabled={SMSMfaLoading || isSubmitting}
-                hint="The code is 6 digits"
+                hint="The code is 6 digits. Entering the code incorrectly too many times will temporarily prevent you from signing in."
               />
             )}
             rules={{

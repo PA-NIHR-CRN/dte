@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BaseSyntheticEvent, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import DocumentTitle from "react-document-title";
@@ -12,7 +12,6 @@ import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import Utils, { MobileRegex } from "../../../../Helper/Utils";
 import { AuthContext } from "../../../../context/AuthContext";
 import DTECheckBox from "../../UI/DTECheckBox/DTECheckBox";
-import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -21,7 +20,11 @@ const ButtonWrapper = styled.div`
 const MfaSmsSetup = () => {
   const { mfaDetails, setMfaDetails } = useContext(AuthContext);
   const history = useHistory();
+  const [ukMobileNumber, setUkMobileNumber] = useState("");
+  const [ukMobileInputDisabled, setUkMobileInputDisabled] = useState(false);
   const [ukMobileChecked, setUkMobileChecked] = useState(false);
+  const [ukMobileICheckboxDisabled, setUkMobileICheckboxDisabled] =
+    useState(false);
 
   // if (!mfaDetails) {
   //   history.push("/");
@@ -50,7 +53,7 @@ const MfaSmsSetup = () => {
 
   const onSubmit = async (data: any) => {
     if (ukMobileChecked) {
-      history.push("/MfaSmsChallenge");
+      history.push(`/MfaSmsChallenge?mobilePhoneNumber=${ukMobileNumber}`);
     }
     const { phoneNumber } = data;
     const res = await postSetupInfo({
@@ -64,7 +67,7 @@ const MfaSmsSetup = () => {
     const result = Utils.ConvertResponseToDTEResponse(res);
     if (result?.errors?.some((e) => e.customCode === "Sms_Mfa_Challenge")) {
       setMfaDetails(result?.errors[0]?.detail as string);
-      history.push("/MfaSmsChallenge");
+      history.push(`/MfaSmsChallenge?mobilePhoneNumber=${ukMobileNumber}`);
     }
   };
 
@@ -80,13 +83,17 @@ const MfaSmsSetup = () => {
     }
   };
 
+  const handleUKMobileCheckbox = async () => {
+    setUkMobileChecked(!ukMobileChecked);
+    setUkMobileInputDisabled(!ukMobileInputDisabled);
+  };
+
   return (
     <DocumentTitle title="Enter your mobile phone number">
       <StepWrapper>
-        <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
         <DTEHeader as="h1">Enter your mobile phone number</DTEHeader>
         <DTEContent>
-          We will send you a 6 digit security code to verify your mobile phone
+          We will send you a 6 digit security code to confirm your mobile phone
           number.
         </DTEContent>
         <DTEContent>
@@ -107,12 +114,20 @@ const MfaSmsSetup = () => {
                 type="tel"
                 required
                 value={value}
-                onValueChange={onChange}
+                onValueChange={(e) => {
+                  onChange(e);
+                  setUkMobileNumber(e.target.value);
+                  if (e.target.value.length > 0)
+                    setUkMobileICheckboxDisabled(true);
+                  else setUkMobileICheckboxDisabled(false);
+                }}
                 onValueBlur={onBlur}
                 error={error?.message}
                 spellcheck={false}
                 autocomplete="tel-national"
-                disabled={setupMfaLoading || isSubmitting}
+                disabled={
+                  setupMfaLoading || isSubmitting || ukMobileInputDisabled
+                }
               />
             )}
             rules={{
@@ -129,11 +144,26 @@ const MfaSmsSetup = () => {
           />
           <DTECheckBox
             id="noMobileNumber"
-            label="I do not have a UK mobile phone number"
-            checked={ukMobileChecked}
-            value="I do not have a UK mobile phone number"
-            onClick={() => setUkMobileChecked(!ukMobileChecked)}
+            label="Use another way to secure my account"
+            defaultChecked={ukMobileChecked}
+            value="Use another way to secure my account"
+            onClick={() => handleUKMobileCheckbox()}
+            disabled={ukMobileICheckboxDisabled}
           />
+          <DTEDetails summary="Not received your security code?">
+            <>
+              <DTEContent>
+                When we are really busy, it may take a bit longer for your code
+                to arrive.
+              </DTEContent>
+              <DTELinkButton
+                onClick={handleResendCode}
+                disabled={SMSMfaLoading || isSubmitting}
+              >
+                Send the security code again
+              </DTELinkButton>
+            </>
+          </DTEDetails>
           <ButtonWrapper>
             <DTEButton
               type="button"
