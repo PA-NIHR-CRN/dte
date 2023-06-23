@@ -18,7 +18,9 @@ import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 
 const MfaSmsChallenge = () => {
   const queryParameters = new URLSearchParams(window.location.search);
-  const mobilePhoneNumber = queryParameters.get("mobilePhoneNumber");
+  const mobilePhoneNumber = queryParameters.get("mobilePhoneNumber")
+    ? queryParameters.get("mobilePhoneNumber")
+    : "your mobile phone";
   const { mfaDetails, saveToken, setMfaDetails } = useContext(AuthContext);
   const history = useHistory();
   const {
@@ -91,20 +93,6 @@ const MfaSmsChallenge = () => {
           You need to use this code within <strong>5 minutes</strong> or it will
           expire.
         </DTEContent>
-        <DTEDetails summary="Not received your security code?">
-          <>
-            <DTEContent>
-              When we are really busy, it may take a bit longer for your code to
-              arrive.
-            </DTEContent>
-            <DTELinkButton
-              onClick={handleResendCode}
-              disabled={SMSMfaLoading || isSubmitting}
-            >
-              Send the security code again
-            </DTELinkButton>
-          </>
-        </DTEDetails>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Controller
             control={control}
@@ -140,6 +128,63 @@ const MfaSmsChallenge = () => {
               },
             }}
           />
+          <DTEDetails summary="Not received your security code?">
+            <>
+              <DTEContent>
+                When we are really busy, it may take a bit longer for your code
+                to arrive.
+              </DTEContent>
+              <ul className="govuk-list govuk-list--bullet">
+                <li>
+                  <DTELinkButton
+                    onClick={handleResendCode}
+                    disabled={SMSMfaLoading || isSubmitting}
+                  >
+                    send your security code again
+                  </DTELinkButton>
+                </li>
+                <li>
+                  <DTELinkButton
+                    onClick={handleResendCode}
+                    disabled={SMSMfaLoading || isSubmitting}
+                  >
+                    enter your mobile phone number again
+                  </DTELinkButton>
+                </li>
+                <li>
+                  <DTELinkButton
+                    onClick={handleResendCode}
+                    disabled={SMSMfaLoading || isSubmitting}
+                  >
+                    use another way to secure your account
+                  </DTELinkButton>
+                </li>
+              </ul>
+              {/* <DTEContent>
+                When we are really busy, it may take a bit longer for your code
+                to arrive.
+              </DTEContent>
+              <DTELinkButton
+                onClick={handleResendCode}
+                disabled={SMSMfaLoading || isSubmitting}
+              >
+                send your security code again
+              </DTELinkButton>
+
+              <DTELinkButton
+                onClick={handleResendCode}
+                disabled={SMSMfaLoading || isSubmitting}
+              >
+                enter your mobile phone number again
+              </DTELinkButton>
+              <DTELinkButton
+                onClick={handleResendCode}
+                disabled={SMSMfaLoading || isSubmitting}
+              >
+                use another way to secure your account
+              </DTELinkButton> */}
+            </>
+          </DTEDetails>
           <DTEDetails summary="I do not have access to my mobile phone">
             <DTEContent>
               If you do not have access to your phone you can{" "}
@@ -149,8 +194,9 @@ const MfaSmsChallenge = () => {
                 to="/"
                 renderStyle="standard"
               >
-                change your phone number securely.
+                change your phone number securely
               </DTERouteLink>
+              .
             </DTEContent>
           </DTEDetails>
           <DTEButton type="submit" disabled={SMSMfaLoading || isSubmitting}>
