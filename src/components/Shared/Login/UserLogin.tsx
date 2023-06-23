@@ -110,9 +110,10 @@ const UserLogin = (props: UserLoginProps) => {
       setMfaDetails(result?.errors[0]?.detail as string);
       history.push("/MfaSmsSetup");
     }
+    console.log(result);
     if (result?.errors?.some((e) => e.customCode === "Sms_Mfa_Challenge")) {
       setMfaDetails(result?.errors[0]?.detail as string);
-      history.push("/MfaSmsChallenge");
+      history.push(`/MfaSmsChallenge?mobilePhoneNumber=`);
     }
     if (
       result?.errors?.some(
