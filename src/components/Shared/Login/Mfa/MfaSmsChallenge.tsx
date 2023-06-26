@@ -58,6 +58,14 @@ const MfaSmsChallenge = () => {
     }
   };
 
+  const handleAlternativeMFA = async () => {
+    window.location.href = `${process.env.REACT_APP_BASE_URL}/MfaNoUkMobileOptions`;
+  };
+
+  const handleReEnterNumber = async () => {
+    window.location.href = `${process.env.REACT_APP_BASE_URL}/MfaSmsSetup`;
+  };
+
   const handleResendCode = async () => {
     const res = await postMfaCode({
       url: `${process.env.REACT_APP_BASE_API}/users/resendmfachallenge`,
@@ -66,9 +74,7 @@ const MfaSmsChallenge = () => {
         mfaDetails,
       },
     });
-    console.log(res);
     const result = Utils.ConvertResponseToDTEResponse(res);
-    console.log(result);
     if (result?.isSuccess) {
       setMfaDetails(result?.content);
     }
@@ -145,7 +151,7 @@ const MfaSmsChallenge = () => {
                 </li>
                 <li>
                   <DTELinkButton
-                    onClick={handleResendCode}
+                    onClick={handleReEnterNumber}
                     disabled={SMSMfaLoading || isSubmitting}
                   >
                     enter your mobile phone number again
@@ -153,36 +159,13 @@ const MfaSmsChallenge = () => {
                 </li>
                 <li>
                   <DTELinkButton
-                    onClick={handleResendCode}
+                    onClick={handleAlternativeMFA}
                     disabled={SMSMfaLoading || isSubmitting}
                   >
                     use another way to secure your account
                   </DTELinkButton>
                 </li>
               </ul>
-              {/* <DTEContent>
-                When we are really busy, it may take a bit longer for your code
-                to arrive.
-              </DTEContent>
-              <DTELinkButton
-                onClick={handleResendCode}
-                disabled={SMSMfaLoading || isSubmitting}
-              >
-                send your security code again
-              </DTELinkButton>
-
-              <DTELinkButton
-                onClick={handleResendCode}
-                disabled={SMSMfaLoading || isSubmitting}
-              >
-                enter your mobile phone number again
-              </DTELinkButton>
-              <DTELinkButton
-                onClick={handleResendCode}
-                disabled={SMSMfaLoading || isSubmitting}
-              >
-                use another way to secure your account
-              </DTELinkButton> */}
             </>
           </DTEDetails>
           <DTEDetails summary="I do not have access to my mobile phone">

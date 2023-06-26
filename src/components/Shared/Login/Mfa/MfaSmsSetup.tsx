@@ -11,9 +11,7 @@ import DTEButton from "../../UI/DTEButton/DTEButton";
 import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import Utils, { MobileRegex } from "../../../../Helper/Utils";
 import { AuthContext } from "../../../../context/AuthContext";
-import DTECheckBox from "../../UI/DTECheckBox/DTECheckBox";
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
-import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
