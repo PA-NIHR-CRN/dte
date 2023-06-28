@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import DocumentTitle from "react-document-title";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
@@ -11,7 +11,6 @@ import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import { AuthContext } from "../../../../context/AuthContext";
 import Utils from "../../../../Helper/Utils";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
-import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
@@ -59,11 +58,11 @@ const MfaSmsChallenge = () => {
   };
 
   const handleAlternativeMFA = async () => {
-    window.location.href = `${process.env.REACT_APP_BASE_URL}/MfaNoUkMobileOptions`;
+    history.push("/MfaNoUkMobileOptions");
   };
 
   const handleReEnterNumber = async () => {
-    window.location.href = `${process.env.REACT_APP_BASE_URL}/MfaSmsSetup`;
+    history.push("/MfaSmsSetup");
   };
 
   const handleResendCode = async () => {
@@ -80,10 +79,15 @@ const MfaSmsChallenge = () => {
     }
   };
 
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
+
   return (
     <DocumentTitle title="MFA Challenge SMS">
       <StepWrapper>
-        <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
         <DTEHeader as="h1">Check your mobile phone</DTEHeader>
         <ErrorMessageContainer
           axiosErrors={[setupMfaError]}
@@ -125,7 +129,7 @@ const MfaSmsChallenge = () => {
             rules={{
               required: {
                 value: true,
-                message: "Enter your MFA Code",
+                message: "Enter a valid security code",
               },
 
               pattern: {

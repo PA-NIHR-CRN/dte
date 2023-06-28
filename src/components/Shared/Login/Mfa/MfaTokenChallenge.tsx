@@ -54,7 +54,6 @@ const MfaTotpChallenge = () => {
   return (
     <DocumentTitle title="MFA Challenge TOTP">
       <StepWrapper>
-        <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
         <DTEHeader as="h1">Enter your 6 Digit code</DTEHeader>
         <DTEContent>
           Please enter the 6 digit code from your authenticator app.

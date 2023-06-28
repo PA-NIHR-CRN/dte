@@ -29,7 +29,7 @@ const MfaLandlineSetup = () => {
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
-      landlineNumber: "",
+      phoneNumber: "",
     },
   });
   const [
@@ -42,12 +42,12 @@ const MfaLandlineSetup = () => {
   ] = useAxiosFetch({}, { useCache: false, manual: true });
 
   const onSubmit = async (data: any) => {
-    const { landlineNumber } = data;
+    const { phoneNumber } = data;
     const res = await postSetupInfo({
       url: `${process.env.REACT_APP_BASE_API}/users/setupsmsmfa`,
       method: "POST",
       data: {
-        landlineNumber,
+        phoneNumber,
         mfaDetails,
       },
     });
@@ -70,14 +70,14 @@ const MfaLandlineSetup = () => {
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Controller
             control={control}
-            name="landlineNumber"
+            name="phoneNumber"
             render={({
               field: { value, onChange, onBlur },
               fieldState: { error },
             }) => (
               <DTEInput
                 label="Landline number"
-                id="landlineNumber"
+                id="phoneNumber"
                 type="tel"
                 required
                 value={value}

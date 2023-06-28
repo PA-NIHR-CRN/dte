@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext, useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import DocumentTitle from "react-document-title";
@@ -12,6 +12,7 @@ import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import Utils, { MobileRegex } from "../../../../Helper/Utils";
 import { AuthContext } from "../../../../context/AuthContext";
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
+import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -23,9 +24,6 @@ const MfaSmsSetup = () => {
   const [ukMobileNumber, setUkMobileNumber] = useState("");
   const [ukMobileChecked, setUkMobileChecked] = useState(false);
 
-  // if (!mfaDetails) {
-  //   history.push("/");
-  // }
   const {
     trigger,
     control,
@@ -79,6 +77,12 @@ const MfaSmsSetup = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
 
   return (
     <DocumentTitle title="Enter your mobile phone number">
@@ -134,9 +138,13 @@ const MfaSmsSetup = () => {
               <DTEContent>
                 If you do not have a UK mobile phone number or do not want to
                 use this method,{" "}
-                <a href="/MfaNoUkMobileOptions">
+                <DTERouteLink
+                  disabled={setupMfaLoading || isSubmitting}
+                  to="/MfaNoUkMobileOptions"
+                  renderStyle="standard"
+                >
                   you can use another way to secure your account
-                </a>
+                </DTERouteLink>
                 .
               </DTEContent>
             </>
