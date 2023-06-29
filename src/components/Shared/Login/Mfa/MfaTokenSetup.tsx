@@ -81,8 +81,7 @@ const MfaTokenSetup = () => {
       method: "POST",
       data: {
         authenticatorAppCode,
-        sessionId,
-        username,
+        mfaDetails,
       },
     });
     const result = Utils.ConvertResponseToDTEResponse(res);
@@ -133,7 +132,7 @@ const MfaTokenSetup = () => {
             rules={{
               required: {
                 value: true,
-                message: "Enter your MFA Code",
+                message: "Enter a valid security code",
               },
 
               pattern: {
