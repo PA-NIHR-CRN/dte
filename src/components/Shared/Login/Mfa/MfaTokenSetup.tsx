@@ -13,6 +13,7 @@ import Utils from "../../../../Helper/Utils";
 import DTEButton from "../../UI/DTEButton/DTEButton";
 import LoadingIndicator from "../../LoadingIndicator/LoadingIndicator";
 import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
+import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
 
 const MfaTokenSetup = () => {
   const { mfaDetails, saveToken, setMfaDetails } = useContext(AuthContext);
@@ -76,13 +77,16 @@ const MfaTokenSetup = () => {
 
   const onSubmit = async (data: any) => {
     const { authenticatorAppCode } = data;
+    console.log(sessionId);
     const res = await postMfaCode({
-      url: `${process.env.REACT_APP_BASE_API}/users/respondtototpmfachallenge`,
+      // url: `${process.env.REACT_APP_BASE_API}/users/respondtototpmfachallenge`,
+      url: `${process.env.REACT_APP_BASE_API}/users/verifytokenmfa`,
       method: "POST",
       data: {
         authenticatorAppCode,
-        sessionId,
-        username,
+        mfaDetails,
+        // sessionId,
+        // username,
       },
     });
     const result = Utils.ConvertResponseToDTEResponse(res);
@@ -96,6 +100,12 @@ const MfaTokenSetup = () => {
   return (
     <DocumentTitle title="MFA Setup Token">
       <StepWrapper>
+        <ErrorMessageContainer
+          axiosErrors={[totpMfaError]}
+          DTEAxiosErrors={[
+            Utils.ConvertResponseToDTEResponse(totpMfaResponse)?.errors,
+          ]}
+        />
         <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
         <DTEHeader as="h1">Connect your authenticator app</DTEHeader>
         <DTEContent>

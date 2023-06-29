@@ -11,7 +11,6 @@ import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import { AuthContext } from "../../../../context/AuthContext";
 import Utils from "../../../../Helper/Utils";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
-import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 
 const MfaTotpChallenge = () => {
   const { mfaDetails, saveToken, setMfaDetails } = useContext(AuthContext);
@@ -29,7 +28,11 @@ const MfaTotpChallenge = () => {
     },
   });
   const [
-    { response: SMSMfaResponse, loading: SMSMfaLoading, error: setupMfaError },
+    {
+      response: TokenMfaResponse,
+      loading: TokenMfaLoading,
+      error: setupMfaError,
+    },
     postMfaCode,
   ] = useAxiosFetch({}, { useCache: false, manual: true });
 
@@ -55,15 +58,15 @@ const MfaTotpChallenge = () => {
     <DocumentTitle title="MFA Challenge TOTP">
       <StepWrapper>
         <DTEHeader as="h1">Enter your 6 Digit code</DTEHeader>
-        <DTEContent>
-          Please enter the 6 digit code from your authenticator app.
-        </DTEContent>
         <ErrorMessageContainer
           axiosErrors={[setupMfaError]}
           DTEAxiosErrors={[
-            Utils.ConvertResponseToDTEResponse(SMSMfaResponse)?.errors,
+            Utils.ConvertResponseToDTEResponse(TokenMfaResponse)?.errors,
           ]}
         />
+        <DTEContent>
+          Please enter the 6 digit code from your authenticator app.
+        </DTEContent>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Controller
             control={control}
@@ -82,7 +85,7 @@ const MfaTotpChallenge = () => {
                 onValueBlur={onBlur}
                 error={error?.message}
                 spellcheck={false}
-                disabled={SMSMfaLoading || isSubmitting}
+                disabled={TokenMfaLoading || isSubmitting}
               />
             )}
             rules={{
@@ -97,7 +100,7 @@ const MfaTotpChallenge = () => {
               },
             }}
           />
-          <DTEButton type="submit" disabled={SMSMfaLoading || isSubmitting}>
+          <DTEButton type="submit" disabled={TokenMfaLoading || isSubmitting}>
             Send security code
           </DTEButton>
         </form>
