@@ -16,6 +16,8 @@ const Login = () => {
     authenticatedEmail,
     authenticatedUserId,
     authenticatedEmailVerified,
+    authenticatedMobile,
+    authenticatedMobileVerified,
     isAuthenticatedRole,
     isInNHSApp,
   } = useContext(AuthContext);

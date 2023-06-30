@@ -20,7 +20,13 @@ const MfaSmsChallenge = () => {
   const mobilePhoneNumber = queryParameters.get("mobilePhoneNumber")
     ? queryParameters.get("mobilePhoneNumber")
     : "your mobile phone";
-  const { mfaDetails, saveToken, setMfaDetails } = useContext(AuthContext);
+  const {
+    mfaDetails,
+    saveToken,
+    setMfaDetails,
+    authenticatedMobile,
+    authenticatedMobileVerified,
+  } = useContext(AuthContext);
   const history = useHistory();
   const {
     control,
@@ -85,6 +91,11 @@ const MfaSmsChallenge = () => {
     }
   }, [isSubmitting]);
 
+  const maskedMobile = () => {
+    const charsToDisplay = authenticatedMobile?.substring(9, 11);
+    return `********${charsToDisplay}`;
+  };
+
   return (
     <DocumentTitle title="MFA Challenge SMS">
       <StepWrapper>
@@ -96,8 +107,14 @@ const MfaSmsChallenge = () => {
           ]}
         />
         <DTEContent>
-          Enter the 6 digit security code we&apos;ve sent to {mobilePhoneNumber}{" "}
-          to confirm this is your mobile phone number.
+          {authenticatedMobileVerified && authenticatedMobile != null ? (
+            <>Enter the 6 digit security code we’ve sent to {maskedMobile}.</>
+          ) : (
+            <>
+              Enter the 6 digit security code we&apos;ve sent to{" "}
+              {mobilePhoneNumber} to confirm this is your mobile phone number.
+            </>
+          )}
           <br />
           <br />
           You need to use this code within <strong>5 minutes</strong> or it will

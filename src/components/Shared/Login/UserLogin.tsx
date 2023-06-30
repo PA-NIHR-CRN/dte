@@ -70,6 +70,8 @@ const UserLogin = (props: UserLoginProps) => {
     token,
     saveToken,
     setMfaDetails,
+    authenticatedMobile,
+    authenticatedMobileVerified,
   } = useContext(AuthContext);
 
   const [loginResponse, setLoginResponse] = useState<
@@ -105,6 +107,9 @@ const UserLogin = (props: UserLoginProps) => {
     });
     const result = Utils.ConvertResponseToDTEResponse(res);
     setLoginResponse(result);
+
+    // TODO - can we get authenticatedMobile and authenticatedMobileVerified here before MFA challenge? To determine between set up and login challenge
+
     // check for MFA_Setup_Challenge error in the response
     if (result?.errors?.some((e) => e.customCode === "Mfa_Setup_Challenge")) {
       setMfaDetails(result?.errors[0]?.detail as string);

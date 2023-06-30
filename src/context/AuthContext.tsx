@@ -22,6 +22,11 @@ export const AuthProvider = (props: { children: any }) => {
   const [authenticatedEmailVerified, setAuthenticatedEmailVerified] = useState<
     boolean | null
   >(null);
+  const [authenticatedMobile, setAuthenticatedMobile] = useState<string | null>(
+    null
+  );
+  const [authenticatedMobileVerified, setAuthenticatedMobileVerified] =
+    useState<boolean | null>(null);
   const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(
     null
   );
@@ -123,6 +128,12 @@ export const AuthProvider = (props: { children: any }) => {
 
         const emailVerified = decodedToken?.email_verified;
         setAuthenticatedEmailVerified(emailVerified);
+
+        const mobile = decodedToken?.phone_number;
+        setAuthenticatedMobile(mobile);
+
+        const mobileVerified = decodedToken?.phone_number_verified;
+        setAuthenticatedMobileVerified(mobileVerified);
 
         const admin = decodedToken?.["cognito:groups"]?.includes("Admin");
         setAuthenticatedIsAdmin(admin);
@@ -236,6 +247,8 @@ export const AuthProvider = (props: { children: any }) => {
         setAuthenticatedUserId(null);
         setAuthenticatedEmail(null);
         setAuthenticatedEmailVerified(null);
+        setAuthenticatedMobile(null);
+        setAuthenticatedMobileVerified(null);
         setAuthenticatedFirstname(null);
         setAuthenticatedLastname(null);
         setLastNonLoginUrl(null);
@@ -264,6 +277,8 @@ export const AuthProvider = (props: { children: any }) => {
         lastNonLoginUrl,
         authenticatedEmail,
         authenticatedEmailVerified,
+        authenticatedMobile,
+        authenticatedMobileVerified,
         authenticatedUserId,
         authenticatedFirstname,
         authenticatedLastname,

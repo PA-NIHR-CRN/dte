@@ -11,6 +11,8 @@ export interface JWTDeCode {
   aud: number;
   exp: number;
   email_verified: boolean;
+  phone_number: string;
+  phone_number_verified: boolean;
   token_use: string;
   "cognito:groups": string[];
   sub: string;
@@ -37,6 +39,8 @@ export interface AuthContextProps {
   lastNonLoginUrl: string | null;
   authenticatedEmail: string | null;
   authenticatedEmailVerified: boolean | null;
+  authenticatedMobile: string | null;
+  authenticatedMobileVerified: boolean | null;
   authenticatedUserId: string | null;
   authenticatedFirstname: string | null;
   authenticatedLastname: string | null;
