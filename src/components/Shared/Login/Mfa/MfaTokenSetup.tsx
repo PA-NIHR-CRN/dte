@@ -89,9 +89,13 @@ const MfaTokenSetup = () => {
     postMfaCode,
   ] = useAxiosFetch({}, { useCache: false, manual: true });
 
+  const copySecretKey = () => {
+    setSecretKey(secretKey);
+    navigator.clipboard.writeText(secretKey);
+  };
+
   const onSubmit = async (data: any) => {
     const { authenticatorAppCode } = data;
-    console.log(token);
     const res = await postMfaCode({
       url: `${process.env.REACT_APP_BASE_API}/users/verifytokenmfa`,
       method: "POST",
@@ -120,10 +124,47 @@ const MfaTokenSetup = () => {
         <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
         <DTEHeader as="h1">Set up your authenticator application</DTEHeader>
         <DTEContent>
-          Guidance text: TBC - needs to include suggesting the Authenticator
-          extension if people don’t already have an authenticator setup. Also
-          needs to say that the authenticator needs to be able to provide a
-          time-based 6 digit code. Include BPOR email address for help.
+          You can download an authenticator app on any smart device, such as a
+          smart phone or tablet. Examples of authenticator apps are the{" "}
+          <DTERouteLink
+            aria-label="Opens in a new tab"
+            external
+            target="_blank"
+            to="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&pli=1"
+            renderStyle="standard"
+          >
+            Google Authenticator
+          </DTERouteLink>{" "}
+          and{" "}
+          <DTERouteLink
+            aria-label="Opens in a new tab"
+            external
+            target="_blank"
+            to="https://www.microsoft.com/en-us/security/mobile-authenticator-app"
+            renderStyle="standard"
+          >
+            Microsoft Authenticator
+          </DTERouteLink>
+          .
+        </DTEContent>
+        <DTEContent>
+          Alternatively, you can install an authenticator app on a computer. An
+          example of an authenticator app that doesn&apos;t require a smart
+          device is the{" "}
+          <DTERouteLink
+            aria-label="Opens in a new tab"
+            external
+            target="_blank"
+            to="https://authenticator.cc/docs/en/overview"
+            renderStyle="standard"
+          >
+            Authenticator Extension
+          </DTERouteLink>
+          .
+        </DTEContent>
+        <DTEContent>
+          Once your authenticator app is installed, you will then need to open
+          it and manually enter the secret key or scan the QR code
         </DTEContent>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <DTEInput
@@ -136,7 +177,8 @@ const MfaTokenSetup = () => {
           />
           <ButtonWrapper>
             <DTEButton
-              type="submit"
+              type="button"
+              onClick={copySecretKey}
               disabled={tokenCodeLoading || isSubmitting || totpMfaLoading}
             >
               Copy secret key
