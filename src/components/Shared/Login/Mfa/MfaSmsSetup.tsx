@@ -66,18 +66,6 @@ const MfaSmsSetup = () => {
     }
   };
 
-  const handleButtonClick = async () => {
-    if (ukMobileChecked) {
-      history.push("/MfaNoUkMobileOptions");
-    } else {
-      const result = await trigger(); // manually triggers validation
-      if (result) {
-        // form is valid
-        await handleSubmit(onSubmit)(); // manually submits form
-      }
-    }
-  };
-
   useEffect(() => {
     if (document.getElementsByClassName("nhsuk-error-message")[0]) {
       Utils.FocusOnError();
@@ -96,7 +84,7 @@ const MfaSmsSetup = () => {
           We will only use your mobile phone number to send you a security code
           to verify your identity. We will not use it for any other purpose.
         </DTEContent>
-        <form noValidate>
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Controller
             control={control}
             name="phoneNumber"
@@ -150,11 +138,7 @@ const MfaSmsSetup = () => {
             </>
           </DTEDetails>
           <ButtonWrapper>
-            <DTEButton
-              type="button"
-              onClick={handleButtonClick}
-              disabled={setupMfaLoading || isSubmitting}
-            >
+            <DTEButton disabled={setupMfaLoading || isSubmitting}>
               Continue
             </DTEButton>
           </ButtonWrapper>
