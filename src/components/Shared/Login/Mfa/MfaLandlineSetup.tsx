@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import DocumentTitle from "react-document-title";
@@ -24,7 +24,7 @@ const MfaLandlineSetup = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors: formErrors, isSubmitting, isSubmitSuccessful },
+    formState: { isSubmitting },
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -32,14 +32,10 @@ const MfaLandlineSetup = () => {
       phoneNumber: "",
     },
   });
-  const [
-    {
-      response: setupMfaResponse,
-      loading: setupMfaLoading,
-      error: setupMfaError,
-    },
-    postSetupInfo,
-  ] = useAxiosFetch({}, { useCache: false, manual: true });
+  const [{ loading: setupMfaLoading }, postSetupInfo] = useAxiosFetch(
+    {},
+    { useCache: false, manual: true }
+  );
 
   const onSubmit = async (data: any) => {
     const { phoneNumber } = data;

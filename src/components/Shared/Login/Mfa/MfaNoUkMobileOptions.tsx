@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Radios } from "nhsuk-react-components";
 import { useHistory } from "react-router-dom";
@@ -8,7 +7,6 @@ import DTERadio from "../../UI/DTERadio/DTERadio";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEButton from "../../UI/DTEButton/DTEButton";
 import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
-import { AuthContext } from "../../../../context/AuthContext";
 
 type MfaNoUkMobileOptionsData = {
   ukLandline: string;
@@ -16,8 +14,6 @@ type MfaNoUkMobileOptionsData = {
 };
 
 const MfaNoUkMobileOptions = () => {
-  const { mfaDetails, setMfaDetails } = useContext(AuthContext);
-
   const {
     control,
     handleSubmit,

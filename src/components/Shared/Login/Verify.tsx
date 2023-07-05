@@ -1,6 +1,5 @@
 import { ReactNode, useContext, useEffect } from "react";
 import ReactGA from "react-ga";
-import { Grid } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { useLocation, useHistory } from "react-router-dom";

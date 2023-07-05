@@ -27,19 +27,16 @@ const ComponentSpacer = styled.div`
 `;
 
 const MfaTokenSetup = () => {
-  const { mfaDetails, saveToken, token, setMfaDetails } =
-    useContext(AuthContext);
+  const { mfaDetails, saveToken, setMfaDetails } = useContext(AuthContext);
   const history = useHistory();
   const [qrSrc, setQrSrc] = useState("");
   const [sessionId, setSessionId] = useState("");
-  const [username, setUsername] = useState("");
   const [secretKey, setSecretKey] = useState("");
 
   const {
     control,
     handleSubmit,
-    setValue,
-    formState: { errors: formErrors, isSubmitting, isSubmitSuccessful },
+    formState: { isSubmitting },
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -47,38 +44,26 @@ const MfaTokenSetup = () => {
       authenticatorAppCode: "",
     },
   });
-  const [
-    {
-      response: tokenCodeResponse,
-      loading: tokenCodeLoading,
-      error: tokenCodeError,
-    },
-  ] = useAxiosFetch(
-    {
-      url: `${process.env.REACT_APP_BASE_API}/users/setuptokenmfa`,
-      method: "POST",
-      data: {
-        mfaDetails,
+  const [{ response: tokenCodeResponse, loading: tokenCodeLoading }] =
+    useAxiosFetch(
+      {
+        url: `${process.env.REACT_APP_BASE_API}/users/setuptokenmfa`,
+        method: "POST",
+        data: {
+          mfaDetails,
+        },
       },
-    },
-    { useCache: false, manual: false }
-  );
+      { useCache: false, manual: false }
+    );
 
-  // eslint-disable-next-line consistent-return
-  const generateQR = async (code: string) => {
-    try {
-      return await QRCode.toDataURL(code);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const generateQR = async (code: string) => QRCode.toDataURL(code);
 
   useEffect(() => {
     if (!tokenCodeResponse?.data?.content?.secretCode) return;
     setSessionId(tokenCodeResponse?.data?.content?.sessionId);
-    setUsername(tokenCodeResponse?.data?.content?.username);
-    setSecretKey(tokenCodeResponse?.data.content.secretCode);
-    const qrCode = `otpauth://totp/AWSCognito:${tokenCodeResponse?.data.content.username}?secret=${tokenCodeResponse?.data.content.secretCode}&issuer=Cognito`;
+    const { username, secretCode } = tokenCodeResponse?.data?.content;
+    setSecretKey(secretCode);
+    const qrCode = `otpauth://totp/AWSCognito:${username}?secret=${secretCode}&issuer=Cognito`;
     generateQR(qrCode).then((res) => {
       setQrSrc(res as string);
     });
@@ -90,7 +75,6 @@ const MfaTokenSetup = () => {
   ] = useAxiosFetch({}, { useCache: false, manual: true });
 
   const copySecretKey = () => {
-    setSecretKey(secretKey);
     navigator.clipboard.writeText(secretKey);
   };
 
@@ -101,10 +85,19 @@ const MfaTokenSetup = () => {
       method: "POST",
       data: {
         authenticatorAppCode,
+        sessionId,
         mfaDetails,
       },
     });
     const result = Utils.ConvertResponseToDTEResponse(res);
+    if (
+      result?.errors?.some(
+        (e) => e.customCode === "Software_Token_Mfa_Challenge"
+      )
+    ) {
+      setMfaDetails(result?.errors[0]?.detail as string);
+      history.push("/MfaTokenChallenge");
+    }
     if (result?.isSuccess) {
       saveToken(result?.content);
       setMfaDetails("");
@@ -245,7 +238,7 @@ const MfaTokenSetup = () => {
         <ComponentSpacer>
           <DTERouteLink
             disabled={tokenCodeLoading || isSubmitting || totpMfaLoading}
-            to="/MfaNoUkMobileOptions"
+            to="/MfaSmsSetup"
             renderStyle="standard"
           >
             Use another way to secure your account

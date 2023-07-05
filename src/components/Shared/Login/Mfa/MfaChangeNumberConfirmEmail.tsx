@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import DocumentTitle from "react-document-title";
@@ -18,43 +18,47 @@ const ButtonWrapper = styled.div`
   margin: 1rem 0;
 `;
 
-const MfaSmsSetup = () => {
-  const { mfaDetails, setMfaDetails, setEnteredMfaMobile } =
-    useContext(AuthContext);
+const MfaChangeNumberConfirmEmail = () => {
+  const { mfaDetails, setMfaDetails } = useContext(AuthContext);
   const history = useHistory();
 
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting },
+    setValue,
+    formState: { errors: formErrors, isSubmitting, isSubmitSuccessful },
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
-      phoneNumber: "",
+      emailOtp: "",
     },
   });
-  const [{ loading: setupMfaLoading }, postSetupInfo] = useAxiosFetch(
-    {},
-    { useCache: false, manual: true }
+  const [
+    {
+      response: getEmailOtpResponse,
+      loading: getEmailOtpLoading,
+      error: getEmailOtpError,
+    },
+  ] = useAxiosFetch(
+    {
+      url: `${process.env.REACT_APP_BASE_API}/users/sendmfaotpemail`,
+      method: "POST",
+      data: {
+        mfaDetails,
+      },
+    },
+    { useCache: false, manual: false }
   );
 
   const onSubmit = async (data: any) => {
-    const { phoneNumber } = data;
-    const res = await postSetupInfo({
-      url: `${process.env.REACT_APP_BASE_API}/users/setupsmsmfa`,
-      method: "POST",
-      data: {
-        phoneNumber,
-        mfaDetails,
-      },
-    });
-    const result = Utils.ConvertResponseToDTEResponse(res);
-    if (result?.errors?.some((e) => e.customCode === "Sms_Mfa_Challenge")) {
-      setMfaDetails(result?.errors[0]?.detail as string);
-      setEnteredMfaMobile(phoneNumber);
-      history.push("/MfaSmsChallenge");
-    }
+    const { emailOtp } = data;
+    // console.log(emailOtp);
+    // const result = Utils.ConvertResponseToDTEResponse(res);
+    // if (result?.errors?.some((e) => e.customCode === "Sms_Mfa_Challenge")) {
+    //   setMfaDetails(result?.errors[0]?.detail as string);
+    //   history.push(`/MfaSmsChallenge`);
+    // }
   };
 
   useEffect(() => {
@@ -64,29 +68,28 @@ const MfaSmsSetup = () => {
   }, [isSubmitting]);
 
   return (
-    <DocumentTitle title="Enter your mobile phone number">
+    <DocumentTitle title="Email OTP">
       <StepWrapper>
-        <DTEHeader as="h1">Enter your mobile phone number</DTEHeader>
+        <DTEHeader as="h1">Check your email</DTEHeader>
         <DTEContent>
-          We will send you a 6 digit security code to confirm your mobile phone
-          number.
+          Enter the 6 digit security code we’ve sent to `${getEmailOtpResponse}`
+          to confirm this is your email address.
         </DTEContent>
         <DTEContent>
-          We will only use your mobile phone number to send you a security code
-          to verify your identity. We will not use it for any other purpose.
+          You need to use this code within <strong>5 minutes</strong> or it will
+          expire.
         </DTEContent>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Controller
             control={control}
-            name="phoneNumber"
+            name="emailOtp"
             render={({
               field: { value, onChange, onBlur },
               fieldState: { error },
             }) => (
               <DTEInput
-                label="UK mobile phone number"
-                id="mobilePhoneNumber"
-                type="tel"
+                label="Security code"
+                id="emailOtp"
                 required
                 value={value}
                 onValueChange={(e) => {
@@ -95,19 +98,14 @@ const MfaSmsSetup = () => {
                 onValueBlur={onBlur}
                 error={error?.message}
                 spellcheck={false}
-                autocomplete="tel-national"
-                disabled={setupMfaLoading || isSubmitting}
+                disabled={getEmailOtpLoading || isSubmitting}
+                hint="The code is 6 digits. Entering the code incorrectly too many times will temporarily prevent you from signing in."
               />
             )}
             rules={{
               required: {
                 value: true,
-                message: "Enter a UK Phone Number",
-              },
-
-              pattern: {
-                value: MobileRegex,
-                message: "Enter a valid UK Phone Number",
+                message: "Enter a valid security code",
               },
             }}
           />
@@ -117,7 +115,7 @@ const MfaSmsSetup = () => {
                 If you do not have a UK mobile phone number or do not want to
                 use this method, you can{" "}
                 <DTERouteLink
-                  disabled={setupMfaLoading || isSubmitting}
+                  disabled={getEmailOtpLoading || isSubmitting}
                   to="/MfaTokenSetup"
                   renderStyle="standard"
                 >
@@ -128,7 +126,7 @@ const MfaSmsSetup = () => {
             </>
           </DTEDetails>
           <ButtonWrapper>
-            <DTEButton disabled={setupMfaLoading || isSubmitting}>
+            <DTEButton disabled={getEmailOtpLoading || isSubmitting}>
               Continue
             </DTEButton>
           </ButtonWrapper>
@@ -138,4 +136,4 @@ const MfaSmsSetup = () => {
   );
 };
 
-export default MfaSmsSetup;
+export default MfaChangeNumberConfirmEmail;

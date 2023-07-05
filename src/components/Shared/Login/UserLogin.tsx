@@ -70,8 +70,7 @@ const UserLogin = (props: UserLoginProps) => {
     token,
     saveToken,
     setMfaDetails,
-    authenticatedMobile,
-    authenticatedMobileVerified,
+    setAuthenticatedMobile,
   } = useContext(AuthContext);
 
   const [loginResponse, setLoginResponse] = useState<
@@ -116,8 +115,9 @@ const UserLogin = (props: UserLoginProps) => {
       history.push("/MfaSmsSetup");
     }
     if (result?.errors?.some((e) => e.customCode === "Sms_Mfa_Challenge")) {
-      setMfaDetails(result?.errors[0]?.detail as string);
-      history.push("/MfaSmsSetup");
+      const returnObject = JSON.parse(result?.errors[0]?.detail as string);
+      setAuthenticatedMobile(returnObject?.PhoneNumber);
+      setMfaDetails(returnObject?.MfaDetails);
       history.push(`/MfaSmsChallenge`);
     }
     if (

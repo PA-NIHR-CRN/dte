@@ -16,23 +16,22 @@ import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 
 const MfaSmsChallenge = () => {
-  const queryParameters = new URLSearchParams(window.location.search);
-  const mobilePhoneNumber = queryParameters.get("mobilePhoneNumber")
-    ? queryParameters.get("mobilePhoneNumber")
-    : "your mobile phone";
   const {
     mfaDetails,
     saveToken,
     setMfaDetails,
     authenticatedMobile,
-    authenticatedMobileVerified,
+    enteredMfaMobile,
   } = useContext(AuthContext);
+
+  const mobilePhoneNumber = enteredMfaMobile || "your mobile phone";
+
   const history = useHistory();
+
   const {
     control,
     handleSubmit,
-    setValue,
-    formState: { errors: formErrors, isSubmitting, isSubmitSuccessful },
+    formState: { isSubmitting },
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -64,7 +63,7 @@ const MfaSmsChallenge = () => {
   };
 
   const handleAlternativeMFA = async () => {
-    history.push("/MfaNoUkMobileOptions");
+    history.push("/MfaTokenSetup");
   };
 
   const handleReEnterNumber = async () => {
@@ -91,10 +90,7 @@ const MfaSmsChallenge = () => {
     }
   }, [isSubmitting]);
 
-  const maskedMobile = () => {
-    const charsToDisplay = authenticatedMobile?.substring(9, 11);
-    return `********${charsToDisplay}`;
-  };
+  const removePlus = (number: string) => number.replace("+", "");
 
   return (
     <DocumentTitle title="MFA Challenge SMS">
@@ -107,8 +103,11 @@ const MfaSmsChallenge = () => {
           ]}
         />
         <DTEContent>
-          {authenticatedMobileVerified && authenticatedMobile != null ? (
-            <>Enter the 6 digit security code we’ve sent to {maskedMobile}.</>
+          {authenticatedMobile != null ? (
+            <>
+              Enter the 6 digit security code we’ve sent to{" "}
+              {removePlus(authenticatedMobile)}.
+            </>
           ) : (
             <>
               Enter the 6 digit security code we&apos;ve sent to{" "}
@@ -193,7 +192,7 @@ const MfaSmsChallenge = () => {
             <DTEContent>
               If you do not have access to your phone you can{" "}
               <DTERouteLink
-                onClick={() => history.push("/mfa/change-phone-number")}
+                onClick={() => history.push("/MfaChangePhoneNumber")}
                 disabled={SMSMfaLoading || isSubmitting}
                 to="/"
                 renderStyle="standard"

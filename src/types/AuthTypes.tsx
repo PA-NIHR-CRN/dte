@@ -49,6 +49,9 @@ export interface AuthContextProps {
   getSessionExpiry: () => SessionExpiryInfo;
   mfaDetails: string;
   setMfaDetails: (mfaDetails: string) => void;
+  setEnteredMfaMobile: (enteredMfaMobile: string) => void;
+  enteredMfaMobile: string;
+  setAuthenticatedMobile: (authenticatedMobile: string) => void;
 }
 
 export interface DTEAxiosResponse {

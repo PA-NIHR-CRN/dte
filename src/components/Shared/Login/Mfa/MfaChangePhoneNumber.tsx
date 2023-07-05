@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import DocumentTitle from "react-document-title";
@@ -18,15 +18,18 @@ const ButtonWrapper = styled.div`
   margin: 1rem 0;
 `;
 
-const MfaSmsSetup = () => {
-  const { mfaDetails, setMfaDetails, setEnteredMfaMobile } =
-    useContext(AuthContext);
+const MfaChangePhoneNumber = () => {
+  const { mfaDetails, setMfaDetails } = useContext(AuthContext);
   const history = useHistory();
+  const [ukMobileNumber, setUkMobileNumber] = useState("");
+  const [ukMobileChecked, setUkMobileChecked] = useState(false);
 
   const {
+    trigger,
     control,
     handleSubmit,
-    formState: { isSubmitting },
+    setValue,
+    formState: { errors: formErrors, isSubmitting, isSubmitSuccessful },
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -34,12 +37,19 @@ const MfaSmsSetup = () => {
       phoneNumber: "",
     },
   });
-  const [{ loading: setupMfaLoading }, postSetupInfo] = useAxiosFetch(
-    {},
-    { useCache: false, manual: true }
-  );
+  const [
+    {
+      response: setupMfaResponse,
+      loading: setupMfaLoading,
+      error: setupMfaError,
+    },
+    postSetupInfo,
+  ] = useAxiosFetch({}, { useCache: false, manual: true });
 
   const onSubmit = async (data: any) => {
+    if (ukMobileChecked) {
+      history.push(`/MfaSmsChallenge?mobilePhoneNumber=${ukMobileNumber}`);
+    }
     const { phoneNumber } = data;
     const res = await postSetupInfo({
       url: `${process.env.REACT_APP_BASE_API}/users/setupsmsmfa`,
@@ -52,8 +62,7 @@ const MfaSmsSetup = () => {
     const result = Utils.ConvertResponseToDTEResponse(res);
     if (result?.errors?.some((e) => e.customCode === "Sms_Mfa_Challenge")) {
       setMfaDetails(result?.errors[0]?.detail as string);
-      setEnteredMfaMobile(phoneNumber);
-      history.push("/MfaSmsChallenge");
+      history.push(`/MfaSmsChallenge?mobilePhoneNumber=${ukMobileNumber}`);
     }
   };
 
@@ -91,6 +100,7 @@ const MfaSmsSetup = () => {
                 value={value}
                 onValueChange={(e) => {
                   onChange(e);
+                  setUkMobileNumber(e.target.value);
                 }}
                 onValueBlur={onBlur}
                 error={error?.message}
@@ -138,4 +148,4 @@ const MfaSmsSetup = () => {
   );
 };
 
-export default MfaSmsSetup;
+export default MfaChangePhoneNumber;
