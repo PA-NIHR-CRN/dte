@@ -20,7 +20,7 @@ beforeAll(() => {
       this.post(
         `${process.env.REACT_APP_BASE_API}/users/setupsmsmfa`,
         (schema, request) => {
-          let { phoneNumber, mfaDetails } = JSON.parse(request.requestBody);
+          const { phoneNumber, mfaDetails } = JSON.parse(request.requestBody);
           if (phoneNumber === "1234567890" && mfaDetails) {
             return {
               content: null,
@@ -29,9 +29,8 @@ beforeAll(() => {
               conversationId: null,
               version: 1,
             };
-          } else {
-            return new Error("Incorrect Phone Number");
           }
+          return new Error("Incorrect Phone Number");
         }
       );
     },
