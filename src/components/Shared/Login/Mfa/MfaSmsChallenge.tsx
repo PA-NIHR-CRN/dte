@@ -24,6 +24,10 @@ const MfaSmsChallenge = () => {
     enteredMfaMobile,
   } = useContext(AuthContext);
 
+  if (!mfaDetails) {
+    history.push("/");
+  }
+
   const mobilePhoneNumber = enteredMfaMobile || "your mobile phone";
 
   const history = useHistory();
@@ -177,27 +181,20 @@ const MfaSmsChallenge = () => {
                     enter your mobile phone number again
                   </DTELinkButton>
                 </li>
-                <li>
-                  <DTELinkButton
-                    onClick={handleAlternativeMFA}
-                    disabled={SMSMfaLoading || isSubmitting}
-                  >
-                    use another way to secure your account
-                  </DTELinkButton>
-                </li>
               </ul>
             </>
           </DTEDetails>
-          <DTEDetails summary="I do not have access to my mobile phone">
+          <DTEDetails summary="Use another way to secure my account">
             <DTEContent>
-              If you do not have access to your phone you can{" "}
+              If you do not have a UK mobile phone number or do not want to use
+              this method, you can{" "}
               <DTERouteLink
-                onClick={() => history.push("/MfaChangePhoneNumber")}
+                onClick={() => history.push("/MfaTokenSetup")}
                 disabled={SMSMfaLoading || isSubmitting}
                 to="/"
                 renderStyle="standard"
               >
-                change your phone number securely
+                use an authenticator app to secure your account
               </DTERouteLink>
               .
             </DTEContent>

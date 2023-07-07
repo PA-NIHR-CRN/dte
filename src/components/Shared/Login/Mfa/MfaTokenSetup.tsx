@@ -33,6 +33,10 @@ const MfaTokenSetup = () => {
   const [sessionId, setSessionId] = useState("");
   const [secretKey, setSecretKey] = useState("");
 
+  if (!mfaDetails) {
+    history.push("/");
+  }
+
   const {
     control,
     handleSubmit,

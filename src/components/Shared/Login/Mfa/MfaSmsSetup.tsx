@@ -22,6 +22,9 @@ const MfaSmsSetup = () => {
   const { mfaDetails, setMfaDetails, setEnteredMfaMobile } =
     useContext(AuthContext);
   const history = useHistory();
+  if (!mfaDetails) {
+    history.push("/");
+  }
 
   const {
     control,

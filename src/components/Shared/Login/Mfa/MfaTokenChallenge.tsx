@@ -15,6 +15,11 @@ import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageConta
 const MfaTotpChallenge = () => {
   const { mfaDetails, saveToken, setMfaDetails } = useContext(AuthContext);
   const history = useHistory();
+
+  if (!mfaDetails) {
+    history.push("/");
+  }
+
   const {
     control,
     handleSubmit,
