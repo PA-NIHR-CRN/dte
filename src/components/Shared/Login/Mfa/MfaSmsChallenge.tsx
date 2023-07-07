@@ -23,14 +23,13 @@ const MfaSmsChallenge = () => {
     authenticatedMobile,
     enteredMfaMobile,
   } = useContext(AuthContext);
+  const history = useHistory();
 
   if (!mfaDetails) {
     history.push("/");
   }
 
   const mobilePhoneNumber = enteredMfaMobile || "your mobile phone";
-
-  const history = useHistory();
 
   const {
     control,
@@ -64,10 +63,6 @@ const MfaSmsChallenge = () => {
       setMfaDetails("");
       history.push("/");
     }
-  };
-
-  const handleAlternativeMFA = async () => {
-    history.push("/MfaTokenSetup");
   };
 
   const handleReEnterNumber = async () => {
