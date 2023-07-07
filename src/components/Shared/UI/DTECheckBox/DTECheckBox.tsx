@@ -24,12 +24,7 @@ const StyledDTECheckBox = styled(Checkboxes)`
 `;
 
 const DTECheckBox = (props: any) => {
-  const { id, label, onClick, disabled } = props;
-  return (
-    <StyledDTECheckBox.Box id={id} onClick={onClick} disabled={disabled}>
-      <label htmlFor={id}>{label}</label>
-    </StyledDTECheckBox.Box>
-  );
+  const { value } = props;
+  return <StyledDTECheckBox.Box>{value}</StyledDTECheckBox.Box>;
 };
-
 export default DTECheckBox;
