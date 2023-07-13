@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import DocumentTitle from "react-document-title";
@@ -24,30 +24,26 @@ const MfaLandlineSetup = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors: formErrors, isSubmitting, isSubmitSuccessful },
+    formState: { isSubmitting },
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
-      landlineNumber: "",
+      phoneNumber: "",
     },
   });
-  const [
-    {
-      response: setupMfaResponse,
-      loading: setupMfaLoading,
-      error: setupMfaError,
-    },
-    postSetupInfo,
-  ] = useAxiosFetch({}, { useCache: false, manual: true });
+  const [{ loading: setupMfaLoading }, postSetupInfo] = useAxiosFetch(
+    {},
+    { useCache: false, manual: true }
+  );
 
   const onSubmit = async (data: any) => {
-    const { landlineNumber } = data;
+    const { phoneNumber } = data;
     const res = await postSetupInfo({
       url: `${process.env.REACT_APP_BASE_API}/users/setupsmsmfa`,
       method: "POST",
       data: {
-        landlineNumber,
+        phoneNumber,
         mfaDetails,
       },
     });
@@ -70,14 +66,14 @@ const MfaLandlineSetup = () => {
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Controller
             control={control}
-            name="landlineNumber"
+            name="phoneNumber"
             render={({
               field: { value, onChange, onBlur },
               fieldState: { error },
             }) => (
               <DTEInput
                 label="Landline number"
-                id="landlineNumber"
+                id="phoneNumber"
                 type="tel"
                 required
                 value={value}

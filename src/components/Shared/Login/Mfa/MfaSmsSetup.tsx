@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BaseSyntheticEvent, useContext, useState } from "react";
+import { useEffect, useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import DocumentTitle from "react-document-title";
@@ -11,27 +11,25 @@ import DTEButton from "../../UI/DTEButton/DTEButton";
 import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import Utils, { MobileRegex } from "../../../../Helper/Utils";
 import { AuthContext } from "../../../../context/AuthContext";
-import DTECheckBox from "../../UI/DTECheckBox/DTECheckBox";
-import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
+import DTEDetails from "../../UI/DTEDetails/DTEDetails";
+import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
 `;
 
 const MfaSmsSetup = () => {
-  const { mfaDetails, setMfaDetails } = useContext(AuthContext);
+  const { mfaDetails, setMfaDetails, setEnteredMfaMobile } =
+    useContext(AuthContext);
   const history = useHistory();
-  const [ukMobileChecked, setUkMobileChecked] = useState(false);
+  if (!mfaDetails) {
+    history.push("/");
+  }
 
-  // if (!mfaDetails) {
-  //   history.push("/");
-  // }
   const {
-    trigger,
     control,
     handleSubmit,
-    setValue,
-    formState: { errors: formErrors, isSubmitting, isSubmitSuccessful },
+    formState: { isSubmitting },
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -39,19 +37,12 @@ const MfaSmsSetup = () => {
       phoneNumber: "",
     },
   });
-  const [
-    {
-      response: setupMfaResponse,
-      loading: setupMfaLoading,
-      error: setupMfaError,
-    },
-    postSetupInfo,
-  ] = useAxiosFetch({}, { useCache: false, manual: true });
+  const [{ loading: setupMfaLoading }, postSetupInfo] = useAxiosFetch(
+    {},
+    { useCache: false, manual: true }
+  );
 
   const onSubmit = async (data: any) => {
-    if (ukMobileChecked) {
-      history.push("/MfaSmsChallenge");
-    }
     const { phoneNumber } = data;
     const res = await postSetupInfo({
       url: `${process.env.REACT_APP_BASE_API}/users/setupsmsmfa`,
@@ -64,36 +55,30 @@ const MfaSmsSetup = () => {
     const result = Utils.ConvertResponseToDTEResponse(res);
     if (result?.errors?.some((e) => e.customCode === "Sms_Mfa_Challenge")) {
       setMfaDetails(result?.errors[0]?.detail as string);
+      setEnteredMfaMobile(phoneNumber);
       history.push("/MfaSmsChallenge");
     }
   };
 
-  const handleButtonClick = async () => {
-    if (ukMobileChecked) {
-      history.push("/MfaNoUkMobileOptions");
-    } else {
-      const result = await trigger(); // manually triggers validation
-      if (result) {
-        // form is valid
-        await handleSubmit(onSubmit)(); // manually submits form
-      }
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
     }
-  };
+  }, [isSubmitting]);
 
   return (
     <DocumentTitle title="Enter your mobile phone number">
       <StepWrapper>
-        <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
         <DTEHeader as="h1">Enter your mobile phone number</DTEHeader>
         <DTEContent>
-          We will send you a 6 digit security code to verify your mobile phone
+          We will send you a 6 digit security code to confirm your mobile phone
           number.
         </DTEContent>
         <DTEContent>
           We will only use your mobile phone number to send you a security code
           to verify your identity. We will not use it for any other purpose.
         </DTEContent>
-        <form noValidate>
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Controller
             control={control}
             name="phoneNumber"
@@ -107,7 +92,9 @@ const MfaSmsSetup = () => {
                 type="tel"
                 required
                 value={value}
-                onValueChange={onChange}
+                onValueChange={(e) => {
+                  onChange(e);
+                }}
                 onValueBlur={onBlur}
                 error={error?.message}
                 spellcheck={false}
@@ -127,19 +114,24 @@ const MfaSmsSetup = () => {
               },
             }}
           />
-          <DTECheckBox
-            id="noMobileNumber"
-            label="I do not have a UK mobile phone number"
-            checked={ukMobileChecked}
-            value="I do not have a UK mobile phone number"
-            onClick={() => setUkMobileChecked(!ukMobileChecked)}
-          />
+          <DTEDetails summary="Use another way to secure my account">
+            <>
+              <DTEContent>
+                If you do not have a UK mobile phone number or do not want to
+                use this method, you can{" "}
+                <DTERouteLink
+                  disabled={setupMfaLoading || isSubmitting}
+                  to="/MfaTokenSetup"
+                  renderStyle="standard"
+                >
+                  use an authenticator app to secure your account
+                </DTERouteLink>
+                .
+              </DTEContent>
+            </>
+          </DTEDetails>
           <ButtonWrapper>
-            <DTEButton
-              type="button"
-              onClick={handleButtonClick}
-              disabled={setupMfaLoading || isSubmitting}
-            >
+            <DTEButton disabled={setupMfaLoading || isSubmitting}>
               Continue
             </DTEButton>
           </ButtonWrapper>

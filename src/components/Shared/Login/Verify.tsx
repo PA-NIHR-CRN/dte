@@ -1,6 +1,5 @@
 import { ReactNode, useContext, useEffect } from "react";
 import ReactGA from "react-ga";
-import { Grid } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { useLocation, useHistory } from "react-router-dom";
@@ -122,15 +121,8 @@ const Verify = () => {
               <DTEHeader as="h1" $variant={headerVariant}>
                 Your email address has been verified
               </DTEHeader>
-              <UserLogin />
-              <Grid item xs={12} sm={10}>
-                <DTEContent>
-                  Please sign in to continue registration.
-                </DTEContent>
-                <DTERouteLink to="/Participants/Register/Continue/Questions">
-                  Sign in
-                </DTERouteLink>
-              </Grid>
+              <DTEContent>Please sign in to continue registration.</DTEContent>
+              <UserLogin nested />
             </>
           </DocumentTitle>
         )}

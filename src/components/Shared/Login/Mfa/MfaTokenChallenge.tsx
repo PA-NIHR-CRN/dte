@@ -11,16 +11,19 @@ import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import { AuthContext } from "../../../../context/AuthContext";
 import Utils from "../../../../Helper/Utils";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
-import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 
 const MfaTotpChallenge = () => {
   const { mfaDetails, saveToken, setMfaDetails } = useContext(AuthContext);
   const history = useHistory();
+
+  if (!mfaDetails) {
+    history.push("/");
+  }
+
   const {
     control,
     handleSubmit,
-    setValue,
-    formState: { errors: formErrors, isSubmitting, isSubmitSuccessful },
+    formState: { isSubmitting },
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -29,7 +32,11 @@ const MfaTotpChallenge = () => {
     },
   });
   const [
-    { response: SMSMfaResponse, loading: SMSMfaLoading, error: setupMfaError },
+    {
+      response: TokenMfaResponse,
+      loading: TokenMfaLoading,
+      error: setupMfaError,
+    },
     postMfaCode,
   ] = useAxiosFetch({}, { useCache: false, manual: true });
 
@@ -54,17 +61,16 @@ const MfaTotpChallenge = () => {
   return (
     <DocumentTitle title="MFA Challenge TOTP">
       <StepWrapper>
-        <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
         <DTEHeader as="h1">Enter your 6 Digit code</DTEHeader>
-        <DTEContent>
-          Please enter the 6 digit code from your authenticator app.
-        </DTEContent>
         <ErrorMessageContainer
           axiosErrors={[setupMfaError]}
           DTEAxiosErrors={[
-            Utils.ConvertResponseToDTEResponse(SMSMfaResponse)?.errors,
+            Utils.ConvertResponseToDTEResponse(TokenMfaResponse)?.errors,
           ]}
         />
+        <DTEContent>
+          Please enter the 6 digit code from your authenticator app.
+        </DTEContent>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Controller
             control={control}
@@ -83,7 +89,7 @@ const MfaTotpChallenge = () => {
                 onValueBlur={onBlur}
                 error={error?.message}
                 spellcheck={false}
-                disabled={SMSMfaLoading || isSubmitting}
+                disabled={TokenMfaLoading || isSubmitting}
               />
             )}
             rules={{
@@ -98,7 +104,7 @@ const MfaTotpChallenge = () => {
               },
             }}
           />
-          <DTEButton type="submit" disabled={SMSMfaLoading || isSubmitting}>
+          <DTEButton type="submit" disabled={TokenMfaLoading || isSubmitting}>
             Send security code
           </DTEButton>
         </form>
