@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import DocumentTitle from "react-document-title";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
@@ -16,20 +16,16 @@ import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 
 const MfaSmsChallenge = () => {
-  const {
-    mfaDetails,
-    saveToken,
-    setMfaDetails,
-    authenticatedMobile,
-    enteredMfaMobile,
-  } = useContext(AuthContext);
+  const { mfaDetails, saveToken, setMfaDetails, enteredMfaMobile } =
+    useContext(AuthContext);
   const history = useHistory();
 
   if (!mfaDetails) {
     history.push("/");
   }
 
-  const mobilePhoneNumber = enteredMfaMobile || "your mobile phone";
+  const [mobilePhoneNumber, setMobilePhoneNumber] =
+    useState<string>("your mobile phone");
 
   const {
     control,
@@ -46,6 +42,17 @@ const MfaSmsChallenge = () => {
     { response: SMSMfaResponse, loading: SMSMfaLoading, error: setupMfaError },
     postMfaCode,
   ] = useAxiosFetch({}, { useCache: false, manual: true });
+
+  const [{ response: maskedMobileResponse }] = useAxiosFetch(
+    {
+      url: `${process.env.REACT_APP_BASE_API}/users/getmaskedmobile`,
+      method: "POST",
+      data: {
+        mfaDetails,
+      },
+    },
+    { useCache: false, manual: false }
+  );
 
   const onSubmit = async (data: any) => {
     const { mfaCode } = data;
@@ -89,7 +96,15 @@ const MfaSmsChallenge = () => {
     }
   }, [isSubmitting]);
 
-  const removePlus = (number: string) => number.replace("+", "");
+  useEffect(() => {
+    if (maskedMobileResponse && maskedMobileResponse?.data) {
+      setMobilePhoneNumber(maskedMobileResponse?.data);
+    }
+  }, [maskedMobileResponse]);
+
+  const removePlus = (number: string) => {
+    return number ? number.replace("+", "") : "";
+  };
 
   return (
     <DocumentTitle title="MFA Challenge SMS">
@@ -102,17 +117,9 @@ const MfaSmsChallenge = () => {
           ]}
         />
         <DTEContent>
-          {authenticatedMobile != null ? (
-            <>
-              Enter the 6 digit security code we’ve sent to{" "}
-              {removePlus(authenticatedMobile)}.
-            </>
-          ) : (
-            <>
-              Enter the 6 digit security code we&apos;ve sent to{" "}
-              {mobilePhoneNumber} to confirm this is your mobile phone number.
-            </>
-          )}
+          Enter the 6 digit security code we&apos;ve sent to{" "}
+          {enteredMfaMobile || removePlus(mobilePhoneNumber)}.
+          {enteredMfaMobile && " to confirm this is your mobile phone number."}
           <br />
           <br />
           You need to use this code within <strong>5 minutes</strong> or it will
