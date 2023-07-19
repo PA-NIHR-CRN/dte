@@ -13,7 +13,6 @@ import Utils, { MobileRegex } from "../../../../Helper/Utils";
 import { AuthContext } from "../../../../context/AuthContext";
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
-import MfaTokenSetup from "./MfaTokenSetup";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
