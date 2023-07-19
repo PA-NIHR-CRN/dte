@@ -11,6 +11,10 @@ import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import { AuthContext } from "../../../../context/AuthContext";
 import Utils from "../../../../Helper/Utils";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
+import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
+import DTEDetails from "../../UI/DTEDetails/DTEDetails";
+import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
+import MfaSmsSetup from "./MfaSmsSetup";
 
 const MfaTotpChallenge = () => {
   const { mfaDetails, saveToken, setMfaDetails } = useContext(AuthContext);
@@ -104,6 +108,18 @@ const MfaTotpChallenge = () => {
               },
             }}
           />
+          <DTEDetails summary="I do not have access to my authenticator app">
+            <DTEContent>
+              If you do not have access to your authenticator app, you can{" "}
+              <DTERouteLink
+                to="/MfaSmsSetup"
+                disabled={isSubmitting}
+                renderStyle="standard"
+              >
+                use a UK mobile phone number to secure your account.
+              </DTERouteLink>
+            </DTEContent>
+          </DTEDetails>
           <DTEButton type="submit" disabled={TokenMfaLoading || isSubmitting}>
             Send security code
           </DTEButton>
