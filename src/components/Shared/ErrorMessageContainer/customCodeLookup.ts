@@ -71,6 +71,10 @@ const customCodeLookup = (code: string, detail?: string | ReactNode) => {
       return "Your session has expired. Please sign in again.";
     case "MFA_Code_Mismatch":
       return "Enter the correct security code";
+    case "MFA_Code_Expired":
+      return "Enter the correct security code";
+    case "MFA_User_Not_Found":
+      return "Your user account has not yet been verified. We can send you the email again.";
     default:
       return defaultErrorMessage;
   }

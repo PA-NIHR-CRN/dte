@@ -13,13 +13,14 @@ import Utils, { MobileRegex } from "../../../../Helper/Utils";
 import { AuthContext } from "../../../../context/AuthContext";
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
+import MfaTokenSetup from "./MfaTokenSetup";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
 `;
 
 const MfaSmsSetup = () => {
-  const { mfaDetails, setMfaDetails, setEnteredMfaMobile } =
+  const { mfaDetails, setMfaDetails, setEnteredMfaMobile, prevUrl } =
     useContext(AuthContext);
   const history = useHistory();
   if (!mfaDetails) {
@@ -41,6 +42,25 @@ const MfaSmsSetup = () => {
     {},
     { useCache: false, manual: true }
   );
+
+  useEffect(() => {
+    const reissueSession = async () => {
+      const res = await postSetupInfo({
+        url: `${process.env.REACT_APP_BASE_API}/users/reissuesession`,
+        method: "POST",
+        data: {
+          mfaDetails,
+        },
+      });
+      const result = Utils.ConvertResponseToDTEResponse(res);
+      if (result?.errors?.some((e) => e.customCode === "Mfa_Reissue_Session")) {
+        setMfaDetails(result?.errors[0]?.detail as string);
+      }
+    };
+    if (prevUrl === "/MfaTokenSetup") {
+      reissueSession();
+    }
+  }, [prevUrl]);
 
   const onSubmit = async (data: any) => {
     const { phoneNumber } = data;

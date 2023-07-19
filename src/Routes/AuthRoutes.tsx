@@ -23,7 +23,9 @@ import MfaSmsChallenge from "../components/Shared/Login/Mfa/MfaSmsChallenge";
 import MfaTokenSetup from "../components/Shared/Login/Mfa/MfaTokenSetup";
 import MfaTokenChallenge from "../components/Shared/Login/Mfa/MfaTokenChallenge";
 import MfaNoUkMobileOptions from "../components/Shared/Login/Mfa/MfaNoUkMobileOptions";
-import MfaLandlineSetup from "../components/Shared/Login/Mfa/MfaLandlineSetup";
+import MfaChangeNumberConfirmEmail from "../components/Shared/Login/Mfa/MfaChangeNumberConfirmEmail";
+import MfaChangePhoneNumber from "../components/Shared/Login/Mfa/MfaChangePhoneNumber";
+import MfaSecurityCodeExpired from "../components/Shared/Login/Mfa/MfaSecurityCodeExpired";
 
 const redirect = (pathOrigin: string) => {
   const { persistLastNonLoginUrl, prevUrl, lastUrl } = useContext(AuthContext);
@@ -211,13 +213,31 @@ export default [
     key="MfaNoUkMobileOptions"
   />,
   <Route
-    path="/MfaLandlineSetup"
+    path="/MfaChangeNumberConfirmEmail"
     render={() => {
-      ReactGA.pageview("MfaLandlineSetup");
-      return <MfaLandlineSetup />;
+      ReactGA.pageview("MfaChangeNumberConfirmEmail");
+      return <MfaChangeNumberConfirmEmail />;
     }}
     strict
-    key="MfaLandlineSetup"
+    key="MfaChangeNumberConfirmEmail"
+  />,
+  <Route
+    path="/MfaChangePhoneNumber"
+    render={() => {
+      ReactGA.pageview("MfaChangePhoneNumber");
+      return <MfaChangePhoneNumber />;
+    }}
+    strict
+    key="MfaChangePhoneNumber"
+  />,
+  <Route
+    path="/MfaSecurityCodeExpired"
+    render={() => {
+      ReactGA.pageview("MfaSecurityCodeExpired");
+      return <MfaSecurityCodeExpired />;
+    }}
+    strict
+    key="MfaSecurityCodeExpired"
   />,
   <Route path="/Verify" component={Verify} strict key="verify" />,
   <Route path="/callback" component={NhsLoginCallback} strict key="callback" />,

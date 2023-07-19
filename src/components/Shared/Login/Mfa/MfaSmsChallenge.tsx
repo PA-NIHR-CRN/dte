@@ -16,7 +16,8 @@ import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 
 const MfaSmsChallenge = () => {
-  const { mfaDetails, saveToken, setMfaDetails, enteredMfaMobile } =
+  const [isCodeResent, setIsCodeResent] = useState<boolean>(false);
+  const { mfaDetails, saveToken, setMfaDetails, enteredMfaMobile, prevUrl } =
     useContext(AuthContext);
   const history = useHistory();
 
@@ -65,6 +66,9 @@ const MfaSmsChallenge = () => {
       },
     });
     const result = Utils.ConvertResponseToDTEResponse(res);
+    if (result?.errors?.some((e) => e.customCode === "MFA_Session_Expired")) {
+      history.push("/MfaSecurityCodeExpired");
+    }
     if (result?.isSuccess) {
       saveToken(result?.content);
       setMfaDetails("");
@@ -73,10 +77,11 @@ const MfaSmsChallenge = () => {
   };
 
   const handleReEnterNumber = async () => {
-    history.push("/MfaSmsSetup");
+    history.push("/MfaChangeNumberConfirmEmail");
   };
 
   const handleResendCode = async () => {
+    setIsCodeResent(false);
     const res = await postMfaCode({
       url: `${process.env.REACT_APP_BASE_API}/users/resendmfachallenge`,
       method: "POST",
@@ -85,10 +90,20 @@ const MfaSmsChallenge = () => {
       },
     });
     const result = Utils.ConvertResponseToDTEResponse(res);
+    setIsCodeResent(true);
     if (result?.isSuccess) {
       setMfaDetails(result?.content);
     }
+    if (result?.errors?.some((e) => e.customCode === "Sms_Mfa_Challenge")) {
+      setMfaDetails(result?.errors[0]?.detail as string);
+    }
   };
+
+  useEffect(() => {
+    if (prevUrl === "/MfaSecurityCodeExpired") {
+      handleResendCode();
+    }
+  }, [prevUrl]);
 
   useEffect(() => {
     if (document.getElementsByClassName("nhsuk-error-message")[0]) {
@@ -106,16 +121,28 @@ const MfaSmsChallenge = () => {
     return number ? number.replace("+", "") : "";
   };
 
+  const handleErrors = (error: any, responseError: any) => {
+    const response = Utils.ConvertResponseToDTEResponse(responseError);
+    if (
+      response?.errors?.some((e: any) => e?.customCode === "Sms_Mfa_Challenge")
+    ) {
+      return null;
+    }
+    return (
+      <ErrorMessageContainer
+        axiosErrors={[error]}
+        DTEAxiosErrors={[response?.errors]}
+      />
+    );
+  };
+
   return (
     <DocumentTitle title="MFA Challenge SMS">
       <StepWrapper>
         <DTEHeader as="h1">Check your mobile phone</DTEHeader>
-        <ErrorMessageContainer
-          axiosErrors={[setupMfaError]}
-          DTEAxiosErrors={[
-            Utils.ConvertResponseToDTEResponse(SMSMfaResponse)?.errors,
-          ]}
-        />
+        {setupMfaError || SMSMfaResponse
+          ? handleErrors(setupMfaError, SMSMfaResponse)
+          : null}
         <DTEContent>
           Enter the 6 digit security code we&apos;ve sent to{" "}
           {enteredMfaMobile || removePlus(mobilePhoneNumber)}.
@@ -125,6 +152,11 @@ const MfaSmsChallenge = () => {
           You need to use this code within <strong>5 minutes</strong> or it will
           expire.
         </DTEContent>
+        {isCodeResent && (
+          <div className="govuk-details__text">
+            <DTEContent>You have been sent a new security code.</DTEContent>
+          </div>
+        )}
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Controller
             control={control}
@@ -166,34 +198,50 @@ const MfaSmsChallenge = () => {
                 When we are really busy, it may take a bit longer for your code
                 to arrive.
               </DTEContent>
+              <DTEContent>If you still did not get a security code:</DTEContent>
               <ul className="govuk-list govuk-list--bullet">
                 <li>
                   <DTELinkButton
                     onClick={handleResendCode}
                     disabled={SMSMfaLoading || isSubmitting}
                   >
-                    send your security code again
+                    Send your security code again
                   </DTELinkButton>
                 </li>
-                <li>
-                  <DTELinkButton
-                    onClick={handleReEnterNumber}
-                    disabled={SMSMfaLoading || isSubmitting}
-                  >
-                    enter your mobile phone number again
-                  </DTELinkButton>
-                </li>
+                {prevUrl !== "/UserLogin" && (
+                  <li>
+                    <DTELinkButton
+                      onClick={handleReEnterNumber}
+                      disabled={SMSMfaLoading || isSubmitting}
+                    >
+                      Enter your mobile phone number again
+                    </DTELinkButton>
+                  </li>
+                )}
               </ul>
             </>
           </DTEDetails>
+          {prevUrl === "/UserLogin" && (
+            <DTEDetails summary="I do not have access to my mobile phone">
+              <DTEContent>
+                If you do not have access to your mobile phone, you can{" "}
+                <DTELinkButton
+                  onClick={handleReEnterNumber}
+                  disabled={SMSMfaLoading || isSubmitting}
+                >
+                  change your mobile phone number securely.
+                </DTELinkButton>
+              </DTEContent>
+            </DTEDetails>
+          )}
+
           <DTEDetails summary="Use another way to secure my account">
             <DTEContent>
               If you do not have a UK mobile phone number or do not want to use
               this method, you can{" "}
               <DTERouteLink
-                onClick={() => history.push("/MfaTokenSetup")}
                 disabled={SMSMfaLoading || isSubmitting}
-                to="/"
+                to="/MfaTokenSetup"
                 renderStyle="standard"
               >
                 use an authenticator app to secure your account
