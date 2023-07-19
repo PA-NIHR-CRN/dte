@@ -11,10 +11,8 @@ import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import { AuthContext } from "../../../../context/AuthContext";
 import Utils from "../../../../Helper/Utils";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
-import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
-import MfaSmsSetup from "./MfaSmsSetup";
 
 const MfaTotpChallenge = () => {
   const { mfaDetails, saveToken, setMfaDetails } = useContext(AuthContext);
