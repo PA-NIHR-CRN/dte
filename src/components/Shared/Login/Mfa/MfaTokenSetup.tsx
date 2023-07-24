@@ -119,7 +119,7 @@ const MfaTokenSetup = () => {
           ]}
         />
         <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
-        <DTEHeader as="h1">Set up your authenticator application</DTEHeader>
+        <DTEHeader as="h1">Set up your authenticator app</DTEHeader>
         <DTEContent>
           You can download an authenticator app on any smart device, such as a
           smart phone or tablet. Examples of authenticator apps are the{" "}
@@ -161,7 +161,17 @@ const MfaTokenSetup = () => {
         </DTEContent>
         <DTEContent>
           Once your authenticator app is installed, you will then need to open
-          it and manually enter the secret key or scan the QR code
+          it and manually enter the secret key or scan the QR code. Select a
+          time-based code if you are given the option between time-based or
+          counter-based in your authenticator app.
+        </DTEContent>
+        <DTEContent>
+          If you need support in setting up your authenticator app, please
+          contact us at{" "}
+          <a href="mailto:bepartofresearch@nihr.ac.uk">
+            bepartofresearch@nihr.ac.uk
+          </a>
+          .
         </DTEContent>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <DTEInput
@@ -197,8 +207,8 @@ const MfaTokenSetup = () => {
             </DTEDetails>
           </ComponentSpacer>
           <DTEContent>
-            A six-digit passcode will appear in your authenticator app once it
-            is set up. Please enter this passcode below.
+            A 6-digit security code will appear in your authenticator app once
+            it is set up. Enter this security code below.
           </DTEContent>
           <Controller
             control={control}

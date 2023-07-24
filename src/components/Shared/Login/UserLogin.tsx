@@ -186,10 +186,12 @@ const UserLogin = (props: UserLoginProps) => {
                   Enter the email address and password for a registered user
                   account.
                 </p>
-                <p>
-                  If you registered using NHS login use the back button above
-                  and select NHS login to sign in.
-                </p>
+                {!nested && (
+                  <p>
+                    If you registered using NHS login use the back button above
+                    and select NHS login to sign in.
+                  </p>
+                )}
               </>
             );
           } else if (e.customCode === "Mfa_Setup_Challenge") {

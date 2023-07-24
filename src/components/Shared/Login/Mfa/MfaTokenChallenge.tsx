@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import DocumentTitle from "react-document-title";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
@@ -11,8 +11,9 @@ import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import { AuthContext } from "../../../../context/AuthContext";
 import Utils from "../../../../Helper/Utils";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
-import DTEDetails from "../../UI/DTEDetails/DTEDetails";
-import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
+// import DTEDetails from "../../UI/DTEDetails/DTEDetails";
+// import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
+import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 
 const MfaTotpChallenge = () => {
   const { mfaDetails, saveToken, setMfaDetails } = useContext(AuthContext);
@@ -60,10 +61,17 @@ const MfaTotpChallenge = () => {
     }
   };
 
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
+
   return (
-    <DocumentTitle title="MFA Challenge TOTP">
+    <DocumentTitle title="Check your authenticator app">
       <StepWrapper>
-        <DTEHeader as="h1">Enter your 6 Digit code</DTEHeader>
+        <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
+        <DTEHeader as="h1">Check your authenticator app</DTEHeader>
         <ErrorMessageContainer
           axiosErrors={[setupMfaError]}
           DTEAxiosErrors={[
@@ -71,7 +79,9 @@ const MfaTotpChallenge = () => {
           ]}
         />
         <DTEContent>
-          Please enter the 6 digit code from your authenticator app.
+          Enter the 6 digit security code from your authenticator app to
+          complete verification. Entering the code incorrectly too many times
+          will temporarily prevent you from signing in.
         </DTEContent>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Controller
@@ -82,7 +92,7 @@ const MfaTotpChallenge = () => {
               fieldState: { error },
             }) => (
               <DTEInput
-                label="Code"
+                label="Security code"
                 id="mfaCode"
                 type="text"
                 required
@@ -97,27 +107,27 @@ const MfaTotpChallenge = () => {
             rules={{
               required: {
                 value: true,
-                message: "Enter your MFA Code",
+                message: "Enter a valid security code",
               },
 
               pattern: {
                 value: /^\d{6}$/,
-                message: "Code must be 6 digits long",
+                message: "Enter a valid security code",
               },
             }}
           />
-          <DTEDetails summary="I do not have access to my authenticator app">
-            <DTEContent>
-              If you do not have access to your authenticator app, you can{" "}
-              <DTERouteLink
-                to="/MfaSmsSetup"
-                disabled={isSubmitting}
-                renderStyle="standard"
-              >
-                use a UK mobile phone number to secure your account.
-              </DTERouteLink>
-            </DTEContent>
-          </DTEDetails>
+          {/* <DTEDetails summary="I do not have access to my authenticator app"> */}
+          {/*  <DTEContent> */}
+          {/*    If you do not have access to your authenticator app, you can{" "} */}
+          {/*    <DTERouteLink */}
+          {/*      to="/MfaSmsSetup" */}
+          {/*      disabled={isSubmitting} */}
+          {/*      renderStyle="standard" */}
+          {/*    > */}
+          {/*      use a UK mobile phone number to secure your account. */}
+          {/*    </DTERouteLink> */}
+          {/*  </DTEContent> */}
+          {/* </DTEDetails> */}
           <DTEButton type="submit" disabled={TokenMfaLoading || isSubmitting}>
             Send security code
           </DTEButton>

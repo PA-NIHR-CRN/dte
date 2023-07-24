@@ -13,7 +13,8 @@ import Utils from "../../../../Helper/Utils";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
-import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
+// import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
+import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 
 const MfaSmsChallenge = () => {
   const [isCodeResent, setIsCodeResent] = useState<boolean>(false);
@@ -21,9 +22,9 @@ const MfaSmsChallenge = () => {
     useContext(AuthContext);
   const history = useHistory();
 
-  if (!mfaDetails) {
-    history.push("/");
-  }
+  // if (!mfaDetails) {
+  //   history.push("/");
+  // }
 
   const [mobilePhoneNumber, setMobilePhoneNumber] =
     useState<string>("your mobile phone");
@@ -139,14 +140,15 @@ const MfaSmsChallenge = () => {
   return (
     <DocumentTitle title="MFA Challenge SMS">
       <StepWrapper>
+        <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
         <DTEHeader as="h1">Check your mobile phone</DTEHeader>
         {setupMfaError || SMSMfaResponse
           ? handleErrors(setupMfaError, SMSMfaResponse)
           : null}
         <DTEContent>
           Enter the 6 digit security code we&apos;ve sent to{" "}
-          {enteredMfaMobile || removePlus(mobilePhoneNumber)}.
-          {enteredMfaMobile && " to confirm this is your mobile phone number."}
+          {enteredMfaMobile || removePlus(mobilePhoneNumber)}
+          {enteredMfaMobile && " to confirm this is your mobile phone number"}.
           <br />
           <br />
           You need to use this code within <strong>5 minutes</strong> or it will
@@ -199,13 +201,13 @@ const MfaSmsChallenge = () => {
                 to arrive.
               </DTEContent>
               <DTEContent>If you still did not get a security code:</DTEContent>
-              <ul className="govuk-list govuk-list--bullet">
+              <ul>
                 <li>
                   <DTELinkButton
                     onClick={handleResendCode}
                     disabled={SMSMfaLoading || isSubmitting}
                   >
-                    Send your security code again
+                    send your security code again
                   </DTELinkButton>
                 </li>
                 {prevUrl !== "/UserLogin" && (
@@ -214,7 +216,9 @@ const MfaSmsChallenge = () => {
                       onClick={handleReEnterNumber}
                       disabled={SMSMfaLoading || isSubmitting}
                     >
-                      Enter your mobile phone number again
+                      <DTEContent>
+                        enter your mobile phone number again
+                      </DTEContent>
                     </DTELinkButton>
                   </li>
                 )}
@@ -235,20 +239,20 @@ const MfaSmsChallenge = () => {
             </DTEDetails>
           )}
 
-          <DTEDetails summary="Use another way to secure my account">
-            <DTEContent>
-              If you do not have a UK mobile phone number or do not want to use
-              this method, you can{" "}
-              <DTERouteLink
-                disabled={SMSMfaLoading || isSubmitting}
-                to="/MfaTokenSetup"
-                renderStyle="standard"
-              >
-                use an authenticator app to secure your account
-              </DTERouteLink>
-              .
-            </DTEContent>
-          </DTEDetails>
+          {/* <DTEDetails summary="Use another way to secure my account"> */}
+          {/*  <DTEContent> */}
+          {/*    If you do not have a UK mobile phone number or do not want to use */}
+          {/*    this method, you can{" "} */}
+          {/*    <DTERouteLink */}
+          {/*      disabled={SMSMfaLoading || isSubmitting} */}
+          {/*      to="/MfaTokenSetup" */}
+          {/*      renderStyle="standard" */}
+          {/*    > */}
+          {/*      use an authenticator app to secure your account */}
+          {/*    </DTERouteLink> */}
+          {/*    . */}
+          {/*  </DTEContent> */}
+          {/* </DTEDetails> */}
           <DTEButton type="submit" disabled={SMSMfaLoading || isSubmitting}>
             Continue
           </DTEButton>

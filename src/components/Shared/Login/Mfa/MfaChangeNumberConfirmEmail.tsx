@@ -12,7 +12,7 @@ import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import Utils from "../../../../Helper/Utils";
 import { AuthContext } from "../../../../context/AuthContext";
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
-import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
+// import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
@@ -72,7 +72,7 @@ const MfaChangeNumberConfirmEmail = () => {
     });
     const response = Utils.ConvertResponseToDTEResponse(res);
     if (response?.errors?.some((e) => e.customCode === "MFA_Code_Expired")) {
-      history.push("/MfaTokenChallenge");
+      history.push("/MfaSecurityCodeExpired");
     }
     if (response?.isSuccess) {
       history.push("/MfaChangePhoneNumber");
@@ -149,28 +149,28 @@ const MfaChangeNumberConfirmEmail = () => {
                     onClick={handleResendCode}
                     disabled={validateEmailOtpLoading || isSubmitting}
                   >
-                    Send your security code again
+                    send your security code again
                   </DTELinkButton>
                 </li>
               </ul>
             </>
           </DTEDetails>
-          <DTEDetails summary="Use another way to secure my account">
-            <>
-              <DTEContent>
-                If you do not have a UK mobile phone number or do not want to
-                use this method, you can{" "}
-                <DTERouteLink
-                  disabled={validateEmailOtpLoading || isSubmitting}
-                  to="/MfaTokenSetup"
-                  renderStyle="standard"
-                >
-                  use an authenticator app to secure your account
-                </DTERouteLink>
-                .
-              </DTEContent>
-            </>
-          </DTEDetails>
+          {/* <DTEDetails summary="Use another way to secure my account"> */}
+          {/*  <> */}
+          {/*    <DTEContent> */}
+          {/*      If you do not have a UK mobile phone number or do not want to */}
+          {/*      use this method, you can{" "} */}
+          {/*      <DTERouteLink */}
+          {/*        disabled={validateEmailOtpLoading || isSubmitting} */}
+          {/*        to="/MfaTokenSetup" */}
+          {/*        renderStyle="standard" */}
+          {/*      > */}
+          {/*        use an authenticator app to secure your account */}
+          {/*      </DTERouteLink> */}
+          {/*      . */}
+          {/*    </DTEContent> */}
+          {/*  </> */}
+          {/* </DTEDetails> */}
           <ButtonWrapper>
             <DTEButton disabled={getEmailOtpLoading || isSubmitting}>
               Continue

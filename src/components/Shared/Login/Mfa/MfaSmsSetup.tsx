@@ -124,7 +124,7 @@ const MfaSmsSetup = () => {
             rules={{
               required: {
                 value: true,
-                message: "Enter a UK Phone Number",
+                message: "Enter a UK phone number",
               },
 
               pattern: {

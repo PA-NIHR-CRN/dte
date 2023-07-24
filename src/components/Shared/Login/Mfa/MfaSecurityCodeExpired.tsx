@@ -6,7 +6,7 @@ import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import { AuthContext } from "../../../../context/AuthContext";
-import DTEDetails from "../../UI/DTEDetails/DTEDetails";
+// import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 
 const LinkWrapper = styled.div`
@@ -30,22 +30,30 @@ const MfaSecurityCodeExpired = () => {
             to={prevUrl || "/MfaChangeNumberConfirmEmail"}
             renderStyle="standard"
           >
-            Send your security code again
+            <DTEContent>Send your security code again</DTEContent>
+          </DTERouteLink>
+        </LinkWrapper>
+        <LinkWrapper>
+          <DTERouteLink
+            to="/MfaChangeNumberConfirmEmail"
+            renderStyle="standard"
+          >
+            <DTEContent>Enter your mobile phone number again</DTEContent>
           </DTERouteLink>
         </LinkWrapper>
 
-        <DTEDetails summary="Use another way to secure my account">
-          <>
-            <DTEContent>
-              If you do not have a UK mobile phone number or do not want to use
-              this method, you can{" "}
-              <DTERouteLink to="/MfaTokenSetup" renderStyle="standard">
-                use an authenticator app to secure your account
-              </DTERouteLink>
-              .
-            </DTEContent>
-          </>
-        </DTEDetails>
+        {/* <DTEDetails summary="Use another way to secure my account"> */}
+        {/*  <> */}
+        {/*    <DTEContent> */}
+        {/*      If you do not have a UK mobile phone number or do not want to use */}
+        {/*      this method, you can{" "} */}
+        {/*      <DTERouteLink to="/MfaTokenSetup" renderStyle="standard"> */}
+        {/*        use an authenticator app to secure your account */}
+        {/*      </DTERouteLink> */}
+        {/*      . */}
+        {/*    </DTEContent> */}
+        {/*  </> */}
+        {/* </DTEDetails> */}
       </StepWrapper>
     </DocumentTitle>
   );
