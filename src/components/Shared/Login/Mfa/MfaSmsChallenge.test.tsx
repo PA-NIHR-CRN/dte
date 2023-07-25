@@ -81,12 +81,12 @@ describe("MFA code input must have correct attributes", () => {
     expect(typeValue).toBe("text");
   });
 
-  it("must have a autocomplete attribute of tel-national", async () => {
+  it("must have a autocomplete attribute of one-time-code", async () => {
     render(<MfaSmsChallenge />);
     const mfaInput = await screen.findByLabelText("Security code");
     const autocompleteValue = mfaInput.getAttribute("autocomplete");
     expect(mfaInput).toHaveAttribute("autocomplete");
-    expect(autocompleteValue).toBe("tel-national");
+    expect(autocompleteValue).toBe("one-time-code");
   });
 
   it("must have a spellcheck attribute set to false", async () => {
