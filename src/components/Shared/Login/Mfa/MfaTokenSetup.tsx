@@ -17,6 +17,7 @@ import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
+import useInlineServerError from "../../../../hooks/useInlineServerError";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -77,7 +78,7 @@ const MfaTokenSetup = () => {
     { response: totpMfaResponse, loading: totpMfaLoading, error: totpMfaError },
     postMfaCode,
   ] = useAxiosFetch({}, { useCache: false, manual: true });
-
+  const convertedError = useInlineServerError(totpMfaResponse);
   const copySecretKey = () => {
     navigator.clipboard.writeText(secretKey);
   };
@@ -109,13 +110,21 @@ const MfaTokenSetup = () => {
     }
   };
 
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting]);
+
   return (
     <DocumentTitle title="MFA Setup Token">
       <StepWrapper>
         <ErrorMessageContainer
           axiosErrors={[totpMfaError]}
           DTEAxiosErrors={[
-            Utils.ConvertResponseToDTEResponse(totpMfaResponse)?.errors,
+            convertedError
+              ? []
+              : Utils.ConvertResponseToDTEResponse(totpMfaResponse)?.errors,
           ]}
         />
         <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
@@ -225,7 +234,7 @@ const MfaTokenSetup = () => {
                 value={value}
                 onValueChange={onChange}
                 onValueBlur={onBlur}
-                error={error?.message}
+                error={convertedError || error?.message}
                 spellcheck={false}
                 disabled={tokenCodeLoading || isSubmitting || totpMfaLoading}
               />

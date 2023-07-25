@@ -6,8 +6,8 @@ import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import { AuthContext } from "../../../../context/AuthContext";
-// import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
+import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 
 const LinkWrapper = styled.div`
   margin: 1rem 0;
@@ -33,27 +33,19 @@ const MfaSecurityCodeExpired = () => {
             <DTEContent>Send your security code again</DTEContent>
           </DTERouteLink>
         </LinkWrapper>
-        <LinkWrapper>
-          <DTERouteLink
-            to="/MfaChangeNumberConfirmEmail"
-            renderStyle="standard"
-          >
-            <DTEContent>Enter your mobile phone number again</DTEContent>
-          </DTERouteLink>
-        </LinkWrapper>
-
-        {/* <DTEDetails summary="Use another way to secure my account"> */}
-        {/*  <> */}
-        {/*    <DTEContent> */}
-        {/*      If you do not have a UK mobile phone number or do not want to use */}
-        {/*      this method, you can{" "} */}
-        {/*      <DTERouteLink to="/MfaTokenSetup" renderStyle="standard"> */}
-        {/*        use an authenticator app to secure your account */}
-        {/*      </DTERouteLink> */}
-        {/*      . */}
-        {/*    </DTEContent> */}
-        {/*  </> */}
-        {/* </DTEDetails> */}
+        {prevUrl === "/MfaSmsChallenge" && (
+          <DTEDetails summary="I do not have access to my mobile phone">
+            <DTEContent>
+              If you do not have access to your mobile phone, you can{" "}
+              <DTERouteLink
+                to="/MfaChangeNumberConfirmEmail"
+                renderStyle="standard"
+              >
+                change your mobile phone number securely.
+              </DTERouteLink>
+            </DTEContent>
+          </DTEDetails>
+        )}
       </StepWrapper>
     </DocumentTitle>
   );

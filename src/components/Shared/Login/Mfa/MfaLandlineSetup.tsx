@@ -93,7 +93,7 @@ const MfaLandlineSetup = () => {
 
               pattern: {
                 value: LandlineRegex,
-                message: "Enter a valid UK Landline Number",
+                message: "Enter a valid UK landline number",
               },
             }}
           />

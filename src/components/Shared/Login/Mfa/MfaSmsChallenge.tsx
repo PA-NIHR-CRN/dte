@@ -13,8 +13,9 @@ import Utils from "../../../../Helper/Utils";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
-// import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
+import useInlineServerError from "../../../../hooks/useInlineServerError";
+import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 
 const MfaSmsChallenge = () => {
   const [isCodeResent, setIsCodeResent] = useState<boolean>(false);
@@ -44,6 +45,7 @@ const MfaSmsChallenge = () => {
     { response: SMSMfaResponse, loading: SMSMfaLoading, error: setupMfaError },
     postMfaCode,
   ] = useAxiosFetch({}, { useCache: false, manual: true });
+  const convertedError = useInlineServerError(SMSMfaResponse);
 
   const [{ response: maskedMobileResponse }] = useAxiosFetch(
     {
@@ -75,10 +77,6 @@ const MfaSmsChallenge = () => {
       setMfaDetails("");
       history.push("/");
     }
-  };
-
-  const handleReEnterNumber = async () => {
-    history.push("/MfaChangeNumberConfirmEmail");
   };
 
   const handleResendCode = async () => {
@@ -132,7 +130,7 @@ const MfaSmsChallenge = () => {
     return (
       <ErrorMessageContainer
         axiosErrors={[error]}
-        DTEAxiosErrors={[response?.errors]}
+        DTEAxiosErrors={[convertedError ? [] : response?.errors]}
       />
     );
   };
@@ -175,9 +173,9 @@ const MfaSmsChallenge = () => {
                 value={value}
                 onValueChange={onChange}
                 onValueBlur={onBlur}
-                error={error?.message}
+                error={convertedError || error?.message}
                 spellcheck={false}
-                autocomplete="tel-national"
+                autocomplete="one-time-code"
                 disabled={SMSMfaLoading || isSubmitting}
                 hint="The code is 6 digits. Entering the code incorrectly too many times will temporarily prevent you from signing in."
               />
@@ -201,58 +199,53 @@ const MfaSmsChallenge = () => {
                 to arrive.
               </DTEContent>
               <DTEContent>If you still did not get a security code:</DTEContent>
-              <ul>
-                <li>
-                  <DTELinkButton
-                    onClick={handleResendCode}
-                    disabled={SMSMfaLoading || isSubmitting}
-                  >
-                    send your security code again
-                  </DTELinkButton>
-                </li>
-                {prevUrl !== "/UserLogin" && (
+              {prevUrl === "/UserLogin" ? (
+                <DTELinkButton
+                  onClick={handleResendCode}
+                  disabled={SMSMfaLoading || isSubmitting}
+                >
+                  Send your security code again
+                </DTELinkButton>
+              ) : (
+                <ul>
+                  {" "}
                   <li>
                     <DTELinkButton
-                      onClick={handleReEnterNumber}
+                      onClick={handleResendCode}
                       disabled={SMSMfaLoading || isSubmitting}
+                    >
+                      send your security code again
+                    </DTELinkButton>
+                  </li>
+                  <li>
+                    <DTERouteLink
+                      disabled={SMSMfaLoading || isSubmitting}
+                      to="/MfaChangeNumberConfirmEmail"
+                      renderStyle="standard"
                     >
                       <DTEContent>
                         enter your mobile phone number again
                       </DTEContent>
-                    </DTELinkButton>
+                    </DTERouteLink>
                   </li>
-                )}
-              </ul>
+                </ul>
+              )}
             </>
           </DTEDetails>
           {prevUrl === "/UserLogin" && (
             <DTEDetails summary="I do not have access to my mobile phone">
               <DTEContent>
                 If you do not have access to your mobile phone, you can{" "}
-                <DTELinkButton
-                  onClick={handleReEnterNumber}
+                <DTERouteLink
                   disabled={SMSMfaLoading || isSubmitting}
+                  to="/MfaChangeNumberConfirmEmail"
+                  renderStyle="standard"
                 >
                   change your mobile phone number securely.
-                </DTELinkButton>
+                </DTERouteLink>
               </DTEContent>
             </DTEDetails>
           )}
-
-          {/* <DTEDetails summary="Use another way to secure my account"> */}
-          {/*  <DTEContent> */}
-          {/*    If you do not have a UK mobile phone number or do not want to use */}
-          {/*    this method, you can{" "} */}
-          {/*    <DTERouteLink */}
-          {/*      disabled={SMSMfaLoading || isSubmitting} */}
-          {/*      to="/MfaTokenSetup" */}
-          {/*      renderStyle="standard" */}
-          {/*    > */}
-          {/*      use an authenticator app to secure your account */}
-          {/*    </DTERouteLink> */}
-          {/*    . */}
-          {/*  </DTEContent> */}
-          {/* </DTEDetails> */}
           <DTEButton type="submit" disabled={SMSMfaLoading || isSubmitting}>
             Continue
           </DTEButton>

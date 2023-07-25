@@ -1,13 +1,11 @@
-import { ReactNode } from "react";
-
-const customCodeLookup = (code: string, detail?: string | ReactNode) => {
+const customCodeLookup = (code: string, detail?: string): string => {
   const defaultLoginErrorMessage = "An error occurred while logging in";
   const defaultRegistrationErrorMessage = "An error occurred while registering";
   const defaultErrorMessage = "An error occurred";
   switch (code) {
     // Code used when the details have already been changed locally
     case "NO_CHANGE":
-      return detail;
+      return detail || "";
     case "User_Not_In_Allow_List_Error":
       return "Email address is not recognised by the service - contact bepartofresearch@nihr.ac.uk to sign up.";
     case "InternalServerError":
@@ -76,7 +74,7 @@ const customCodeLookup = (code: string, detail?: string | ReactNode) => {
     case "MFA_User_Not_Found":
       return "Your user account has not yet been verified. We can send you the email again.";
     default:
-      return defaultErrorMessage;
+      return defaultErrorMessage || "An unexpected error occurred";
   }
 };
 

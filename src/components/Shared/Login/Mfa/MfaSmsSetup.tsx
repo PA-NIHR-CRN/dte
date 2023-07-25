@@ -129,7 +129,7 @@ const MfaSmsSetup = () => {
 
               pattern: {
                 value: MobileRegex,
-                message: "Enter a valid UK Phone Number",
+                message: "Enter a valid UK phone number",
               },
             }}
           />

@@ -1,7 +1,5 @@
 /* eslint-disable camelcase */
 
-import { ReactNode } from "react";
-
 export interface JWTDeCode {
   "cognito:username": string;
   email: string;
@@ -62,7 +60,7 @@ export interface DTEAxiosResponse {
 
 export interface DTEAxiosError {
   code?: string;
-  detail?: string | ReactNode;
+  detail?: string;
   customCode?: string;
   service?: string;
   component?: string;
