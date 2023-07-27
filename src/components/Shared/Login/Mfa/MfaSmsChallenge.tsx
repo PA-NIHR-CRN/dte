@@ -138,7 +138,9 @@ const MfaSmsChallenge = () => {
   return (
     <DocumentTitle title="MFA Challenge SMS">
       <StepWrapper>
-        <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
+        {prevUrl === "/MfaSmsSetup" && (
+          <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
+        )}
         <DTEHeader as="h1">Check your mobile phone</DTEHeader>
         {setupMfaError || SMSMfaResponse
           ? handleErrors(setupMfaError, SMSMfaResponse)

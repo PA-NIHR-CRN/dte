@@ -25,6 +25,7 @@ const MfaChangeNumberConfirmEmail = () => {
   const [isCodeResent, setIsCodeResent] = useState<boolean>(true);
   const { mfaDetails } = useContext(AuthContext);
   const history = useHistory();
+  const [userEmail, setUserEmail] = useState<string>("your email address");
 
   if (!mfaDetails) {
     history.push("/");
@@ -41,7 +42,10 @@ const MfaChangeNumberConfirmEmail = () => {
       mfaCode: "",
     },
   });
-  const [{ loading: getEmailOtpLoading }, resendCode] = useAxiosFetch(
+  const [
+    { response: userEmailRespose, loading: getEmailOtpLoading },
+    resendCode,
+  ] = useAxiosFetch(
     {
       url: `${process.env.REACT_APP_BASE_API}/users/sendmfaotpemail`,
       method: "POST",
@@ -88,6 +92,13 @@ const MfaChangeNumberConfirmEmail = () => {
   };
 
   useEffect(() => {
+    const result = Utils.ConvertResponseToDTEResponse(userEmailRespose);
+    if (result?.isSuccess) {
+      setUserEmail(result?.content);
+    }
+  }, [userEmailRespose]);
+
+  useEffect(() => {
     if (document.getElementsByClassName("nhsuk-error-message")[0]) {
       Utils.FocusOnError();
     }
@@ -108,8 +119,8 @@ const MfaChangeNumberConfirmEmail = () => {
           ]}
         />
         <DTEContent>
-          Enter the 6 digit security code we’ve sent to to confirm this is your
-          email address.
+          Enter the 6 digit security code we’ve sent to {userEmail} to confirm
+          this is your email address.
         </DTEContent>
         <DTEContent>
           You need to use this code within <strong>5 minutes</strong> or it will
