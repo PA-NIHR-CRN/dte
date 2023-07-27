@@ -134,11 +134,12 @@ const MfaSmsChallenge = () => {
       />
     );
   };
+  const urlList = ["/MfaSmsSetup", "/MfaChangePhoneNumber"];
 
   return (
     <DocumentTitle title="MFA Challenge SMS">
       <StepWrapper>
-        {prevUrl === "/MfaSmsSetup" && (
+        {urlList.includes(prevUrl as string) && (
           <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
         )}
         <DTEHeader as="h1">Check your mobile phone</DTEHeader>
@@ -201,16 +202,8 @@ const MfaSmsChallenge = () => {
                 to arrive.
               </DTEContent>
               <DTEContent>If you still did not get a security code:</DTEContent>
-              {prevUrl === "/UserLogin" ? (
-                <DTELinkButton
-                  onClick={handleResendCode}
-                  disabled={SMSMfaLoading || isSubmitting}
-                >
-                  Send your security code again
-                </DTELinkButton>
-              ) : (
+              {urlList.includes(prevUrl as string) ? (
                 <ul>
-                  {" "}
                   <li>
                     <DTELinkButton
                       onClick={handleResendCode}
@@ -222,19 +215,28 @@ const MfaSmsChallenge = () => {
                   <li>
                     <DTERouteLink
                       disabled={SMSMfaLoading || isSubmitting}
-                      to="/MfaChangeNumberConfirmEmail"
+                      to="/MfaSmsSetup"
                       renderStyle="standard"
                     >
                       <DTEContent>
-                        enter your mobile phone number again
+                        enter your{" "}
+                        {prevUrl === "/MfaChangePhoneNumber" && "new"} mobile
+                        phone number again
                       </DTEContent>
                     </DTERouteLink>
                   </li>
                 </ul>
+              ) : (
+                <DTELinkButton
+                  onClick={handleResendCode}
+                  disabled={SMSMfaLoading || isSubmitting}
+                >
+                  Send your security code again
+                </DTELinkButton>
               )}
             </>
           </DTEDetails>
-          {prevUrl === "/UserLogin" && (
+          {prevUrl !== "/MfaSmsSetup" && (
             <DTEDetails summary="I do not have access to my mobile phone">
               <DTEContent>
                 If you do not have access to your mobile phone, you can{" "}

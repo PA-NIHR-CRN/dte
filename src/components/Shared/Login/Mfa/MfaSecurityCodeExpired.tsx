@@ -34,17 +34,14 @@ const MfaSecurityCodeExpired = () => {
           </DTERouteLink>
         </LinkWrapper>
         {prevUrl === "/MfaSmsChallenge" && (
-          <DTEDetails summary="I do not have access to my mobile phone">
-            <DTEContent>
-              If you do not have access to your mobile phone, you can{" "}
-              <DTERouteLink
-                to="/MfaChangeNumberConfirmEmail"
-                renderStyle="standard"
-              >
-                change your mobile phone number securely.
-              </DTERouteLink>
-            </DTEContent>
-          </DTEDetails>
+          <DTEContent>
+            <DTERouteLink
+              to="/MfaChangeNumberConfirmEmail"
+              renderStyle="standard"
+            >
+              Enter your new mobile phone number again
+            </DTERouteLink>
+          </DTEContent>
         )}
       </StepWrapper>
     </DocumentTitle>

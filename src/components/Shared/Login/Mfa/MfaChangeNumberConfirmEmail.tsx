@@ -22,8 +22,10 @@ const ButtonWrapper = styled.div`
 `;
 
 const MfaChangeNumberConfirmEmail = () => {
-  const [isCodeResent, setIsCodeResent] = useState<boolean>(true);
-  const { mfaDetails } = useContext(AuthContext);
+  const { mfaDetails, prevUrl } = useContext(AuthContext);
+  const [isCodeResent, setIsCodeResent] = useState<boolean>(
+    prevUrl === "/MfaSecurityCodeExpired"
+  );
   const history = useHistory();
   const [userEmail, setUserEmail] = useState<string>("your email address");
 
@@ -53,7 +55,7 @@ const MfaChangeNumberConfirmEmail = () => {
         mfaDetails,
       },
     },
-    { useCache: false, manual: false }
+    { useCache: false, manual: prevUrl === "/MfaChangePhoneNumber" }
   );
 
   const handleResendCode = async () => {
@@ -107,7 +109,9 @@ const MfaChangeNumberConfirmEmail = () => {
   return (
     <DocumentTitle title="Email OTP">
       <StepWrapper>
-        <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
+        {prevUrl !== "/MfaSecurityCodeExpired" && (
+          <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
+        )}
         <DTEHeader as="h1">Check your email</DTEHeader>
         <ErrorMessageContainer
           axiosErrors={[validateEmailOtpError]}
