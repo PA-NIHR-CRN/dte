@@ -7,7 +7,6 @@ import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import { AuthContext } from "../../../../context/AuthContext";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
-import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 
 const LinkWrapper = styled.div`
   margin: 1rem 0;
