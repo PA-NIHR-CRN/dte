@@ -19,8 +19,13 @@ const ButtonWrapper = styled.div`
 `;
 
 const MfaSmsSetup = () => {
-  const { mfaDetails, setMfaDetails, setEnteredMfaMobile, prevUrl } =
-    useContext(AuthContext);
+  const {
+    mfaDetails,
+    setMfaDetails,
+    setEnteredMfaMobile,
+    prevUrl,
+    enteredMfaMobile,
+  } = useContext(AuthContext);
   const history = useHistory();
   if (!mfaDetails) {
     history.push("/");
@@ -34,7 +39,7 @@ const MfaSmsSetup = () => {
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
-      phoneNumber: "",
+      phoneNumber: enteredMfaMobile,
     },
   });
   const [{ loading: setupMfaLoading }, postSetupInfo] = useAxiosFetch(
@@ -124,12 +129,12 @@ const MfaSmsSetup = () => {
             rules={{
               required: {
                 value: true,
-                message: "Enter a UK phone number",
+                message: "Enter a UK mobile phone number",
               },
 
               pattern: {
                 value: MobileRegex,
-                message: "Enter a valid UK phone number",
+                message: "Enter a valid UK mobile phone number",
               },
             }}
           />

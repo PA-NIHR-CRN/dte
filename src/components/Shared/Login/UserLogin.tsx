@@ -183,7 +183,7 @@ const UserLogin = (props: UserLoginProps) => {
             detail = `Enter the email address and password for a registered user account.${
               !nested
                 ? " If you registered using NHS login use the back button above and select NHS login to sign in."
-                : ""
+                : " If you registered using NHS login use the back button above and select NHS login visit the sign in page and select NHS login to sign in."
             }`;
           } else if (e.customCode === "Mfa_Setup_Challenge") {
             detail =

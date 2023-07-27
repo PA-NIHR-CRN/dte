@@ -12,8 +12,18 @@ const useInlineServerError = (
     const result = Utils.ConvertResponseToDTEResponse(serverResponse);
     if (result?.errors?.length) {
       const { customCode, detail } = result.errors[0];
-      const converted = customCodeLookup(customCode || "", detail || "");
-      setConvertedError(converted);
+
+      // Ignore certain errors
+      const ignoreErrors = [
+        "Sms_Mfa_Challenge",
+        "Software_Token_Mfa_Challenge",
+        "Setup_Mfa_Challenge",
+      ];
+
+      if (customCode && !ignoreErrors.includes(customCode)) {
+        const converted = customCodeLookup(customCode || "", detail || "");
+        setConvertedError(converted);
+      }
     } else {
       setConvertedError(null);
     }

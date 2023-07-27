@@ -68,7 +68,7 @@ const MfaTokenSetup = () => {
     setSessionId(tokenCodeResponse?.data?.content?.sessionId);
     const { username, secretCode } = tokenCodeResponse?.data?.content;
     setSecretKey(secretCode);
-    const qrCode = `otpauth://totp/AWSCognito:${username}?secret=${secretCode}&issuer=Cognito`;
+    const qrCode = `otpauth://totp/BePartOfResearch:${username}?secret=${secretCode}&issuer=Cognito`;
     generateQR(qrCode).then((res) => {
       setQrSrc(res as string);
     });
@@ -258,15 +258,6 @@ const MfaTokenSetup = () => {
             Continue
           </DTEButton>
         </form>
-        <ComponentSpacer>
-          <DTERouteLink
-            disabled={tokenCodeLoading || isSubmitting || totpMfaLoading}
-            to="/MfaSmsSetup"
-            renderStyle="standard"
-          >
-            Use another way to secure your account
-          </DTERouteLink>
-        </ComponentSpacer>
       </StepWrapper>
     </DocumentTitle>
   );

@@ -23,9 +23,9 @@ const MfaSmsChallenge = () => {
     useContext(AuthContext);
   const history = useHistory();
 
-  // if (!mfaDetails) {
-  //   history.push("/");
-  // }
+  if (!mfaDetails) {
+    history.push("/");
+  }
 
   const [mobilePhoneNumber, setMobilePhoneNumber] =
     useState<string>("your mobile phone");
@@ -175,7 +175,7 @@ const MfaSmsChallenge = () => {
                 onValueBlur={onBlur}
                 error={convertedError || error?.message}
                 spellcheck={false}
-                autocomplete="one-time-code"
+                autocomplete="off"
                 disabled={SMSMfaLoading || isSubmitting}
                 hint="The code is 6 digits. Entering the code incorrectly too many times will temporarily prevent you from signing in."
               />

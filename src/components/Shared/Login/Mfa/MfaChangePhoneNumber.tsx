@@ -11,8 +11,6 @@ import DTEButton from "../../UI/DTEButton/DTEButton";
 import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import Utils, { MobileRegex } from "../../../../Helper/Utils";
 import { AuthContext } from "../../../../context/AuthContext";
-// import DTEDetails from "../../UI/DTEDetails/DTEDetails";
-// import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 
 const ButtonWrapper = styled.div`
@@ -99,31 +97,15 @@ const MfaChangePhoneNumber = () => {
             rules={{
               required: {
                 value: true,
-                message: "Enter a valid UK phone number",
+                message: "Enter a valid UK mobile phone number",
               },
 
               pattern: {
                 value: MobileRegex,
-                message: "Enter a valid UK phone number",
+                message: "Enter a valid UK mobile phone number",
               },
             }}
           />
-          {/* <DTEDetails summary="Use another way to secure my account"> */}
-          {/*  <> */}
-          {/*    <DTEContent> */}
-          {/*      If you do not have a UK mobile phone number or do not want to */}
-          {/*      use this method, you can{" "} */}
-          {/*      <DTERouteLink */}
-          {/*        disabled={setupMfaLoading || isSubmitting} */}
-          {/*        to="/MfaTokenSetup" */}
-          {/*        renderStyle="standard" */}
-          {/*      > */}
-          {/*        use an authenticator app to secure your account */}
-          {/*      </DTERouteLink> */}
-          {/*      . */}
-          {/*    </DTEContent> */}
-          {/*  </> */}
-          {/* </DTEDetails> */}
           <ButtonWrapper>
             <DTEButton disabled={setupMfaLoading || isSubmitting}>
               Continue

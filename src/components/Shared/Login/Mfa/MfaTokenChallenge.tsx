@@ -105,7 +105,7 @@ const MfaTotpChallenge = () => {
                 error={convertedError || error?.message}
                 spellcheck={false}
                 disabled={TokenMfaLoading || isSubmitting}
-                autocomplete="one-time-code"
+                autocomplete="off"
               />
             )}
             rules={{
