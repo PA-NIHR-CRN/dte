@@ -98,10 +98,6 @@ const MfaSmsSetup = () => {
           We will send you a 6 digit security code to your phone to confirm your
           mobile number.
         </DTEContent>
-        <DTEContent>
-          We will only use your mobile phone number to send you a security code
-          to verify your identity. We will not use it for any other purpose.
-        </DTEContent>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Controller
             control={control}
