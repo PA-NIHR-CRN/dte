@@ -236,7 +236,7 @@ const MfaSmsChallenge = () => {
               )}
             </>
           </DTEDetails>
-          {prevUrl !== "/MfaSmsSetup" && (
+          {urlList.includes(prevUrl as string) && (
             <DTEDetails summary="I do not have access to my mobile phone">
               <DTEContent>
                 If you do not have access to your mobile phone, you can{" "}
