@@ -38,7 +38,7 @@ const MfaSecurityCodeExpired = () => {
               to="/MfaChangeNumberConfirmEmail"
               renderStyle="standard"
             >
-              Enter your new mobile phone number again
+              Enter your mobile phone number again
             </DTERouteLink>
           </DTEContent>
         )}

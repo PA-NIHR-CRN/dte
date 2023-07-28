@@ -299,15 +299,15 @@ const UserLogin = (props: UserLoginProps) => {
               </DTERouteLink>
             </DTEContent>
             <DTEContent>
-              If you registered using NHS login,{" "}
+              If you registered using NHS login, you can{" "}
               <DTERouteLink
                 to="/Participants/Options"
                 renderStyle="standard"
                 ariaLabel="visit the sign in options page"
               >
-                visit the sign in options page
-              </DTERouteLink>{" "}
-              and select NHS login to sign in.
+                sign in here
+              </DTERouteLink>
+              .
             </DTEContent>
             <ButtonWrapper>
               <DTEButton disabled={loadingLogin}>Sign in</DTEButton>

@@ -95,8 +95,8 @@ const MfaSmsSetup = () => {
       <StepWrapper>
         <DTEHeader as="h1">Enter your mobile phone number</DTEHeader>
         <DTEContent>
-          We will send you a 6 digit security code to confirm your mobile phone
-          number.
+          We will send you a 6 digit security code to your phone to confirm your
+          mobile number.
         </DTEContent>
         <DTEContent>
           We will only use your mobile phone number to send you a security code
