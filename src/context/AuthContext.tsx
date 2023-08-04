@@ -1,6 +1,7 @@
 import { useState, createContext, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom"
 import {
   JWTDeCode,
   AuthContextProps,
@@ -48,6 +49,7 @@ export const AuthProvider = (props: { children: any }) => {
   const [isInNHSApp, setIsInNHSApp] = useState<boolean>(false);
 
   const baseUrl = process.env.REACT_APP_BASE_API;
+  const history = useHistory();
 
   const [{ loading: logoutLoading }, logout] = useAxiosFetch(
     {
@@ -242,6 +244,7 @@ export const AuthProvider = (props: { children: any }) => {
         setLastUrl(null);
         setIsNhsLinkedAccount(false);
         setAuthenticatedIsParticipant(true);
+        history.push("/Participants/Options");
       });
     }
   };

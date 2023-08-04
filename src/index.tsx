@@ -11,7 +11,7 @@ import { AuthProvider } from "./context/AuthContext";
 import ScrollToTop from "./Helper/ScrollToTop";
 
 ReactDOM.render(
-  <AuthProvider>
+
     <MuiThemeProvider theme={theme}>
       <SnackbarProvider
         maxSnack={3}
@@ -21,12 +21,14 @@ ReactDOM.render(
         }}
       >
         <Router>
-          <ScrollToTop />
-          <App />
+          <AuthProvider>
+            <ScrollToTop />
+            <App />
+          </AuthProvider>
         </Router>
       </SnackbarProvider>
     </MuiThemeProvider>
-  </AuthProvider>,
+,
   document.getElementById("root")
 );
 
