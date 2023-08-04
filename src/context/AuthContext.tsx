@@ -1,7 +1,7 @@
 import { useState, createContext, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
-import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom";
 import {
   JWTDeCode,
   AuthContextProps,
