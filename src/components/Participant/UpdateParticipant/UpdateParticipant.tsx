@@ -777,7 +777,7 @@ const UpdateParticipant = () => {
                       </dd>
                       <dd className="govuk-summary-list__actions">
                         <DTELinkButton
-                          onClick={() => setCurrentDisplayPage("gender")}
+                          onClick={() => setCurrentDisplayPage("sex")}
                         >
                           Change{" "}
                           <StyledHiddenText>
