@@ -17,7 +17,7 @@ function Logout() {
 
   useEffect(() => {
     if (loggedOut) {
-      history.push("/");
+      history.push("/Participants/Options");
     }
   }, [loggedOut]);
 
