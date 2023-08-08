@@ -10,11 +10,7 @@ import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContainer";
 import DTEInput from "../UI/DTEInput/DTEInput";
 import DTEButton from "../UI/DTEButton/DTEButton";
-import {
-  DTEAxiosResponse,
-  Role,
-  DTEAxiosError,
-} from "../../../types/AuthTypes";
+import { DTEAxiosResponse, DTEAxiosError } from "../../../types/AuthTypes";
 import Utils, { EmailRegex } from "../../../Helper/Utils";
 import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
@@ -61,7 +57,6 @@ const UserLogin = () => {
     persistLastNonLoginUrl,
     lastUrl,
     isAuthenticated,
-    isAuthenticatedRole,
     logOutToken,
     token,
     saveToken,
@@ -112,9 +107,8 @@ const UserLogin = () => {
   );
 
   useEffect(() => {
-    if (isAuthenticated() && isAuthenticatedRole(Role.Participant)) {
-      // redirect back as we are already logged in.
-      setShouldRedirect(true);
+    if (isAuthenticated()) {
+      history.push("/");
     } else {
       logOutToken();
       persistLastNonLoginUrl(lastUrl ?? "");
@@ -143,6 +137,8 @@ const UserLogin = () => {
   useEffect(() => {
     if (document.getElementsByClassName("nhsuk-error-message")[0]) {
       Utils.FocusOnError();
+    } else if (document.getElementsByClassName("error-summary")[0]) {
+      document.getElementsByTagName("input")[0].focus();
     }
   }, [isSubmitting]);
 
@@ -187,7 +183,6 @@ const UserLogin = () => {
   return (
     <DocumentTitle title="Sign in or register - Volunteer Registration - Be Part of Research">
       <>
-        {shouldRedirect && <Redirect push to={`/Login#id_token=${token}`} />}
         {loadingLogin && <LoadingIndicator text="Signing In..." />}
         {resendLoading && (
           <LoadingIndicator text="Resending verification email..." />

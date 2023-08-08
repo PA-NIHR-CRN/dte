@@ -4,7 +4,6 @@ import Cookies from "js-cookie";
 import {
   JWTDeCode,
   AuthContextProps,
-  Role,
   SessionExpiryInfo,
 } from "../types/AuthTypes";
 import useAxiosFetch from "../hooks/useAxiosFetch";
@@ -32,17 +31,6 @@ export const AuthProvider = (props: { children: any }) => {
     string | null
   >(null);
 
-  const [authenticatedIsAdmin, setAuthenticatedIsAdmin] = useState<
-    boolean | null
-  >(null);
-
-  const [authenticatedIsParticipant, setAuthenticatedIsParticipant] = useState<
-    boolean | null
-  >(true);
-
-  const [authenticatedIsResearcher, setAuthenticatedIsResearcher] = useState<
-    boolean | null
-  >(null);
   const [isNhsLinkedAccount, setIsNhsLinkedAccount] = useState<boolean>(false);
   const [token, setToken] = useState<string | null | undefined>(null);
   const [isInNHSApp, setIsInNHSApp] = useState<boolean>(false);
@@ -123,18 +111,6 @@ export const AuthProvider = (props: { children: any }) => {
         const emailVerified = decodedToken?.email_verified;
         setAuthenticatedEmailVerified(emailVerified);
 
-        const admin = decodedToken?.["cognito:groups"]?.includes("Admin");
-        setAuthenticatedIsAdmin(admin);
-
-        const researcher =
-          !decodedToken?.["cognito:groups"]?.includes("Admin") &&
-          decodedToken?.["cognito:username"]?.includes("idg");
-        setAuthenticatedIsResearcher(researcher);
-
-        const participant =
-          !decodedToken?.["cognito:username"]?.includes("idg") ||
-          (!researcher && !admin);
-        setAuthenticatedIsParticipant(participant);
         return true;
       }
     }
@@ -208,26 +184,6 @@ export const AuthProvider = (props: { children: any }) => {
     return new SessionExpiryInfo(expiryCookie);
   };
 
-  const isAuthenticatedRole = (role: Role) => {
-    if (role === Role.None) {
-      return true;
-    }
-
-    if (isAuthenticated()) {
-      switch (role) {
-        case Role.Admin:
-          return authenticatedIsAdmin ?? false;
-        case Role.Participant:
-          return authenticatedIsParticipant ?? false;
-        case Role.Researcher:
-          return authenticatedIsResearcher ?? false;
-        default:
-          break;
-      }
-    }
-    return false;
-  };
-
   const logOutToken = () => {
     if (isAuthenticated() && !logoutLoading) {
       logout().then(() => {
@@ -241,7 +197,6 @@ export const AuthProvider = (props: { children: any }) => {
         setPrevUrl(null);
         setLastUrl(null);
         setIsNhsLinkedAccount(false);
-        setAuthenticatedIsParticipant(true);
       });
     }
   };
@@ -253,7 +208,6 @@ export const AuthProvider = (props: { children: any }) => {
         saveToken,
         logOutToken,
         isAuthenticated,
-        isAuthenticatedRole,
         persistLastUrl,
         persistLastNonLoginUrl,
         setIsNhsLinkedAccount,
