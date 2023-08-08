@@ -201,31 +201,36 @@ const MfaSmsChallenge = () => {
                 When we are really busy, it may take a bit longer for your code
                 to arrive.
               </DTEContent>
-              <DTEContent>If you still did not get a security code:</DTEContent>
+
               {urlList.includes(prevUrl as string) ? (
-                <ul>
-                  <li>
-                    <DTELinkButton
-                      onClick={handleResendCode}
-                      disabled={SMSMfaLoading || isSubmitting}
-                    >
-                      send your security code again
-                    </DTELinkButton>
-                  </li>
-                  <li>
-                    <DTERouteLink
-                      disabled={SMSMfaLoading || isSubmitting}
-                      to="/MfaSmsSetup"
-                      renderStyle="standard"
-                    >
-                      <DTEContent>
-                        enter your{" "}
-                        {prevUrl === "/MfaChangePhoneNumber" && "new"} mobile
-                        phone number again
-                      </DTEContent>
-                    </DTERouteLink>
-                  </li>
-                </ul>
+                <>
+                  <DTEContent>
+                    If you still did not get a security code:
+                  </DTEContent>
+                  <ul>
+                    <li>
+                      <DTELinkButton
+                        onClick={handleResendCode}
+                        disabled={SMSMfaLoading || isSubmitting}
+                      >
+                        send your security code again
+                      </DTELinkButton>
+                    </li>
+                    <li>
+                      <DTERouteLink
+                        disabled={SMSMfaLoading || isSubmitting}
+                        to="/MfaSmsSetup"
+                        renderStyle="standard"
+                      >
+                        <DTEContent>
+                          enter your{" "}
+                          {prevUrl === "/MfaChangePhoneNumber" && "new"} mobile
+                          phone number again
+                        </DTEContent>
+                      </DTERouteLink>
+                    </li>
+                  </ul>
+                </>
               ) : (
                 <DTELinkButton
                   onClick={handleResendCode}
@@ -236,7 +241,7 @@ const MfaSmsChallenge = () => {
               )}
             </>
           </DTEDetails>
-          {urlList.includes(prevUrl as string) && (
+          {!urlList.includes(prevUrl as string) && (
             <DTEDetails summary="I do not have access to my mobile phone">
               <DTEContent>
                 If you do not have access to your mobile phone, you can{" "}
