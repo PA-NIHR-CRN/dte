@@ -18,7 +18,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const MfaChangePhoneNumber = () => {
-  const { mfaDetails, setMfaDetails, setEnteredMfaMobile } =
+  const { mfaDetails, setMfaDetails, setEnteredMfaMobile, enteredMfaMobile } =
     useContext(AuthContext);
   const history = useHistory();
 
@@ -30,7 +30,7 @@ const MfaChangePhoneNumber = () => {
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
-      phoneNumber: "",
+      phoneNumber: enteredMfaMobile,
     },
   });
 

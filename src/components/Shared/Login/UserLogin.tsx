@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import { Grid } from "@material-ui/core";
-import { Controller, useForm } from "react-hook-form";
 import { Redirect, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
@@ -8,21 +7,17 @@ import { AuthContext } from "../../../context/AuthContext";
 import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContainer";
-import DTEInput from "../UI/DTEInput/DTEInput";
-import DTEButton from "../UI/DTEButton/DTEButton";
 import {
   DTEAxiosResponse,
   Role,
   DTEAxiosError,
 } from "../../../types/AuthTypes";
-import Utils, { EmailRegex } from "../../../Helper/Utils";
+import Utils from "../../../Helper/Utils";
 import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
-import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import CheckYourEmail from "../FormElements/CommonElements/CheckYourEmail";
-import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
-import PasswordShowHide from "../Password/showHide";
 import DTEBackLink from "../UI/DTEBackLink/DTEBackLink";
+import UserLoginForm from "./UserLoginForm/UserLoginForm";
 
 const StyledGridElementLeft = styled(Grid)`
   padding-left: 1em;
@@ -46,19 +41,6 @@ interface UserLoginProps {
 }
 const UserLogin = (props: UserLoginProps) => {
   const { nested } = props;
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    formState: { errors: formErrors, isSubmitting, isSubmitSuccessful },
-  } = useForm({
-    mode: "onSubmit",
-    reValidateMode: "onSubmit",
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
 
   const history = useHistory();
   const {
@@ -83,10 +65,6 @@ const UserLogin = (props: UserLoginProps) => {
 
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  useEffect(() => {
-    setValue("password", "");
-  }, [isSubmitSuccessful]);
-
   const onSubmit = async (formData: any) => {
     setEmail(formData.email);
     setLoginResponse(undefined);
@@ -106,9 +84,6 @@ const UserLogin = (props: UserLoginProps) => {
     const result = Utils.ConvertResponseToDTEResponse(res);
     setLoginResponse(result);
 
-    // TODO - can we get authenticatedMobile and authenticatedMobileVerified here before MFA challenge? To determine between set up and login challenge
-
-    // check for MFA_Setup_Challenge error in the response
     if (result?.errors?.some((e) => e.customCode === "Mfa_Setup_Challenge")) {
       setMfaDetails(result?.errors[0]?.detail as string);
       history.push("/MfaSmsSetup");
@@ -166,12 +141,6 @@ const UserLogin = (props: UserLoginProps) => {
     }
   }, [resendResponse]);
 
-  useEffect(() => {
-    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
-      Utils.FocusOnError();
-    }
-  }, [isSubmitting]);
-
   const injectCallIntoError = (errors: (DTEAxiosError[] | undefined)[]) => {
     return errors.map((error) => {
       if (error) {
@@ -213,10 +182,6 @@ const UserLogin = (props: UserLoginProps) => {
           {resendLoading && (
             <LoadingIndicator text="Resending verification email..." />
           )}
-          <ErrorMessageSummary
-            renderSummary={!isSubmitting}
-            errors={formErrors}
-          />
           {!resendDTEResponse?.isSuccess &&
             !resendDTEResponse?.errors?.some(
               (e) => e.customCode === "Mfa_Setup_Challenge"
@@ -229,90 +194,7 @@ const UserLogin = (props: UserLoginProps) => {
                 ])}
               />
             )}
-          <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <Controller
-              control={control}
-              name="email"
-              render={({
-                field: { value, onChange, onBlur },
-                fieldState: { error },
-              }) => (
-                <DTEInput
-                  id="email"
-                  value={value}
-                  onValueChange={onChange}
-                  onValueBlur={onBlur}
-                  error={error?.message}
-                  label="Email address"
-                  required
-                  disabled={loadingLogin}
-                  type="email"
-                  spellcheck={false}
-                  autocomplete="username"
-                />
-              )}
-              rules={{
-                required: {
-                  value: true,
-                  message: "Enter an email address",
-                },
-
-                pattern: {
-                  value: EmailRegex,
-                  message:
-                    "Enter an email address in the correct format, like name@example.com",
-                },
-              }}
-            />
-            <Controller
-              control={control}
-              name="password"
-              render={({ fieldState: { error } }) => (
-                <PasswordShowHide
-                  id="password"
-                  onValueChange={(e) => setValue("password", e.target.value)}
-                  error={error?.message}
-                  label="Password"
-                  required
-                  disabled={loadingLogin}
-                  spellcheck={false}
-                  autocomplete="current-password"
-                  buttonAriaLabelHide="Hide the entered password on screen"
-                  buttonAriaLabelShow="Show the entered password on screen"
-                />
-              )}
-              rules={{
-                required: {
-                  value: true,
-                  message: "Enter a password",
-                },
-              }}
-            />
-            <DTEContent>
-              If you cannot remember your password, you can{" "}
-              <DTERouteLink
-                to="/ForgottenPassword"
-                renderStyle="standard"
-                ariaLabel="reset your password here"
-              >
-                reset it here.
-              </DTERouteLink>
-            </DTEContent>
-            <DTEContent>
-              If you registered using NHS login, you can{" "}
-              <DTERouteLink
-                to="/Participants/Options"
-                renderStyle="standard"
-                ariaLabel="visit the sign in options page"
-              >
-                sign in here
-              </DTERouteLink>
-              .
-            </DTEContent>
-            <ButtonWrapper>
-              <DTEButton disabled={loadingLogin}>Sign in</DTEButton>
-            </ButtonWrapper>
-          </form>
+          <UserLoginForm loadingLogin={loadingLogin} onSubmit={onSubmit} />
         </>
       ) : (
         <DocumentTitle title="Sign in or register - Volunteer Registration - Be Part of Research">
@@ -352,10 +234,7 @@ const UserLogin = (props: UserLoginProps) => {
                       <DTEHeader as="h1">
                         Sign in to Be Part of Research
                       </DTEHeader>
-                      <ErrorMessageSummary
-                        renderSummary={!isSubmitting}
-                        errors={formErrors}
-                      />
+
                       {!resendDTEResponse?.isSuccess &&
                         !resendDTEResponse?.errors?.some(
                           (e) => e.customCode === "Mfa_Setup_Challenge"
@@ -368,81 +247,10 @@ const UserLogin = (props: UserLoginProps) => {
                             ])}
                           />
                         )}
-                      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                        <Controller
-                          control={control}
-                          name="email"
-                          render={({
-                            field: { value, onChange, onBlur },
-                            fieldState: { error },
-                          }) => (
-                            <DTEInput
-                              id="email"
-                              value={value}
-                              onValueChange={onChange}
-                              onValueBlur={onBlur}
-                              error={error?.message}
-                              label="Email address"
-                              required
-                              disabled={loadingLogin}
-                              type="email"
-                              spellcheck={false}
-                              autocomplete="username"
-                            />
-                          )}
-                          rules={{
-                            required: {
-                              value: true,
-                              message: "Enter an email address",
-                            },
-
-                            pattern: {
-                              value: EmailRegex,
-                              message:
-                                "Enter an email address in the correct format, like name@example.com",
-                            },
-                          }}
-                        />
-                        <Controller
-                          control={control}
-                          name="password"
-                          render={({ fieldState: { error } }) => (
-                            <PasswordShowHide
-                              id="password"
-                              onValueChange={(e) =>
-                                setValue("password", e.target.value)
-                              }
-                              error={error?.message}
-                              label="Password"
-                              required
-                              disabled={loadingLogin}
-                              spellcheck={false}
-                              autocomplete="current-password"
-                              buttonAriaLabelHide="Hide the entered password on screen"
-                              buttonAriaLabelShow="Show the entered password on screen"
-                            />
-                          )}
-                          rules={{
-                            required: {
-                              value: true,
-                              message: "Enter a password",
-                            },
-                          }}
-                        />
-                        <DTEContent>
-                          If you cannot remember your password, you can{" "}
-                          <DTERouteLink
-                            to="/ForgottenPassword"
-                            renderStyle="standard"
-                            ariaLabel="reset your password here"
-                          >
-                            reset it here.
-                          </DTERouteLink>
-                        </DTEContent>
-                        <ButtonWrapper>
-                          <DTEButton disabled={loadingLogin}>Sign in</DTEButton>
-                        </ButtonWrapper>
-                      </form>
+                      <UserLoginForm
+                        loadingLogin={loadingLogin}
+                        onSubmit={onSubmit}
+                      />
                       <ButtonWrapper>
                         <DTERouteLink
                           to="/Participants/register"

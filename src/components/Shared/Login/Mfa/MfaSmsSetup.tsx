@@ -13,6 +13,7 @@ import Utils, { MobileRegex } from "../../../../Helper/Utils";
 import { AuthContext } from "../../../../context/AuthContext";
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
+import LoadingIndicator from "../../LoadingIndicator/LoadingIndicator";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -93,69 +94,76 @@ const MfaSmsSetup = () => {
   return (
     <DocumentTitle title="Enter your mobile phone number">
       <StepWrapper>
-        <DTEHeader as="h1">Enter your mobile phone number</DTEHeader>
-        <DTEContent>
-          We will send you a 6 digit security code to your phone to confirm your
-          mobile number.
-        </DTEContent>
-        <form noValidate onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            control={control}
-            name="phoneNumber"
-            render={({
-              field: { value, onChange, onBlur },
-              fieldState: { error },
-            }) => (
-              <DTEInput
-                label="UK mobile phone number"
-                id="mobilePhoneNumber"
-                type="tel"
-                required
-                value={value}
-                onValueChange={(e) => {
-                  onChange(e);
-                }}
-                onValueBlur={onBlur}
-                error={error?.message}
-                spellcheck={false}
-                autocomplete="tel-national"
-                disabled={setupMfaLoading || isSubmitting}
-              />
-            )}
-            rules={{
-              required: {
-                value: true,
-                message: "Enter a UK mobile phone number",
-              },
+        {setupMfaLoading ? (
+          <LoadingIndicator />
+        ) : (
+          <>
+            <DTEHeader as="h1">Enter your mobile phone number</DTEHeader>
+            <DTEContent>
+              We will send you a 6 digit security code to your phone to confirm
+              your mobile number.
+            </DTEContent>
+            <form noValidate onSubmit={handleSubmit(onSubmit)}>
+              <Controller
+                control={control}
+                name="phoneNumber"
+                render={({
+                  field: { value, onChange, onBlur },
+                  fieldState: { error },
+                }) => (
+                  <DTEInput
+                    label="UK mobile phone number"
+                    id="mobilePhoneNumber"
+                    type="tel"
+                    required
+                    value={value}
+                    onValueChange={(e) => {
+                      onChange(e);
+                      setEnteredMfaMobile(e.target.value);
+                    }}
+                    onValueBlur={onBlur}
+                    error={error?.message}
+                    spellcheck={false}
+                    autocomplete="tel-national"
+                    disabled={setupMfaLoading || isSubmitting}
+                  />
+                )}
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Enter a valid UK mobile phone number",
+                  },
 
-              pattern: {
-                value: MobileRegex,
-                message: "Enter a valid UK mobile phone number",
-              },
-            }}
-          />
-          <DTEDetails summary="Use another way to secure my account">
-            <>
-              <DTEContent>
-                If you do not have a UK mobile phone number or do not want to
-                use this method, you can{" "}
-                <DTERouteLink
-                  disabled={setupMfaLoading || isSubmitting}
-                  to="/MfaTokenSetup"
-                  renderStyle="standard"
-                >
-                  use an authenticator app to secure your account
-                </DTERouteLink>
-                .
-              </DTEContent>
-            </>
-          </DTEDetails>
-          <ButtonWrapper>
-            <DTEButton disabled={setupMfaLoading || isSubmitting}>
-              Continue
-            </DTEButton>
-          </ButtonWrapper>
-        </form>
+                  pattern: {
+                    value: MobileRegex,
+                    message: "Enter a valid UK mobile phone number",
+                  },
+                }}
+              />
+              <DTEDetails summary="Use another way to secure my account">
+                <>
+                  <DTEContent>
+                    If you do not have a UK mobile phone number or do not want
+                    to use this method, you can{" "}
+                    <DTERouteLink
+                      disabled={setupMfaLoading || isSubmitting}
+                      to="/MfaTokenSetup"
+                      renderStyle="standard"
+                    >
+                      use an authenticator app to secure your account
+                    </DTERouteLink>
+                    .
+                  </DTEContent>
+                </>
+              </DTEDetails>
+              <ButtonWrapper>
+                <DTEButton disabled={setupMfaLoading || isSubmitting}>
+                  Continue
+                </DTEButton>
+              </ButtonWrapper>
+            </form>
+          </>
+        )}
       </StepWrapper>
     </DocumentTitle>
   );

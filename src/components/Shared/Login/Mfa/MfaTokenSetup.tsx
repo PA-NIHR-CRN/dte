@@ -127,137 +127,145 @@ const MfaTokenSetup = () => {
               : Utils.ConvertResponseToDTEResponse(totpMfaResponse)?.errors,
           ]}
         />
-        <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
-        <DTEHeader as="h1">Set up your authenticator app</DTEHeader>
-        <DTEContent>
-          You can download an authenticator app on any smart device, such as a
-          smart phone or tablet. Examples of authenticator apps are the{" "}
-          <DTERouteLink
-            aria-label="Opens in a new tab"
-            external
-            target="_blank"
-            to="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&pli=1"
-            renderStyle="standard"
-          >
-            Google Authenticator
-          </DTERouteLink>{" "}
-          and{" "}
-          <DTERouteLink
-            aria-label="Opens in a new tab"
-            external
-            target="_blank"
-            to="https://www.microsoft.com/en-us/security/mobile-authenticator-app"
-            renderStyle="standard"
-          >
-            Microsoft Authenticator
-          </DTERouteLink>
-          .
-        </DTEContent>
-        <DTEContent>
-          Alternatively, you can install an authenticator app on a computer. An
-          example of an authenticator app that doesn&apos;t require a smart
-          device is the{" "}
-          <DTERouteLink
-            aria-label="Opens in a new tab"
-            external
-            target="_blank"
-            to="https://authenticator.cc/docs/en/overview"
-            renderStyle="standard"
-          >
-            Authenticator Extension
-          </DTERouteLink>
-          .
-        </DTEContent>
-        <DTEContent>
-          Once your authenticator app is installed, you will then need to open
-          it and manually enter the secret key or scan the QR code. Select a
-          time-based code if you are given the option between time-based or
-          counter-based in your authenticator app.
-        </DTEContent>
-        <DTEContent>
-          If you need support in setting up your authenticator app, please
-          contact us at{" "}
-          <a href="mailto:bepartofresearch@nihr.ac.uk">
-            bepartofresearch@nihr.ac.uk
-          </a>
-          .
-        </DTEContent>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <DTEInput
-            label="Secret key"
-            id="secretKey"
-            type="text"
-            value={secretKey}
-            spellcheck={false}
-            disabled
-          />
-          <ButtonWrapper>
-            <DTEButton
-              type="button"
-              onClick={copySecretKey}
-              disabled={tokenCodeLoading || isSubmitting || totpMfaLoading}
-            >
-              Copy secret key
-            </DTEButton>
-          </ButtonWrapper>
-          <ComponentSpacer>
-            <DTEDetails summary="Show QR code">
-              <>
-                <DTEContent>
-                  <div>
-                    {qrSrc ? (
-                      <img src={qrSrc} alt="qr code" />
-                    ) : (
-                      <LoadingIndicator />
-                    )}
-                  </div>
-                </DTEContent>
-              </>
-            </DTEDetails>
-          </ComponentSpacer>
-          <DTEContent>
-            A 6-digit security code will appear in your authenticator app once
-            it is set up. Enter this security code below.
-          </DTEContent>
-          <Controller
-            control={control}
-            name="authenticatorAppCode"
-            render={({
-              field: { value, onChange, onBlur },
-              fieldState: { error },
-            }) => (
+        {tokenCodeLoading ? (
+          <LoadingIndicator />
+        ) : (
+          <>
+            <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
+            <DTEHeader as="h1">Set up your authenticator app</DTEHeader>
+            <DTEContent>
+              You can download an authenticator app on any smart device, such as
+              a smart phone or tablet. Examples of authenticator apps are the{" "}
+              <DTERouteLink
+                aria-label="Opens in a new tab"
+                external
+                target="_blank"
+                to="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&pli=1"
+                renderStyle="standard"
+              >
+                Google Authenticator
+              </DTERouteLink>{" "}
+              and{" "}
+              <DTERouteLink
+                aria-label="Opens in a new tab"
+                external
+                target="_blank"
+                to="https://www.microsoft.com/en-us/security/mobile-authenticator-app"
+                renderStyle="standard"
+              >
+                Microsoft Authenticator
+              </DTERouteLink>
+              .
+            </DTEContent>
+            <DTEContent>
+              Alternatively, you can install an authenticator app on a computer.
+              An example of an authenticator app that doesn&apos;t require a
+              smart device is the{" "}
+              <DTERouteLink
+                aria-label="Opens in a new tab"
+                external
+                target="_blank"
+                to="https://authenticator.cc/docs/en/overview"
+                renderStyle="standard"
+              >
+                Authenticator Extension
+              </DTERouteLink>
+              .
+            </DTEContent>
+            <DTEContent>
+              Once your authenticator app is installed, you will then need to
+              open it and manually enter the secret key or scan the QR code.
+              Select a time-based code if you are given the option between
+              time-based or counter-based in your authenticator app.
+            </DTEContent>
+            <DTEContent>
+              If you need support in setting up your authenticator app, please
+              contact us at{" "}
+              <a href="mailto:bepartofresearch@nihr.ac.uk">
+                bepartofresearch@nihr.ac.uk
+              </a>
+              .
+            </DTEContent>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
               <DTEInput
-                label="Security code"
-                id="authenticatorAppCode"
+                label="Secret key"
+                id="secretKey"
                 type="text"
-                required
-                value={value}
-                onValueChange={onChange}
-                onValueBlur={onBlur}
-                error={convertedError || error?.message}
+                value={secretKey}
                 spellcheck={false}
-                disabled={tokenCodeLoading || isSubmitting || totpMfaLoading}
+                disabled
               />
-            )}
-            rules={{
-              required: {
-                value: true,
-                message: "Enter a valid security code",
-              },
+              <ButtonWrapper>
+                <DTEButton
+                  type="button"
+                  onClick={copySecretKey}
+                  disabled={tokenCodeLoading || isSubmitting || totpMfaLoading}
+                >
+                  Copy secret key
+                </DTEButton>
+              </ButtonWrapper>
+              <ComponentSpacer>
+                <DTEDetails summary="Show QR code">
+                  <>
+                    <DTEContent>
+                      <div>
+                        {qrSrc ? (
+                          <img src={qrSrc} alt="qr code" />
+                        ) : (
+                          <LoadingIndicator />
+                        )}
+                      </div>
+                    </DTEContent>
+                  </>
+                </DTEDetails>
+              </ComponentSpacer>
+              <DTEContent>
+                A 6-digit security code will appear in your authenticator app
+                once it is set up. Enter this security code below.
+              </DTEContent>
+              <Controller
+                control={control}
+                name="authenticatorAppCode"
+                render={({
+                  field: { value, onChange, onBlur },
+                  fieldState: { error },
+                }) => (
+                  <DTEInput
+                    label="Security code"
+                    id="authenticatorAppCode"
+                    type="text"
+                    required
+                    value={value}
+                    onValueChange={onChange}
+                    onValueBlur={onBlur}
+                    error={convertedError || error?.message}
+                    spellcheck={false}
+                    disabled={
+                      tokenCodeLoading || isSubmitting || totpMfaLoading
+                    }
+                  />
+                )}
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Enter a valid security code",
+                  },
 
-              pattern: {
-                value: /^\d{6}$/,
-                message: "Code must be 6 digits long",
-              },
-            }}
-          />
-          <DTEButton
-            type="submit"
-            disabled={tokenCodeLoading || isSubmitting || totpMfaLoading}
-          >
-            Continue
-          </DTEButton>
-        </form>
+                  pattern: {
+                    value: /^\d{6}$/,
+                    message: "The security code must be 6 digits",
+                  },
+                }}
+              />
+              <DTEButton
+                type="submit"
+                disabled={tokenCodeLoading || isSubmitting || totpMfaLoading}
+              >
+                Continue
+              </DTEButton>
+            </form>
+          </>
+        )}
       </StepWrapper>
     </DocumentTitle>
   );

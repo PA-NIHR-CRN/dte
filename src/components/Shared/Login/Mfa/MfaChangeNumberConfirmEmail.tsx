@@ -16,6 +16,7 @@ import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
 import useInlineServerError from "../../../../hooks/useInlineServerError";
+import LoadingIndicator from "../../LoadingIndicator/LoadingIndicator";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -109,93 +110,102 @@ const MfaChangeNumberConfirmEmail = () => {
   return (
     <DocumentTitle title="Email OTP">
       <StepWrapper>
-        {prevUrl !== "/MfaSecurityCodeExpired" && (
-          <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
-        )}
-        <DTEHeader as="h1">Check your email</DTEHeader>
-        <ErrorMessageContainer
-          axiosErrors={[validateEmailOtpError]}
-          DTEAxiosErrors={[
-            convertedError
-              ? []
-              : Utils.ConvertResponseToDTEResponse(validateEmailOtpRespose)
-                  ?.errors,
-          ]}
-        />
-        <DTEContent>
-          Enter the 6 digit security code we’ve sent to {userEmail} to confirm
-          this is your email address.
-        </DTEContent>
-        <DTEContent>
-          You need to use this code within <strong>5 minutes</strong> or it will
-          expire.
-        </DTEContent>
-        {isCodeResent && (
-          <div className="govuk-details__text">
-            <DTEContent>You have been sent a new security code.</DTEContent>
-          </div>
-        )}
-        <form noValidate onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            control={control}
-            name="mfaCode"
-            render={({
-              field: { value, onChange, onBlur },
-              fieldState: { error },
-            }) => (
-              <DTEInput
-                label="Security code"
-                id="mfaCode"
-                required
-                value={value}
-                onValueChange={(e) => {
-                  onChange(e);
-                }}
-                onValueBlur={onBlur}
-                error={convertedError || error?.message}
-                spellcheck={false}
-                disabled={getEmailOtpLoading || isSubmitting}
-                hint="The code is 6 digits. Entering the code incorrectly too many times will temporarily prevent you from signing in."
-              />
+        {getEmailOtpLoading ? (
+          <LoadingIndicator />
+        ) : (
+          <>
+            {prevUrl !== "/MfaSecurityCodeExpired" && (
+              <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
             )}
-            rules={{
-              required: {
-                value: true,
-                message: "Enter a valid security code",
-              },
-            }}
-          />
-          <DTEDetails summary="Not received your security code?">
-            <>
-              <DTEContent>
-                When we are really busy, it may take a bit longer for your code
-                to arrive.
-              </DTEContent>
-              <DTEContent>If you still did not get a security code:</DTEContent>
-
-              <ul className="govuk-list govuk-list--bullet">
-                <li>
-                  <DTEContent>check your spam folder</DTEContent>
-                </li>
-                <li>
+            <DTEHeader as="h1">Check your email</DTEHeader>
+            <ErrorMessageContainer
+              axiosErrors={[validateEmailOtpError]}
+              DTEAxiosErrors={[
+                convertedError
+                  ? []
+                  : Utils.ConvertResponseToDTEResponse(validateEmailOtpRespose)
+                      ?.errors,
+              ]}
+            />
+            <DTEContent>
+              Enter the 6 digit security code we’ve sent to {userEmail} to
+              confirm this is your email address.
+            </DTEContent>
+            <DTEContent>
+              You need to use this code within <strong>5 minutes</strong> or it
+              will expire.
+            </DTEContent>
+            {isCodeResent && (
+              <div className="govuk-details__text">
+                <DTEContent>You have been sent a new security code.</DTEContent>
+              </div>
+            )}
+            <form noValidate onSubmit={handleSubmit(onSubmit)}>
+              <Controller
+                control={control}
+                name="mfaCode"
+                render={({
+                  field: { value, onChange, onBlur },
+                  fieldState: { error },
+                }) => (
+                  <DTEInput
+                    label="Security code"
+                    id="mfaCode"
+                    required
+                    value={value}
+                    onValueChange={(e) => {
+                      const trimmedValue = e.target.value.trim();
+                      onChange(trimmedValue);
+                    }}
+                    onValueBlur={onBlur}
+                    error={convertedError || error?.message}
+                    spellcheck={false}
+                    disabled={getEmailOtpLoading || isSubmitting}
+                    hint="The code is 6 digits. Entering the code incorrectly too many times will temporarily prevent you from signing in."
+                  />
+                )}
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Enter a valid security code",
+                  },
+                }}
+              />
+              <DTEDetails summary="Not received your security code?">
+                <>
                   <DTEContent>
-                    <DTELinkButton
-                      onClick={handleResendCode}
-                      disabled={validateEmailOtpLoading || isSubmitting}
-                    >
-                      send your security code again
-                    </DTELinkButton>
+                    When we are really busy, it may take a bit longer for your
+                    code to arrive.
                   </DTEContent>
-                </li>
-              </ul>
-            </>
-          </DTEDetails>
-          <ButtonWrapper>
-            <DTEButton disabled={getEmailOtpLoading || isSubmitting}>
-              Continue
-            </DTEButton>
-          </ButtonWrapper>
-        </form>
+                  <DTEContent>
+                    If you still did not get a security code:
+                  </DTEContent>
+
+                  <ul className="govuk-list govuk-list--bullet">
+                    <li>
+                      <DTEContent>check your spam folder</DTEContent>
+                    </li>
+                    <li>
+                      <DTEContent>
+                        <DTELinkButton
+                          onClick={handleResendCode}
+                          disabled={validateEmailOtpLoading || isSubmitting}
+                        >
+                          send your security code again
+                        </DTELinkButton>
+                      </DTEContent>
+                    </li>
+                  </ul>
+                </>
+              </DTEDetails>
+              <ButtonWrapper>
+                <DTEButton disabled={getEmailOtpLoading || isSubmitting}>
+                  Continue
+                </DTEButton>
+              </ButtonWrapper>
+            </form>
+          </>
+        )}
       </StepWrapper>
     </DocumentTitle>
   );

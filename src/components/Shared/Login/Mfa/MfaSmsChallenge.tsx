@@ -19,8 +19,14 @@ import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 
 const MfaSmsChallenge = () => {
   const [isCodeResent, setIsCodeResent] = useState<boolean>(false);
-  const { mfaDetails, saveToken, setMfaDetails, enteredMfaMobile, prevUrl } =
-    useContext(AuthContext);
+  const {
+    mfaDetails,
+    saveToken,
+    setMfaDetails,
+    enteredMfaMobile,
+    prevUrl,
+    setEnteredMfaMobile,
+  } = useContext(AuthContext);
   const history = useHistory();
 
   if (!mfaDetails) {
@@ -75,6 +81,7 @@ const MfaSmsChallenge = () => {
     if (result?.isSuccess) {
       saveToken(result?.content);
       setMfaDetails("");
+      setEnteredMfaMobile("");
       history.push("/");
     }
   };
@@ -191,7 +198,7 @@ const MfaSmsChallenge = () => {
 
               pattern: {
                 value: /^\d{6}$/,
-                message: "Code must be 6 digits long",
+                message: "The security code must be 6 digits",
               },
             }}
           />

@@ -15,7 +15,8 @@ import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 import useInlineServerError from "../../../../hooks/useInlineServerError";
 
 const MfaTotpChallenge = () => {
-  const { mfaDetails, saveToken, setMfaDetails } = useContext(AuthContext);
+  const { mfaDetails, saveToken, setMfaDetails, setEnteredMfaMobile } =
+    useContext(AuthContext);
   const history = useHistory();
 
   if (!mfaDetails) {
@@ -58,6 +59,7 @@ const MfaTotpChallenge = () => {
     if (result?.isSuccess) {
       saveToken(result?.content);
       setMfaDetails("");
+      setEnteredMfaMobile("");
       history.push("/");
     }
   };
