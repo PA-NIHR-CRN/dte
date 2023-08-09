@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Grid } from "@material-ui/core";
+import { useForm } from "react-hook-form";
 import { Redirect, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
@@ -16,6 +17,7 @@ import Utils from "../../../Helper/Utils";
 import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import CheckYourEmail from "../FormElements/CommonElements/CheckYourEmail";
+import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import DTEBackLink from "../UI/DTEBackLink/DTEBackLink";
 import UserLoginForm from "./UserLoginForm/UserLoginForm";
 
@@ -41,6 +43,23 @@ interface UserLoginProps {
 }
 const UserLogin = (props: UserLoginProps) => {
   const { nested } = props;
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors: formErrors, isSubmitting, isSubmitSuccessful },
+  } = useForm({
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  useEffect(() => {
+    setValue("password", "");
+  }, [isSubmitSuccessful]);
 
   const history = useHistory();
   const {
@@ -141,6 +160,14 @@ const UserLogin = (props: UserLoginProps) => {
     }
   }, [resendResponse]);
 
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    } else if (document.getElementsByClassName("error-summary")[0]) {
+      document.getElementsByTagName("input")[0].focus();
+    }
+  }, [isSubmitting]);
+
   const injectCallIntoError = (errors: (DTEAxiosError[] | undefined)[]) => {
     return errors.map((error) => {
       if (error) {
@@ -182,6 +209,10 @@ const UserLogin = (props: UserLoginProps) => {
           {resendLoading && (
             <LoadingIndicator text="Resending verification email..." />
           )}
+          <ErrorMessageSummary
+            renderSummary={!isSubmitting}
+            errors={formErrors}
+          />
           {!resendDTEResponse?.isSuccess &&
             !resendDTEResponse?.errors?.some(
               (e) => e.customCode === "Mfa_Setup_Challenge"
@@ -194,7 +225,13 @@ const UserLogin = (props: UserLoginProps) => {
                 ])}
               />
             )}
-          <UserLoginForm loadingLogin={loadingLogin} onSubmit={onSubmit} />
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <UserLoginForm
+              control={control}
+              loadingLogin={loadingLogin}
+              setValue={setValue}
+            />
+          </form>
         </>
       ) : (
         <DocumentTitle title="Sign in or register - Volunteer Registration - Be Part of Research">
@@ -234,7 +271,10 @@ const UserLogin = (props: UserLoginProps) => {
                       <DTEHeader as="h1">
                         Sign in to Be Part of Research
                       </DTEHeader>
-
+                      <ErrorMessageSummary
+                        renderSummary={!isSubmitting}
+                        errors={formErrors}
+                      />
                       {!resendDTEResponse?.isSuccess &&
                         !resendDTEResponse?.errors?.some(
                           (e) => e.customCode === "Mfa_Setup_Challenge"
@@ -247,10 +287,13 @@ const UserLogin = (props: UserLoginProps) => {
                             ])}
                           />
                         )}
-                      <UserLoginForm
-                        loadingLogin={loadingLogin}
-                        onSubmit={onSubmit}
-                      />
+                      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                        <UserLoginForm
+                          control={control}
+                          loadingLogin={loadingLogin}
+                          setValue={setValue}
+                        />
+                      </form>
                       <ButtonWrapper>
                         <DTERouteLink
                           to="/Participants/register"
