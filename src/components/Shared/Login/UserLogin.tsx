@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { Grid } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
 import { AuthContext } from "../../../context/AuthContext";
@@ -58,7 +58,6 @@ const UserLogin = () => {
     lastUrl,
     isAuthenticated,
     logOutToken,
-    token,
     saveToken,
   } = useContext(AuthContext);
 
@@ -70,8 +69,6 @@ const UserLogin = () => {
   >(undefined);
 
   const [email, setEmail] = useState<string>();
-
-  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   useEffect(() => {
     setValue("password", "");
