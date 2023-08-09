@@ -75,6 +75,7 @@ export interface NHSApp {
 export class SessionExpiryInfo {
   constructor(cookieValue: string | undefined) {
     if (cookieValue === undefined || !cookieValue) {
+      this.isLoggedIn = false;
       return;
     }
 

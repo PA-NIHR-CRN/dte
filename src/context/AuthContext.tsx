@@ -184,20 +184,22 @@ export const AuthProvider = (props: { children: any }) => {
     return new SessionExpiryInfo(expiryCookie);
   };
 
-  const logOutToken = () => {
+  const logOutToken = async () => {
     if (isAuthenticated() && !logoutLoading) {
-      logout().then(() => {
-        setToken(null);
-        setAuthenticatedUserId(null);
-        setAuthenticatedEmail(null);
-        setAuthenticatedEmailVerified(null);
-        setAuthenticatedFirstname(null);
-        setAuthenticatedLastname(null);
-        setLastNonLoginUrl(null);
-        setPrevUrl(null);
-        setLastUrl(null);
-        setIsNhsLinkedAccount(false);
-      });
+      await logout();
+      // Clear user-related cookies
+      Cookies.remove(".BPOR.Session.Expiry");
+
+      setToken(null);
+      setAuthenticatedUserId(null);
+      setAuthenticatedEmail(null);
+      setAuthenticatedEmailVerified(null);
+      setAuthenticatedFirstname(null);
+      setAuthenticatedLastname(null);
+      setLastNonLoginUrl(null);
+      setPrevUrl(null);
+      setLastUrl(null);
+      setIsNhsLinkedAccount(false);
     }
   };
 

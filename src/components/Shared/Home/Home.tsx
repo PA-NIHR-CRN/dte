@@ -198,7 +198,6 @@ const Home = () => {
                 </DTEContent>
               </>
             )}
-          <DTEHeader as="h2">Need help?</DTEHeader>
         </Grid>
       </StyledGrid>
     </DocumentTitle>
