@@ -11,7 +11,6 @@ import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import { AuthContext } from "../../../../context/AuthContext";
 import Utils from "../../../../Helper/Utils";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
-import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 import useInlineServerError from "../../../../hooks/useInlineServerError";
 
 const MfaTotpChallenge = () => {
@@ -73,7 +72,6 @@ const MfaTotpChallenge = () => {
   return (
     <DocumentTitle title="Check your authenticator app">
       <StepWrapper>
-        <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
         <DTEHeader as="h1">Check your authenticator app</DTEHeader>
         <ErrorMessageContainer
           axiosErrors={[setupMfaError]}
