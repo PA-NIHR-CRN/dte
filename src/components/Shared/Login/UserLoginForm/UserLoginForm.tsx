@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Control, Controller, useForm, UseFormSetValue } from "react-hook-form";
-import React, { useEffect } from "react";
+import { Control, Controller, UseFormSetValue } from "react-hook-form";
+import React from "react";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 import DTEButton from "../../UI/DTEButton/DTEButton";
