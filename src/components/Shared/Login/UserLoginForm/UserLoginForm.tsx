@@ -16,12 +16,14 @@ type UserLoginFormProps = {
   loadingLogin: boolean | undefined;
   control: Control<{ email: string; password: string }>;
   setValue: UseFormSetValue<{ email: string; password: string }>;
+  nested?: boolean;
 };
 
 const UserLoginForm: React.FC<UserLoginFormProps> = ({
   loadingLogin,
   control,
   setValue,
+  nested,
 }) => {
   return (
     <>
@@ -94,6 +96,19 @@ const UserLoginForm: React.FC<UserLoginFormProps> = ({
           reset it here.
         </DTERouteLink>
       </DTEContent>
+      {nested && (
+        <DTEContent>
+          If you registered using NHS login, you can{" "}
+          <DTERouteLink
+            to="/Participants/Options"
+            renderStyle="standard"
+            ariaLabel="visit the sign in options page"
+          >
+            sign in here
+          </DTERouteLink>
+          .
+        </DTEContent>
+      )}
       <ButtonWrapper>
         <DTEButton disabled={loadingLogin}>Sign in</DTEButton>
       </ButtonWrapper>

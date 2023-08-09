@@ -230,6 +230,7 @@ const UserLogin = (props: UserLoginProps) => {
               control={control}
               loadingLogin={loadingLogin}
               setValue={setValue}
+              nested
             />
           </form>
         </>
