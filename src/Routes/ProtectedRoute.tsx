@@ -25,11 +25,11 @@ const generateAuthPath = (role: Role) => {
   }
   return path;
 };
-const ProtectedRoute = ({
+function ProtectedRoute({
   userRole,
   authenticationPath,
   ...routeProps
-}: ProtectedRouteProps) => {
+}: ProtectedRouteProps) {
   const { isAuthenticatedRole, isAuthenticated } = useContext(AuthContext);
   if (isAuthenticated()) {
     if (isAuthenticatedRole(userRole)) {
@@ -43,6 +43,6 @@ const ProtectedRoute = ({
       to={{ pathname: authenticationPath || generateAuthPath(userRole) }}
     />
   );
-};
+}
 
 export default ProtectedRoute;

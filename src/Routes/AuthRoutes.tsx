@@ -30,7 +30,7 @@ export default [
   /* Auth Routes */
   <Route path="/Login" component={Login} strict key="login" />,
   <Route
-    path="/UserLogin"
+    path={["/UserLogin", "/MewngofnodiDefnyddiwr"]}
     render={(props) => {
       ReactGA.pageview(props.location.pathname);
       return <UserLogin />;
@@ -38,7 +38,7 @@ export default [
     key="userlogin"
   />,
   <Route
-    path="/Participants/Options"
+    path={["/Participants/Options", "/Cyfranogwyr/Dewisiadau"]}
     render={() => {
       ReactGA.pageview("/Participants/Options");
       return <LoginOptions />;

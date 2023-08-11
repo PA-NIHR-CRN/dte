@@ -7,7 +7,7 @@ import { AuthContext } from "../../../context/AuthContext";
 
 const userIsUnderageErrorCode = "User_Is_Underage";
 const unableToMatchAccounts = "Unable_To_Match_Accounts";
-const NhsLoginCallback = () => {
+function NhsLoginCallback() {
   const { search } = useLocation();
   const authCode = new URLSearchParams(search).get("code");
   const error = new URLSearchParams(search).get("error");
@@ -29,7 +29,7 @@ const NhsLoginCallback = () => {
     {
       manual: true,
       useCache: false,
-    }
+    },
   );
 
   useEffect(() => {
@@ -69,6 +69,6 @@ const NhsLoginCallback = () => {
   }
 
   return null;
-};
+}
 
 export default NhsLoginCallback;

@@ -21,7 +21,7 @@ interface MobileNumberFormProps extends FormBaseProps {
   onDataChange: (data: MobileFormData) => void;
 }
 
-const MobileNumberForm = (props: MobileNumberFormProps) => {
+function MobileNumberForm(props: MobileNumberFormProps) {
   const {
     onDataChange,
     initialStateData,
@@ -74,11 +74,9 @@ const MobileNumberForm = (props: MobileNumberFormProps) => {
         </DTEHeader>
       )}
       {instructionText || (
-        <>
-          <DTEContent>
-            You may provide either a mobile or a landline number if you choose.
-          </DTEContent>
-        </>
+        <DTEContent>
+          You may provide either a mobile or a landline number if you choose.
+        </DTEContent>
       )}
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
       <form onSubmit={handleSubmit(onDataChangePreProcessing)}>
@@ -116,19 +114,17 @@ const MobileNumberForm = (props: MobileNumberFormProps) => {
             field: { value, onChange, onBlur },
             fieldState: { error },
           }) => (
-            <>
-              <DTEInput
-                id="landlineNumber"
-                value={value}
-                onValueChange={onChange}
-                onValueBlur={onBlur}
-                error={error?.message}
-                label="Landline number"
-                autocomplete="tel"
-                spellcheck={false}
-                type="tel"
-              />
-            </>
+            <DTEInput
+              id="landlineNumber"
+              value={value}
+              onValueChange={onChange}
+              onValueBlur={onBlur}
+              error={error?.message}
+              label="Landline number"
+              autocomplete="tel"
+              spellcheck={false}
+              type="tel"
+            />
           )}
           rules={{
             pattern: {
@@ -160,6 +156,6 @@ const MobileNumberForm = (props: MobileNumberFormProps) => {
       </form>
     </>
   );
-};
+}
 
 export default MobileNumberForm;

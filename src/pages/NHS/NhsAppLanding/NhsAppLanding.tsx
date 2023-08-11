@@ -9,12 +9,14 @@ import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import Utils from "../../../Helper/Utils";
 import { AuthContext } from "../../../context/AuthContext";
 import LoadingIndicator from "../../../components/Shared/LoadingIndicator/LoadingIndicator";
+import { ContentContext } from "../../../context/ContentContext";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
 `;
 
-const NhsAppLanding = () => {
+function NhsAppLanding() {
+  const { content } = useContext(ContentContext);
   const history = useHistory();
   const { isInNHSApp } = useContext(AuthContext);
   const [completedDemographics, setCompletedDemographics] = useState(false);
@@ -27,7 +29,7 @@ const NhsAppLanding = () => {
     {
       manual: false,
       useCache: false,
-    }
+    },
   );
 
   useEffect(() => {
@@ -48,10 +50,7 @@ const NhsAppLanding = () => {
       {isInNHSApp && (
         <div className="nhs-app-provider-banner">
           <div className="nhsuk-width-container">
-            <strong>
-              This service is provided by the National Institute for Health and
-              Care Research
-            </strong>
+            {content["reusable-nhs-app-provider-banner"]}
           </div>
         </div>
       )}
@@ -89,14 +88,10 @@ const NhsAppLanding = () => {
         {!loading && completedDemographics && (
           <>
             <DTEHeader as="h1">
-              You are registered with Be Part of Research
+              {content["reusable-registered-with-bpor"]}
             </DTEHeader>
-            <DTEContent>
-              You can visit the Be Part of Research website and sign in using
-              the NHS login option to change your preferences and personal
-              details.
-            </DTEContent>
-            <DTEHeader as="h2">When will you hear from us?</DTEHeader>
+            {content["reusable-nhs-confirmation"]}
+            <DTEHeader as="h2">{content["reusable-hear-from-us"]}</DTEHeader>
             <DTEContent>
               As you are registered with Be Part of Research, you may hear from
               us in the coming weeks or months about opportunities to take part
@@ -108,6 +103,6 @@ const NhsAppLanding = () => {
       </StepWrapper>
     </>
   );
-};
+}
 
 export default NhsAppLanding;

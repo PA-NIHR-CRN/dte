@@ -8,7 +8,7 @@ export default class Utils {
       const supportedStatuses =
         process.env.REACT_APP_DTE_READY_STATUS_LIST?.split("#");
       const language = supportedStatuses?.find(
-        (status: any) => status === statusName
+        (status: any) => status === statusName,
       );
       return !!language;
     }
@@ -52,7 +52,7 @@ export default class Utils {
   };
 
   static ConvertResponseToDTEResponse = (
-    resp?: AxiosResponse<any> | void
+    resp?: AxiosResponse<any> | void,
   ): DTEAxiosResponse | undefined => {
     if (!resp) {
       return undefined;
@@ -73,9 +73,13 @@ export default class Utils {
     return updatedFormData;
   };
 
+  static capitalise = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   static FocusOnError = () => {
     const inputWithError = document.getElementsByClassName(
-      "nhsuk-error-message"
+      "nhsuk-error-message",
     )[0];
     if (inputWithError && inputWithError.id) {
       const regex = /--error-message/g;
@@ -94,5 +98,5 @@ export default class Utils {
 }
 export const EmailRegex = new RegExp(
   // eslint-disable-next-line no-useless-escape
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
 );

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Grid } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
@@ -16,6 +16,7 @@ import ErrorMessageSummary from "../../../Shared/ErrorMessageSummary/ErrorMessag
 import PasswordShowHide from "../../../Shared/Password/showHide";
 import ThreeWords from "../../../Shared/Password/threeWords";
 import commonPasswords from "../../../../data/commonPassword";
+import { ContentContext } from "../../../../context/ContentContext";
 
 export type UpdatePasswordFormData = {
   currentPassword: string;
@@ -32,7 +33,8 @@ interface PasswordPolicy {
   allowedPasswordSymbols?: string;
 }
 
-const UpdatePasswordForm = (props: FormBaseProps) => {
+function UpdatePasswordForm(props: FormBaseProps) {
+  const { content } = useContext(ContentContext);
   const { onCancel } = props;
   let requiresPolicyComma: boolean;
   let requiresErrorMessageComma: boolean;
@@ -71,7 +73,7 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
       url: `${process.env.REACT_APP_BASE_API}/users/passwordpolicy`,
       method: "GET",
     },
-    { useCache: false, manual: false }
+    { useCache: false, manual: false },
   );
 
   const [
@@ -85,13 +87,13 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
     {
       method: "POST",
     },
-    { useCache: false, manual: true }
+    { useCache: false, manual: true },
   );
 
   const requirementsBuilder = (
     initialiser: string,
     clause: boolean,
-    clauseText: string
+    clauseText: string,
   ) => {
     let returnedValue = initialiser;
     if (clause) {
@@ -109,7 +111,7 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
     clause: boolean,
     commaClauseText: string,
     nonCommaClauseText: string,
-    specialInitialiser?: boolean
+    specialInitialiser?: boolean,
   ) => {
     let returnedValue = initialiser;
     if (clause) {
@@ -131,7 +133,7 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
   useEffect(() => {
     if (policyResponse) {
       const policy = Utils.ConvertResponseToDTEResponse(
-        policyResponse
+        policyResponse,
       ) as unknown as PasswordPolicy;
       let builder = `Your password must be ${policy.minimumLength} or more characters. You can use a mix of letters, numbers or symbols`;
       let requirements = "";
@@ -146,22 +148,22 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
       requirements = requirementsBuilder(
         requirements,
         policy.requireUppercase,
-        "1 capital letter"
+        "1 capital letter",
       );
       requirements = requirementsBuilder(
         requirements,
         policy.requireLowercase,
-        "1 lowercase letter"
+        "1 lowercase letter",
       );
       requirements = requirementsBuilder(
         requirements,
         policy.requireNumbers,
-        "1 number"
+        "1 number",
       );
       requirements = requirementsBuilder(
         requirements,
         policy.requireSymbols,
-        "1 symbol"
+        "1 symbol",
       );
       if (
         policy.requireUppercase ||
@@ -280,7 +282,7 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
                       requiresErrorMessageComma = false;
                       validationSuccess = true;
                       const regExMinLength = new RegExp(
-                        `^.{${passwordPolicy.minimumLength},}$`
+                        `^.{${passwordPolicy.minimumLength},}$`,
                       );
                       if (!regExMinLength.test(value)) {
                         passwordError += `is at least ${passwordPolicy.minimumLength} characters long`;
@@ -296,7 +298,7 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
                           passwordError,
                           !/[A-Z]/.test(value),
                           "at least 1 capital letter",
-                          "at least 1 capital letter"
+                          "at least 1 capital letter",
                         );
                       }
                       if (passwordPolicy.requireLowercase) {
@@ -304,7 +306,7 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
                           passwordError,
                           !/[a-z]/.test(value),
                           "1 lowercase letter",
-                          "at least 1 lowercase letter"
+                          "at least 1 lowercase letter",
                         );
                       }
                       if (passwordPolicy.requireNumbers) {
@@ -312,7 +314,7 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
                           passwordError,
                           !/\d/.test(value),
                           "1 number",
-                          "at least 1 number"
+                          "at least 1 number",
                         );
                       }
                       if (
@@ -322,15 +324,15 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
                         const regExSymbols = new RegExp(
                           `[\\${passwordPolicy.allowedPasswordSymbols.replace(
                             / /g,
-                            "\\"
-                          )}]`
+                            "\\",
+                          )}]`,
                         );
 
                         passwordError = errorBuilder(
                           passwordError,
                           !regExSymbols.test(value),
                           "1 symbol",
-                          "at least 1 symbol"
+                          "at least 1 symbol",
                         );
                       }
 
@@ -341,32 +343,32 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
                         !/^[^ ]+$/.test(value),
                         "does not include spaces",
                         "does not include spaces",
-                        true
+                        true,
                       );
 
                       if (passwordPolicy.allowedPasswordSymbols) {
                         const regExIllegal = new RegExp(
                           `[^a-zA-Z0-9 \\${passwordPolicy.allowedPasswordSymbols.replace(
                             / /g,
-                            "\\"
-                          )}]`
+                            "\\",
+                          )}]`,
                         );
                         passwordError = errorBuilder(
                           passwordError,
                           regExIllegal.test(value),
                           "only includes symbols from this list ##allowedsymbols##",
                           "only includes symbols from this list ##allowedsymbols##",
-                          true
+                          true,
                         );
                       }
 
                       let finalErrorMessage = passwordError.replace(
                         /,([^,]*)$/,
-                        ` and$1`
+                        ` and$1`,
                       );
 
                       const isCommonPassword = commonPasswords.includes(
-                        value.toLowerCase()
+                        value.toLowerCase(),
                       );
                       if (isCommonPassword) {
                         finalErrorMessage +=
@@ -379,8 +381,8 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
                           `##allowedsymbols##`,
                           passwordPolicy.allowedPasswordSymbols.replace(
                             / /g,
-                            ""
-                          )
+                            "",
+                          ),
                         );
                       }
 
@@ -419,7 +421,7 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
                   }}
                 />
                 <FormNavigationButtons
-                  nextButtonText="Save"
+                  nextButtonText={content["reusable-Save"]}
                   showCancelButton
                   onCancel={onCancel}
                 />
@@ -430,6 +432,6 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
       )}
     </>
   );
-};
+}
 
 export default UpdatePasswordForm;

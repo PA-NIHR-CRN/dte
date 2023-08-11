@@ -21,7 +21,7 @@ interface Disability2FormProps extends FormBaseProps {
   onDataChange: (data: Disability2FormData) => void;
 }
 
-const Disability2Form = (props: Disability2FormProps) => {
+function Disability2Form(props: Disability2FormProps) {
   let labelElement: ReactNode;
   const {
     onDataChange,
@@ -80,86 +80,84 @@ const Disability2Form = (props: Disability2FormProps) => {
   }, [isSubmitting]);
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <Controller
-          control={control}
-          name="disabilityDescription"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <DTERadio
-              id="disabilityDescriptionRadio"
-              name="disabilityDescription"
-              label={labelElement}
-              onChange={onChange}
-              error={error?.message}
+    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <Controller
+        control={control}
+        name="disabilityDescription"
+        render={({ field: { value, onChange }, fieldState: { error } }) => (
+          <DTERadio
+            id="disabilityDescriptionRadio"
+            name="disabilityDescription"
+            label={labelElement}
+            onChange={onChange}
+            error={error?.message}
+          >
+            <Radios.Radio
+              value="Yes, a lot"
+              defaultChecked={value === "Yes, a lot"}
+              aria-label="Yes, my condition reduces my ability to carry out day to day activities a lot"
+              aria-labelledby=""
             >
-              <Radios.Radio
-                value="Yes, a lot"
-                defaultChecked={value === "Yes, a lot"}
-                aria-label="Yes, my condition reduces my ability to carry out day to day activities a lot"
-                aria-labelledby=""
-              >
-                Yes, a lot
-              </Radios.Radio>
-              <Radios.Radio
-                value="Yes, a little"
-                defaultChecked={value === "Yes, a little"}
-                aria-label="Yes, my condition reduces my ability to carry out day to day activities a little"
-                aria-labelledby=""
-              >
-                Yes, a little
-              </Radios.Radio>
-              <Radios.Radio
-                value="Not at all"
-                defaultChecked={value === "Not at all"}
-                aria-label="No, my condition does not reduce my ability to carry out day to day activities at all"
-                aria-labelledby=""
-              >
-                Not at all
-              </Radios.Radio>
-              <DTEContent $radioList>or</DTEContent>
-              <Radios.Radio
-                value="Prefer not to say"
-                defaultChecked={value === "Prefer not to say"}
-                aria-label="I would prefer not to say how much my condition reduces my ability to carry out day to day activities"
-                aria-labelledby=""
-              >
-                Prefer not to say
-              </Radios.Radio>
-            </DTERadio>
-          )}
-          rules={{
-            validate: (value) => {
-              if (!value || value.length === 0)
-                return "Select whether any of your conditions or illnesses reduce your ability to carry out day to day activities";
-              return true;
-            },
-          }}
-        />
-        {!hideInfo && (
-          <DTEDetails summary="Why we are asking this question">
-            <DTEContent>
-              Some studies will require volunteers with disabilities, other
-              studies want to make sure they have a representative sample of the
-              population taking part in research studies. We may use this
-              information when contacting you about studies you may be
-              interested in.
-            </DTEContent>
-            <DTEContent>
-              If we find that people with disabilities are under represented in
-              signing up to be contacted about research we will look at how to
-              improve this.
-            </DTEContent>
-          </DTEDetails>
+              Yes, a lot
+            </Radios.Radio>
+            <Radios.Radio
+              value="Yes, a little"
+              defaultChecked={value === "Yes, a little"}
+              aria-label="Yes, my condition reduces my ability to carry out day to day activities a little"
+              aria-labelledby=""
+            >
+              Yes, a little
+            </Radios.Radio>
+            <Radios.Radio
+              value="Not at all"
+              defaultChecked={value === "Not at all"}
+              aria-label="No, my condition does not reduce my ability to carry out day to day activities at all"
+              aria-labelledby=""
+            >
+              Not at all
+            </Radios.Radio>
+            <DTEContent $radioList>or</DTEContent>
+            <Radios.Radio
+              value="Prefer not to say"
+              defaultChecked={value === "Prefer not to say"}
+              aria-label="I would prefer not to say how much my condition reduces my ability to carry out day to day activities"
+              aria-labelledby=""
+            >
+              Prefer not to say
+            </Radios.Radio>
+          </DTERadio>
         )}
-        <FormNavigationButtons
-          nextButtonText={disability2NextButtonText || "Continue"}
-          showCancelButton={disability2ShowCancelButton || false}
-          onCancel={onCancel}
-        />
-      </form>
-    </>
+        rules={{
+          validate: (value) => {
+            if (!value || value.length === 0)
+              return "Select whether any of your conditions or illnesses reduce your ability to carry out day to day activities";
+            return true;
+          },
+        }}
+      />
+      {!hideInfo && (
+        <DTEDetails summary="Why we are asking this question">
+          <DTEContent>
+            Some studies will require volunteers with disabilities, other
+            studies want to make sure they have a representative sample of the
+            population taking part in research studies. We may use this
+            information when contacting you about studies you may be interested
+            in.
+          </DTEContent>
+          <DTEContent>
+            If we find that people with disabilities are under represented in
+            signing up to be contacted about research we will look at how to
+            improve this.
+          </DTEContent>
+        </DTEDetails>
+      )}
+      <FormNavigationButtons
+        nextButtonText={disability2NextButtonText || "Continue"}
+        showCancelButton={disability2ShowCancelButton || false}
+        onCancel={onCancel}
+      />
+    </form>
   );
-};
+}
 
 export default Disability2Form;

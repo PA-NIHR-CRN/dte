@@ -6,7 +6,7 @@ export interface EthnicityNavigationButtonsProps {
   studyType: string;
 }
 
-const EthnicityInformation = (props: EthnicityNavigationButtonsProps) => {
+function EthnicityInformation(props: EthnicityNavigationButtonsProps) {
   const { hideInfo, studyType } = props;
 
   return (
@@ -27,6 +27,6 @@ const EthnicityInformation = (props: EthnicityNavigationButtonsProps) => {
       )}
     </>
   );
-};
+}
 
 export default EthnicityInformation;

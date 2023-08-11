@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Grid } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
@@ -13,6 +13,7 @@ import ErrorMessageSummary from "../../../../../Shared/ErrorMessageSummary/Error
 import PasswordShowHide from "../../../../../Shared/Password/showHide";
 import ThreeWords from "../../../../../Shared/Password/threeWords";
 import commonPasswords from "../../../../../../data/commonPassword";
+import { ContentContext } from "../../../../../../context/ContentContext";
 
 export type PasswordFormData = {
   password: string;
@@ -35,7 +36,8 @@ interface PasswordFormProps {
   setLoadingText: (text: string) => void;
 }
 
-const PasswordForm = (props: PasswordFormProps) => {
+function PasswordForm(props: PasswordFormProps) {
+  const { content } = useContext(ContentContext);
   const { onDataChange, initialStateData, setLoading, setLoadingText } = props;
   let requirePolicyComma: boolean;
   let requireErrorMessageComma: boolean;
@@ -70,18 +72,18 @@ const PasswordForm = (props: PasswordFormProps) => {
       url: `${process.env.REACT_APP_BASE_API}/users/passwordpolicy`,
       method: "GET",
     },
-    { useCache: false, manual: false }
+    { useCache: false, manual: false },
   );
 
   useEffect(() => {
-    setLoadingText("Loading password policy...");
+    setLoadingText(content["register-password-loading"]);
     setLoading(policyLoading || false);
   }, [setLoading, setLoadingText, policyLoading]);
 
   const requirementsConstructor = (
     constructor: string,
     clause: boolean,
-    clauseText: string
+    clauseText: string,
   ) => {
     let returnedValue = constructor;
     if (clause) {
@@ -99,7 +101,7 @@ const PasswordForm = (props: PasswordFormProps) => {
     clause: boolean,
     commaClauseText: string,
     nonCommaClauseText: string,
-    specialConstructor?: boolean
+    specialConstructor?: boolean,
   ) => {
     let returnedValue = constructor;
     if (clause) {
@@ -121,9 +123,9 @@ const PasswordForm = (props: PasswordFormProps) => {
   useEffect(() => {
     if (policyResponse) {
       const policy = Utils.ConvertResponseToDTEResponse(
-        policyResponse
+        policyResponse,
       ) as unknown as PasswordPolicy;
-      let builder = `Your password must be ${policy.minimumLength} or more characters. You can use a mix of letters, numbers or symbols`;
+      let builder = `${content["register-password-policy-builder-char1"]} ${policy.minimumLength} ${content["register-password-policy-builder-char2"]}`;
       let requirements = "";
       if (
         policy.requireUppercase ||
@@ -131,27 +133,27 @@ const PasswordForm = (props: PasswordFormProps) => {
         policy.requireNumbers ||
         policy.requireSymbols
       ) {
-        requirements += " which must include at least ";
+        requirements += content["register-password-policy-builder-include"];
       }
       requirements = requirementsConstructor(
         requirements,
         policy.requireUppercase,
-        "1 capital letter"
+        content["register-password-policy-builder-include-uppercase"],
       );
       requirements = requirementsConstructor(
         requirements,
         policy.requireLowercase,
-        "1 lowercase letter"
+        content["register-password-policy-builder-include-lowercase"],
       );
       requirements = requirementsConstructor(
         requirements,
         policy.requireNumbers,
-        "1 number"
+        content["register-password-policy-builder-include-numbers"],
       );
       requirements = requirementsConstructor(
         requirements,
         policy.requireSymbols,
-        "1 symbol"
+        content["register-password-policy-builder-include-symbols"],
       );
       if (
         policy.requireUppercase ||
@@ -159,7 +161,10 @@ const PasswordForm = (props: PasswordFormProps) => {
         policy.requireNumbers ||
         policy.requireSymbols
       ) {
-        requirements = requirements.replace(/,([^,]*)$/, ` and$1`);
+        requirements = requirements.replace(
+          /,([^,]*)$/,
+          ` ${content["reusable-text-and"]}$1`,
+        );
       }
       builder += `${requirements}.`;
       setPolicyBuilder(builder);
@@ -185,7 +190,7 @@ const PasswordForm = (props: PasswordFormProps) => {
       {passwordPolicy && (
         <>
           <DTEHeader as="h1" $variant={headerVariant}>
-            Create a password for your Be Part of Research account
+            {content["register-password-header"]}
           </DTEHeader>
           <DTEContent>{policyBuilder}</DTEContent>
           <ThreeWords />
@@ -202,7 +207,7 @@ const PasswordForm = (props: PasswordFormProps) => {
                         setValue("password", e.target.value)
                       }
                       error={error?.message}
-                      label="Create your password"
+                      label={content["reusable-password-input-create"]}
                       required
                       autocomplete="new-password"
                       spellcheck={false}
@@ -211,45 +216,48 @@ const PasswordForm = (props: PasswordFormProps) => {
                     />
                   )}
                   rules={{
-                    required: { value: true, message: "Enter a password" },
+                    required: {
+                      value: true,
+                      message: content["reusable-validation-enter-password"],
+                    },
                     validate: (value) => {
-                      let passwordError = "Enter a password that ";
+                      let passwordError = `${content["reusable-validation-enter-password"]} ${content["reusable-text-that"]} `;
                       requireErrorMessageComma = false;
                       validationSuccess = true;
                       const regExMinLength = new RegExp(
-                        `^.{${passwordPolicy.minimumLength},}$`
+                        `^.{${passwordPolicy.minimumLength},}$`,
                       );
                       if (!regExMinLength.test(value)) {
-                        passwordError += `is at least ${passwordPolicy.minimumLength} characters long`;
+                        passwordError += `${content["reusable-text-is"]} ${content["register-password-policy-builder-at-least"]} ${passwordPolicy.minimumLength} ${content["register-password-policy-builder-char-long"]}`;
                         minLengthErrorOccured = true;
-                        includesStatement = " and includes ";
+                        includesStatement = ` ${content["reusable-text-and"]} ${content["reusable-text-includes"]} `;
                         validationSuccess = false;
                       } else {
-                        includesStatement = "includes ";
+                        includesStatement = `${content["reusable-text-includes"]} `;
                       }
 
                       if (passwordPolicy.requireUppercase) {
                         passwordError = errorConstructor(
                           passwordError,
                           !/[A-Z]/.test(value),
-                          "at least 1 capital letter",
-                          "at least 1 capital letter"
+                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-uppercase"]}`,
+                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-uppercase"]}`,
                         );
                       }
                       if (passwordPolicy.requireLowercase) {
                         passwordError = errorConstructor(
                           passwordError,
                           !/[a-z]/.test(value),
-                          "1 lowercase letter",
-                          "at least 1 lowercase letter"
+                          `${content["register-password-policy-builder-include-lowercase"]}`,
+                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-lowercase"]}`,
                         );
                       }
                       if (passwordPolicy.requireNumbers) {
                         passwordError = errorConstructor(
                           passwordError,
                           !/\d/.test(value),
-                          "1 number",
-                          "at least 1 number"
+                          `${content["register-password-policy-builder-include-numbers"]}`,
+                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-numbers"]}`,
                         );
                       }
                       if (
@@ -259,15 +267,15 @@ const PasswordForm = (props: PasswordFormProps) => {
                         const regExSymbols = new RegExp(
                           `[\\${passwordPolicy.allowedPasswordSymbols.replace(
                             / /g,
-                            "\\"
-                          )}]`
+                            "\\",
+                          )}]`,
                         );
 
                         passwordError = errorConstructor(
                           passwordError,
                           !regExSymbols.test(value),
-                          "1 symbol",
-                          "at least 1 symbol"
+                          `${content["register-password-policy-builder-include-symbols"]}`,
+                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-symbols"]}`,
                         );
                       }
 
@@ -276,38 +284,41 @@ const PasswordForm = (props: PasswordFormProps) => {
                       passwordError = errorConstructor(
                         passwordError,
                         !/^[^ ]+$/.test(value),
-                        "does not include spaces",
-                        "does not include spaces",
-                        true
+                        content[
+                          "register-password-policy-builder-include-no-spaces"
+                        ],
+                        content[
+                          "register-password-policy-builder-include-no-spaces"
+                        ],
+                        true,
                       );
 
                       if (passwordPolicy.allowedPasswordSymbols) {
                         const regExIllegal = new RegExp(
                           `[^a-zA-Z0-9 \\${passwordPolicy.allowedPasswordSymbols.replace(
                             / /g,
-                            "\\"
-                          )}]`
+                            "\\",
+                          )}]`,
                         );
                         passwordError = errorConstructor(
                           passwordError,
                           regExIllegal.test(value),
-                          "only includes symbols from this list ##allowedsymbols##",
-                          "only includes symbols from this list ##allowedsymbols##",
-                          true
+                          `${content["register-password-policy-builder-symbol-list"]} ##allowedsymbols##`,
+                          `${content["register-password-policy-builder-symbol-list"]} ##allowedsymbols##`,
+                          true,
                         );
                       }
 
                       let finalErrorMessage = passwordError.replace(
                         /,([^,]*)$/,
-                        ` and$1`
+                        ` ${content["reusable-text-and"]}$1`,
                       );
 
                       const isCommonPassword = commonPasswords.includes(
-                        value.toLowerCase()
+                        value.toLowerCase(),
                       );
                       if (isCommonPassword) {
-                        finalErrorMessage +=
-                          ". You cannot use a commonly used password";
+                        finalErrorMessage += `. ${content["register-password-policy-builder-symbol-list"]}`;
                         validationSuccess = false;
                       }
 
@@ -316,8 +327,8 @@ const PasswordForm = (props: PasswordFormProps) => {
                           `##allowedsymbols##`,
                           passwordPolicy.allowedPasswordSymbols.replace(
                             / /g,
-                            ""
-                          )
+                            "",
+                          ),
                         );
                       }
 
@@ -335,7 +346,7 @@ const PasswordForm = (props: PasswordFormProps) => {
                         setValue("password2", e.target.value)
                       }
                       error={error?.message}
-                      label="Confirm your password"
+                      label={content["reusable-password-input-confirm"]}
                       required
                       spellcheck={false}
                       buttonAriaLabelHide="Hide the entered password confirmation on screen"
@@ -355,7 +366,7 @@ const PasswordForm = (props: PasswordFormProps) => {
                     },
                   }}
                 />
-                <DTEButton>Continue</DTEButton>
+                <DTEButton>{content["reusable-Continue"]}</DTEButton>
               </form>
             </Grid>
           </Grid>
@@ -363,6 +374,6 @@ const PasswordForm = (props: PasswordFormProps) => {
       )}
     </>
   );
-};
+}
 
 export default PasswordForm;

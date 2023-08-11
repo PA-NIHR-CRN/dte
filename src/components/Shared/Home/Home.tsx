@@ -12,6 +12,7 @@ import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import Utils from "../../../Helper/Utils";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import { AuthContext } from "../../../context/AuthContext";
+import { ContentContext } from "../../../context/ContentContext";
 
 const StyledGrid = styled(Grid)`
   padding: 1rem;
@@ -44,7 +45,8 @@ const StyledDTEHR = styled(DTEHR)`
   }
 `;
 
-const Home = () => {
+function Home() {
+  const { content } = useContext(ContentContext);
   const history = useHistory();
   const getDemographicsURL = `${process.env.REACT_APP_BASE_API}/participants/demographics`;
   const { isNhsLinkedAccount, isInNHSApp } = useContext(AuthContext);
@@ -56,7 +58,7 @@ const Home = () => {
     {
       manual: false,
       useCache: false,
-    }
+    },
   );
 
   useEffect(() => {
@@ -68,7 +70,7 @@ const Home = () => {
   }, [response, error, loading]);
 
   return (
-    <DocumentTitle title="My account - Volunteer Account - Be Part of Research">
+    <DocumentTitle title={content["account-document-title"]}>
       <StyledGrid container direction="row" role="main" id="main">
         {loading && <LoadingIndicator />}
         <Grid item sm={1} md={2} />
@@ -76,7 +78,7 @@ const Home = () => {
           {Utils.ConvertResponseToDTEResponse(response)?.isSuccess &&
             !isInNHSApp && (
               <>
-                <DTEHeader as="h1">My account</DTEHeader>
+                <DTEHeader as="h1">{content["account-header"]}</DTEHeader>
                 <DTEHR />
                 <StyledDTEHeader as="h2" $variant="h3">
                   <DTERouteLink
@@ -89,14 +91,14 @@ const Home = () => {
                     external={isNhsLinkedAccount || false}
                     target={isNhsLinkedAccount ? "_blank" : undefined}
                   >
-                    Account settings
+                    {content["reusable-account-settings-header"]}
                     <ArrowForwardRoundedIcon />
                   </DTERouteLink>
                 </StyledDTEHeader>
                 <StyledDTEContent>
                   {isNhsLinkedAccount
-                    ? "You can make changes to your account settings on NHS login."
-                    : "Change your email or password."}
+                    ? content["account-settings-nhs-text"]
+                    : content["account-settings-native-text"]}
                 </StyledDTEContent>
                 <DTEHR />
                 <StyledDTEHeader as="h2" $variant="h3">
@@ -104,15 +106,12 @@ const Home = () => {
                     to="/Participants/ResearchAreas"
                     renderStyle="standard"
                   >
-                    Areas of research
+                    {content["reusable-areas-of-research"]}
                     <ArrowForwardRoundedIcon />
                   </DTERouteLink>
                 </StyledDTEHeader>
                 <StyledDTEContent>
-                  Add, edit or remove areas of research that you are interested
-                  in. Remember - you do not need a diagnosis of a disease or
-                  condition to take part, lots of studies need healthy
-                  volunteers too.
+                  {content["account-areas-of-research-body"]}
                 </StyledDTEContent>
                 <DTEHR />
                 <StyledDTEHeader as="h2" $variant="h3">
@@ -120,14 +119,16 @@ const Home = () => {
                     to="/Participants/MyDetails"
                     renderStyle="standard"
                   >
-                    Personal details
+                    {content["reusable-personal-details-header"]}
                     <ArrowForwardRoundedIcon />
                   </DTERouteLink>
                 </StyledDTEHeader>
                 <StyledDTEContent>
-                  Change any information that you&apos;ve provided about
-                  yourself, such as your {isNhsLinkedAccount ? "" : "name or "}
-                  home address.
+                  {content["account-personal-details-body"]}{" "}
+                  {isNhsLinkedAccount
+                    ? ""
+                    : content["account-personal-details-body-nhs"]}
+                  {content["reusable-home-address"]}.
                 </StyledDTEContent>
                 <DTEHR />
                 <StyledDTEHeader as="h2" $variant="h3">
@@ -137,14 +138,12 @@ const Home = () => {
                     external
                     target="_blank"
                   >
-                    Search for studies on Be Part of Research
+                    {content["account-search-studies-header"]}
                     <ArrowForwardRoundedIcon />
                   </DTERouteLink>
                 </StyledDTEHeader>
                 <StyledDTEContent>
-                  By clicking this link, you can search for trials and studies
-                  taking place for health conditions you are interested in, at
-                  locations that are easy for you to get to
+                  {content["account-search-studies-body"]}
                 </StyledDTEContent>
                 <DTEHR />
                 <StyledDTEHeader as="h2" $variant="h3">
@@ -152,14 +151,12 @@ const Home = () => {
                     to="/Participants/BePartOfResearchNewsletter"
                     renderStyle="standard"
                   >
-                    Be Part of Research Newsletter
+                    {content["reusable-newsletter-header"]}
                     <ArrowForwardRoundedIcon />
                   </DTERouteLink>
                 </StyledDTEHeader>
                 <StyledDTEContent>
-                  By signing up to our monthly newsletter, you&apos;ll receive
-                  all our latest news and hear of more opportunities to take
-                  part in research from across the UK.
+                  {content["account-newsletter-body"]}
                 </StyledDTEContent>
                 <DTEHR />
                 <StyledDTEHeader as="h2" $variant="h3">
@@ -167,41 +164,36 @@ const Home = () => {
                     to="/Participants/CloseAccount"
                     renderStyle="standard"
                   >
-                    Close your account
+                    {content["reusable-header-close-account"]}
                     <ArrowForwardRoundedIcon />
                   </DTERouteLink>
                 </StyledDTEHeader>
                 <StyledDTEContent>
-                  If you have changed your mind and wish to withdraw your
-                  consent to be contacted.
+                  {content["account-close-account-body"]}
                 </StyledDTEContent>
                 <StyledDTEHR />
-                <DTERouteLink to="/logout">Sign out</DTERouteLink>
+                <DTERouteLink to="/logout">
+                  {content["account-button-sign-out"]}
+                </DTERouteLink>
               </>
             )}
           {Utils.ConvertResponseToDTEResponse(response)?.isSuccess &&
             isInNHSApp && (
               <>
                 <DTEHeader as="h1">
-                  You are registered with Be Part of Research
+                  {content["reusable-registered-with-bpor"]}
                 </DTEHeader>
-                <DTEContent>
-                  You can visit the Be Part of Research website and sign in
-                  using the NHS login option to change your preferences and
-                  personal details.
-                </DTEContent>
-                <DTEHeader as="h2">When will you hear from us?</DTEHeader>
-                <DTEContent>
-                  You may hear from us about a study in weeks or months or it
-                  may take longer depending on the areas of research you’ve
-                  chosen.
-                </DTEContent>
+                {content["reusable-nhs-confirmation"]}
+                <DTEHeader as="h2">
+                  {content["reusable-hear-from-us"]}
+                </DTEHeader>
+                {content["reusable-hear-about-study-timescale"]}
               </>
             )}
         </Grid>
       </StyledGrid>
     </DocumentTitle>
   );
-};
+}
 
 export default Home;

@@ -45,7 +45,7 @@ const StyledCloseIconButton = styled(IconButton)<Props>`
   }
 `;
 
-const DTEPaper = ({
+function DTEPaper({
   onClickClose,
   disabled,
   $bandColour,
@@ -55,7 +55,7 @@ const DTEPaper = ({
   className,
   $buttonLabel,
   elevation,
-}: Props) => {
+}: Props) {
   return (
     <StyledPaper
       $bandColour={$bandColour}
@@ -76,6 +76,6 @@ const DTEPaper = ({
       {children}
     </StyledPaper>
   );
-};
+}
 
 export default DTEPaper;

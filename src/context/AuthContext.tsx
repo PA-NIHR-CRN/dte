@@ -8,22 +8,23 @@ import {
   SessionExpiryInfo,
 } from "../types/AuthTypes";
 import useAxiosFetch from "../hooks/useAxiosFetch";
+import { useHistory } from "react-router-dom";
 
 export const AuthContext = createContext<AuthContextProps>(
-  {} as AuthContextProps
+  {} as AuthContextProps,
 );
 
 const sessionRefreshCheckInterval = 10 * 1000;
 
-export const AuthProvider = (props: { children: any }) => {
+export function AuthProvider(props: { children: any }) {
   const [authenticatedEmail, setAuthenticatedEmail] = useState<string | null>(
-    null
+    null,
   );
   const [authenticatedEmailVerified, setAuthenticatedEmailVerified] = useState<
     boolean | null
   >(null);
   const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(
-    null
+    null,
   );
   const [authenticatedFirstname, setAuthenticatedFirstname] = useState<
     string | null
@@ -46,7 +47,7 @@ export const AuthProvider = (props: { children: any }) => {
   const [isNhsLinkedAccount, setIsNhsLinkedAccount] = useState<boolean>(false);
   const [token, setToken] = useState<string | null | undefined>(null);
   const [isInNHSApp, setIsInNHSApp] = useState<boolean>(false);
-
+  const history = useHistory();
   const baseUrl = process.env.REACT_APP_BASE_API;
 
   const [{ loading: logoutLoading }, logout] = useAxiosFetch(
@@ -55,7 +56,7 @@ export const AuthProvider = (props: { children: any }) => {
       url: `${baseUrl}/users/logout`,
       withCredentials: true,
     },
-    { useCache: false, manual: true }
+    { useCache: false, manual: true },
   );
 
   const [{ loading: refreshSessionTokenLoading }, refreshSessionToken] =
@@ -65,7 +66,7 @@ export const AuthProvider = (props: { children: any }) => {
         url: `${baseUrl}/users/refreshsession`,
         withCredentials: true,
       },
-      { useCache: false, manual: true }
+      { useCache: false, manual: true },
     );
 
   useEffect(() => {
@@ -152,10 +153,10 @@ export const AuthProvider = (props: { children: any }) => {
   };
 
   const [lastUrl, setLastUrl] = useState<string | null>(
-    localStorage.getItem("currentUrl")
+    localStorage.getItem("currentUrl"),
   );
   const [prevUrl, setPrevUrl] = useState<string | null>(
-    localStorage.getItem("previousUrl")
+    localStorage.getItem("previousUrl"),
   );
 
   const persistLastUrl = (url: string) => {
@@ -167,7 +168,7 @@ export const AuthProvider = (props: { children: any }) => {
   };
 
   const [lastNonLoginUrl, setLastNonLoginUrl] = useState(
-    localStorage.getItem("lastNonLoginUrl")
+    localStorage.getItem("lastNonLoginUrl"),
   );
   const persistLastNonLoginUrl = (url: string) => {
     if (!url) {
@@ -242,6 +243,7 @@ export const AuthProvider = (props: { children: any }) => {
         setLastUrl(null);
         setIsNhsLinkedAccount(false);
         setAuthenticatedIsParticipant(true);
+        history.push("/Participants/Options");
       });
     }
   };
@@ -274,4 +276,4 @@ export const AuthProvider = (props: { children: any }) => {
       {props.children}
     </AuthContext.Provider>
   );
-};
+}

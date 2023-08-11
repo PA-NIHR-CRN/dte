@@ -17,7 +17,9 @@ const StyledDetailsSummary = styled(Details.Summary)`
       text-decoration: none;
       color: ${(props) => props.theme.NIHR.Blue};
       background-color: ${(props) => props.theme.NIHR.Yellow};
-      box-shadow: 0 -2px ${(props) => props.theme.NIHR.Yellow}, 0 4px #212b32;
+      box-shadow:
+        0 -2px ${(props) => props.theme.NIHR.Yellow},
+        0 4px #212b32;
     }
     &:hover {
       color: ${(props) => props.theme.NIHR.Blue};
@@ -35,7 +37,7 @@ const StyledDetailsText = styled(Details.Text)`
   border-left-color: ${(props) => props.theme.NIHR.LightGrey};
 `;
 
-const DTEDetails = ({ summary, children }: Props) => {
+function DTEDetails({ summary, children }: Props) {
   const componentId = useId(null, "");
 
   return (
@@ -51,6 +53,6 @@ const DTEDetails = ({ summary, children }: Props) => {
       </StyledDetailsText>
     </Details>
   );
-};
+}
 
 export default DTEDetails;

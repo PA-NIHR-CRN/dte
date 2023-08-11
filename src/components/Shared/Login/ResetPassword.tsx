@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Grid, Box } from "@material-ui/core";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
@@ -19,6 +19,7 @@ import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../Password/showHide";
 import ThreeWords from "../Password/threeWords";
+import { ContentContext } from "../../../context/ContentContext";
 
 interface PasswordPolicy {
   minimumLength: number;
@@ -36,6 +37,7 @@ const StyledDTEContent = styled(DTEContent)`
 `;
 
 function ResetPassword() {
+  const { content } = useContext(ContentContext);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   let requirePolicyComma: boolean;
@@ -71,13 +73,13 @@ function ResetPassword() {
       url: `${process.env.REACT_APP_BASE_API}/users/passwordpolicy`,
       method: "GET",
     },
-    { useCache: false, manual: false }
+    { useCache: false, manual: false },
   );
 
   const requirementsConstruction = (
     constructor: string,
     clause: boolean,
-    clauseText: string
+    clauseText: string,
   ) => {
     let returnedValue = constructor;
     if (clause) {
@@ -95,7 +97,7 @@ function ResetPassword() {
     errorClause: boolean,
     errorCommaClauseText: string,
     errorNonCommaClauseText: string,
-    errorSpecialConstructor?: boolean
+    errorSpecialConstructor?: boolean,
   ) => {
     let returnedValue = errorConstructor;
     if (errorClause) {
@@ -117,7 +119,7 @@ function ResetPassword() {
   useEffect(() => {
     if (policyResponse) {
       const policy = Utils.ConvertResponseToDTEResponse(
-        policyResponse
+        policyResponse,
       ) as unknown as PasswordPolicy;
       let builder = `Your password must be ${policy.minimumLength} or more characters. You can use a mix of letters, numbers or symbols`;
       let requirements = "";
@@ -132,22 +134,22 @@ function ResetPassword() {
       requirements = requirementsConstruction(
         requirements,
         policy.requireUppercase,
-        "1 capital letter"
+        "1 capital letter",
       );
       requirements = requirementsConstruction(
         requirements,
         policy.requireLowercase,
-        "1 lowercase letter"
+        "1 lowercase letter",
       );
       requirements = requirementsConstruction(
         requirements,
         policy.requireNumbers,
-        "1 number"
+        "1 number",
       );
       requirements = requirementsConstruction(
         requirements,
         policy.requireSymbols,
-        "1 symbol"
+        "1 symbol",
       );
       if (
         policy.requireUppercase ||
@@ -180,7 +182,7 @@ function ResetPassword() {
       },
       {
         manual: true,
-      }
+      },
     ).catch(() => {
       // swallow 404 axios error -
     });
@@ -262,14 +264,17 @@ function ResetPassword() {
                               rules={{
                                 required: {
                                   value: true,
-                                  message: "Enter a password",
+                                  message:
+                                    content[
+                                      "reusable-validation-enter-password"
+                                    ],
                                 },
                                 validate: (value) => {
-                                  let passwordError = "Enter a password that ";
+                                  let passwordError = `${content["reusable-validation-enter-password"]} that `;
                                   requireErrorMessageComma = false;
                                   validationSuccess = true;
                                   const regExMinLength = new RegExp(
-                                    `^.{${passwordPolicy.minimumLength},}$`
+                                    `^.{${passwordPolicy.minimumLength},}$`,
                                   );
                                   if (!regExMinLength.test(value)) {
                                     passwordError += `is at least ${passwordPolicy.minimumLength} characters long`;
@@ -284,7 +289,7 @@ function ResetPassword() {
                                       passwordError,
                                       !/[A-Z]/.test(value),
                                       "at least 1 capital letter",
-                                      "at least 1 capital letter"
+                                      "at least 1 capital letter",
                                     );
                                   }
                                   if (passwordPolicy.requireLowercase) {
@@ -292,7 +297,7 @@ function ResetPassword() {
                                       passwordError,
                                       !/[a-z]/.test(value),
                                       "1 lowercase letter",
-                                      "at least 1 lowercase letter"
+                                      "at least 1 lowercase letter",
                                     );
                                   }
                                   if (passwordPolicy.requireNumbers) {
@@ -300,7 +305,7 @@ function ResetPassword() {
                                       passwordError,
                                       !/\d/.test(value),
                                       "1 number",
-                                      "at least 1 number"
+                                      "at least 1 number",
                                     );
                                   }
                                   if (
@@ -310,14 +315,14 @@ function ResetPassword() {
                                     const regExSymbols = new RegExp(
                                       `[\\${passwordPolicy.allowedPasswordSymbols.replace(
                                         / /g,
-                                        "\\"
-                                      )}]`
+                                        "\\",
+                                      )}]`,
                                     );
                                     passwordError = errorConstruction(
                                       passwordError,
                                       !regExSymbols.test(value),
                                       "1 symbol",
-                                      "at least 1 symbol"
+                                      "at least 1 symbol",
                                     );
                                   }
                                   includesStatement = "";
@@ -326,26 +331,26 @@ function ResetPassword() {
                                     !/^[^ ]+$/.test(value),
                                     "does not include spaces",
                                     "does not include spaces",
-                                    true
+                                    true,
                                   );
                                   if (passwordPolicy.allowedPasswordSymbols) {
                                     const regExIllegal = new RegExp(
                                       `[^a-zA-Z0-9 \\${passwordPolicy.allowedPasswordSymbols.replace(
                                         / /g,
-                                        "\\"
-                                      )}]`
+                                        "\\",
+                                      )}]`,
                                     );
                                     passwordError = errorConstruction(
                                       passwordError,
                                       regExIllegal.test(value),
                                       "only includes symbols from this list ##allowedsymbols##",
                                       "only includes symbols from this list ##allowedsymbols##",
-                                      true
+                                      true,
                                     );
                                   }
                                   let finalErrorMessage = passwordError.replace(
                                     /,([^,]*)$/,
-                                    ` and$1`
+                                    ` and$1`,
                                   );
                                   if (passwordPolicy.allowedPasswordSymbols) {
                                     finalErrorMessage =
@@ -353,8 +358,8 @@ function ResetPassword() {
                                         `##allowedsymbols##`,
                                         passwordPolicy.allowedPasswordSymbols.replace(
                                           / /g,
-                                          ""
-                                        )
+                                          "",
+                                        ),
                                       );
                                   }
                                   return validationSuccess
@@ -396,7 +401,7 @@ function ResetPassword() {
                             <Grid container spacing={4} alignItems="center">
                               <Grid item xs={4}>
                                 <DTEButton $fullwidth disabled={loadingForgot}>
-                                  Save
+                                  {content["reusable-Save"]}
                                 </DTEButton>
                               </Grid>
                               <Grid item>

@@ -3,7 +3,7 @@ import StepWrapper from "../../../Shared/StepWrapper/StepWrapper";
 import DTERouteLink from "../../../Shared/UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
 
-const UpdatePasswordSuccess = () => {
+function UpdatePasswordSuccess() {
   return (
     <DocumentTitle title="Your password has been updated - Volunteer Account - Be Part of Research">
       <StepWrapper>
@@ -12,6 +12,6 @@ const UpdatePasswordSuccess = () => {
       </StepWrapper>
     </DocumentTitle>
   );
-};
+}
 
 export default UpdatePasswordSuccess;

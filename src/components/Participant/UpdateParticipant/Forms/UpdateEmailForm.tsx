@@ -16,13 +16,15 @@ import DTEDetails from "../../../Shared/UI/DTEDetails/DTEDetails";
 import FormBaseProps from "../../../Shared/FormElements/FormBaseProps";
 import FormNavigationButtons from "../../../Shared/FormElements/CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../../../Shared/ErrorMessageSummary/ErrorMessageSummary";
+import { ContentContext } from "../../../../context/ContentContext";
 
 export type UpdateEmailFormData = {
   emailAddress: string;
   confirmEmailAddress: string;
 };
 
-const UpdateEmailForm = ({ onCancel }: FormBaseProps) => {
+function UpdateEmailForm({ onCancel }: FormBaseProps) {
+  const { content } = useContext(ContentContext);
   const history = useHistory();
   const { logOutToken } = useContext(AuthContext);
   const theme = useTheme();
@@ -54,7 +56,7 @@ const UpdateEmailForm = ({ onCancel }: FormBaseProps) => {
     {
       method: "POST",
     },
-    { useCache: false, manual: true }
+    { useCache: false, manual: true },
   );
 
   const handleChangeEmail = async (data: UpdateEmailFormData) => {
@@ -174,7 +176,7 @@ const UpdateEmailForm = ({ onCancel }: FormBaseProps) => {
               </DTEContent>
             </DTEDetails>
             <FormNavigationButtons
-              nextButtonText="Save"
+              nextButtonText={content["reusable-Save"]}
               showCancelButton
               onCancel={onCancel}
             />
@@ -183,6 +185,6 @@ const UpdateEmailForm = ({ onCancel }: FormBaseProps) => {
       </Grid>
     </>
   );
-};
+}
 
 export default UpdateEmailForm;

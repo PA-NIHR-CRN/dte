@@ -26,10 +26,10 @@ interface Ethnicity2FormProps extends FormBaseProps {
   ethnicity: string;
 }
 
-const ConditionalInput = (props: {
+function ConditionalInput(props: {
   value: string;
   onValueChange: (e: ChangeEvent<HTMLInputElement>) => void;
-}) => {
+}) {
   const { value, onValueChange } = props;
   return (
     <DTEInput
@@ -38,9 +38,9 @@ const ConditionalInput = (props: {
       label="How would you describe your background?"
     />
   );
-};
+}
 
-const Ethnicity2Form = (props: Ethnicity2FormProps) => {
+function Ethnicity2Form(props: Ethnicity2FormProps) {
   const {
     onDataChange,
     initialStateData,
@@ -65,13 +65,13 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
         ethnicities.black.backgrounds,
         ethnicities.mixed.backgrounds,
         ethnicities.white.backgrounds,
-        ethnicities.other.backgrounds
+        ethnicities.other.backgrounds,
       )
       .includes(initialStateData.background) &&
       initialStateData.background !== "other" &&
       initialStateData.background !== ""
       ? initialStateData.background
-      : undefined
+      : undefined,
   );
 
   const {
@@ -89,7 +89,7 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
             ethnicities.black.backgrounds,
             ethnicities.mixed.backgrounds,
             ethnicities.white.backgrounds,
-            ethnicities.other.backgrounds
+            ethnicities.other.backgrounds,
           )
           .includes(initialStateData.background) &&
         initialStateData.background !== ""
@@ -135,102 +135,97 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
   }, [isSubmitting]);
 
   return (
-    <>
-      <Grid container>
-        <Grid item xs={12}>
-          <form
-            onSubmit={handleSubmit(preOnDataChange)}
-            data-testid="background-form"
-            noValidate
-          >
-            <Controller
-              control={control}
-              name="background"
-              render={({
-                field: { value, onChange },
-                fieldState: { error },
-              }) => (
-                <DTERadio
-                  id="backgroundRadio"
-                  name="background"
-                  label={labelElement}
-                  error={error?.message}
-                  onChange={onChange}
-                >
-                  {ethnicities[ethnicity] && (
-                    <>
-                      {ethnicities[ethnicity].backgrounds.map(
-                        (backgroundName: string) => {
-                          return (
-                            <Radios.Radio
-                              value={backgroundName}
-                              defaultChecked={value === backgroundName}
-                              key={backgroundName}
-                              aria-label={`My background is most closely described as ${backgroundName}`}
-                              aria-labelledby=""
-                            >
-                              {backgroundName}
-                            </Radios.Radio>
-                          );
-                        }
-                      )}
-                      <Radios.Radio
-                        value="other"
-                        defaultChecked={
-                          !ethnicities.asian.backgrounds
-                            .concat(
-                              ethnicities.black.backgrounds,
-                              ethnicities.mixed.backgrounds,
-                              ethnicities.white.backgrounds,
-                              ethnicities.other.backgrounds,
-                              [""]
-                            )
-                            .includes(value)
-                        }
-                        conditional={
-                          <ConditionalInput
-                            value={otherText || ""}
-                            onValueChange={(e) =>
-                              setOtherText(e.currentTarget.value)
-                            }
-                          />
-                        }
-                        key="other"
-                      >
-                        {ethnicity === "other"
-                          ? "Any other ethnic group"
-                          : `Another ${
-                              ethnicity === "mixed"
-                                ? ethnicity
-                                : ethnicity.charAt(0).toUpperCase() +
-                                  ethnicity.slice(1)
-                            } background`}
-                      </Radios.Radio>
-                    </>
-                  )}
-                </DTERadio>
-              )}
-              rules={{
-                validate: (value) => {
-                  if (value === "") return "Select your ethnic background";
-                  return true;
-                },
-              }}
-            />
-            <EthnicityInformation
-              hideInfo={hideInfo || false}
-              studyType="backgrounds"
-            />
-            <FormNavigationButtons
-              nextButtonText={nextButtonText || "Continue"}
-              showCancelButton={showCancelButton || false}
-              onCancel={onCancel}
-            />
-          </form>
-        </Grid>
+    <Grid container>
+      <Grid item xs={12}>
+        <form
+          onSubmit={handleSubmit(preOnDataChange)}
+          data-testid="background-form"
+          noValidate
+        >
+          <Controller
+            control={control}
+            name="background"
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <DTERadio
+                id="backgroundRadio"
+                name="background"
+                label={labelElement}
+                error={error?.message}
+                onChange={onChange}
+              >
+                {ethnicities[ethnicity] && (
+                  <>
+                    {ethnicities[ethnicity].backgrounds.map(
+                      (backgroundName: string) => {
+                        return (
+                          <Radios.Radio
+                            value={backgroundName}
+                            defaultChecked={value === backgroundName}
+                            key={backgroundName}
+                            aria-label={`My background is most closely described as ${backgroundName}`}
+                            aria-labelledby=""
+                          >
+                            {backgroundName}
+                          </Radios.Radio>
+                        );
+                      },
+                    )}
+                    <Radios.Radio
+                      value="other"
+                      defaultChecked={
+                        !ethnicities.asian.backgrounds
+                          .concat(
+                            ethnicities.black.backgrounds,
+                            ethnicities.mixed.backgrounds,
+                            ethnicities.white.backgrounds,
+                            ethnicities.other.backgrounds,
+                            [""],
+                          )
+                          .includes(value)
+                      }
+                      conditional={
+                        <ConditionalInput
+                          value={otherText || ""}
+                          onValueChange={(e) =>
+                            setOtherText(e.currentTarget.value)
+                          }
+                        />
+                      }
+                      key="other"
+                    >
+                      {ethnicity === "other"
+                        ? "Any other ethnic group"
+                        : `Another ${
+                            ethnicity === "mixed"
+                              ? ethnicity
+                              : ethnicity.charAt(0).toUpperCase() +
+                                ethnicity.slice(1)
+                          } background`}
+                    </Radios.Radio>
+                  </>
+                )}
+              </DTERadio>
+            )}
+            rules={{
+              validate: (value) => {
+                if (value === "") return "Select your ethnic background";
+                return true;
+              },
+            }}
+          />
+          <EthnicityInformation
+            hideInfo={hideInfo || false}
+            studyType="backgrounds"
+          />
+          <FormNavigationButtons
+            nextButtonText={nextButtonText || "Continue"}
+            showCancelButton={showCancelButton || false}
+            onCancel={onCancel}
+          />
+        </form>
       </Grid>
-    </>
+    </Grid>
   );
-};
+}
 
 export default Ethnicity2Form;

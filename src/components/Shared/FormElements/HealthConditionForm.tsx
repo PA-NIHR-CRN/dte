@@ -10,6 +10,8 @@ import FormBaseProps from "./FormBaseProps";
 import DTEForwardLookup from "../UI/DTEForwardLookup/DTEForwardLookup";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import healthConditions from "../../../data/healthConditions";
+import { useContext } from "react";
+import { ContentContext } from "../../../context/ContentContext";
 
 export type HealthConditionFormData = {
   conditions: string[];
@@ -20,7 +22,8 @@ interface HealthConditionFormProps extends FormBaseProps {
   onDataChange: (data: HealthConditionFormData) => void;
 }
 
-const HealthConditionForm = (props: HealthConditionFormProps) => {
+function HealthConditionForm(props: HealthConditionFormProps) {
+  const { content } = useContext(ContentContext);
   const {
     onDataChange,
     initialStateData,
@@ -85,7 +88,7 @@ const HealthConditionForm = (props: HealthConditionFormProps) => {
                   values={value}
                   data={healthConditions}
                   onSelectedValuesChange={onChange}
-                  label="Areas of research"
+                  label={content["reusable-areas-of-research"]}
                 />
               )}
             />
@@ -116,6 +119,6 @@ const HealthConditionForm = (props: HealthConditionFormProps) => {
       </Grid>
     </>
   );
-};
+}
 
 export default HealthConditionForm;

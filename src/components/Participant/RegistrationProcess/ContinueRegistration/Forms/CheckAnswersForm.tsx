@@ -1,10 +1,11 @@
-import { Fragment, ReactNode } from "react";
+import { Fragment, ReactNode, useContext } from "react";
 import styled from "styled-components";
 import { ContinueRegistrationState } from "../../../../../types/ParticipantTypes";
 import DTEHeader from "../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEButton from "../../../../Shared/UI/DTEButton/DTEButton";
 import DTELinkButton from "../../../../Shared/UI/DTELinkButton/DTELinkButton";
+import { ContentContext } from "../../../../../context/ContentContext";
 
 interface CheckAnswersFormProps {
   initialStateData: ContinueRegistrationState;
@@ -24,7 +25,8 @@ const StyledCheckHiddenText = styled.span`
   white-space: nowrap;
 `;
 
-const CheckAnswersForm = (props: CheckAnswersFormProps) => {
+function CheckAnswersForm(props: CheckAnswersFormProps) {
+  const { content } = useContext(ContentContext);
   const { initialStateData, changeStep } = props;
 
   const formatCheckDisplayAddress = (address: any) => {
@@ -46,31 +48,31 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
     if (address.address.addressLine2) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.address.addressLine2
+        address.address.addressLine2,
       );
     }
     if (address.address.addressLine3) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.address.addressLine3
+        address.address.addressLine3,
       );
     }
     if (address.address.addressLine4) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.address.addressLine4
+        address.address.addressLine4,
       );
     }
     if (address.address.town) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.address.town
+        address.address.town,
       );
     }
     if (address.postcode) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.postcode
+        address.postcode,
       );
     }
     return (<DTEContent>{formattedCheckAddress}</DTEContent>) as ReactNode;
@@ -102,28 +104,22 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
           <dd className="govuk-summary-list__value">
             {" "}
             {initialStateData.mobileFormData.mobileNumber && (
-              <>
-                <DTEContent>
-                  Mobile
-                  <br />
-                  {initialStateData.mobileFormData.mobileNumber}
-                </DTEContent>
-              </>
+              <DTEContent>
+                Mobile
+                <br />
+                {initialStateData.mobileFormData.mobileNumber}
+              </DTEContent>
             )}
             {initialStateData.mobileFormData.landlineNumber && (
-              <>
-                <DTEContent>
-                  Landline
-                  <br />
-                  {initialStateData.mobileFormData.landlineNumber}
-                </DTEContent>
-              </>
+              <DTEContent>
+                Landline
+                <br />
+                {initialStateData.mobileFormData.landlineNumber}
+              </DTEContent>
             )}
             {!initialStateData.mobileFormData.landlineNumber &&
               !initialStateData.mobileFormData.mobileNumber && (
-                <>
-                  <DTEContent>Not provided</DTEContent>
-                </>
+                <DTEContent>Not provided</DTEContent>
               )}
           </dd>
           <dd className="govuk-summary-list__actions">
@@ -260,7 +256,7 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
         )}
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
-            <DTEContent>Areas of research</DTEContent>
+            <DTEContent>{content["reusable-areas-of-research"]}</DTEContent>
           </dt>
           <dd className="govuk-summary-list__value">
             <DTEContent>
@@ -272,7 +268,7 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
                       {condition}
                       <br />
                     </Fragment>
-                  )
+                  ),
                 )
               ) : (
                 <>Not provided</>
@@ -282,7 +278,9 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(7)}>
               Change{" "}
-              <StyledCheckHiddenText>areas of research</StyledCheckHiddenText>
+              <StyledCheckHiddenText>
+                {content["reusable-areas-of-research"]}
+              </StyledCheckHiddenText>
             </DTELinkButton>
           </dd>
         </div>
@@ -296,6 +294,6 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
       <DTEButton onClick={() => changeStep(9)}>Complete registration</DTEButton>
     </>
   );
-};
+}
 
 export default CheckAnswersForm;

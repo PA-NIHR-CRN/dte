@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -15,6 +15,7 @@ import DTELinkButton from "../../Shared/UI/DTELinkButton/DTELinkButton";
 import UpdateEmailForm from "./Forms/UpdateEmailForm";
 import UpdatePasswordForm from "./Forms/UpdatePasswordForm";
 import DTEContent from "../../Shared/UI/DTETypography/DTEContent/DTEContent";
+import { ContentContext } from "../../../context/ContentContext";
 
 interface UserDataState {
   currentEmail: string;
@@ -37,11 +38,12 @@ const StyledHiddenText = styled.span`
   white-space: nowrap;
 `;
 
-const AccountSettings = () => {
+function AccountSettings() {
+  const { content } = useContext(ContentContext);
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState<string>("main");
   const [pageTitle, setPageTitle] = useState(
-    "Account settings - Volunteer Account - Be Part of Research"
+    "Account settings - Volunteer Account - Be Part of Research",
   );
   const [gaURL, setGaURL] = useState("/AccountSettings");
   const theme = useTheme();
@@ -57,26 +59,26 @@ const AccountSettings = () => {
     {
       manual: false,
       useCache: false,
-    }
+    },
   );
 
   const handlePageTitle = (page: string) => {
     switch (page) {
       case "email":
         setPageTitle(
-          "What is your new email address? - Volunteer Account - Be Part of Research"
+          "What is your new email address? - Volunteer Account - Be Part of Research",
         );
         setGaURL("/AccountSettings/ChangeEmail");
         break;
       case "password":
         setPageTitle(
-          "Change your password - Volunteer Account - Be Part of Research"
+          "Change your password - Volunteer Account - Be Part of Research",
         );
         setGaURL("/AccountSettings/ChangePassword");
         break;
       default:
         setPageTitle(
-          "Account settings - Volunteer Account - Be Part of Research"
+          "Account settings - Volunteer Account - Be Part of Research",
         );
         setGaURL("/AccountSettings");
     }
@@ -117,7 +119,7 @@ const AccountSettings = () => {
           {currentPage === "main" && (
             <>
               <DTEHeader as="h1" $variant={headerVariant}>
-                Account settings
+                {content["reusable-account-settings-header"]}
               </DTEHeader>
               {userData && (
                 <dl className="govuk-summary-list">
@@ -163,22 +165,20 @@ const AccountSettings = () => {
             </>
           )}
           {currentPage === "email" && (
-            <>
-              <UpdateEmailForm
-                onCancel={() => {
-                  setCurrentDisplayPage("main");
-                }}
-                nextButtonText="Save"
-                showCancelButton
-              />
-            </>
+            <UpdateEmailForm
+              onCancel={() => {
+                setCurrentDisplayPage("main");
+              }}
+              nextButtonText={content["reusable-Save"]}
+              showCancelButton
+            />
           )}
           {currentPage === "password" && (
             <UpdatePasswordForm
               onCancel={() => {
                 setCurrentDisplayPage("main");
               }}
-              nextButtonText="Save"
+              nextButtonText={content["reusable-Save"]}
               showCancelButton
             />
           )}
@@ -186,6 +186,6 @@ const AccountSettings = () => {
       </StyledWrapper>
     </DocumentTitle>
   );
-};
+}
 
 export default AccountSettings;

@@ -108,7 +108,7 @@ const StyledGrid = styled(Grid)`
   padding-right: 1rem;
 `;
 
-const DTEButton = ({
+function DTEButton({
   id,
   name,
   label,
@@ -125,7 +125,7 @@ const DTEButton = ({
   onKeyDown,
   disabled,
   $danger,
-}: Props & baseButtonProps) => {
+}: Props & baseButtonProps) {
   return (
     <StyledButton
       id={id}
@@ -159,6 +159,6 @@ const DTEButton = ({
       )}
     </StyledButton>
   );
-};
+}
 
 export default DTEButton;

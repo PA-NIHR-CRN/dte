@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import DTERouteLink from "../DTERouteLink/DTERouteLink";
+import { useContext } from "react";
+import { ContentContext } from "../../../../context/ContentContext";
 
 type DTEPhaseBannerProps = {
   phase: "ALPHA" | "BETA";
@@ -55,26 +57,27 @@ const StyledSpan = styled.span`
   vertical-align: middle;
 `;
 
-const DTEPhaseBanner = ({ phase, url }: DTEPhaseBannerProps) => {
+function DTEPhaseBanner({ phase, url }: DTEPhaseBannerProps) {
+  const { content } = useContext(ContentContext);
   return (
     <StyledDiv>
       <StyledPara>
         <StyledStrong>{phase}</StyledStrong>
         <StyledSpan>
-          This is a new service – your{" "}
+          {content["phase-banner-body1"]}
           <DTERouteLink
             to={url}
             external
             target="_blank"
             renderStyle="standard"
           >
-            feedback
+            {content["phase-banner-link"]}
           </DTERouteLink>{" "}
-          will help us to improve it.
+          {content["phase-banner-body2"]}
         </StyledSpan>
       </StyledPara>
     </StyledDiv>
   );
-};
+}
 
 export default DTEPhaseBanner;

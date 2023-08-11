@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReactGA from "react-ga";
 import { hotjar } from "react-hotjar";
 import Cookies from "js-cookie";
 import DTEButton from "../UI/DTEButton/DTEButton";
-import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import { ContentContext } from "../../../context/ContentContext";
 
 // eslint-disable-next-line
 const reactGTMModule = require("react-gtm-module");
@@ -14,9 +14,10 @@ const tagManagerArgs = {
   gtmId: "GTM-MH4K4Z7",
 };
 
-const CookieBanner = () => {
+function CookieBanner() {
+  const { content } = useContext(ContentContext);
   const [cookiesAccepted, setCookiesAccepted] = useState(
-    Cookies.get("cookiesAccepted") || null
+    Cookies.get("cookiesAccepted") || null,
   );
   const [confirmationBannerShow, setConfirmationBannerShow] = useState(false);
   const [cookieBannerHide, setCookieBannerHide] = useState(true);
@@ -72,21 +73,10 @@ const CookieBanner = () => {
           <div className="govuk-grid-row">
             <div className="govuk-grid-column-two-thirds cookiesHeader">
               <DTEHeader as="h3" $variant="h3">
-                Cookies on Be Part of Research
+                {content["cookiebanner-header"]}
               </DTEHeader>
               <div className="govuk-cookie-banner__content">
-                <DTEContent>
-                  We use some essential cookies to make this service work.
-                </DTEContent>
-                <DTEContent>
-                  We would like to use additional cookies to remember your
-                  settings, understand how you use Be Part of Research and
-                  improve the service.
-                </DTEContent>
-                <DTEContent>
-                  We also use cookies set by other sites to help us deliver
-                  content via their services.
-                </DTEContent>
+                {content["cookiebanner-body"]}
               </div>
             </div>
           </div>
@@ -96,7 +86,7 @@ const CookieBanner = () => {
               $small
               onClick={() => handleAcceptCookie()}
             >
-              Accept additional cookies
+              {content["cookiebanner-button-accept"]}
             </DTEButton>
             <DTEButton
               id="rejectCookies"
@@ -104,14 +94,14 @@ const CookieBanner = () => {
               onClick={() => handleRejectCookie()}
               type="button"
             >
-              Reject additional cookies
+              {content["cookiebanner-button-reject"]}
             </DTEButton>
             <DTERouteLink
               id="viewCookiesLink"
               to="/cookies"
               renderStyle="standard"
             >
-              View cookies
+              {content["cookiebanner-link-view"]}
             </DTERouteLink>
           </div>
         </div>
@@ -132,16 +122,13 @@ const CookieBanner = () => {
                 <div className="govuk-grid-column-two-thirds">
                   <div className="govuk-cookie-banner__content">
                     <p className="govuk-body hideCookieMessage">
-                      <DTEContent>
-                        You’ve
-                        {cookiesAccepted === "true" && <span> accepted </span>}
-                        {cookiesAccepted === "false" && <span> rejected </span>}
-                        additional cookies. You can{" "}
-                        <DTERouteLink renderStyle="standard" to="/cookies">
-                          View our cookie policy
-                        </DTERouteLink>{" "}
-                        for more information at any time.
-                      </DTEContent>
+                      {
+                        content[
+                          `cookiebanner-text-confirmation-${
+                            cookiesAccepted === "true" ? "accept" : "reject"
+                          }`
+                        ]
+                      }
                     </p>
                   </div>
                 </div>
@@ -153,7 +140,7 @@ const CookieBanner = () => {
                   type="button"
                   id="hideCookieButton"
                 >
-                  Hide cookie message
+                  {content["cookiebanner-button-hide"]}
                 </DTEButton>
               </div>
             </div>
@@ -162,6 +149,6 @@ const CookieBanner = () => {
       )}
     </div>
   );
-};
+}
 
 export default CookieBanner;

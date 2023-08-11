@@ -6,12 +6,14 @@ import styled from "styled-components";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEButton from "../UI/DTEButton/DTEButton";
 import { AuthContext } from "../../../context/AuthContext";
+import { ContentContext } from "../../../context/ContentContext";
 
 const StyledWrapper = styled.div`
   padding: 3em 2em;
 `;
 
 function SessionExpired() {
+  const { content } = useContext(ContentContext);
   const history = useHistory();
   const { isInNHSApp } = useContext(AuthContext);
 
@@ -20,30 +22,22 @@ function SessionExpired() {
   };
 
   return (
-    <DocumentTitle title="Session Expired - Be Part of Research">
+    <DocumentTitle title={content["session-expired-document-title"]}>
       <>
         <Grid container justifyContent="center" alignItems="center" role="main">
           <StyledWrapper>
-            <DTEHeader as="h1">
-              Your session has ended due to inactivity
-            </DTEHeader>
-            <p>
-              Your session has ended because you haven&apos;t done anything for
-              10 minutes.
-            </p>
-            <p>
-              We did not store any information you entered and had not saved.
-            </p>
+            <DTEHeader as="h1">{content["session-expired-header"]}</DTEHeader>
+            {content["session-expired-body"]}
             <DTEButton
               onClick={() =>
                 isInNHSApp
                   ? window.nhsapp.navigation.goToPage(
-                      window.nhsapp.navigation.HOME_PAGE
+                      window.nhsapp.navigation.HOME_PAGE,
                     )
                   : gotoLogin()
               }
             >
-              Sign in again
+              {content["session-expired-button-text"]}
             </DTEButton>
           </StyledWrapper>
         </Grid>

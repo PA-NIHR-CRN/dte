@@ -17,12 +17,13 @@ import {
 } from "../../../types/AuthTypes";
 import Utils, { EmailRegex } from "../../../Helper/Utils";
 import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
-import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import CheckYourEmail from "../FormElements/CommonElements/CheckYourEmail";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../Password/showHide";
 import DTEBackLink from "../UI/DTEBackLink/DTEBackLink";
+import { ContentContext } from "../../../context/ContentContext";
+import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 
 const StyledGridElementLeft = styled(Grid)`
   padding-left: 1em;
@@ -41,7 +42,9 @@ const ButtonWrapper = styled.div`
   margin-top: 1rem;
 `;
 
-const UserLogin = () => {
+function UserLogin() {
+  const { content } = useContext(ContentContext);
+  const { language } = useContext(ContentContext);
   const {
     control,
     handleSubmit,
@@ -94,7 +97,7 @@ const UserLogin = () => {
       },
       {
         manual: true,
-      }
+      },
     ).catch(() => {
       // swallow 404 axios error -
     });
@@ -108,7 +111,7 @@ const UserLogin = () => {
 
   const [{ loading: loadingLogin, error: errorLogin }, login] = useAxiosFetch(
     {},
-    { manual: true }
+    { manual: true },
   );
 
   useEffect(() => {
@@ -131,7 +134,7 @@ const UserLogin = () => {
         email,
       },
     },
-    { useCache: false, manual: true }
+    { useCache: false, manual: true },
   );
 
   useEffect(() => {
@@ -157,24 +160,17 @@ const UserLogin = () => {
                   detail: (
                     <>
                       <p>
-                        Enter the email address and password for a registered
-                        user account.
+                        {content["signin-error-authentication-not-authorized"]}
                       </p>
                       <p>
-                        If you registered using NHS login use the back button
-                        above and select NHS login to sign in.
+                        {content["signin-error-authentication-not-authorized2"]}
                       </p>
                     </>
                   ),
                   customCode: "NO_CHANGE",
                 }
               : {
-                  detail: (
-                    <>
-                      You have not given permission to access your account.
-                      Please
-                    </>
-                  ),
+                  detail: <>{content["signin-error-authentication-generic"]}</>,
                   customCode: "NO_CHANGE",
                 }),
           };
@@ -185,12 +181,14 @@ const UserLogin = () => {
   };
 
   return (
-    <DocumentTitle title="Sign in or register - Volunteer Registration - Be Part of Research">
+    <DocumentTitle title={content["signin-document-title"]}>
       <>
         {shouldRedirect && <Redirect push to={`/Login#id_token=${token}`} />}
-        {loadingLogin && <LoadingIndicator text="Signing In..." />}
+        {loadingLogin && (
+          <LoadingIndicator text={content["signin-loading-signin"]} />
+        )}
         {resendLoading && (
-          <LoadingIndicator text="Resending verification email..." />
+          <LoadingIndicator text={content["signin-loading-resend"]} />
         )}
         {!loadingLogin && !resendLoading && (
           <Grid
@@ -201,7 +199,10 @@ const UserLogin = () => {
           >
             <Grid item sm={2} md={1} />
             <StyledGridElementLeft item xs={12} sm={10} md={11}>
-              <DTEBackLink href="/Participants/Options" linkText="Back" />
+              <DTEBackLink
+                href="/Participants/Options"
+                linkText={content["signin-link-back-link"]}
+              />
             </StyledGridElementLeft>
           </Grid>
         )}
@@ -213,105 +214,119 @@ const UserLogin = () => {
           id="main"
         >
           <LoginWrapper item xs={12} sm={8} md={6} lg={5} xl={4}>
-            {!loadingLogin && !resendLoading && !resendDTEResponse?.isSuccess && (
-              <>
-                <DTEHeader as="h1">Sign in to Be Part of Research</DTEHeader>
-                <ErrorMessageSummary
-                  renderSummary={!isSubmitting}
-                  errors={formErrors}
-                />
-                {!resendDTEResponse?.isSuccess && (
-                  <ErrorMessageContainer
-                    axiosErrors={[errorLogin, resendError]}
-                    DTEAxiosErrors={injectCallIntoError([
-                      loginResponse?.errors,
-                      resendDTEResponse?.errors,
-                    ])}
+            {!loadingLogin &&
+              !resendLoading &&
+              !resendDTEResponse?.isSuccess && (
+                <>
+                  <DTEHeader as="h1">{content["signin-header"]}</DTEHeader>
+                  <ErrorMessageSummary
+                    renderSummary={!isSubmitting}
+                    errors={formErrors}
                   />
-                )}
-                <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                  <Controller
-                    control={control}
-                    name="email"
-                    render={({
-                      field: { value, onChange, onBlur },
-                      fieldState: { error },
-                    }) => (
-                      <DTEInput
-                        id="email"
-                        value={value}
-                        onValueChange={onChange}
-                        onValueBlur={onBlur}
-                        error={error?.message}
-                        label="Email address"
-                        required
-                        disabled={loadingLogin}
-                        type="email"
-                        spellcheck={false}
-                        autocomplete="username"
-                      />
-                    )}
-                    rules={{
-                      required: {
-                        value: true,
-                        message: "Enter an email address",
-                      },
+                  {!resendDTEResponse?.isSuccess && (
+                    <ErrorMessageContainer
+                      axiosErrors={[errorLogin, resendError]}
+                      DTEAxiosErrors={injectCallIntoError([
+                        loginResponse?.errors,
+                        resendDTEResponse?.errors,
+                      ])}
+                    />
+                  )}
+                  <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                    <Controller
+                      control={control}
+                      name="email"
+                      render={({
+                        field: { value, onChange, onBlur },
+                        fieldState: { error },
+                      }) => (
+                        <DTEInput
+                          id="email"
+                          value={value}
+                          onValueChange={onChange}
+                          onValueBlur={onBlur}
+                          error={error?.message}
+                          label={content["reusable-text-email-address"]}
+                          required
+                          disabled={loadingLogin}
+                          type="email"
+                          spellcheck={false}
+                          autocomplete="username"
+                        />
+                      )}
+                      rules={{
+                        required: {
+                          value: true,
+                          message: content["signin-email-validation-required"],
+                        },
 
-                      pattern: {
-                        value: EmailRegex,
-                        message:
-                          "Enter an email address in the correct format, like name@example.com",
-                      },
-                    }}
-                  />
-                  <Controller
-                    control={control}
-                    name="password"
-                    render={({ fieldState: { error } }) => (
-                      <PasswordShowHide
-                        id="password"
-                        onValueChange={(e) =>
-                          setValue("password", e.target.value)
-                        }
-                        error={error?.message}
-                        label="Password"
-                        required
-                        disabled={loadingLogin}
-                        spellcheck={false}
-                        autocomplete="current-password"
-                        buttonAriaLabelHide="Hide the entered password on screen"
-                        buttonAriaLabelShow="Show the entered password on screen"
-                      />
-                    )}
-                    rules={{
-                      required: { value: true, message: "Enter a password" },
-                    }}
-                  />
-                  <DTEContent>
-                    If you cannot remember your password, you can{" "}
-                    <DTERouteLink
-                      to="/ForgottenPassword"
-                      renderStyle="standard"
-                      ariaLabel="reset your password here"
-                    >
-                      reset it here.
-                    </DTERouteLink>
-                  </DTEContent>
+                        pattern: {
+                          value: EmailRegex,
+                          message:
+                            content[
+                              "signin-email-validation-invalid-format-message"
+                            ],
+                        },
+                      }}
+                    />
+                    <Controller
+                      control={control}
+                      name="password"
+                      render={({ fieldState: { error } }) => (
+                        <PasswordShowHide
+                          id="password"
+                          onValueChange={(e) =>
+                            setValue("password", e.target.value)
+                          }
+                          error={error?.message}
+                          label={content["reusable-text-password"]}
+                          required
+                          disabled={loadingLogin}
+                          spellcheck={false}
+                          autocomplete="current-password"
+                          buttonAriaLabelHide="Hide the entered password on screen"
+                          buttonAriaLabelShow="Show the entered password on screen"
+                        />
+                      )}
+                      rules={{
+                        required: {
+                          value: true,
+                          message:
+                            content["reusable-validation-enter-password"],
+                        },
+                      }}
+                    />
+                    <DTEContent>
+                      {content["signin-text-forgotten-password"]}
+                      <DTERouteLink
+                        to="/ForgottenPassword"
+                        renderStyle="standard"
+                        ariaLabel="reset your password here"
+                      >
+                        {content["signin-link-forgotten-password"]}
+                      </DTERouteLink>
+                    </DTEContent>
+                    <ButtonWrapper>
+                      <DTEButton disabled={loadingLogin}>
+                        {content["signin-button-signin"]}
+                      </DTEButton>
+                    </ButtonWrapper>
+                  </form>
                   <ButtonWrapper>
-                    <DTEButton disabled={loadingLogin}>Sign in</DTEButton>
+                    <DTERouteLink
+                      to={
+                        language === "en-GB"
+                          ? "/Participants/register"
+                          : "/Cyfranogwyr/Cofrestrwch"
+                      }
+                      disabled={loadingLogin}
+                      $outlined
+                    >
+                      {content["signin-button-register"]}
+                    </DTERouteLink>
                   </ButtonWrapper>
-                </form>
-                <ButtonWrapper>
-                  <DTERouteLink
-                    to="/Participants/register"
-                    disabled={loadingLogin}
-                    $outlined
-                  >
-                    Register with Be Part of Research
-                  </DTERouteLink>
-                </ButtonWrapper>
-              </>
-            )}
+                </>
+              )}
             {resendDTEResponse?.isSuccess && (
               <CheckYourEmail emailAddress={email} />
             )}
@@ -320,6 +335,6 @@ const UserLogin = () => {
       </>
     </DocumentTitle>
   );
-};
+}
 
 export default UserLogin;

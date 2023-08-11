@@ -23,8 +23,8 @@ const StyledDTECheckBox = styled(Checkboxes)`
   }
 `;
 
-const DTECheckBox = (props: any) => {
+function DTECheckBox(props: any) {
   const { value } = props;
   return <StyledDTECheckBox.Box>{value}</StyledDTECheckBox.Box>;
-};
+}
 export default DTECheckBox;

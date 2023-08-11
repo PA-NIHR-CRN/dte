@@ -6,11 +6,20 @@ import nhslogo from "../../../images/NHS_logo.svg";
 import { AppContext } from "../../../context/AppContext";
 import DTEBackLink from "../UI/DTEBackLink/DTEBackLink";
 import DTEPhaseBanner from "../UI/DTEPhaseBanner/DTEPhaseBanner";
+import { ContentContext } from "../../../context/ContentContext";
+import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
+import DTELinkButton from "../UI/DTELinkButton/DTELinkButton";
 
 const StyledHeader = styled.header`
   margin-top: 0.5em;
   padding-left: 1em;
   padding-right: 1em;
+`;
+
+const LanguageSelector = styled(Grid)`
+  // float right
+  float: right;
+  margin-right: 1em;
 `;
 
 const StyledGridElementLeft = styled(Grid)`
@@ -109,6 +118,7 @@ const NHSLogo = styled.img.attrs({
 
 export default function Header() {
   const { showBacklink } = useContext(AppContext);
+  const { setLanguage, language } = useContext(ContentContext);
   return (
     <>
       <StyledHeader>
@@ -150,12 +160,42 @@ export default function Header() {
           </StyledGridElementRight>
           <Grid item sm={1} md={1} />
           <Grid item sm={2} md={1} />
-          <StyledGridElementLeft item xs={12} sm={10} md={11}>
+        </Grid>
+        <Grid
+          container
+          alignItems="center"
+          direction="row"
+          justifyContent="flex-start"
+        >
+          <Grid item sm={2} md={1} />
+          <StyledGridElementLeft item xs={8} sm={6} md={7}>
             <DTEPhaseBanner
               phase="BETA"
               url="https://bepartofresearch.nihr.ac.uk/about/#contact-form"
             />
           </StyledGridElementLeft>
+          <StyledGridElementRight item xs={4} sm={3} md={3}>
+            <LanguageSelector>
+              <DTEContent>
+                {language !== "en-GB" ? (
+                  <DTELinkButton onClick={() => setLanguage("en-GB")}>
+                    English
+                  </DTELinkButton>
+                ) : (
+                  "English"
+                )}{" "}
+                |{" "}
+                {language !== "cy-GB" ? (
+                  <DTELinkButton onClick={() => setLanguage("cy-GB")}>
+                    Cymraeg
+                  </DTELinkButton>
+                ) : (
+                  "Cymraeg"
+                )}
+              </DTEContent>
+            </LanguageSelector>
+          </StyledGridElementRight>
+          <Grid item sm={2} md={1} />
         </Grid>
       </StyledHeader>
     </>

@@ -91,14 +91,14 @@ const StyledAccordionSection = styled(DTEAccordionSection)`
   }
 `;
 
-const DTEAccordion = ({
+function DTEAccordion({
   id,
   name,
   sections,
   outlined,
   noSideBar,
   bold,
-}: Props) => {
+}: Props) {
   const handleOnChange = (e: any) => {
     if (!e.currentTarget.open) {
       e.currentTarget.setAttribute("aria-expanded", "true");
@@ -140,6 +140,6 @@ const DTEAccordion = ({
       ))}
     </StyledAccordionMenu>
   );
-};
+}
 
 export default DTEAccordion;

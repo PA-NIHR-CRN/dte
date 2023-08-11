@@ -8,7 +8,7 @@ export interface FormNavigationButtonsProps {
   onCancel?: () => void;
 }
 
-const FormNavigationButtons = (props: FormNavigationButtonsProps) => {
+function FormNavigationButtons(props: FormNavigationButtonsProps) {
   const { nextButtonText, showCancelButton, onCancel } = props;
 
   return (
@@ -31,6 +31,6 @@ const FormNavigationButtons = (props: FormNavigationButtonsProps) => {
       )}
     </Grid>
   );
-};
+}
 
 export default FormNavigationButtons;

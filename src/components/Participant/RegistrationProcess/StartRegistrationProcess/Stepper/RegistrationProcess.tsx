@@ -1,4 +1,4 @@
-import React, { useState, createRef, useEffect } from "react";
+import React, { useState, createRef, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import ReactGA from "react-ga";
 import styled from "styled-components";
@@ -21,6 +21,7 @@ import DTEContent from "../../../../Shared/UI/DTETypography/DTEContent/DTEConten
 import ConsentForm, { ConsentFormData } from "./Forms/ConsentForm";
 import NoConsent from "./Forms/NoConsent";
 import LoadingIndicator from "../../../../Shared/LoadingIndicator/LoadingIndicator";
+import { ContentContext } from "../../../../../context/ContentContext";
 
 const PercentageGrid = styled(Grid)`
   && {
@@ -29,13 +30,14 @@ const PercentageGrid = styled(Grid)`
   }
 `;
 
-const RegsitrationProcess = () => {
+function RegsitrationProcess() {
+  const { content } = useContext(ContentContext);
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState("");
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
   const [registrationPageTitle, setRegistrationPageTitle] = useState(
-    "What is your name? - Volunteer Registration - Be Part of Research"
+    content["register-name-document-title"],
   );
   const [gaURL, setGaURL] = useState("/registration/name");
   const [registrationData, setRegistrationData] =
@@ -88,7 +90,7 @@ const RegsitrationProcess = () => {
       | PasswordFormData
       | ConsentFormData
       | any,
-    form: string
+    form: string,
   ) => {
     setRegistrationData((oldRegistrationData) => {
       switch (form) {
@@ -130,7 +132,7 @@ const RegsitrationProcess = () => {
 
   const handleBack = () => {
     if (activeStep === 0) {
-      history.push("/Participants/register");
+      history.goBack();
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
     }
@@ -180,7 +182,7 @@ const RegsitrationProcess = () => {
               handleRegistrationDataChange(data, "dobFormData")
             }
             initialStateData={registrationData.dobFormData}
-            nextButtonText="Continue"
+            nextButtonText={content["reusable-Continue"]}
           />
         );
       case 2:
@@ -236,44 +238,34 @@ const RegsitrationProcess = () => {
     switch (step) {
       case 1:
         setRegistrationPageTitle(
-          "What is your date of birth? - Volunteer Registration - Be Part of Research"
+          content["register-date-of-birth-document-title"],
         );
         setGaURL("/registration/dateofbirth");
         break;
       case 2:
-        setRegistrationPageTitle(
-          "What is your email address? - Volunteer Registration - Be Part of Research"
-        );
+        setRegistrationPageTitle(content["register-email-document-title"]);
         setGaURL("/registration/email");
         break;
       case 3:
-        setRegistrationPageTitle(
-          "Create a password - Volunteer Registration - Be Part of Research"
-        );
+        setRegistrationPageTitle(content["register-password-document-title"]);
         setGaURL("/registration/password");
         break;
       case 4:
-        setRegistrationPageTitle(
-          "Consent to process your data and be contacted - Volunteer Registration - Be Part of Research"
-        );
+        setRegistrationPageTitle(content["register-consent-document-title"]);
         setGaURL("/registration/consent");
         break;
       case 5:
         setRegistrationPageTitle(
-          "Registering your account - Volunteer Registration - Be Part of Research"
+          content["register-check-email-document-title"],
         );
         setGaURL("/registration/registering");
         break;
       case 6:
-        setRegistrationPageTitle(
-          "Your registration has been cancelled - Volunteer Registration - Be Part of Research"
-        );
+        setRegistrationPageTitle(content["register-no-consent-document-title"]);
         setGaURL("/registration/cancelled");
         break;
       default:
-        setRegistrationPageTitle(
-          "What is your name? - Volunteer Registration - Be Part of Research"
-        );
+        setRegistrationPageTitle(content["register-name-document-title"]);
         setGaURL("/registration/name");
     }
   };
@@ -304,7 +296,7 @@ const RegsitrationProcess = () => {
                 {activeStep !== 6 && (
                   <DTEBackLink
                     title="Return to previous page"
-                    linkText="Back"
+                    linkText={content["reusable-back-link"]}
                     ariaLabel="Return to previous page"
                     onClick={handleBack}
                   />
@@ -312,7 +304,8 @@ const RegsitrationProcess = () => {
               </Grid>
               <Grid item>
                 <DTEContent aria-hidden>
-                  {calculatePercentageComplete(activeStep, 13)}% complete
+                  {calculatePercentageComplete(activeStep, 13)}%{" "}
+                  {content["reusable-progress-complete"]}
                 </DTEContent>
               </Grid>
             </PercentageGrid>
@@ -323,6 +316,6 @@ const RegsitrationProcess = () => {
       </>
     </DocumentTitle>
   );
-};
+}
 
 export default RegsitrationProcess;

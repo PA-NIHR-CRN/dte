@@ -8,6 +8,8 @@ import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTE
 import DTERouteLink from "../../../components/Shared/UI/DTERouteLink/DTERouteLink";
 import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
 import DTEButton from "../../../components/Shared/UI/DTEButton/DTEButton";
+import React, { useContext } from "react";
+import { ContentContext } from "../../../context/ContentContext";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -17,12 +19,13 @@ const AccordionWrapper = styled.div`
   margin: 2rem 0;
 `;
 
-const NhsPreRegistration = () => {
+function NhsPreRegistration() {
+  const { content } = useContext(ContentContext);
   const history = useHistory();
   return (
     <>
       <Helmet
-        title="Be Part of Research"
+        title={content["introduction-document-title"]}
         meta={[
           {
             name: `robots`,
@@ -31,30 +34,12 @@ const NhsPreRegistration = () => {
         ]}
       />
       <StepWrapper>
-        <DTEHeader as="h1">Welcome to Be Part of Research</DTEHeader>
-        <DTEContent>
-          Be Part of Research enables you to find and take part in a range of
-          health and care research.
-        </DTEContent>
-        <DTEContent>
-          Health research helps to discover new and better ways to treat
-          diseases, improve the NHS and the quality of care across the country.
-        </DTEContent>
-        <DTEContent>
-          Anyone can take part in research whether you have a health condition
-          or not. You could take part in research at a local hospital, GP
-          practice – or even at home.
-        </DTEContent>
-        <DTEContent>
-          It&apos;s easy to get involved. Simply sign up online and choose the
-          health conditions you are interested in. You will be sent details of
-          approved studies that match your interests to decide if you want to
-          take part.
-        </DTEContent>
+        <DTEHeader as="h1">{content["introduction-header"]}</DTEHeader>
+        {content["introduction-body"]}
         <AccordionWrapper>
-          <DTEDetails summary="More information about registering with Be Part of Research">
+          <DTEDetails summary={content["introduction-accordion-header"]}>
             <DTEContent>
-              Find out more information about registering your account with{" "}
+              {content["introduction-accordion-body1"]}{" "}
               <DTERouteLink
                 external
                 target="_blank"
@@ -66,14 +51,13 @@ const NhsPreRegistration = () => {
                       label: "Be Part of Research",
                     },
                     () => {},
-                    ["https://bepartofresearch.nihr.ac.uk/volunteer-service/"]
+                    ["https://bepartofresearch.nihr.ac.uk/volunteer-service/"],
                   )
                 }
               >
-                Be Part of Research
+                {content["introduction-accordion-link"]}
               </DTERouteLink>
-              . Please use the back button on your device to return to this
-              page.
+              {content["introduction-accordion-body2"]}
             </DTEContent>
           </DTEDetails>
         </AccordionWrapper>
@@ -90,10 +74,10 @@ const NhsPreRegistration = () => {
             }}
             ariaLabel="Continue to register for an account"
           >
-            Register
+            {content["introduction-button-register"]}
           </DTEButton>
         </ButtonWrapper>
-        <DTEContent>Already have an account?</DTEContent>
+        <DTEContent>{content["introduction-text-account"]}</DTEContent>
         <ButtonWrapper>
           <DTEButton
             $outlined
@@ -107,12 +91,12 @@ const NhsPreRegistration = () => {
               });
             }}
           >
-            Sign in
+            {content["introduction-button-signin"]}
           </DTEButton>
         </ButtonWrapper>
       </StepWrapper>
     </>
   );
-};
+}
 
 export default NhsPreRegistration;

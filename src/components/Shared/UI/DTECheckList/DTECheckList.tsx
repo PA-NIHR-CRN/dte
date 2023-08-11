@@ -56,7 +56,7 @@ const DTECheckList = memo(
     const handleOnChange = (e: any) => {
       const updatedList = checkBoxList;
       const valuesIndex = checkBoxList.findIndex(
-        (x) => x.value === e.target.value
+        (x) => x.value === e.target.value,
       );
       if (valuesIndex > -1) {
         updatedList[valuesIndex].checked = e.target.checked;
@@ -112,7 +112,7 @@ const DTECheckList = memo(
         </StyledCheckboxes>
       </StyledFieldset>
     );
-  }
+  },
 );
 
 export default DTECheckList;

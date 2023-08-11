@@ -3,13 +3,15 @@ import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
 import LoadingIndicator from "../../LoadingIndicator/LoadingIndicator";
 import DTEButton from "../../UI/DTEButton/DTEButton";
-import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
+import { useContext } from "react";
+import { ContentContext } from "../../../../context/ContentContext";
 
 type ResendEmailProps = {
   userId?: string;
 };
 
-const ResendEmail = ({ userId }: ResendEmailProps) => {
+function ResendEmail({ userId }: ResendEmailProps) {
+  const { content } = useContext(ContentContext);
   const [
     { response: resendResponse, loading: resendLoading, error: resendError },
     resend,
@@ -21,14 +23,18 @@ const ResendEmail = ({ userId }: ResendEmailProps) => {
         userId,
       },
     },
-    { useCache: false, manual: true }
+    { useCache: false, manual: true },
   );
   return userId ? (
     <>
-      {resendLoading && <LoadingIndicator text="Resending Email..." />}
+      {resendLoading && (
+        <LoadingIndicator
+          text={content["register-check-email-loading-resend"]}
+        />
+      )}
       {!resendLoading && (
         <DTEButton onClick={() => resend()}>
-          Resend verification email
+          {content["register-check-email-button-resend"]}
         </DTEButton>
       )}
       {resendError &&
@@ -40,26 +46,19 @@ const ResendEmail = ({ userId }: ResendEmailProps) => {
                 Utils.ConvertResponseToDTEResponse(resendResponse)?.errors,
               ]}
             >
-              <DTEContent>
-                There has been a technical issue. Please try again later.
-              </DTEContent>
+              {content["register-check-email-error-resend"]}
             </ErrorMessageContainer>
           </div>
         )}
       {Utils.ConvertResponseToDTEResponse(resendResponse)?.isSuccess && (
         <div style={{ marginTop: "1rem" }}>
-          <DTEContent>
-            We&apos;ve resent the email. If you need help, please contact{" "}
-            <a href="mailto:bepartofresearch@nihr.ac.uk">
-              bepartofresearch@nihr.ac.uk
-            </a>
-          </DTEContent>
+          {content["register-check-email-success-resend"]}
         </div>
       )}
     </>
   ) : (
     <></>
   );
-};
+}
 
 export default ResendEmail;

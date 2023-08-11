@@ -4,7 +4,7 @@ import DTEContent from "../../../components/Shared/UI/DTETypography/DTEContent/D
 import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
 import { AuthContext } from "../../../context/AuthContext";
 
-const NhsUnableToMatch = () => {
+function NhsUnableToMatch() {
   const { isInNHSApp } = useContext(AuthContext);
   return (
     <StepWrapper>
@@ -25,6 +25,6 @@ const NhsUnableToMatch = () => {
       )}
     </StepWrapper>
   );
-};
+}
 
 export default NhsUnableToMatch;

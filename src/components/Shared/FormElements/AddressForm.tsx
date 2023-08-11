@@ -39,7 +39,7 @@ interface AddressFormProps extends FormBaseProps {
   onDataChange: (data: AddressFormData) => void;
 }
 
-const AddressForm = (props: AddressFormProps) => {
+function AddressForm(props: AddressFormProps) {
   const {
     onDataChange,
     initialStateData,
@@ -93,7 +93,7 @@ const AddressForm = (props: AddressFormProps) => {
 
   const handleDataChange = (
     data: PostcodeLookupData | ManualEntryData | SelectAddressData,
-    stage: string
+    stage: string,
   ) => {
     setAddressData((oldData: AddressFormState) => {
       switch (stage) {
@@ -220,6 +220,6 @@ const AddressForm = (props: AddressFormProps) => {
       </Grid>
     </>
   );
-};
+}
 
 export default AddressForm;

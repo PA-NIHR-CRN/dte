@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import LoadingIndicator from "../../../components/Shared/LoadingIndicator/LoadingIndicator";
 
-const NhsAppIntegration = () => {
+function NhsAppIntegration() {
   const { search } = useLocation();
   const assertedLoginIdentity = new URLSearchParams(search).get(
-    "assertedLoginIdentity"
+    "assertedLoginIdentity",
   );
 
   useEffect(() => {
@@ -17,6 +17,6 @@ const NhsAppIntegration = () => {
   }, [assertedLoginIdentity]);
 
   return <LoadingIndicator text="Loading..." />;
-};
+}
 
 export default NhsAppIntegration;

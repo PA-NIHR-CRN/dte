@@ -18,7 +18,7 @@ import { DTEAxiosError } from "../../../types/AuthTypes";
 import ResendEmail from "../FormElements/CommonElements/ResendEmail";
 
 // Component for the Redirect from IDG login
-const Verify = () => {
+function Verify() {
   const { logOutToken } = useContext(AuthContext);
   const history = useHistory();
   const { search } = useLocation();
@@ -50,7 +50,7 @@ const Verify = () => {
     },
     {
       useCache: false,
-    }
+    },
   );
 
   useEffect(() => {
@@ -141,7 +141,7 @@ const Verify = () => {
                 </DTEHeader>
                 {convertErrorsToResponse(
                   Utils.ConvertResponseToDTEResponse(confirmationResponse)
-                    ?.errors
+                    ?.errors,
                 )}
               </>
             </DocumentTitle>
@@ -152,6 +152,6 @@ const Verify = () => {
       </StepWrapper>
     </>
   );
-};
+}
 
 export default Verify;

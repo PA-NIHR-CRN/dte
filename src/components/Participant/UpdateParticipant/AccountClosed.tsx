@@ -3,7 +3,7 @@ import Container from "../../Shared/Container/Container";
 import DTEContent from "../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEHeader from "../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
 
-const AccountClosed = () => {
+function AccountClosed() {
   return (
     <DocumentTitle title="Your account has been closed - Volunteer Account - Be Part of Research">
       <Container>
@@ -15,6 +15,6 @@ const AccountClosed = () => {
       </Container>
     </DocumentTitle>
   );
-};
+}
 
 export default AccountClosed;

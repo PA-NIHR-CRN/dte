@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Grid, Box } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -14,8 +14,10 @@ import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import { DTEAxiosResponse } from "../../../types/AuthTypes";
 import Utils, { EmailRegex } from "../../../Helper/Utils";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
+import { ContentContext } from "../../../context/ContentContext";
 
 function ForgottenPassword() {
+  const { content } = useContext(ContentContext);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const {
@@ -25,7 +27,7 @@ function ForgottenPassword() {
     formState: { errors: formErrors, isSubmitting },
   } = useForm({ mode: "onSubmit", reValidateMode: "onSubmit" });
   const [pageTitle, setPageTitle] = useState(
-    "Reset password - Volunteer Account - Be Part of Research"
+    content["resetpassword-document-title"],
   );
   const [submitResponse, setSubmitResponse] = useState<
     DTEAxiosResponse | undefined
@@ -44,15 +46,13 @@ function ForgottenPassword() {
       },
       {
         manual: true,
-      }
+      },
     ).catch(() => {
       // swallow 404 axios error -
     });
     const result = Utils.ConvertResponseToDTEResponse(res);
     setSubmitResponse(result);
-    setPageTitle(
-      "Check your email to reset password - Volunteer Account - Be Part of Research"
-    );
+    setPageTitle(content["resetpassword-check-email-document-title"]);
   };
   useEffect(() => {
     if (document.getElementsByClassName("nhsuk-error-message")[0]) {
@@ -81,11 +81,10 @@ function ForgottenPassword() {
                     "UserNotFoundException"
                 ) ? (
                   <>
-                    <DTEHeader as="h1">Reset password</DTEHeader>
-                    <DTEContent>
-                      Enter your email address and we will send you a link to
-                      reset your password.
-                    </DTEContent>
+                    <DTEHeader as="h1">
+                      {content["resetpassword-header"]}
+                    </DTEHeader>
+                    <DTEContent>{content["resetpassword-body"]}</DTEContent>
                     <ErrorMessageSummary
                       renderSummary={!isSubmitting}
                       errors={formErrors}
@@ -108,7 +107,7 @@ function ForgottenPassword() {
                             onValueChange={onChange}
                             onValueBlur={onBlur}
                             error={error?.message}
-                            label="Email address"
+                            label={content["resetpassword-input-email"]}
                             required
                             type="email"
                             autocomplete="email"
@@ -118,7 +117,8 @@ function ForgottenPassword() {
                         rules={{
                           required: {
                             value: true,
-                            message: "Enter an email address",
+                            message:
+                              content["signin-email-validation-required"],
                           },
                           pattern: {
                             value: EmailRegex,
@@ -129,7 +129,7 @@ function ForgottenPassword() {
                       />
                       <Grid container xs={6} sm={9} md={9}>
                         <DTEButton disabled={loadingForgot} $fullwidth>
-                          Reset your password
+                          {content["resetpassword-button-reset"]}
                         </DTEButton>
                       </Grid>
                     </form>
@@ -138,52 +138,51 @@ function ForgottenPassword() {
                     />
                   </>
                 ) : (
-                  <>
-                    <Grid container direction="column" spacing={2}>
-                      <Grid item>
-                        <DTEHeader as="h1">Check your email</DTEHeader>
-                        <DTEContent>
-                          We&apos;ve sent an email to {watch("email")} with a
-                          link to reset your password. The link lasts for 1
-                          hour.
-                        </DTEContent>
-                        <DTEContent>
-                          Unable to find it? Check your spam folder.
-                        </DTEContent>
-                        <DTEContent>Still unable to find the email?</DTEContent>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <DTEButton
-                          $fullwidth
-                          disabled={loadingForgot}
-                          onClick={() => {
-                            forgotPasswordSubmit(
-                              {
-                                url: `${process.env.REACT_APP_BASE_API}/users/forgotpassword`,
-                                method: "POST",
-                                data: {
-                                  email: userEmail,
-                                },
-                              },
-                              {
-                                manual: true,
-                              }
-                            ).catch(() => {
-                              // swallow 404 axios error -
-                            });
-                          }}
-                        >
-                          Resend the email
-                        </DTEButton>
-                      </Grid>
+                  <Grid container direction="column" spacing={2}>
+                    <Grid item>
+                      <DTEHeader as="h1">Check your email</DTEHeader>
+                      <DTEContent>
+                        We&apos;ve sent an email to {watch("email")} with a link
+                        to reset your password. The link lasts for 1 hour.
+                      </DTEContent>
+                      <DTEContent>
+                        Unable to find it? Check your spam folder.
+                      </DTEContent>
+                      <DTEContent>Still unable to find the email?</DTEContent>
                     </Grid>
-                  </>
+                    <Grid item xs={6}>
+                      <DTEButton
+                        $fullwidth
+                        disabled={loadingForgot}
+                        onClick={() => {
+                          forgotPasswordSubmit(
+                            {
+                              url: `${process.env.REACT_APP_BASE_API}/users/forgotpassword`,
+                              method: "POST",
+                              data: {
+                                email: userEmail,
+                              },
+                            },
+                            {
+                              manual: true,
+                            },
+                          ).catch(() => {
+                            // swallow 404 axios error -
+                          });
+                        }}
+                      >
+                        Resend the email
+                      </DTEButton>
+                    </Grid>
+                  </Grid>
                 )}
-                {loadingForgot && <LoadingIndicator text="Submitting..." />}
+                {loadingForgot && (
+                  <LoadingIndicator
+                    text={content["resetpassword-submitting"]}
+                  />
+                )}
                 {errorForgot && (
-                  <>
-                    <ErrorMessageContainer axiosError={errorForgot} />
-                  </>
+                  <ErrorMessageContainer axiosError={errorForgot} />
                 )}
               </Grid>
             </Grid>

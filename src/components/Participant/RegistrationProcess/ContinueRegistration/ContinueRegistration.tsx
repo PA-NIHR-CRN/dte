@@ -46,6 +46,7 @@ import { AuthContext } from "../../../../context/AuthContext";
 import LoadingIndicator from "../../../Shared/LoadingIndicator/LoadingIndicator";
 import Utils from "../../../../Helper/Utils";
 import ConsentForm from "../StartRegistrationProcess/Stepper/Forms/ConsentForm";
+import { ContentContext } from "../../../../context/ContentContext";
 
 const PercentageGrid = styled(Grid)`
   && {
@@ -54,7 +55,8 @@ const PercentageGrid = styled(Grid)`
   }
 `;
 
-const ContinueRegistration = () => {
+function ContinueRegistration() {
+  const { content } = useContext(ContentContext);
   const { isNhsLinkedAccount, isInNHSApp } = useContext(AuthContext);
   const history = useHistory();
   const [isUserConsented, setIsUserConsented] = useState(false);
@@ -63,7 +65,7 @@ const ContinueRegistration = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [changing, setChanging] = useState(false);
   const [pageTitle, setPageTitle] = useState(
-    "What is your home address? - Volunteer Registration - Be Part of Research"
+    content["register2-address-document-title"],
   );
   const [gaURL, setGaURL] = useState("/registration/address");
   useEffect(() => {
@@ -148,7 +150,7 @@ const ContinueRegistration = () => {
       | Disability2FormData
       | HealthConditionFormData
       | SexFormData,
-    form: string
+    form: string,
   ) => {
     setRegistrationData((oldRegistrationData: ContinueRegistrationState) => {
       switch (form) {
@@ -254,8 +256,8 @@ const ContinueRegistration = () => {
   };
 
   const nextButtonText = useMemo(
-    () => (changing ? "Save" : "Continue"),
-    [changing]
+    () => (changing ? content["reusable-Save"] : content["reusable-Continue"]),
+    [changing],
   );
 
   const getStepContent = (step: number) => {
@@ -314,7 +316,7 @@ const ContinueRegistration = () => {
                             otherText: undefined,
                           },
                   };
-                }
+                },
               );
             }}
             initialStateData={registrationData.ethnicity1FormData}
@@ -360,7 +362,7 @@ const ContinueRegistration = () => {
                           : undefined,
                     },
                   };
-                }
+                },
               );
               if (data.disability === "no") {
                 setCancelData((oldCancelData: any) => {
@@ -440,63 +442,45 @@ const ContinueRegistration = () => {
   const updatePageTitle = (step: number) => {
     switch (step) {
       case 1:
-        setPageTitle(
-          "What is your phone number? - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-phone-document-title"]);
         setGaURL("/registration/phone");
         break;
       case 2:
-        setPageTitle(
-          "Sex and gender identity - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-sex-gender-document-title"]);
         setGaURL("/registration/sex");
         break;
       case 3:
-        setPageTitle(
-          "What is your ethnic group? - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-ethnic-group-document-title"]);
         setGaURL("/registration/ethnicgroup");
         break;
       case 4:
-        setPageTitle(
-          "Which of the following best describes your ethnic background? - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-ethnic-background-document-title"]);
         setGaURL("/registration/ethnicbackground");
         break;
       case 5:
-        setPageTitle(
-          "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more? - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-disability-document-title"]);
         setGaURL("/registration/conditions");
         break;
       case 6:
-        setPageTitle(
-          "Do any of your conditions or illnesses reduce your ability to carry out day-to-day activities? - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-reduced-ability-document-title"]);
         setGaURL("/registration/reducedability");
         break;
       case 7:
-        setPageTitle(
-          "Which areas of research are you interested in? - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-health-conditions-document-title"]);
         setGaURL("/registration/areasofresearch");
         break;
       case 8:
-        setPageTitle(
-          "Check your answers before completing your registration - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-check-your-answers-document-title"]);
         setGaURL("/registration/checkyouranswers");
         break;
       case 9:
         setPageTitle(
-          "Thank you for registering with Be Part of Research - Volunteer Account - Be Part of Research"
+          content["register2-you-are-now-registered-document-title"],
         );
         setGaURL("/registration/complete");
         break;
       default:
-        setPageTitle(
-          "What is your home address? - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-address-document-title"]);
         setGaURL("/registration/address");
     }
   };
@@ -509,7 +493,7 @@ const ContinueRegistration = () => {
     {
       manual: false,
       useCache: false,
-    }
+    },
   );
 
   useEffect(() => {
@@ -532,13 +516,13 @@ const ContinueRegistration = () => {
     {
       manual: true,
       useCache: false,
-    }
+    },
   );
 
   // add a post request to the consent endpoint
   const handleConsent = () => {
     postConsent().then((res) =>
-      setIsUserConsented(res.data.content.userConsents)
+      setIsUserConsented(res.data.content.userConsents),
     );
   };
 
@@ -556,7 +540,7 @@ const ContinueRegistration = () => {
               <div className="nhsuk-width-container ">
                 <DTEBackLink
                   title="Return to previous page"
-                  linkText="Back"
+                  linkText={content["reusable-back-link"]}
                   onClick={handleBack}
                   ariaLabel="Return to previous page"
                 />
@@ -565,10 +549,7 @@ const ContinueRegistration = () => {
 
             <div className="nhs-app-provider-banner">
               <div className="nhsuk-width-container">
-                <strong>
-                  This service is provided by the National Institute for Health
-                  and Care Research
-                </strong>
+                {content["reusable-nhs-app-provider-banner"]}
               </div>
             </div>
           </>
@@ -607,7 +588,7 @@ const ContinueRegistration = () => {
                       !isInNHSApp && (
                         <DTEBackLink
                           title="Return to previous page"
-                          linkText="Back"
+                          linkText={content["reusable-back-link"]}
                           onClick={handleBack}
                         />
                       )}
@@ -617,7 +598,7 @@ const ContinueRegistration = () => {
                   {activeStep < 9 && (
                     <DTEContent aria-hidden>
                       {calculatePercentageComplete(activeStep + 5, 13)}%
-                      complete
+                      {content["reusable-progress-complete"]}
                     </DTEContent>
                   )}
                 </Grid>
@@ -634,10 +615,7 @@ const ContinueRegistration = () => {
       {isInNHSApp && (
         <div className="nhs-app-provider-banner">
           <div className="nhsuk-width-container">
-            <strong>
-              This service is provided by the National Institute for Health and
-              Care Research
-            </strong>
+            {content["reusable-nhs-app-provider-banner"]}
           </div>
         </div>
       )}
@@ -655,6 +633,6 @@ const ContinueRegistration = () => {
       </StepWrapper>
     </>
   );
-};
+}
 
 export default ContinueRegistration;

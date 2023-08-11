@@ -43,6 +43,7 @@ import Disability2Form, {
 } from "../../Shared/FormElements/Disability2Form";
 import { AuthContext } from "../../../context/AuthContext";
 import ethnicities from "../../../data/ethnicityData";
+import { ContentContext } from "../../../context/ContentContext";
 
 interface UserDataState {
   address: AddressFormData;
@@ -74,12 +75,13 @@ const StyledHiddenText = styled.span`
   white-space: nowrap;
 `;
 
-const UpdateParticipant = () => {
+function UpdateParticipant() {
+  const { content } = useContext(ContentContext);
   const { isNhsLinkedAccount } = useContext(AuthContext);
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState<string>("main");
   const [pageTitle, setPageTitle] = useState(
-    "Personal details - Volunteer Account - Be Part of Research"
+    "Personal details - Volunteer Account - Be Part of Research",
   );
   const [gaURL, setGaURL] = useState("/MyAccount/PersonalDetails");
   const [userData, setUserData] = React.useState<UserDataState>();
@@ -98,7 +100,7 @@ const UpdateParticipant = () => {
     {
       manual: false,
       useCache: false,
-    }
+    },
   );
 
   const getDemographicsURL = `${process.env.REACT_APP_BASE_API}/participants/demographics`;
@@ -116,7 +118,7 @@ const UpdateParticipant = () => {
     {
       manual: false,
       useCache: false,
-    }
+    },
   );
 
   const setCurrentDisplayPage = (page: string) => {
@@ -130,64 +132,44 @@ const UpdateParticipant = () => {
   const handlePageTitle = (page: string) => {
     switch (page) {
       case "name":
-        setPageTitle(
-          "What is your name? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-address-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/name");
         break;
       case "address":
-        setPageTitle(
-          "What is your home address? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-address-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/address");
         break;
       case "dob":
-        setPageTitle(
-          "What is your date of birth? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-date-of-birth-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/dateofbirth");
         break;
       case "mobile":
-        setPageTitle(
-          "What is your phone number? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-phone-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/phonenumber");
         break;
       case "sex":
       case "gender":
-        setPageTitle(
-          "What is your sex? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-sex-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/sex");
         break;
       case "ethnicity1":
-        setPageTitle(
-          "What is your ethnic group? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-ethnic-group-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/ethnicgroup");
         break;
       case "ethnicity2":
-        setPageTitle(
-          "Which of the following best describes your ethnic background? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-ethnic-background-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/ethnicbackground");
         break;
       case "disability":
-        setPageTitle(
-          "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-disability-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/conditions");
         break;
       case "disability2":
-        setPageTitle(
-          "Do any of your conditions or illnesses reduce your ability to carry out day-to-day activities? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-reduced-ability-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/reducedability");
         break;
       default:
-        setPageTitle(
-          "Personal details - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-personal-details-document-title"]);
         setGaURL("/MyAccount/PersonalDetails");
     }
   };
@@ -219,19 +201,19 @@ const UpdateParticipant = () => {
     if (address.address.addressLine2) {
       formattedAddress = lineManagement(
         formattedAddress,
-        address.address.addressLine2
+        address.address.addressLine2,
       );
     }
     if (address.address.addressLine3) {
       formattedAddress = lineManagement(
         formattedAddress,
-        address.address.addressLine3
+        address.address.addressLine3,
       );
     }
     if (address.address.addressLine4) {
       formattedAddress = lineManagement(
         formattedAddress,
-        address.address.addressLine4
+        address.address.addressLine4,
       );
     }
     if (address.address.town) {
@@ -294,13 +276,13 @@ const UpdateParticipant = () => {
           disability: {
             disability: parseTriStateBoolean(
               DTEDemographicsResponse.disability,
-              "notSaying"
+              "notSaying",
             ),
           },
           disabilityDescription: {
             disability: parseTriStateBoolean(
               DTEDemographicsResponse.disability,
-              "notSaying"
+              "notSaying",
             ),
             disabilityDescription:
               DTEDemographicsResponse.disabilityDescription,
@@ -309,7 +291,7 @@ const UpdateParticipant = () => {
             sexAtBirth: DTEDemographicsResponse.sexRegisteredAtBirth,
             genderAtBirth: parseTriStateBoolean(
               DTEDemographicsResponse.genderIsSameAsSexRegisteredAtBirth,
-              "noSay"
+              "noSay",
             ),
           },
           ethnicity1: {
@@ -339,7 +321,7 @@ const UpdateParticipant = () => {
     {
       method: "PUT",
     },
-    { useCache: false, manual: true }
+    { useCache: false, manual: true },
   );
 
   const [
@@ -353,7 +335,7 @@ const UpdateParticipant = () => {
     {
       method: "PUT",
     },
-    { useCache: false, manual: true }
+    { useCache: false, manual: true },
   );
 
   type FormDataType =
@@ -376,7 +358,7 @@ const UpdateParticipant = () => {
 
   const mapDataToStateObject = (
     source: string,
-    data: FormDataType
+    data: FormDataType,
   ): MappedDataType => {
     if (!userData) return { data: undefined, screen: "main" };
     switch (source) {
@@ -522,7 +504,7 @@ const UpdateParticipant = () => {
               parseInt(mappedData.data.dob.year, 10),
               parseInt(mappedData.data.dob.month, 10) - 1,
               parseInt(mappedData.data.dob.day, 10),
-              12
+              12,
             ).toISOString(),
             sexRegisteredAtBirth: mappedData.data.sex.sexAtBirth,
             genderIsSameAsSexRegisteredAtBirth:
@@ -587,7 +569,7 @@ const UpdateParticipant = () => {
           {currentPage === "main" && (
             <>
               <DTEHeader as="h1" $variant={headerVariant}>
-                Personal details
+                {content["reusable-personal-details-header"]}
               </DTEHeader>
               {userData && !(detailsPostLoading || demographicsPostLoading) && (
                 <>
@@ -615,7 +597,7 @@ const UpdateParticipant = () => {
                                 parseInt(userData.dob.year, 10),
                                 parseInt(userData.dob.month, 10) - 1,
                                 parseInt(userData.dob.day, 10),
-                                12
+                                12,
                               ).toLocaleString("en-GB", {
                                 day: "numeric",
                                 month: "long",
@@ -720,7 +702,7 @@ const UpdateParticipant = () => {
                               parseInt(userData.dob.year, 10),
                               parseInt(userData.dob.month, 10) - 1,
                               parseInt(userData.dob.day, 10),
-                              12
+                              12,
                             ).toLocaleString("en-GB", {
                               day: "numeric",
                               month: "long",
@@ -777,7 +759,7 @@ const UpdateParticipant = () => {
                       </dd>
                       <dd className="govuk-summary-list__actions">
                         <DTELinkButton
-                          onClick={() => setCurrentDisplayPage("gender")}
+                          onClick={() => setCurrentDisplayPage("sex")}
                         >
                           Change{" "}
                           <StyledHiddenText>
@@ -928,7 +910,7 @@ const UpdateParticipant = () => {
                 firstName: userData?.name.firstName || "",
                 lastName: userData?.name.lastName || "",
               }}
-              nextButtonText="Save"
+              nextButtonText={content["reusable-Save"]}
               showCancelButton
             />
           </Container>
@@ -957,7 +939,7 @@ const UpdateParticipant = () => {
                   postcode: "",
                 }
               }
-              nextButtonText="Save"
+              nextButtonText={content["reusable-Save"]}
               showCancelButton
             />
           </Container>
@@ -979,7 +961,7 @@ const UpdateParticipant = () => {
                   disability: "no",
                 }
               }
-              nextButtonText="Save"
+              nextButtonText={content["reusable-Save"]}
               hideHeader
               showCancelButton
               instructionText={
@@ -1004,7 +986,7 @@ const UpdateParticipant = () => {
               onDataChange={(data) => {
                 const mappedData = mapDataToStateObject(
                   "DisabilityDescription",
-                  data
+                  data,
                 );
                 if (mappedData) {
                   handleUpdateUserDemographics(mappedData);
@@ -1019,7 +1001,7 @@ const UpdateParticipant = () => {
                 disabilityDescription:
                   userData?.disabilityDescription.disabilityDescription,
               }}
-              nextButtonText="Save"
+              nextButtonText={content["reusable-Save"]}
               showCancelButton
             />
           </Container>
@@ -1069,7 +1051,7 @@ const UpdateParticipant = () => {
               onDataChange={(data) => {
                 const mappedData = mapDataToStateObject(
                   "EthnicityBackground",
-                  data
+                  data,
                 );
                 if (mappedData) {
                   handleUpdateUserDemographics(mappedData);
@@ -1086,7 +1068,7 @@ const UpdateParticipant = () => {
                   background: "",
                 }
               }
-              nextButtonText="Save"
+              nextButtonText={content["reusable-Save"]}
               showCancelButton
               ethnicity={userData?.ethnicity1.ethnicity || "other"}
             />
@@ -1110,7 +1092,7 @@ const UpdateParticipant = () => {
                   landlineNumber: "",
                 }
               }
-              nextButtonText="Save"
+              nextButtonText={content["reusable-Save"]}
               showCancelButton
             />
           </Container>
@@ -1134,7 +1116,7 @@ const UpdateParticipant = () => {
                   year: "",
                 }
               }
-              nextButtonText="Save"
+              nextButtonText={content["reusable-Save"]}
               showCancelButton
             />
           </Container>
@@ -1157,7 +1139,7 @@ const UpdateParticipant = () => {
                   genderAtBirth: "",
                 }
               }
-              nextButtonText="Save"
+              nextButtonText={content["reusable-Save"]}
               showCancelButton
               hideNextQuestionText
             />
@@ -1166,6 +1148,6 @@ const UpdateParticipant = () => {
       </StyledWrapper>
     </DocumentTitle>
   );
-};
+}
 
 export default UpdateParticipant;

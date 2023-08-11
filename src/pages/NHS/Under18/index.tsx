@@ -2,7 +2,7 @@ import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTE
 import DTEContent from "../../../components/Shared/UI/DTETypography/DTEContent/DTEContent";
 import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
 
-const Under18ErrorPage = () => {
+function Under18ErrorPage() {
   return (
     <StepWrapper>
       <DTEHeader as="h1">There is a problem</DTEHeader>
@@ -12,6 +12,6 @@ const Under18ErrorPage = () => {
       </DTEContent>
     </StepWrapper>
   );
-};
+}
 
 export default Under18ErrorPage;

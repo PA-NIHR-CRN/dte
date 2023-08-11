@@ -19,6 +19,7 @@ import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import Utils from "../../../Helper/Utils";
 import LoadingIndicator from "../../Shared/LoadingIndicator/LoadingIndicator";
 import ErrorMessageContainer from "../../Shared/ErrorMessageContainer/ErrorMessageContainer";
+import { ContentContext } from "../../../context/ContentContext";
 
 const StyledErrorSummary = styled(ErrorSummary)`
   margin-bottom: 1rem;
@@ -35,7 +36,8 @@ const StyledErrorSummary = styled(ErrorSummary)`
   }
 `;
 
-const CloseAccount = () => {
+function CloseAccount() {
+  const { content } = useContext(ContentContext);
   const history = useHistory();
   const { logOutToken, isNhsLinkedAccount } = useContext(AuthContext);
   const [requireConf, setRequireConf] = useState(true);
@@ -55,7 +57,7 @@ const CloseAccount = () => {
     {
       method: "DELETE",
     },
-    { useCache: false, manual: true }
+    { useCache: false, manual: true },
   );
 
   const handleConfirmCloseAccount = async () => {
@@ -92,7 +94,7 @@ const CloseAccount = () => {
         <div role="main" id="main">
           <DTEBackLink href="/" linkText="Back" />
           <DTEHeader as="h1" $variant={headerVariant}>
-            Close your account
+            {content["reusable-header-close-account"]}
           </DTEHeader>
           {isNhsLinkedAccount ? (
             <DTEContent $marginBottom="medium">
@@ -185,6 +187,6 @@ const CloseAccount = () => {
       </Container>
     </DocumentTitle>
   );
-};
+}
 
 export default CloseAccount;

@@ -33,7 +33,7 @@ interface SelectAddressProps {
   onDataChange: (data: SelectAddressData) => void;
 }
 
-const SelectAddress = (props: SelectAddressProps) => {
+function SelectAddress(props: SelectAddressProps) {
   const {
     onDataChange,
     addresses,
@@ -118,24 +118,22 @@ const SelectAddress = (props: SelectAddressProps) => {
           name="address"
           defaultValue={0}
           render={({ field: { onChange }, fieldState: { error } }) => (
-            <>
-              <DTESelect
-                id="select-address"
-                name="select-address"
-                label="Select your address"
-                error={error?.message}
-                required={false}
-                options={[
-                  ...addresses.map((data: address, index: number) => {
-                    return {
-                      value: index,
-                      text: data.fullAddress,
-                    };
-                  }),
-                ]}
-                onValueChange={onChange}
-              />
-            </>
+            <DTESelect
+              id="select-address"
+              name="select-address"
+              label="Select your address"
+              error={error?.message}
+              required={false}
+              options={[
+                ...addresses.map((data: address, index: number) => {
+                  return {
+                    value: index,
+                    text: data.fullAddress,
+                  };
+                }),
+              ]}
+              onValueChange={onChange}
+            />
           )}
           rules={{
             validate: (value) => {
@@ -178,6 +176,6 @@ const SelectAddress = (props: SelectAddressProps) => {
       </form>
     </>
   );
-};
+}
 
 export default SelectAddress;

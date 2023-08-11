@@ -33,7 +33,7 @@ const StyledCol = styled.col<{ colWidth: string }>`
   width: ${(props) => props.colWidth};
 `;
 
-const DTETable = (props: DTETableProps) => {
+function DTETable(props: DTETableProps) {
   const { columns, rows, caption, responsive } = props;
 
   const totalWidth =
@@ -76,6 +76,6 @@ const DTETable = (props: DTETableProps) => {
       </StyledBody>
     </StyledTable>
   );
-};
+}
 
 export default DTETable;

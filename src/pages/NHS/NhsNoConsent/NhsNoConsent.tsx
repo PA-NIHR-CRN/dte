@@ -7,20 +7,20 @@ import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
 import { AuthContext } from "../../../context/AuthContext";
 import DTEButton from "../../../components/Shared/UI/DTEButton/DTEButton";
 import DTEBackLink from "../../../components/Shared/UI/DTEBackLink/DTEBackLink";
+import { ContentContext } from "../../../context/ContentContext";
 
-const NhsNoConsent = () => {
+function NhsNoConsent() {
   const { isInNHSApp } = useContext(AuthContext);
   const { search } = useLocation();
   const state = new URLSearchParams(search).get("state");
+  const { content } = useContext(ContentContext);
+
   return (
     <>
       {isInNHSApp && (
         <div className="nhs-app-provider-banner">
           <div className="nhsuk-width-container">
-            <strong>
-              This service is provided by the National Institute for Health and
-              Care Research
-            </strong>
+            {content["reusable-nhs-app-provider-banner"]}
           </div>
         </div>
       )}
@@ -34,7 +34,7 @@ const NhsNoConsent = () => {
           />
         )}
         <DTEHeader as="h1" $variant="h2">
-          Your registration has been cancelled
+          {content["register-no-consent-header"]}
         </DTEHeader>
         <DTEContent>
           <strong>Your data has not been stored.</strong>
@@ -47,7 +47,7 @@ const NhsNoConsent = () => {
               to="/"
               onClick={() =>
                 window.nhsapp.navigation.goToPage(
-                  window.nhsapp.navigation.HOME_PAGE
+                  window.nhsapp.navigation.HOME_PAGE,
                 )
               }
               renderStyle="standard"
@@ -73,20 +73,20 @@ const NhsNoConsent = () => {
           <DTEButton
             onClick={() =>
               window.nhsapp.navigation.openBrowserOverlay(
-                "https://bepartofresearch.nihr.ac.uk/"
+                "https://bepartofresearch.nihr.ac.uk/",
               )
             }
           >
-            Go to Be Part of Research homepage
+            {content["register-no-consent-button-homepage"]}
           </DTEButton>
         ) : (
           <DTERouteLink external to="https://bepartofresearch.nihr.ac.uk/">
-            Go to Be Part of Research homepage
+            {content["register-no-consent-button-homepage"]}
           </DTERouteLink>
         )}
       </StepWrapper>
     </>
   );
-};
+}
 
 export default NhsNoConsent;

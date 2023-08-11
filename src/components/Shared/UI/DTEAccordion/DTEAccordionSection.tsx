@@ -42,7 +42,7 @@ const DTEAccordionSection: React.FC<SectionProps> = ({
   ...rest
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(
-    open === undefined ? Boolean(defaultOpen) : open
+    open === undefined ? Boolean(defaultOpen) : open,
   );
 
   const onSummaryClick = (event: MouseEvent<HTMLDetailsElement>) => {
@@ -65,17 +65,19 @@ const DTEAccordionSection: React.FC<SectionProps> = ({
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...rest}
     >
-      <summary
-        className="nhsuk-accordion-menu__section-summary"
-        tabIndex={tabIndex !== 0 ? tabIndex : 0}
-        onClick={onSummaryClick}
-      >
-        <span className="nhsuk-accordion-menu__section-summary-text">
-          {heading}
-        </span>
-        <ToggleIcon open={isOpen} />
-      </summary>
-      {children}
+      <>
+        <summary
+          className="nhsuk-accordion-menu__section-summary"
+          tabIndex={tabIndex !== 0 ? tabIndex : 0}
+          onClick={onSummaryClick}
+        >
+          <span className="nhsuk-accordion-menu__section-summary-text">
+            {heading}
+          </span>
+          <ToggleIcon open={isOpen} />
+        </summary>
+        {children}
+      </>
     </details>
   );
 };

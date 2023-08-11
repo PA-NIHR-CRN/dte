@@ -36,7 +36,7 @@ interface PostcodeLookupProps {
   onDataChange: (data: PostcodeLookupData) => void;
 }
 
-export const Details = () => {
+export function Details() {
   return (
     <DTEDetails summary="Why we are asking this question">
       <DTEContent>
@@ -49,7 +49,7 @@ export const Details = () => {
       </DTEContent>
     </DTEDetails>
   );
-};
+}
 
 interface ContinueButtonProps {
   buttonText: string;
@@ -58,7 +58,7 @@ interface ContinueButtonProps {
   onCancel?: () => void;
 }
 
-export const ContinueButton = (props: ContinueButtonProps) => {
+export function ContinueButton(props: ContinueButtonProps) {
   const { buttonText, altButtonText, showCancelButton, onCancel } = props;
   return (
     <Grid
@@ -80,9 +80,9 @@ export const ContinueButton = (props: ContinueButtonProps) => {
       )}
     </Grid>
   );
-};
+}
 
-const PostcodeLookup = (props: PostcodeLookupProps) => {
+function PostcodeLookup(props: PostcodeLookupProps) {
   const {
     initialStateData,
     showCancelButton,
@@ -118,7 +118,7 @@ const PostcodeLookup = (props: PostcodeLookupProps) => {
       },
       {
         manual: true,
-      }
+      },
     ).catch(() => {
       // swallow 404 axios error -
     });
@@ -126,7 +126,7 @@ const PostcodeLookup = (props: PostcodeLookupProps) => {
       formData.postcode
         .toUpperCase()
         .replace(/[^A-Z0-9]/g, "")
-        .replace(/[A-Z0-9]{3}$/, " $&")
+        .replace(/[A-Z0-9]{3}$/, " $&"),
     );
   };
 
@@ -210,7 +210,7 @@ const PostcodeLookup = (props: PostcodeLookupProps) => {
               const cleaned = value.replace(/[^A-Za-z0-9]/g, "");
               if (
                 cleaned.match(
-                  /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})$/
+                  /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})$/,
                 )
               ) {
                 return true;
@@ -241,6 +241,6 @@ const PostcodeLookup = (props: PostcodeLookupProps) => {
       </form>
     </>
   );
-};
+}
 
 export default PostcodeLookup;

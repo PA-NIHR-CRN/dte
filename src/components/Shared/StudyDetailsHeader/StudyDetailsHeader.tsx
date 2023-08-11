@@ -17,14 +17,14 @@ const DetailsWrapper = styled.div`
   padding-top: 10px;
 `;
 
-const StudyDetailsHeader = (props: StudyDetailsHeaderProps) => {
+function StudyDetailsHeader(props: StudyDetailsHeaderProps) {
   const { title, studyid } = props;
   const [{ response, loading, error }, getDetails] = useAxiosFetch(
     {
       url: `${process.env.REACT_APP_BASE_API}/studies/${studyid}`,
       method: "GET",
     },
-    { manual: true, useCache: true }
+    { manual: true, useCache: true },
   );
 
   useEffect(() => {
@@ -34,34 +34,32 @@ const StudyDetailsHeader = (props: StudyDetailsHeaderProps) => {
   }, [title]);
 
   return (
-    <>
-      <DetailsWrapper>
-        <Grid justifyContent="space-between" alignItems="center" container>
-          <Grid item xs={loading ? 6 : undefined}>
-            {title || (
-              <>
-                {loading && <Skeleton variant="text" />}
-                {error && "Unable to load title"}
-                {response &&
-                  Utils.ConvertResponseToDTEResponse(response)?.isSuccess &&
-                  (Utils.ConvertResponseToDTEResponse(response)?.content?.item
-                    ?.title ||
-                    "No title found")}
-                {response &&
-                  !Utils.ConvertResponseToDTEResponse(response)?.isSuccess &&
-                  "Unable to load title"}
-              </>
-            )}
-          </Grid>
-          <Grid item>
-            <strong>IRAS ID: </strong>
-            {studyid}
-          </Grid>
+    <DetailsWrapper>
+      <Grid justifyContent="space-between" alignItems="center" container>
+        <Grid item xs={loading ? 6 : undefined}>
+          {title || (
+            <>
+              {loading && <Skeleton variant="text" />}
+              {error && "Unable to load title"}
+              {response &&
+                Utils.ConvertResponseToDTEResponse(response)?.isSuccess &&
+                (Utils.ConvertResponseToDTEResponse(response)?.content?.item
+                  ?.title ||
+                  "No title found")}
+              {response &&
+                !Utils.ConvertResponseToDTEResponse(response)?.isSuccess &&
+                "Unable to load title"}
+            </>
+          )}
         </Grid>
-        <DTEHR />
-      </DetailsWrapper>
-    </>
+        <Grid item>
+          <strong>IRAS ID: </strong>
+          {studyid}
+        </Grid>
+      </Grid>
+      <DTEHR />
+    </DetailsWrapper>
   );
-};
+}
 
 export default StudyDetailsHeader;

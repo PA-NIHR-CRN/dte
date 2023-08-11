@@ -1,31 +1,26 @@
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import ResendEmail from "./ResendEmail";
+import { useContext } from "react";
+import { ContentContext } from "../../../../context/ContentContext";
 
 type CheckYourEmailProps = {
   emailAddress?: string;
 };
 
-const CheckYourEmail = ({ emailAddress }: CheckYourEmailProps) => {
+function CheckYourEmail({ emailAddress }: CheckYourEmailProps) {
+  const { content } = useContext(ContentContext);
   return (
     <>
-      <DTEHeader as="h1">Check your email</DTEHeader>
+      <DTEHeader as="h1">{content["register-check-email-header"]}</DTEHeader>
       <DTEContent as="b" $marginBottom="large">
-        We&apos;ve sent an email to {emailAddress}
+        {content["register-check-email-bold-text"]} {emailAddress}
       </DTEContent>
-      <DTEContent>
-        You&apos;ll need to click on the link to validate it within 24 hours.
-      </DTEContent>
-      <DTEContent>
-        Once you&apos;ve verified the email, you will be able to continue
-        registration by signing in.
-      </DTEContent>
-      <DTEContent>Unable to find it? Check your spam folder.</DTEContent>
-      <DTEContent>Still unable to find the email? </DTEContent>
+      {content["register-check-email-body"]}
 
       <ResendEmail userId={emailAddress} />
     </>
   );
-};
+}
 
 export default CheckYourEmail;

@@ -18,6 +18,8 @@ import bottomRightSplotch from "./images/bottomsplash.png";
 import CookieBanner from "./components/Shared/Footer/CookieBanner";
 import { NHSApp } from "./types/AuthTypes";
 import SessionTimeoutModal from "./components/Shared/SessionTimeout/SessionTimeoutModal";
+import { ContentContext } from "./context/ContentContext";
+import LoadingIndicator from "./components/Shared/LoadingIndicator/LoadingIndicator";
 
 const TopLeftSplotch = styled.img.attrs({
   src: `${topLeftSplotch}`,
@@ -52,6 +54,7 @@ declare global {
 }
 
 function App() {
+  const { contentLoading } = useContext(ContentContext);
   const [theme, setTheme] = React.useState(Theme.Light);
   const [showHeader, setShowHeader] = React.useState(true);
   const [showSplotches, setShowSplotches] = React.useState(false);
@@ -75,46 +78,56 @@ function App() {
       >
         <div className="App Site">
           <AppRoot />
-          <AppContext.Provider
-            value={{
-              lang: "de",
-              theme,
-              setTheme,
-              showHeader,
-              setShowHeader,
-              showBacklink,
-              setShowBacklink,
-              showSplotches,
-              setShowSplotches,
-            }}
-          >
-            <div className="Site-content">
-              <CookieBanner />
-              {showSplotches && (
-                <SplotchContainer aria-label="Top left splotch">
-                  <TopLeftSplotch />
-                </SplotchContainer>
-              )}
-              {!isInNHSApp && showHeader && <Header />}
-              <Switch>
-                {AuthRoutes}
-                {ParticipantRoutes}
-                <Route
-                  path="/Unauthorized"
-                  component={Unauthorized}
-                  key="unauthorized"
-                />
-                <Route path="*" component={PageNotFound} key="pagenotfound" />
-              </Switch>
-            </div>
-            {showSplotches && (
-              <SplotchContainer aria-label="Bottom right splotch">
-                <BottomRightSplotch />
-              </SplotchContainer>
-            )}
-            {!isInNHSApp && <Footer />}
-          </AppContext.Provider>
-          <SessionTimeoutModal />
+          {contentLoading ? (
+            <LoadingIndicator />
+          ) : (
+            <>
+              <AppContext.Provider
+                value={{
+                  lang: "de",
+                  theme,
+                  setTheme,
+                  showHeader,
+                  setShowHeader,
+                  showBacklink,
+                  setShowBacklink,
+                  showSplotches,
+                  setShowSplotches,
+                }}
+              >
+                <div className="Site-content">
+                  <CookieBanner />
+                  {showSplotches && (
+                    <SplotchContainer aria-label="Top left splotch">
+                      <TopLeftSplotch />
+                    </SplotchContainer>
+                  )}
+                  {!isInNHSApp && showHeader && <Header />}
+                  <Switch>
+                    {AuthRoutes}
+                    {ParticipantRoutes}
+                    <Route
+                      path="/Unauthorized"
+                      component={Unauthorized}
+                      key="unauthorized"
+                    />
+                    <Route
+                      path="*"
+                      component={PageNotFound}
+                      key="pagenotfound"
+                    />
+                  </Switch>
+                </div>
+                {showSplotches && (
+                  <SplotchContainer aria-label="Bottom right splotch">
+                    <BottomRightSplotch />
+                  </SplotchContainer>
+                )}
+                {!isInNHSApp && <Footer />}
+              </AppContext.Provider>
+              <SessionTimeoutModal />
+            </>
+          )}
         </div>
       </StyledComponentsThemeProvider>
     </StylesProvider>

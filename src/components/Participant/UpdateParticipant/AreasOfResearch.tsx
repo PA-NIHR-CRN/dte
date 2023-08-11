@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
@@ -18,6 +18,7 @@ import { SexFormData } from "../../Shared/FormElements/SexForm";
 import Utils from "../../../Helper/Utils";
 import { Disability2FormData } from "../../Shared/FormElements/Disability2Form";
 import ErrorMessageContainer from "../../Shared/ErrorMessageContainer/ErrorMessageContainer";
+import { ContentContext } from "../../../context/ContentContext";
 
 interface UserDataState {
   address: AddressFormData;
@@ -35,7 +36,8 @@ const StyledWrapper = styled.div`
   scroll-margin-top: 10em;
 `;
 
-const AreasOfResearch = () => {
+function AreasOfResearch() {
+  const { content } = useContext(ContentContext);
   const history = useHistory();
   const containerRef = useRef<HTMLDivElement>(null);
   const [userData, setUserData] = React.useState<UserDataState>();
@@ -54,7 +56,7 @@ const AreasOfResearch = () => {
     {
       manual: false,
       useCache: false,
-    }
+    },
   );
 
   const parseTriStateBoolean = (value: boolean, nullValue: string) => {
@@ -103,7 +105,7 @@ const AreasOfResearch = () => {
             sexAtBirth: response.sexRegisteredAtBirth,
             genderAtBirth: parseTriStateBoolean(
               response.genderIsSameAsSexRegisteredAtBirth,
-              "noSay"
+              "noSay",
             ),
           },
           ethnicity1: {
@@ -132,7 +134,7 @@ const AreasOfResearch = () => {
     {
       method: "PUT",
     },
-    { useCache: false, manual: true }
+    { useCache: false, manual: true },
   );
 
   const handleSave = async (data: HealthConditionFormData) => {
@@ -155,7 +157,7 @@ const AreasOfResearch = () => {
             parseInt(userData.dob.year, 10),
             parseInt(userData.dob.month, 10) - 1,
             parseInt(userData.dob.day, 10),
-            12
+            12,
           ).toISOString(),
           sexRegisteredAtBirth: userData.sex.sexAtBirth,
           genderIsSameAsSexRegisteredAtBirth:
@@ -180,7 +182,7 @@ const AreasOfResearch = () => {
   };
 
   return (
-    <DocumentTitle title="Which areas of research are you interested in? - Volunteer Account - Be Part of Research">
+    <DocumentTitle title={content["account-health-conditions-document-title"]}>
       <StyledWrapper role="main" id="main" ref={containerRef}>
         {demographicsLoading && (
           <LoadingIndicator text="Loading your details..." />
@@ -219,7 +221,7 @@ const AreasOfResearch = () => {
                     conditions: [],
                   }
                 }
-                nextButtonText="Save"
+                nextButtonText={content["reusable-Save"]}
                 showCancelButton
               />
             )}
@@ -227,6 +229,6 @@ const AreasOfResearch = () => {
       </StyledWrapper>
     </DocumentTitle>
   );
-};
+}
 
 export default AreasOfResearch;

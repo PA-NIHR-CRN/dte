@@ -24,7 +24,7 @@ const ListItemLink: FunctionComponent<ListItemLinkProps> = (props) => {
         // eslint-disable-next-line react/jsx-props-no-spreading
         <RouterLink to={to} innerRef={ref} ref={ref} {...itemProps} />
       )),
-    [to]
+    [to],
   );
 
   return (

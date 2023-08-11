@@ -7,7 +7,7 @@ import DTEPaper from "../UI/DTEPaper/DTEPaper";
 import { Role } from "../../../types/AuthTypes";
 
 // Component for the Redirect from IDG login
-const Login = () => {
+function Login() {
   const { hash } = useLocation();
   const idToken = new URLSearchParams(hash.slice(1)).get("id_token");
   const {
@@ -38,7 +38,7 @@ const Login = () => {
     {
       manual: true,
       useCache: false,
-    }
+    },
   );
 
   const returnToOriginatingPage = () => {
@@ -95,6 +95,6 @@ const Login = () => {
       )}
     </Grid>
   );
-};
+}
 
 export default Login;

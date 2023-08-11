@@ -33,7 +33,7 @@ const StyledInput = styled(Input)`
   }
 `;
 
-const DTEInput = ({
+function DTEInput({
   id,
   name,
   label,
@@ -48,7 +48,7 @@ const DTEInput = ({
   autoFocus,
   autocomplete,
   spellcheck,
-}: Props) => {
+}: Props) {
   const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (onValueChange) {
       onValueChange(e);
@@ -93,6 +93,6 @@ const DTEInput = ({
       spellCheck={spellcheck}
     />
   );
-};
+}
 
 export default DTEInput;

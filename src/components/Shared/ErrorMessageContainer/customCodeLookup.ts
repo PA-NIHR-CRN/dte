@@ -1,9 +1,12 @@
-import { ReactNode } from "react";
+import { ReactNode, useContext } from "react";
+import { ContentContext } from "../../../context/ContentContext";
 
 const customCodeLookup = (code: string, detail?: string | ReactNode) => {
-  const defaultLoginErrorMessage = "An error occurred while logging in";
-  const defaultRegistrationErrorMessage = "An error occurred while registering";
-  const defaultErrorMessage = "An error occurred";
+  const { content } = useContext(ContentContext);
+  const defaultLoginErrorMessage = content["error-codes-default-login"];
+  const defaultRegistrationErrorMessage =
+    content["error-codes-default-registration"];
+  const defaultErrorMessage = content["error-codes-default"];
   switch (code) {
     // Code used when the details have already been changed locally
     case "NO_CHANGE":

@@ -17,7 +17,7 @@ interface RenderProps {
 
 // const { saveToken, logOutToken,isAuthenticated, } = useContext(AuthContext);
 
-const AllTheProviders = ({ children, initialRoutes }: RenderProps) => {
+function AllTheProviders({ children, initialRoutes }: RenderProps) {
   const MuiTheme = useTheme();
   return (
     <AuthProvider>
@@ -54,12 +54,12 @@ const AllTheProviders = ({ children, initialRoutes }: RenderProps) => {
       </StylesProvider>
     </AuthProvider>
   );
-};
+}
 
 const customRender = (
   ui: ReactElement,
   options?: Omit<RenderOptions, "wrapper">,
-  initialRoutes?: { [name: string]: string }[]
+  initialRoutes?: { [name: string]: string }[],
 ) => {
   return render(ui, {
     wrapper: (args) => AllTheProviders({ ...args, initialRoutes }),

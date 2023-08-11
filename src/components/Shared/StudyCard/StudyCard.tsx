@@ -24,7 +24,7 @@ interface StudyCardProps {
   children?: React.ReactNode;
 }
 
-const StudyCard = (props: StudyCardProps) => {
+function StudyCard(props: StudyCardProps) {
   const classes = useStyles();
   const { study, children } = props;
   return (
@@ -50,6 +50,6 @@ const StudyCard = (props: StudyCardProps) => {
       {children && <CardActions>{children}</CardActions>}
     </Card>
   );
-};
+}
 
 export default StudyCard;

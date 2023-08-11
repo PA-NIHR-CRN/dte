@@ -22,7 +22,7 @@ interface Ethnicity1FormProps extends FormBaseProps {
   onDataChange: (data: Ethnicity1FormData) => void;
 }
 
-const Ethnicity1Form = (props: Ethnicity1FormProps) => {
+function Ethnicity1Form(props: Ethnicity1FormProps) {
   const {
     onDataChange,
     initialStateData,
@@ -83,64 +83,59 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
   }, [isSubmitting]);
 
   return (
-    <>
-      <Grid container>
-        <Grid item xs={12}>
-          <form
-            onSubmit={handleSubmit(preOnDataChange)}
-            data-testid="ethnicity-form"
-            noValidate
-          >
-            <Controller
-              control={control}
-              name="ethnicity"
-              render={({
-                field: { value, onChange },
-                fieldState: { error },
-              }) => (
-                <DTERadio
-                  id="ethnicityRadio"
-                  name="ethnicity"
-                  label={labelElement}
-                  error={error?.message}
-                  onChange={onChange}
-                >
-                  {Object.values(ethnicities).map((ethnicity) => {
-                    return (
-                      <Radios.Radio
-                        value={ethnicity.shortName}
-                        defaultChecked={value === ethnicity.shortName}
-                        key={ethnicity.shortName}
-                        aria-label={`The ethnic group I most closely identify as is ${ethnicity.longName}`}
-                        aria-labelledby=""
-                      >
-                        {ethnicity.longName}
-                      </Radios.Radio>
-                    );
-                  })}
-                </DTERadio>
-              )}
-              rules={{
-                validate: (value) => {
-                  if (value === "") return "Select your ethnic group";
-                  return true;
-                },
-              }}
-            />
-            <EthnicityInformation
-              hideInfo={hideInfo || false}
-              studyType="groups"
-            />
-            <FormNavigationButtons
-              nextButtonText={nextButtonText || "Continue"}
-              showCancelButton={showCancelButton || false}
-              onCancel={onCancel}
-            />
-          </form>
-        </Grid>
+    <Grid container>
+      <Grid item xs={12}>
+        <form
+          onSubmit={handleSubmit(preOnDataChange)}
+          data-testid="ethnicity-form"
+          noValidate
+        >
+          <Controller
+            control={control}
+            name="ethnicity"
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <DTERadio
+                id="ethnicityRadio"
+                name="ethnicity"
+                label={labelElement}
+                error={error?.message}
+                onChange={onChange}
+              >
+                {Object.values(ethnicities).map((ethnicity) => {
+                  return (
+                    <Radios.Radio
+                      value={ethnicity.shortName}
+                      defaultChecked={value === ethnicity.shortName}
+                      key={ethnicity.shortName}
+                      aria-label={`The ethnic group I most closely identify as is ${ethnicity.longName}`}
+                      aria-labelledby=""
+                    >
+                      {ethnicity.longName}
+                    </Radios.Radio>
+                  );
+                })}
+              </DTERadio>
+            )}
+            rules={{
+              validate: (value) => {
+                if (value === "") return "Select your ethnic group";
+                return true;
+              },
+            }}
+          />
+          <EthnicityInformation
+            hideInfo={hideInfo || false}
+            studyType="groups"
+          />
+          <FormNavigationButtons
+            nextButtonText={nextButtonText || "Continue"}
+            showCancelButton={showCancelButton || false}
+            onCancel={onCancel}
+          />
+        </form>
       </Grid>
-    </>
+    </Grid>
   );
-};
+}
 
 export default Ethnicity1Form;
