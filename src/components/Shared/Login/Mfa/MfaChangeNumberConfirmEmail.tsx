@@ -37,7 +37,7 @@ const MfaChangeNumberConfirmEmail = () => {
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting, isSubmitSuccessful },
+    formState: { isSubmitting },
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -102,9 +102,7 @@ const MfaChangeNumberConfirmEmail = () => {
   }, [userEmailRespose]);
 
   useEffect(() => {
-    console.error("in useEffect");
     if (document.getElementsByClassName("nhsuk-error-message")[0]) {
-      console.error("in if statement");
       Utils.FocusOnError();
     }
   }, [isSubmitting, getEmailOtpLoading, convertedError]);
