@@ -37,7 +37,7 @@ const MfaChangeNumberConfirmEmail = () => {
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, isSubmitSuccessful },
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -102,10 +102,12 @@ const MfaChangeNumberConfirmEmail = () => {
   }, [userEmailRespose]);
 
   useEffect(() => {
+    console.error("in useEffect");
     if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      console.error("in if statement");
       Utils.FocusOnError();
     }
-  }, [isSubmitting]);
+  }, [isSubmitting, getEmailOtpLoading, convertedError]);
 
   return (
     <DocumentTitle title="Email OTP">
@@ -168,6 +170,18 @@ const MfaChangeNumberConfirmEmail = () => {
                   required: {
                     value: true,
                     message: "Enter a valid security code",
+                  },
+                  minLength: {
+                    value: 6,
+                    message: "Security code must be 6 digits",
+                  },
+                  maxLength: {
+                    value: 6,
+                    message: "Security code must be 6 digits",
+                  },
+                  pattern: {
+                    value: /^\d{6}$/,
+                    message: "Security code must be 6 digits",
                   },
                 }}
               />

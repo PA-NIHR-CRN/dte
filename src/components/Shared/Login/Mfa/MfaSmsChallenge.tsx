@@ -226,7 +226,11 @@ const MfaSmsChallenge = () => {
                     <li>
                       <DTERouteLink
                         disabled={SMSMfaLoading || isSubmitting}
-                        to="/MfaSmsSetup"
+                        to={
+                          prevUrl === "/MfaChangePhoneNumber"
+                            ? "/MfaChangePhoneNumber"
+                            : "/MfaSmsSetup"
+                        }
                         renderStyle="standard"
                       >
                         <DTEContent>

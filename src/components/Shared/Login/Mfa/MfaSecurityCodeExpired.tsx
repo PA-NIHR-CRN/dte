@@ -7,6 +7,7 @@ import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import { AuthContext } from "../../../../context/AuthContext";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
+import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 
 const LinkWrapper = styled.div`
   margin: 1rem 0;
@@ -33,14 +34,17 @@ const MfaSecurityCodeExpired = () => {
           </DTERouteLink>
         </LinkWrapper>
         {prevUrl === "/MfaSmsChallenge" && (
-          <DTEContent>
-            <DTERouteLink
-              to="/MfaChangeNumberConfirmEmail"
-              renderStyle="standard"
-            >
-              Enter your mobile phone number again
-            </DTERouteLink>
-          </DTEContent>
+          <DTEDetails summary="I do not have access to my mobile phone">
+            <DTEContent>
+              If you do not have access to your mobile phone, you can{" "}
+              <DTERouteLink
+                to="/MfaChangeNumberConfirmEmail"
+                renderStyle="standard"
+              >
+                change your mobile phone number securely.
+              </DTERouteLink>
+            </DTEContent>
+          </DTEDetails>
         )}
       </StepWrapper>
     </DocumentTitle>
