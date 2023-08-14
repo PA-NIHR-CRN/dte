@@ -5,6 +5,7 @@ import {
   screen,
   fireEvent,
   userEvent,
+  waitFor,
 } from "../../../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import PasswordForm from "./PasswordForm";
@@ -67,6 +68,9 @@ describe("Accessibility test", () => {
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -83,6 +87,9 @@ describe("Password must have correct attributes", () => {
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const passwordInput = await screen.findByLabelText("Create your password");
     expect(passwordInput).toHaveAttribute("required");
   });
@@ -97,6 +104,9 @@ describe("Password must have correct attributes", () => {
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const passwordInput = await screen.findByLabelText("Create your password");
     const ariaRequiredValue = passwordInput.getAttribute("aria-required");
     expect(passwordInput).toHaveAttribute("aria-required");
@@ -113,6 +123,9 @@ describe("Password must have correct attributes", () => {
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const passwordInput = await screen.findByLabelText("Create your password");
     const typeValue = passwordInput.getAttribute("type");
     expect(passwordInput).toHaveAttribute("type");
@@ -129,6 +142,9 @@ describe("Password must have correct attributes", () => {
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const passwordInput = await screen.findByLabelText("Create your password");
     const autoCompleteValue = passwordInput.getAttribute("autocomplete");
     expect(passwordInput).toHaveAttribute("autocomplete");
@@ -145,6 +161,9 @@ describe("Password must have correct attributes", () => {
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const passwordInput = await screen.findByLabelText("Create your password");
     const spellCheckValue = passwordInput.getAttribute("spellcheck");
     expect(passwordInput).toHaveAttribute("spellcheck");
@@ -163,6 +182,9 @@ describe("Confirm Password must have correct attributes", () => {
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const passwordConfInput = await screen.findByLabelText(
       "Confirm your password"
     );
@@ -179,6 +201,9 @@ describe("Confirm Password must have correct attributes", () => {
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const passwordConfInput = await screen.findByLabelText(
       "Confirm your password"
     );
@@ -197,6 +222,9 @@ describe("Confirm Password must have correct attributes", () => {
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const passwordConfInput = await screen.findByLabelText(
       "Confirm your password"
     );
@@ -215,6 +243,9 @@ describe("Confirm Password must have correct attributes", () => {
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const passwordConfInput = await screen.findByLabelText(
       "Confirm your password"
     );
@@ -235,6 +266,9 @@ describe("Validation must fail if both fields are empty", () => {
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
     fireEvent.click(continueButton);
@@ -495,6 +529,9 @@ describe.each([
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
     const passwordInputBox = await screen.findByLabelText(
@@ -523,6 +560,9 @@ describe("Validation must fail for non matching entries", () => {
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
     const passwordInputBox = await screen.findByLabelText(
@@ -554,6 +594,9 @@ describe("Validation must fail for non matching entries", () => {
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
     const passwordInputBox = await screen.findByLabelText(
@@ -586,6 +629,9 @@ describe("Validation must pass for matching valid entries", () => {
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
     const passwordInputBox = await screen.findByLabelText(
@@ -617,6 +663,9 @@ describe("Password Form must display error summary header on invalid submission"
         setLoadingText={mockSetLoadingText}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
     userEvent.click(continueButton);

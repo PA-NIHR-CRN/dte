@@ -187,17 +187,26 @@ afterEach(() => {
 describe("UpdateParticipant display tests", () => {
   it("should not have accessibility violations", async () => {
     const { container } = render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it("should render without crashing", async () => {
     const { container } = render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     expect(container).toBeInTheDocument();
   });
 
   it("should render the correct title", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
     expect(header.textContent).toBe("Personal details");
@@ -205,6 +214,9 @@ describe("UpdateParticipant display tests", () => {
 
   it("displays the data retrieved from the server correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const nameHeader = await screen.findByText("Name");
     expect(nameHeader).toBeInTheDocument();
     const name = await screen.findByText("Miles Budden");
@@ -260,6 +272,9 @@ describe("UpdateParticipant display tests", () => {
 
   it("must have the correct amount of change answer buttons", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByRole("button");
     expect(changeButtons[0]).toHaveTextContent("Change name");
     expect(changeButtons[1]).toHaveTextContent("Change home address");
@@ -285,6 +300,9 @@ describe("UpdateParticipant display tests", () => {
 describe("Update participant name", () => {
   it("must display the update options", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[0]);
@@ -311,6 +329,9 @@ describe("Update participant name", () => {
 
   it("must update the name correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[0]);
@@ -333,6 +354,9 @@ describe("Update participant name", () => {
 
   it("must cancel updating the name correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[0]);
@@ -349,6 +373,9 @@ describe("Update participant name", () => {
 describe("Update participant phone number", () => {
   it("must display the update options", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[2]);
@@ -384,6 +411,9 @@ describe("Update participant phone number", () => {
 
   it("must update both the numbers correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[2]);
@@ -408,6 +438,9 @@ describe("Update participant phone number", () => {
 
   it("must update only the mobile correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[2]);
@@ -432,6 +465,9 @@ describe("Update participant phone number", () => {
 
   it("must update only the landline correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[2]);
@@ -456,6 +492,9 @@ describe("Update participant phone number", () => {
 
   it("must clear both the numbers correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[2]);
@@ -478,6 +517,9 @@ describe("Update participant phone number", () => {
 
   it("must cancel updating the phone number correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[2]);
@@ -496,6 +538,9 @@ describe("Update participant phone number", () => {
 describe("Update participant date of birth", () => {
   it("must display the update options", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[3]);
@@ -533,6 +578,9 @@ describe("Update participant date of birth", () => {
 
   it("must update the day correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[3]);
@@ -552,6 +600,9 @@ describe("Update participant date of birth", () => {
 
   it("must handle the day cancel correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[3]);
@@ -569,6 +620,9 @@ describe("Update participant date of birth", () => {
 
   it("must update the month correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[3]);
@@ -586,6 +640,9 @@ describe("Update participant date of birth", () => {
 
   it("must handle the month cancel correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[3]);
@@ -603,6 +660,9 @@ describe("Update participant date of birth", () => {
 
   it("must update the year correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[3]);
@@ -620,6 +680,9 @@ describe("Update participant date of birth", () => {
 
   it("must handle the year cancel correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[3]);
@@ -639,6 +702,9 @@ describe("Update participant date of birth", () => {
 describe("Update participant Ethnicity", () => {
   it("must display the Ethnic Group options", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[6]);
@@ -697,6 +763,9 @@ describe("Update participant Ethnicity", () => {
 
   it("must correctly update a change to the ethnic group and background", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[6]);
@@ -761,6 +830,9 @@ describe("Update participant Ethnicity", () => {
 
   it("must handle the ethnic group cancel correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[6]);
@@ -784,6 +856,9 @@ describe("Update participant Ethnicity", () => {
 
   it("must handle the ethnic background cancel correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[6]);
@@ -829,6 +904,9 @@ describe("Update other ethnic group", () => {
     "Given %p as other ethnic background, displays %p as other ethnic background",
     async (enteredBackground, expectedDisplayedBackground) => {
       render(<UpdateParticipant />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       act(() => {
         fireEvent.click(changeButtons[6]);
@@ -897,6 +975,9 @@ describe("Update other ethnic group", () => {
 describe("Update participant Sex", () => {
   it("must display the Sex options", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[4]);
@@ -934,6 +1015,9 @@ describe("Update participant Sex", () => {
 
   it("must correctly update a change to the sex", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[4]);
@@ -957,6 +1041,9 @@ describe("Update participant Sex", () => {
 
   it("must handle the sex cancel correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[4]);
@@ -982,6 +1069,9 @@ describe("Update participant Sex", () => {
 describe("Update participant Gender Identification", () => {
   it("must display the Gender Identification options", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[4]);
@@ -1047,6 +1137,9 @@ describe("Update participant Gender Identification", () => {
 
   it("must handle the Gender Identification cancel correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[4]);
@@ -1072,6 +1165,9 @@ describe("Update participant Gender Identification", () => {
 describe("Update participant Long Term Illness", () => {
   it("must display the Long Term Illness options", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[8]);
@@ -1117,6 +1213,9 @@ describe("Update participant Long Term Illness", () => {
 
   it("must correctly update a change to the Long Term Illness ability", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[8]);
@@ -1167,6 +1266,9 @@ describe("Update participant Long Term Illness", () => {
 
   it("must correctly update a change to the Long Term Illness to remove the ability", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[8]);
@@ -1190,6 +1292,9 @@ describe("Update participant Long Term Illness", () => {
 
   it("must handle the Long Term Illness cancel correctly where initial is Yes", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[8]);
@@ -1243,6 +1348,9 @@ describe("Update participant Long Term Illness", () => {
       }
     );
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[8]);
@@ -1262,6 +1370,9 @@ describe("Update participant Long Term Illness", () => {
 
   it("must handle the Long Term Illness ability cancel correctly where intial is Yes", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[8]);
@@ -1322,6 +1433,9 @@ describe("Update participant Long Term Illness", () => {
       }
     );
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[8]);
@@ -1352,6 +1466,9 @@ describe("Update participant Long Term Illness", () => {
 describe("Update participant address", () => {
   it("must display the update options", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[1]);
@@ -1386,6 +1503,9 @@ describe("Update participant address", () => {
 
   it("must allow update of located address correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[1]);
@@ -1427,6 +1547,9 @@ describe("Update participant address", () => {
 
   it("must allow update of manually entered address correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[1]);
@@ -1497,6 +1620,9 @@ describe("Update participant address", () => {
 
   it("must display a no-found postcode error correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[1]);
@@ -1522,6 +1648,9 @@ describe("Update participant address", () => {
 
   it("must cancel update on postcode search correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[1]);
@@ -1536,6 +1665,9 @@ describe("Update participant address", () => {
 
   it("must cancel update on postcode search result correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[1]);
@@ -1556,6 +1688,9 @@ describe("Update participant address", () => {
 
   it("must cancel update on manual address entry correctly", async () => {
     render(<UpdateParticipant />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     act(() => {
       fireEvent.click(changeButtons[1]);

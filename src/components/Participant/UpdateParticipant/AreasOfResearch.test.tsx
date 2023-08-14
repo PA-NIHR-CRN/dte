@@ -93,17 +93,26 @@ afterEach(() => {
 describe("Areas Of Research display tests", () => {
   it("must not have accessibility violations", async () => {
     const { container } = render(<AreasOfResearch />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it("must render without crashing", async () => {
     const { container } = render(<AreasOfResearch />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     expect(container).toBeInTheDocument();
   });
 
   it("must render the correct title", async () => {
     render(<AreasOfResearch />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
     expect(header.textContent).toBe(
@@ -113,6 +122,9 @@ describe("Areas Of Research display tests", () => {
 
   it("must display the data retrieved from the server correctly", async () => {
     render(<AreasOfResearch />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const intro1 = await screen.findByText(
       "Start entering details below to see different areas of research. You can select as many options as you like."
     );
@@ -150,6 +162,9 @@ describe("Areas Of Research display tests", () => {
 describe("Update Areas Of Research", () => {
   it("must remove an existing area of research", async () => {
     render(<AreasOfResearch />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const editorButtons = await screen.findAllByRole("button");
     expect(editorButtons).toHaveLength(6);
     expect(editorButtons[0]).toHaveTextContent("Achalasia");
@@ -194,6 +209,9 @@ describe("Update Areas Of Research", () => {
   });
   it("must add a new area of research", async () => {
     render(<AreasOfResearch />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const areaEditor = await screen.findByLabelText("Areas of research");
     await waitFor(() => {
       fireEvent.change(areaEditor, {

@@ -1,11 +1,10 @@
 import { useEffect, useState, createContext, ReactNode } from "react";
 import Cookies from "js-cookie";
-import transformContent from "../Helper/contenful/transform";
-import client from "../Helper/contenful/client";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
 import "moment/locale/cy"; // Welsh
 import "moment/locale/en-gb";
+import fetchAndTransformContent from "../Helper/contenful/fetchAndTransformContent";
 
 // Define the type for the content context value
 interface ContentContextType {
@@ -37,33 +36,14 @@ export function ContentProvider({ children }: ContentProviderProps) {
     moment.locale(language);
   };
 
-  async function fetchAllEntries(locale: string) {
-    let skip = 0;
-    const limit = 100; // You can adjust this value
-    let allEntries: any[] = []; // Define a more specific type if known
-
-    while (true) {
-      const response = await client.getEntries({ locale, skip, limit });
-      allEntries = [...allEntries, ...response.items];
-      skip += limit;
-      if (skip >= response.total) break;
-    }
-
-    return allEntries;
-  }
-
   useEffect(() => {
     setContentLoading(true);
-    Cookies.set("selectedLanguage", language);
-    fetchAllEntries(language)
-      .then((entries) => {
-        const transformedContent = transformContent({ items: entries }); // Modify transformContent if needed
+    fetchAndTransformContent(language, 100)
+      .then((transformedContent) => {
         setContent(transformedContent);
         return changeLanguage(language);
       })
-      .catch((error) => {
-        console.error(error);
-      })
+      .catch(console.error)
       .finally(() => {
         setContentLoading(false);
       });

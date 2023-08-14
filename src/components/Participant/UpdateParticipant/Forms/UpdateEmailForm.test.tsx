@@ -65,6 +65,9 @@ afterEach(() => {
 describe("Update Email display tests", () => {
   it("must not have accessibility violations", async () => {
     const { container } = render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
     const results = await axe(container);
@@ -73,6 +76,9 @@ describe("Update Email display tests", () => {
 
   it("must render without crashing", async () => {
     const { container } = render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
     expect(container).toBeInTheDocument();
@@ -80,6 +86,9 @@ describe("Update Email display tests", () => {
 
   it("must render the correct title", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
     const header = await screen.findByRole("heading", { level: 1 });
@@ -89,6 +98,9 @@ describe("Update Email display tests", () => {
 
   it("must display the data retrieved from the server correctly", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
     const newEmailEditor = await screen.findByLabelText("New email address");
@@ -117,6 +129,9 @@ describe("Update Email display tests", () => {
   describe("Email input must have correct attributes", () => {
     it("must have a required attribute", async () => {
       render(<AccountSettings />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       userEvent.click(changeButtons[0]);
       const emailInput = await screen.findByLabelText("New email address");
@@ -124,6 +139,9 @@ describe("Update Email display tests", () => {
     });
     it("must have a aria-required attribute of true", async () => {
       render(<AccountSettings />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       userEvent.click(changeButtons[0]);
       const emailInput = await screen.findByLabelText("New email address");
@@ -133,6 +151,9 @@ describe("Update Email display tests", () => {
     });
     it("must have a type attribute of email", async () => {
       render(<AccountSettings />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       userEvent.click(changeButtons[0]);
       const emailInput = await screen.findByLabelText("New email address");
@@ -142,6 +163,9 @@ describe("Update Email display tests", () => {
     });
     it("must have a autocomplete attribute of email", async () => {
       render(<AccountSettings />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       userEvent.click(changeButtons[0]);
       const emailInput = await screen.findByLabelText("New email address");
@@ -151,6 +175,9 @@ describe("Update Email display tests", () => {
     });
     it("must have a spellcheck attribute set to false", async () => {
       render(<AccountSettings />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       userEvent.click(changeButtons[0]);
       const emailInput = await screen.findByLabelText("New email address");
@@ -163,6 +190,9 @@ describe("Update Email display tests", () => {
   describe("Email confirm input must have correct attributes", () => {
     it("must have a required attribute", async () => {
       render(<AccountSettings />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       userEvent.click(changeButtons[0]);
       const emailInput = await screen.findByLabelText("New email address");
@@ -170,6 +200,9 @@ describe("Update Email display tests", () => {
     });
     it("must have a aria-required attribute of true", async () => {
       render(<AccountSettings />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       userEvent.click(changeButtons[0]);
       const emailInput = await screen.findByLabelText("New email address");
@@ -179,6 +212,9 @@ describe("Update Email display tests", () => {
     });
     it("must have a type attribute of email", async () => {
       render(<AccountSettings />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       userEvent.click(changeButtons[0]);
       const emailInput = await screen.findByLabelText("New email address");
@@ -188,6 +224,9 @@ describe("Update Email display tests", () => {
     });
     it("must have a autocomplete attribute of email", async () => {
       render(<AccountSettings />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       userEvent.click(changeButtons[0]);
       const emailInput = await screen.findByLabelText("New email address");
@@ -197,6 +236,9 @@ describe("Update Email display tests", () => {
     });
     it("must have a spellcheck attribute set to false", async () => {
       render(<AccountSettings />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       userEvent.click(changeButtons[0]);
       const emailInput = await screen.findByLabelText("New email address");
@@ -219,6 +261,9 @@ describe.each([
   ) => {
     test(`validates ${emailAddress} correctly`, async () => {
       render(<AccountSettings />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       userEvent.click(changeButtons[0]);
 
@@ -340,6 +385,9 @@ describe.each([
   (emailAddress, validationErrorMessage) => {
     test(`validates ${emailAddress} correctly`, async () => {
       render(<AccountSettings />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       userEvent.click(changeButtons[0]);
 
@@ -388,6 +436,9 @@ describe.each([
   (emailAddress) => {
     test(`validates ${emailAddress} correctly`, async () => {
       render(<AccountSettings />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       userEvent.click(changeButtons[0]);
 
@@ -414,6 +465,9 @@ describe.each([
 describe("Update Email must show correct error messages", () => {
   it("must show the correct message when a user does not enter their new email address", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
     const confNewEmailEditor = await screen.findByLabelText(
@@ -429,6 +483,9 @@ describe("Update Email must show correct error messages", () => {
 
   it("must show the correct message when a user does not enter a valid new email address", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
     const newEmailEditor = await screen.findByLabelText("New email address");
@@ -448,6 +505,9 @@ describe("Update Email must show correct error messages", () => {
 
   it("must show the correct message when a user does not enter their new email address confirmation", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     await waitForElementToBeRemoved(await screen.findByText(/Loading.../));
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
@@ -461,6 +521,9 @@ describe("Update Email must show correct error messages", () => {
 
   it("must show the correct message when a user does not enter a valid confirmation email address", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
     const newEmailEditor = await screen.findByLabelText("New email address");
@@ -480,6 +543,9 @@ describe("Update Email must show correct error messages", () => {
 
   it("must show the correct message when a user does not enter matching email addresses", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
     const newEmailEditor = await screen.findByLabelText("New email address");
@@ -517,6 +583,9 @@ describe("Update Email must show correct error messages", () => {
       };
     });
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
     const newEmailEditor = await screen.findByLabelText("New email address");
@@ -540,6 +609,9 @@ describe("Update Email must show correct error messages", () => {
       return new Response(504);
     });
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
     const newEmailEditor = await screen.findByLabelText("New email address");
@@ -562,6 +634,9 @@ describe("Update Email must show correct error messages", () => {
 describe("Update Email must handle valid user operations", () => {
   it("must return to the Account Settings screen on cancel", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
     const newEmailEditor = await screen.findByLabelText("New email address");
@@ -583,6 +658,9 @@ describe("Update Email must handle valid user operations", () => {
 
   it("must post the correct information to the server api", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
     const newEmailEditor = await screen.findByLabelText("New email address");
@@ -607,6 +685,9 @@ describe("Update Email must handle valid user operations", () => {
 
   it("must display the updating your details when new email is valid", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
     const newEmailEditor = await screen.findByLabelText("New email address");
@@ -631,7 +712,9 @@ describe("Update Email must handle valid user operations", () => {
       { pathname: "/Participants/AccountSettings" },
       { pathname: "/Participants/EmailUpdated" },
     ]);
-
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
     const newEmailEditor = await screen.findByLabelText("New email address");
@@ -668,6 +751,9 @@ describe("Update Email must handle valid user operations", () => {
 describe("Update Email Form must display error summary header on invalid submission", () => {
   it("renders correctly", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[0]);
 

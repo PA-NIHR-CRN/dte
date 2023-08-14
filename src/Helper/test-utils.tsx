@@ -10,9 +10,7 @@ import { AppContext, Theme } from "../context/AppContext";
 import { AuthProvider } from "../context/AuthContext";
 import ManualLoginProvider from "../context/ManualLoginContext";
 import { ContentContext } from "../context/ContentContext";
-import transformContent from "./contenful/transform";
-import { contentfulResponse } from "../mocks/content";
-import client from "./contenful/client";
+import fetchAndTransformContent from "./contenful/fetchAndTransformContent";
 
 interface RenderProps {
   children?: any;
@@ -23,31 +21,19 @@ interface RenderProps {
 
 function AllTheProviders({ children, initialRoutes }: RenderProps) {
   const [mockContent, setMockContent] = useState({});
-  async function fetchAllEntries(locale: string) {
-    let skip = 0;
-    const limit = 500; // You can adjust this value
-    let allEntries: any[] = []; // Define a more specific type if known
-
-    while (true) {
-      const response = await client.getEntries({ locale, skip, limit });
-      allEntries = [...allEntries, ...response.items];
-      skip += limit;
-      if (skip >= response.total) break;
-    }
-
-    return allEntries;
-  }
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchAllEntries("en-GB")
-      .then((entries) => {
-        const transformedContent = transformContent({ items: entries });
-        setMockContent(transformedContent);
+    fetchAndTransformContent("en-GB", 500)
+      .then((content) => {
+        setMockContent(content);
+        setIsLoading(false);
       })
-      .catch((error) => {
-        console.error(error);
-      });
+      .catch(console.error);
   }, []);
+
+  if (isLoading) return <div data-testid="loadingContent">Loading...</div>;
+
   const MuiTheme = useTheme();
   return (
     <AuthProvider>

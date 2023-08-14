@@ -55,17 +55,26 @@ afterEach(() => {
 describe("Close Account display tests", () => {
   it("must not have accessibility violations", async () => {
     const { container } = render(<CloseAccount />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it("must render without crashing", async () => {
     const { container } = render(<CloseAccount />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     expect(container).toBeInTheDocument();
   });
 
   it("must render the correct title", async () => {
     render(<CloseAccount />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
     expect(header.textContent).toBe("Close your account");
@@ -73,6 +82,9 @@ describe("Close Account display tests", () => {
 
   it("must display the data retrieved from the server correctly", async () => {
     render(<CloseAccount />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     expect(
       await screen.findByText(
         "If you have changed your mind and wish to close your account, you are withdrawing your consent for Be Part of Research to process and store your personal information."
@@ -114,6 +126,9 @@ describe("Close Account display tests", () => {
 describe("Close Account functional tests", () => {
   it("must display warning dialogue on Close your account", async () => {
     render(<CloseAccount />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const buttons = await screen.findAllByRole("button");
     userEvent.click(buttons[0]);
     const confirmButtons = await screen.findAllByRole("button");
@@ -127,6 +142,9 @@ describe("Close Account functional tests", () => {
 
   it("must handle cancel close account correctly", async () => {
     render(<CloseAccount />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const buttons = await screen.findAllByRole("button");
     userEvent.click(buttons[0]);
     const confirmButtons = await screen.findAllByRole("button");
@@ -141,6 +159,9 @@ describe("Close Account functional tests", () => {
 
   it("must call the api to close the account only on confirm button", async () => {
     render(<CloseAccount />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const buttons = await screen.findAllByRole("button");
     userEvent.click(buttons[0]);
     const confirmButtons = await screen.findAllByRole("button");
@@ -155,6 +176,9 @@ describe("Close Account functional tests", () => {
 
   it("must not call the api to close the account on cancel button", async () => {
     render(<CloseAccount />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const buttons = await screen.findAllByRole("button");
     userEvent.click(buttons[0]);
     const confirmButtons = await screen.findAllByRole("button");
@@ -173,6 +197,9 @@ describe("Close Account functional tests", () => {
       { pathname: "/Participants/CloseAccount" },
       { pathname: "/Participants/AccountClosed" },
     ]);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const buttons = await screen.findAllByRole("button");
     userEvent.click(buttons[0]);
     const confirmButtons = await screen.findAllByRole("button");

@@ -1,5 +1,5 @@
 import { axe, toHaveNoViolations } from "jest-axe";
-import { render, screen } from "../../../../../../Helper/test-utils";
+import { render, screen, waitFor } from "../../../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import NoConsent from "./NoConsent";
 
@@ -19,6 +19,9 @@ describe("NoConsent tests", () => {
   });
   it("displays the correct content", async () => {
     render(<NoConsent />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     expect(
       screen.getByText("Your registration has been cancelled")
     ).toBeInTheDocument();

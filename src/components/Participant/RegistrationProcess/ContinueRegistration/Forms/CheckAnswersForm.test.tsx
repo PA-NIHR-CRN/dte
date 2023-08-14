@@ -100,6 +100,10 @@ describe("Check Answers Form displays data correctly", () => {
       />
     );
 
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
+
     expect(screen.getByText(/address line 1/)).toBeInTheDocument();
     expect(screen.getByText(/address line 2/)).toBeInTheDocument();
     expect(screen.getByText(/address line 3/)).toBeInTheDocument();
@@ -117,6 +121,10 @@ describe("Check Answers Form displays data correctly", () => {
       />
     );
 
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
+
     expect(screen.getByText(/Phone number/)).toBeInTheDocument();
     expect(screen.getByText(/Mobile/)).toBeInTheDocument();
     expect(screen.getByText(/07666666666/)).toBeInTheDocument();
@@ -133,6 +141,10 @@ describe("Check Answers Form displays data correctly", () => {
       />
     );
 
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
+
     expect(screen.getByText("Sex registered at birth")).toBeInTheDocument();
     expect(screen.getByText("Male")).toBeInTheDocument();
   });
@@ -145,6 +157,10 @@ describe("Check Answers Form displays data correctly", () => {
         changeStep={mockChangeStep}
       />
     );
+
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
 
     expect(
       screen.getByText("Gender identity same as sex registered at birth")
@@ -161,6 +177,10 @@ describe("Check Answers Form displays data correctly", () => {
       />
     );
 
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
+
     expect(screen.getByText("Ethnic group")).toBeInTheDocument();
     expect(screen.getByText("White")).toBeInTheDocument();
   });
@@ -174,6 +194,10 @@ describe("Check Answers Form displays data correctly", () => {
       />
     );
 
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
+
     expect(screen.getByText("Ethnic background")).toBeInTheDocument();
     expect(screen.getByText("other typed in answer")).toBeInTheDocument();
   });
@@ -186,6 +210,10 @@ describe("Check Answers Form displays data correctly", () => {
         changeStep={mockChangeStep}
       />
     );
+
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
 
     expect(
       screen.getByText("Long-term conditions or illness")
@@ -202,6 +230,10 @@ describe("Check Answers Form displays data correctly", () => {
       />
     );
 
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
+
     expect(
       screen.getByText("Reduced ability to carry out daily activities")
     ).toBeInTheDocument();
@@ -217,6 +249,10 @@ describe("Check Answers Form displays data correctly", () => {
       />
     );
 
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
+
     expect(screen.getByText("Areas of research")).toBeInTheDocument();
     expect(screen.getByText("Flu")).toBeInTheDocument();
   });
@@ -231,6 +267,10 @@ describe("Check Answers Form Layout", () => {
         changeStep={mockChangeStep}
       />
     );
+
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
 
     const header = screen.getByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
@@ -277,6 +317,10 @@ describe("Check Answers Form Layout", () => {
       />
     );
 
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
+
     const buttons = screen.getAllByRole("button");
     const submitButtons = buttons.filter(
       (x) => x.textContent === "Complete registration"
@@ -292,6 +336,10 @@ describe("Check Answers Form Layout", () => {
         changeStep={mockChangeStep}
       />
     );
+
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
 
     const changeButton = screen.getAllByText("Change")[4];
     fireEvent.click(changeButton);
@@ -310,6 +358,10 @@ describe("Accessibility test", () => {
         changeStep={mockChangeStep}
       />
     );
+
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -322,6 +374,10 @@ describe("Accessibility test", () => {
         changeStep={mockChangeStep}
       />
     );
+
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

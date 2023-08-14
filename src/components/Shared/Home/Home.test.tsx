@@ -3,6 +3,7 @@ import { createServer, Server } from "miragejs";
 import {
   render,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from "../../../Helper/test-utils";
 import Home from "./Home";
@@ -57,6 +58,9 @@ afterEach(() => {
 describe("Accessibility test", () => {
   it("must not fail any accessibility tests", async () => {
     const { container } = render(<Home />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -65,6 +69,9 @@ describe("Accessibility test", () => {
 describe("Home screen render tests", () => {
   it("must display the correct information", async () => {
     render(<Home />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     await waitForElementToBeRemoved(await screen.findByText(/Loading.../));
 
     const header = await screen.findByRole("heading", { level: 1 });

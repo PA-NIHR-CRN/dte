@@ -21,6 +21,9 @@ describe("ConsentForm", () => {
         handleNoConsent={mockHandleNoConsent}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     expect(
       screen.getByText("Yes, I consent and wish to register now")
     ).toBeInTheDocument();
@@ -41,6 +44,9 @@ describe("ConsentForm", () => {
         handleNoConsent={mockHandleNoConsent}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     fireEvent.click(screen.getByDisplayValue("consentContact"));
     fireEvent.click(
       screen.getByText("Yes, I consent and wish to register now")
@@ -60,6 +66,9 @@ describe("ConsentForm", () => {
         handleNoConsent={mockHandleNoConsent}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     fireEvent.click(
       screen.getByText("Yes, I consent and wish to register now")
     );
@@ -83,6 +92,9 @@ describe("ConsentForm", () => {
         handleNoConsent={mockHandleNoConsent}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     fireEvent.click(
       screen.getByText(
         "No, I do not consent and wish to cancel this registration"
@@ -105,6 +117,9 @@ describe("Accessibility test", () => {
         handleNoConsent={mockHandleNoConsent}
       />
     );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

@@ -5,6 +5,7 @@ import {
   render,
   screen,
   waitForElementToBeRemoved,
+  waitFor,
 } from "../../../../Helper/test-utils";
 import AccountSettings from "../AccountSettings";
 
@@ -78,6 +79,9 @@ afterEach(() => {
 describe("Update Password display tests", () => {
   it("must not have accessibility violations", async () => {
     const { container } = render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
     const results = await axe(container);
@@ -86,6 +90,9 @@ describe("Update Password display tests", () => {
 
   it("must render without crashing", async () => {
     const { container } = render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
     expect(container).toBeInTheDocument();
@@ -93,6 +100,9 @@ describe("Update Password display tests", () => {
 
   it("must render the correct title", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
     const header = await screen.findByRole("heading", { level: 1 });
@@ -102,6 +112,9 @@ describe("Update Password display tests", () => {
 
   it("must render the correct auto complete attributes", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
@@ -129,6 +142,9 @@ describe("Update Password display tests", () => {
 
   it("must display the data retrieved from the server correctly", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
@@ -159,6 +175,9 @@ describe("Update Password display tests", () => {
 describe("Update Password must show correct error messages", () => {
   it("must show the correct messages when a user does not enter data in the fields", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
@@ -174,6 +193,9 @@ describe("Update Password must show correct error messages", () => {
 
   it("must show the correct message when a user does not enter matching passwords", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
@@ -443,6 +465,9 @@ describe.each([
   (password, expectedError) => {
     test(`for ${password}, returns ${expectedError}`, async () => {
       render(<AccountSettings />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const changeButtons = await screen.findAllByText("Change");
       userEvent.click(changeButtons[1]);
 
@@ -472,6 +497,9 @@ describe.each([
 describe("Update Password must handle valid user operations", () => {
   it("must return to the Account Settings screen on cancel", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
@@ -492,6 +520,9 @@ describe("Update Password must handle valid user operations", () => {
       { pathname: "/Participants/AccountSettings" },
       { pathname: "/Participants/PasswordUpdated" },
     ]);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
@@ -559,6 +590,9 @@ describe("Update Password must handle server errors", () => {
       }
     );
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
@@ -594,6 +628,9 @@ describe("Update Password must handle server errors", () => {
       }
     );
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
@@ -625,6 +662,9 @@ describe("Update Password must handle server errors", () => {
 describe("Update Password Form must display error summary header on invalid submission", () => {
   it("renders correctly", async () => {
     render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 

@@ -1,6 +1,6 @@
 import { axe, toHaveNoViolations } from "jest-axe";
 import { createServer, Server } from "miragejs";
-import { render } from "../../../Helper/test-utils";
+import { render, screen, waitFor } from "../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import Login from "./Login";
 
@@ -54,6 +54,9 @@ describe("Login accessibility tests", () => {
     const content = render(<Login />, {}, [
       { pathname: "/login", search: `?${ParticipantParams}` },
     ]);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const results = await axe(content.container);
     expect(results).toHaveNoViolations();
   });
@@ -64,11 +67,17 @@ describe("Login tests", () => {
     render(<Login />, {}, [
       { pathname: "/login", search: `?${ParticipantParams}` },
     ]);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
   });
   it("checks demographics for participant", async () => {
     render(<Login />, {}, [
       { pathname: "/login", search: `?${ParticipantParams}` },
     ]);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     server.pretender.handledRequest = (path) => {
       expect(path).toBe(
         `${process.env.REACT_APP_BASE_API}/participants/undefined/demographics`
@@ -79,6 +88,9 @@ describe("Login tests", () => {
     render(<Login />, {}, [
       { pathname: "/login", search: `?${ResearcherParams}` },
     ]);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     server.pretender.handledRequest = (path) => {
       expect(path).not.toBe(
         `${process.env.REACT_APP_BASE_API}/participants/undefined/demographics`

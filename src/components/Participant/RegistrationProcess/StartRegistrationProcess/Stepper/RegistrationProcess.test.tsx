@@ -16,6 +16,9 @@ beforeEach(() => {
 describe("RegistrationProcess", () => {
   it("loads and displays the registration stepper page", async () => {
     render(<RegistrationProcess />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     expect(screen.getByText("Back")).toBeInTheDocument();
   });
 

@@ -55,11 +55,17 @@ describe("ContinueRegistration", () => {
 describe("Accessibility test", () => {
   it("should not fail any accessibility tests", async () => {
     const { container } = render(<ContinueRegistration />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
   test("progress bar marked as aria hidden", async () => {
     render(<ContinueRegistration />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const progressText = await screen.findByText("38% complete");
     expect(progressText).toBeInTheDocument();
     expect(progressText).toHaveAttribute("aria-hidden", "true");
@@ -69,6 +75,9 @@ describe("Accessibility test", () => {
 describe("Continue registration analytics", () => {
   it("must send the correct data", async () => {
     render(<ContinueRegistration />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
 
     await waitFor(
       () => {

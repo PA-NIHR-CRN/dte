@@ -33,25 +33,37 @@ afterAll(() => {
 describe("Accessibility test", () => {
   it("should not fail any accessibility tests", async () => {
     const { container } = render(<ForgottenPassword />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 });
 
 describe("Render Forgotten Password Form", () => {
-  it("must render the form", () => {
+  it("must render the form", async () => {
     render(<ForgottenPassword />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
   });
 });
 
 describe("Email input must have correct attributes", () => {
   it("must have a required attribute", async () => {
     render(<ForgottenPassword />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const emailInput = await screen.findByLabelText("Email address");
     expect(emailInput).toHaveAttribute("required");
   });
   it("must have a aria-required attribute of true", async () => {
     render(<ForgottenPassword />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const emailInput = await screen.findByLabelText("Email address");
     const ariaRequiredValue = emailInput.getAttribute("aria-required");
     expect(emailInput).toHaveAttribute("aria-required");
@@ -59,6 +71,9 @@ describe("Email input must have correct attributes", () => {
   });
   it("must have a type attribute of email", async () => {
     render(<ForgottenPassword />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const emailInput = await screen.findByLabelText("Email address");
     const typeValue = emailInput.getAttribute("type");
     expect(emailInput).toHaveAttribute("type");
@@ -66,6 +81,9 @@ describe("Email input must have correct attributes", () => {
   });
   it("must have a autocomplete attribute of email", async () => {
     render(<ForgottenPassword />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const emailInput = await screen.findByLabelText("Email address");
     const autocompleteValue = emailInput.getAttribute("autocomplete");
     expect(emailInput).toHaveAttribute("autocomplete");
@@ -73,6 +91,9 @@ describe("Email input must have correct attributes", () => {
   });
   it("must have a spellcheck attribute set to false", async () => {
     render(<ForgottenPassword />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const emailInput = await screen.findByLabelText("Email address");
     const spellcheckValue = emailInput.getAttribute("spellcheck");
     expect(emailInput).toHaveAttribute("spellcheck");
@@ -180,6 +201,9 @@ describe.each([
   (emailAddress, validationError) => {
     test(`validates ${emailAddress} correctly`, async () => {
       render(<ForgottenPassword />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const emailInput = screen.getByLabelText("Email address");
       userEvent.type(emailInput, emailAddress);
       userEvent.click(screen.getByText("Reset your password"));
@@ -217,6 +241,9 @@ describe.each([
   (emailAddress) => {
     test(`validates ${emailAddress} correctly`, async () => {
       render(<ForgottenPassword />);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const emailInput = screen.getByLabelText("Email address");
       userEvent.type(emailInput, emailAddress);
       userEvent.click(screen.getByText("Reset your password"));
@@ -237,6 +264,9 @@ describe.each([
 describe("Forgotten Password must display error summary header on invalid submission", () => {
   it("renders correctly", async () => {
     render(<ForgottenPassword />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const submitButton = await screen.findByText("Reset your password");
     userEvent.click(submitButton);
 
@@ -249,6 +279,9 @@ describe("Forgotten Password must display error summary header on invalid submis
 describe("Functional requirements must be met", () => {
   it("must send a post request when the validation rules are met", async () => {
     render(<ForgottenPassword />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+    });
     const emailInput = await screen.findByLabelText("Email address");
     userEvent.type(emailInput, "name@example.com");
     const submitButton = await screen.findByText("Reset your password");
