@@ -18,18 +18,16 @@ describe("Email Form Rendering", () => {
   it("should render the form", () => {
     const mockOnDataChange = jest.fn();
     render(
-      <EmailForm onDataChange={mockOnDataChange} initialStateData={data} />
+      <EmailForm onDataChange={mockOnDataChange} initialStateData={data} />,
     );
   });
 
   it("should not fail any accessibility tests", async () => {
     const mockOnDataChange = jest.fn();
     const { container } = render(
-      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />
+      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />,
     );
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -37,11 +35,9 @@ describe("Email Form Rendering", () => {
   it("must render the correct title", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />
+      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />,
     );
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
     expect(header.textContent).toBe("What is your email address?");
@@ -50,11 +46,9 @@ describe("Email Form Rendering", () => {
   it("must render the screen correctly", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />
+      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />,
     );
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const emailEditor = await screen.findByLabelText("Email address");
     const continueButton = await screen.findByText("Continue");
     expect(emailEditor).toBeInTheDocument();
@@ -62,11 +56,11 @@ describe("Email Form Rendering", () => {
     expect(continueButton).toBeInTheDocument();
 
     const extraInfoDetails = await screen.findByText(
-      "Why we are asking this question"
+      "Why we are asking this question",
     );
     userEvent.click(extraInfoDetails);
     const explanationText = await screen.findByText(
-      "We need your email address so we can contact you when we find a suitable study"
+      "We need your email address so we can contact you when we find a suitable study",
     );
     expect(explanationText).toBeInTheDocument();
   });
@@ -76,11 +70,9 @@ describe("Email input must have correct attributes", () => {
   it("must have a required attribute", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />
+      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />,
     );
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const emailInput = await screen.findByLabelText("Email address");
     expect(emailInput).toHaveAttribute("required");
   });
@@ -88,11 +80,9 @@ describe("Email input must have correct attributes", () => {
   it("must have a aria-required attribute of true", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />
+      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />,
     );
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const emailInput = await screen.findByLabelText("Email address");
     const ariaRequiredValue = emailInput.getAttribute("aria-required");
     expect(emailInput).toHaveAttribute("aria-required");
@@ -101,11 +91,9 @@ describe("Email input must have correct attributes", () => {
   it("must have a type attribute of email", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />
+      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />,
     );
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const emailInput = await screen.findByLabelText("Email address");
     const typeValue = emailInput.getAttribute("type");
     expect(emailInput).toHaveAttribute("type");
@@ -114,11 +102,9 @@ describe("Email input must have correct attributes", () => {
   it("must have a autocomplete attribute of email", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />
+      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />,
     );
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const emailInput = await screen.findByLabelText("Email address");
     const autocompleteValue = emailInput.getAttribute("autocomplete");
     expect(emailInput).toHaveAttribute("autocomplete");
@@ -127,11 +113,9 @@ describe("Email input must have correct attributes", () => {
   it("must have a spellcheck attribute set to false", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />
+      <EmailForm initialStateData={data} onDataChange={mockOnDataChange} />,
     );
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const emailInput = await screen.findByLabelText("Email address");
     const spellcheckValue = emailInput.getAttribute("spellcheck");
     expect(emailInput).toHaveAttribute("spellcheck");
@@ -240,7 +224,7 @@ describe.each([
     test(`validates ${emailAddress} correctly`, async () => {
       const mockOnDataChange = jest.fn();
       render(
-        <EmailForm onDataChange={mockOnDataChange} initialStateData={data} />
+        <EmailForm onDataChange={mockOnDataChange} initialStateData={data} />,
       );
       const emailInput = screen.getByLabelText("Email address");
       userEvent.type(emailInput, emailAddress);
@@ -249,7 +233,7 @@ describe.each([
         expect(await screen.findByText(validationError)).toBeInTheDocument();
       });
     });
-  }
+  },
 );
 
 describe.each([
@@ -280,7 +264,7 @@ describe.each([
     test(`validates ${emailAddress} correctly`, async () => {
       const mockOnDataChange = jest.fn();
       render(
-        <EmailForm onDataChange={mockOnDataChange} initialStateData={data} />
+        <EmailForm onDataChange={mockOnDataChange} initialStateData={data} />,
       );
       await waitFor(() => {
         expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
@@ -290,27 +274,25 @@ describe.each([
       userEvent.click(screen.getByText("Continue"));
       await waitFor(async () => {
         expect(
-          screen.queryByText("Enter your email address")
+          screen.queryByText("Enter your email address"),
         ).not.toBeInTheDocument();
         expect(
           screen.queryByText(
-            "Enter an email address in the correct format, like name@example.com"
-          )
+            "Enter an email address in the correct format, like name@example.com",
+          ),
         ).not.toBeInTheDocument();
       });
     });
-  }
+  },
 );
 
 describe("Email Form must display error summary header on invalid submission", () => {
   it("renders correctly", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <EmailForm onDataChange={mockOnDataChange} initialStateData={data} />
+      <EmailForm onDataChange={mockOnDataChange} initialStateData={data} />,
     );
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     userEvent.click(screen.getByText("Continue"));
 
     const errors = await screen.findAllByRole("alert");

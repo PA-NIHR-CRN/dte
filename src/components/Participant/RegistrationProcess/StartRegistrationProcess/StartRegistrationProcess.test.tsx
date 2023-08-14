@@ -17,9 +17,6 @@ describe("StartRegistrationProcess accessibility tests", () => {
 describe("StartRegistrationProcess functionality tests", () => {
   it("should render without crashing", async () => {
     render(<StartRegistrationProcess />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
 
     expect(
       screen.getByText("Register with Be Part of Research"),

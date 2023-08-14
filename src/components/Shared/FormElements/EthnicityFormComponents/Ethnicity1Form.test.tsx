@@ -17,8 +17,11 @@ test("loads and displays ethnicity form", async () => {
         ethnicity: "",
       }}
       onDataChange={() => {}}
-    />
+    />,
   );
+  await waitFor(() => {
+    expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+  });
   expect(screen.getByDisplayValue("asian")).toBeInTheDocument();
   expect(screen.getByDisplayValue("asian")).not.toBeChecked();
   expect(screen.getByDisplayValue("other")).not.toBeChecked();
@@ -32,15 +35,18 @@ test("select a radio button and submit", async () => {
         ethnicity: "",
       }}
       onDataChange={mockOnDataChange}
-    />
+    />,
   );
+  await waitFor(() => {
+    expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+  });
   fireEvent.click(screen.getByDisplayValue("asian"));
   expect(screen.getByDisplayValue("asian")).toBeChecked();
   fireEvent.submit(screen.getByTestId("ethnicity-form"));
   await waitFor(() =>
     expect(mockOnDataChange).toHaveBeenCalledWith({
       ethnicity: "asian",
-    })
+    }),
   );
 });
 
@@ -51,8 +57,11 @@ test("pre-filled data entry", async () => {
         ethnicity: "black",
       }}
       onDataChange={() => {}}
-    />
+    />,
   );
+  await waitFor(() => {
+    expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+  });
   expect(screen.getByDisplayValue("black")).toBeChecked();
 });
 
@@ -64,8 +73,9 @@ describe("Accessibility test", () => {
           ethnicity: "",
         }}
         onDataChange={() => {}}
-      />
+      />,
     );
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

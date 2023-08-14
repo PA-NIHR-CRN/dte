@@ -97,12 +97,8 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
-
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
 
     expect(screen.getByText(/address line 1/)).toBeInTheDocument();
     expect(screen.getByText(/address line 2/)).toBeInTheDocument();
@@ -118,12 +114,8 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
-
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
 
     expect(screen.getByText(/Phone number/)).toBeInTheDocument();
     expect(screen.getByText(/Mobile/)).toBeInTheDocument();
@@ -138,12 +130,8 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
-
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
 
     expect(screen.getByText("Sex registered at birth")).toBeInTheDocument();
     expect(screen.getByText("Male")).toBeInTheDocument();
@@ -155,15 +143,11 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
 
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
-
     expect(
-      screen.getByText("Gender identity same as sex registered at birth")
+      screen.getByText("Gender identity same as sex registered at birth"),
     ).toBeInTheDocument();
     expect(screen.getByText("Prefer not to say")).toBeInTheDocument();
   });
@@ -174,12 +158,8 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
-
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
 
     expect(screen.getByText("Ethnic group")).toBeInTheDocument();
     expect(screen.getByText("White")).toBeInTheDocument();
@@ -191,12 +171,8 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
-
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
 
     expect(screen.getByText("Ethnic background")).toBeInTheDocument();
     expect(screen.getByText("other typed in answer")).toBeInTheDocument();
@@ -208,15 +184,11 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
 
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
-
     expect(
-      screen.getByText("Long-term conditions or illness")
+      screen.getByText("Long-term conditions or illness"),
     ).toBeInTheDocument();
     expect(screen.getByText("Yes")).toBeInTheDocument();
   });
@@ -227,15 +199,11 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
 
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
-
     expect(
-      screen.getByText("Reduced ability to carry out daily activities")
+      screen.getByText("Reduced ability to carry out daily activities"),
     ).toBeInTheDocument();
     expect(screen.getByText("Yes, a little")).toBeInTheDocument();
   });
@@ -246,12 +214,8 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
-
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
 
     expect(screen.getByText("Areas of research")).toBeInTheDocument();
     expect(screen.getByText("Flu")).toBeInTheDocument();
@@ -265,17 +229,13 @@ describe("Check Answers Form Layout", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
-
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
 
     const header = screen.getByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
     expect(header).toHaveTextContent(
-      "Check your answers before completing your registration"
+      "Check your answers before completing your registration",
     );
   });
 
@@ -285,25 +245,25 @@ describe("Check Answers Form Layout", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
 
     const changeButtons = await screen.findAllByRole("button");
     expect(changeButtons[0]).toHaveTextContent("Change home address");
     expect(changeButtons[1]).toHaveTextContent("Change phone number");
     expect(changeButtons[2]).toHaveTextContent(
-      "Change sex registered at birth"
+      "Change sex registered at birth",
     );
     expect(changeButtons[3]).toHaveTextContent(
-      "Change gender identity same as sex registered at birth"
+      "Change gender identity same as sex registered at birth",
     );
     expect(changeButtons[4]).toHaveTextContent("Change ethnic group");
     expect(changeButtons[5]).toHaveTextContent("Change ethnic background");
     expect(changeButtons[6]).toHaveTextContent(
-      "Change long-term conditions or illness"
+      "Change long-term conditions or illness",
     );
     expect(changeButtons[7]).toHaveTextContent(
-      "Change reduced ability to carry out daily activities"
+      "Change reduced ability to carry out daily activities",
     );
     expect(changeButtons[8]).toHaveTextContent("Change areas of research");
   });
@@ -314,16 +274,12 @@ describe("Check Answers Form Layout", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
-
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
 
     const buttons = screen.getAllByRole("button");
     const submitButtons = buttons.filter(
-      (x) => x.textContent === "Complete registration"
+      (x) => x.textContent === "Complete registration",
     );
     expect(submitButtons).toHaveLength(1);
   });
@@ -334,12 +290,8 @@ describe("Check Answers Form Layout", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
-
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
 
     const changeButton = screen.getAllByText("Change")[4];
     fireEvent.click(changeButton);
@@ -356,12 +308,9 @@ describe("Accessibility test", () => {
       <CheckAnswersForm
         initialStateData={blankTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
 
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -372,12 +321,9 @@ describe("Accessibility test", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />
+      />,
     );
 
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

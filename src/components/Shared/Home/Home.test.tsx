@@ -45,7 +45,7 @@ beforeEach(() => {
             conversationId: null,
             version: 1,
           };
-        }
+        },
       );
     },
   });
@@ -58,9 +58,7 @@ afterEach(() => {
 describe("Accessibility test", () => {
   it("must not fail any accessibility tests", async () => {
     const { container } = render(<Home />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -69,9 +67,7 @@ describe("Accessibility test", () => {
 describe("Home screen render tests", () => {
   it("must display the correct information", async () => {
     render(<Home />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     await waitForElementToBeRemoved(await screen.findByText(/Loading.../));
 
     const header = await screen.findByRole("heading", { level: 1 });
@@ -88,14 +84,14 @@ describe("Home screen render tests", () => {
     expect(links[2]).toHaveTextContent("Personal details");
     expect(links[3]).toHaveAttribute(
       "href",
-      "https://bepartofresearch.nihr.ac.uk/results/search-results?query=&location="
+      "https://bepartofresearch.nihr.ac.uk/results/search-results?query=&location=",
     );
     expect(links[3]).toHaveTextContent(
-      "Search for studies on Be Part of Research"
+      "Search for studies on Be Part of Research",
     );
     expect(links[4]).toHaveAttribute(
       "href",
-      "/Participants/BePartOfResearchNewsletter"
+      "/Participants/BePartOfResearchNewsletter",
     );
     expect(links[4]).toHaveTextContent("Be Part of Research Newsletter");
     expect(links[5]).toHaveAttribute("href", "/Participants/CloseAccount");

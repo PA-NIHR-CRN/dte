@@ -4,6 +4,7 @@ import {
   screen,
   fireEvent,
   userEvent,
+  waitFor,
 } from "../../../Helper/test-utils";
 import DOBForm from "./DOBForm";
 
@@ -26,8 +27,9 @@ describe("DOB Renders correctly", () => {
           month: "",
           year: "",
         }}
-      />
+      />,
     );
+
     const buttons = screen.getAllByRole("button");
     expect(buttons).toHaveLength(1);
     expect(buttons[0]).toHaveTextContent("Continue");
@@ -47,7 +49,7 @@ describe("DOB Renders correctly", () => {
           month: "",
           year: "",
         }}
-      />
+      />,
     );
     const buttons = screen.getAllByRole("button");
     expect(buttons).toHaveLength(2);
@@ -65,22 +67,23 @@ describe("DOB Renders correctly", () => {
           month: "",
           year: "",
         }}
-      />
+      />,
     );
   });
 
   it("renders with populated data", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />
+      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />,
     );
   });
 
   it("correctly populates state data", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />
+      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />,
     );
+
     expect(screen.getByDisplayValue("11")).toBeInTheDocument();
     expect(screen.getByDisplayValue("12")).toBeInTheDocument();
     expect(screen.getByDisplayValue("2000")).toBeInTheDocument();
@@ -96,8 +99,9 @@ describe("DOB Renders correctly", () => {
           month: "",
           year: "",
         }}
-      />
+      />,
     );
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -105,8 +109,9 @@ describe("DOB Renders correctly", () => {
   it("must not fail any accessibility tests for populated data", async () => {
     const mockOnDataChange = jest.fn();
     const { container } = render(
-      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />
+      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />,
     );
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -116,8 +121,9 @@ describe("DOB Form Functional tests", () => {
   it("allows for day value to be changed", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />
+      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />,
     );
+
     fireEvent.change(screen.getByLabelText(/Day/, { selector: "input" }), {
       target: { value: "8" },
     });
@@ -129,8 +135,9 @@ describe("DOB Form Functional tests", () => {
   it("allows for month value to be changed", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />
+      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />,
     );
+
     fireEvent.change(screen.getByLabelText(/Month/, { selector: "input" }), {
       target: { value: "7" },
     });
@@ -142,8 +149,9 @@ describe("DOB Form Functional tests", () => {
   it("allows for year value to be changed", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />
+      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />,
     );
+
     fireEvent.change(screen.getByLabelText(/Year/, { selector: "input" }), {
       target: { value: "1980" },
     });
@@ -152,33 +160,36 @@ describe("DOB Form Functional tests", () => {
     expect(screen.getByDisplayValue("1980")).toBeInTheDocument();
   });
 
-  it("should only allow 2 characters for the day field", () => {
+  it("should only allow 2 characters for the day field", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />
+      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />,
     );
+
     fireEvent.change(screen.getByLabelText(/Day/, { selector: "input" }), {
       target: { value: "888" },
     });
     expect(screen.getByDisplayValue("11")).toBeInTheDocument();
   });
 
-  it("should only allow 2 characters for the month field", () => {
+  it("should only allow 2 characters for the month field", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />
+      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />,
     );
+
     fireEvent.change(screen.getByLabelText(/Month/, { selector: "input" }), {
       target: { value: "999" },
     });
     expect(screen.getByDisplayValue("12")).toBeInTheDocument();
   });
 
-  it("should only allow 4 characters for the year field", () => {
+  it("should only allow 4 characters for the year field", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />
+      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />,
     );
+
     fireEvent.change(screen.getByLabelText(/Year/, { selector: "input" }), {
       target: { value: "12345" },
     });
@@ -192,8 +203,9 @@ describe("DOB Form Functional tests", () => {
     yesterday.setDate(yesterday.getDate() - 1);
 
     render(
-      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />
+      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />,
     );
+
     fireEvent.change(screen.getByLabelText(/Day/), {
       target: { value: yesterday.getDay() },
     });
@@ -205,7 +217,7 @@ describe("DOB Form Functional tests", () => {
     });
     fireEvent.click(screen.getByRole("button"));
     expect(
-      await screen.findByText("You must be 18 or over to use this service")
+      await screen.findByText("You must be 18 or over to use this service"),
     ).toBeInTheDocument();
   });
 
@@ -216,8 +228,9 @@ describe("DOB Form Functional tests", () => {
     tomorrow.setDate(tomorrow.getDate() + 1);
 
     render(
-      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />
+      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />,
     );
+
     fireEvent.change(screen.getByLabelText(/Day/), {
       target: { value: tomorrow.getDay() },
     });
@@ -229,7 +242,7 @@ describe("DOB Form Functional tests", () => {
     });
     fireEvent.click(screen.getByRole("button"));
     expect(
-      await screen.findByText("You must be 18 or over to use this service")
+      await screen.findByText("You must be 18 or over to use this service"),
     ).toBeInTheDocument();
   });
 
@@ -240,8 +253,9 @@ describe("DOB Form Functional tests", () => {
     validDate.setFullYear(validDate.getDate() - 20);
 
     render(
-      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />
+      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />,
     );
+
     fireEvent.change(screen.getByLabelText(/Day/), {
       target: { value: validDate.getDay() },
     });
@@ -261,8 +275,9 @@ describe("DOB Form Functional tests", () => {
     tomorrow.setDate(tomorrow.getDate() + 1);
 
     render(
-      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />
+      <DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />,
     );
+
     fireEvent.change(screen.getByLabelText(/Day/), {
       target: { value: "x" },
     });
@@ -274,7 +289,7 @@ describe("DOB Form Functional tests", () => {
     });
     fireEvent.click(screen.getByRole("button"));
     expect(
-      await screen.findByText("Date of birth must be a real date")
+      await screen.findByText("Date of birth must be a real date"),
     ).toBeInTheDocument();
   });
 });
@@ -294,7 +309,7 @@ describe("User Login must display error summary header on invalid submission", (
           month: "",
           year: "",
         }}
-      />
+      />,
     );
     const buttons = screen.getAllByRole("button");
     userEvent.click(buttons[0]);

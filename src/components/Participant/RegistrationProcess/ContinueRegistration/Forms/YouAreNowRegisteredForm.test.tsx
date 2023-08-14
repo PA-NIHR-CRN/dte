@@ -1,6 +1,6 @@
 import { axe, toHaveNoViolations } from "jest-axe";
 import { createServer, Server } from "miragejs";
-import {render, screen, waitFor} from "../../../../../Helper/test-utils";
+import { render, screen, waitFor } from "../../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import YouAreNowRegisteredForm from "./YouAreNowRegisteredForm";
 import { ContinueRegistrationState } from "../../../../../types/ParticipantTypes";
@@ -60,7 +60,7 @@ beforeAll(() => {
             conversationId: null,
             version: 1,
           };
-        }
+        },
       );
     },
   });
@@ -77,16 +77,13 @@ describe("Demographics Api Success Tests", () => {
         data={testData}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
 
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
     expect(
       await screen.findByText(
-        "Thank you for registering for Be Part of Research"
-      )
+        "Thank you for registering for Be Part of Research",
+      ),
     ).toBeInTheDocument();
   });
 
@@ -96,12 +93,9 @@ describe("Demographics Api Success Tests", () => {
         data={testData}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
 
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

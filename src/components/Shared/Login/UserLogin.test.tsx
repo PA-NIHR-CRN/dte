@@ -35,7 +35,7 @@ beforeEach(() => {
             conversationId: null,
             version: 1,
           };
-        }
+        },
       );
     },
   });
@@ -48,21 +48,17 @@ afterEach(() => {
 describe("User Login must render correctly", () => {
   it("should not fail any accessibility tests", async () => {
     const { container } = render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
   it("renders correctly", async () => {
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const loginButton = screen.getAllByRole("button")[1];
     const links = screen.getAllByRole("link");
     expect(
-      screen.getByText("Sign in to Be Part of Research")
+      screen.getByText("Sign in to Be Part of Research"),
     ).toBeInTheDocument();
     const email = screen.getByLabelText("Email address");
     expect(email).toBeInTheDocument();
@@ -86,17 +82,13 @@ describe("User Login must render correctly", () => {
 describe("Email input must have correct attributes", () => {
   it("must have a required attribute", async () => {
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const emailInput = await screen.findByLabelText("Email address");
     expect(emailInput).toHaveAttribute("required");
   });
   it("must have a aria-required attribute of true", async () => {
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const emailInput = await screen.findByLabelText("Email address");
     const ariaRequiredValue = emailInput.getAttribute("aria-required");
     expect(emailInput).toHaveAttribute("aria-required");
@@ -104,9 +96,7 @@ describe("Email input must have correct attributes", () => {
   });
   it("must have a type attribute of email", async () => {
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const emailInput = await screen.findByLabelText("Email address");
     const typeValue = emailInput.getAttribute("type");
     expect(emailInput).toHaveAttribute("type");
@@ -114,9 +104,7 @@ describe("Email input must have correct attributes", () => {
   });
   it("must have a autocomplete attribute of email", async () => {
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const emailInput = await screen.findByLabelText("Email address");
     const autocompleteValue = emailInput.getAttribute("autocomplete");
     expect(emailInput).toHaveAttribute("autocomplete");
@@ -124,9 +112,7 @@ describe("Email input must have correct attributes", () => {
   });
   it("must have a spellcheck attribute set to false", async () => {
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const emailInput = await screen.findByLabelText("Email address");
     const spellcheckValue = emailInput.getAttribute("spellcheck");
     expect(emailInput).toHaveAttribute("spellcheck");
@@ -137,17 +123,13 @@ describe("Email input must have correct attributes", () => {
 describe("Password input must have correct attributes", () => {
   it("must have a required attribute", async () => {
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const passwordInput = await screen.findByLabelText("Password");
     expect(passwordInput).toHaveAttribute("required");
   });
   it("must have a aria-required attribute of true", async () => {
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const passwordInput = await screen.findByLabelText("Password");
     const ariaRequiredValue = passwordInput.getAttribute("aria-required");
     expect(passwordInput).toHaveAttribute("aria-required");
@@ -155,9 +137,7 @@ describe("Password input must have correct attributes", () => {
   });
   it("must have a type attribute of email", async () => {
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const passwordInput = await screen.findByLabelText("Password");
     const typeValue = passwordInput.getAttribute("type");
     expect(passwordInput).toHaveAttribute("type");
@@ -165,9 +145,7 @@ describe("Password input must have correct attributes", () => {
   });
   it("must have a autocomplete attribute of password", async () => {
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const passwordInput = await screen.findByLabelText("Password");
     const autocompleteValue = passwordInput.getAttribute("autocomplete");
     expect(passwordInput).toHaveAttribute("autocomplete");
@@ -175,9 +153,7 @@ describe("Password input must have correct attributes", () => {
   });
   it("must have a spellcheck attribute set to false", async () => {
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const passwordInput = await screen.findByLabelText("Password");
     const spellcheckValue = passwordInput.getAttribute("spellcheck");
     expect(passwordInput).toHaveAttribute("spellcheck");
@@ -285,9 +261,7 @@ describe.each([
   (emailAddress, validationError) => {
     test(`validates ${emailAddress} correctly`, async () => {
       render(<UserLogin />);
-      await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
       const emailInput = screen.getByLabelText("Email address");
       userEvent.type(emailInput, emailAddress);
       userEvent.click(screen.getByText("Sign in"));
@@ -295,7 +269,7 @@ describe.each([
         expect(await screen.findByText(validationError)).toBeInTheDocument();
       });
     });
-  }
+  },
 );
 
 describe.each([
@@ -325,44 +299,38 @@ describe.each([
   (emailAddress) => {
     test(`validates ${emailAddress} correctly`, async () => {
       render(<UserLogin />);
-      await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
       const emailInput = screen.getByLabelText("Email address");
       userEvent.type(emailInput, emailAddress);
       userEvent.click(screen.getByText("Sign in"));
       await waitFor(async () => {
         expect(
-          screen.queryByText("Enter your email address")
+          screen.queryByText("Enter your email address"),
         ).not.toBeInTheDocument();
         expect(
           screen.queryByText(
-            "Enter an email address in the correct format, like name@example.com"
-          )
+            "Enter an email address in the correct format, like name@example.com",
+          ),
         ).not.toBeInTheDocument();
       });
     });
-  }
+  },
 );
 
 describe("User Login functions correctly", () => {
   it("validates required fields when both are blank", async () => {
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     userEvent.click(screen.getByText("Sign in"));
     expect(
-      await screen.findByText("Enter an email address")
+      await screen.findByText("Enter an email address"),
     ).toBeInTheDocument();
     expect(await screen.findByText("Enter a password")).toBeInTheDocument();
   });
 
   it("send a login request for a valididated request", async () => {
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const emailInput = screen.getByLabelText("Email address");
     userEvent.type(emailInput, "valid@example.com");
     const passwordInput = screen.getByLabelText("Password");
@@ -379,7 +347,7 @@ describe("User Login functions correctly", () => {
           errors: [],
           conversationId: null,
           version: 1,
-        })
+        }),
       );
     };
   });
@@ -408,9 +376,7 @@ describe("Non Validated Account processes correctly", () => {
       };
     });
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const emailInput = screen.getByLabelText("Email address");
     userEvent.type(emailInput, "valid@example.com");
     const passwordInput = screen.getByLabelText("Password");
@@ -420,8 +386,8 @@ describe("Non Validated Account processes correctly", () => {
     expect(await screen.findByText("There is a problem")).toBeInTheDocument();
     expect(
       await screen.findByText(
-        "Enter the email address and password for a registered user account."
-      )
+        "Enter the email address and password for a registered user account.",
+      ),
     ).toBeInTheDocument();
     const buttons = await screen.findAllByRole("button");
     expect(buttons).toHaveLength(2);
@@ -432,9 +398,7 @@ describe("Non Validated Account processes correctly", () => {
 describe("User Login must display error summary header on invalid submission", () => {
   it("renders correctly", async () => {
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     userEvent.click(screen.getByText("Sign in"));
 
     const errors = await screen.findAllByRole("alert");
@@ -466,9 +430,7 @@ describe("Unknown Account processes correctly", () => {
       };
     });
     render(<UserLogin />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const emailInput = screen.getByLabelText("Email address");
     userEvent.type(emailInput, "valid@example.com");
     const passwordInput = screen.getByLabelText("Password");
@@ -478,8 +440,8 @@ describe("Unknown Account processes correctly", () => {
     expect(await screen.findByText("There is a problem")).toBeInTheDocument();
     expect(
       await screen.findByText(
-        "Enter the email address and password for a registered user account."
-      )
+        "Enter the email address and password for a registered user account.",
+      ),
     ).toBeInTheDocument();
     const buttons = await screen.findAllByRole("button");
     const links = screen.getAllByRole("link");

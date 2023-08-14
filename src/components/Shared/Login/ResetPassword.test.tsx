@@ -45,9 +45,7 @@ afterAll(() => {
 describe("Accessibility test", () => {
   it("should not fail any accessibility tests", async () => {
     const { container } = render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -56,27 +54,20 @@ describe("Accessibility test", () => {
 describe("Reset Password Form", () => {
   it("must render the form", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
   });
 });
 
 describe("Password must have correct attributes", () => {
   it("must have a required attribute", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const passwordInput = await screen.findByLabelText("Create your password");
     expect(passwordInput).toHaveAttribute("required");
   });
 
   it("must have a aria-required attribute of true", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const passwordInput = await screen.findByLabelText("Create your password");
     const ariaRequiredValue = passwordInput.getAttribute("aria-required");
     expect(passwordInput).toHaveAttribute("aria-required");
@@ -85,9 +76,7 @@ describe("Password must have correct attributes", () => {
 
   it("must have a type attribute of password", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const passwordInput = await screen.findByLabelText("Create your password");
     const typeValue = passwordInput.getAttribute("type");
     expect(passwordInput).toHaveAttribute("type");
@@ -96,9 +85,7 @@ describe("Password must have correct attributes", () => {
 
   it("must have an autocomplete attribute of given-name", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const passwordInput = await screen.findByLabelText("Create your password");
     const autoCompleteValue = passwordInput.getAttribute("autocomplete");
     expect(passwordInput).toHaveAttribute("autocomplete");
@@ -107,9 +94,7 @@ describe("Password must have correct attributes", () => {
 
   it("must have a spellcheck attribute set to false", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const passwordInput = await screen.findByLabelText("Create your password");
     const spellCheckValue = passwordInput.getAttribute("spellcheck");
     expect(passwordInput).toHaveAttribute("spellcheck");
@@ -120,22 +105,18 @@ describe("Password must have correct attributes", () => {
 describe("Confirm Password must have correct attributes", () => {
   it("must have a required attribute", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     expect(passwordConfInput).toHaveAttribute("required");
   });
 
   it("must have a aria-required attribute of true", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     const ariaRequiredValue = passwordConfInput.getAttribute("aria-required");
     expect(passwordConfInput).toHaveAttribute("aria-required");
@@ -144,11 +125,9 @@ describe("Confirm Password must have correct attributes", () => {
 
   it("must have a type attribute of password", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     const typeValue = passwordConfInput.getAttribute("type");
     expect(passwordConfInput).toHaveAttribute("type");
@@ -157,11 +136,9 @@ describe("Confirm Password must have correct attributes", () => {
 
   it("must have a spellcheck attribute set to false", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     const spellCheckValue = passwordConfInput.getAttribute("spellcheck");
     expect(passwordConfInput).toHaveAttribute("spellcheck");
@@ -172,9 +149,7 @@ describe("Confirm Password must have correct attributes", () => {
 describe("Validation must fail if both fields are empty", () => {
   it("Both require error messages must show when both fields are empty", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const continueButton = await screen.findByText("Save");
     fireEvent.click(continueButton);
     const errors = await screen.findAllByRole("presentation");
@@ -426,15 +401,13 @@ describe.each([
 ])("Validation must show correct error message", (password, expectedError) => {
   test(`for ${password}, returns ${expectedError}`, async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const continueButton = await screen.findByText("Save");
     const passwordInputBox = await screen.findByLabelText(
-      "Create your password"
+      "Create your password",
     );
     const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     fireEvent.change(passwordInputBox, { target: { value: password } });
     fireEvent.change(passwordConfInputBox, { target: { value: password } });
@@ -448,15 +421,13 @@ describe.each([
 describe("Validation must fail for non matching entries", () => {
   it("Invalid Password and Invalid Match must show for invalid password and non match", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const continueButton = await screen.findByText("Save");
     const passwordInputBox = await screen.findByLabelText(
-      "Create your password"
+      "Create your password",
     );
     const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     fireEvent.change(passwordInputBox, { target: { value: "1" } });
     fireEvent.change(passwordConfInputBox, { target: { value: "2" } });
@@ -464,24 +435,22 @@ describe("Validation must fail for non matching entries", () => {
     const errors = await screen.findAllByRole("presentation");
     expect(errors).toHaveLength(2);
     expect(errors[0].textContent).toBe(
-      "Error: Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter and 1 symbol"
+      "Error: Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter and 1 symbol",
     );
     expect(errors[1].textContent).toBe(
-      "Error: Enter the same password as above"
+      "Error: Enter the same password as above",
     );
   });
 
   it("Invalid Match must show for valid password and non match", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const continueButton = await screen.findByText("Save");
     const passwordInputBox = await screen.findByLabelText(
-      "Create your password"
+      "Create your password",
     );
     const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     fireEvent.change(passwordInputBox, {
       target: { value: "passwordElephant123!" },
@@ -491,7 +460,7 @@ describe("Validation must fail for non matching entries", () => {
     const errors = await screen.findAllByRole("presentation");
     expect(errors).toHaveLength(1);
     expect(errors[0].textContent).toBe(
-      "Error: Enter the same password as above"
+      "Error: Enter the same password as above",
     );
   });
 });
@@ -499,15 +468,13 @@ describe("Validation must fail for non matching entries", () => {
 describe("Validation must pass for matching valid entries", () => {
   it("Valid Password and Valid Match must pass", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const continueButton = await screen.findByText("Save");
     const passwordInputBox = await screen.findByLabelText(
-      "Create your password"
+      "Create your password",
     );
     const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     fireEvent.change(passwordInputBox, {
       target: { value: "passwordElephant123!" },
@@ -524,9 +491,7 @@ describe("Validation must pass for matching valid entries", () => {
 describe("Reset Password must display error summary header on invalid submission", () => {
   it("renders correctly", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
+
     const continueButton = await screen.findByText("Save");
     userEvent.click(continueButton);
 
@@ -539,9 +504,6 @@ describe("Reset Password must display error summary header on invalid submission
 describe("Password reset analytics", () => {
   it("must send the correct data", async () => {
     render(<ResetPassword />);
-    await waitFor(() => {
-      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-    });
 
     await waitFor(
       () => {
@@ -549,7 +511,7 @@ describe("Password reset analytics", () => {
           ["send", { hitType: "pageview", page: "/ResetPassword/choose" }],
         ]);
       },
-      { timeout: 1000 }
+      { timeout: 1000 },
     );
   });
 });

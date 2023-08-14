@@ -10,26 +10,23 @@ import { AppContext, Theme } from "../context/AppContext";
 import { AuthProvider } from "../context/AuthContext";
 import ManualLoginProvider from "../context/ManualLoginContext";
 import { ContentContext } from "../context/ContentContext";
-import fetchAndTransformContent from "./contenful/fetchAndTransformContent";
+import { getContent } from "./contenful/contentHandler";
 
 interface RenderProps {
   children?: any;
   initialRoutes?: { [name: string]: string }[];
 }
 
-// const { saveToken, logOutToken,isAuthenticated, } = useContext(AuthContext);
-
 function AllTheProviders({ children, initialRoutes }: RenderProps) {
   const [mockContent, setMockContent] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchAndTransformContent("en-GB", 500)
-      .then((content) => {
-        setMockContent(content);
-        setIsLoading(false);
-      })
-      .catch(console.error);
+    setIsLoading(true);
+    const savedContent = getContent();
+
+    setMockContent(savedContent);
+    setIsLoading(false);
   }, []);
 
   if (isLoading) return <div data-testid="loadingContent">Loading...</div>;
