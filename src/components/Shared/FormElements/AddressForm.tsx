@@ -1,7 +1,7 @@
 import { Grid } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import FormBaseProps from "./FormBaseProps";
 import PostcodeLookup, {
@@ -13,6 +13,7 @@ import ManualEntry, {
 import SelectAddress, {
   SelectAddressData,
 } from "./AddressFormComponents/SelectAddress";
+import { ContentContext } from "../../../context/ContentContext";
 
 type address = {
   addressLine1: string;
@@ -40,6 +41,7 @@ interface AddressFormProps extends FormBaseProps {
 }
 
 function AddressForm(props: AddressFormProps) {
+  const { content } = useContext(ContentContext);
   const {
     onDataChange,
     initialStateData,
@@ -174,7 +176,7 @@ function AddressForm(props: AddressFormProps) {
     <>
       {!hideHeader && (
         <DTEHeader as="h1" $variant={headerVariant}>
-          What is your home address?
+          {content["register2-address-header"]}
         </DTEHeader>
       )}
       {instructionText}

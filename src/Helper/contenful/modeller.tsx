@@ -64,9 +64,6 @@ const renderContent = (node: any, parentNodeType?: string) => {
   if (!node || !node.nodeType) {
     return null; // or some other default value
   }
-  if (node.summary) {
-    console.log("node.summary", node.summary);
-  }
   switch (node.nodeType) {
     case "document":
       return node.content.map((childNode: any) =>
@@ -133,7 +130,7 @@ const renderContent = (node: any, parentNodeType?: string) => {
     case "ordered-list":
       return <ol>{node.content.map(renderContent)}</ol>;
     case "embedded-entry-block":
-      const contentTypeID = node.data.target.sys.contentType.sys.id;
+      const contentTypeID = node?.data?.target?.sys?.contentType?.sys?.id;
 
       if (contentTypeID === "button") {
         return (
