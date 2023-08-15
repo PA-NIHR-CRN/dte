@@ -3,7 +3,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
-import { ReactNode, useState, ChangeEvent, useEffect } from "react";
+import { ReactNode, useState, ChangeEvent, useEffect, useContext } from "react";
 import DTERadio from "../../UI/DTERadio/DTERadio";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
@@ -14,6 +14,7 @@ import { Ethnicities } from "../../../../types/ReferenceData/Ethnicities";
 import EthnicityInformation from "./EthnicityInformation";
 import FormNavigationButtons from "../CommonElements/FormNavigationButtons";
 import Utils from "../../../../Helper/Utils";
+import { ContentContext } from "../../../../context/ContentContext";
 
 export type Ethnicity2FormData = {
   background: string;
@@ -41,6 +42,7 @@ function ConditionalInput(props: {
 }
 
 function Ethnicity2Form(props: Ethnicity2FormProps) {
+  const { content } = useContext(ContentContext);
   const {
     onDataChange,
     initialStateData,
