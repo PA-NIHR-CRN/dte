@@ -321,7 +321,7 @@ function UserLogin() {
                       disabled={loadingLogin}
                       $outlined
                     >
-                      {content["signin-button-register"]}
+                      {content["signin-button-registerwithbpor"]}
                     </DTERouteLink>
                   </ButtonWrapper>
                 </>

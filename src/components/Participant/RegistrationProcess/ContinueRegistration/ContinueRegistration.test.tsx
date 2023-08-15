@@ -62,7 +62,7 @@ describe("Accessibility test", () => {
   test("progress bar marked as aria hidden", async () => {
     render(<ContinueRegistration />);
 
-    const progressText = await screen.findByText("38% complete");
+    const progressText = await screen.findByText(/38\s?%\s?complete/i);
     expect(progressText).toBeInTheDocument();
     expect(progressText).toHaveAttribute("aria-hidden", "true");
   });

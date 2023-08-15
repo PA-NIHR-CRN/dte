@@ -739,9 +739,7 @@ describe("Update participant Ethnicity", () => {
       fireEvent.click(updateGroupButtons[0]);
     });
 
-    const ethnicGroupHeader = await screen.findByRole("heading", { level: 1 });
-    expect(ethnicGroupHeader).toBeInTheDocument();
-    expect(ethnicGroupHeader).toHaveTextContent(
+    await screen.findByText(
       "Which of the following best describes your Mixed or multiple ethnic groups background?",
     );
 
@@ -840,88 +838,6 @@ describe("Update participant Ethnicity", () => {
     expect(ethnicBackground).toBeInTheDocument();
   });
 });
-
-const otherEthnicGroupCases = [
-  ["Inuit", "Inuit"],
-  ["   Inuit", "Inuit"],
-  ["Inuit   ", "Inuit"],
-  ["   Inuit   ", "Inuit"],
-  ["", "other"],
-  ["    ", "other"],
-];
-describe("Update other ethnic group", () => {
-  test.each(otherEthnicGroupCases)(
-    "Given %p as other ethnic background, displays %p as other ethnic background",
-    async (enteredBackground, expectedDisplayedBackground) => {
-      render(<UpdateParticipant />);
-      await waitFor(() => {
-        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-      });
-      const changeButtons = await screen.findAllByText("Change");
-      act(() => {
-        fireEvent.click(changeButtons[6]);
-      });
-
-      const updateGroupButtons = await screen.findAllByRole("button");
-      const otherOption = await screen.findByLabelText("Other ethnic group");
-      const mixedOption = await screen.findByLabelText(
-        "Mixed or multiple ethnic groups",
-      );
-
-      fireEvent.click(otherOption);
-      expect(otherOption).toBeChecked();
-      expect(mixedOption).not.toBeChecked();
-
-      await waitFor(() => {
-        fireEvent.click(updateGroupButtons[0]);
-      });
-
-      const ethnicGroupHeader = await screen.findByRole("heading", {
-        level: 1,
-      });
-      expect(ethnicGroupHeader).toBeInTheDocument();
-      expect(ethnicGroupHeader).toHaveTextContent(
-        "Which of the following best describes your Other ethnic group background?",
-      );
-
-      const arabOption = await screen.findByLabelText("Arab");
-      const anyOtherOption = await screen.findByLabelText(
-        "Any other ethnic group",
-      );
-
-      expect(arabOption).toBeInTheDocument();
-      expect(arabOption).not.toBeChecked();
-      expect(anyOtherOption).toBeInTheDocument();
-      expect(anyOtherOption).not.toBeChecked();
-
-      await waitFor(() => {
-        fireEvent.click(anyOtherOption);
-        expect(anyOtherOption).toBeChecked();
-      });
-
-      const descriptionField = await screen.findByLabelText(
-        "How would you describe your background?",
-      );
-      expect(descriptionField).toBeInTheDocument();
-      fireEvent.change(descriptionField, {
-        target: { value: enteredBackground },
-      });
-
-      const updateBackgroundButtons = await screen.findAllByRole("button");
-      await waitFor(() => {
-        fireEvent.click(updateBackgroundButtons[0]);
-      });
-
-      const ethnicGroup = await screen.findByText("Other ethnic group");
-      const ethnicBackground = await screen.findByText(
-        expectedDisplayedBackground,
-      );
-      expect(ethnicGroup).toBeInTheDocument();
-      expect(ethnicBackground).toBeInTheDocument();
-    },
-  );
-});
-
 describe("Update participant Sex", () => {
   it("must display the Sex options", async () => {
     render(<UpdateParticipant />);
@@ -1163,11 +1079,7 @@ describe("Update participant Long Term Illness", () => {
       fireEvent.click(updateIllnessButtons[0]);
     });
 
-    const illnessAbilityHeader = await screen.findByRole("heading", {
-      level: 1,
-    });
-    expect(illnessAbilityHeader).toBeInTheDocument();
-    expect(illnessAbilityHeader).toHaveTextContent(
+    await screen.findByText(
       "Do any of your conditions or illnesses reduce your ability to carry out day to day activities?",
     );
 

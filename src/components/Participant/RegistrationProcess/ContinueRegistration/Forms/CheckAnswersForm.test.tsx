@@ -217,7 +217,8 @@ describe("Check Answers Form displays data correctly", () => {
       />,
     );
 
-    expect(screen.getByText("Areas of research")).toBeInTheDocument();
+    const allMatches = screen.getAllByText("Areas of research");
+    expect(allMatches).toHaveLength(2);
     expect(screen.getByText("Flu")).toBeInTheDocument();
   });
 });
@@ -265,7 +266,7 @@ describe("Check Answers Form Layout", () => {
     expect(changeButtons[7]).toHaveTextContent(
       "Change reduced ability to carry out daily activities",
     );
-    expect(changeButtons[8]).toHaveTextContent("Change areas of research");
+    expect(changeButtons[8]).toHaveTextContent("Change Areas of research");
   });
 
   it("must have the correct submit button", async () => {
