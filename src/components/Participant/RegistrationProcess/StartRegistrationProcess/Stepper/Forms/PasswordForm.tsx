@@ -218,10 +218,10 @@ function PasswordForm(props: PasswordFormProps) {
                   rules={{
                     required: {
                       value: true,
-                      message: content["reusable-validation-enter-password"],
+                      message: content["reusable-password-validation-required"],
                     },
                     validate: (value) => {
-                      let passwordError = `${content["reusable-validation-enter-password"]} ${content["reusable-text-that"]} `;
+                      let passwordError = `${content["reusable-password-validation-required"]} ${content["reusable-text-that"]} `;
                       requireErrorMessageComma = false;
                       validationSuccess = true;
                       const regExMinLength = new RegExp(
@@ -356,17 +356,17 @@ function PasswordForm(props: PasswordFormProps) {
                   rules={{
                     required: {
                       value: true,
-                      message: "Confirm the password",
+                      message: content["reusable-validation-confirm-password"],
                     },
                     validate: (value) => {
                       if (value === getValues().password) {
                         return true;
                       }
-                      return "Enter the same password as above";
+                      return content["reusable-validation-same-password"];
                     },
                   }}
                 />
-                <DTEButton>{content["reusable-Continue"]}</DTEButton>
+                <DTEButton>{content["reusable-button-continue"]}</DTEButton>
               </form>
             </Grid>
           </Grid>

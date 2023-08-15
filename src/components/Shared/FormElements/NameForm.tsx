@@ -132,7 +132,9 @@ function NameForm(props: NameFormProps) {
               }}
             />
             <FormNavigationButtons
-              nextButtonText={nextButtonText || content["reusable-Continue"]}
+              nextButtonText={
+                nextButtonText || content["reusable-button-continue"]
+              }
               showCancelButton={showCancelButton || false}
               onCancel={onCancel}
             />

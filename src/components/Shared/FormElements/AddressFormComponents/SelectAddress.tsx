@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
@@ -6,6 +6,7 @@ import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTESelect from "../../UI/DTESelect/DTESelect";
 import { Details, ContinueButton } from "./PostcodeLookup";
 import Utils from "../../../../Helper/Utils";
+import { ContentContext } from "../../../../context/ContentContext";
 
 type address = {
   addressLine1: string;
@@ -34,6 +35,7 @@ interface SelectAddressProps {
 }
 
 function SelectAddress(props: SelectAddressProps) {
+  const { content } = useContext(ContentContext);
   const {
     onDataChange,
     addresses,
@@ -168,7 +170,7 @@ function SelectAddress(props: SelectAddressProps) {
           <Grid item>{!hideInfo && <Details />}</Grid>
         </Grid>
         <ContinueButton
-          buttonText="Continue"
+          buttonText={content["reusable-button-continue"]}
           altButtonText={nextButtonText}
           showCancelButton={showCancelButton}
           onCancel={onCancel}

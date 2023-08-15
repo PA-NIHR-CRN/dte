@@ -1,11 +1,12 @@
 import { Grid } from "@material-ui/core";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Utils from "../../../../Helper/Utils";
 import ErrorMessageSummary from "../../ErrorMessageSummary/ErrorMessageSummary";
 import DTEInput from "../../UI/DTEInput/DTEInput";
 import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import { Details, ContinueButton } from "./PostcodeLookup";
+import { ContentContext } from "../../../../context/ContentContext";
 
 export type ManualEntryData = {
   addressLine1: string;
@@ -27,6 +28,7 @@ interface ManualEntryProps {
 }
 
 function ManualEntry(props: ManualEntryProps) {
+  const { content } = useContext(ContentContext);
   const {
     initialStateData,
     onDataChange,
@@ -219,7 +221,7 @@ function ManualEntry(props: ManualEntryProps) {
           <Grid item>{!hideInfo && <Details />}</Grid>
         </Grid>
         <ContinueButton
-          buttonText="Continue"
+          buttonText={content["reusable-button-continue"]}
           altButtonText={nextButtonText}
           showCancelButton={showCancelButton}
           onCancel={onCancel}

@@ -3,7 +3,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useContext, useEffect } from "react";
 import DTERadio from "../../UI/DTERadio/DTERadio";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
 import ethnicitiesStatic from "../../../../data/ethnicityData";
@@ -12,6 +12,7 @@ import { Ethnicities } from "../../../../types/ReferenceData/Ethnicities";
 import EthnicityInformation from "./EthnicityInformation";
 import FormNavigationButtons from "../CommonElements/FormNavigationButtons";
 import Utils from "../../../../Helper/Utils";
+import { ContentContext } from "../../../../context/ContentContext";
 
 export type Ethnicity1FormData = {
   ethnicity: string;
@@ -23,6 +24,7 @@ interface Ethnicity1FormProps extends FormBaseProps {
 }
 
 function Ethnicity1Form(props: Ethnicity1FormProps) {
+  const { content } = useContext(ContentContext);
   const {
     onDataChange,
     initialStateData,
@@ -128,7 +130,9 @@ function Ethnicity1Form(props: Ethnicity1FormProps) {
             studyType="groups"
           />
           <FormNavigationButtons
-            nextButtonText={nextButtonText || "Continue"}
+            nextButtonText={
+              nextButtonText || content["reusable-button-continue"]
+            }
             showCancelButton={showCancelButton || false}
             onCancel={onCancel}
           />

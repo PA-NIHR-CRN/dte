@@ -256,7 +256,8 @@ function ContinueRegistration() {
   };
 
   const nextButtonText = useMemo(
-    () => (changing ? content["reusable-Save"] : content["reusable-Continue"]),
+    () =>
+      changing ? content["reusable-Save"] : content["reusable-button-continue"],
     [changing],
   );
 

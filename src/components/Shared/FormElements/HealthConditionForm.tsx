@@ -110,7 +110,9 @@ function HealthConditionForm(props: HealthConditionFormProps) {
               </DTEDetails>
             )}
             <FormNavigationButtons
-              nextButtonText={nextButtonText || "Continue"}
+              nextButtonText={
+                nextButtonText || content["reusable-button-continue"]
+              }
               showCancelButton={showCancelButton || false}
               onCancel={onCancel}
             />

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Controller, useForm } from "react-hook-form";
@@ -10,6 +10,7 @@ import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import Utils from "../../../Helper/Utils";
+import { ContentContext } from "../../../context/ContentContext";
 
 export type MobileFormData = {
   mobileNumber?: string;
@@ -22,6 +23,7 @@ interface MobileNumberFormProps extends FormBaseProps {
 }
 
 function MobileNumberForm(props: MobileNumberFormProps) {
+  const { content } = useContext(ContentContext);
   const {
     onDataChange,
     initialStateData,
@@ -149,7 +151,7 @@ function MobileNumberForm(props: MobileNumberFormProps) {
           </DTEDetails>
         )}
         <FormNavigationButtons
-          nextButtonText={nextButtonText || "Continue"}
+          nextButtonText={nextButtonText || content["reusable-button-continue"]}
           showCancelButton={showCancelButton || false}
           onCancel={onCancel}
         />

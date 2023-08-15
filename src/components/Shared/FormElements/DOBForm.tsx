@@ -259,7 +259,9 @@ function DOBForm({
             </StyledFieldset>
             {!hideInfo && content["register-date-of-birth"]}
             <FormNavigationButtons
-              nextButtonText={nextButtonText || "Continue"}
+              nextButtonText={
+                nextButtonText || content["reusable-button-continue"]
+              }
               showCancelButton={showCancelButton || false}
               onCancel={onCancel}
             />

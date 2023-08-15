@@ -201,7 +201,9 @@ function SessionTimeoutModal() {
         </DTEHeader>
       )}
       <div className="govuk-body">{content["session-warning-modal-body"]}</div>
-      <DTEButton onClick={closeModal}>{content["reusable-Continue"]}</DTEButton>
+      <DTEButton onClick={closeModal}>
+        {content["reusable-button-continue"]}
+      </DTEButton>
     </dialog>
   );
 }

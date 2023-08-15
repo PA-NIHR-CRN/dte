@@ -2,7 +2,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useContext, useEffect } from "react";
 import DTERadio from "../UI/DTERadio/DTERadio";
 import DTEDetails from "../UI/DTEDetails/DTEDetails";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
@@ -10,6 +10,7 @@ import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import FormBaseProps from "./FormBaseProps";
 import Utils from "../../../Helper/Utils";
+import { ContentContext } from "../../../context/ContentContext";
 
 export type Disability2FormData = {
   disability?: string;
@@ -22,6 +23,7 @@ interface Disability2FormProps extends FormBaseProps {
 }
 
 function Disability2Form(props: Disability2FormProps) {
+  const { content } = useContext(ContentContext);
   let labelElement: ReactNode;
   const {
     onDataChange,
@@ -152,7 +154,9 @@ function Disability2Form(props: Disability2FormProps) {
         </DTEDetails>
       )}
       <FormNavigationButtons
-        nextButtonText={disability2NextButtonText || "Continue"}
+        nextButtonText={
+          disability2NextButtonText || content["reusable-button-continue"]
+        }
         showCancelButton={disability2ShowCancelButton || false}
         onCancel={onCancel}
       />

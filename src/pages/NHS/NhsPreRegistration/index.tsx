@@ -91,7 +91,7 @@ function NhsPreRegistration() {
               });
             }}
           >
-            {content["introduction-button-signin"]}
+            {content["reusable-button-signin"]}
           </DTEButton>
         </ButtonWrapper>
       </StepWrapper>

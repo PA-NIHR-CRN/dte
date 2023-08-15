@@ -201,7 +201,7 @@ function UserLogin() {
             <StyledGridElementLeft item xs={12} sm={10} md={11}>
               <DTEBackLink
                 href="/Participants/Options"
-                linkText={content["signin-link-back-link"]}
+                linkText={content["reusable-back-link"]}
               />
             </StyledGridElementLeft>
           </Grid>
@@ -257,15 +257,14 @@ function UserLogin() {
                       rules={{
                         required: {
                           value: true,
-                          message: content["signin-email-validation-required"],
+                          message:
+                            content["reusable-email-validation-required"],
                         },
 
                         pattern: {
                           value: EmailRegex,
                           message:
-                            content[
-                              "signin-email-validation-invalid-format-message"
-                            ],
+                            content["reusable-email-validation-invalid-format"],
                         },
                       }}
                     />
@@ -292,23 +291,23 @@ function UserLogin() {
                         required: {
                           value: true,
                           message:
-                            content["reusable-validation-enter-password"],
+                            content["reusable-password-validation-required"],
                         },
                       }}
                     />
                     <DTEContent>
-                      {content["signin-text-forgotten-password"]}
+                      {content["reusable-text-forgotten-password"]}
                       <DTERouteLink
                         to="/ForgottenPassword"
                         renderStyle="standard"
                         ariaLabel="reset your password here"
                       >
-                        {content["signin-link-forgotten-password"]}
+                        {content["reusable-link-forgotten-password"]}
                       </DTERouteLink>
                     </DTEContent>
                     <ButtonWrapper>
                       <DTEButton disabled={loadingLogin}>
-                        {content["signin-button-signin"]}
+                        {content["reusable-button-signin"]}
                       </DTEButton>
                     </ButtonWrapper>
                   </form>

@@ -3,7 +3,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useContext, useEffect } from "react";
 import DTERadio from "../UI/DTERadio/DTERadio";
 import DTEDetails from "../UI/DTEDetails/DTEDetails";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
@@ -11,6 +11,7 @@ import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import Utils from "../../../Helper/Utils";
+import { ContentContext } from "../../../context/ContentContext";
 
 export type SexFormData = {
   sexAtBirth: string;
@@ -24,6 +25,7 @@ interface SexFormProps extends FormBaseProps {
 }
 
 function SexForm(props: SexFormProps) {
+  const { content } = useContext(ContentContext);
   let questionHeader: ReactNode;
   const {
     onDataChange,
@@ -201,7 +203,9 @@ function SexForm(props: SexFormProps) {
             </DTEDetails>
           )}
           <FormNavigationButtons
-            nextButtonText={nextButtonText || "Continue"}
+            nextButtonText={
+              nextButtonText || content["reusable-button-continue"]
+            }
             showCancelButton={showCancelButton || false}
             onCancel={onCancel}
           />

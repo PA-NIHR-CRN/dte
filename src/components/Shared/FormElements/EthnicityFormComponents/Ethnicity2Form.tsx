@@ -218,7 +218,9 @@ function Ethnicity2Form(props: Ethnicity2FormProps) {
             studyType="backgrounds"
           />
           <FormNavigationButtons
-            nextButtonText={nextButtonText || "Continue"}
+            nextButtonText={
+              nextButtonText || content["reusable-button-continue"]
+            }
             showCancelButton={showCancelButton || false}
             onCancel={onCancel}
           />

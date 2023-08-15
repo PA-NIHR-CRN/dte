@@ -9,8 +9,6 @@ import { RegistrationProcessState } from "../../../../../../types/ParticipantTyp
 import ErrorMessageContainer from "../../../../../Shared/ErrorMessageContainer/ErrorMessageContainer";
 import DTEButton from "../../../../../Shared/UI/DTEButton/DTEButton";
 import DTEHeader from "../../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
-import DTEContent from "../../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
-import DTERouteLink from "../../../../../Shared/UI/DTERouteLink/DTERouteLink";
 import CheckYourEmail from "../../../../../Shared/FormElements/CommonElements/CheckYourEmail";
 import { ContentContext } from "../../../../../../context/ContentContext";
 
@@ -82,7 +80,7 @@ function CheckEmailForm(props: CheckEmailFormProps) {
         )}
         {/* Successfully hit the end point and response is positive */}
         {Utils.ConvertResponseToDTEResponse(response)?.isSuccess && (
-          <DocumentTitle title="Check your email - Volunteer Registration - Be Part of Research">
+          <DocumentTitle title={content["register-check-email-document-title"]}>
             <CheckYourEmail
               emailAddress={initialStateData?.emailFormData?.emailAddress}
             />
@@ -92,62 +90,28 @@ function CheckEmailForm(props: CheckEmailFormProps) {
         {Utils.ConvertResponseToDTEResponse(response)?.errors && !loading && (
           <>
             {Utils.ConvertResponseToDTEResponse(response)?.errors.some(
-              (e) => e?.customCode === "User_Not_In_Allow_List_Error",
-            ) && (
-              <DocumentTitle title="Unable to create account - Volunteer Registration - Be Part of Research">
-                <>
-                  <DTEHeader as="h1" $variant="h2">
-                    Unable to create account
-                  </DTEHeader>
-                  <DTEContent as="b" $marginBottom="medium">
-                    Your data has not been stored.
-                  </DTEContent>
-                  <DTEContent>
-                    The email address is not recognised by the service. If you
-                    want to help test this new service, contact
-                    bepartofresearch@nihr.ac.uk to sign up.
-                  </DTEContent>
-                  <DTERouteLink
-                    external
-                    to="https://bepartofresearch.nihr.ac.uk/"
-                  >
-                    Go to Be Part of Research homepage
-                  </DTERouteLink>
-                </>
-              </DocumentTitle>
-            )}
-            {Utils.ConvertResponseToDTEResponse(response)?.errors.some(
               (e) => e?.customCode === "SignUp_Error_Username_Exists",
             ) && (
-              <DocumentTitle title="Unable to create account - Volunteer Registration - Be Part of Research">
+              <DocumentTitle
+                title={content["register-check-email-fail-document-title"]}
+              >
                 <>
                   <DTEHeader as="h1" $variant="h2">
-                    Unable to create account
+                    {content["register-check-email-fail-header"]}
                   </DTEHeader>
-                  <DTEContent as="b" $marginBottom="medium">
-                    Your data has not been stored.
-                  </DTEContent>
-                  <DTEContent>
-                    The email address may already be registered or there may
-                    have been a technical issue. You can try again or reset
-                    password from the Sign in page.
-                  </DTEContent>
-                  <DTERouteLink to="/UserLogin">Sign in</DTERouteLink>
+                  {content["register-check-email-fail-body"]}
                 </>
               </DocumentTitle>
             )}
             {!Utils.ConvertResponseToDTEResponse(response)?.errors.some(
-              (e) => e?.customCode === "User_Not_In_Allow_List_Error",
-            ) &&
-              !Utils.ConvertResponseToDTEResponse(response)?.errors.some(
-                (e) => e?.customCode === "SignUp_Error_Username_Exists",
-              ) && (
-                <ErrorMessageContainer
-                  DTEAxiosErrors={[
-                    Utils.ConvertResponseToDTEResponse(response)?.errors,
-                  ]}
-                />
-              )}
+              (e) => e?.customCode === "SignUp_Error_Username_Exists",
+            ) && (
+              <ErrorMessageContainer
+                DTEAxiosErrors={[
+                  Utils.ConvertResponseToDTEResponse(response)?.errors,
+                ]}
+              />
+            )}
           </>
         )}
       </Grid>

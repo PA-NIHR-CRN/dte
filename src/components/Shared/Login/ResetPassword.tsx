@@ -266,11 +266,11 @@ function ResetPassword() {
                                   value: true,
                                   message:
                                     content[
-                                      "reusable-validation-enter-password"
+                                      "reusable-password-validation-required"
                                     ],
                                 },
                                 validate: (value) => {
-                                  let passwordError = `${content["reusable-validation-enter-password"]} that `;
+                                  let passwordError = `${content["reusable-password-validation-required"]} that `;
                                   requireErrorMessageComma = false;
                                   validationSuccess = true;
                                   const regExMinLength = new RegExp(

@@ -85,7 +85,7 @@ function EmailForm(props: EmailFormProps) {
               }}
             />
             {content["register-email-page"]}
-            <DTEButton>Continue</DTEButton>
+            <DTEButton>{content["reusable-button-continue"]}</DTEButton>
           </form>
         </Grid>
       </Grid>

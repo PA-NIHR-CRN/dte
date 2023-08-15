@@ -107,7 +107,7 @@ function ForgottenPassword() {
                             onValueChange={onChange}
                             onValueBlur={onBlur}
                             error={error?.message}
-                            label={content["resetpassword-input-email"]}
+                            label={content["reusable-text-email-address"]}
                             required
                             type="email"
                             autocomplete="email"
@@ -118,7 +118,7 @@ function ForgottenPassword() {
                           required: {
                             value: true,
                             message:
-                              content["signin-email-validation-required"],
+                              content["reusable-email-validation-required"],
                           },
                           pattern: {
                             value: EmailRegex,
@@ -178,7 +178,7 @@ function ForgottenPassword() {
                 )}
                 {loadingForgot && (
                   <LoadingIndicator
-                    text={content["resetpassword-submitting"]}
+                    text={content["resetpassword-loading-submitting"]}
                   />
                 )}
                 {errorForgot && (

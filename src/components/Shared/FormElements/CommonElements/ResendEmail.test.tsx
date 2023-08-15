@@ -1,5 +1,5 @@
 import { axe, toHaveNoViolations } from "jest-axe";
-import { render, screen, waitFor } from "../../../../Helper/test-utils";
+import { render } from "../../../../Helper/test-utils";
 import ResendEmail from "./ResendEmail";
 
 expect.extend(toHaveNoViolations);

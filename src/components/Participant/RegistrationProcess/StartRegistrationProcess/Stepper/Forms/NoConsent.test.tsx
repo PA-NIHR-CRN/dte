@@ -1,5 +1,5 @@
 import { axe, toHaveNoViolations } from "jest-axe";
-import { render, screen, waitFor } from "../../../../../../Helper/test-utils";
+import { render, screen } from "../../../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import NoConsent from "./NoConsent";
 

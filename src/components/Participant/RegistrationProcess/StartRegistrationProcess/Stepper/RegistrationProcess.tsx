@@ -182,7 +182,7 @@ function RegsitrationProcess() {
               handleRegistrationDataChange(data, "dobFormData")
             }
             initialStateData={registrationData.dobFormData}
-            nextButtonText={content["reusable-Continue"]}
+            nextButtonText={content["reusable-button-continue"]}
           />
         );
       case 2:
@@ -256,7 +256,7 @@ function RegsitrationProcess() {
         break;
       case 5:
         setRegistrationPageTitle(
-          content["register-check-email-document-title"],
+          content["register-check-email-registering-document-title"],
         );
         setGaURL("/registration/registering");
         break;
