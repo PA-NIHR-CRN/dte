@@ -11,8 +11,6 @@ import { AuthProvider } from "./context/AuthContext";
 import ScrollToTop from "./Helper/ScrollToTop";
 import { ContentProvider } from "./context/ContentContext";
 import "./Helper/translations";
-import { DevSupport } from "@react-buddy/ide-toolbox";
-import { ComponentPreviews, useInitial } from "./dev";
 
 const root = document.getElementById("root");
 
@@ -31,12 +29,7 @@ const app = (
         <AuthProvider>
           <ContentProvider>
             <ScrollToTop />
-            <DevSupport
-              ComponentPreviews={ComponentPreviews}
-              useInitialHook={useInitial}
-            >
-              <App />
-            </DevSupport>
+            <App />
           </ContentProvider>
         </AuthProvider>
       </Router>
