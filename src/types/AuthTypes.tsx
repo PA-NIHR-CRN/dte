@@ -16,19 +16,11 @@ export interface JWTDeCode {
   sub: string;
   identity_proofing_level: string;
 }
-
-export enum Role {
-  Participant,
-  Admin,
-  Researcher,
-  None,
-}
 export interface AuthContextProps {
   isInNHSApp: boolean;
   saveToken: (token: string) => void;
   logOutToken: () => void;
   isAuthenticated: () => boolean;
-  isAuthenticatedRole: (role: Role) => boolean;
   persistLastUrl: (url: string) => void;
   persistLastNonLoginUrl: (url: string) => void;
   token: string | null | undefined;
@@ -83,6 +75,7 @@ export interface NHSApp {
 export class SessionExpiryInfo {
   constructor(cookieValue: string | undefined) {
     if (cookieValue === undefined || !cookieValue) {
+      this.isLoggedIn = false;
       return;
     }
 

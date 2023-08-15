@@ -12,26 +12,6 @@ import { Disability2FormData } from "../components/Shared/FormElements/Disabilit
 import { HealthConditionFormData } from "../components/Shared/FormElements/HealthConditionForm";
 import { ConsentFormData } from "../components/Participant/RegistrationProcess/StartRegistrationProcess/Stepper/Forms/ConsentForm";
 
-export interface StudyInfo {
-  id: string;
-  title: string;
-  description: string;
-  sites: Site[];
-}
-export interface Site {
-  name: string;
-  rtsIdentifier: string;
-}
-
-export interface DTECommand {
-  type: string;
-  source: string;
-  id: string;
-  time: string;
-  dataContentType: string;
-  dataSchema: string;
-}
-
 export type RegistrationProcessState = {
   nameFormData: NameFormData;
   dobFormData: DOBFormData;

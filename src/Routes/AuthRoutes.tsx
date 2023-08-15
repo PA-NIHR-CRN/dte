@@ -1,7 +1,6 @@
 import { Route } from "react-router-dom";
 import React, { useContext } from "react";
 import ReactGA from "react-ga";
-import Login from "../components/Shared/Login/Login";
 import Logout from "../components/Shared/Login/Logout";
 import { AuthContext } from "../context/AuthContext";
 import UserLogin from "../components/Shared/Login/UserLogin";
@@ -28,7 +27,6 @@ const redirect = (pathOrigin: string) => {
 
 export default [
   /* Auth Routes */
-  <Route path="/Login" component={Login} strict key="login" />,
   <Route
     path="/UserLogin"
     render={(props) => {
