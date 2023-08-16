@@ -12,6 +12,10 @@ const client = createClient({
   space,
   accessToken,
   environment: contentfulEnvironment,
+  ...(process.env.REACT_APP_CONTENTFUL_PREVIEW_MODE && {
+    host: "preview.contentful.com",
+    accessToken: process.env.REACT_APP_CONTENTFUL_PREVIEW_ACCESS_TOKEN,
+  }),
 });
 
 export default client;

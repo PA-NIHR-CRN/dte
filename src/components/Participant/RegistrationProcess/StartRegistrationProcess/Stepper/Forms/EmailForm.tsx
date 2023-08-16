@@ -79,8 +79,7 @@ function EmailForm(props: EmailFormProps) {
                 required: { value: true, message: "Enter your email address" },
                 pattern: {
                   value: EmailRegex,
-                  message:
-                    "Enter an email address in the correct format, like name@example.com",
+                  message: content["reusable-email-validation-invalid-format"],
                 },
               }}
             />

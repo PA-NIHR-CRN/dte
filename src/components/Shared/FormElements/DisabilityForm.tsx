@@ -106,7 +106,7 @@ function DisabilityForm(props: DisabilityFormProps) {
               value="notSaying"
               defaultChecked={value === "notSaying"}
             >
-              Prefer not to say
+              {content["reusable-prefer-not-to-say"]}
             </Radios.Radio>
           </DTERadio>
         )}

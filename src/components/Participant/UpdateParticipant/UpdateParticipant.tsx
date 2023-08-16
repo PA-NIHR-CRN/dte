@@ -641,7 +641,9 @@ function UpdateParticipant() {
                     )}
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
-                        <DTEContent>Home address</DTEContent>
+                        <DTEContent>
+                          {content["reusable-home-address"]}
+                        </DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">
                         {formatDisplayAddress(userData.address)}
@@ -651,13 +653,17 @@ function UpdateParticipant() {
                           onClick={() => setCurrentDisplayPage("address")}
                         >
                           Change{" "}
-                          <StyledHiddenText>home address</StyledHiddenText>
+                          <StyledHiddenText>
+                            {content["reusable-home-address"].toLowerCase()}
+                          </StyledHiddenText>
                         </DTELinkButton>
                       </dd>
                     </div>
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
-                        <DTEContent>Phone number</DTEContent>
+                        <DTEContent>
+                          {content["reusable-phone-number"]}
+                        </DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">
                         {userData.mobile.mobileNumber ||
@@ -679,7 +685,9 @@ function UpdateParticipant() {
                             )}
                           </>
                         ) : (
-                          <DTEContent>Not provided</DTEContent>
+                          <DTEContent>
+                            {content["reusable-not-provided"]}
+                          </DTEContent>
                         )}
                       </dd>
                       <dd className="govuk-summary-list__actions">
@@ -687,7 +695,9 @@ function UpdateParticipant() {
                           onClick={() => setCurrentDisplayPage("mobile")}
                         >
                           Change{" "}
-                          <StyledHiddenText>phone number</StyledHiddenText>
+                          <StyledHiddenText>
+                            {content["reusable-phone-number"].toLowerCase()}
+                          </StyledHiddenText>
                         </DTELinkButton>
                       </dd>
                     </div>
@@ -722,7 +732,9 @@ function UpdateParticipant() {
                     )}
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
-                        <DTEContent>Sex registered at birth</DTEContent>
+                        <DTEContent>
+                          {content["reusable-sex-registered-at-birth"]}
+                        </DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
@@ -736,7 +748,9 @@ function UpdateParticipant() {
                         >
                           Change{" "}
                           <StyledHiddenText>
-                            sex registered at birth
+                            {content[
+                              "reusable-sex-registered-at-birth"
+                            ].toLowerCase()}
                           </StyledHiddenText>
                         </DTELinkButton>
                       </dd>
@@ -744,13 +758,15 @@ function UpdateParticipant() {
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
                         <DTEContent>
-                          Gender identity same as sex registered at birth
+                          {content[
+                            "reusable-gender-identity-same-as-sex-registered-at-birth"
+                          ].toLowerCase()}
                         </DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
                           {userData.sex.genderAtBirth === "noSay"
-                            ? "Prefer not to say"
+                            ? content["reusable-prefer-not-to-say"]
                             : userData.sex.genderAtBirth
                                 .charAt(0)
                                 .toUpperCase() +
@@ -763,14 +779,18 @@ function UpdateParticipant() {
                         >
                           Change{" "}
                           <StyledHiddenText>
-                            gender identity same as sex registered at birth
+                            {content[
+                              "reusable-gender-identity-same-as-sex-registered-at-birth"
+                            ].toLowerCase()}
                           </StyledHiddenText>
                         </DTELinkButton>
                       </dd>
                     </div>
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
-                        <DTEContent>Ethnic group</DTEContent>
+                        <DTEContent>
+                          {content["reusable-ethnic-group"]}
+                        </DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
@@ -782,13 +802,17 @@ function UpdateParticipant() {
                           onClick={() => setCurrentDisplayPage("ethnicity1")}
                         >
                           Change{" "}
-                          <StyledHiddenText>ethnic group</StyledHiddenText>
+                          <StyledHiddenText>
+                            {content["reusable-ethnic-group"].toLowerCase()}
+                          </StyledHiddenText>
                         </DTELinkButton>
                       </dd>
                     </div>
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
-                        <DTEContent>Ethnic background</DTEContent>
+                        <DTEContent>
+                          {content["reusable-ethnic-background"]}
+                        </DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
@@ -800,18 +824,24 @@ function UpdateParticipant() {
                           onClick={() => setCurrentDisplayPage("ethnicity2")}
                         >
                           Change{" "}
-                          <StyledHiddenText>ethnic background</StyledHiddenText>
+                          <StyledHiddenText>
+                            {content[
+                              "reusable-ethnic-background"
+                            ].toLowerCase()}
+                          </StyledHiddenText>
                         </DTELinkButton>
                       </dd>
                     </div>
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
-                        <DTEContent>Long-term conditions or illness</DTEContent>
+                        <DTEContent>
+                          {content["reusable-long-term-conditions-or-illness"]}
+                        </DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
                           {userData.disability.disability === "notSaying"
-                            ? "Prefer not to say"
+                            ? content["reusable-prefer-not-to-say"]
                             : userData.disability.disability
                                 .charAt(0)
                                 .toUpperCase() +
@@ -824,7 +854,9 @@ function UpdateParticipant() {
                         >
                           Change{" "}
                           <StyledHiddenText>
-                            long-term conditions or illness
+                            {content[
+                              "reusable-long-term-conditions-or-illness"
+                            ].toLowerCase()}
                           </StyledHiddenText>
                         </DTELinkButton>
                       </dd>
@@ -833,7 +865,11 @@ function UpdateParticipant() {
                       <div className="govuk-summary-list__row">
                         <dt className="govuk-summary-list__key">
                           <DTEContent>
-                            Reduced ability to carry out daily activities
+                            {
+                              content[
+                                "reusable-reduced-ability-to-carry-out-daily-activities"
+                              ]
+                            }
                           </DTEContent>
                         </dt>
                         <dd className="govuk-summary-list__value">
@@ -850,7 +886,9 @@ function UpdateParticipant() {
                           >
                             Change{" "}
                             <StyledHiddenText>
-                              reduced ability to carry out daily activities
+                              {content[
+                                "reusable-reduced-ability-to-carry-out-daily-activities"
+                              ].toLowerCase()}
                             </StyledHiddenText>
                           </DTELinkButton>
                         </dd>

@@ -128,7 +128,7 @@ function Home() {
                   {isNhsLinkedAccount
                     ? ""
                     : content["account-personal-details-body-nhs"]}
-                  {content["reusable-home-address"]}.
+                  {content["reusable-home-address"].toLowerCase()}.
                 </StyledDTEContent>
                 <DTEHR />
                 <StyledDTEHeader as="h2" $variant="h3">

@@ -18,7 +18,7 @@ function Newsletter() {
     <DocumentTitle title={content["newsletter-document-title"]}>
       <StyledWrapper role="main" id="main" ref={containerRef}>
         <Container>
-          <DTEBackLink href="/" linkText="Back" />
+          <DTEBackLink href="/" linkText={content["reusable-back-link"]} />
           <DTEHeader as="h1">{content["reusable-newsletter-header"]}</DTEHeader>
           {content["newsletter"]}
         </Container>

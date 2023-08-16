@@ -20,6 +20,7 @@ import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../Password/showHide";
 import ThreeWords from "../Password/threeWords";
 import { ContentContext } from "../../../context/ContentContext";
+import commonPasswords from "../../../data/commonPassword";
 
 interface PasswordPolicy {
   minimumLength: number;
@@ -76,7 +77,7 @@ function ResetPassword() {
     { useCache: false, manual: false },
   );
 
-  const requirementsConstruction = (
+  const requirementsConstructor = (
     constructor: string,
     clause: boolean,
     clauseText: string,
@@ -92,7 +93,7 @@ function ResetPassword() {
     return returnedValue;
   };
 
-  const errorConstruction = (
+  const errorConstructor = (
     errorConstructor: string,
     errorClause: boolean,
     errorCommaClauseText: string,
@@ -121,7 +122,7 @@ function ResetPassword() {
       const policy = Utils.ConvertResponseToDTEResponse(
         policyResponse,
       ) as unknown as PasswordPolicy;
-      let builder = `Your password must be ${policy.minimumLength} or more characters. You can use a mix of letters, numbers or symbols`;
+      let builder = `${content["register-password-policy-builder-char1"]} ${policy.minimumLength} ${content["register-password-policy-builder-char2"]}`;
       let requirements = "";
       if (
         policy.requireUppercase ||
@@ -129,27 +130,27 @@ function ResetPassword() {
         policy.requireNumbers ||
         policy.requireSymbols
       ) {
-        requirements += " which must include at least ";
+        requirements += content["register-password-policy-builder-include"];
       }
-      requirements = requirementsConstruction(
+      requirements = requirementsConstructor(
         requirements,
         policy.requireUppercase,
-        "1 capital letter",
+        content["register-password-policy-builder-include-uppercase"],
       );
-      requirements = requirementsConstruction(
+      requirements = requirementsConstructor(
         requirements,
         policy.requireLowercase,
-        "1 lowercase letter",
+        content["register-password-policy-builder-include-lowercase"],
       );
-      requirements = requirementsConstruction(
+      requirements = requirementsConstructor(
         requirements,
         policy.requireNumbers,
-        "1 number",
+        content["register-password-policy-builder-include-numbers"],
       );
-      requirements = requirementsConstruction(
+      requirements = requirementsConstructor(
         requirements,
         policy.requireSymbols,
-        "1 symbol",
+        content["register-password-policy-builder-include-symbols"],
       );
       if (
         policy.requireUppercase ||
@@ -157,7 +158,10 @@ function ResetPassword() {
         policy.requireNumbers ||
         policy.requireSymbols
       ) {
-        requirements = requirements.replace(/,([^,]*)$/, ` and$1`);
+        requirements = requirements.replace(
+          /,([^,]*)$/,
+          ` ${content["reusable-text-and"]}$1`,
+        );
       }
       builder += `${requirements}.`;
       setPolicyBuilder(builder);
@@ -204,7 +208,9 @@ function ResetPassword() {
   }, [passwordPolicy, submitResponse]);
 
   return (
-    <DocumentTitle title="Choose a new password - Volunteer Account - Be Part of Research">
+    <DocumentTitle
+      title={content["resetpassword-choose-password-document-title"]}
+    >
       <Grid container justifyContent="center" alignItems="center">
         <Grid item xs={10} sm={6} md={4}>
           <Box pt={isMobile ? 5 : 15} pb={isMobile ? 5 : 15}>
@@ -215,7 +221,9 @@ function ResetPassword() {
               justifyContent="center"
             >
               {policyLoading && (
-                <LoadingIndicator text="Loading password policy..." />
+                <LoadingIndicator
+                  text={content["reusable-password-policy-loading"]}
+                />
               )}
               {passwordPolicy && (
                 <Grid item xs={12}>
@@ -231,7 +239,9 @@ function ResetPassword() {
                                 ?.errors,
                             ]}
                           />
-                          <DTEHeader as="h1">Choose a new password</DTEHeader>
+                          <DTEHeader as="h1">
+                            {content["resetpassword-header-choose-password"]}
+                          </DTEHeader>
                           <ErrorMessageSummary
                             renderSummary={!isSubmitting}
                             errors={formErrors}
@@ -253,7 +263,11 @@ function ResetPassword() {
                                     setValue("password", e.target.value)
                                   }
                                   error={error?.message}
-                                  label="Create your password"
+                                  label={
+                                    content[
+                                      "reusable-password-validation-required"
+                                    ]
+                                  }
                                   required
                                   autocomplete="new-password"
                                   spellcheck={false}
@@ -270,42 +284,43 @@ function ResetPassword() {
                                     ],
                                 },
                                 validate: (value) => {
-                                  let passwordError = `${content["reusable-password-validation-required"]} that `;
+                                  let passwordError = `${content["reusable-password-validation-required"]} ${content["reusable-text-that"]} `;
                                   requireErrorMessageComma = false;
                                   validationSuccess = true;
                                   const regExMinLength = new RegExp(
                                     `^.{${passwordPolicy.minimumLength},}$`,
                                   );
                                   if (!regExMinLength.test(value)) {
-                                    passwordError += `is at least ${passwordPolicy.minimumLength} characters long`;
+                                    passwordError += `${content["reusable-text-is"]} ${content["register-password-policy-builder-at-least"]} ${passwordPolicy.minimumLength} ${content["register-password-policy-builder-char-long"]}`;
                                     minLengthErrorOccured = true;
-                                    includesStatement = " and includes ";
+                                    includesStatement = ` ${content["reusable-text-and"]} ${content["reusable-text-includes"]} `;
                                     validationSuccess = false;
                                   } else {
-                                    includesStatement = "includes ";
+                                    includesStatement = `${content["reusable-text-includes"]} `;
                                   }
+
                                   if (passwordPolicy.requireUppercase) {
-                                    passwordError = errorConstruction(
+                                    passwordError = errorConstructor(
                                       passwordError,
                                       !/[A-Z]/.test(value),
-                                      "at least 1 capital letter",
-                                      "at least 1 capital letter",
+                                      `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-uppercase"]}`,
+                                      `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-uppercase"]}`,
                                     );
                                   }
                                   if (passwordPolicy.requireLowercase) {
-                                    passwordError = errorConstruction(
+                                    passwordError = errorConstructor(
                                       passwordError,
                                       !/[a-z]/.test(value),
-                                      "1 lowercase letter",
-                                      "at least 1 lowercase letter",
+                                      `${content["register-password-policy-builder-include-lowercase"]}`,
+                                      `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-lowercase"]}`,
                                     );
                                   }
                                   if (passwordPolicy.requireNumbers) {
-                                    passwordError = errorConstruction(
+                                    passwordError = errorConstructor(
                                       passwordError,
                                       !/\d/.test(value),
-                                      "1 number",
-                                      "at least 1 number",
+                                      `${content["register-password-policy-builder-include-numbers"]}`,
+                                      `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-numbers"]}`,
                                     );
                                   }
                                   if (
@@ -318,21 +333,29 @@ function ResetPassword() {
                                         "\\",
                                       )}]`,
                                     );
-                                    passwordError = errorConstruction(
+
+                                    passwordError = errorConstructor(
                                       passwordError,
                                       !regExSymbols.test(value),
-                                      "1 symbol",
-                                      "at least 1 symbol",
+                                      `${content["register-password-policy-builder-include-symbols"]}`,
+                                      `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-symbols"]}`,
                                     );
                                   }
+
                                   includesStatement = "";
-                                  passwordError = errorConstruction(
+
+                                  passwordError = errorConstructor(
                                     passwordError,
                                     !/^[^ ]+$/.test(value),
-                                    "does not include spaces",
-                                    "does not include spaces",
+                                    content[
+                                      "register-password-policy-builder-include-no-spaces"
+                                    ],
+                                    content[
+                                      "register-password-policy-builder-include-no-spaces"
+                                    ],
                                     true,
                                   );
+
                                   if (passwordPolicy.allowedPasswordSymbols) {
                                     const regExIllegal = new RegExp(
                                       `[^a-zA-Z0-9 \\${passwordPolicy.allowedPasswordSymbols.replace(
@@ -340,18 +363,29 @@ function ResetPassword() {
                                         "\\",
                                       )}]`,
                                     );
-                                    passwordError = errorConstruction(
+                                    passwordError = errorConstructor(
                                       passwordError,
                                       regExIllegal.test(value),
-                                      "only includes symbols from this list ##allowedsymbols##",
-                                      "only includes symbols from this list ##allowedsymbols##",
+                                      `${content["register-password-policy-builder-symbol-list"]} ##allowedsymbols##`,
+                                      `${content["register-password-policy-builder-symbol-list"]} ##allowedsymbols##`,
                                       true,
                                     );
                                   }
+
                                   let finalErrorMessage = passwordError.replace(
                                     /,([^,]*)$/,
-                                    ` and$1`,
+                                    ` ${content["reusable-text-and"]}$1`,
                                   );
+
+                                  const isCommonPassword =
+                                    commonPasswords.includes(
+                                      value.toLowerCase(),
+                                    );
+                                  if (isCommonPassword) {
+                                    finalErrorMessage += `. ${content["register-password-policy-builder-symbol-list"]}`;
+                                    validationSuccess = false;
+                                  }
+
                                   if (passwordPolicy.allowedPasswordSymbols) {
                                     finalErrorMessage =
                                       finalErrorMessage.replace(
@@ -362,6 +396,7 @@ function ResetPassword() {
                                         ),
                                       );
                                   }
+
                                   return validationSuccess
                                     ? true
                                     : finalErrorMessage;
@@ -374,7 +409,9 @@ function ResetPassword() {
                               render={({ fieldState: { error } }) => (
                                 <PasswordShowHide
                                   id="password2"
-                                  label="Confirm your password"
+                                  label={
+                                    content["reusable-password-input-confirm"]
+                                  }
                                   error={error?.message}
                                   onValueChange={(e) =>
                                     setValue("password2", e.target.value)
@@ -387,21 +424,26 @@ function ResetPassword() {
                               )}
                               rules={{
                                 required: {
-                                  message: "Confirm the password",
                                   value: true,
+                                  message:
+                                    content[
+                                      "reusable-validation-confirm-password"
+                                    ],
                                 },
                                 validate: (value) => {
                                   if (value === getValues().password) {
                                     return true;
                                   }
-                                  return "Enter the same password as above";
+                                  return content[
+                                    "reusable-validation-same-password"
+                                  ];
                                 },
                               }}
                             />
                             <Grid container spacing={4} alignItems="center">
                               <Grid item xs={4}>
                                 <DTEButton $fullwidth disabled={loadingForgot}>
-                                  {content["reusable-Save"]}
+                                  {content["reusable-save"]}
                                 </DTEButton>
                               </Grid>
                               <Grid item>
@@ -410,7 +452,7 @@ function ResetPassword() {
                                     to="/UserLogin"
                                     renderStyle="standard"
                                   >
-                                    Cancel
+                                    {content["reusable-cancel"]}
                                   </DTERouteLink>
                                 </StyledDTEContent>
                               </Grid>
@@ -424,18 +466,9 @@ function ResetPassword() {
                       ) : (
                         <>
                           <DTEHeader as="h2">
-                            Unable to reset your password
+                            {content["resetpassword-header-failed"]}
                           </DTEHeader>
-                          <DTEContent>
-                            Your password reset link has expired as the link
-                            only lasts for 1 hour.
-                          </DTEContent>
-                          <DTEContent>
-                            You will need to reset your password again.
-                          </DTEContent>
-                          <DTERouteLink to="/ForgottenPassword">
-                            Reset your password
-                          </DTERouteLink>
+                          {content["resetpassword-failed-page"]}
                         </>
                       )}
                     </>
@@ -443,12 +476,18 @@ function ResetPassword() {
                   {submitResponse?.isSuccess && (
                     <>
                       <DTEHeader as="h2">
-                        Your password has been updated
+                        {content["resetpassword-header-updated"]}
                       </DTEHeader>
-                      <DTERouteLink to="/">Sign in</DTERouteLink>
+                      <DTERouteLink to="/">
+                        {content["reusable-button-signin"]}
+                      </DTERouteLink>
                     </>
                   )}
-                  {loadingForgot && <LoadingIndicator text="Submitting..." />}
+                  {loadingForgot && (
+                    <LoadingIndicator
+                      text={content["reusable-loading-submitting"]}
+                    />
+                  )}
                 </Grid>
               )}
             </Grid>

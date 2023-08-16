@@ -125,7 +125,7 @@ function Disability2Form(props: Disability2FormProps) {
               aria-label="I would prefer not to say how much my condition reduces my ability to carry out day to day activities"
               aria-labelledby=""
             >
-              Prefer not to say
+              {content["reusable-prefer-not-to-say"]}
             </Radios.Radio>
           </DTERadio>
         )}

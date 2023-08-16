@@ -37,7 +37,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
   const { content } = useContext(ContentContext);
   const { onCancel } = props;
   let requiresPolicyComma: boolean;
-  let requiresErrorMessageComma: boolean;
+  let requireErrorMessageComma: boolean;
   let minLengthErrorOccured: boolean;
   let validationSuccess = true;
   let includesStatement = "";
@@ -90,7 +90,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
     { useCache: false, manual: true },
   );
 
-  const requirementsBuilder = (
+  const requirementsConstructor = (
     initialiser: string,
     clause: boolean,
     clauseText: string,
@@ -106,7 +106,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
     return returnedValue;
   };
 
-  const errorBuilder = (
+  const errorConstructor = (
     initialiser: string,
     clause: boolean,
     commaClauseText: string,
@@ -116,14 +116,14 @@ function UpdatePasswordForm(props: FormBaseProps) {
     let returnedValue = initialiser;
     if (clause) {
       if (
-        requiresErrorMessageComma ||
+        requireErrorMessageComma ||
         (minLengthErrorOccured && specialInitialiser)
       ) {
         returnedValue += `, ${includesStatement}${commaClauseText}`;
       } else {
         returnedValue += `${includesStatement}${nonCommaClauseText}`;
       }
-      requiresErrorMessageComma = true;
+      requireErrorMessageComma = true;
       includesStatement = "";
       validationSuccess = false;
     }
@@ -135,7 +135,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
       const policy = Utils.ConvertResponseToDTEResponse(
         policyResponse,
       ) as unknown as PasswordPolicy;
-      let builder = `Your password must be ${policy.minimumLength} or more characters. You can use a mix of letters, numbers or symbols`;
+      let builder = `${content["register-password-policy-builder-char1"]} ${policy.minimumLength} ${content["register-password-policy-builder-char2"]}`;
       let requirements = "";
       if (
         policy.requireUppercase ||
@@ -143,27 +143,27 @@ function UpdatePasswordForm(props: FormBaseProps) {
         policy.requireNumbers ||
         policy.requireSymbols
       ) {
-        requirements += " which must include at least ";
+        requirements += content["register-password-policy-builder-include"];
       }
-      requirements = requirementsBuilder(
+      requirements = requirementsConstructor(
         requirements,
         policy.requireUppercase,
-        "1 capital letter",
+        content["register-password-policy-builder-include-uppercase"],
       );
-      requirements = requirementsBuilder(
+      requirements = requirementsConstructor(
         requirements,
         policy.requireLowercase,
-        "1 lowercase letter",
+        content["register-password-policy-builder-include-lowercase"],
       );
-      requirements = requirementsBuilder(
+      requirements = requirementsConstructor(
         requirements,
         policy.requireNumbers,
-        "1 number",
+        content["register-password-policy-builder-include-numbers"],
       );
-      requirements = requirementsBuilder(
+      requirements = requirementsConstructor(
         requirements,
         policy.requireSymbols,
-        "1 symbol",
+        content["register-password-policy-builder-include-symbols"],
       );
       if (
         policy.requireUppercase ||
@@ -171,7 +171,10 @@ function UpdatePasswordForm(props: FormBaseProps) {
         policy.requireNumbers ||
         policy.requireSymbols
       ) {
-        requirements = requirements.replace(/,([^,]*)$/, ` and$1`);
+        requirements = requirements.replace(
+          /,([^,]*)$/,
+          ` ${content["reusable-text-and"]}$1`,
+        );
       }
       builder += `${requirements}.`;
       setPolicyBuilder(builder);
@@ -201,7 +204,9 @@ function UpdatePasswordForm(props: FormBaseProps) {
 
   return (
     <>
-      {policyLoading && <LoadingIndicator text="Loading password policy..." />}
+      {policyLoading && (
+        <LoadingIndicator text={content["reusable-password-policy-loading"]} />
+      )}
       {passwordPolicy && (
         <>
           <DTEHeader as="h1" $variant={headerVariant}>
@@ -276,45 +281,48 @@ function UpdatePasswordForm(props: FormBaseProps) {
                     />
                   )}
                   rules={{
-                    required: { value: true, message: "Enter a new password" },
+                    required: {
+                      value: true,
+                      message: content["reusable-password-validation-required"],
+                    },
                     validate: (value) => {
-                      let passwordError = "Enter a new password that ";
-                      requiresErrorMessageComma = false;
+                      let passwordError = `${content["reusable-password-validation-required"]} ${content["reusable-text-that"]} `;
+                      requireErrorMessageComma = false;
                       validationSuccess = true;
                       const regExMinLength = new RegExp(
                         `^.{${passwordPolicy.minimumLength},}$`,
                       );
                       if (!regExMinLength.test(value)) {
-                        passwordError += `is at least ${passwordPolicy.minimumLength} characters long`;
+                        passwordError += `${content["reusable-text-is"]} ${content["register-password-policy-builder-at-least"]} ${passwordPolicy.minimumLength} ${content["register-password-policy-builder-char-long"]}`;
                         minLengthErrorOccured = true;
-                        includesStatement = " and includes ";
+                        includesStatement = ` ${content["reusable-text-and"]} ${content["reusable-text-includes"]} `;
                         validationSuccess = false;
                       } else {
-                        includesStatement = "includes ";
+                        includesStatement = `${content["reusable-text-includes"]} `;
                       }
 
                       if (passwordPolicy.requireUppercase) {
-                        passwordError = errorBuilder(
+                        passwordError = errorConstructor(
                           passwordError,
                           !/[A-Z]/.test(value),
-                          "at least 1 capital letter",
-                          "at least 1 capital letter",
+                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-uppercase"]}`,
+                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-uppercase"]}`,
                         );
                       }
                       if (passwordPolicy.requireLowercase) {
-                        passwordError = errorBuilder(
+                        passwordError = errorConstructor(
                           passwordError,
                           !/[a-z]/.test(value),
-                          "1 lowercase letter",
-                          "at least 1 lowercase letter",
+                          `${content["register-password-policy-builder-include-lowercase"]}`,
+                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-lowercase"]}`,
                         );
                       }
                       if (passwordPolicy.requireNumbers) {
-                        passwordError = errorBuilder(
+                        passwordError = errorConstructor(
                           passwordError,
                           !/\d/.test(value),
-                          "1 number",
-                          "at least 1 number",
+                          `${content["register-password-policy-builder-include-numbers"]}`,
+                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-numbers"]}`,
                         );
                       }
                       if (
@@ -328,21 +336,25 @@ function UpdatePasswordForm(props: FormBaseProps) {
                           )}]`,
                         );
 
-                        passwordError = errorBuilder(
+                        passwordError = errorConstructor(
                           passwordError,
                           !regExSymbols.test(value),
-                          "1 symbol",
-                          "at least 1 symbol",
+                          `${content["register-password-policy-builder-include-symbols"]}`,
+                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-symbols"]}`,
                         );
                       }
 
                       includesStatement = "";
 
-                      passwordError = errorBuilder(
+                      passwordError = errorConstructor(
                         passwordError,
                         !/^[^ ]+$/.test(value),
-                        "does not include spaces",
-                        "does not include spaces",
+                        content[
+                          "register-password-policy-builder-include-no-spaces"
+                        ],
+                        content[
+                          "register-password-policy-builder-include-no-spaces"
+                        ],
                         true,
                       );
 
@@ -353,26 +365,25 @@ function UpdatePasswordForm(props: FormBaseProps) {
                             "\\",
                           )}]`,
                         );
-                        passwordError = errorBuilder(
+                        passwordError = errorConstructor(
                           passwordError,
                           regExIllegal.test(value),
-                          "only includes symbols from this list ##allowedsymbols##",
-                          "only includes symbols from this list ##allowedsymbols##",
+                          `${content["register-password-policy-builder-symbol-list"]} ##allowedsymbols##`,
+                          `${content["register-password-policy-builder-symbol-list"]} ##allowedsymbols##`,
                           true,
                         );
                       }
 
                       let finalErrorMessage = passwordError.replace(
                         /,([^,]*)$/,
-                        ` and$1`,
+                        ` ${content["reusable-text-and"]}$1`,
                       );
 
                       const isCommonPassword = commonPasswords.includes(
                         value.toLowerCase(),
                       );
                       if (isCommonPassword) {
-                        finalErrorMessage +=
-                          ". You cannot use a commonly used password";
+                        finalErrorMessage += `. ${content["register-password-policy-builder-symbol-list"]}`;
                         validationSuccess = false;
                       }
 
@@ -410,13 +421,13 @@ function UpdatePasswordForm(props: FormBaseProps) {
                   rules={{
                     required: {
                       value: true,
-                      message: "Confirm the new password",
+                      message: content["reusable-validation-confirm-password"],
                     },
                     validate: (value) => {
                       if (value === getValues().newPassword) {
                         return true;
                       }
-                      return "Enter the same new password as above";
+                      return content["reusable-validation-same-password"];
                     },
                   }}
                 />

@@ -123,7 +123,9 @@ function ForgottenPassword() {
                           pattern: {
                             value: EmailRegex,
                             message:
-                              "Enter an email address in the correct format, like name@example.com",
+                              content[
+                                "reusable-email-validation-invalid-format"
+                              ],
                           },
                         }}
                       />
@@ -140,15 +142,15 @@ function ForgottenPassword() {
                 ) : (
                   <Grid container direction="column" spacing={2}>
                     <Grid item>
-                      <DTEHeader as="h1">Check your email</DTEHeader>
-                      <DTEContent>
-                        We&apos;ve sent an email to {watch("email")} with a link
-                        to reset your password. The link lasts for 1 hour.
+                      <DTEHeader as="h1">
+                        {content["reusable-check-your-email-header"]}
+                      </DTEHeader>
+                      <DTEContent as="b" $marginBottom="large">
+                        {content["reusable-check-email-bold-text"]}{" "}
+                        {watch("email")}
                       </DTEContent>
-                      <DTEContent>
-                        Unable to find it? Check your spam folder.
-                      </DTEContent>
-                      <DTEContent>Still unable to find the email?</DTEContent>
+                      {content["resetpassword-check-email-text-linksent"]}
+                      {content["reusable-check-email-body"]}
                     </Grid>
                     <Grid item xs={6}>
                       <DTEButton
@@ -171,14 +173,14 @@ function ForgottenPassword() {
                           });
                         }}
                       >
-                        Resend the email
+                        {content["resetpassword-button-resend-email"]}
                       </DTEButton>
                     </Grid>
                   </Grid>
                 )}
                 {loadingForgot && (
                   <LoadingIndicator
-                    text={content["resetpassword-loading-submitting"]}
+                    text={content["reusable-loading-submitting"]}
                   />
                 )}
                 {errorForgot && (

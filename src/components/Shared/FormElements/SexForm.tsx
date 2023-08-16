@@ -120,7 +120,7 @@ function SexForm(props: SexFormProps) {
                   aria-label="I am Female"
                   aria-labelledby=""
                 >
-                  Female
+                  {content["reusable-female"]}
                 </Radios.Radio>
                 <Radios.Radio
                   value="male"
@@ -128,7 +128,7 @@ function SexForm(props: SexFormProps) {
                   aria-label="I am Male"
                   aria-labelledby=""
                 >
-                  Male
+                  {content["reusable-male"]}
                 </Radios.Radio>
               </DTERadio>
             )}
@@ -173,7 +173,7 @@ function SexForm(props: SexFormProps) {
                   aria-label="I prefer not to say whether the gender I identify with is the same as my registered sex at birth "
                   aria-labelledby=""
                 >
-                  Prefer not to say
+                  {content["reusable-prefer-not-to-say"]}
                 </Radios.Radio>
               </DTERadio>
             )}

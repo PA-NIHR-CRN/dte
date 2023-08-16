@@ -76,7 +76,7 @@ function PasswordForm(props: PasswordFormProps) {
   );
 
   useEffect(() => {
-    setLoadingText(content["register-password-loading"]);
+    setLoadingText(content["reusable-password-policy-loading"]);
     setLoading(policyLoading || false);
   }, [setLoading, setLoadingText, policyLoading]);
 
