@@ -100,9 +100,7 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
-            <DTEContent>
-              {content["reusable-phone-number"].toLowerCase()}
-            </DTEContent>
+            <DTEContent>{content["reusable-phone-number"]}</DTEContent>
           </dt>
           <dd className="govuk-summary-list__value">
             {" "}
@@ -129,7 +127,7 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
             <DTELinkButton onClick={() => changeStep(1)}>
               Change{" "}
               <StyledCheckHiddenText>
-                {content["reusable-phone-number"]}
+                {content["reusable-phone-number"].toLowerCase()}
               </StyledCheckHiddenText>
             </DTELinkButton>
           </dd>
@@ -160,9 +158,11 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
             <DTEContent>
-              {content[
-                "reusable-gender-identity-same-as-sex-registered-at-birth"
-              ].toLowerCase()}
+              {
+                content[
+                  "reusable-gender-identity-same-as-sex-registered-at-birth"
+                ]
+              }
             </DTEContent>
           </dt>
           <dd className="govuk-summary-list__value">

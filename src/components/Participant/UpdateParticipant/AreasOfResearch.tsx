@@ -188,7 +188,9 @@ function AreasOfResearch() {
           <LoadingIndicator text="Loading your details..." />
         )}
         {demographicsPostLoading && (
-          <LoadingIndicator text="Updating your details..." />
+          <LoadingIndicator
+            text={content["reusable-loading-updating-details"]}
+          />
         )}
         <Container>
           <ErrorMessageContainer

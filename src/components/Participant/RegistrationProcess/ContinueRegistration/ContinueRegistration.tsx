@@ -61,7 +61,7 @@ function ContinueRegistration() {
   const history = useHistory();
   const [isUserConsented, setIsUserConsented] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState("");
+  const [loadingText, setLoadingText] = useState(content["reusable-loading"]);
   const [activeStep, setActiveStep] = useState(0);
   const [changing, setChanging] = useState(false);
   const [pageTitle, setPageTitle] = useState(
@@ -529,7 +529,7 @@ function ContinueRegistration() {
 
   // if consent is not given, redirect to the consent page
   if (loadingDetails) {
-    return <LoadingIndicator />;
+    return <LoadingIndicator text={content["reusable-loading"]} />;
   }
 
   return isUserConsented || !isNhsLinkedAccount ? (

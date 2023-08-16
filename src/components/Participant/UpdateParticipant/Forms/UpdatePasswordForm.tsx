@@ -223,12 +223,16 @@ function UpdatePasswordForm(props: FormBaseProps) {
             ]}
           />
           {updateUserPasswordPostLoading && (
-            <LoadingIndicator text="Updating your details..." />
+            <LoadingIndicator
+              text={content["reusable-loading-updating-details"]}
+            />
           )}
           {(updateUserPasswordPostError ||
             Utils.ConvertResponseToDTEResponse(updateUserPasswordPostResponse)
               ?.errors) && (
-            <ErrorMessageContainer description="Your password has not been updated. You may not have entered the current password correctly or there may have been a technical issue.">
+            <ErrorMessageContainer
+              description={content["update-password-error"]}
+            >
               <></>
             </ErrorMessageContainer>
           )}
@@ -247,7 +251,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
                         setValue("currentPassword", e.target.value)
                       }
                       error={error?.message}
-                      label="Current password"
+                      label={content["update-password-input-current"]}
                       required
                       autocomplete="current-password"
                       spellcheck={false}
@@ -258,7 +262,8 @@ function UpdatePasswordForm(props: FormBaseProps) {
                   rules={{
                     required: {
                       value: true,
-                      message: "Enter your current password",
+                      message:
+                        content["update-password-validation-required-current"],
                     },
                   }}
                 />
@@ -272,7 +277,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
                         setValue("newPassword", e.target.value)
                       }
                       error={error?.message}
-                      label="Create new password"
+                      label={content["update-password-input-create"]}
                       required
                       autocomplete="new-password"
                       spellcheck={false}
@@ -283,10 +288,10 @@ function UpdatePasswordForm(props: FormBaseProps) {
                   rules={{
                     required: {
                       value: true,
-                      message: content["reusable-password-validation-required"],
+                      message: content["update-password-validation-new"],
                     },
                     validate: (value) => {
-                      let passwordError = `${content["reusable-password-validation-required"]} ${content["reusable-text-that"]} `;
+                      let passwordError = `${content["update-password-validation-new"]} ${content["reusable-text-that"]} `;
                       requireErrorMessageComma = false;
                       validationSuccess = true;
                       const regExMinLength = new RegExp(
@@ -411,7 +416,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
                         setValue("confirmNewPassword", e.target.value)
                       }
                       error={error?.message}
-                      label="Confirm new password"
+                      label={content["update-password-input-confirm"]}
                       required
                       spellcheck={false}
                       buttonAriaLabelHide="Hide the entered password confirmation on screen"
@@ -421,18 +426,21 @@ function UpdatePasswordForm(props: FormBaseProps) {
                   rules={{
                     required: {
                       value: true,
-                      message: content["reusable-validation-confirm-password"],
+                      message:
+                        content["update-password-validation-confirm-password"],
                     },
                     validate: (value) => {
                       if (value === getValues().newPassword) {
                         return true;
                       }
-                      return content["reusable-validation-same-password"];
+                      return content[
+                        "update-password-validation-same-password"
+                      ];
                     },
                   }}
                 />
                 <FormNavigationButtons
-                  nextButtonText={content["reusable-Save"]}
+                  nextButtonText={content["reusable-save"]}
                   showCancelButton
                   onCancel={onCancel}
                 />

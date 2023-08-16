@@ -54,7 +54,7 @@ declare global {
 }
 
 function App() {
-  const { contentLoading } = useContext(ContentContext);
+  const { contentLoading, content } = useContext(ContentContext);
   const [theme, setTheme] = React.useState(Theme.Light);
   const [showHeader, setShowHeader] = React.useState(true);
   const [showSplotches, setShowSplotches] = React.useState(false);
@@ -79,7 +79,7 @@ function App() {
         <div className="App Site">
           <AppRoot />
           {contentLoading ? (
-            <LoadingIndicator />
+            <LoadingIndicator text={content["reusable-loading"]} />
           ) : (
             <>
               <AppContext.Provider

@@ -113,7 +113,7 @@ function AccountSettings() {
   return (
     <DocumentTitle title={pageTitle}>
       <StyledWrapper role="main" id="main" ref={containerRef}>
-        {loading && <LoadingIndicator />}
+        {loading && <LoadingIndicator text={content["reusable-loading"]} />}
         <Container>
           {currentPage === "main" && <DTEBackLink href="/" linkText="Back" />}
           {currentPage === "main" && (

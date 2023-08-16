@@ -562,7 +562,9 @@ function UpdateParticipant() {
       <StyledWrapper role="main" id="main" ref={containerRef}>
         {(loading || demographicsLoading) && <LoadingIndicator />}
         {(detailsPostLoading || demographicsPostLoading) && (
-          <LoadingIndicator text="Updating your details..." />
+          <LoadingIndicator
+            text={content["reusable-loading-updating-details"]}
+          />
         )}
         <Container>
           {currentPage === "main" && <DTEBackLink href="/" linkText="Back" />}
@@ -758,9 +760,11 @@ function UpdateParticipant() {
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
                         <DTEContent>
-                          {content[
-                            "reusable-gender-identity-same-as-sex-registered-at-birth"
-                          ].toLowerCase()}
+                          {
+                            content[
+                              "reusable-gender-identity-same-as-sex-registered-at-birth"
+                            ]
+                          }
                         </DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">

@@ -72,7 +72,7 @@ function Home() {
   return (
     <DocumentTitle title={content["account-document-title"]}>
       <StyledGrid container direction="row" role="main" id="main">
-        {loading && <LoadingIndicator />}
+        {loading && <LoadingIndicator text={content["reusable-loading"]} />}
         <Grid item sm={1} md={2} />
         <Grid item xs={12} sm={8} md={7} lg={6} xl={5}>
           {Utils.ConvertResponseToDTEResponse(response)?.isSuccess &&

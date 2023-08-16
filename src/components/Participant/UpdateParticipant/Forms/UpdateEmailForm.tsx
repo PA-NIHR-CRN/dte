@@ -94,7 +94,7 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
         </ErrorMessageContainer>
       )}
       {updateUserEmailPostLoading && (
-        <LoadingIndicator text="Updating your details..." />
+        <LoadingIndicator text={content["reusable-loading-updating-details"]} />
       )}
       <Grid container>
         <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { TextField, Button, Grid, makeStyles } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
@@ -8,8 +8,10 @@ import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContainer";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import { ContentContext } from "../../../context/ContentContext";
 
 function UserRegistration() {
+  const { content } = useContext(ContentContext);
   const {
     register,
     handleSubmit,
@@ -138,7 +140,9 @@ function UserRegistration() {
               Registration Failed: {dataRegister?.errorMessage}
             </DTEHeader>
           )}
-          {loadingRegister && <LoadingIndicator />}
+          {loadingRegister && (
+            <LoadingIndicator text={content["reusable-loading"]} />
+          )}
           {errorRegister?.isAxiosError && (
             <Grid item xs={12}>
               <DTEPaper className={classes.paper}>

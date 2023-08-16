@@ -33,7 +33,7 @@ const PercentageGrid = styled(Grid)`
 function RegsitrationProcess() {
   const { content } = useContext(ContentContext);
   const [loading, setLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState("");
+  const [loadingText, setLoadingText] = useState(content["reusable-loading"]);
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
   const [registrationPageTitle, setRegistrationPageTitle] = useState(

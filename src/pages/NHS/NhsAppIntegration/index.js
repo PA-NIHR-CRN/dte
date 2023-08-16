@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import LoadingIndicator from "../../../components/Shared/LoadingIndicator/LoadingIndicator";
+import { ContentContext } from "../../../context/ContentContext";
 
 function NhsAppIntegration() {
+  const { content } = useContext(ContentContext);
   const { search } = useLocation();
   const assertedLoginIdentity = new URLSearchParams(search).get(
     "assertedLoginIdentity",
@@ -16,7 +18,7 @@ function NhsAppIntegration() {
     window.location.href = `${nhsBaseDomain}/authorize?prompt=none&client_id=${clientId}&scope=${scope}&asserted_login_identity=${assertedLoginIdentity}&response_type=code&state=ssointegration&redirect_uri=${redirectUri}/callback`;
   }, [assertedLoginIdentity]);
 
-  return <LoadingIndicator text="Loading..." />;
+  return <LoadingIndicator text={content["reusable-loading"]} />;
 }
 
 export default NhsAppIntegration;

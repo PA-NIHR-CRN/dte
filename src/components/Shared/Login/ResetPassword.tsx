@@ -264,9 +264,7 @@ function ResetPassword() {
                                   }
                                   error={error?.message}
                                   label={
-                                    content[
-                                      "reusable-password-validation-required"
-                                    ]
+                                    content["reusable-password-input-create"]
                                   }
                                   required
                                   autocomplete="new-password"

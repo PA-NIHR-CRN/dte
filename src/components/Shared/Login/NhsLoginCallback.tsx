@@ -4,10 +4,13 @@ import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import Utils from "../../../Helper/Utils";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import { AuthContext } from "../../../context/AuthContext";
+import { ContentContext } from "../../../context/ContentContext";
 
 const userIsUnderageErrorCode = "User_Is_Underage";
 const unableToMatchAccounts = "Unable_To_Match_Accounts";
 function NhsLoginCallback() {
+  const { content } = useContext(ContentContext);
+
   const { search } = useLocation();
   const authCode = new URLSearchParams(search).get("code");
   const error = new URLSearchParams(search).get("error");
@@ -65,7 +68,7 @@ function NhsLoginCallback() {
   }, [response]);
 
   if (loading) {
-    return <LoadingIndicator text="Loading..." />;
+    return <LoadingIndicator text={content["reusable-loading"]} />;
   }
 
   return null;

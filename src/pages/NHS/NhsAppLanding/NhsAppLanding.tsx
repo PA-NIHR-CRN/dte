@@ -56,7 +56,7 @@ function NhsAppLanding() {
       )}
 
       <StepWrapper>
-        {loading && <LoadingIndicator />}
+        {loading && <LoadingIndicator text={content["reusable-loading"]} />}
         {!loading && !completedDemographics && (
           <>
             <DTEHeader as="h1">Be Part of Research</DTEHeader>
