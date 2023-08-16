@@ -54,7 +54,7 @@ declare global {
 }
 
 function App() {
-  const { contentLoading, content } = useContext(ContentContext);
+  const { contentLoading } = useContext(ContentContext);
   const [theme, setTheme] = React.useState(Theme.Light);
   const [showHeader, setShowHeader] = React.useState(true);
   const [showSplotches, setShowSplotches] = React.useState(false);
