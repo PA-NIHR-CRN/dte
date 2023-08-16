@@ -952,7 +952,7 @@ function UpdateParticipant() {
                 firstName: userData?.name.firstName || "",
                 lastName: userData?.name.lastName || "",
               }}
-              nextButtonText={content["reusable-Save"]}
+              nextButtonText={content["reusable-save"]}
               showCancelButton
             />
           </Container>
@@ -981,7 +981,7 @@ function UpdateParticipant() {
                   postcode: "",
                 }
               }
-              nextButtonText={content["reusable-Save"]}
+              nextButtonText={content["reusable-save"]}
               showCancelButton
             />
           </Container>
@@ -1003,7 +1003,7 @@ function UpdateParticipant() {
                   disability: "no",
                 }
               }
-              nextButtonText={content["reusable-Save"]}
+              nextButtonText={content["reusable-save"]}
               hideHeader
               showCancelButton
               instructionText={
@@ -1043,7 +1043,7 @@ function UpdateParticipant() {
                 disabilityDescription:
                   userData?.disabilityDescription.disabilityDescription,
               }}
-              nextButtonText={content["reusable-Save"]}
+              nextButtonText={content["reusable-save"]}
               showCancelButton
             />
           </Container>
@@ -1110,7 +1110,7 @@ function UpdateParticipant() {
                   background: "",
                 }
               }
-              nextButtonText={content["reusable-Save"]}
+              nextButtonText={content["reusable-save"]}
               showCancelButton
               ethnicity={userData?.ethnicity1.ethnicity || "other"}
             />
@@ -1134,7 +1134,7 @@ function UpdateParticipant() {
                   landlineNumber: "",
                 }
               }
-              nextButtonText={content["reusable-Save"]}
+              nextButtonText={content["reusable-save"]}
               showCancelButton
             />
           </Container>
@@ -1158,7 +1158,7 @@ function UpdateParticipant() {
                   year: "",
                 }
               }
-              nextButtonText={content["reusable-Save"]}
+              nextButtonText={content["reusable-save"]}
               showCancelButton
             />
           </Container>
@@ -1181,7 +1181,7 @@ function UpdateParticipant() {
                   genderAtBirth: "",
                 }
               }
-              nextButtonText={content["reusable-Save"]}
+              nextButtonText={content["reusable-save"]}
               showCancelButton
               hideNextQuestionText
             />

@@ -10,7 +10,7 @@ describe("LoadingIndicator Component Tests", () => {
     const loadingMessage = "Loading...";
     render(
       <StyledComponentsThemeProvider theme={styledComponentsTheme}>
-        <LoadingIndicator text={content["reusable-loading"]} />
+        <LoadingIndicator />
       </StyledComponentsThemeProvider>,
     );
     expect(screen.queryByText(loadingMessage)).toBeInTheDocument();

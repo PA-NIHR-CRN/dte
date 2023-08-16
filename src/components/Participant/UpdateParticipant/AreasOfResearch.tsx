@@ -223,7 +223,7 @@ function AreasOfResearch() {
                     conditions: [],
                   }
                 }
-                nextButtonText={content["reusable-Save"]}
+                nextButtonText={content["reusable-save"]}
                 showCancelButton
               />
             )}

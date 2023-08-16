@@ -174,7 +174,7 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
               </DTEContent>
             </DTEDetails>
             <FormNavigationButtons
-              nextButtonText={content["reusable-Save"]}
+              nextButtonText={content["reusable-save"]}
               showCancelButton
               onCancel={onCancel}
             />

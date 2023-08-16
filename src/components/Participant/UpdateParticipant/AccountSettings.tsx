@@ -169,7 +169,7 @@ function AccountSettings() {
               onCancel={() => {
                 setCurrentDisplayPage("main");
               }}
-              nextButtonText={content["reusable-Save"]}
+              nextButtonText={content["reusable-save"]}
               showCancelButton
             />
           )}
@@ -178,7 +178,7 @@ function AccountSettings() {
               onCancel={() => {
                 setCurrentDisplayPage("main");
               }}
-              nextButtonText={content["reusable-Save"]}
+              nextButtonText={content["reusable-save"]}
               showCancelButton
             />
           )}
