@@ -79,7 +79,7 @@ function App() {
         <div className="App Site">
           <AppRoot />
           {contentLoading ? (
-            <LoadingIndicator text={content["reusable-loading"]} />
+            <LoadingIndicator />
           ) : (
             <>
               <AppContext.Provider
