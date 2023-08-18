@@ -11,6 +11,7 @@ import { AuthProvider } from "./context/AuthContext";
 import ScrollToTop from "./Helper/ScrollToTop";
 import { ContentProvider } from "./context/ContentContext";
 import "./Helper/translations";
+import { UserProvider } from "./context/UserContext";
 
 const root = document.getElementById("root");
 
@@ -27,10 +28,12 @@ const app = (
     >
       <Router>
         <AuthProvider>
-          <ContentProvider>
-            <ScrollToTop />
-            <App />
-          </ContentProvider>
+          <UserProvider>
+            <ContentProvider>
+              <ScrollToTop />
+              <App />
+            </ContentProvider>
+          </UserProvider>
         </AuthProvider>
       </Router>
     </SnackbarProvider>

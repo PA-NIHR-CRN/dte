@@ -47,6 +47,7 @@ import LoadingIndicator from "../../../Shared/LoadingIndicator/LoadingIndicator"
 import Utils from "../../../../Helper/Utils";
 import ConsentForm from "../StartRegistrationProcess/Stepper/Forms/ConsentForm";
 import { ContentContext } from "../../../../context/ContentContext";
+import { UserContext } from "../../../../context/UserContext";
 
 const PercentageGrid = styled(Grid)`
   && {
@@ -58,11 +59,16 @@ const PercentageGrid = styled(Grid)`
 function ContinueRegistration() {
   const { content } = useContext(ContentContext);
   const { isNhsLinkedAccount, isInNHSApp } = useContext(AuthContext);
+  const {
+    continueRegistrationActiveStep: activeStep,
+    setContinueRegistrationActiveStep: setActiveStep,
+    continueRegistrationData: registrationData,
+    setContinueRegistrationData: setRegistrationData,
+  } = useContext(UserContext);
   const history = useHistory();
   const [isUserConsented, setIsUserConsented] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState(content["reusable-loading"]);
-  const [activeStep, setActiveStep] = useState(0);
   const [changing, setChanging] = useState(false);
   const [pageTitle, setPageTitle] = useState(
     content["register2-address-document-title"],
@@ -94,42 +100,6 @@ function ContinueRegistration() {
 
   const [cancelData, setCancelData] =
     useState<ContinueRegistrationState | null>(null);
-  const [registrationData, setRegistrationData] =
-    useState<ContinueRegistrationState>({
-      addressFormData: {
-        address: {
-          addressLine1: "",
-          addressLine2: "",
-          addressLine3: "",
-          addressLine4: "",
-          town: "",
-        },
-        postcode: "",
-      } as AddressFormData,
-      mobileFormData: {
-        mobileNumber: undefined,
-        landlineNumber: undefined,
-      } as MobileFormData,
-      ethnicity1FormData: {
-        ethnicity: "",
-      } as Ethnicity1FormData,
-      ethnicity2FormData: {
-        background: "",
-      } as Ethnicity2FormData,
-      disabilityFormData: {
-        disability: "",
-      } as DisabilityFormData,
-      disability2FormData: {
-        disabilityDescription: "",
-      } as Disability2FormData,
-      healthConditionFormData: {
-        conditions: [],
-      } as HealthConditionFormData,
-      sexFormData: {
-        sexAtBirth: "",
-        genderAtBirth: "",
-      } as SexFormData,
-    });
 
   const LinearProps: LinearProgressPropsData = {
     "aria-label": "Registration",

@@ -16,12 +16,12 @@ import DTEStepper, {
   LinearProgressPropsData,
 } from "../../../../Shared/UI/DTEStepper/DTEStepper";
 import CheckEmailForm from "./Forms/CheckEmailForm";
-import { RegistrationProcessState } from "../../../../../types/ParticipantTypes";
 import DTEContent from "../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import ConsentForm, { ConsentFormData } from "./Forms/ConsentForm";
 import NoConsent from "./Forms/NoConsent";
 import LoadingIndicator from "../../../../Shared/LoadingIndicator/LoadingIndicator";
 import { ContentContext } from "../../../../../context/ContentContext";
+import { UserContext } from "../../../../../context/UserContext";
 
 const PercentageGrid = styled(Grid)`
   && {
@@ -32,37 +32,15 @@ const PercentageGrid = styled(Grid)`
 
 function RegsitrationProcess() {
   const { content } = useContext(ContentContext);
+  const { activeStep, setActiveStep, registrationData, setRegistrationData } =
+    useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState(content["reusable-loading"]);
   const history = useHistory();
-  const [activeStep, setActiveStep] = useState(0);
   const [registrationPageTitle, setRegistrationPageTitle] = useState(
     content["register-name-document-title"],
   );
   const [gaURL, setGaURL] = useState("/registration/name");
-  const [registrationData, setRegistrationData] =
-    useState<RegistrationProcessState>({
-      nameFormData: {
-        firstName: "",
-        lastName: "",
-      },
-      dobFormData: {
-        day: "",
-        month: "",
-        year: "",
-      } as DOBFormData,
-      emailFormData: {
-        emailAddress: "",
-      },
-      passwordFormData: {
-        password: "",
-        password2: "",
-      },
-      consentFormData: {
-        consent: false,
-        consentContact: false,
-      } as ConsentFormData,
-    });
 
   const stepperRef = createRef<HTMLElement>();
 

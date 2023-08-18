@@ -44,6 +44,7 @@ import Disability2Form, {
 import { AuthContext } from "../../../context/AuthContext";
 import ethnicities from "../../../data/ethnicityData";
 import { ContentContext } from "../../../context/ContentContext";
+import { UserContext } from "../../../context/UserContext";
 
 interface UserDataState {
   address: AddressFormData;
@@ -79,7 +80,7 @@ function UpdateParticipant() {
   const { content } = useContext(ContentContext);
   const { isNhsLinkedAccount } = useContext(AuthContext);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [currentPage, setCurrentPage] = useState<string>("main");
+  const { currentPage, setCurrentPage } = useContext(UserContext);
   const [pageTitle, setPageTitle] = useState(
     "Personal details - Volunteer Account - Be Part of Research",
   );
