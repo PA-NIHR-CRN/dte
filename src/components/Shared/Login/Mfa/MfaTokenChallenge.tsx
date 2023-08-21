@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import DocumentTitle from "react-document-title";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
@@ -22,6 +22,7 @@ const MfaTotpChallenge = () => {
     setUserMfaEmail,
   } = useContext(AuthContext);
   const history = useHistory();
+  const [convertedError, setConvertedError] = useState<any>(null);
 
   if (!mfaDetails) {
     history.push("/");
@@ -47,8 +48,6 @@ const MfaTotpChallenge = () => {
     postMfaCode,
   ] = useAxiosFetch({}, { useCache: false, manual: true });
 
-  const convertedError = useInlineServerError(TokenMfaResponse);
-
   const onSubmit = async (data: any) => {
     const { mfaCode } = data;
     const res = await postMfaCode({
@@ -63,6 +62,16 @@ const MfaTotpChallenge = () => {
     if (result?.errors?.some((e) => e.customCode === "MFA_Session_Expired")) {
       history.push("/MfaSessionExpired");
     }
+    if (
+      result?.errors?.some(
+        (e) =>
+          e.customCode === "Not_Authorized" &&
+          e.detail ===
+            "Too many invalid credentials attempts. User temporarily locked. Please try again after few seconds."
+      )
+    ) {
+      history.push("/MfaLockedOut");
+    }
     if (result?.isSuccess) {
       saveToken(result?.content);
       setMfaDetails("");
@@ -76,16 +85,30 @@ const MfaTotpChallenge = () => {
     if (document.getElementsByClassName("nhsuk-error-message")[0]) {
       Utils.FocusOnError();
     }
-  }, [isSubmitting]);
+  }, [isSubmitting, convertedError, TokenMfaResponse]);
+
+  const serverError = useInlineServerError(TokenMfaResponse);
+
+  useEffect(() => {
+    if (serverError) {
+      setConvertedError(serverError);
+    }
+  }, [serverError]);
+
+  const interceptSubmit = (e: any) => {
+    e.preventDefault();
+    setConvertedError(null);
+    handleSubmit(onSubmit)();
+  };
 
   return (
-    <DocumentTitle title="Check your authenticator app">
+    <DocumentTitle title="Check your authenticator app - Volunteer Registration - Be Part of Research">
       <StepWrapper>
         <DTEHeader as="h1">Check your authenticator app</DTEHeader>
         <ErrorMessageContainer
           axiosErrors={[setupMfaError]}
           DTEAxiosErrors={[
-            convertedError
+            serverError
               ? []
               : Utils.ConvertResponseToDTEResponse(TokenMfaResponse)?.errors,
           ]}
@@ -95,7 +118,7 @@ const MfaTotpChallenge = () => {
           complete verification. Entering the code incorrectly too many times
           will temporarily prevent you from signing in.
         </DTEContent>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form onSubmit={interceptSubmit} noValidate>
           <Controller
             control={control}
             name="mfaCode"
