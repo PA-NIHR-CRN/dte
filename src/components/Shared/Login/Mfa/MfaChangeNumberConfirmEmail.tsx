@@ -184,7 +184,7 @@ const MfaChangeNumberConfirmEmail = () => {
                     error={convertedError || error?.message}
                     spellcheck={false}
                     disabled={getEmailOtpLoading || isSubmitting}
-                    hint="The code is 6 digits. Entering the code incorrectly too many times will temporarily prevent you from signing in."
+                    hint="The code is 6 digits."
                   />
                 )}
                 rules={{
