@@ -60,6 +60,9 @@ const MfaTotpChallenge = () => {
       },
     });
     const result = Utils.ConvertResponseToDTEResponse(res);
+    if (result?.errors?.some((e) => e.customCode === "MFA_Session_Expired")) {
+      history.push("/MfaSessionExpired");
+    }
     if (result?.isSuccess) {
       saveToken(result?.content);
       setMfaDetails("");
