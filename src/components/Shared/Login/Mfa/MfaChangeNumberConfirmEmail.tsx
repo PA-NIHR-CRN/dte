@@ -23,12 +23,19 @@ const ButtonWrapper = styled.div`
 `;
 
 const MfaChangeNumberConfirmEmail = () => {
-  const { mfaDetails, prevUrl } = useContext(AuthContext);
-  const [isCodeResent, setIsCodeResent] = useState<boolean>(
-    prevUrl === "/MfaSecurityCodeExpired"
-  );
+  const { mfaDetails, prevUrl, userMfaEmail, setUserMfaEmail } =
+    useContext(AuthContext);
+  const [isCodeResent, setIsCodeResent] = useState<boolean>(false);
   const history = useHistory();
-  const [userEmail, setUserEmail] = useState<string>("your email address");
+  const [userEmail, setUserEmail] = useState<string>(userMfaEmail);
+
+  useEffect(() => {
+    if (prevUrl === "/MfaSecurityCodeExpired") {
+      setIsCodeResent(true);
+    } else {
+      setIsCodeResent(false);
+    }
+  }, [prevUrl]);
 
   if (!mfaDetails) {
     history.push("/");
@@ -73,7 +80,14 @@ const MfaChangeNumberConfirmEmail = () => {
     },
     validateEmailOtp,
   ] = useAxiosFetch({}, { useCache: false, manual: true });
-  const convertedError = useInlineServerError(validateEmailOtpRespose);
+  const [convertedError, setConvertedError] = useState<any>(null);
+  const serverError = useInlineServerError(validateEmailOtpRespose);
+
+  useEffect(() => {
+    if (serverError) {
+      setConvertedError(serverError);
+    }
+  }, [serverError]);
 
   const onSubmit = async (data: any) => {
     const { mfaCode } = data;
@@ -98,6 +112,7 @@ const MfaChangeNumberConfirmEmail = () => {
     const result = Utils.ConvertResponseToDTEResponse(userEmailRespose);
     if (result?.isSuccess) {
       setUserEmail(result?.content);
+      setUserMfaEmail(result?.content);
     }
   }, [userEmailRespose]);
 
@@ -106,6 +121,12 @@ const MfaChangeNumberConfirmEmail = () => {
       Utils.FocusOnError();
     }
   }, [isSubmitting, getEmailOtpLoading, convertedError]);
+
+  const interceptSubmit = (e: any) => {
+    e.preventDefault();
+    setConvertedError(null);
+    handleSubmit(onSubmit)();
+  };
 
   return (
     <DocumentTitle title="Email OTP">
@@ -121,7 +142,7 @@ const MfaChangeNumberConfirmEmail = () => {
             <ErrorMessageContainer
               axiosErrors={[validateEmailOtpError]}
               DTEAxiosErrors={[
-                convertedError
+                serverError
                   ? []
                   : Utils.ConvertResponseToDTEResponse(validateEmailOtpRespose)
                       ?.errors,
@@ -137,10 +158,12 @@ const MfaChangeNumberConfirmEmail = () => {
             </DTEContent>
             {isCodeResent && (
               <div className="govuk-details__text">
-                <DTEContent>You have been sent a new security code.</DTEContent>
+                <DTEContent role="alert">
+                  You have been sent a new security code.
+                </DTEContent>
               </div>
             )}
-            <form noValidate onSubmit={handleSubmit(onSubmit)}>
+            <form noValidate onSubmit={interceptSubmit}>
               <Controller
                 control={control}
                 name="mfaCode"

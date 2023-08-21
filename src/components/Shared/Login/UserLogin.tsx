@@ -71,6 +71,7 @@ const UserLogin = (props: UserLoginProps) => {
     token,
     saveToken,
     setMfaDetails,
+    setUserMfaEmail,
   } = useContext(AuthContext);
 
   const [loginResponse, setLoginResponse] = useState<
@@ -122,6 +123,7 @@ const UserLogin = (props: UserLoginProps) => {
     if (result?.isSuccess) {
       saveToken(result?.content);
       setMfaDetails("");
+      setUserMfaEmail("your email address");
       history.push("/");
     }
   };

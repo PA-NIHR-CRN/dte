@@ -28,7 +28,8 @@ const ComponentSpacer = styled.div`
 `;
 
 const MfaTokenSetup = () => {
-  const { mfaDetails, saveToken, setMfaDetails } = useContext(AuthContext);
+  const { mfaDetails, saveToken, setMfaDetails, setUserMfaEmail } =
+    useContext(AuthContext);
   const history = useHistory();
   const [qrSrc, setQrSrc] = useState("");
   const [sessionId, setSessionId] = useState("");
@@ -103,9 +104,13 @@ const MfaTokenSetup = () => {
       setMfaDetails(result?.errors[0]?.detail as string);
       history.push("/MfaTokenChallenge");
     }
+    if (result?.errors?.some((e) => e.customCode === "MFA_Session_Expired")) {
+      history.push("/MfaSessionExpired");
+    }
     if (result?.isSuccess) {
       saveToken(result?.content);
       setMfaDetails("");
+      setUserMfaEmail("your email address");
       history.push("/");
     }
   };
@@ -114,7 +119,7 @@ const MfaTokenSetup = () => {
     if (document.getElementsByClassName("nhsuk-error-message")[0]) {
       Utils.FocusOnError();
     }
-  }, [isSubmitting]);
+  }, [isSubmitting, totpMfaResponse, convertedError]);
 
   return (
     <DocumentTitle title="MFA Setup Token">
@@ -181,9 +186,12 @@ const MfaTokenSetup = () => {
             <DTEContent>
               If you need support in setting up your authenticator app, please
               contact us at{" "}
-              <a href="mailto:bepartofresearch@nihr.ac.uk">
+              <DTERouteLink
+                to="mailto:bepartofresearch@nihr.ac.uk"
+                renderStyle="standard"
+              >
                 bepartofresearch@nihr.ac.uk
-              </a>
+              </DTERouteLink>
               .
             </DTEContent>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>

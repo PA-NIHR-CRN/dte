@@ -131,12 +131,14 @@ const MfaSmsSetup = () => {
                 rules={{
                   required: {
                     value: true,
-                    message: "Enter a valid UK mobile phone number",
+                    message:
+                      "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982",
                   },
 
                   pattern: {
                     value: MobileRegex,
-                    message: "Enter a valid UK mobile phone number",
+                    message:
+                      "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982",
                   },
                 }}
               />

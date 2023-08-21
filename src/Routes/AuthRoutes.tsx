@@ -26,6 +26,8 @@ import MfaNoUkMobileOptions from "../components/Shared/Login/Mfa/MfaNoUkMobileOp
 import MfaChangeNumberConfirmEmail from "../components/Shared/Login/Mfa/MfaChangeNumberConfirmEmail";
 import MfaChangePhoneNumber from "../components/Shared/Login/Mfa/MfaChangePhoneNumber";
 import MfaSecurityCodeExpired from "../components/Shared/Login/Mfa/MfaSecurityCodeExpired";
+import MfaSessionExpired from "../components/Shared/Login/Mfa/MfaSessionExpired";
+import MfaLockedOut from "../components/Shared/Login/Mfa/MfaLockedOut";
 
 const redirect = (pathOrigin: string) => {
   const { persistLastNonLoginUrl, prevUrl, lastUrl } = useContext(AuthContext);
@@ -238,6 +240,24 @@ export default [
     }}
     strict
     key="MfaSecurityCodeExpired"
+  />,
+  <Route
+    path="/MfaSessionExpired"
+    render={() => {
+      ReactGA.pageview("MfaSessionExpired");
+      return <MfaSessionExpired />;
+    }}
+    strict
+    key="MfaSessionExpired"
+  />,
+  <Route
+    path="/MfaLockedOut"
+    render={() => {
+      ReactGA.pageview("MfaLockedOut");
+      return <MfaLockedOut />;
+    }}
+    strict
+    key="MfaLockedOut"
   />,
   <Route path="/Verify" component={Verify} strict key="verify" />,
   <Route path="/callback" component={NhsLoginCallback} strict key="callback" />,

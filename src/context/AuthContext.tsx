@@ -53,6 +53,8 @@ export const AuthProvider = (props: { children: any }) => {
   const [isInNHSApp, setIsInNHSApp] = useState<boolean>(false);
   const [mfaDetails, setMfaDetails] = useState<string>("");
   const [enteredMfaMobile, setEnteredMfaMobile] = useState<string>("");
+  const [userMfaEmail, setUserMfaEmail] =
+    useState<string>("your email address");
 
   const baseUrl = process.env.REACT_APP_BASE_API;
 
@@ -259,6 +261,7 @@ export const AuthProvider = (props: { children: any }) => {
         setAuthenticatedIsParticipant(true);
         setAuthenticatedMobile(null);
         setEnteredMfaMobile("");
+        setUserMfaEmail("your email address");
         setMfaDetails("");
       });
     }
@@ -293,6 +296,8 @@ export const AuthProvider = (props: { children: any }) => {
         setEnteredMfaMobile,
         enteredMfaMobile,
         setAuthenticatedMobile,
+        userMfaEmail,
+        setUserMfaEmail,
       }}
     >
       {/* eslint-disable-next-line react/destructuring-assignment */}

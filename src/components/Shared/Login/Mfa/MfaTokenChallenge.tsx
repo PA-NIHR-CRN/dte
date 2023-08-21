@@ -14,8 +14,13 @@ import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageConta
 import useInlineServerError from "../../../../hooks/useInlineServerError";
 
 const MfaTotpChallenge = () => {
-  const { mfaDetails, saveToken, setMfaDetails, setEnteredMfaMobile } =
-    useContext(AuthContext);
+  const {
+    mfaDetails,
+    saveToken,
+    setMfaDetails,
+    setEnteredMfaMobile,
+    setUserMfaEmail,
+  } = useContext(AuthContext);
   const history = useHistory();
 
   if (!mfaDetails) {
@@ -59,6 +64,7 @@ const MfaTotpChallenge = () => {
       saveToken(result?.content);
       setMfaDetails("");
       setEnteredMfaMobile("");
+      setUserMfaEmail("your email address");
       history.push("/");
     }
   };

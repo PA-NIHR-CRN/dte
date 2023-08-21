@@ -50,6 +50,8 @@ export interface AuthContextProps {
   setEnteredMfaMobile: (enteredMfaMobile: string) => void;
   enteredMfaMobile: string;
   setAuthenticatedMobile: (authenticatedMobile: string) => void;
+  userMfaEmail: string;
+  setUserMfaEmail: (userMfaEmail: string) => void;
 }
 
 export interface DTEAxiosResponse {

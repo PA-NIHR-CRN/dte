@@ -26,8 +26,17 @@ const MfaSmsChallenge = () => {
     enteredMfaMobile,
     prevUrl,
     setEnteredMfaMobile,
+    setUserMfaEmail,
   } = useContext(AuthContext);
   const history = useHistory();
+
+  useEffect(() => {
+    if (prevUrl === "/MfaSecurityCodeExpired") {
+      setIsCodeResent(true);
+    } else {
+      setIsCodeResent(false);
+    }
+  }, [prevUrl]);
 
   if (!mfaDetails) {
     history.push("/");
@@ -51,7 +60,15 @@ const MfaSmsChallenge = () => {
     { response: SMSMfaResponse, loading: SMSMfaLoading, error: setupMfaError },
     postMfaCode,
   ] = useAxiosFetch({}, { useCache: false, manual: true });
-  const convertedError = useInlineServerError(SMSMfaResponse);
+
+  const [convertedError, setConvertedError] = useState<any>(null);
+  const serverError = useInlineServerError(SMSMfaResponse);
+
+  useEffect(() => {
+    if (serverError) {
+      setConvertedError(serverError);
+    }
+  }, [serverError]);
 
   const [{ response: maskedMobileResponse }] = useAxiosFetch(
     {
@@ -78,9 +95,20 @@ const MfaSmsChallenge = () => {
     if (result?.errors?.some((e) => e.customCode === "MFA_Session_Expired")) {
       history.push("/MfaSecurityCodeExpired");
     }
+    if (
+      result?.errors?.some(
+        (e) =>
+          e.customCode === "Not_Authorized" &&
+          e.detail ===
+            "Too many invalid credentials attempts. User temporarily locked. Please try again after few seconds."
+      )
+    ) {
+      history.push("/MfaLockedOut");
+    }
     if (result?.isSuccess) {
       saveToken(result?.content);
       setMfaDetails("");
+      setUserMfaEmail("your email address");
       setEnteredMfaMobile("");
       history.push("/");
     }
@@ -115,7 +143,7 @@ const MfaSmsChallenge = () => {
     if (document.getElementsByClassName("nhsuk-error-message")[0]) {
       Utils.FocusOnError();
     }
-  }, [isSubmitting]);
+  }, [isSubmitting, convertedError, SMSMfaResponse]);
 
   useEffect(() => {
     if (maskedMobileResponse && maskedMobileResponse?.data) {
@@ -137,11 +165,17 @@ const MfaSmsChallenge = () => {
     return (
       <ErrorMessageContainer
         axiosErrors={[error]}
-        DTEAxiosErrors={[convertedError ? [] : response?.errors]}
+        DTEAxiosErrors={[serverError ? [] : response?.errors]}
       />
     );
   };
   const urlList = ["/MfaSmsSetup", "/MfaChangePhoneNumber"];
+
+  const interceptSubmit = (e: any) => {
+    e.preventDefault();
+    setConvertedError(null);
+    handleSubmit(onSubmit)();
+  };
 
   return (
     <DocumentTitle title="MFA Challenge SMS">
@@ -164,10 +198,12 @@ const MfaSmsChallenge = () => {
         </DTEContent>
         {isCodeResent && (
           <div className="govuk-details__text">
-            <DTEContent>You have been sent a new security code.</DTEContent>
+            <DTEContent role="alert">
+              You have been sent a new security code.
+            </DTEContent>
           </div>
         )}
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form onSubmit={interceptSubmit} noValidate>
           <Controller
             control={control}
             name="mfaCode"
@@ -224,21 +260,20 @@ const MfaSmsChallenge = () => {
                       </DTELinkButton>
                     </li>
                     <li>
-                      <DTERouteLink
+                      <DTELinkButton
                         disabled={SMSMfaLoading || isSubmitting}
-                        to={
-                          prevUrl === "/MfaChangePhoneNumber"
-                            ? "/MfaChangePhoneNumber"
-                            : "/MfaSmsSetup"
-                        }
-                        renderStyle="standard"
+                        onClick={() => {
+                          history.push(
+                            prevUrl === "/MfaChangePhoneNumber"
+                              ? "/MfaChangePhoneNumber"
+                              : "/MfaSmsSetup"
+                          );
+                        }}
                       >
-                        <DTEContent>
-                          enter your{" "}
-                          {prevUrl === "/MfaChangePhoneNumber" && "new"} mobile
-                          phone number again
-                        </DTEContent>
-                      </DTERouteLink>
+                        enter your{" "}
+                        {prevUrl === "/MfaChangePhoneNumber" && "new"} mobile
+                        phone number again
+                      </DTELinkButton>
                     </li>
                   </ul>
                 </>

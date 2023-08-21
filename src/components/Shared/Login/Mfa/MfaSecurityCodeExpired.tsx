@@ -26,12 +26,18 @@ const MfaSecurityCodeExpired = () => {
         <DTEHeader as="h1">Security code expired</DTEHeader>
         <DTEContent>The security code you entered has expired.</DTEContent>
         <LinkWrapper>
-          <DTERouteLink
-            to={prevUrl || "/MfaChangeNumberConfirmEmail"}
-            renderStyle="standard"
-          >
-            <DTEContent>Send your security code again</DTEContent>
-          </DTERouteLink>
+          <DTEContent>
+            <DTERouteLink
+              to={
+                prevUrl === "/MfaSmsChallenge"
+                  ? "/MfaSmsChallenge"
+                  : "/MfaChangeNumberConfirmEmail"
+              }
+              renderStyle="standard"
+            >
+              Send your security code again
+            </DTERouteLink>
+          </DTEContent>
         </LinkWrapper>
         {prevUrl === "/MfaSmsChallenge" && (
           <DTEDetails summary="I do not have access to my mobile phone">
