@@ -13,6 +13,7 @@ import Utils from "../../../Helper/Utils";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import { AuthContext } from "../../../context/AuthContext";
 import { ContentContext } from "../../../context/ContentContext";
+import { UserContext } from "../../../context/UserContext";
 
 const StyledGrid = styled(Grid)`
   padding: 1rem;
@@ -47,6 +48,7 @@ const StyledDTEHR = styled(DTEHR)`
 
 function Home() {
   const { content } = useContext(ContentContext);
+  const { setCurrentPage, setCurrentAccountPage } = useContext(UserContext);
   const history = useHistory();
   const getDemographicsURL = `${process.env.REACT_APP_BASE_API}/participants/demographics`;
   const { isNhsLinkedAccount, isInNHSApp } = useContext(AuthContext);
@@ -68,6 +70,11 @@ function Home() {
       }
     }
   }, [response, error, loading]);
+
+  useEffect(() => {
+    setCurrentPage("main");
+    setCurrentAccountPage("main");
+  }, []);
 
   return (
     <DocumentTitle title={content["account-document-title"]}>

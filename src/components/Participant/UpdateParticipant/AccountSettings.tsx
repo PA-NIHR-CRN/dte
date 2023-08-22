@@ -16,6 +16,7 @@ import UpdateEmailForm from "./Forms/UpdateEmailForm";
 import UpdatePasswordForm from "./Forms/UpdatePasswordForm";
 import DTEContent from "../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import { ContentContext } from "../../../context/ContentContext";
+import { UserContext } from "../../../context/UserContext";
 
 interface UserDataState {
   currentEmail: string;
@@ -41,7 +42,10 @@ const StyledHiddenText = styled.span`
 function AccountSettings() {
   const { content } = useContext(ContentContext);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [currentPage, setCurrentPage] = useState<string>("main");
+  const {
+    currentAccountPage: currentPage,
+    setCurrentAccountPage: setCurrentPage,
+  } = useContext(UserContext);
   const [pageTitle, setPageTitle] = useState(
     "Account settings - Volunteer Account - Be Part of Research",
   );

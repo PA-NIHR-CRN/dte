@@ -32,6 +32,8 @@ interface UserContextType {
   >;
   currentPage: string;
   setCurrentPage: React.Dispatch<React.SetStateAction<string>>;
+  currentAccountPage: string;
+  setCurrentAccountPage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const UserContext = createContext<UserContextType>(
@@ -109,6 +111,7 @@ export function UserProvider({ children }: UserProviderProps) {
     useState(0);
   // state for updating the update user page
   const [currentPage, setCurrentPage] = useState<string>("main");
+  const [currentAccountPage, setCurrentAccountPage] = useState<string>("main");
 
   return (
     <UserContext.Provider
@@ -123,6 +126,8 @@ export function UserProvider({ children }: UserProviderProps) {
         setContinueRegistrationActiveStep,
         currentPage,
         setCurrentPage,
+        currentAccountPage,
+        setCurrentAccountPage,
       }}
     >
       {children}
