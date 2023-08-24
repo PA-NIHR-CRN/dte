@@ -1,6 +1,5 @@
 import { useHistory } from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
-import DTEContent from "../../../components/Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
 import useAxiosFetch from "../../../hooks/useAxiosFetch";
