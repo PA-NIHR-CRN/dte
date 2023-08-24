@@ -91,7 +91,7 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(0)}>
-              Change{" "}
+              {content["reusable-change"]}{" "}
               <StyledCheckHiddenText>
                 {content["reusable-home-address"].toLowerCase()}
               </StyledCheckHiddenText>
@@ -113,7 +113,7 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
             )}
             {initialStateData.mobileFormData.landlineNumber && (
               <DTEContent>
-                Landline
+                {content["reusable-landline"]}
                 <br />
                 {initialStateData.mobileFormData.landlineNumber}
               </DTEContent>
@@ -125,7 +125,7 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(1)}>
-              Change{" "}
+              {content["reusable-change"]}{" "}
               <StyledCheckHiddenText>
                 {content["reusable-phone-number"].toLowerCase()}
               </StyledCheckHiddenText>
@@ -148,7 +148,7 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(2)}>
-              Change{" "}
+              {content["reusable-change"]}{" "}
               <StyledCheckHiddenText>
                 {content["reusable-sex-registered-at-birth"].toLowerCase()}
               </StyledCheckHiddenText>
@@ -167,15 +167,17 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
           </dt>
           <dd className="govuk-summary-list__value">
             <DTEContent>
-              {initialStateData.sexFormData.genderAtBirth === "no" && "No"}
-              {initialStateData.sexFormData.genderAtBirth === "yes" && "Yes"}
+              {initialStateData.sexFormData.genderAtBirth === "no" &&
+                content["reusable-no"]}
+              {initialStateData.sexFormData.genderAtBirth === "yes" &&
+                content["reusable-yes"]}
               {initialStateData.sexFormData.genderAtBirth === "noSay" &&
                 content["reusable-prefer-not-to-say"]}
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(2)}>
-              Change{" "}
+              {content["reusable-change"]}{" "}
               <StyledCheckHiddenText>
                 {content[
                   "reusable-gender-identity-same-as-sex-registered-at-birth"
@@ -191,20 +193,20 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
           <dd className="govuk-summary-list__value">
             <DTEContent>
               {initialStateData.ethnicity1FormData.ethnicity === "asian" &&
-                "Asian or Asian British"}
+                content["reusable-asian"]}
               {initialStateData.ethnicity1FormData.ethnicity === "black" &&
-                "Black, African, Caribbean or Black British"}
+                content["reusable-black"]}
               {initialStateData.ethnicity1FormData.ethnicity === "mixed" &&
-                "Mixed or multiple ethnic groups"}
+                content["reusable-mixed"]}
               {initialStateData.ethnicity1FormData.ethnicity === "white" &&
-                "White"}
+                content["reusable-white"]}
               {initialStateData.ethnicity1FormData.ethnicity === "other" &&
-                "Other ethnic group"}
+                content["reusable-other"]}
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(3)}>
-              Change{" "}
+              {content["reusable-change"]}{" "}
               <StyledCheckHiddenText>
                 {content["reusable-ethnic-group"].toLowerCase()}
               </StyledCheckHiddenText>
@@ -222,7 +224,7 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(4)}>
-              Change{" "}
+              {content["reusable-change"]}{" "}
               <StyledCheckHiddenText>
                 {content["reusable-ethnic-background"].toLowerCase()}
               </StyledCheckHiddenText>
@@ -237,16 +239,17 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
           </dt>
           <dd className="govuk-summary-list__value">
             <DTEContent>
-              {initialStateData.disabilityFormData.disability === "no" && "No"}
+              {initialStateData.disabilityFormData.disability === "no" &&
+                content["reusable-no"]}
               {initialStateData.disabilityFormData.disability === "yes" &&
-                "Yes"}
+                content["reusable-yes"]}
               {initialStateData.disabilityFormData.disability === "notSaying" &&
                 content["reusable-prefer-not-to-say"]}
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(5)}>
-              Change{" "}
+              {content["reusable-change"]}{" "}
               <StyledCheckHiddenText>
                 {content[
                   "reusable-long-term-conditions-or-illness"
@@ -273,7 +276,7 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
             </dd>
             <dd className="govuk-summary-list__actions">
               <DTELinkButton onClick={() => changeStep(6)}>
-                Change{" "}
+                {content["reusable-change"]}{" "}
                 <StyledCheckHiddenText>
                   {content[
                     "reusable-reduced-ability-to-carry-out-daily-activities"
@@ -306,7 +309,7 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(7)}>
-              Change{" "}
+              {content["reusable-change"]}{" "}
               <StyledCheckHiddenText>
                 {content["reusable-areas-of-research"]}
               </StyledCheckHiddenText>

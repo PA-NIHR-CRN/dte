@@ -283,8 +283,12 @@ function UserLogin() {
                           disabled={loadingLogin}
                           spellcheck={false}
                           autocomplete="current-password"
-                          buttonAriaLabelHide="Hide the entered password on screen"
-                          buttonAriaLabelShow="Show the entered password on screen"
+                          buttonAriaLabelHide={
+                            content["reusable-aria-hide-password"]
+                          }
+                          buttonAriaLabelShow={
+                            content["reusable-aria-show-password"]
+                          }
                         />
                       )}
                       rules={{
@@ -300,7 +304,7 @@ function UserLogin() {
                       <DTERouteLink
                         to="/ForgottenPassword"
                         renderStyle="standard"
-                        ariaLabel="reset your password here"
+                        ariaLabel={content["signin-aria-reset-password"]}
                       >
                         {content["reusable-link-forgotten-password"]}
                       </DTERouteLink>

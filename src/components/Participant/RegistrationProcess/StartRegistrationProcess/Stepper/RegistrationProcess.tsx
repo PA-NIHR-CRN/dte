@@ -273,9 +273,9 @@ function RegsitrationProcess() {
               <Grid item>
                 {activeStep !== 6 && (
                   <DTEBackLink
-                    title="Return to previous page"
+                    title={content["reusable-aria-go-back"]}
                     linkText={content["reusable-back-link"]}
-                    ariaLabel="Return to previous page"
+                    ariaLabel={content["reusable-aria-go-back"]}
                     onClick={handleBack}
                   />
                 )}

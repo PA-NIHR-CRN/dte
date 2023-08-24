@@ -510,10 +510,10 @@ function ContinueRegistration() {
             {!(activeStep === 0 || activeStep === 8 || activeStep === 9) && (
               <div className="nhsuk-width-container ">
                 <DTEBackLink
-                  title="Return to previous page"
+                  title={content["reusable-aria-go-back"]}
                   linkText={content["reusable-back-link"]}
                   onClick={handleBack}
-                  ariaLabel="Return to previous page"
+                  ariaLabel={content["reusable-aria-go-back"]}
                 />
               </div>
             )}
@@ -558,7 +558,7 @@ function ContinueRegistration() {
                     ) &&
                       !isInNHSApp && (
                         <DTEBackLink
-                          title="Return to previous page"
+                          title={content["reusable-aria-go-back"]}
                           linkText={content["reusable-back-link"]}
                           onClick={handleBack}
                         />

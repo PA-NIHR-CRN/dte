@@ -53,7 +53,7 @@ function NhsNoConsent() {
               renderStyle="standard"
               ariaLabel="Go back to previous page"
             >
-              go back
+              {content["reusable-go-back"].toLowerCase()}
             </DTERouteLink>{" "}
             and change this decision if you wish.
           </DTEContent>

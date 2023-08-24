@@ -13,6 +13,7 @@ import EthnicityInformation from "./EthnicityInformation";
 import FormNavigationButtons from "../CommonElements/FormNavigationButtons";
 import Utils from "../../../../Helper/Utils";
 import { ContentContext } from "../../../../context/ContentContext";
+import getEthnicities from "../../../../data/ethnicityData";
 
 export type Ethnicity1FormData = {
   ethnicity: string;
@@ -40,7 +41,7 @@ function Ethnicity1Form(props: Ethnicity1FormProps) {
     ? "h2"
     : "h1";
   let labelElement: ReactNode;
-  const ethnicities: Ethnicities = ethnicitiesStatic;
+  const ethnicities = getEthnicities(content);
 
   const {
     control,

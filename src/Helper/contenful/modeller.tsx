@@ -56,7 +56,6 @@ const extractValueFromNode = (node: any) => {
   ) {
     return node.content[0].content[0].value;
   }
-  console.log("Unexpected node structure:", node);
   return null;
 };
 

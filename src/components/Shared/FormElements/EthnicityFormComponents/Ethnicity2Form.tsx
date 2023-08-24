@@ -8,13 +8,12 @@ import DTERadio from "../../UI/DTERadio/DTERadio";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import DTEInput from "../../UI/DTEInput/DTEInput";
-import ethnicitiesStatic from "../../../../data/ethnicityData";
 import FormBaseProps from "../FormBaseProps";
-import { Ethnicities } from "../../../../types/ReferenceData/Ethnicities";
 import EthnicityInformation from "./EthnicityInformation";
 import FormNavigationButtons from "../CommonElements/FormNavigationButtons";
 import Utils from "../../../../Helper/Utils";
 import { ContentContext } from "../../../../context/ContentContext";
+import getEthnicities from "../../../../data/ethnicityData";
 
 export type Ethnicity2FormData = {
   background: string;
@@ -56,7 +55,7 @@ function Ethnicity2Form(props: Ethnicity2FormProps) {
   } = props;
 
   let labelElement: ReactNode;
-  const ethnicities: Ethnicities = ethnicitiesStatic;
+  const ethnicities = getEthnicities(content);
   const theme = useTheme();
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
     ? "h2"
@@ -120,7 +119,9 @@ function Ethnicity2Form(props: Ethnicity2FormProps) {
       <DTEHeader
         as="h1"
         $variant={headerVariant}
-      >{`Which of the following best describes your ${ethnicities[ethnicity].longName} background?`}</DTEHeader>
+      >{`Which of the following best describes your ${
+        ethnicities[ethnicity as keyof typeof ethnicities].longName
+      } background?`}</DTEHeader>
     );
   } else if (instructionText) {
     labelElement = instructionText;
@@ -155,23 +156,23 @@ function Ethnicity2Form(props: Ethnicity2FormProps) {
                 error={error?.message}
                 onChange={onChange}
               >
-                {ethnicities[ethnicity] && (
+                {ethnicities[ethnicity as keyof typeof ethnicities] && (
                   <>
-                    {ethnicities[ethnicity].backgrounds.map(
-                      (backgroundName: string) => {
-                        return (
-                          <Radios.Radio
-                            value={backgroundName}
-                            defaultChecked={value === backgroundName}
-                            key={backgroundName}
-                            aria-label={`My background is most closely described as ${backgroundName}`}
-                            aria-labelledby=""
-                          >
-                            {backgroundName}
-                          </Radios.Radio>
-                        );
-                      },
-                    )}
+                    {ethnicities[
+                      ethnicity as keyof typeof ethnicities
+                    ].backgrounds.map((backgroundName: string) => {
+                      return (
+                        <Radios.Radio
+                          value={backgroundName}
+                          defaultChecked={value === backgroundName}
+                          key={backgroundName}
+                          aria-label={`My background is most closely described as ${backgroundName}`}
+                          aria-labelledby=""
+                        >
+                          {backgroundName}
+                        </Radios.Radio>
+                      );
+                    })}
                     <Radios.Radio
                       value="other"
                       defaultChecked={

@@ -281,8 +281,12 @@ function UpdatePasswordForm(props: FormBaseProps) {
                       required
                       autocomplete="new-password"
                       spellcheck={false}
-                      buttonAriaLabelHide="Hide the entered password on screen"
-                      buttonAriaLabelShow="Show the entered password on screen"
+                      buttonAriaLabelHide={
+                        content["reusable-aria-hide-password"]
+                      }
+                      buttonAriaLabelShow={
+                        content["reusable-aria-show-password"]
+                      }
                     />
                   )}
                   rules={{
@@ -419,8 +423,12 @@ function UpdatePasswordForm(props: FormBaseProps) {
                       label={content["update-password-input-confirm"]}
                       required
                       spellcheck={false}
-                      buttonAriaLabelHide="Hide the entered password confirmation on screen"
-                      buttonAriaLabelShow="Show the entered password confirmation on screen"
+                      buttonAriaLabelHide={
+                        content["reusable-aria-hide-password-confirmation"]
+                      }
+                      buttonAriaLabelShow={
+                        content["reusable-aria-show-password-confirmation"]
+                      }
                     />
                   )}
                   rules={{

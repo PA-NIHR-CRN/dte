@@ -76,7 +76,10 @@ function EmailForm(props: EmailFormProps) {
                 />
               )}
               rules={{
-                required: { value: true, message: "Enter your email address" },
+                required: {
+                  value: true,
+                  message: content["register-email-validation-required"],
+                },
                 pattern: {
                   value: EmailRegex,
                   message: content["reusable-email-validation-invalid-format"],

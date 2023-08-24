@@ -72,7 +72,7 @@ function CheckEmailForm(props: CheckEmailFormProps) {
                     history.push("/");
                   }}
                 >
-                  Go back
+                  {content["reusable-go-back"]}
                 </DTEButton>
               </Grid>
             </Grid>

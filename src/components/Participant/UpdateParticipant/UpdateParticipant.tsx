@@ -42,9 +42,9 @@ import Disability2Form, {
   Disability2FormData,
 } from "../../Shared/FormElements/Disability2Form";
 import { AuthContext } from "../../../context/AuthContext";
-import ethnicities from "../../../data/ethnicityData";
 import { ContentContext } from "../../../context/ContentContext";
 import { UserContext } from "../../../context/UserContext";
+import getEthnicities from "../../../data/ethnicityData";
 
 interface UserDataState {
   address: AddressFormData;
@@ -78,6 +78,7 @@ const StyledHiddenText = styled.span`
 
 function UpdateParticipant() {
   const { content } = useContext(ContentContext);
+  const ethnicities = getEthnicities(content);
   const { isNhsLinkedAccount } = useContext(AuthContext);
   const containerRef = useRef<HTMLDivElement>(null);
   const { currentPage, setCurrentPage } = useContext(UserContext);
@@ -655,7 +656,7 @@ function UpdateParticipant() {
                         <DTELinkButton
                           onClick={() => setCurrentDisplayPage("address")}
                         >
-                          Change{" "}
+                          {content["reusable-change"]}{" "}
                           <StyledHiddenText>
                             {content["reusable-home-address"].toLowerCase()}
                           </StyledHiddenText>
@@ -674,14 +675,14 @@ function UpdateParticipant() {
                           <>
                             {userData.mobile.mobileNumber && (
                               <DTEContent>
-                                Mobile
+                                {content["reusable-mobile"]}
                                 <br />
                                 {userData.mobile.mobileNumber}
                               </DTEContent>
                             )}
                             {userData.mobile.landlineNumber && (
                               <DTEContent>
-                                Landline
+                                {content["reusable-landline"]}
                                 <br />
                                 {userData.mobile.landlineNumber}
                               </DTEContent>
@@ -697,7 +698,7 @@ function UpdateParticipant() {
                         <DTELinkButton
                           onClick={() => setCurrentDisplayPage("mobile")}
                         >
-                          Change{" "}
+                          {content["reusable-change"]}{" "}
                           <StyledHiddenText>
                             {content["reusable-phone-number"].toLowerCase()}
                           </StyledHiddenText>
@@ -727,7 +728,7 @@ function UpdateParticipant() {
                           <DTELinkButton
                             onClick={() => setCurrentDisplayPage("dob")}
                           >
-                            Change{" "}
+                            {content["reusable-change"]}{" "}
                             <StyledHiddenText>date of birth</StyledHiddenText>
                           </DTELinkButton>
                         </dd>
@@ -749,7 +750,7 @@ function UpdateParticipant() {
                         <DTELinkButton
                           onClick={() => setCurrentDisplayPage("sex")}
                         >
-                          Change{" "}
+                          {content["reusable-change"]}{" "}
                           <StyledHiddenText>
                             {content[
                               "reusable-sex-registered-at-birth"
@@ -782,7 +783,7 @@ function UpdateParticipant() {
                         <DTELinkButton
                           onClick={() => setCurrentDisplayPage("sex")}
                         >
-                          Change{" "}
+                          {content["reusable-change"]}{" "}
                           <StyledHiddenText>
                             {content[
                               "reusable-gender-identity-same-as-sex-registered-at-birth"
@@ -799,14 +800,19 @@ function UpdateParticipant() {
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
-                          {ethnicities[userData.ethnicity1.ethnicity].longName}
+                          {
+                            ethnicities[
+                              userData.ethnicity1
+                                .ethnicity as keyof typeof ethnicities
+                            ].longName
+                          }
                         </DTEContent>
                       </dd>
                       <dd className="govuk-summary-list__actions">
                         <DTELinkButton
                           onClick={() => setCurrentDisplayPage("ethnicity1")}
                         >
-                          Change{" "}
+                          {content["reusable-change"]}{" "}
                           <StyledHiddenText>
                             {content["reusable-ethnic-group"].toLowerCase()}
                           </StyledHiddenText>
@@ -828,7 +834,7 @@ function UpdateParticipant() {
                         <DTELinkButton
                           onClick={() => setCurrentDisplayPage("ethnicity2")}
                         >
-                          Change{" "}
+                          {content["reusable-change"]}{" "}
                           <StyledHiddenText>
                             {content[
                               "reusable-ethnic-background"
@@ -857,7 +863,7 @@ function UpdateParticipant() {
                         <DTELinkButton
                           onClick={() => setCurrentDisplayPage("disability")}
                         >
-                          Change{" "}
+                          {content["reusable-change"]}{" "}
                           <StyledHiddenText>
                             {content[
                               "reusable-long-term-conditions-or-illness"
@@ -889,7 +895,7 @@ function UpdateParticipant() {
                           <DTELinkButton
                             onClick={() => setCurrentDisplayPage("disability2")}
                           >
-                            Change{" "}
+                            {content["reusable-change"]}{" "}
                             <StyledHiddenText>
                               {content[
                                 "reusable-reduced-ability-to-carry-out-daily-activities"

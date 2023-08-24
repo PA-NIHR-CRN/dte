@@ -7,7 +7,7 @@ function StartRegistrationProcess() {
   const { content } = useContext(ContentContext);
 
   return (
-    <DocumentTitle title="Register now - Volunteer Registration - Be Part of Research">
+    <DocumentTitle title={content["register-page-document-title"]}>
       <StepWrapper>{content["register-page"]}</StepWrapper>
     </DocumentTitle>
   );

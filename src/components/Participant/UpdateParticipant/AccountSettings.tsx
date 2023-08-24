@@ -138,7 +138,7 @@ function AccountSettings() {
                       <DTELinkButton
                         onClick={() => setCurrentDisplayPage("email")}
                       >
-                        Change{" "}
+                        {content["reusable-change"]}{" "}
                         <StyledHiddenText>email address</StyledHiddenText>
                       </DTELinkButton>
                     </dd>

@@ -112,7 +112,7 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
                   onValueChange={onChange}
                   onValueBlur={onBlur}
                   error={error?.message}
-                  label="New email address"
+                  label={content["update-email-label-email-address"]}
                   required
                   type="email"
                   autocomplete="email"
@@ -122,7 +122,7 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
               rules={{
                 required: {
                   value: true,
-                  message: "Enter your new email address",
+                  message: content["update-email-validation-required"],
                 },
                 pattern: {
                   value: EmailRegex,
