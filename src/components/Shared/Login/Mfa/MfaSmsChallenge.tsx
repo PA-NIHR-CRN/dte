@@ -30,13 +30,16 @@ const MfaSmsChallenge = () => {
   } = useContext(AuthContext);
   const history = useHistory();
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const setCodeResent = urlParams.get("setCodeResent");
+
   useEffect(() => {
-    if (prevUrl === "/MfaSecurityCodeExpired") {
+    if (setCodeResent === "true") {
       setIsCodeResent(true);
     } else {
       setIsCodeResent(false);
     }
-  }, [prevUrl]);
+  }, [setCodeResent]);
 
   if (!mfaDetails) {
     history.push("/");
@@ -255,6 +258,7 @@ const MfaSmsChallenge = () => {
                       <DTELinkButton
                         onClick={handleResendCode}
                         disabled={SMSMfaLoading || isSubmitting}
+                        customStyles={{ textAlign: "left" }}
                       >
                         send your security code again
                       </DTELinkButton>
@@ -269,6 +273,7 @@ const MfaSmsChallenge = () => {
                               : "/MfaSmsSetup"
                           );
                         }}
+                        customStyles={{ textAlign: "left" }}
                       >
                         enter your{" "}
                         {prevUrl === "/MfaChangePhoneNumber" && "new"} mobile

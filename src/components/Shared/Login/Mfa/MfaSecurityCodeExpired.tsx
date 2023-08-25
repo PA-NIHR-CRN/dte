@@ -30,8 +30,8 @@ const MfaSecurityCodeExpired = () => {
             <DTERouteLink
               to={
                 prevUrl === "/MfaSmsChallenge"
-                  ? "/MfaSmsChallenge"
-                  : "/MfaChangeNumberConfirmEmail"
+                  ? "/MfaSmsChallenge?setCodeResent=true"
+                  : "/MfaChangeNumberConfirmEmail?setCodeResent=true"
               }
               renderStyle="standard"
             >

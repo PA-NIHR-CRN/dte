@@ -28,14 +28,17 @@ const MfaChangeNumberConfirmEmail = () => {
   const [isCodeResent, setIsCodeResent] = useState<boolean>(false);
   const history = useHistory();
   const [userEmail, setUserEmail] = useState<string>(userMfaEmail);
+  // get setCodeResent from url query params
+  const urlParams = new URLSearchParams(window.location.search);
+  const setCodeResent = urlParams.get("setCodeResent");
 
   useEffect(() => {
-    if (prevUrl === "/MfaSecurityCodeExpired") {
+    if (setCodeResent === "true") {
       setIsCodeResent(true);
     } else {
       setIsCodeResent(false);
     }
-  }, [prevUrl]);
+  }, [setCodeResent]);
 
   if (!mfaDetails) {
     history.push("/");
@@ -194,15 +197,15 @@ const MfaChangeNumberConfirmEmail = () => {
                   },
                   minLength: {
                     value: 6,
-                    message: "Security code must be 6 digits",
+                    message: "The security code must be 6 digits",
                   },
                   maxLength: {
                     value: 6,
-                    message: "Security code must be 6 digits",
+                    message: "The security code must be 6 digits",
                   },
                   pattern: {
                     value: /^\d{6}$/,
-                    message: "Security code must be 6 digits",
+                    message: "The security code must be 6 digits",
                   },
                 }}
               />
