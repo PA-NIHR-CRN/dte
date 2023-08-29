@@ -295,21 +295,26 @@ const PasswordForm = (props: PasswordFormProps) => {
                           "only includes symbols from this list ##allowedsymbols##",
                           true
                         );
+                        const strippedPassword = value.replace(
+                          /[^a-zA-Z]/g,
+                          ""
+                        );
+
+                        passwordError = errorConstructor(
+                          passwordError,
+                          commonPasswords.includes(
+                            strippedPassword.toLowerCase()
+                          ),
+                          "is not a commonly used password",
+                          "is not a commonly used password",
+                          true
+                        );
                       }
 
                       let finalErrorMessage = passwordError.replace(
                         /,([^,]*)$/,
                         ` and$1`
                       );
-
-                      const isCommonPassword = commonPasswords.includes(
-                        value.toLowerCase()
-                      );
-                      if (isCommonPassword) {
-                        finalErrorMessage +=
-                          ". You cannot use a commonly used password";
-                        validationSuccess = false;
-                      }
 
                       if (passwordPolicy.allowedPasswordSymbols) {
                         finalErrorMessage = finalErrorMessage.replace(
