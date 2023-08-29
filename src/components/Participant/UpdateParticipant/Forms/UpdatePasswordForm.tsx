@@ -381,20 +381,31 @@ function UpdatePasswordForm(props: FormBaseProps) {
                           `${content["register-password-policy-builder-symbol-list"]} ##allowedsymbols##`,
                           true,
                         );
+
+                        const strippedPassword = value.replace(
+                          /[^a-zA-Z]/g,
+                          "",
+                        );
+
+                        passwordError = errorConstructor(
+                          passwordError,
+                          commonPasswords.includes(
+                            strippedPassword.toLowerCase(),
+                          ),
+                          content[
+                            "register-password-policy-builder-common-passwords"
+                          ],
+                          content[
+                            "register-password-policy-builder-common-passwords"
+                          ],
+                          true,
+                        );
                       }
 
                       let finalErrorMessage = passwordError.replace(
                         /,([^,]*)$/,
                         ` ${content["reusable-text-and"]}$1`,
                       );
-
-                      const isCommonPassword = commonPasswords.includes(
-                        value.toLowerCase(),
-                      );
-                      if (isCommonPassword) {
-                        finalErrorMessage += `. ${content["register-password-policy-builder-symbol-list"]}`;
-                        validationSuccess = false;
-                      }
 
                       if (passwordPolicy.allowedPasswordSymbols) {
                         finalErrorMessage = finalErrorMessage.replace(
