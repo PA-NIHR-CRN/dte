@@ -229,6 +229,7 @@ const UserLogin = (props: UserLoginProps) => {
               />
             )}
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <Honeypot />
             <UserLoginForm
               control={control}
               loadingLogin={loadingLogin}
