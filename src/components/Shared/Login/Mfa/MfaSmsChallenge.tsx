@@ -16,6 +16,7 @@ import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 import useInlineServerError from "../../../../hooks/useInlineServerError";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
+import Honeypot from "../../Honeypot/Honeypot";
 
 const MfaSmsChallenge = () => {
   const [isCodeResent, setIsCodeResent] = useState<boolean>(false);
@@ -207,6 +208,7 @@ const MfaSmsChallenge = () => {
           </div>
         )}
         <form onSubmit={interceptSubmit} noValidate>
+          <Honeypot />
           <Controller
             control={control}
             name="mfaCode"

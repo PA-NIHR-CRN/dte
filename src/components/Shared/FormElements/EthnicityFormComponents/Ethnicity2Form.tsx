@@ -14,6 +14,7 @@ import { Ethnicities } from "../../../../types/ReferenceData/Ethnicities";
 import EthnicityInformation from "./EthnicityInformation";
 import FormNavigationButtons from "../CommonElements/FormNavigationButtons";
 import Utils from "../../../../Helper/Utils";
+import Honeypot from "../../Honeypot/Honeypot";
 
 export type Ethnicity2FormData = {
   background: string;
@@ -143,6 +144,7 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
             data-testid="background-form"
             noValidate
           >
+            <Honeypot />
             <Controller
               control={control}
               name="background"

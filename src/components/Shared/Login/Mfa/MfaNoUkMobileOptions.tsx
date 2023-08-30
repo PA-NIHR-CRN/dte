@@ -7,6 +7,7 @@ import DTERadio from "../../UI/DTERadio/DTERadio";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEButton from "../../UI/DTEButton/DTEButton";
 import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
+import Honeypot from "../../Honeypot/Honeypot";
 
 type MfaNoUkMobileOptionsData = {
   ukLandline: string;
@@ -41,6 +42,7 @@ const MfaNoUkMobileOptions = () => {
         <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
         <DTEHeader as="h1">Please select an option</DTEHeader>
         <form onSubmit={handleSubmit(handleOptionSelect)} noValidate>
+          <Honeypot />
           <Controller
             control={control}
             name="ukLandline"

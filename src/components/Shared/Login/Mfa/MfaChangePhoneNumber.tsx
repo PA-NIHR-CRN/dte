@@ -12,6 +12,7 @@ import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import Utils, { MobileRegex } from "../../../../Helper/Utils";
 import { AuthContext } from "../../../../context/AuthContext";
 import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
+import Honeypot from "../../Honeypot/Honeypot";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -73,6 +74,7 @@ const MfaChangePhoneNumber = () => {
           number.
         </DTEContent>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
+          <Honeypot />
           <Controller
             control={control}
             name="phoneNumber"

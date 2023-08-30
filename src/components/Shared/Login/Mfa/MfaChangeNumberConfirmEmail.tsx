@@ -17,6 +17,7 @@ import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
 import useInlineServerError from "../../../../hooks/useInlineServerError";
 import LoadingIndicator from "../../LoadingIndicator/LoadingIndicator";
+import Honeypot from "../../Honeypot/Honeypot";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -167,6 +168,7 @@ const MfaChangeNumberConfirmEmail = () => {
               </div>
             )}
             <form noValidate onSubmit={interceptSubmit}>
+              <Honeypot />
               <Controller
                 control={control}
                 name="mfaCode"

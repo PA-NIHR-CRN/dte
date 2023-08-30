@@ -12,6 +12,7 @@ import { AuthContext } from "../../../../context/AuthContext";
 import Utils from "../../../../Helper/Utils";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
 import useInlineServerError from "../../../../hooks/useInlineServerError";
+import Honeypot from "../../Honeypot/Honeypot";
 
 const MfaTotpChallenge = () => {
   const {
@@ -119,6 +120,7 @@ const MfaTotpChallenge = () => {
           will temporarily prevent you from signing in.
         </DTEContent>
         <form onSubmit={interceptSubmit} noValidate>
+          <Honeypot />
           <Controller
             control={control}
             name="mfaCode"
