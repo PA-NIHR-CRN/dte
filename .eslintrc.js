@@ -20,6 +20,12 @@ module.exports = {
     "@typescript-eslint/no-empty-function": "off",
     "react/display-name": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
   },
   settings: {
     react: {
