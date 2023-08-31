@@ -20,6 +20,7 @@ import CheckYourEmail from "../FormElements/CommonElements/CheckYourEmail";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import DTEBackLink from "../UI/DTEBackLink/DTEBackLink";
 import UserLoginForm from "./UserLoginForm/UserLoginForm";
+import Honeypot from "../Honeypot/Honeypot";
 
 const StyledGridElementLeft = styled(Grid)`
   padding-left: 1em;
@@ -228,6 +229,7 @@ const UserLogin = (props: UserLoginProps) => {
               />
             )}
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <Honeypot />
             <UserLoginForm
               control={control}
               loadingLogin={loadingLogin}
@@ -291,6 +293,7 @@ const UserLogin = (props: UserLoginProps) => {
                           />
                         )}
                       <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                        <Honeypot />
                         <UserLoginForm
                           control={control}
                           loadingLogin={loadingLogin}

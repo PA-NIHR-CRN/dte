@@ -14,6 +14,7 @@ import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import { DTEAxiosResponse } from "../../../types/AuthTypes";
 import Utils, { EmailRegex } from "../../../Helper/Utils";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
+import Honeypot from "../Honeypot/Honeypot";
 
 function ForgottenPassword() {
   const theme = useTheme();
@@ -95,6 +96,7 @@ function ForgottenPassword() {
                       noValidate
                       onInvalid={() => {}}
                     >
+                      <Honeypot />
                       <Controller
                         control={control}
                         name="email"

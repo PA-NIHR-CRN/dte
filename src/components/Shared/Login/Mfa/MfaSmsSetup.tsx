@@ -14,6 +14,7 @@ import { AuthContext } from "../../../../context/AuthContext";
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 import LoadingIndicator from "../../LoadingIndicator/LoadingIndicator";
+import Honeypot from "../../Honeypot/Honeypot";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -104,6 +105,7 @@ const MfaSmsSetup = () => {
               your mobile number.
             </DTEContent>
             <form noValidate onSubmit={handleSubmit(onSubmit)}>
+              <Honeypot />
               <Controller
                 control={control}
                 name="phoneNumber"

@@ -8,6 +8,7 @@ import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContainer";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import Honeypot from "../Honeypot/Honeypot";
 
 function UserRegistration() {
   const {
@@ -90,6 +91,7 @@ function UserRegistration() {
                 Please enter a username and password to register an account
               </DTEHeader>
               <form onSubmit={handleSubmit(onSubmit)}>
+                <Honeypot />
                 <TextField
                   id="username"
                   className={classes.field}

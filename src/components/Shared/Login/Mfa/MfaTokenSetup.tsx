@@ -18,6 +18,7 @@ import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageConta
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 import useInlineServerError from "../../../../hooks/useInlineServerError";
+import Honeypot from "../../Honeypot/Honeypot";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -195,6 +196,7 @@ const MfaTokenSetup = () => {
               .
             </DTEContent>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
+              <Honeypot />
               <DTEInput
                 label="Secret key"
                 id="secretKey"

@@ -12,6 +12,7 @@ import { Ethnicities } from "../../../../types/ReferenceData/Ethnicities";
 import EthnicityInformation from "./EthnicityInformation";
 import FormNavigationButtons from "../CommonElements/FormNavigationButtons";
 import Utils from "../../../../Helper/Utils";
+import Honeypot from "../../Honeypot/Honeypot";
 
 export type Ethnicity1FormData = {
   ethnicity: string;
@@ -91,6 +92,7 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
             data-testid="ethnicity-form"
             noValidate
           >
+            <Honeypot />
             <Controller
               control={control}
               name="ethnicity"

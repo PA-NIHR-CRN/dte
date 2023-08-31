@@ -12,6 +12,7 @@ import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import Utils, { LandlineRegex } from "../../../../Helper/Utils";
 import { AuthContext } from "../../../../context/AuthContext";
 import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
+import Honeypot from "../../Honeypot/Honeypot";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -64,6 +65,7 @@ const MfaLandlineSetup = () => {
           please have a pen and paper handy.
         </DTEContent>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <Honeypot />
           <Controller
             control={control}
             name="phoneNumber"
