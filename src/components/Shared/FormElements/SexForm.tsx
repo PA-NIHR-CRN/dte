@@ -11,6 +11,7 @@ import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import Utils from "../../../Helper/Utils";
+import Honeypot from "../Honeypot/Honeypot";
 
 export type SexFormData = {
   sexAtBirth: string;
@@ -88,6 +89,7 @@ const SexForm = (props: SexFormProps) => {
         <Grid item xs={12}>
           {questionHeader}
           <form onSubmit={handleSubmit(onDataChange)} noValidate>
+            <Honeypot />
             <Controller
               control={control}
               name="sexAtBirth"

@@ -9,6 +9,7 @@ import DTEHeader from "../../../../../Shared/UI/DTETypography/DTEHeader/DTEHeade
 import DTEContent from "../../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTELinkButton from "../../../../../Shared/UI/DTELinkButton/DTELinkButton";
 import Utils from "../../../../../../Helper/Utils";
+import Honeypot from "../../../../../Shared/Honeypot/Honeypot";
 
 export type ConsentFormData = {
   consent: boolean;
@@ -88,6 +89,7 @@ const ConsentForm = (props: ConsentFormProps) => {
         research opportunities.
       </DTEContent>
       <form onSubmit={handleSubmit(onDataChange)}>
+        <Honeypot />
         <Controller
           control={control}
           name="consentContact"

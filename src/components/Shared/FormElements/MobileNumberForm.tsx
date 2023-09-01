@@ -10,6 +10,7 @@ import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import Utils from "../../../Helper/Utils";
+import Honeypot from "../Honeypot/Honeypot";
 
 export type MobileFormData = {
   mobileNumber?: string;
@@ -82,6 +83,7 @@ const MobileNumberForm = (props: MobileNumberFormProps) => {
       )}
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
       <form onSubmit={handleSubmit(onDataChangePreProcessing)}>
+        <Honeypot />
         <Controller
           control={control}
           name="mobileNumber"

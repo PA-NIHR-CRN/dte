@@ -10,6 +10,7 @@ import DTEHeader from "../../../../../Shared/UI/DTETypography/DTEHeader/DTEHeade
 import DTEContent from "../../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEDetails from "../../../../../Shared/UI/DTEDetails/DTEDetails";
 import ErrorMessageSummary from "../../../../../Shared/ErrorMessageSummary/ErrorMessageSummary";
+import Honeypot from "../../../../../Shared/Honeypot/Honeypot";
 
 export type EmailFormData = {
   emailAddress: string;
@@ -55,6 +56,7 @@ const EmailForm = (props: EmailFormProps) => {
       <Grid container>
         <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>
           <form onSubmit={handleSubmit(onDataChange)} noValidate>
+            <Honeypot />
             <Controller
               control={control}
               name="emailAddress"

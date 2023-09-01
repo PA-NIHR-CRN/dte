@@ -10,6 +10,7 @@ import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import FormBaseProps from "./FormBaseProps";
 import Utils from "../../../Helper/Utils";
+import Honeypot from "../Honeypot/Honeypot";
 
 export type DisabilityFormData = {
   disability: string;
@@ -68,6 +69,7 @@ const DisabilityForm = (props: DisabilityFormProps) => {
   return (
     <>
       <form onSubmit={handleSubmit(onDataChange)} noValidate>
+        <Honeypot />
         <Controller
           control={control}
           name="disability"

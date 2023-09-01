@@ -16,6 +16,7 @@ import DTEDetails from "../../../Shared/UI/DTEDetails/DTEDetails";
 import FormBaseProps from "../../../Shared/FormElements/FormBaseProps";
 import FormNavigationButtons from "../../../Shared/FormElements/CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../../../Shared/ErrorMessageSummary/ErrorMessageSummary";
+import Honeypot from "../../../Shared/Honeypot/Honeypot";
 
 export type UpdateEmailFormData = {
   emailAddress: string;
@@ -97,6 +98,7 @@ const UpdateEmailForm = ({ onCancel }: FormBaseProps) => {
       <Grid container>
         <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>
           <form onSubmit={handleSubmit(handleChangeEmail)} noValidate>
+            <Honeypot />
             <Controller
               control={control}
               name="emailAddress"
