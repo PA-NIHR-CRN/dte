@@ -20,7 +20,7 @@ function NhsLoginButton({ helperText, buttonText }: NhsLoginButtonProps) {
     const responseType = process.env.REACT_APP_NHS_LOGIN_RESPONSE_TYPE;
     const nhsBaseDomain = process.env.REACT_APP_NHS_LOGIN_URL;
     setNhsLoginUrl(
-      `${nhsBaseDomain}/authorize?client_id=${clientId}&scope=${scope}&response_type=${responseType}&redirect_uri=${redirectUri}/callback`,
+      `${nhsBaseDomain}/authorize?client_id=${clientId}&scope=${scope}&response_type=${responseType}&redirect_uri=${redirectUri}/callback`
     );
   }, []);
 

@@ -29,14 +29,7 @@ interface ManualEntryProps {
 
 function ManualEntry(props: ManualEntryProps) {
   const { content } = useContext(ContentContext);
-  const {
-    initialStateData,
-    onDataChange,
-    nextButtonText,
-    hideInfo,
-    showCancelButton,
-    onCancel,
-  } = props;
+  const { initialStateData, onDataChange, nextButtonText, hideInfo, showCancelButton, onCancel } = props;
   const {
     control,
     setValue,
@@ -72,10 +65,7 @@ function ManualEntry(props: ManualEntryProps) {
         <Controller
           control={control}
           name="addressLine1"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="addressLine1"
               label="Address line 1"
@@ -99,10 +89,7 @@ function ManualEntry(props: ManualEntryProps) {
         <Controller
           control={control}
           name="addressLine2"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="addressLine2"
               label="Address line 2 (optional)"
@@ -145,10 +132,7 @@ function ManualEntry(props: ManualEntryProps) {
         <Controller
           control={control}
           name="town"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="town"
               label="Town"
@@ -172,10 +156,7 @@ function ManualEntry(props: ManualEntryProps) {
         <Controller
           control={control}
           name="postcode"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="postcode"
               value={value}
@@ -191,7 +172,7 @@ function ManualEntry(props: ManualEntryProps) {
               const cleaned = value.replace(/[^A-Za-z0-9]/g, "");
               if (
                 cleaned.match(
-                  /^$|([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})$/,
+                  /^$|([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})$/
                 )
               ) {
                 return true;

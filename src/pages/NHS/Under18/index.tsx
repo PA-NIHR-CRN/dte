@@ -6,10 +6,7 @@ function Under18ErrorPage() {
   return (
     <StepWrapper>
       <DTEHeader as="h1">There is a problem</DTEHeader>
-      <DTEContent>
-        You are not able to register as you must be 18 years old or over to use
-        this service.
-      </DTEContent>
+      <DTEContent>You are not able to register as you must be 18 years old or over to use this service.</DTEContent>
     </StepWrapper>
   );
 }

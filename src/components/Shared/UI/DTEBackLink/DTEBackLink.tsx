@@ -53,13 +53,7 @@ const StyledBackLink = styled(Link)`
   }
 `;
 
-function DTEBackLink({
-  linkText,
-  title,
-  ariaLabel,
-  href = "#",
-  onClick,
-}: Props) {
+function DTEBackLink({ linkText, title, ariaLabel, href = "#", onClick }: Props) {
   return (
     <div className="nhsuk-back-link">
       <StyledBackLink

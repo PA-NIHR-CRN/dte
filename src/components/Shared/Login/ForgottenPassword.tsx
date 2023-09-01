@@ -26,12 +26,8 @@ function ForgottenPassword() {
     watch,
     formState: { errors: formErrors, isSubmitting },
   } = useForm({ mode: "onSubmit", reValidateMode: "onSubmit" });
-  const [pageTitle, setPageTitle] = useState(
-    content["resetpassword-document-title"],
-  );
-  const [submitResponse, setSubmitResponse] = useState<
-    DTEAxiosResponse | undefined
-  >(undefined);
+  const [pageTitle, setPageTitle] = useState(content["resetpassword-document-title"]);
+  const [submitResponse, setSubmitResponse] = useState<DTEAxiosResponse | undefined>(undefined);
   const [userEmail, setUserEmail] = useState("");
 
   const onSubmit = async (formData: any) => {
@@ -46,7 +42,7 @@ function ForgottenPassword() {
       },
       {
         manual: true,
-      },
+      }
     ).catch(() => {
       // swallow 404 axios error -
     });
@@ -60,47 +56,25 @@ function ForgottenPassword() {
     }
   }, [isSubmitting]);
 
-  const [{ loading: loadingForgot, error: errorForgot }, forgotPasswordSubmit] =
-    useAxiosFetch({}, { manual: true });
+  const [{ loading: loadingForgot, error: errorForgot }, forgotPasswordSubmit] = useAxiosFetch({}, { manual: true });
 
   return (
     <DocumentTitle title={pageTitle}>
       <Grid container justifyContent="center" alignItems="center">
         <Grid item xs={10} sm={6} md={4}>
           <Box pt={isMobile ? 5 : 15} pb={isMobile ? 5 : 15}>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-              justifyContent="center"
-            >
+            <Grid container direction="column" alignItems="center" justifyContent="center">
               <Grid item xs={12}>
-                {!(
-                  submitResponse?.isSuccess ||
-                  submitResponse?.errors[0].exceptionName ===
-                    "UserNotFoundException"
-                ) ? (
+                {!(submitResponse?.isSuccess || submitResponse?.errors[0].exceptionName === "UserNotFoundException") ? (
                   <>
-                    <DTEHeader as="h1">
-                      {content["resetpassword-header"]}
-                    </DTEHeader>
+                    <DTEHeader as="h1">{content["resetpassword-header"]}</DTEHeader>
                     <DTEContent>{content["resetpassword-body"]}</DTEContent>
-                    <ErrorMessageSummary
-                      renderSummary={!isSubmitting}
-                      errors={formErrors}
-                    />
-                    <form
-                      onSubmit={handleSubmit(onSubmit)}
-                      noValidate
-                      onInvalid={() => {}}
-                    >
+                    <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
+                    <form onSubmit={handleSubmit(onSubmit)} noValidate onInvalid={() => {}}>
                       <Controller
                         control={control}
                         name="email"
-                        render={({
-                          field: { value, onChange, onBlur },
-                          fieldState: { error },
-                        }) => (
+                        render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                           <DTEInput
                             id="email"
                             value={value}
@@ -117,15 +91,11 @@ function ForgottenPassword() {
                         rules={{
                           required: {
                             value: true,
-                            message:
-                              content["reusable-email-validation-required"],
+                            message: content["reusable-email-validation-required"],
                           },
                           pattern: {
                             value: EmailRegex,
-                            message:
-                              content[
-                                "reusable-email-validation-invalid-format"
-                              ],
+                            message: content["reusable-email-validation-invalid-format"],
                           },
                         }}
                       />
@@ -135,19 +105,14 @@ function ForgottenPassword() {
                         </DTEButton>
                       </Grid>
                     </form>
-                    <ErrorMessageContainer
-                      DTEAxiosErrors={[submitResponse?.errors]}
-                    />
+                    <ErrorMessageContainer DTEAxiosErrors={[submitResponse?.errors]} />
                   </>
                 ) : (
                   <Grid container direction="column" spacing={2}>
                     <Grid item>
-                      <DTEHeader as="h1">
-                        {content["reusable-check-your-email-header"]}
-                      </DTEHeader>
+                      <DTEHeader as="h1">{content["reusable-check-your-email-header"]}</DTEHeader>
                       <DTEContent as="b" $marginBottom="large">
-                        {content["reusable-check-email-bold-text"]}{" "}
-                        {watch("email")}
+                        {content["reusable-check-email-bold-text"]} {watch("email")}
                       </DTEContent>
                       {content["resetpassword-check-email-text-linksent"]}
                       {content["reusable-check-email-body"]}
@@ -167,7 +132,7 @@ function ForgottenPassword() {
                             },
                             {
                               manual: true,
-                            },
+                            }
                           ).catch(() => {
                             // swallow 404 axios error -
                           });
@@ -178,14 +143,8 @@ function ForgottenPassword() {
                     </Grid>
                   </Grid>
                 )}
-                {loadingForgot && (
-                  <LoadingIndicator
-                    text={content["reusable-loading-submitting"]}
-                  />
-                )}
-                {errorForgot && (
-                  <ErrorMessageContainer axiosError={errorForgot} />
-                )}
+                {loadingForgot && <LoadingIndicator text={content["reusable-loading-submitting"]} />}
+                {errorForgot && <ErrorMessageContainer axiosError={errorForgot} />}
               </Grid>
             </Grid>
           </Box>

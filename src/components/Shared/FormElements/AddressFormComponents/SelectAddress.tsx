@@ -36,15 +36,7 @@ interface SelectAddressProps {
 
 function SelectAddress(props: SelectAddressProps) {
   const { content } = useContext(ContentContext);
-  const {
-    onDataChange,
-    addresses,
-    postcode,
-    nextButtonText,
-    hideInfo,
-    showCancelButton,
-    onCancel,
-  } = props;
+  const { onDataChange, addresses, postcode, nextButtonText, hideInfo, showCancelButton, onCancel } = props;
   const {
     control,
     handleSubmit,
@@ -58,10 +50,7 @@ function SelectAddress(props: SelectAddressProps) {
     },
   });
 
-  const hijackOnDataChange = (data: {
-    postcode?: string;
-    address?: number;
-  }) => {
+  const hijackOnDataChange = (data: { postcode?: string; address?: number }) => {
     if (addresses && data.address) {
       onDataChange({
         address: addresses[data.address],
@@ -77,12 +66,7 @@ function SelectAddress(props: SelectAddressProps) {
 
   return (
     <>
-      <Grid
-        container
-        spacing={2}
-        justifyContent="flex-start"
-        alignItems="center"
-      >
+      <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
         <Grid item>
           <DTEContent>Postcode</DTEContent>
           <DTEContent>

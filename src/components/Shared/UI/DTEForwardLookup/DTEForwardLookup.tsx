@@ -99,32 +99,18 @@ const StyledInputDiv = styled.div`
   width: 100%;
 `;
 
-function DTEForwardLookup({
-  id,
-  label,
-  hint,
-  values,
-  error,
-  data,
-  onSelectedValuesChange,
-  placeholder,
-}: Props) {
+function DTEForwardLookup({ id, label, hint, values, error, data, onSelectedValuesChange, placeholder }: Props) {
   const [selectedData, setSelectedData] = useState<string[]>(values || []);
   const [inputValue, setInputValue] = useState("");
-  const [checkBoxDataList, setCheckBoxDataList] =
-    useState<ICheckBoxElement[]>();
+  const [checkBoxDataList, setCheckBoxDataList] = useState<ICheckBoxElement[]>();
   const [checkBoxExpanded, setCheckBoxExpanded] = useState(false);
 
   const buildCheckBoxFilteredList = (filter: string) => {
     let filtered: string[] = [];
     if (filter !== "") {
-      filtered = data.filter((element) =>
-        element.toLowerCase().includes(filter.toLowerCase()),
-      );
+      filtered = data.filter((element) => element.toLowerCase().includes(filter.toLowerCase()));
     }
-    filtered = filtered
-      .filter((v, i, a) => a.findIndex((t) => t === v) === i)
-      .sort((a, b) => (a > b && 1) || -1);
+    filtered = filtered.filter((v, i, a) => a.findIndex((t) => t === v) === i).sort((a, b) => (a > b && 1) || -1);
     return filtered;
   };
 
@@ -145,16 +131,12 @@ function DTEForwardLookup({
 
   const handleInputValueChanged = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-    setCheckBoxDataList(
-      buildCheckBoxList(buildCheckBoxFilteredList(e.target.value)),
-    );
+    setCheckBoxDataList(buildCheckBoxList(buildCheckBoxFilteredList(e.target.value)));
     setCheckBoxExpanded(true);
   };
 
   const handleRemoveSelectedChoice = (index: number) => {
-    setSelectedData((oldSelectedData) =>
-      oldSelectedData.filter((_, i) => i !== index),
-    );
+    setSelectedData((oldSelectedData) => oldSelectedData.filter((_, i) => i !== index));
     if (checkBoxDataList) {
       const mappedCheckboxes = checkBoxDataList;
       checkBoxDataList?.forEach((checkBox, mapperIndex) => {
@@ -166,10 +148,7 @@ function DTEForwardLookup({
     }
   };
 
-  const handleRemoveSelectedChoiceKeyDown = (
-    e: KeyboardEvent<HTMLButtonElement>,
-    index: number,
-  ) => {
+  const handleRemoveSelectedChoiceKeyDown = (e: KeyboardEvent<HTMLButtonElement>, index: number) => {
     if (e.code === "Enter" || e.code === "NumpadEnter" || e.code === "Space") {
       const selectedText = selectedData[index];
       const checkBoxes = checkBoxDataList;
@@ -179,9 +158,7 @@ function DTEForwardLookup({
         }
       });
       setCheckBoxDataList(checkBoxes);
-      setSelectedData((oldSelectedData) =>
-        oldSelectedData.filter((_, i) => i !== index),
-      );
+      setSelectedData((oldSelectedData) => oldSelectedData.filter((_, i) => i !== index));
     }
   };
 
@@ -196,14 +173,12 @@ function DTEForwardLookup({
       checkBoxValues.push(checkBox.value);
     });
 
-    const nonAffectedSelectedItems = selectedData.filter(
-      (x) => !checkBoxValues.includes(x),
-    );
+    const nonAffectedSelectedItems = selectedData.filter((x) => !checkBoxValues.includes(x));
 
     setSelectedData(
       [...nonAffectedSelectedItems, ...addedData]
         .filter((v, i, a) => a.findIndex((t) => t === v) === i)
-        .sort((a, b) => (a > b && 1) || -1),
+        .sort((a, b) => (a > b && 1) || -1)
     );
 
     setCheckBoxDataList(e);
@@ -224,12 +199,7 @@ function DTEForwardLookup({
 
   return (
     <Grid container>
-      <Grid
-        item
-        xs={12}
-        aria-live="assertive"
-        data-testid={`${id}-selected-area`}
-      >
+      <Grid item xs={12} aria-live="assertive" data-testid={`${id}-selected-area`}>
         {selectedData.length > 0 ? (
           <StyledHiddenUpdatePane data-testid={`${id}-selected-area-count`}>
             You have {selectedData.length}
@@ -276,9 +246,7 @@ function DTEForwardLookup({
             aria-label="Clear your search"
             onClick={() => {
               setInputValue("");
-              setCheckBoxDataList(
-                buildCheckBoxList(buildCheckBoxFilteredList("")),
-              );
+              setCheckBoxDataList(buildCheckBoxList(buildCheckBoxFilteredList("")));
             }}
             disabled={inputValue === ""}
             data-testid="clear-icon"
@@ -291,10 +259,7 @@ function DTEForwardLookup({
           </StyledClearButton>
         </StyledInputDiv>
 
-        <StyledHiddenUpdatePane
-          data-testid={`${id}-result-area-count`}
-          id={`${id}-result-area-count`}
-        >
+        <StyledHiddenUpdatePane data-testid={`${id}-result-area-count`} id={`${id}-result-area-count`}>
           {inputValue && inputValue !== "" ? (
             <>There are {checkBoxDataList?.length || 0} results available</>
           ) : (

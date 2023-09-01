@@ -16,22 +16,13 @@ const getEthnicities = (content: any) => ({
     longName: content["reusable-mixed"],
     shortName: "mixed",
     description: "Includes any Mixed background",
-    backgrounds: [
-      "Asian and White",
-      "Black African and White",
-      "Black Caribbean and White",
-    ],
+    backgrounds: ["Asian and White", "Black African and White", "Black Caribbean and White"],
   },
   white: {
     longName: content["reusable-white"],
     shortName: "white",
     description: "Includes any White background",
-    backgrounds: [
-      "British, English, Northern Irish, Scottish, or Welsh",
-      "Irish",
-      "Irish Traveller",
-      "Roma",
-    ],
+    backgrounds: ["British, English, Northern Irish, Scottish, or Welsh", "Irish", "Irish Traveller", "Roma"],
   },
   other: {
     longName: content["reusable-other"],

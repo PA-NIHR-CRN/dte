@@ -32,7 +32,7 @@ function NhsLoginCallback() {
     {
       manual: true,
       useCache: false,
-    },
+    }
   );
 
   useEffect(() => {
@@ -44,10 +44,7 @@ function NhsLoginCallback() {
   // handle errors from the url
   useEffect(() => {
     if (error === "access_denied" && errorDescription === "ConsentNotGiven") {
-      const path =
-        state === "ssointegration"
-          ? `/nhsnoconsent?state=${state}`
-          : "/nhsnoconsent";
+      const path = state === "ssointegration" ? `/nhsnoconsent?state=${state}` : "/nhsnoconsent";
       history.push(path);
     }
   }, [error, errorDescription]);
@@ -56,9 +53,7 @@ function NhsLoginCallback() {
     const result = Utils.ConvertResponseToDTEResponse(response);
     if (result?.errors?.some((e) => e.customCode === userIsUnderageErrorCode)) {
       history.push(`/under18`);
-    } else if (
-      result?.errors?.some((e) => e.customCode === unableToMatchAccounts)
-    ) {
+    } else if (result?.errors?.some((e) => e.customCode === unableToMatchAccounts)) {
       history.push(`/unabletomatch`);
     } else if (result?.isSuccess) {
       saveToken(result?.content);

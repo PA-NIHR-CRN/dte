@@ -39,9 +39,7 @@ function SexForm(props: SexFormProps) {
     instructionText,
   } = props;
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("sm"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("sm")) ? "h2" : "h1";
   const {
     control,
     handleSubmit,
@@ -57,9 +55,7 @@ function SexForm(props: SexFormProps) {
 
   const sexHeader = <DTEHeader as="h2">What is your sex?</DTEHeader>;
   const genderHeader = (
-    <DTEHeader as="h2">
-      Is the gender you identify with the same as your sex registered at birth?
-    </DTEHeader>
+    <DTEHeader as="h2">Is the gender you identify with the same as your sex registered at birth?</DTEHeader>
   );
   if (!hideHeader) {
     questionHeader = (
@@ -72,8 +68,7 @@ function SexForm(props: SexFormProps) {
   } else {
     questionHeader = (
       <DTEContent>
-        Studies may need this information for [reason] - we respect that your
-        identifying gender might be different.
+        Studies may need this information for [reason] - we respect that your identifying gender might be different.
       </DTEContent>
     );
   }
@@ -92,27 +87,18 @@ function SexForm(props: SexFormProps) {
           <Controller
             control={control}
             name="sexAtBirth"
-            render={({
-              field: { value, onChange, onBlur },
-              fieldState: { error },
-            }) => (
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
               <DTERadio
                 id="sexRadio"
                 name="SexAtBirth"
                 label={sexHeader}
                 error={error?.message}
-                infoText={
-                  !hideNextQuestionText
-                    ? "This question is about your sex registered at birth."
-                    : ""
-                }
+                infoText={!hideNextQuestionText ? "This question is about your sex registered at birth." : ""}
                 onChange={onChange}
                 onBlur={onBlur}
               >
                 {!hideNextQuestionText && (
-                  <DTEContent aria-hidden="true">
-                    This question is about your sex registered at birth.
-                  </DTEContent>
+                  <DTEContent aria-hidden="true">This question is about your sex registered at birth.</DTEContent>
                 )}
                 <Radios.Radio
                   value="female"
@@ -122,12 +108,7 @@ function SexForm(props: SexFormProps) {
                 >
                   {content["reusable-female"]}
                 </Radios.Radio>
-                <Radios.Radio
-                  value="male"
-                  defaultChecked={value === "male"}
-                  aria-label="I am Male"
-                  aria-labelledby=""
-                >
+                <Radios.Radio value="male" defaultChecked={value === "male"} aria-label="I am Male" aria-labelledby="">
                   {content["reusable-male"]}
                 </Radios.Radio>
               </DTERadio>
@@ -188,24 +169,19 @@ function SexForm(props: SexFormProps) {
           {!hideInfo && (
             <DTEDetails summary="Why we are asking this question">
               <DTEContent>
-                Some studies can only include people of a specific sex, or may
-                be focused on people whose gender differs from their assigned
-                sex at birth. We may use this information when contacting you
-                about studies you may be interested in.
+                Some studies can only include people of a specific sex, or may be focused on people whose gender differs
+                from their assigned sex at birth. We may use this information when contacting you about studies you may
+                be interested in.
               </DTEContent>
               <DTEContent>
-                We&apos;re also asking this so we can make sure there is a mix
-                of different people taking part in research. We want to make
-                sure everyone 18 and over in the UK feels able to take part in
-                research if they wish to and look to improve our service where
-                our data shows this may not be the case.
+                We&apos;re also asking this so we can make sure there is a mix of different people taking part in
+                research. We want to make sure everyone 18 and over in the UK feels able to take part in research if
+                they wish to and look to improve our service where our data shows this may not be the case.
               </DTEContent>
             </DTEDetails>
           )}
           <FormNavigationButtons
-            nextButtonText={
-              nextButtonText || content["reusable-button-continue"]
-            }
+            nextButtonText={nextButtonText || content["reusable-button-continue"]}
             showCancelButton={showCancelButton || false}
             onCancel={onCancel}
           />

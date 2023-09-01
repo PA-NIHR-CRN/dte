@@ -25,11 +25,7 @@ const generateAuthPath = (role: Role) => {
   }
   return path;
 };
-function ProtectedRoute({
-  userRole,
-  authenticationPath,
-  ...routeProps
-}: ProtectedRouteProps) {
+function ProtectedRoute({ userRole, authenticationPath, ...routeProps }: ProtectedRouteProps) {
   const { isAuthenticatedRole, isAuthenticated } = useContext(AuthContext);
   if (isAuthenticated()) {
     if (isAuthenticatedRole(userRole)) {
@@ -38,11 +34,7 @@ function ProtectedRoute({
     }
     return <Redirect to={{ pathname: "/Unauthorized" }} />;
   }
-  return (
-    <Redirect
-      to={{ pathname: authenticationPath || generateAuthPath(userRole) }}
-    />
-  );
+  return <Redirect to={{ pathname: authenticationPath || generateAuthPath(userRole) }} />;
 }
 
 export default ProtectedRoute;

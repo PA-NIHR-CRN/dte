@@ -123,12 +123,7 @@ export default function Header() {
     <>
       <StyledHeader>
         <StyledSkipToMain href="#main"> Skip to Main Content</StyledSkipToMain>
-        <Grid
-          container
-          alignItems="center"
-          direction="row"
-          justifyContent="flex-start"
-        >
+        <Grid container alignItems="center" direction="row" justifyContent="flex-start">
           <Grid item sm={2} md={1} />
           <StyledGridElementLeft item xs={8} sm={6} md={7}>
             {showBacklink ? (
@@ -149,46 +144,29 @@ export default function Header() {
             )}
           </StyledGridElementLeft>
           <StyledGridElementRight item xs={4} sm={3} md={3}>
-            <StyledLogoLink
-              rel="noreferrer"
-              id="styledLogoLink"
-              target="_blank"
-              href=" https://nhs.uk/"
-            >
+            <StyledLogoLink rel="noreferrer" id="styledLogoLink" target="_blank" href=" https://nhs.uk/">
               <NHSLogo id="NHSLogo" />
             </StyledLogoLink>
           </StyledGridElementRight>
           <Grid item sm={1} md={1} />
           <Grid item sm={2} md={1} />
         </Grid>
-        <Grid
-          container
-          alignItems="center"
-          direction="row"
-          justifyContent="flex-start"
-        >
+        <Grid container alignItems="center" direction="row" justifyContent="flex-start">
           <Grid item sm={2} md={1} />
           <StyledGridElementLeft item xs={8} sm={6} md={7}>
-            <DTEPhaseBanner
-              phase="BETA"
-              url="https://bepartofresearch.nihr.ac.uk/about/#contact-form"
-            />
+            <DTEPhaseBanner phase="BETA" url="https://bepartofresearch.nihr.ac.uk/about/#contact-form" />
           </StyledGridElementLeft>
           <StyledGridElementRight item xs={4} sm={3} md={3}>
             <LanguageSelector>
               <DTEContent>
                 {language !== "en-GB" ? (
-                  <DTELinkButton onClick={() => setLanguage("en-GB")}>
-                    English
-                  </DTELinkButton>
+                  <DTELinkButton onClick={() => setLanguage("en-GB")}>English</DTELinkButton>
                 ) : (
                   "English"
                 )}{" "}
                 |{" "}
                 {language !== "cy-GB" ? (
-                  <DTELinkButton onClick={() => setLanguage("cy-GB")}>
-                    Cymraeg
-                  </DTELinkButton>
+                  <DTELinkButton onClick={() => setLanguage("cy-GB")}>Cymraeg</DTELinkButton>
                 ) : (
                   "Cymraeg"
                 )}

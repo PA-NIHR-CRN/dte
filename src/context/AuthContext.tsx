@@ -1,49 +1,26 @@
 import { useState, createContext, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
-import {
-  JWTDeCode,
-  AuthContextProps,
-  Role,
-  SessionExpiryInfo,
-} from "../types/AuthTypes";
+import { JWTDeCode, AuthContextProps, Role, SessionExpiryInfo } from "../types/AuthTypes";
 import useAxiosFetch from "../hooks/useAxiosFetch";
 import { useHistory } from "react-router-dom";
 
-export const AuthContext = createContext<AuthContextProps>(
-  {} as AuthContextProps,
-);
+export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
 const sessionRefreshCheckInterval = 10 * 1000;
 
 export function AuthProvider(props: { children: any }) {
-  const [authenticatedEmail, setAuthenticatedEmail] = useState<string | null>(
-    null,
-  );
-  const [authenticatedEmailVerified, setAuthenticatedEmailVerified] = useState<
-    boolean | null
-  >(null);
-  const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(
-    null,
-  );
-  const [authenticatedFirstname, setAuthenticatedFirstname] = useState<
-    string | null
-  >(null);
-  const [authenticatedLastname, setAuthenticatedLastname] = useState<
-    string | null
-  >(null);
+  const [authenticatedEmail, setAuthenticatedEmail] = useState<string | null>(null);
+  const [authenticatedEmailVerified, setAuthenticatedEmailVerified] = useState<boolean | null>(null);
+  const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(null);
+  const [authenticatedFirstname, setAuthenticatedFirstname] = useState<string | null>(null);
+  const [authenticatedLastname, setAuthenticatedLastname] = useState<string | null>(null);
 
-  const [authenticatedIsAdmin, setAuthenticatedIsAdmin] = useState<
-    boolean | null
-  >(null);
+  const [authenticatedIsAdmin, setAuthenticatedIsAdmin] = useState<boolean | null>(null);
 
-  const [authenticatedIsParticipant, setAuthenticatedIsParticipant] = useState<
-    boolean | null
-  >(true);
+  const [authenticatedIsParticipant, setAuthenticatedIsParticipant] = useState<boolean | null>(true);
 
-  const [authenticatedIsResearcher, setAuthenticatedIsResearcher] = useState<
-    boolean | null
-  >(null);
+  const [authenticatedIsResearcher, setAuthenticatedIsResearcher] = useState<boolean | null>(null);
   const [isNhsLinkedAccount, setIsNhsLinkedAccount] = useState<boolean>(false);
   const [token, setToken] = useState<string | null | undefined>(null);
   const [isInNHSApp, setIsInNHSApp] = useState<boolean>(false);
@@ -56,18 +33,17 @@ export function AuthProvider(props: { children: any }) {
       url: `${baseUrl}/users/logout`,
       withCredentials: true,
     },
-    { useCache: false, manual: true },
+    { useCache: false, manual: true }
   );
 
-  const [{ loading: refreshSessionTokenLoading }, refreshSessionToken] =
-    useAxiosFetch(
-      {
-        method: "GET",
-        url: `${baseUrl}/users/refreshsession`,
-        withCredentials: true,
-      },
-      { useCache: false, manual: true },
-    );
+  const [{ loading: refreshSessionTokenLoading }, refreshSessionToken] = useAxiosFetch(
+    {
+      method: "GET",
+      url: `${baseUrl}/users/refreshsession`,
+      withCredentials: true,
+    },
+    { useCache: false, manual: true }
+  );
 
   useEffect(() => {
     if (window.nhsapp.tools.isOpenInNHSApp()) {
@@ -128,13 +104,10 @@ export function AuthProvider(props: { children: any }) {
         setAuthenticatedIsAdmin(admin);
 
         const researcher =
-          !decodedToken?.["cognito:groups"]?.includes("Admin") &&
-          decodedToken?.["cognito:username"]?.includes("idg");
+          !decodedToken?.["cognito:groups"]?.includes("Admin") && decodedToken?.["cognito:username"]?.includes("idg");
         setAuthenticatedIsResearcher(researcher);
 
-        const participant =
-          !decodedToken?.["cognito:username"]?.includes("idg") ||
-          (!researcher && !admin);
+        const participant = !decodedToken?.["cognito:username"]?.includes("idg") || (!researcher && !admin);
         setAuthenticatedIsParticipant(participant);
         return true;
       }
@@ -152,12 +125,8 @@ export function AuthProvider(props: { children: any }) {
     }
   };
 
-  const [lastUrl, setLastUrl] = useState<string | null>(
-    localStorage.getItem("currentUrl"),
-  );
-  const [prevUrl, setPrevUrl] = useState<string | null>(
-    localStorage.getItem("previousUrl"),
-  );
+  const [lastUrl, setLastUrl] = useState<string | null>(localStorage.getItem("currentUrl"));
+  const [prevUrl, setPrevUrl] = useState<string | null>(localStorage.getItem("previousUrl"));
 
   const persistLastUrl = (url: string) => {
     const prev = localStorage.getItem("currentUrl");
@@ -167,9 +136,7 @@ export function AuthProvider(props: { children: any }) {
     setLastUrl(url || "/");
   };
 
-  const [lastNonLoginUrl, setLastNonLoginUrl] = useState(
-    localStorage.getItem("lastNonLoginUrl"),
-  );
+  const [lastNonLoginUrl, setLastNonLoginUrl] = useState(localStorage.getItem("lastNonLoginUrl"));
   const persistLastNonLoginUrl = (url: string) => {
     if (!url) {
       // eslint-disable-next-line no-param-reassign

@@ -15,8 +15,7 @@ export default class DTERichTextValidators {
     return (
       sanitizeHtml(data, {
         allowedTags: [],
-      }).replace(/[^a-zA-Z0-9!"£$%^&*():@~{}\[\]<>\? ]/g, "").length >=
-      minLength
+      }).replace(/[^a-zA-Z0-9!"£$%^&*():@~{}\[\]<>\? ]/g, "").length >= minLength
     );
   };
 
@@ -24,16 +23,11 @@ export default class DTERichTextValidators {
     return (
       sanitizeHtml(data, {
         allowedTags: [],
-      }).replace(/[^a-zA-Z0-9!"£$%^&*():@~{}\[\]<>\? ]/g, "").length <=
-      maxLength
+      }).replace(/[^a-zA-Z0-9!"£$%^&*():@~{}\[\]<>\? ]/g, "").length <= maxLength
     );
   };
 
-  static characterLengthRange = (
-    data: string,
-    minLength: number,
-    maxLength: number,
-  ) => {
+  static characterLengthRange = (data: string, minLength: number, maxLength: number) => {
     const clean = sanitizeHtml(data, {
       allowedTags: [],
     }).replace(/[^a-zA-Z0-9!"£$%^&*():@~{}\[\]<>\? ]/g, "");
@@ -41,12 +35,8 @@ export default class DTERichTextValidators {
   };
 
   static isHtml = (data: string) => {
-    const basic =
-      /\s?<!doctype html>|(<html\b[^>]*>|<body\b[^>]*>|<x-[^>]+>)+/i;
-    const full = new RegExp(
-      htmlTags.map((tag) => `<${tag}\\b[^>]*>`).join("|"),
-      "i",
-    );
+    const basic = /\s?<!doctype html>|(<html\b[^>]*>|<body\b[^>]*>|<x-[^>]+>)+/i;
+    const full = new RegExp(htmlTags.map((tag) => `<${tag}\\b[^>]*>`).join("|"), "i");
 
     const checker = data.trim().slice(0, 1000);
     return basic.test(checker) || full.test(checker);

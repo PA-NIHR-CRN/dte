@@ -57,18 +57,15 @@ function YouAreNowRegisteredForm(props: YouAreNowRegisteredFormProps) {
           postcode: data.addressFormData.postcode,
         },
         sexRegisteredAtBirth: data.sexFormData.sexAtBirth,
-        genderIsSameAsSexRegisteredAtBirth:
-          data.sexFormData.genderAtBirth === "noSay" ? null : gender,
+        genderIsSameAsSexRegisteredAtBirth: data.sexFormData.genderAtBirth === "noSay" ? null : gender,
         ethnicGroup: data.ethnicity1FormData.ethnicity,
         ethnicBackground: data.ethnicity2FormData.background,
         disability,
-        disabilityDescription: disability
-          ? data.disability2FormData.disabilityDescription
-          : null,
+        disabilityDescription: disability ? data.disability2FormData.disabilityDescription : null,
         healthConditionInterests: data.healthConditionFormData.conditions,
       },
     },
-    { useCache: false },
+    { useCache: false }
   );
 
   useEffect(() => {
@@ -81,17 +78,13 @@ function YouAreNowRegisteredForm(props: YouAreNowRegisteredFormProps) {
       {error && (
         <ErrorMessageContainer
           axiosErrors={[error]}
-          DTEAxiosErrors={[
-            Utils.ConvertResponseToDTEResponse(response)?.errors,
-          ]}
+          DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(response)?.errors]}
         />
       )}
       {Utils.ConvertResponseToDTEResponse(response)?.isSuccess && (
         <>
           <DTEHeader as="h1">{content["registered-thanks-header"]}</DTEHeader>
-          {isInNHSApp
-            ? content["registered-thanks-page-nhs"]
-            : content["registered-thanks-page"]}
+          {isInNHSApp ? content["registered-thanks-page-nhs"] : content["registered-thanks-page"]}
         </>
       )}
     </>

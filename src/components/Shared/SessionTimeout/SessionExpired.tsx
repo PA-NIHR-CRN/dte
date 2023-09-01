@@ -30,11 +30,7 @@ function SessionExpired() {
             {content["session-expired-body"]}
             <DTEButton
               onClick={() =>
-                isInNHSApp
-                  ? window.nhsapp.navigation.goToPage(
-                      window.nhsapp.navigation.HOME_PAGE,
-                    )
-                  : gotoLogin()
+                isInNHSApp ? window.nhsapp.navigation.goToPage(window.nhsapp.navigation.HOME_PAGE) : gotoLogin()
               }
             >
               {content["session-expired-button-text"]}

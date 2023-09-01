@@ -51,7 +51,7 @@ function NhsPreRegistration() {
                       label: "Be Part of Research",
                     },
                     () => {},
-                    ["https://bepartofresearch.nihr.ac.uk/volunteer-service/"],
+                    ["https://bepartofresearch.nihr.ac.uk/volunteer-service/"]
                   )
                 }
               >
@@ -67,8 +67,7 @@ function NhsPreRegistration() {
               history.push("/Participants/Register");
               ReactGA.event({
                 category: "Internal Link Clicks",
-                action:
-                  "https://volunteer.bepartofresearch.nihr.ac.uk/Participants/Register",
+                action: "https://volunteer.bepartofresearch.nihr.ac.uk/Participants/Register",
                 label: "Register",
               });
             }}
@@ -85,8 +84,7 @@ function NhsPreRegistration() {
               history.push("/Participants/Options");
               ReactGA.event({
                 category: "Internal Link Clicks",
-                action:
-                  "https://volunteer.bepartofresearch.nihr.ac.uk/Participants/Options",
+                action: "https://volunteer.bepartofresearch.nihr.ac.uk/Participants/Options",
                 label: "Sign in",
               });
             }}

@@ -4,10 +4,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Omit } from "@material-ui/types";
-import {
-  Link as RouterLink,
-  LinkProps as RouterLinkProps,
-} from "react-router-dom";
+import { Link as RouterLink, LinkProps as RouterLinkProps } from "react-router-dom";
 
 interface ListItemLinkProps {
   icon?: React.ReactElement;
@@ -24,7 +21,7 @@ const ListItemLink: FunctionComponent<ListItemLinkProps> = (props) => {
         // eslint-disable-next-line react/jsx-props-no-spreading
         <RouterLink to={to} innerRef={ref} ref={ref} {...itemProps} />
       )),
-    [to],
+    [to]
   );
 
   return (

@@ -18,9 +18,7 @@ type Props = {
   ariaLabel?: string;
 };
 
-const StyledButton = styled(Button)<
-  Props & { $dark?: boolean; $padded?: boolean }
->`
+const StyledButton = styled(Button)<Props & { $dark?: boolean; $padded?: boolean }>`
   && {
     border-radius: 0;
     background-color: transparent;

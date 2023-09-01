@@ -12,10 +12,7 @@ type ResendEmailProps = {
 
 function ResendEmail({ userId }: ResendEmailProps) {
   const { content } = useContext(ContentContext);
-  const [
-    { response: resendResponse, loading: resendLoading, error: resendError },
-    resend,
-  ] = useAxiosFetch(
+  const [{ response: resendResponse, loading: resendLoading, error: resendError }, resend] = useAxiosFetch(
     {
       url: `${process.env.REACT_APP_BASE_API}/users/resendverificationemail`,
       method: "POST",
@@ -23,37 +20,26 @@ function ResendEmail({ userId }: ResendEmailProps) {
         userId,
       },
     },
-    { useCache: false, manual: true },
+    { useCache: false, manual: true }
   );
   return userId ? (
     <>
-      {resendLoading && (
-        <LoadingIndicator
-          text={content["register-check-email-loading-resend"]}
-        />
-      )}
+      {resendLoading && <LoadingIndicator text={content["register-check-email-loading-resend"]} />}
       {!resendLoading && (
-        <DTEButton onClick={() => resend()}>
-          {content["register-check-email-button-resend"]}
-        </DTEButton>
+        <DTEButton onClick={() => resend()}>{content["register-check-email-button-resend"]}</DTEButton>
       )}
-      {resendError &&
-        !Utils.ConvertResponseToDTEResponse(resendResponse)?.isSuccess && (
-          <div style={{ marginTop: "1rem" }}>
-            <ErrorMessageContainer
-              axiosError={resendError}
-              DTEAxiosErrors={[
-                Utils.ConvertResponseToDTEResponse(resendResponse)?.errors,
-              ]}
-            >
-              {content["register-check-email-error-resend"]}
-            </ErrorMessageContainer>
-          </div>
-        )}
-      {Utils.ConvertResponseToDTEResponse(resendResponse)?.isSuccess && (
+      {resendError && !Utils.ConvertResponseToDTEResponse(resendResponse)?.isSuccess && (
         <div style={{ marginTop: "1rem" }}>
-          {content["register-check-email-success-resend"]}
+          <ErrorMessageContainer
+            axiosError={resendError}
+            DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(resendResponse)?.errors]}
+          >
+            {content["register-check-email-error-resend"]}
+          </ErrorMessageContainer>
         </div>
+      )}
+      {Utils.ConvertResponseToDTEResponse(resendResponse)?.isSuccess && (
+        <div style={{ marginTop: "1rem" }}>{content["register-check-email-success-resend"]}</div>
       )}
     </>
   ) : (

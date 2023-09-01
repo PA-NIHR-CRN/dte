@@ -28,11 +28,7 @@ const StyledPaper = styled(Paper)<Props>`
     /* padding: 3em; */
     border-left: ${(Props) =>
       Props.$bandColour
-        ? `10px solid ${
-            Props.$bandColour === "Default"
-              ? Props.theme.NIHR.Blue
-              : Props.$bandColour
-          }`
+        ? `10px solid ${Props.$bandColour === "Default" ? Props.theme.NIHR.Blue : Props.$bandColour}`
         : ``};
   }
 `;
@@ -65,11 +61,7 @@ function DTEPaper({
       elevation={elevation}
     >
       {onClickClose && (
-        <StyledCloseIconButton
-          onClick={onClickClose}
-          disabled={disabled}
-          aria-label={$buttonLabel}
-        >
+        <StyledCloseIconButton onClick={onClickClose} disabled={disabled} aria-label={$buttonLabel}>
           <CloseIcon />
         </StyledCloseIconButton>
       )}

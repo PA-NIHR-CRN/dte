@@ -84,7 +84,7 @@ function AllTheProviders({ children, initialRoutes }: RenderProps) {
 const customRender = (
   ui: ReactElement,
   options?: Omit<RenderOptions, "wrapper">,
-  initialRoutes?: { [name: string]: string }[],
+  initialRoutes?: { [name: string]: string }[]
 ) => {
   return render(ui, {
     wrapper: (args) => AllTheProviders({ ...args, initialRoutes }),

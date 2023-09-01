@@ -10,9 +10,7 @@ import { DisabilityFormData } from "../../Shared/FormElements/DisabilityForm";
 import { DOBFormData } from "../../Shared/FormElements/DOBForm";
 import { Ethnicity1FormData } from "../../Shared/FormElements/EthnicityFormComponents/Ethnicity1Form";
 import { Ethnicity2FormData } from "../../Shared/FormElements/EthnicityFormComponents/Ethnicity2Form";
-import HealthConditionForm, {
-  HealthConditionFormData,
-} from "../../Shared/FormElements/HealthConditionForm";
+import HealthConditionForm, { HealthConditionFormData } from "../../Shared/FormElements/HealthConditionForm";
 import { MobileFormData } from "../../Shared/FormElements/MobileNumberForm";
 import { SexFormData } from "../../Shared/FormElements/SexForm";
 import Utils from "../../../Helper/Utils";
@@ -42,13 +40,7 @@ function AreasOfResearch() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [userData, setUserData] = React.useState<UserDataState>();
   const getDemographicsURL = `${process.env.REACT_APP_BASE_API}/participants/demographics`;
-  const [
-    {
-      response: demographicsResponse,
-      loading: demographicsLoading,
-      error: demographicsError,
-    },
-  ] = useAxiosFetch(
+  const [{ response: demographicsResponse, loading: demographicsLoading, error: demographicsError }] = useAxiosFetch(
     {
       url: getDemographicsURL,
       method: "GET",
@@ -56,7 +48,7 @@ function AreasOfResearch() {
     {
       manual: false,
       useCache: false,
-    },
+    }
   );
 
   const parseTriStateBoolean = (value: boolean, nullValue: string) => {
@@ -67,12 +59,8 @@ function AreasOfResearch() {
   };
 
   useEffect(() => {
-    if (
-      !userData &&
-      Utils.ConvertResponseToDTEResponse(demographicsResponse)?.isSuccess
-    ) {
-      const response =
-        Utils.ConvertResponseToDTEResponse(demographicsResponse)?.content;
+    if (!userData && Utils.ConvertResponseToDTEResponse(demographicsResponse)?.isSuccess) {
+      const response = Utils.ConvertResponseToDTEResponse(demographicsResponse)?.content;
       if (response) {
         const stateData: UserDataState = {
           address: {
@@ -103,10 +91,7 @@ function AreasOfResearch() {
           },
           sex: {
             sexAtBirth: response.sexRegisteredAtBirth,
-            genderAtBirth: parseTriStateBoolean(
-              response.genderIsSameAsSexRegisteredAtBirth,
-              "noSay",
-            ),
+            genderAtBirth: parseTriStateBoolean(response.genderIsSameAsSexRegisteredAtBirth, "noSay"),
           },
           ethnicity1: {
             ethnicity: response.ethnicGroup,
@@ -124,17 +109,13 @@ function AreasOfResearch() {
   }, [demographicsResponse, userData]);
 
   const [
-    {
-      response: demographicsPostResponse,
-      loading: demographicsPostLoading,
-      error: demographicsPostError,
-    },
+    { response: demographicsPostResponse, loading: demographicsPostLoading, error: demographicsPostError },
     demographicsPost,
   ] = useAxiosFetch(
     {
       method: "PUT",
     },
-    { useCache: false, manual: true },
+    { useCache: false, manual: true }
   );
 
   const handleSave = async (data: HealthConditionFormData) => {
@@ -157,25 +138,17 @@ function AreasOfResearch() {
             parseInt(userData.dob.year, 10),
             parseInt(userData.dob.month, 10) - 1,
             parseInt(userData.dob.day, 10),
-            12,
+            12
           ).toISOString(),
           sexRegisteredAtBirth: userData.sex.sexAtBirth,
           genderIsSameAsSexRegisteredAtBirth:
-            userData.sex.genderAtBirth === "noSay"
-              ? null
-              : userData.sex.genderAtBirth === "yes",
+            userData.sex.genderAtBirth === "noSay" ? null : userData.sex.genderAtBirth === "yes",
           ethnicGroup: userData.ethnicity1.ethnicity,
           ethnicBackground: userData.ethnicity2.background,
-          disability:
-            userData.disability.disability === "notSaying"
-              ? null
-              : userData.disability.disability === "yes",
+          disability: userData.disability.disability === "notSaying" ? null : userData.disability.disability === "yes",
           disabilityDescription:
-            userData.disability.disability === "yes"
-              ? userData.disabilityDescription.disabilityDescription
-              : null,
-          healthConditionInterests:
-            data.conditions.length > 0 ? data.conditions : null,
+            userData.disability.disability === "yes" ? userData.disabilityDescription.disabilityDescription : null,
+          healthConditionInterests: data.conditions.length > 0 ? data.conditions : null,
         },
       }).catch(() => {});
     }
@@ -184,49 +157,35 @@ function AreasOfResearch() {
   return (
     <DocumentTitle title={content["account-health-conditions-document-title"]}>
       <StyledWrapper role="main" id="main" ref={containerRef}>
-        {demographicsLoading && (
-          <LoadingIndicator text="Loading your details..." />
-        )}
-        {demographicsPostLoading && (
-          <LoadingIndicator
-            text={content["reusable-loading-updating-details"]}
-          />
-        )}
+        {demographicsLoading && <LoadingIndicator text="Loading your details..." />}
+        {demographicsPostLoading && <LoadingIndicator text={content["reusable-loading-updating-details"]} />}
         <Container>
           <ErrorMessageContainer
             axiosErrors={[demographicsPostError]}
-            DTEAxiosErrors={[
-              Utils.ConvertResponseToDTEResponse(demographicsPostResponse)
-                ?.errors,
-            ]}
+            DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(demographicsPostResponse)?.errors]}
           />
           <ErrorMessageContainer
             axiosErrors={[demographicsError]}
-            DTEAxiosErrors={[
-              Utils.ConvertResponseToDTEResponse(demographicsResponse)?.errors,
-            ]}
+            DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(demographicsResponse)?.errors]}
           />
-          {!demographicsLoading &&
-            Utils.ConvertResponseToDTEResponse(demographicsResponse)
-              ?.isSuccess &&
-            userData && (
-              <HealthConditionForm
-                onDataChange={async (data) => {
-                  await handleSave(data);
-                  history.push("/");
-                }}
-                onCancel={() => {
-                  history.push("/");
-                }}
-                initialStateData={
-                  userData?.healthConditions || {
-                    conditions: [],
-                  }
+          {!demographicsLoading && Utils.ConvertResponseToDTEResponse(demographicsResponse)?.isSuccess && userData && (
+            <HealthConditionForm
+              onDataChange={async (data) => {
+                await handleSave(data);
+                history.push("/");
+              }}
+              onCancel={() => {
+                history.push("/");
+              }}
+              initialStateData={
+                userData?.healthConditions || {
+                  conditions: [],
                 }
-                nextButtonText={content["reusable-save"]}
-                showCancelButton
-              />
-            )}
+              }
+              nextButtonText={content["reusable-save"]}
+              showCancelButton
+            />
+          )}
         </Container>
       </StyledWrapper>
     </DocumentTitle>

@@ -16,9 +16,7 @@ const tagManagerArgs = {
 
 function CookieBanner() {
   const { content } = useContext(ContentContext);
-  const [cookiesAccepted, setCookiesAccepted] = useState(
-    Cookies.get("cookiesAccepted") || null,
-  );
+  const [cookiesAccepted, setCookiesAccepted] = useState(Cookies.get("cookiesAccepted") || null);
   const [confirmationBannerShow, setConfirmationBannerShow] = useState(false);
   const [cookieBannerHide, setCookieBannerHide] = useState(true);
 
@@ -38,8 +36,7 @@ function CookieBanner() {
 
     Cookies.set("cookiesAccepted", "true-20221221", {
       path: "/",
-      domain:
-        process.env.REACT_APP_COOKIE_DOMAIN || ".bepartofresearch.nihr.ac.uk",
+      domain: process.env.REACT_APP_COOKIE_DOMAIN || ".bepartofresearch.nihr.ac.uk",
       expires: 182.5,
     });
     setConfirmationBannerShow(true);
@@ -75,32 +72,17 @@ function CookieBanner() {
               <DTEHeader as="h3" $variant="h3">
                 {content["cookiebanner-header"]}
               </DTEHeader>
-              <div className="govuk-cookie-banner__content">
-                {content["cookiebanner-body"]}
-              </div>
+              <div className="govuk-cookie-banner__content">{content["cookiebanner-body"]}</div>
             </div>
           </div>
           <div className="govuk-button-group">
-            <DTEButton
-              id="acceptCookies"
-              $small
-              onClick={() => handleAcceptCookie()}
-            >
+            <DTEButton id="acceptCookies" $small onClick={() => handleAcceptCookie()}>
               {content["cookiebanner-button-accept"]}
             </DTEButton>
-            <DTEButton
-              id="rejectCookies"
-              $small
-              onClick={() => handleRejectCookie()}
-              type="button"
-            >
+            <DTEButton id="rejectCookies" $small onClick={() => handleRejectCookie()} type="button">
               {content["cookiebanner-button-reject"]}
             </DTEButton>
-            <DTERouteLink
-              id="viewCookiesLink"
-              to="/cookies"
-              renderStyle="standard"
-            >
+            <DTERouteLink id="viewCookiesLink" to="/cookies" renderStyle="standard">
               {content["cookiebanner-link-view"]}
             </DTERouteLink>
           </div>
@@ -122,24 +104,13 @@ function CookieBanner() {
                 <div className="govuk-grid-column-two-thirds">
                   <div className="govuk-cookie-banner__content">
                     <p className="govuk-body hideCookieMessage">
-                      {
-                        content[
-                          `cookiebanner-text-confirmation-${
-                            cookiesAccepted === "true" ? "accept" : "reject"
-                          }`
-                        ]
-                      }
+                      {content[`cookiebanner-text-confirmation-${cookiesAccepted === "true" ? "accept" : "reject"}`]}
                     </p>
                   </div>
                 </div>
               </div>
               <div className="govuk-button-group hideCookieButtonGroup">
-                <DTEButton
-                  $small
-                  onClick={() => handleHideBanner()}
-                  type="button"
-                  id="hideCookieButton"
-                >
+                <DTEButton $small onClick={() => handleHideBanner()} type="button" id="hideCookieButton">
                   {content["cookiebanner-button-hide"]}
                 </DTEButton>
               </div>

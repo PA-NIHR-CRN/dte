@@ -107,10 +107,7 @@ export default [
     key="accountclosed"
   />,
   <Route
-    path={[
-      "/Participants/Register/Questions",
-      "/Cyfranogwyr/Cofrestru/Cwestiynau",
-    ]}
+    path={["/Participants/Register/Questions", "/Cyfranogwyr/Cofrestru/Cwestiynau"]}
     component={RegsitrationProcess}
     strict
     exact

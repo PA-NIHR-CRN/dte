@@ -4,8 +4,7 @@ import { ContentContext } from "../../../context/ContentContext";
 const customCodeLookup = (code: string, detail?: string | ReactNode) => {
   const { content } = useContext(ContentContext);
   const defaultLoginErrorMessage = content["error-codes-default-login"];
-  const defaultRegistrationErrorMessage =
-    content["error-codes-default-registration"];
+  const defaultRegistrationErrorMessage = content["error-codes-default-registration"];
   const defaultErrorMessage = content["error-codes-default"];
   switch (code) {
     // Code used when the details have already been changed locally

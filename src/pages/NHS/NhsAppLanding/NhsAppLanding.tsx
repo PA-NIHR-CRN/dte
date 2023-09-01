@@ -22,7 +22,7 @@ function NhsAppLanding() {
     {
       manual: false,
       useCache: false,
-    },
+    }
   );
 
   useEffect(() => {
@@ -42,9 +42,7 @@ function NhsAppLanding() {
     <>
       {isInNHSApp && (
         <div className="nhs-app-provider-banner">
-          <div className="nhsuk-width-container">
-            {content["reusable-nhs-app-provider-banner"]}
-          </div>
+          <div className="nhsuk-width-container">{content["reusable-nhs-app-provider-banner"]}</div>
         </div>
       )}
 
@@ -52,17 +50,13 @@ function NhsAppLanding() {
         {loading && <LoadingIndicator text={content["reusable-loading"]} />}
         {!loading && !completedDemographics && (
           <>
-            <DTEHeader as="h1">
-              {content["nhsapp-landing-be-part-of-research"]}
-            </DTEHeader>
+            <DTEHeader as="h1">{content["nhsapp-landing-be-part-of-research"]}</DTEHeader>
             {content["nhsapp-landing-page"]}
           </>
         )}
         {!loading && completedDemographics && (
           <>
-            <DTEHeader as="h1">
-              {content["reusable-registered-with-bpor"]}
-            </DTEHeader>
+            <DTEHeader as="h1">{content["reusable-registered-with-bpor"]}</DTEHeader>
             {content["reusable-nhs-confirmation"]}
             <DTEHeader as="h2">{content["reusable-hear-from-us"]}</DTEHeader>
             {content["nhsapp-landing-hear-from-us"]}

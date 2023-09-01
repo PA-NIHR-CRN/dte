@@ -12,9 +12,7 @@ function CheckYourEmail({ emailAddress }: CheckYourEmailProps) {
   const { content } = useContext(ContentContext);
   return (
     <>
-      <DTEHeader as="h1">
-        {content["reusable-check-your-email-header"]}
-      </DTEHeader>
+      <DTEHeader as="h1">{content["reusable-check-your-email-header"]}</DTEHeader>
       <DTEContent as="b" $marginBottom="large">
         {content["reusable-check-email-bold-text"]} {emailAddress}
       </DTEContent>

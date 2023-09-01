@@ -35,9 +35,7 @@ function Ethnicity1Form(props: Ethnicity1FormProps) {
     instructionText,
   } = props;
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   let labelElement: ReactNode;
   const ethnicities = getEthnicities(content);
 
@@ -62,8 +60,7 @@ function Ethnicity1Form(props: Ethnicity1FormProps) {
 
   const preOnDataChange = (data: Ethnicity1FormData & { other: string }) => {
     onDataChange({
-      ethnicity:
-        data.ethnicity === "other" && data.other ? data.other : data.ethnicity,
+      ethnicity: data.ethnicity === "other" && data.other ? data.other : data.ethnicity,
     });
   };
 
@@ -86,11 +83,7 @@ function Ethnicity1Form(props: Ethnicity1FormProps) {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <form
-          onSubmit={handleSubmit(preOnDataChange)}
-          data-testid="ethnicity-form"
-          noValidate
-        >
+        <form onSubmit={handleSubmit(preOnDataChange)} data-testid="ethnicity-form" noValidate>
           <Controller
             control={control}
             name="ethnicity"
@@ -124,14 +117,9 @@ function Ethnicity1Form(props: Ethnicity1FormProps) {
               },
             }}
           />
-          <EthnicityInformation
-            hideInfo={hideInfo || false}
-            studyType="groups"
-          />
+          <EthnicityInformation hideInfo={hideInfo || false} studyType="groups" />
           <FormNavigationButtons
-            nextButtonText={
-              nextButtonText || content["reusable-button-continue"]
-            }
+            nextButtonText={nextButtonText || content["reusable-button-continue"]}
             showCancelButton={showCancelButton || false}
             onCancel={onCancel}
           />

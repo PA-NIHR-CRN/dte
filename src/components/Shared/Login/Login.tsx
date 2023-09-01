@@ -38,7 +38,7 @@ function Login() {
     {
       manual: true,
       useCache: false,
-    },
+    }
   );
 
   const returnToOriginatingPage = () => {
@@ -54,10 +54,7 @@ function Login() {
       history.push("/");
     }
     if (token) {
-      if (
-        isAuthenticatedRole(Role.Participant) &&
-        !(process.env.REACT_APP_DEBUG_AUTH === "true")
-      ) {
+      if (isAuthenticatedRole(Role.Participant) && !(process.env.REACT_APP_DEBUG_AUTH === "true")) {
         returnToOriginatingPage();
       } else if (process.env.REACT_APP_DEBUG_AUTH === "true") {
         checkToken();
@@ -68,13 +65,7 @@ function Login() {
   }, [token]);
 
   return (
-    <Grid
-      container
-      justifyContent="center"
-      alignItems="center"
-      role="main"
-      id="main"
-    >
+    <Grid container justifyContent="center" alignItems="center" role="main" id="main">
       {idToken && process.env.REACT_APP_DEBUG_AUTH === "true" && (
         <Grid item xs={12}>
           <DTEPaper>
@@ -83,12 +74,7 @@ function Login() {
             <Chip label={`EMAIL: ${authenticatedEmail}`} />
             <Chip label={`ID: ${authenticatedUserId}`} />
             <Chip label={`Email Verified: ${authenticatedEmailVerified}`} />
-            {!loading && (
-              <Chip
-                color="primary"
-                label={`Server Verification: ${response?.status === 200}`}
-              />
-            )}
+            {!loading && <Chip color="primary" label={`Server Verification: ${response?.status === 200}`} />}
             <Button onClick={() => returnToOriginatingPage()}>Continue</Button>
           </DTEPaper>
         </Grid>

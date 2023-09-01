@@ -19,19 +19,12 @@ function NhsNoConsent() {
     <>
       {isInNHSApp && (
         <div className="nhs-app-provider-banner">
-          <div className="nhsuk-width-container">
-            {content["reusable-nhs-app-provider-banner"]}
-          </div>
+          <div className="nhsuk-width-container">{content["reusable-nhs-app-provider-banner"]}</div>
         </div>
       )}
       <StepWrapper>
         {!isInNHSApp && (
-          <DTEBackLink
-            linkText="Back"
-            onClick={() =>
-              window.history.go(state === "ssointegration" ? -2 : -3)
-            }
-          />
+          <DTEBackLink linkText="Back" onClick={() => window.history.go(state === "ssointegration" ? -2 : -3)} />
         )}
         <DTEHeader as="h1" $variant="h2">
           {content["register-no-consent-header"]}
@@ -41,15 +34,10 @@ function NhsNoConsent() {
         </DTEContent>
         {isInNHSApp ? (
           <DTEContent>
-            You have chosen not to share your NHS login account information with
-            Be Part of Research. You can{" "}
+            You have chosen not to share your NHS login account information with Be Part of Research. You can{" "}
             <DTERouteLink
               to="/"
-              onClick={() =>
-                window.nhsapp.navigation.goToPage(
-                  window.nhsapp.navigation.HOME_PAGE,
-                )
-              }
+              onClick={() => window.nhsapp.navigation.goToPage(window.nhsapp.navigation.HOME_PAGE)}
               renderStyle="standard"
               ariaLabel="Go back to previous page"
             >
@@ -59,23 +47,17 @@ function NhsNoConsent() {
           </DTEContent>
         ) : (
           <DTEContent>
-            You have chosen not to share your NHS login account information with
-            Be Part of Research. You can go back change this decision if you
-            wish.
+            You have chosen not to share your NHS login account information with Be Part of Research. You can go back
+            change this decision if you wish.
           </DTEContent>
         )}
         <DTEContent>
-          You can find out more about taking part in health and care research
-          and register using your email address on the Be Part of Research
-          website.
+          You can find out more about taking part in health and care research and register using your email address on
+          the Be Part of Research website.
         </DTEContent>
         {isInNHSApp ? (
           <DTEButton
-            onClick={() =>
-              window.nhsapp.navigation.openBrowserOverlay(
-                "https://bepartofresearch.nihr.ac.uk/",
-              )
-            }
+            onClick={() => window.nhsapp.navigation.openBrowserOverlay("https://bepartofresearch.nihr.ac.uk/")}
           >
             {content["register-no-consent-button-homepage"]}
           </DTEButton>

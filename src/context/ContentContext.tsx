@@ -14,9 +14,7 @@ interface ContentContextType {
   setLanguage: (language: string) => void;
 }
 
-export const ContentContext = createContext<ContentContextType>(
-  {} as ContentContextType,
-);
+export const ContentContext = createContext<ContentContextType>({} as ContentContextType);
 
 interface ContentProviderProps {
   children: ReactNode;
@@ -24,9 +22,7 @@ interface ContentProviderProps {
 
 export function ContentProvider({ children }: ContentProviderProps) {
   const defaultLanguage = "en-GB";
-  const [language, setLanguage] = useState<string>(
-    Cookies.get("selectedLanguage") || defaultLanguage,
-  );
+  const [language, setLanguage] = useState<string>(Cookies.get("selectedLanguage") || defaultLanguage);
   const [content, setContent] = useState<any>(null); // Define a more specific type if known
   const [contentLoading, setContentLoading] = useState(true);
   const { i18n } = useTranslation();
@@ -50,9 +46,7 @@ export function ContentProvider({ children }: ContentProviderProps) {
   }, [language]);
 
   return (
-    <ContentContext.Provider
-      value={{ content, contentLoading, language, setLanguage }}
-    >
+    <ContentContext.Provider value={{ content, contentLoading, language, setLanguage }}>
       {children}
     </ContentContext.Provider>
   );

@@ -1,7 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import styled, {
-  ThemeProvider as StyledComponentsThemeProvider,
-} from "styled-components";
+import styled, { ThemeProvider as StyledComponentsThemeProvider } from "styled-components";
 import { useTheme, StylesProvider } from "@material-ui/core/styles";
 import { Route, Switch, useLocation } from "react-router-dom";
 import Header from "./components/Shared/Header/Header";
@@ -73,9 +71,7 @@ function App() {
 
   return (
     <StylesProvider injectFirst>
-      <StyledComponentsThemeProvider
-        theme={{ ...styledComponentsTheme, ...MuiTheme }}
-      >
+      <StyledComponentsThemeProvider theme={{ ...styledComponentsTheme, ...MuiTheme }}>
         <div className="App Site">
           <AppRoot />
           {contentLoading ? (
@@ -106,16 +102,8 @@ function App() {
                   <Switch>
                     {AuthRoutes}
                     {ParticipantRoutes}
-                    <Route
-                      path="/Unauthorized"
-                      component={Unauthorized}
-                      key="unauthorized"
-                    />
-                    <Route
-                      path="*"
-                      component={PageNotFound}
-                      key="pagenotfound"
-                    />
+                    <Route path="/Unauthorized" component={Unauthorized} key="unauthorized" />
+                    <Route path="*" component={PageNotFound} key="pagenotfound" />
                   </Switch>
                 </div>
                 {showSplotches && (

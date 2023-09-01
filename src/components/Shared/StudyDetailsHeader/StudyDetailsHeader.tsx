@@ -24,7 +24,7 @@ function StudyDetailsHeader(props: StudyDetailsHeaderProps) {
       url: `${process.env.REACT_APP_BASE_API}/studies/${studyid}`,
       method: "GET",
     },
-    { manual: true, useCache: true },
+    { manual: true, useCache: true }
   );
 
   useEffect(() => {
@@ -43,12 +43,8 @@ function StudyDetailsHeader(props: StudyDetailsHeaderProps) {
               {error && "Unable to load title"}
               {response &&
                 Utils.ConvertResponseToDTEResponse(response)?.isSuccess &&
-                (Utils.ConvertResponseToDTEResponse(response)?.content?.item
-                  ?.title ||
-                  "No title found")}
-              {response &&
-                !Utils.ConvertResponseToDTEResponse(response)?.isSuccess &&
-                "Unable to load title"}
+                (Utils.ConvertResponseToDTEResponse(response)?.content?.item?.title || "No title found")}
+              {response && !Utils.ConvertResponseToDTEResponse(response)?.isSuccess && "Unable to load title"}
             </>
           )}
         </Grid>

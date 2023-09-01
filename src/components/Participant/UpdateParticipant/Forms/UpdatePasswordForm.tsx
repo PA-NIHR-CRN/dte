@@ -46,9 +46,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
   const [policyBuilder, setPolicyBuilder] = useState("");
   const [passwordPolicy, setPasswordPolicy] = useState<PasswordPolicy>();
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
 
   const {
     control,
@@ -66,14 +64,12 @@ function UpdatePasswordForm(props: FormBaseProps) {
     },
   });
 
-  const [
-    { response: policyResponse, loading: policyLoading, error: policyError },
-  ] = useAxiosFetch(
+  const [{ response: policyResponse, loading: policyLoading, error: policyError }] = useAxiosFetch(
     {
       url: `${process.env.REACT_APP_BASE_API}/users/passwordpolicy`,
       method: "GET",
     },
-    { useCache: false, manual: false },
+    { useCache: false, manual: false }
   );
 
   const [
@@ -87,14 +83,10 @@ function UpdatePasswordForm(props: FormBaseProps) {
     {
       method: "POST",
     },
-    { useCache: false, manual: true },
+    { useCache: false, manual: true }
   );
 
-  const requirementsConstructor = (
-    initialiser: string,
-    clause: boolean,
-    clauseText: string,
-  ) => {
+  const requirementsConstructor = (initialiser: string, clause: boolean, clauseText: string) => {
     let returnedValue = initialiser;
     if (clause) {
       if (requiresPolicyComma) {
@@ -111,14 +103,11 @@ function UpdatePasswordForm(props: FormBaseProps) {
     clause: boolean,
     commaClauseText: string,
     nonCommaClauseText: string,
-    specialInitialiser?: boolean,
+    specialInitialiser?: boolean
   ) => {
     let returnedValue = initialiser;
     if (clause) {
-      if (
-        requireErrorMessageComma ||
-        (minLengthErrorOccured && specialInitialiser)
-      ) {
+      if (requireErrorMessageComma || (minLengthErrorOccured && specialInitialiser)) {
         returnedValue += `, ${includesStatement}${commaClauseText}`;
       } else {
         returnedValue += `${includesStatement}${nonCommaClauseText}`;
@@ -132,49 +121,34 @@ function UpdatePasswordForm(props: FormBaseProps) {
 
   useEffect(() => {
     if (policyResponse) {
-      const policy = Utils.ConvertResponseToDTEResponse(
-        policyResponse,
-      ) as unknown as PasswordPolicy;
+      const policy = Utils.ConvertResponseToDTEResponse(policyResponse) as unknown as PasswordPolicy;
       let builder = `${content["register-password-policy-builder-char1"]} ${policy.minimumLength} ${content["register-password-policy-builder-char2"]}`;
       let requirements = "";
-      if (
-        policy.requireUppercase ||
-        policy.requireLowercase ||
-        policy.requireNumbers ||
-        policy.requireSymbols
-      ) {
+      if (policy.requireUppercase || policy.requireLowercase || policy.requireNumbers || policy.requireSymbols) {
         requirements += content["register-password-policy-builder-include"];
       }
       requirements = requirementsConstructor(
         requirements,
         policy.requireUppercase,
-        content["register-password-policy-builder-include-uppercase"],
+        content["register-password-policy-builder-include-uppercase"]
       );
       requirements = requirementsConstructor(
         requirements,
         policy.requireLowercase,
-        content["register-password-policy-builder-include-lowercase"],
+        content["register-password-policy-builder-include-lowercase"]
       );
       requirements = requirementsConstructor(
         requirements,
         policy.requireNumbers,
-        content["register-password-policy-builder-include-numbers"],
+        content["register-password-policy-builder-include-numbers"]
       );
       requirements = requirementsConstructor(
         requirements,
         policy.requireSymbols,
-        content["register-password-policy-builder-include-symbols"],
+        content["register-password-policy-builder-include-symbols"]
       );
-      if (
-        policy.requireUppercase ||
-        policy.requireLowercase ||
-        policy.requireNumbers ||
-        policy.requireSymbols
-      ) {
-        requirements = requirements.replace(
-          /,([^,]*)$/,
-          ` ${content["reusable-text-and"]}$1`,
-        );
+      if (policy.requireUppercase || policy.requireLowercase || policy.requireNumbers || policy.requireSymbols) {
+        requirements = requirements.replace(/,([^,]*)$/, ` ${content["reusable-text-and"]}$1`);
       }
       builder += `${requirements}.`;
       setPolicyBuilder(builder);
@@ -183,10 +157,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
   }, [policyResponse]);
 
   useEffect(() => {
-    if (
-      Utils.ConvertResponseToDTEResponse(updateUserPasswordPostResponse)
-        ?.isSuccess
-    ) {
+    if (Utils.ConvertResponseToDTEResponse(updateUserPasswordPostResponse)?.isSuccess) {
       history.push("/Participants/PasswordUpdated");
     }
   }, [updateUserPasswordPostResponse]);
@@ -204,35 +175,21 @@ function UpdatePasswordForm(props: FormBaseProps) {
 
   return (
     <>
-      {policyLoading && (
-        <LoadingIndicator text={content["reusable-password-policy-loading"]} />
-      )}
+      {policyLoading && <LoadingIndicator text={content["reusable-password-policy-loading"]} />}
       {passwordPolicy && (
         <>
           <DTEHeader as="h1" $variant={headerVariant}>
             Change your password
           </DTEHeader>
-          <ErrorMessageSummary
-            renderSummary={!isSubmitting}
-            errors={formErrors}
-          />
+          <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
           <ErrorMessageContainer
             axiosErrors={[policyError]}
-            DTEAxiosErrors={[
-              Utils.ConvertResponseToDTEResponse(policyResponse)?.errors,
-            ]}
+            DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(policyResponse)?.errors]}
           />
-          {updateUserPasswordPostLoading && (
-            <LoadingIndicator
-              text={content["reusable-loading-updating-details"]}
-            />
-          )}
+          {updateUserPasswordPostLoading && <LoadingIndicator text={content["reusable-loading-updating-details"]} />}
           {(updateUserPasswordPostError ||
-            Utils.ConvertResponseToDTEResponse(updateUserPasswordPostResponse)
-              ?.errors) && (
-            <ErrorMessageContainer
-              description={content["update-password-error"]}
-            >
+            Utils.ConvertResponseToDTEResponse(updateUserPasswordPostResponse)?.errors) && (
+            <ErrorMessageContainer description={content["update-password-error"]}>
               <></>
             </ErrorMessageContainer>
           )}
@@ -247,9 +204,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
                   render={({ fieldState: { error } }) => (
                     <PasswordShowHide
                       id="currentPassword"
-                      onValueChange={(e) =>
-                        setValue("currentPassword", e.target.value)
-                      }
+                      onValueChange={(e) => setValue("currentPassword", e.target.value)}
                       error={error?.message}
                       label={content["update-password-input-current"]}
                       required
@@ -262,8 +217,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
                   rules={{
                     required: {
                       value: true,
-                      message:
-                        content["update-password-validation-required-current"],
+                      message: content["update-password-validation-required-current"],
                     },
                   }}
                 />
@@ -273,20 +227,14 @@ function UpdatePasswordForm(props: FormBaseProps) {
                   render={({ fieldState: { error } }) => (
                     <PasswordShowHide
                       id="newPassword"
-                      onValueChange={(e) =>
-                        setValue("newPassword", e.target.value)
-                      }
+                      onValueChange={(e) => setValue("newPassword", e.target.value)}
                       error={error?.message}
                       label={content["update-password-input-create"]}
                       required
                       autocomplete="new-password"
                       spellcheck={false}
-                      buttonAriaLabelHide={
-                        content["reusable-aria-hide-password"]
-                      }
-                      buttonAriaLabelShow={
-                        content["reusable-aria-show-password"]
-                      }
+                      buttonAriaLabelHide={content["reusable-aria-hide-password"]}
+                      buttonAriaLabelShow={content["reusable-aria-show-password"]}
                     />
                   )}
                   rules={{
@@ -298,9 +246,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
                       let passwordError = `${content["update-password-validation-new"]} ${content["reusable-text-that"]} `;
                       requireErrorMessageComma = false;
                       validationSuccess = true;
-                      const regExMinLength = new RegExp(
-                        `^.{${passwordPolicy.minimumLength},}$`,
-                      );
+                      const regExMinLength = new RegExp(`^.{${passwordPolicy.minimumLength},}$`);
                       if (!regExMinLength.test(value)) {
                         passwordError += `${content["reusable-text-is"]} ${content["register-password-policy-builder-at-least"]} ${passwordPolicy.minimumLength} ${content["register-password-policy-builder-char-long"]}`;
                         minLengthErrorOccured = true;
@@ -315,7 +261,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
                           passwordError,
                           !/[A-Z]/.test(value),
                           `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-uppercase"]}`,
-                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-uppercase"]}`,
+                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-uppercase"]}`
                         );
                       }
                       if (passwordPolicy.requireLowercase) {
@@ -323,7 +269,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
                           passwordError,
                           !/[a-z]/.test(value),
                           `${content["register-password-policy-builder-include-lowercase"]}`,
-                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-lowercase"]}`,
+                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-lowercase"]}`
                         );
                       }
                       if (passwordPolicy.requireNumbers) {
@@ -331,25 +277,19 @@ function UpdatePasswordForm(props: FormBaseProps) {
                           passwordError,
                           !/\d/.test(value),
                           `${content["register-password-policy-builder-include-numbers"]}`,
-                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-numbers"]}`,
+                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-numbers"]}`
                         );
                       }
-                      if (
-                        passwordPolicy.requireSymbols &&
-                        passwordPolicy.allowedPasswordSymbols
-                      ) {
+                      if (passwordPolicy.requireSymbols && passwordPolicy.allowedPasswordSymbols) {
                         const regExSymbols = new RegExp(
-                          `[\\${passwordPolicy.allowedPasswordSymbols.replace(
-                            / /g,
-                            "\\",
-                          )}]`,
+                          `[\\${passwordPolicy.allowedPasswordSymbols.replace(/ /g, "\\")}]`
                         );
 
                         passwordError = errorConstructor(
                           passwordError,
                           !regExSymbols.test(value),
                           `${content["register-password-policy-builder-include-symbols"]}`,
-                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-symbols"]}`,
+                          `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-symbols"]}`
                         );
                       }
 
@@ -358,39 +298,27 @@ function UpdatePasswordForm(props: FormBaseProps) {
                       passwordError = errorConstructor(
                         passwordError,
                         !/^[^ ]+$/.test(value),
-                        content[
-                          "register-password-policy-builder-include-no-spaces"
-                        ],
-                        content[
-                          "register-password-policy-builder-include-no-spaces"
-                        ],
-                        true,
+                        content["register-password-policy-builder-include-no-spaces"],
+                        content["register-password-policy-builder-include-no-spaces"],
+                        true
                       );
 
                       if (passwordPolicy.allowedPasswordSymbols) {
                         const regExIllegal = new RegExp(
-                          `[^a-zA-Z0-9 \\${passwordPolicy.allowedPasswordSymbols.replace(
-                            / /g,
-                            "\\",
-                          )}]`,
+                          `[^a-zA-Z0-9 \\${passwordPolicy.allowedPasswordSymbols.replace(/ /g, "\\")}]`
                         );
                         passwordError = errorConstructor(
                           passwordError,
                           regExIllegal.test(value),
                           `${content["register-password-policy-builder-symbol-list"]} ##allowedsymbols##`,
                           `${content["register-password-policy-builder-symbol-list"]} ##allowedsymbols##`,
-                          true,
+                          true
                         );
                       }
 
-                      let finalErrorMessage = passwordError.replace(
-                        /,([^,]*)$/,
-                        ` ${content["reusable-text-and"]}$1`,
-                      );
+                      let finalErrorMessage = passwordError.replace(/,([^,]*)$/, ` ${content["reusable-text-and"]}$1`);
 
-                      const isCommonPassword = commonPasswords.includes(
-                        value.toLowerCase(),
-                      );
+                      const isCommonPassword = commonPasswords.includes(value.toLowerCase());
                       if (isCommonPassword) {
                         finalErrorMessage += `. ${content["register-password-policy-builder-symbol-list"]}`;
                         validationSuccess = false;
@@ -399,10 +327,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
                       if (passwordPolicy.allowedPasswordSymbols) {
                         finalErrorMessage = finalErrorMessage.replace(
                           `##allowedsymbols##`,
-                          passwordPolicy.allowedPasswordSymbols.replace(
-                            / /g,
-                            "",
-                          ),
+                          passwordPolicy.allowedPasswordSymbols.replace(/ /g, "")
                         );
                       }
 
@@ -416,42 +341,29 @@ function UpdatePasswordForm(props: FormBaseProps) {
                   render={({ fieldState: { error } }) => (
                     <PasswordShowHide
                       id="confirmNewPassword"
-                      onValueChange={(e) =>
-                        setValue("confirmNewPassword", e.target.value)
-                      }
+                      onValueChange={(e) => setValue("confirmNewPassword", e.target.value)}
                       error={error?.message}
                       label={content["update-password-input-confirm"]}
                       required
                       spellcheck={false}
-                      buttonAriaLabelHide={
-                        content["reusable-aria-hide-password-confirmation"]
-                      }
-                      buttonAriaLabelShow={
-                        content["reusable-aria-show-password-confirmation"]
-                      }
+                      buttonAriaLabelHide={content["reusable-aria-hide-password-confirmation"]}
+                      buttonAriaLabelShow={content["reusable-aria-show-password-confirmation"]}
                     />
                   )}
                   rules={{
                     required: {
                       value: true,
-                      message:
-                        content["update-password-validation-confirm-password"],
+                      message: content["update-password-validation-confirm-password"],
                     },
                     validate: (value) => {
                       if (value === getValues().newPassword) {
                         return true;
                       }
-                      return content[
-                        "update-password-validation-same-password"
-                      ];
+                      return content["update-password-validation-same-password"];
                     },
                   }}
                 />
-                <FormNavigationButtons
-                  nextButtonText={content["reusable-save"]}
-                  showCancelButton
-                  onCancel={onCancel}
-                />
+                <FormNavigationButtons nextButtonText={content["reusable-save"]} showCancelButton onCancel={onCancel} />
               </form>
             </Grid>
           </Grid>

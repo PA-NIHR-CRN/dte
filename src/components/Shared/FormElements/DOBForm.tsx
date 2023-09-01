@@ -39,9 +39,7 @@ function DOBForm({
 }: DOBFormProps) {
   const { content } = useContext(ContentContext);
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
     control,
     handleSubmit,
@@ -71,17 +69,13 @@ function DOBForm({
       ...(value.year === "" ? [content["reusable-text-year"]] : []),
     ];
     if (missingFields.length > 0) {
-      return `${
-        content["register-date-of-birth-validation-missing"]
-      }${missingFields.join(` ${content["reusable-text-and"]} `)}`;
+      return `${content["register-date-of-birth-validation-missing"]}${missingFields.join(
+        ` ${content["reusable-text-and"]} `
+      )}`;
     }
 
     // 1.4
-    if (
-      !/^\d+$/.test(value.day) ||
-      !/^\d+$/.test(value.month) ||
-      !/^\d+$/.test(value.year)
-    ) {
+    if (!/^\d+$/.test(value.day) || !/^\d+$/.test(value.month) || !/^\d+$/.test(value.year)) {
       return content["register-date-of-birth-validation-invalid"];
     }
 
@@ -94,9 +88,7 @@ function DOBForm({
       rangeErrors.push(content["register-date-of-birth-validation-range-day"]);
     }
     if (value.month === "" || month <= 0 || month > 12) {
-      rangeErrors.push(
-        content["register-date-of-birth-validation-range-month"],
-      );
+      rangeErrors.push(content["register-date-of-birth-validation-range-month"]);
     }
     if (value.year === "" || year <= 1900) {
       rangeErrors.push(content["register-date-of-birth-validation-range-year"]);
@@ -109,11 +101,7 @@ function DOBForm({
     const d = new Date(year, month - 1, day);
     if (
       !(d instanceof Date && !Number.isNaN(d)) ||
-      !(
-        d.getFullYear() === year &&
-        d.getMonth() === month - 1 &&
-        d.getDate() === day
-      )
+      !(d.getFullYear() === year && d.getMonth() === month - 1 && d.getDate() === day)
     ) {
       return content["register-date-of-birth-validation-invalid"];
     }
@@ -145,15 +133,8 @@ function DOBForm({
     });
   };
 
-  const handleInputChange = (
-    field: string,
-    e: React.FormEvent<HTMLInputElement>,
-    getValues: any,
-    onChange: any,
-  ) => {
-    if (
-      (e.target as HTMLInputElement).value.length <= (field === "year" ? 4 : 2)
-    )
+  const handleInputChange = (field: string, e: React.FormEvent<HTMLInputElement>, getValues: any, onChange: any) => {
+    if ((e.target as HTMLInputElement).value.length <= (field === "year" ? 4 : 2))
       onChange({
         ...e,
         target: {
@@ -171,11 +152,7 @@ function DOBForm({
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
       <Grid container>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <form
-            onSubmit={handleSubmit(interceptSubmit)}
-            noValidate
-            onInvalid={() => {}}
-          >
+          <form onSubmit={handleSubmit(interceptSubmit)} noValidate onInvalid={() => {}}>
             <StyledFieldset aria-describedby="date-of-birth-legend date-of-birth-hint">
               <StyledFieldsetLegend id="date-of-birth-legend">
                 {!hideHeader && (
@@ -184,18 +161,11 @@ function DOBForm({
                   </DTEHeader>
                 )}
               </StyledFieldsetLegend>
-              <div id="date-of-birth-hint">
-                {instructionText || (
-                  <>{content["register-date-of-birth-body"]}</>
-                )}
-              </div>
+              <div id="date-of-birth-hint">{instructionText || <>{content["register-date-of-birth-body"]}</>}</div>
               <Controller
                 control={control}
                 name="dob"
-                render={({
-                  field: { value, onChange },
-                  fieldState: { error },
-                }) => (
+                render={({ field: { value, onChange }, fieldState: { error } }) => (
                   <DTEDateInput
                     id="dob"
                     error={
@@ -218,9 +188,7 @@ function DOBForm({
                       aria-invalid
                       value={value.day}
                       autoComplete="bday-day"
-                      onChange={(e) =>
-                        handleInputChange("day", e, getValues, onChange)
-                      }
+                      onChange={(e) => handleInputChange("day", e, getValues, onChange)}
                       // capitalize the first letter of the label
                       label={Utils.capitalise(content["reusable-text-day"])}
                     />
@@ -232,9 +200,7 @@ function DOBForm({
                       aria-invalid
                       value={value.month}
                       autoComplete="bday-month"
-                      onChange={(e) =>
-                        handleInputChange("month", e, getValues, onChange)
-                      }
+                      onChange={(e) => handleInputChange("month", e, getValues, onChange)}
                       label={Utils.capitalise(content["reusable-text-month"])}
                     />
                     <DTEDateInput.Year
@@ -245,9 +211,7 @@ function DOBForm({
                       aria-invalid
                       value={value.year}
                       autoComplete="bday-year"
-                      onChange={(e) =>
-                        handleInputChange("year", e, getValues, onChange)
-                      }
+                      onChange={(e) => handleInputChange("year", e, getValues, onChange)}
                       label={Utils.capitalise(content["reusable-text-year"])}
                     />
                   </DTEDateInput>
@@ -259,9 +223,7 @@ function DOBForm({
             </StyledFieldset>
             {!hideInfo && content["register-date-of-birth"]}
             <FormNavigationButtons
-              nextButtonText={
-                nextButtonText || content["reusable-button-continue"]
-              }
+              nextButtonText={nextButtonText || content["reusable-button-continue"]}
               showCancelButton={showCancelButton || false}
               onCancel={onCancel}
             />

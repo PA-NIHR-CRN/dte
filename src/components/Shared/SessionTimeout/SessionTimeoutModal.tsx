@@ -23,8 +23,7 @@ function SessionTimeoutModal() {
     secondsSinceLastActivity: 0,
   });
 
-  const [showSessionTimeoutWarning, setShowSessionTimeoutWarning] =
-    useState(false);
+  const [showSessionTimeoutWarning, setShowSessionTimeoutWarning] = useState(false);
 
   const history = useHistory();
 
@@ -34,9 +33,7 @@ function SessionTimeoutModal() {
     const sessionExpiryInfo = getSessionExpiry();
     const now = new Date();
 
-    const secondsSinceLastActivity = Math.ceil(
-      (now.getTime() - lastActivityDateTime.getTime()) / 1000,
-    );
+    const secondsSinceLastActivity = Math.ceil((now.getTime() - lastActivityDateTime.getTime()) / 1000);
 
     // eslint-disable-next-line no-console
     console.debug(`checkSessionRemainingTime: ${now.toISOString()}`);
@@ -49,10 +46,7 @@ function SessionTimeoutModal() {
     });
 
     // Notify other tabs of activity via local storage
-    window.localStorage.setItem(
-      lastActivityStorageKey,
-      lastActivityDateTime.toISOString(),
-    );
+    window.localStorage.setItem(lastActivityStorageKey, lastActivityDateTime.toISOString());
   };
 
   const resetWarning = () => {
@@ -102,13 +96,7 @@ function SessionTimeoutModal() {
 
     // An array of DOM events that should be interpreted as
     // user activity.
-    const activityEvents = [
-      "mousedown",
-      "mousemove",
-      "keydown",
-      "scroll",
-      "touchstart",
-    ];
+    const activityEvents = ["mousedown", "mousemove", "keydown", "scroll", "touchstart"];
 
     // add these events to the document.
     // register the activity function as the listener parameter.
@@ -149,10 +137,7 @@ function SessionTimeoutModal() {
     checkShouldLogout();
 
     function checkShouldLogout() {
-      if (
-        sessionState.expiryInfo.isLoggedIn &&
-        sessionState.secondsSinceLastActivity >= expireSessionAfterSecs
-      ) {
+      if (sessionState.expiryInfo.isLoggedIn && sessionState.secondsSinceLastActivity >= expireSessionAfterSecs) {
         logOutToken();
         history.push(`/SessionExpired`);
         setShowSessionTimeoutWarning(false);
@@ -161,9 +146,7 @@ function SessionTimeoutModal() {
 
     function checkShowWarning() {
       if (sessionState.expiryInfo.isLoggedIn) {
-        setShowSessionTimeoutWarning(
-          sessionState.secondsSinceLastActivity >= showWarningAfterSecs,
-        );
+        setShowSessionTimeoutWarning(sessionState.secondsSinceLastActivity >= showWarningAfterSecs);
       }
     }
   }, [sessionState]);
@@ -178,32 +161,21 @@ function SessionTimeoutModal() {
       aria-describedby="at-timer"
       ref={timeoutDialogRef}
     >
-      {sessionState.expiryInfo.duration -
-        sessionState.secondsSinceLastActivity >
-        0 && (
+      {sessionState.expiryInfo.duration - sessionState.secondsSinceLastActivity > 0 && (
         <DTEHeader as="h1" id="dialog-title">
           {content["session-warning-modal-header"]} <br />
           {moment
-            .duration(
-              sessionState.expiryInfo.duration -
-                sessionState.secondsSinceLastActivity,
-              "seconds",
-            )
+            .duration(sessionState.expiryInfo.duration - sessionState.secondsSinceLastActivity, "seconds")
             .humanize(true)}
         </DTEHeader>
       )}
-      {sessionState.expiryInfo.duration -
-        sessionState.secondsSinceLastActivity <=
-        0 && (
+      {sessionState.expiryInfo.duration - sessionState.secondsSinceLastActivity <= 0 && (
         <DTEHeader as="h1" id="dialog-title">
-          {content["session-warning-modal-header"]}{" "}
-          {content["reusable-text-soon"]}
+          {content["session-warning-modal-header"]} {content["reusable-text-soon"]}
         </DTEHeader>
       )}
       <div className="govuk-body">{content["session-warning-modal-body"]}</div>
-      <DTEButton onClick={closeModal}>
-        {content["reusable-button-continue"]}
-      </DTEButton>
+      <DTEButton onClick={closeModal}>{content["reusable-button-continue"]}</DTEButton>
     </dialog>
   );
 }

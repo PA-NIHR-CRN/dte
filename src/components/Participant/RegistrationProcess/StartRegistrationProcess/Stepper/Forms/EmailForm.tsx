@@ -25,9 +25,7 @@ function EmailForm(props: EmailFormProps) {
   const { onDataChange, initialStateData } = props;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
     control,
     handleSubmit,
@@ -58,10 +56,7 @@ function EmailForm(props: EmailFormProps) {
             <Controller
               control={control}
               name="emailAddress"
-              render={({
-                field: { value, onChange, onBlur },
-                fieldState: { error },
-              }) => (
+              render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                 <DTEInput
                   id="emailAddress"
                   value={value}

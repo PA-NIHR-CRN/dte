@@ -42,15 +42,10 @@ function DTEDetails({ summary, children }: Props) {
 
   return (
     <Details>
-      <StyledDetailsSummary
-        id={`summary-${componentId}`}
-        aria-controls={`details-${componentId}`}
-      >
+      <StyledDetailsSummary id={`summary-${componentId}`} aria-controls={`details-${componentId}`}>
         {summary}
       </StyledDetailsSummary>
-      <StyledDetailsText id={`details-${componentId}`}>
-        {children}
-      </StyledDetailsText>
+      <StyledDetailsText id={`details-${componentId}`}>{children}</StyledDetailsText>
     </Details>
   );
 }

@@ -23,13 +23,7 @@ function NoConsent() {
           {content["register-no-consent-button-homepage"]}
         </DTERouteLink>
       ) : (
-        <DTEButton
-          onClick={() =>
-            window.nhsapp.navigation.openBrowserOverlay(
-              "https://bepartofresearch.nihr.ac.uk/",
-            )
-          }
-        >
+        <DTEButton onClick={() => window.nhsapp.navigation.openBrowserOverlay("https://bepartofresearch.nihr.ac.uk/")}>
           {content["register-no-consent-button-homepage"]}
         </DTEButton>
       )}
