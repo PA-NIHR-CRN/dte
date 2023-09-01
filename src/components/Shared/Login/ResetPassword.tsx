@@ -20,7 +20,6 @@ import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../Password/showHide";
 import ThreeWords from "../Password/threeWords";
 import { ContentContext } from "../../../context/ContentContext";
-import commonPasswords from "../../../data/commonPassword";
 
 interface PasswordPolicy {
   minimumLength: number;
@@ -29,6 +28,7 @@ interface PasswordPolicy {
   requireSymbols: boolean;
   requireUppercase: boolean;
   allowedPasswordSymbols?: string;
+  weakPasswords: string[];
 }
 
 const StyledDTEContent = styled(DTEContent)`
@@ -380,7 +380,7 @@ function ResetPassword() {
                                   );
 
                                   const isCommonPassword =
-                                    commonPasswords.includes(
+                                    passwordPolicy.weakPasswords.includes(
                                       value.toLowerCase(),
                                     );
                                   if (isCommonPassword) {

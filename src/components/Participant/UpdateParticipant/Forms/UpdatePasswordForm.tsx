@@ -15,7 +15,6 @@ import FormBaseProps from "../../../Shared/FormElements/FormBaseProps";
 import ErrorMessageSummary from "../../../Shared/ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../../../Shared/Password/showHide";
 import ThreeWords from "../../../Shared/Password/threeWords";
-import commonPasswords from "../../../../data/commonPassword";
 import { ContentContext } from "../../../../context/ContentContext";
 
 export type UpdatePasswordFormData = {
@@ -31,6 +30,7 @@ interface PasswordPolicy {
   requireSymbols: boolean;
   requireUppercase: boolean;
   allowedPasswordSymbols?: string;
+  weakPasswords: string[];
 }
 
 function UpdatePasswordForm(props: FormBaseProps) {
@@ -389,7 +389,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
 
                         passwordError = errorConstructor(
                           passwordError,
-                          commonPasswords.includes(
+                          passwordPolicy.weakPasswords.includes(
                             strippedPassword.toLowerCase(),
                           ),
                           content[
