@@ -18,8 +18,7 @@ describe("Honeypot Component", () => {
 
     const input = screen.getByRole("textbox", { hidden: true });
     expect(input).toBeInTheDocument();
-    expect(input).toHaveStyle("position: absolute");
-    expect(input).toHaveStyle("left: -9999px");
+    expect(input).toHaveStyle("display: none");
   });
 
   it("has the correct name attribute", () => {
@@ -33,6 +32,7 @@ describe("Honeypot Component", () => {
     const input = screen.getByRole("textbox", { hidden: true });
     expect(input).toHaveAttribute("tabIndex", "-1");
     expect(input).toHaveAttribute("aria-hidden", "true");
+    expect(input).toHaveAttribute("autoComplete", "off");
   });
 
   it("redirects to root path when the honeypot field is filled", () => {
