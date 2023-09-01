@@ -9,7 +9,7 @@ describe("DTEHeader", () => {
     const { container } = render(
       <DTEHeader as="h1" $variant="h1">
         Content
-      </DTEHeader>
+      </DTEHeader>,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -35,7 +35,7 @@ describe("DTEHeader", () => {
         </DTEHeader>
         <DTEHeader as="h3">H3 Header</DTEHeader>
         <DTEHeader as="h4">H4 Header</DTEHeader>
-      </>
+      </>,
     );
     expect(screen.getByText("H1 Header")).toBeInTheDocument();
     expect(screen.getByText("H1 Header forced mobile")).toBeInTheDocument();

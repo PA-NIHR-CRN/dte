@@ -16,7 +16,7 @@ describe("Test suite for DTEBackLink component", () => {
       <>
         <DTEBackLink href="/routeone" linkText="text" />
         <DTEBackLink href="/routetwo" linkText="text" />
-      </>
+      </>,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

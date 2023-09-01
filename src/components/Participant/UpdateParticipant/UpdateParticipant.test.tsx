@@ -67,13 +67,13 @@ beforeEach(() => {
             conversationId: null,
             version: 1,
           };
-        }
+        },
       );
       this.put(
         `${process.env.REACT_APP_BASE_API}/participants/demographics`,
         () => {
           return { message: "Success" };
-        }
+        },
       );
       this.put(`${process.env.REACT_APP_BASE_API}/participants/details`, () => {
         return { message: "Success" };
@@ -129,7 +129,7 @@ beforeEach(() => {
             conversationId: null,
             version: 1,
           };
-        }
+        },
       );
       this.get(
         `${process.env.REACT_APP_BASE_API}/location/postcode/sa11aa`,
@@ -162,7 +162,7 @@ beforeEach(() => {
             conversationId: null,
             version: 1,
           };
-        }
+        },
       );
       this.get(
         `${process.env.REACT_APP_BASE_API}/location/postcode/aa11aa`,
@@ -174,7 +174,7 @@ beforeEach(() => {
             conversationId: null,
             version: 1,
           };
-        }
+        },
       );
     },
   });
@@ -233,7 +233,7 @@ describe("UpdateParticipant display tests", () => {
     const sex = await screen.findByText("Male");
     expect(sex).toBeInTheDocument();
     const genderHeader = await screen.findByText(
-      "Gender identity same as sex registered at birth"
+      "Gender identity same as sex registered at birth",
     );
     expect(genderHeader).toBeInTheDocument();
     const gender = await screen.findByText("No");
@@ -251,7 +251,7 @@ describe("UpdateParticipant display tests", () => {
     const longTermIllnes = await screen.findByText("Yes");
     expect(longTermIllnes).toBeInTheDocument();
     const longTermIllnesImpactHeader = await screen.findByText(
-      "Reduced ability to carry out daily activities"
+      "Reduced ability to carry out daily activities",
     );
     expect(longTermIllnesImpactHeader).toBeInTheDocument();
     const longTermIllnesImpact = await screen.findByText("Prefer not to say");
@@ -266,18 +266,18 @@ describe("UpdateParticipant display tests", () => {
     expect(changeButtons[2]).toHaveTextContent("Change phone number");
     expect(changeButtons[3]).toHaveTextContent("Change date of birth");
     expect(changeButtons[4]).toHaveTextContent(
-      "Change sex registered at birth"
+      "Change sex registered at birth",
     );
     expect(changeButtons[5]).toHaveTextContent(
-      "Change gender identity same as sex registered at birth"
+      "Change gender identity same as sex registered at birth",
     );
     expect(changeButtons[6]).toHaveTextContent("Change ethnic group");
     expect(changeButtons[7]).toHaveTextContent("Change ethnic background");
     expect(changeButtons[8]).toHaveTextContent(
-      "Change long-term conditions or illness"
+      "Change long-term conditions or illness",
     );
     expect(changeButtons[9]).toHaveTextContent(
-      "Change reduced ability to carry out daily activities"
+      "Change reduced ability to carry out daily activities",
     );
   });
 });
@@ -296,7 +296,7 @@ describe("Update participant name", () => {
     const firstNameEditor = await screen.findByLabelText("First name");
     const lastNameEditor = await screen.findByLabelText("Last name");
     const extraInfoDetails = await screen.queryByText(
-      "Why we are asking this question"
+      "Why we are asking this question",
     );
 
     expect(editorButtons).toHaveLength(2);
@@ -360,7 +360,7 @@ describe("Update participant phone number", () => {
     const mobileEditor = await screen.findByLabelText("Mobile number");
     const landlineEditor = await screen.findByLabelText("Landline number");
     const extraInfoDetails = await screen.findByText(
-      "Why we are asking this question"
+      "Why we are asking this question",
     );
 
     expect(editorButtons).toHaveLength(2);
@@ -373,10 +373,10 @@ describe("Update participant phone number", () => {
     expect(extraInfoDetails).toBeInTheDocument();
     fireEvent.click(extraInfoDetails);
     const explanation1 = await screen.findByText(
-      "Study teams may need to have a contact phone number for volunteers."
+      "Study teams may need to have a contact phone number for volunteers.",
     );
     const explanation2 = await screen.findByText(
-      "Some studies will offer text messages as a way to contact volunteers, they will need your mobile number if you choose for them to contact you in this way."
+      "Some studies will offer text messages as a way to contact volunteers, they will need your mobile number if you choose for them to contact you in this way.",
     );
     expect(explanation1).toBeInTheDocument();
     expect(explanation2).toBeInTheDocument();
@@ -508,7 +508,7 @@ describe("Update participant date of birth", () => {
     const monthEditor = await screen.findByLabelText("Month");
     const yearEditor = await screen.findByLabelText("Year");
     const extraInfoDetails = await screen.findByText(
-      "Why we are asking this question"
+      "Why we are asking this question",
     );
 
     expect(editorButtons).toHaveLength(2);
@@ -522,10 +522,10 @@ describe("Update participant date of birth", () => {
     expect(yearEditor).toHaveValue("1999");
     fireEvent.click(extraInfoDetails);
     const explanation1 = await screen.findByText(
-      "Many studies want to make sure they have people of different ages taking part in research studies, and some are looking for specific age groups only."
+      "Many studies want to make sure they have people of different ages taking part in research studies, and some are looking for specific age groups only.",
     );
     const explanation2 = await screen.findByText(
-      "You have to be 18 or over to sign up for an account with Be Part of Research."
+      "You have to be 18 or over to sign up for an account with Be Part of Research.",
     );
     expect(explanation1).toBeInTheDocument();
     expect(explanation2).toBeInTheDocument();
@@ -648,26 +648,26 @@ describe("Update participant Ethnicity", () => {
     expect(header).toHaveTextContent("What is your ethnic group?");
     expect(
       await screen.findByText(
-        "If you change your ethnic group you will also need to change your ethnic background in the next question."
-      )
+        "If you change your ethnic group you will also need to change your ethnic background in the next question.",
+      ),
     ).toBeInTheDocument();
     expect(
       await screen.findByText(
-        "Once both questions have been answered the changes can be saved."
-      )
+        "Once both questions have been answered the changes can be saved.",
+      ),
     ).toBeInTheDocument();
     const updateGroupButtons = await screen.findAllByRole("button");
     const asianOption = await screen.findByLabelText("Asian or Asian British");
     const blackOption = await screen.findByLabelText(
-      "Black, African, Black British or Caribbean"
+      "Black, African, Black British or Caribbean",
     );
     const mixedOption = await screen.findByLabelText(
-      "Mixed or multiple ethnic groups"
+      "Mixed or multiple ethnic groups",
     );
     const whiteOption = await screen.findByLabelText("White");
     const otherOption = await screen.findByLabelText("Other ethnic group");
     const extraInfoDetails = await screen.findByText(
-      "Why we are asking this question"
+      "Why we are asking this question",
     );
 
     expect(asianOption).toBeInTheDocument();
@@ -686,10 +686,10 @@ describe("Update participant Ethnicity", () => {
 
     fireEvent.click(extraInfoDetails);
     const explanation1 = await screen.findByText(
-      /Many studies want to make sure they have a representative sample of the population taking part in research studies, and some may be looking for people from specific ethnic groups./
+      /Many studies want to make sure they have a representative sample of the population taking part in research studies, and some may be looking for people from specific ethnic groups./,
     );
     const explanation2 = await screen.findByText(
-      /If we find that some ethnic groups are under represented when people are signing up to be contacted about research we will look at how to improve this./
+      /If we find that some ethnic groups are under represented when people are signing up to be contacted about research we will look at how to improve this./,
     );
     expect(explanation1).toBeInTheDocument();
     expect(explanation2).toBeInTheDocument();
@@ -705,7 +705,7 @@ describe("Update participant Ethnicity", () => {
     const updateGroupButtons = await screen.findAllByRole("button");
     const asianOption = await screen.findByLabelText("Asian or Asian British");
     const mixedOption = await screen.findByLabelText(
-      "Mixed or multiple ethnic groups"
+      "Mixed or multiple ethnic groups",
     );
 
     fireEvent.click(mixedOption);
@@ -719,18 +719,18 @@ describe("Update participant Ethnicity", () => {
     const ethnicGroupHeader = await screen.findByRole("heading", { level: 1 });
     expect(ethnicGroupHeader).toBeInTheDocument();
     expect(ethnicGroupHeader).toHaveTextContent(
-      "Which of the following best describes your Mixed or multiple ethnic groups background?"
+      "Which of the following best describes your Mixed or multiple ethnic groups background?",
     );
 
     const asianWhiteOption = await screen.findByLabelText("Asian and White");
     const blackAfricanOption = await screen.findByLabelText(
-      "Black African and White"
+      "Black African and White",
     );
     const blackCaribbeanOption = await screen.findByLabelText(
-      "Black Caribbean and White"
+      "Black Caribbean and White",
     );
     const anotherMixedOption = await screen.findByLabelText(
-      "Another mixed background"
+      "Another mixed background",
     );
 
     expect(asianWhiteOption).toBeInTheDocument();
@@ -752,7 +752,7 @@ describe("Update participant Ethnicity", () => {
     });
 
     const ethnicGroup = await screen.findByText(
-      "Mixed or multiple ethnic groups"
+      "Mixed or multiple ethnic groups",
     );
     const ethnicBackground = await screen.findByText("Black African and White");
     expect(ethnicGroup).toBeInTheDocument();
@@ -767,7 +767,7 @@ describe("Update participant Ethnicity", () => {
     });
 
     const mixedOption = await screen.findByLabelText(
-      "Mixed or multiple ethnic groups"
+      "Mixed or multiple ethnic groups",
     );
     const updateBackgroundButtons = await screen.findAllByRole("button");
 
@@ -791,7 +791,7 @@ describe("Update participant Ethnicity", () => {
 
     const updateGroupButtons = await screen.findAllByRole("button");
     const mixedOption = await screen.findByLabelText(
-      "Mixed or multiple ethnic groups"
+      "Mixed or multiple ethnic groups",
     );
 
     act(() => {
@@ -800,7 +800,7 @@ describe("Update participant Ethnicity", () => {
     });
 
     const blackAfricanOption = await screen.findByLabelText(
-      "Black African and White"
+      "Black African and White",
     );
     const updateBackgroundButtons = await screen.findAllByRole("button");
 
@@ -837,7 +837,7 @@ describe("Update other ethnic group", () => {
       const updateGroupButtons = await screen.findAllByRole("button");
       const otherOption = await screen.findByLabelText("Other ethnic group");
       const mixedOption = await screen.findByLabelText(
-        "Mixed or multiple ethnic groups"
+        "Mixed or multiple ethnic groups",
       );
 
       fireEvent.click(otherOption);
@@ -853,12 +853,12 @@ describe("Update other ethnic group", () => {
       });
       expect(ethnicGroupHeader).toBeInTheDocument();
       expect(ethnicGroupHeader).toHaveTextContent(
-        "Which of the following best describes your Other ethnic group background?"
+        "Which of the following best describes your Other ethnic group background?",
       );
 
       const arabOption = await screen.findByLabelText("Arab");
       const anyOtherOption = await screen.findByLabelText(
-        "Any other ethnic group"
+        "Any other ethnic group",
       );
 
       expect(arabOption).toBeInTheDocument();
@@ -872,7 +872,7 @@ describe("Update other ethnic group", () => {
       });
 
       const descriptionField = await screen.findByLabelText(
-        "How would you describe your background?"
+        "How would you describe your background?",
       );
       expect(descriptionField).toBeInTheDocument();
       fireEvent.change(descriptionField, {
@@ -886,11 +886,11 @@ describe("Update other ethnic group", () => {
 
       const ethnicGroup = await screen.findByText("Other ethnic group");
       const ethnicBackground = await screen.findByText(
-        expectedDisplayedBackground
+        expectedDisplayedBackground,
       );
       expect(ethnicGroup).toBeInTheDocument();
       expect(ethnicBackground).toBeInTheDocument();
-    }
+    },
   );
 });
 
@@ -908,10 +908,10 @@ describe("Update participant Sex", () => {
     const femaleOption = await screen.findByLabelText("Female");
     const maleOption = await screen.findByLabelText("Male");
     const nextQuestion = screen.queryByText(
-      "This question is about your sex registered at birth."
+      "This question is about your sex registered at birth.",
     );
     const extraInfoDetails = await screen.findByText(
-      "Why we are asking this question"
+      "Why we are asking this question",
     );
 
     expect(femaleOption).toBeInTheDocument();
@@ -927,7 +927,7 @@ describe("Update participant Sex", () => {
 
     fireEvent.click(extraInfoDetails);
     const explanation1 = await screen.findByText(
-      /Some studies can only include people of a specific sex, or may be focused on people whose gender differs from their assigned sex at birth./
+      /Some studies can only include people of a specific sex, or may be focused on people whose gender differs from their assigned sex at birth./,
     );
     expect(explanation1).toBeInTheDocument();
   });
@@ -993,10 +993,10 @@ describe("Update participant Gender Identification", () => {
     const yesOption = await screen.findByLabelText("Yes");
     const noOption = await screen.findByLabelText("No");
     const preferNotToSayOption = await screen.findByLabelText(
-      "Prefer not to say"
+      "Prefer not to say",
     );
     const extraInfoDetails = await screen.findByText(
-      "Why we are asking this question"
+      "Why we are asking this question",
     );
 
     expect(yesOption).toBeInTheDocument();
@@ -1013,10 +1013,10 @@ describe("Update participant Gender Identification", () => {
 
     fireEvent.click(extraInfoDetails);
     const explanation1 = await screen.findByText(
-      /Some studies can only include people of a specific sex, or may be focused on people whose gender differs from their assigned sex at birth./
+      /Some studies can only include people of a specific sex, or may be focused on people whose gender differs from their assigned sex at birth./,
     );
     const explanation2 = await screen.findByText(
-      /We're also asking this so we can make sure there is a mix of different people taking part in research./
+      /We're also asking this so we can make sure there is a mix of different people taking part in research./,
     );
     expect(explanation1).toBeInTheDocument();
     expect(explanation2).toBeInTheDocument();
@@ -1079,19 +1079,19 @@ describe("Update participant Long Term Illness", () => {
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
     expect(header).toHaveTextContent(
-      "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more?"
+      "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more?",
     );
     expect(
       await screen.findByText(
-        "If Yes, we will ask you a further question about the impact of your conditions or illness. Both questions will need to be answered before your changes can be saved."
-      )
+        "If Yes, we will ask you a further question about the impact of your conditions or illness. Both questions will need to be answered before your changes can be saved.",
+      ),
     ).toBeInTheDocument();
     const updateIllnessButtons = await screen.findAllByRole("button");
     const yesOption = await screen.findByLabelText("Yes");
     const noOption = await screen.findByLabelText("No");
     const noSayOption = await screen.findByLabelText("Prefer not to say");
     const extraInfoDetails = await screen.findByText(
-      "Why we are asking this question"
+      "Why we are asking this question",
     );
 
     expect(yesOption).toBeInTheDocument();
@@ -1106,10 +1106,10 @@ describe("Update participant Long Term Illness", () => {
 
     fireEvent.click(extraInfoDetails);
     const explanation1 = await screen.findByText(
-      /Some studies will require volunteers with disabilities, other studies want to make sure they have a representative sample of the population taking part in research studies. We may use this information when contacting you about studies you may be interested in./
+      /Some studies will require volunteers with disabilities, other studies want to make sure they have a representative sample of the population taking part in research studies. We may use this information when contacting you about studies you may be interested in./,
     );
     const explanation2 = await screen.findByText(
-      /If we find that people with disabilities are under represented in signing up to be contacted about research we will look at how to improve this./
+      /If we find that people with disabilities are under represented in signing up to be contacted about research we will look at how to improve this./,
     );
     expect(explanation1).toBeInTheDocument();
     expect(explanation2).toBeInTheDocument();
@@ -1133,7 +1133,7 @@ describe("Update participant Long Term Illness", () => {
     });
     expect(illnessAbilityHeader).toBeInTheDocument();
     expect(illnessAbilityHeader).toHaveTextContent(
-      "Do any of your conditions or illnesses reduce your ability to carry out day to day activities?"
+      "Do any of your conditions or illnesses reduce your ability to carry out day to day activities?",
     );
 
     const yesALotOption = await screen.findByLabelText("Yes, a lot");
@@ -1182,7 +1182,7 @@ describe("Update participant Long Term Illness", () => {
 
     const longTermIllness = await screen.findByText("Prefer not to say");
     const longTermIllnesImpactHeader = screen.queryByText(
-      "Reduced ability to carry out daily activities"
+      "Reduced ability to carry out daily activities",
     );
     expect(longTermIllness).toBeInTheDocument();
     expect(longTermIllnesImpactHeader).not.toBeInTheDocument();
@@ -1240,7 +1240,7 @@ describe("Update participant Long Term Illness", () => {
           conversationId: null,
           version: 1,
         };
-      }
+      },
     );
     render(<UpdateParticipant />);
     const changeButtons = await screen.findAllByText("Change");
@@ -1319,7 +1319,7 @@ describe("Update participant Long Term Illness", () => {
           conversationId: null,
           version: 1,
         };
-      }
+      },
     );
     render(<UpdateParticipant />);
     const changeButtons = await screen.findAllByText("Change");
@@ -1362,7 +1362,7 @@ describe("Update participant address", () => {
     const editorButtons = await screen.findAllByRole("button");
     const postCodeEditor = await screen.findByLabelText("Postcode");
     const extraInfoDetails = await screen.findByText(
-      "Why we are asking this question"
+      "Why we are asking this question",
     );
 
     expect(editorButtons).toHaveLength(3);
@@ -1375,10 +1375,10 @@ describe("Update participant address", () => {
 
     fireEvent.click(extraInfoDetails);
     const explanation1 = await screen.findByText(
-      /Study teams need a postal address to send you communications by post, if you choose for them to contact you this way./
+      /Study teams need a postal address to send you communications by post, if you choose for them to contact you this way./,
     );
     const explanation2 = await screen.findByText(
-      /Some studies only recruit from specific locations, we may use this information when contacting you about studies you may be interested in./
+      /Some studies only recruit from specific locations, we may use this information when contacting you about studies you may be interested in./,
     );
     expect(explanation1).toBeInTheDocument();
     expect(explanation2).toBeInTheDocument();
@@ -1407,7 +1407,7 @@ describe("Update participant address", () => {
     expect(addressLookupButtons).toHaveLength(4);
     expect(addressLookupButtons[0]).toHaveTextContent("Change");
     expect(addressLookupButtons[1]).toHaveTextContent(
-      "Enter your address manually"
+      "Enter your address manually",
     );
     expect(addressLookupButtons[2]).toHaveTextContent("Save");
     expect(addressLookupButtons[3]).toHaveTextContent("Cancel");
@@ -1420,7 +1420,7 @@ describe("Update participant address", () => {
       fireEvent.click(addressLookupButtons[2]);
     });
     const updatedAddress = await screen.findByText(
-      /ROYAL MAIL SWANSEA MAIL CENTRE/
+      /ROYAL MAIL SWANSEA MAIL CENTRE/,
     );
     expect(updatedAddress).toBeInTheDocument();
   });
@@ -1439,13 +1439,13 @@ describe("Update participant address", () => {
 
     const addressEditor1 = await screen.findByLabelText("Address line 1");
     const addressEditor2 = await screen.findByLabelText(
-      "Address line 2 (optional)"
+      "Address line 2 (optional)",
     );
     const addressEditor3 = await screen.findByLabelText(
-      "Address line 3 (optional)"
+      "Address line 3 (optional)",
     );
     const addressEditor4 = await screen.findByLabelText(
-      "Address line 4 (optional)"
+      "Address line 4 (optional)",
     );
     const townEditor = await screen.findByLabelText("Town");
     const postCodeEditor = await screen.findByLabelText("Postcode (optional)");
@@ -1453,7 +1453,7 @@ describe("Update participant address", () => {
 
     expect(manualAddressButtons).toHaveLength(3);
     expect(manualAddressButtons[0]).toHaveTextContent(
-      "Find your address by postcode"
+      "Find your address by postcode",
     );
     expect(manualAddressButtons[1]).toHaveTextContent("Save");
     expect(manualAddressButtons[2]).toHaveTextContent("Cancel");
@@ -1514,7 +1514,7 @@ describe("Update participant address", () => {
 
     const errorHeader = await screen.findByText("There is a problem");
     const errorContent = await screen.findByText(
-      "We cannot find a match for the postcode entered. Please try again or enter your address manually."
+      "We cannot find a match for the postcode entered. Please try again or enter your address manually.",
     );
     expect(errorHeader).toBeInTheDocument();
     expect(errorContent).toBeInTheDocument();
@@ -1586,7 +1586,7 @@ describe("Update participant analytics", () => {
           ["send", { hitType: "pageview", page: "/MyAccount/PersonalDetails" }],
         ]);
       },
-      { timeout: 1000 }
+      { timeout: 1000 },
     );
   });
 });

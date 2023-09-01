@@ -40,7 +40,9 @@ const Header = styled.button`
   &:focus,
   &:focus-visible {
     background-color: ${(props) => props.theme.NIHR.Yellow};
-    box-shadow: 0 -2px ${(props) => props.theme.NIHR.Yellow}, 0 4px #0b0c0c;
+    box-shadow:
+      0 -2px ${(props) => props.theme.NIHR.Yellow},
+      0 4px #0b0c0c;
     border-radius: 0;
     color: black;
     text-decoration: none;

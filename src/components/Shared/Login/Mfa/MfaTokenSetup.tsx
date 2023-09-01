@@ -60,7 +60,7 @@ const MfaTokenSetup = () => {
           mfaDetails,
         },
       },
-      { useCache: false, manual: false }
+      { useCache: false, manual: false },
     );
 
   const generateQR = async (code: string) => QRCode.toDataURL(code);
@@ -99,7 +99,7 @@ const MfaTokenSetup = () => {
     const result = Utils.ConvertResponseToDTEResponse(res);
     if (
       result?.errors?.some(
-        (e) => e.customCode === "Software_Token_Mfa_Challenge"
+        (e) => e.customCode === "Software_Token_Mfa_Challenge",
       )
     ) {
       setMfaDetails(result?.errors[0]?.detail as string);

@@ -288,7 +288,7 @@ const DOBForm = (props: DOBFormProps) => {
                     ];
                     if (missingFields.length > 0) {
                       return `Date of birth must include a ${missingFields.join(
-                        " and "
+                        " and ",
                       )}`;
                     }
 
@@ -314,7 +314,7 @@ const DOBForm = (props: DOBFormProps) => {
                     }
                     if (value.year === "" || year <= 1900) {
                       rangeErrors.push(
-                        "Year must be a number that is 1900 or more"
+                        "Year must be a number that is 1900 or more",
                       );
                     }
                     if (rangeErrors.length > 0) {

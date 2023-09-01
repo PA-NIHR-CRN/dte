@@ -1,13 +1,7 @@
 import { axe, toHaveNoViolations } from "jest-axe";
 import { createServer, Server } from "miragejs";
-import {
-  render,
-  screen,
-  userEvent,
-  waitFor,
-} from "../../../../Helper/test-utils";
+import { render, screen, userEvent } from "../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
-import { AuthContext } from "../../../../context/AuthContext";
 import MfaSmsSetup from "./MfaSmsSetup";
 
 expect.extend(toHaveNoViolations);
@@ -31,7 +25,7 @@ beforeAll(() => {
             };
           }
           return new Error("Incorrect Phone Number");
-        }
+        },
       );
     },
   });
@@ -59,7 +53,7 @@ describe("Phone Number input must have correct attributes", () => {
   it("must have a required attribute", async () => {
     render(<MfaSmsSetup />);
     const phoneNumberInput = await screen.findByLabelText(
-      "UK mobile phone number"
+      "UK mobile phone number",
     );
     expect(phoneNumberInput).toHaveAttribute("required");
   });
@@ -67,7 +61,7 @@ describe("Phone Number input must have correct attributes", () => {
   it("must have a type attribute of tel", async () => {
     render(<MfaSmsSetup />);
     const phoneNumberInput = await screen.findByLabelText(
-      "UK mobile phone number"
+      "UK mobile phone number",
     );
     const typeValue = phoneNumberInput.getAttribute("type");
     expect(phoneNumberInput).toHaveAttribute("type");
@@ -77,7 +71,7 @@ describe("Phone Number input must have correct attributes", () => {
   it("must have a autocomplete attribute of tel-national", async () => {
     render(<MfaSmsSetup />);
     const phoneNumberInput = await screen.findByLabelText(
-      "UK mobile phone number"
+      "UK mobile phone number",
     );
     const autocompleteValue = phoneNumberInput.getAttribute("autocomplete");
     expect(phoneNumberInput).toHaveAttribute("autocomplete");
@@ -87,7 +81,7 @@ describe("Phone Number input must have correct attributes", () => {
   it("must have a spellcheck attribute set to false", async () => {
     render(<MfaSmsSetup />);
     const phoneNumberInput = await screen.findByLabelText(
-      "UK mobile phone number"
+      "UK mobile phone number",
     );
     const spellcheckValue = phoneNumberInput.getAttribute("spellcheck");
     expect(phoneNumberInput).toHaveAttribute("spellcheck");
@@ -99,7 +93,7 @@ describe("Functional requirements must be met", () => {
   it("must send a post request when the validation rules are met", async () => {
     render(<MfaSmsSetup />);
     const phoneNumberInput = await screen.findByLabelText(
-      "UK mobile phone number"
+      "UK mobile phone number",
     );
     userEvent.type(phoneNumberInput, "1234567890");
     const submitButton = await screen.findByText("Continue");

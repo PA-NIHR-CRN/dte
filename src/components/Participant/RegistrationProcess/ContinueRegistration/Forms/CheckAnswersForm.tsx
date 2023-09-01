@@ -46,31 +46,31 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
     if (address.address.addressLine2) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.address.addressLine2
+        address.address.addressLine2,
       );
     }
     if (address.address.addressLine3) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.address.addressLine3
+        address.address.addressLine3,
       );
     }
     if (address.address.addressLine4) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.address.addressLine4
+        address.address.addressLine4,
       );
     }
     if (address.address.town) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.address.town
+        address.address.town,
       );
     }
     if (address.postcode) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.postcode
+        address.postcode,
       );
     }
     return (<DTEContent>{formattedCheckAddress}</DTEContent>) as ReactNode;
@@ -272,7 +272,7 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
                       {condition}
                       <br />
                     </Fragment>
-                  )
+                  ),
                 )
               ) : (
                 <>Not provided</>

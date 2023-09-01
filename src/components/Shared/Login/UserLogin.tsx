@@ -98,7 +98,7 @@ const UserLogin = (props: UserLoginProps) => {
       },
       {
         manual: true,
-      }
+      },
     ).catch(() => {
       // swallow 404 axios error -
     });
@@ -115,7 +115,7 @@ const UserLogin = (props: UserLoginProps) => {
     }
     if (
       result?.errors?.some(
-        (e) => e.customCode === "Software_Token_Mfa_Challenge"
+        (e) => e.customCode === "Software_Token_Mfa_Challenge",
       )
     ) {
       setMfaDetails(result?.errors[0]?.detail as string);
@@ -131,7 +131,7 @@ const UserLogin = (props: UserLoginProps) => {
 
   const [{ loading: loadingLogin, error: errorLogin }, login] = useAxiosFetch(
     {},
-    { manual: true }
+    { manual: true },
   );
 
   useEffect(() => {
@@ -154,7 +154,7 @@ const UserLogin = (props: UserLoginProps) => {
         email,
       },
     },
-    { useCache: false, manual: true }
+    { useCache: false, manual: true },
   );
 
   useEffect(() => {
@@ -218,7 +218,7 @@ const UserLogin = (props: UserLoginProps) => {
           />
           {!resendDTEResponse?.isSuccess &&
             !resendDTEResponse?.errors?.some(
-              (e) => e.customCode === "Mfa_Setup_Challenge"
+              (e) => e.customCode === "Mfa_Setup_Challenge",
             ) && (
               <ErrorMessageContainer
                 axiosErrors={[errorLogin, resendError]}
@@ -282,7 +282,7 @@ const UserLogin = (props: UserLoginProps) => {
                       />
                       {!resendDTEResponse?.isSuccess &&
                         !resendDTEResponse?.errors?.some(
-                          (e) => e.customCode === "Mfa_Setup_Challenge"
+                          (e) => e.customCode === "Mfa_Setup_Challenge",
                         ) && (
                           <ErrorMessageContainer
                             axiosErrors={[errorLogin, resendError]}

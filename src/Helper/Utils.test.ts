@@ -3,7 +3,7 @@ import Utils from "./Utils";
 describe("Utils Tests", () => {
   test("Invalid DTE status is recognised.", () => {
     expect(
-      Utils.IsCPMSStatusDTEReady("This is an incorrect Status")
+      Utils.IsCPMSStatusDTEReady("This is an incorrect Status"),
     ).toBeFalsy();
   });
   test("Valid DTE status are recognised.", () => {

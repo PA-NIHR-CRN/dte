@@ -38,7 +38,7 @@ describe("Accessibility test", () => {
   it("should not fail any accessibility tests", async () => {
     const mockOnDataChange = jest.fn();
     const { container } = render(
-      <SexForm initialStateData={data} onDataChange={mockOnDataChange} />
+      <SexForm initialStateData={data} onDataChange={mockOnDataChange} />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

@@ -42,7 +42,7 @@ const DTEAccordionSection: React.FC<SectionProps> = ({
   ...rest
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(
-    open === undefined ? Boolean(defaultOpen) : open
+    open === undefined ? Boolean(defaultOpen) : open,
   );
 
   const onSummaryClick = (event: MouseEvent<HTMLDetailsElement>) => {

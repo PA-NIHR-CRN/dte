@@ -13,7 +13,7 @@ describe("DTERichTextRender accessibility", () => {
 
   it("must be accessible when rendered with valid accessible html string", async () => {
     const { container } = render(
-      <DTERichTextRender richText="<p>This is a valid html string</p>" />
+      <DTERichTextRender richText="<p>This is a valid html string</p>" />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

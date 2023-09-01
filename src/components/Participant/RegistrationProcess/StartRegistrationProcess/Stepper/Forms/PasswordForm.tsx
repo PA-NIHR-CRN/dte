@@ -71,7 +71,7 @@ const PasswordForm = (props: PasswordFormProps) => {
       url: `${process.env.REACT_APP_BASE_API}/users/passwordpolicy`,
       method: "GET",
     },
-    { useCache: false, manual: false }
+    { useCache: false, manual: false },
   );
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const PasswordForm = (props: PasswordFormProps) => {
   const requirementsConstructor = (
     constructor: string,
     clause: boolean,
-    clauseText: string
+    clauseText: string,
   ) => {
     let returnedValue = constructor;
     if (clause) {
@@ -100,7 +100,7 @@ const PasswordForm = (props: PasswordFormProps) => {
     clause: boolean,
     commaClauseText: string,
     nonCommaClauseText: string,
-    specialConstructor?: boolean
+    specialConstructor?: boolean,
   ) => {
     let returnedValue = constructor;
     if (clause) {
@@ -122,7 +122,7 @@ const PasswordForm = (props: PasswordFormProps) => {
   useEffect(() => {
     if (policyResponse) {
       const policy = Utils.ConvertResponseToDTEResponse(
-        policyResponse
+        policyResponse,
       ) as unknown as PasswordPolicy;
       let builder = `Your password must be ${policy.minimumLength} or more characters. You can use a mix of letters, numbers or symbols`;
       let requirements = "";
@@ -137,22 +137,22 @@ const PasswordForm = (props: PasswordFormProps) => {
       requirements = requirementsConstructor(
         requirements,
         policy.requireUppercase,
-        "1 capital letter"
+        "1 capital letter",
       );
       requirements = requirementsConstructor(
         requirements,
         policy.requireLowercase,
-        "1 lowercase letter"
+        "1 lowercase letter",
       );
       requirements = requirementsConstructor(
         requirements,
         policy.requireNumbers,
-        "1 number"
+        "1 number",
       );
       requirements = requirementsConstructor(
         requirements,
         policy.requireSymbols,
-        "1 symbol"
+        "1 symbol",
       );
       if (
         policy.requireUppercase ||
@@ -219,7 +219,7 @@ const PasswordForm = (props: PasswordFormProps) => {
                       requireErrorMessageComma = false;
                       validationSuccess = true;
                       const regExMinLength = new RegExp(
-                        `^.{${passwordPolicy.minimumLength},}$`
+                        `^.{${passwordPolicy.minimumLength},}$`,
                       );
                       if (!regExMinLength.test(value)) {
                         passwordError += `is at least ${passwordPolicy.minimumLength} characters long`;
@@ -235,7 +235,7 @@ const PasswordForm = (props: PasswordFormProps) => {
                           passwordError,
                           !/[A-Z]/.test(value),
                           "at least 1 capital letter",
-                          "at least 1 capital letter"
+                          "at least 1 capital letter",
                         );
                       }
                       if (passwordPolicy.requireLowercase) {
@@ -243,7 +243,7 @@ const PasswordForm = (props: PasswordFormProps) => {
                           passwordError,
                           !/[a-z]/.test(value),
                           "1 lowercase letter",
-                          "at least 1 lowercase letter"
+                          "at least 1 lowercase letter",
                         );
                       }
                       if (passwordPolicy.requireNumbers) {
@@ -251,7 +251,7 @@ const PasswordForm = (props: PasswordFormProps) => {
                           passwordError,
                           !/\d/.test(value),
                           "1 number",
-                          "at least 1 number"
+                          "at least 1 number",
                         );
                       }
                       if (
@@ -261,15 +261,15 @@ const PasswordForm = (props: PasswordFormProps) => {
                         const regExSymbols = new RegExp(
                           `[\\${passwordPolicy.allowedPasswordSymbols.replace(
                             / /g,
-                            "\\"
-                          )}]`
+                            "\\",
+                          )}]`,
                         );
 
                         passwordError = errorConstructor(
                           passwordError,
                           !regExSymbols.test(value),
                           "1 symbol",
-                          "at least 1 symbol"
+                          "at least 1 symbol",
                         );
                       }
 
@@ -280,32 +280,32 @@ const PasswordForm = (props: PasswordFormProps) => {
                         !/^[^ ]+$/.test(value),
                         "does not include spaces",
                         "does not include spaces",
-                        true
+                        true,
                       );
 
                       if (passwordPolicy.allowedPasswordSymbols) {
                         const regExIllegal = new RegExp(
                           `[^a-zA-Z0-9 \\${passwordPolicy.allowedPasswordSymbols.replace(
                             / /g,
-                            "\\"
-                          )}]`
+                            "\\",
+                          )}]`,
                         );
                         passwordError = errorConstructor(
                           passwordError,
                           regExIllegal.test(value),
                           "only includes symbols from this list ##allowedsymbols##",
                           "only includes symbols from this list ##allowedsymbols##",
-                          true
+                          true,
                         );
                       }
 
                       let finalErrorMessage = passwordError.replace(
                         /,([^,]*)$/,
-                        ` and$1`
+                        ` and$1`,
                       );
 
                       const isCommonPassword = commonPasswords.includes(
-                        value.toLowerCase()
+                        value.toLowerCase(),
                       );
                       if (isCommonPassword) {
                         finalErrorMessage +=
@@ -318,8 +318,8 @@ const PasswordForm = (props: PasswordFormProps) => {
                           `##allowedsymbols##`,
                           passwordPolicy.allowedPasswordSymbols.replace(
                             / /g,
-                            ""
-                          )
+                            "",
+                          ),
                         );
                       }
 

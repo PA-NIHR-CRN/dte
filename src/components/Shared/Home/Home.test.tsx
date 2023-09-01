@@ -44,7 +44,7 @@ beforeEach(() => {
             conversationId: null,
             version: 1,
           };
-        }
+        },
       );
     },
   });
@@ -81,7 +81,7 @@ describe("Home screen render tests", () => {
     expect(links[2]).toHaveTextContent("Personal details");
     expect(links[3]).toHaveAttribute(
       "href",
-      "/Participants/BePartOfResearchNewsletter"
+      "/Participants/BePartOfResearchNewsletter",
     );
     expect(links[3]).toHaveTextContent("Be Part of Research Newsletter");
     expect(links[4]).toHaveAttribute("href", "/Participants/CloseAccount");

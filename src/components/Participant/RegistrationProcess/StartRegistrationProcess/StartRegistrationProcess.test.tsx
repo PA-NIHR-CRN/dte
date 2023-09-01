@@ -18,13 +18,13 @@ describe("StartRegistrationProcess functionality tests", () => {
   it("should render without crashing", async () => {
     render(<StartRegistrationProcess />);
     expect(
-      screen.getByText("Register with Be Part of Research")
+      screen.getByText("Register with Be Part of Research"),
     ).toBeInTheDocument();
 
     expect(
       screen.getByText(
-        "A simple registration process will capture your basic information, including contact details."
-      )
+        "A simple registration process will capture your basic information, including contact details.",
+      ),
     ).toBeInTheDocument();
     expect(screen.getByText("You can sign up if you:")).toBeInTheDocument();
     expect(screen.getByText("have an email address")).toBeInTheDocument();

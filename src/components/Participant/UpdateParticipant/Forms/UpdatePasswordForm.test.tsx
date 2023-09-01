@@ -65,7 +65,7 @@ beforeEach(() => {
             conversationId: null,
             version: 1,
           };
-        }
+        },
       );
     },
   });
@@ -106,22 +106,22 @@ describe("Update Password display tests", () => {
     userEvent.click(changeButtons[1]);
 
     const currentPasswordEditor = await screen.findByLabelText(
-      "Current password"
+      "Current password",
     );
     const newPasswordEditor = await screen.findByLabelText(
-      "Create new password"
+      "Create new password",
     );
     const confirmNewPasswordEditor = await screen.findByLabelText(
-      "Confirm new password"
+      "Confirm new password",
     );
 
     expect(currentPasswordEditor).toBeInTheDocument();
     expect(currentPasswordEditor.getAttribute("autocomplete")).toEqual(
-      "current-password"
+      "current-password",
     );
     expect(newPasswordEditor).toBeInTheDocument();
     expect(newPasswordEditor.getAttribute("autocomplete")).toEqual(
-      "new-password"
+      "new-password",
     );
     expect(confirmNewPasswordEditor).toBeInTheDocument();
     expect(confirmNewPasswordEditor.getAttribute("autocomplete")).toBeNull();
@@ -133,13 +133,13 @@ describe("Update Password display tests", () => {
     userEvent.click(changeButtons[1]);
 
     const currentPasswordEditor = await screen.findByLabelText(
-      "Current password"
+      "Current password",
     );
     const newPasswordEditor = await screen.findByLabelText(
-      "Create new password"
+      "Create new password",
     );
     const confirmNewPasswordEditor = await screen.findByLabelText(
-      "Confirm new password"
+      "Confirm new password",
     );
 
     expect(currentPasswordEditor).toBeInTheDocument();
@@ -178,13 +178,13 @@ describe("Update Password must show correct error messages", () => {
     userEvent.click(changeButtons[1]);
 
     const currentPasswordEditor = await screen.findByLabelText(
-      "Current password"
+      "Current password",
     );
     const newPasswordEditor = await screen.findByLabelText(
-      "Create new password"
+      "Create new password",
     );
     const confirmNewPasswordEditor = await screen.findByLabelText(
-      "Confirm new password"
+      "Confirm new password",
     );
     const editorButtons = await screen.findAllByRole("button");
 
@@ -447,13 +447,13 @@ describe.each([
       userEvent.click(changeButtons[1]);
 
       const currentPasswordEditor = await screen.findByLabelText(
-        "Current password"
+        "Current password",
       );
       const newPasswordEditor = await screen.findByLabelText(
-        "Create new password"
+        "Create new password",
       );
       const confirmNewPasswordEditor = await screen.findByLabelText(
-        "Confirm new password"
+        "Confirm new password",
       );
       const editorButtons = await screen.findAllByRole("button");
 
@@ -466,7 +466,7 @@ describe.each([
       expect(alerts).toHaveLength(1);
       expect(alerts[0]).toHaveTextContent(expectedError);
     });
-  }
+  },
 );
 
 describe("Update Password must handle valid user operations", () => {
@@ -482,7 +482,7 @@ describe("Update Password must handle valid user operations", () => {
     expect(header).toBeInTheDocument();
     expect(header.textContent).toBe("Account settings");
     expect(
-      await screen.findByText("first.last@domain.com")
+      await screen.findByText("first.last@domain.com"),
     ).toBeInTheDocument();
   });
 
@@ -496,13 +496,13 @@ describe("Update Password must handle valid user operations", () => {
     userEvent.click(changeButtons[1]);
 
     const currentPasswordEditor = await screen.findByLabelText(
-      "Current password"
+      "Current password",
     );
     const newPasswordEditor = await screen.findByLabelText(
-      "Create new password"
+      "Create new password",
     );
     const confirmNewPasswordEditor = await screen.findByLabelText(
-      "Confirm new password"
+      "Confirm new password",
     );
     const editorButtons = await screen.findAllByRole("button");
 
@@ -519,16 +519,16 @@ describe("Update Password must handle valid user operations", () => {
         JSON.stringify({
           oldPassword: "V4l1dP4ssW0rd!",
           newPassword: "L0ngV4l1dP4ssW0rd!",
-        })
+        }),
       );
     };
 
     await waitForElementToBeRemoved(
-      await screen.findByText("Updating your details...")
+      await screen.findByText("Updating your details..."),
     );
     expect(mockHistoryPush).toHaveBeenCalledTimes(1);
     expect(mockHistoryPush).toHaveBeenCalledWith(
-      "/Participants/PasswordUpdated"
+      "/Participants/PasswordUpdated",
     );
   });
 });
@@ -556,20 +556,20 @@ describe("Update Password must handle server errors", () => {
           conversationId: null,
           version: 1,
         };
-      }
+      },
     );
     render(<AccountSettings />);
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
     const currentPasswordEditor = await screen.findByLabelText(
-      "Current password"
+      "Current password",
     );
     const newPasswordEditor = await screen.findByLabelText(
-      "Create new password"
+      "Create new password",
     );
     const confirmNewPasswordEditor = await screen.findByLabelText(
-      "Confirm new password"
+      "Confirm new password",
     );
     const editorButtons = await screen.findAllByRole("button");
 
@@ -581,8 +581,8 @@ describe("Update Password must handle server errors", () => {
     expect(await screen.findByText("There is a problem")).toBeInTheDocument();
     expect(
       await screen.findByText(
-        "Your password has not been updated. You may not have entered the current password correctly or there may have been a technical issue."
-      )
+        "Your password has not been updated. You may not have entered the current password correctly or there may have been a technical issue.",
+      ),
     ).toBeInTheDocument();
   });
 
@@ -591,20 +591,20 @@ describe("Update Password must handle server errors", () => {
       `${process.env.REACT_APP_BASE_API}/users/changepassword`,
       () => {
         return new Response(504);
-      }
+      },
     );
     render(<AccountSettings />);
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
     const currentPasswordEditor = await screen.findByLabelText(
-      "Current password"
+      "Current password",
     );
     const newPasswordEditor = await screen.findByLabelText(
-      "Create new password"
+      "Create new password",
     );
     const confirmNewPasswordEditor = await screen.findByLabelText(
-      "Confirm new password"
+      "Confirm new password",
     );
     const editorButtons = await screen.findAllByRole("button");
 
@@ -616,8 +616,8 @@ describe("Update Password must handle server errors", () => {
     expect(await screen.findByText("There is a problem")).toBeInTheDocument();
     expect(
       await screen.findByText(
-        "Your password has not been updated. You may not have entered the current password correctly or there may have been a technical issue."
-      )
+        "Your password has not been updated. You may not have entered the current password correctly or there may have been a technical issue.",
+      ),
     ).toBeInTheDocument();
   });
 });

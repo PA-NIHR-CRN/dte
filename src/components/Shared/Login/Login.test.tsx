@@ -33,7 +33,7 @@ beforeEach(() => {
             conversationId: null,
             version: 1,
           };
-        }
+        },
       );
     },
   });
@@ -71,7 +71,7 @@ describe("Login tests", () => {
     ]);
     server.pretender.handledRequest = (path) => {
       expect(path).toBe(
-        `${process.env.REACT_APP_BASE_API}/participants/undefined/demographics`
+        `${process.env.REACT_APP_BASE_API}/participants/undefined/demographics`,
       );
     };
   });
@@ -81,7 +81,7 @@ describe("Login tests", () => {
     ]);
     server.pretender.handledRequest = (path) => {
       expect(path).not.toBe(
-        `${process.env.REACT_APP_BASE_API}/participants/undefined/demographics`
+        `${process.env.REACT_APP_BASE_API}/participants/undefined/demographics`,
       );
     };
   });

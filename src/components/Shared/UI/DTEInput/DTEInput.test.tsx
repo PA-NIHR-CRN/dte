@@ -20,7 +20,7 @@ describe("Test suite for DTEInput component", () => {
 
   it("should not fail any accessibility tests with only label & error configured", async () => {
     const { container } = render(
-      <DTEInput label="label" error="Error message" />
+      <DTEInput label="label" error="Error message" />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -34,7 +34,7 @@ describe("Test suite for DTEInput component", () => {
 
   it("should not fail any accessibility tests with id, name and label configured", async () => {
     const { container } = render(
-      <DTEInput label="label" id="inputName" name="inputName" />
+      <DTEInput label="label" id="inputName" name="inputName" />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -51,7 +51,7 @@ describe("Test suite for DTEInput component", () => {
         hint="hint"
         type="password"
         value="this is a value"
-      />
+      />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

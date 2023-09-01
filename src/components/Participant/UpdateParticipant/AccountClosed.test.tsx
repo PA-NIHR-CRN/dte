@@ -26,12 +26,12 @@ describe("Account Closed display tests", () => {
   it("must display the data retrieved from the server correctly", async () => {
     render(<AccountClosed />);
     expect(
-      await screen.findByText("Your personal data has been deleted.")
+      await screen.findByText("Your personal data has been deleted."),
     ).toBeInTheDocument();
     expect(
       await screen.findByText(
-        "Thank you for your interest in Be Part of Research."
-      )
+        "Thank you for your interest in Be Part of Research.",
+      ),
     ).toBeInTheDocument();
   });
 });

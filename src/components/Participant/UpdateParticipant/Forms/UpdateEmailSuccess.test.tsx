@@ -23,7 +23,7 @@ describe("Update Email Success display tests", () => {
     expect(header.textContent).toBe("Your email address has been updated");
 
     expect(
-      await screen.findByText("You need to sign back in to your account.")
+      await screen.findByText("You need to sign back in to your account."),
     ).toBeInTheDocument();
 
     const links = screen.getAllByRole("link");

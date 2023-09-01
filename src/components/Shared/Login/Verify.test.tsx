@@ -111,7 +111,7 @@ describe.each([
       server.post(
         `${process.env.REACT_APP_BASE_API}/users/confirmsignup`,
         () =>
-          new Response(200, { "Content-Type": "application/json" }, response)
+          new Response(200, { "Content-Type": "application/json" }, response),
       );
 
       render(<Verify />, {}, [
@@ -119,7 +119,7 @@ describe.each([
       ]);
       server.pretender.handledRequest = async (path) => {
         expect(path).toBe(
-          `${process.env.REACT_APP_BASE_API}/users/confirmsignup`
+          `${process.env.REACT_APP_BASE_API}/users/confirmsignup`,
         );
         const header = await screen.findByRole("heading", { level: 1 });
         expect(header).toBeInTheDocument();
@@ -132,7 +132,7 @@ describe.each([
         expect(link).toHaveTextContent(linkText);
       };
     });
-  }
+  },
 );
 
 describe.each([
@@ -158,7 +158,7 @@ describe.each([
               conversationId: null,
               version: 1,
             };
-          }
+          },
         );
       },
     });
@@ -174,7 +174,7 @@ describe.each([
     render(
       <Router history={history}>
         <App />
-      </Router>
+      </Router>,
     );
 
     expect(history.location.pathname).toBe(redirectUrl);

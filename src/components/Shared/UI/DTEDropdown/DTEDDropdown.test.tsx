@@ -19,7 +19,7 @@ describe("DTEDropdown accessiblity tests", () => {
             Archive document
           </button>
         </DTEDropdownItem>
-      </DTEDropdown>
+      </DTEDropdown>,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -41,7 +41,7 @@ describe("DTEDropdown tests", () => {
             Archive document
           </button>
         </DTEDropdownItem>
-      </DTEDropdown>
+      </DTEDropdown>,
     );
     expect(screen.getByText("Actions")).toBeInTheDocument();
   });
@@ -59,7 +59,7 @@ describe("DTEDropdown tests", () => {
             Archive document
           </button>
         </DTEDropdownItem>
-      </DTEDropdown>
+      </DTEDropdown>,
     );
     expect(screen.getByText("Custom text")).toBeInTheDocument();
     const oldText = screen.queryByText("Actions");
@@ -79,7 +79,7 @@ describe("DTEDropdown tests", () => {
             Archive document
           </button>
         </DTEDropdownItem>
-      </DTEDropdown>
+      </DTEDropdown>,
     );
     fireEvent.click(screen.getByText("Actions"));
     expect(screen.getByText("Edit document")).toBeInTheDocument();
