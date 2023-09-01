@@ -2,7 +2,6 @@ import { Route } from "react-router-dom";
 import ReactGA from "react-ga";
 import UpdateParticipant from "../components/Participant/UpdateParticipant/UpdateParticipant";
 import ProtectedRoute from "./ProtectedRoute";
-import { Role } from "../types/AuthTypes";
 import RegsitrationProcess from "../components/Participant/RegistrationProcess/StartRegistrationProcess/Stepper/RegistrationProcess";
 import StartRegistrationProcess from "../components/Participant/RegistrationProcess/StartRegistrationProcess/StartRegistrationProcess";
 import ContinueRegistration from "../components/Participant/RegistrationProcess/ContinueRegistration/ContinueRegistration";
@@ -18,7 +17,6 @@ import NhsPreRegistration from "../pages/NHS/NhsPreRegistration";
 
 export default [
   <ProtectedRoute
-    userRole={Role.Participant}
     path="/Participants/MyDetails"
     component={UpdateParticipant}
     strict
@@ -26,7 +24,6 @@ export default [
     key="updateparticipant"
   />,
   <ProtectedRoute
-    userRole={Role.Participant}
     path="/Participants/AccountSettings"
     render={() => {
       ReactGA.pageview("/AccountSettings");
@@ -37,7 +34,6 @@ export default [
     key="accountsettings"
   />,
   <ProtectedRoute
-    userRole={Role.Participant}
     path="/Participants/ResearchAreas"
     render={() => {
       ReactGA.pageview("/MyAccount/AreasOfResearch");
@@ -78,7 +74,6 @@ export default [
     key="passwordupdatedsuccessfully"
   />,
   <ProtectedRoute
-    userRole={Role.Participant}
     path="/"
     render={(props) => {
       ReactGA.pageview(props.location.pathname);
@@ -89,7 +84,6 @@ export default [
     key="home"
   />,
   <ProtectedRoute
-    userRole={Role.Participant}
     path="/Participants/CloseAccount"
     component={CloseAccount}
     strict
@@ -106,13 +100,6 @@ export default [
     exact
     key="accountclosed"
   />,
-  // <Route
-  //   path="/UserRegistration"
-  //   component={UserRegistration}
-  //   strict
-  //   exact
-  //   key="userregistration"
-  // />,
   <Route
     path="/Participants/Register/Questions"
     component={RegsitrationProcess}
@@ -121,7 +108,6 @@ export default [
     key="registrationprocess"
   />,
   <ProtectedRoute
-    userRole={Role.Participant}
     path="/Participants/Register/Continue/Questions"
     component={ContinueRegistration}
     strict
@@ -139,7 +125,6 @@ export default [
     key="startregistrationprocess"
   />,
   <ProtectedRoute
-    userRole={Role.Participant}
     path="/Participants/BePartOfResearchNewsletter"
     render={() => {
       ReactGA.pageview("/MyAccount/BePartOfResearchNewsletter");
@@ -149,34 +134,4 @@ export default [
     exact
     key="newsletter"
   />,
-  // <Route
-  //   path="/Participants/SelfReferral/:studyid"
-  //   component={SelfReferralLanding}
-  //   strict
-  //   exact
-  //   key="studyinfo"
-  // />,
-  // <Route
-  //   path="/Participants/SelfReferral/Information/:studyid"
-  //   component={StudyInfo}
-  //   strict
-  //   exact
-  //   key="studyinfo"
-  // />,
-  // <ProtectedRoute
-  //   userRole={Role.Participant}
-  //   path="/Participants/SelfReferral/Continue/:studyid"
-  //   component={ContinueSelfReferral}
-  //   strict
-  //   exact
-  //   key="continueselfreferral"
-  // />,
-  // <ProtectedRoute
-  //   userRole={Role.Participant}
-  //   path="/Participants/SelfReferral/Suitability/:studyid"
-  //   component={Suitability}
-  //   strict
-  //   exact
-  //   key="suitability"
-  // />,
 ];

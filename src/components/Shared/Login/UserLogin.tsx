@@ -13,7 +13,9 @@ import {
   Role,
   DTEAxiosError,
 } from "../../../types/AuthTypes";
-import Utils from "../../../Helper/Utils";
+import Utils, { EmailRegex }  from "../../../Helper/Utils";
+import DTEInput from "../UI/DTEInput/DTEInput";
+import DTEButton from "../UI/DTEButton/DTEButton";
 import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import CheckYourEmail from "../FormElements/CommonElements/CheckYourEmail";
@@ -67,9 +69,7 @@ const UserLogin = (props: UserLoginProps) => {
     persistLastNonLoginUrl,
     lastUrl,
     isAuthenticated,
-    isAuthenticatedRole,
     logOutToken,
-    token,
     saveToken,
     setMfaDetails,
     setUserMfaEmail,
@@ -83,8 +83,6 @@ const UserLogin = (props: UserLoginProps) => {
   >(undefined);
 
   const [email, setEmail] = useState<string>();
-
-  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const onSubmit = async (formData: any) => {
     setEmail(formData.email);
@@ -135,9 +133,8 @@ const UserLogin = (props: UserLoginProps) => {
   );
 
   useEffect(() => {
-    if (isAuthenticated() && isAuthenticatedRole(Role.Participant)) {
-      // redirect back as we are already logged in.
-      setShouldRedirect(true);
+    if (isAuthenticated()) {
+      history.push("/");
     } else {
       logOutToken();
       persistLastNonLoginUrl(lastUrl ?? "");
@@ -207,7 +204,6 @@ const UserLogin = (props: UserLoginProps) => {
     <>
       {nested ? (
         <>
-          {shouldRedirect && <Redirect push to={`/Login#id_token=${token}`} />}
           {loadingLogin && <LoadingIndicator text="Signing In..." />}
           {resendLoading && (
             <LoadingIndicator text="Resending verification email..." />
@@ -243,6 +239,7 @@ const UserLogin = (props: UserLoginProps) => {
           <>
             {shouldRedirect && (
               <Redirect push to={`/Login#id_token=${token}`} />
+
             )}
             {loadingLogin && <LoadingIndicator text="Signing In..." />}
             {resendLoading && (
