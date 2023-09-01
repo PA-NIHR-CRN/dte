@@ -2,7 +2,7 @@ import { createServer, Response, Server } from "miragejs";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import Verify from "./Verify";
-import { render, screen } from "../../../Helper/test-utils";
+import { render, screen, waitFor } from "../../../Helper/test-utils";
 import App from "../../../App";
 
 describe.each([
@@ -117,6 +117,9 @@ describe.each([
       render(<Verify />, {}, [
         { pathname: "/verify", search: `?code=123456&userId=${email}` },
       ]);
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       server.pretender.handledRequest = async (path) => {
         expect(path).toBe(
           `${process.env.REACT_APP_BASE_API}/users/confirmsignup`

@@ -4,12 +4,7 @@ import styled from "styled-components";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebookF,
-  faTwitter,
-  faYoutube,
-  faLinkedin,
-} from "@fortawesome/free-brands-svg-icons";
+import { faFacebookF, faTwitter, faYoutube, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
 import bporlogo from "../../../images/BPoR_logo_WO.svg";
 import HSClogo from "../../../images/HSCLogo.svg";
@@ -17,6 +12,7 @@ import nihrlogo from "../../../images/NIHR-Logo.svg";
 import HCRwaleslogo from "../../../images/Health-and-Care-Research-Wales-full-colour-logo-CMYK.svg";
 import nhsScotlandlogo from "../../../images/nhs-research-scotland-logo.svg";
 import FooterLinksPanel from "./FooterLinksPanel";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 interface IsMobileProps {
   isMobile?: boolean;
@@ -165,14 +161,11 @@ const SocialIconWrapper = styled.span`
   border-radius: 50%;
 `;
 
-const SocialIcon = styled(FontAwesomeIcon).attrs({})`
-  &&& {
-    color: ${(Props) => Props.theme.NIHR.Blue};
-    background-color: ${(Props) =>
-      Props.color ?? Props.theme.NIHR.PrimaryWhite};
-    width: 1.4em;
-    height: 1.4em;
-  }
+const SocialIcon = styled(FontAwesomeIcon)`
+  color: ${(props) => props.theme.NIHR.Blue};
+  background-color: ${(props) => props.color ?? props.theme.NIHR.PrimaryWhite};
+  width: 1.4em;
+  height: 1.4em;
 `;
 
 export default function Footer() {
@@ -277,7 +270,7 @@ export default function Footer() {
             aria-label="Facebook"
           >
             <SocialIconWrapper>
-              <SocialIcon aria-label="Facebook" icon={faFacebookF} size="xs" />
+              <SocialIcon aria-label="Facebook" icon={faFacebookF as IconProp} size="xs" />
             </SocialIconWrapper>
           </SocialIconContainer>
           <SocialIconContainer
@@ -286,7 +279,7 @@ export default function Footer() {
             aria-label="Twitter"
           >
             <SocialIconWrapper>
-              <SocialIcon aria-label="Twitter" icon={faTwitter} size="xs" />
+              <SocialIcon aria-label="Twitter" icon={faTwitter as IconProp} size="xs" />
             </SocialIconWrapper>
           </SocialIconContainer>
           <SocialIconContainer
@@ -295,7 +288,7 @@ export default function Footer() {
             aria-label="You Tube"
           >
             <SocialIconWrapper>
-              <SocialIcon aria-label="You Tube" icon={faYoutube} size="xs" />
+              <SocialIcon aria-label="You Tube" icon={faYoutube as IconProp} size="xs" />
             </SocialIconWrapper>
           </SocialIconContainer>
           <SocialIconContainer
@@ -304,17 +297,12 @@ export default function Footer() {
             aria-label="Linked In"
           >
             <SocialIconWrapper>
-              <SocialIcon aria-label="Linked In" icon={faLinkedin} size="xs" />
+              <SocialIcon aria-label="Linked In" icon={faLinkedin as IconProp} size="xs" />
             </SocialIconWrapper>
           </SocialIconContainer>
         </Grid>
       </SocialPanel>
-      <FooterPanel
-        container
-        direction="row"
-        justifyContent="center"
-        alignContent="center"
-      >
+      <FooterPanel container direction="row" justifyContent="center" alignContent="center">
         <Grid
           item
           container
@@ -412,11 +400,7 @@ export default function Footer() {
             aria-label="NHS Scotland"
             className="footerImage scot-logo-img"
           >
-            <img
-              src={nhsScotlandlogo}
-              className="regional-logos img-responsive"
-              alt="NHS Scotland"
-            />
+            <img src={nhsScotlandlogo} className="regional-logos img-responsive" alt="NHS Scotland" />
           </a>
         </div>
         <div className="regional-logos HCW-logo">
@@ -427,11 +411,7 @@ export default function Footer() {
             aria-label="Health and Care Research Wales"
             className="footerImage HCWLogoContainer"
           >
-            <img
-              src={HCRwaleslogo}
-              className="regional-logos img-responsive"
-              alt="Health and Care Research Wales"
-            />
+            <img src={HCRwaleslogo} className="regional-logos img-responsive" alt="Health and Care Research Wales" />
           </a>
         </div>
       </div>

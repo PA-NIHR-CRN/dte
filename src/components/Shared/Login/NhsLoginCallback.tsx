@@ -4,10 +4,13 @@ import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import Utils from "../../../Helper/Utils";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import { AuthContext } from "../../../context/AuthContext";
+import { ContentContext } from "../../../context/ContentContext";
 
 const userIsUnderageErrorCode = "User_Is_Underage";
 const unableToMatchAccounts = "Unable_To_Match_Accounts";
-const NhsLoginCallback = () => {
+function NhsLoginCallback() {
+  const { content } = useContext(ContentContext);
+
   const { search } = useLocation();
   const authCode = new URLSearchParams(search).get("code");
   const error = new URLSearchParams(search).get("error");
@@ -41,10 +44,7 @@ const NhsLoginCallback = () => {
   // handle errors from the url
   useEffect(() => {
     if (error === "access_denied" && errorDescription === "ConsentNotGiven") {
-      const path =
-        state === "ssointegration"
-          ? `/nhsnoconsent?state=${state}`
-          : "/nhsnoconsent";
+      const path = state === "ssointegration" ? `/nhsnoconsent?state=${state}` : "/nhsnoconsent";
       history.push(path);
     }
   }, [error, errorDescription]);
@@ -53,9 +53,7 @@ const NhsLoginCallback = () => {
     const result = Utils.ConvertResponseToDTEResponse(response);
     if (result?.errors?.some((e) => e.customCode === userIsUnderageErrorCode)) {
       history.push(`/under18`);
-    } else if (
-      result?.errors?.some((e) => e.customCode === unableToMatchAccounts)
-    ) {
+    } else if (result?.errors?.some((e) => e.customCode === unableToMatchAccounts)) {
       history.push(`/unabletomatch`);
     } else if (result?.isSuccess) {
       saveToken(result?.content);
@@ -65,10 +63,10 @@ const NhsLoginCallback = () => {
   }, [response]);
 
   if (loading) {
-    return <LoadingIndicator text="Loading..." />;
+    return <LoadingIndicator text={content["reusable-loading"]} />;
   }
 
   return null;
-};
+}
 
 export default NhsLoginCallback;

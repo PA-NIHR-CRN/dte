@@ -1,5 +1,5 @@
 import { createServer, Response, Server } from "miragejs";
-import { render, screen } from "../../../../../../Helper/test-utils";
+import { render, screen, waitFor } from "../../../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import PasswordForm from "./PasswordForm";
 
@@ -180,6 +180,9 @@ describe.each([
           setLoadingText={mockSetLoadingText}
         />
       );
+      await waitFor(() => {
+        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+      });
       const policy = await screen.findByText(expectedContent);
       expect(policy).toBeInTheDocument();
     });

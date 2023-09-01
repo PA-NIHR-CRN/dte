@@ -28,11 +28,7 @@ const StyledPaper = styled(Paper)<Props>`
     /* padding: 3em; */
     border-left: ${(Props) =>
       Props.$bandColour
-        ? `10px solid ${
-            Props.$bandColour === "Default"
-              ? Props.theme.NIHR.Blue
-              : Props.$bandColour
-          }`
+        ? `10px solid ${Props.$bandColour === "Default" ? Props.theme.NIHR.Blue : Props.$bandColour}`
         : ``};
   }
 `;
@@ -45,7 +41,7 @@ const StyledCloseIconButton = styled(IconButton)<Props>`
   }
 `;
 
-const DTEPaper = ({
+function DTEPaper({
   onClickClose,
   disabled,
   $bandColour,
@@ -55,7 +51,7 @@ const DTEPaper = ({
   className,
   $buttonLabel,
   elevation,
-}: Props) => {
+}: Props) {
   return (
     <StyledPaper
       $bandColour={$bandColour}
@@ -65,17 +61,13 @@ const DTEPaper = ({
       elevation={elevation}
     >
       {onClickClose && (
-        <StyledCloseIconButton
-          onClick={onClickClose}
-          disabled={disabled}
-          aria-label={$buttonLabel}
-        >
+        <StyledCloseIconButton onClick={onClickClose} disabled={disabled} aria-label={$buttonLabel}>
           <CloseIcon />
         </StyledCloseIconButton>
       )}
       {children}
     </StyledPaper>
   );
-};
+}
 
 export default DTEPaper;

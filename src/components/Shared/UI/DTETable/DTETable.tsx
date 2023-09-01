@@ -33,7 +33,7 @@ const StyledCol = styled.col<{ colWidth: string }>`
   width: ${(props) => props.colWidth};
 `;
 
-const DTETable = (props: DTETableProps) => {
+function DTETable(props: DTETableProps) {
   const { columns, rows, caption, responsive } = props;
 
   const totalWidth =
@@ -50,11 +50,7 @@ const DTETable = (props: DTETableProps) => {
         {columns.map((column) => (
           <StyledCol
             key={uuidv4()}
-            colWidth={
-              column?.width
-                ? `${(column.width / totalWidth) * 100}%`
-                : `${(1 / totalWidth) * 100}%`
-            }
+            colWidth={column?.width ? `${(column.width / totalWidth) * 100}%` : `${(1 / totalWidth) * 100}%`}
           />
         ))}
       </colgroup>
@@ -76,6 +72,6 @@ const DTETable = (props: DTETableProps) => {
       </StyledBody>
     </StyledTable>
   );
-};
+}
 
 export default DTETable;

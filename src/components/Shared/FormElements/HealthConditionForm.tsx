@@ -10,6 +10,8 @@ import FormBaseProps from "./FormBaseProps";
 import DTEForwardLookup from "../UI/DTEForwardLookup/DTEForwardLookup";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import healthConditions from "../../../data/healthConditions";
+import { useContext } from "react";
+import { ContentContext } from "../../../context/ContentContext";
 import Honeypot from "../Honeypot/Honeypot";
 
 export type HealthConditionFormData = {
@@ -21,7 +23,8 @@ interface HealthConditionFormProps extends FormBaseProps {
   onDataChange: (data: HealthConditionFormData) => void;
 }
 
-const HealthConditionForm = (props: HealthConditionFormProps) => {
+function HealthConditionForm(props: HealthConditionFormProps) {
+  const { content } = useContext(ContentContext);
   const {
     onDataChange,
     initialStateData,
@@ -33,9 +36,7 @@ const HealthConditionForm = (props: HealthConditionFormProps) => {
     instructionText,
   } = props;
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
 
   const { control, handleSubmit } = useForm({
     mode: "onTouched",
@@ -54,14 +55,11 @@ const HealthConditionForm = (props: HealthConditionFormProps) => {
       {instructionText || (
         <>
           <DTEContent>
-            Start entering details below to see different areas of research. You
-            can select as many options as you like.
+            Start entering details below to see different areas of research. You can select as many options as you like.
           </DTEContent>
           <DTEContent>
-            For example, you can enter a health condition like
-            &apos;diabetes&apos;, &apos;heart disease&apos; or
-            &apos;COVID-19&apos;. You can take part whether you have a health
-            condition or not by entering &apos;
+            For example, you can enter a health condition like &apos;diabetes&apos;, &apos;heart disease&apos; or
+            &apos;COVID-19&apos;. You can take part whether you have a health condition or not by entering &apos;
             <DTERouteLink
               to="https://bepartofresearch.nihr.ac.uk/taking-part/volunteering-without-a-condition/"
               external
@@ -87,7 +85,7 @@ const HealthConditionForm = (props: HealthConditionFormProps) => {
                   values={value}
                   data={healthConditions}
                   onSelectedValuesChange={onChange}
-                  label="Areas of research"
+                  label={content["reusable-areas-of-research"]}
                 />
               )}
             />
@@ -95,21 +93,18 @@ const HealthConditionForm = (props: HealthConditionFormProps) => {
               <DTEDetails summary="Why we are asking this question">
                 <>
                   <DTEContent>
-                    We will use this information to contact you about studies
-                    you may be interested in based on the areas of research you
-                    select here.
+                    We will use this information to contact you about studies you may be interested in based on the
+                    areas of research you select here.
                   </DTEContent>
                   <DTEContent>
-                    If you do not select any areas of research we will only be
-                    able to let you know about a limited number of studies based
-                    on the other information you have given during your account
-                    creation.
+                    If you do not select any areas of research we will only be able to let you know about a limited
+                    number of studies based on the other information you have given during your account creation.
                   </DTEContent>
                 </>
               </DTEDetails>
             )}
             <FormNavigationButtons
-              nextButtonText={nextButtonText || "Continue"}
+              nextButtonText={nextButtonText || content["reusable-button-continue"]}
               showCancelButton={showCancelButton || false}
               onCancel={onCancel}
             />
@@ -118,6 +113,6 @@ const HealthConditionForm = (props: HealthConditionFormProps) => {
       </Grid>
     </>
   );
-};
+}
 
 export default HealthConditionForm;

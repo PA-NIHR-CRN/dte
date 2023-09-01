@@ -55,12 +55,14 @@ describe("ContinueRegistration", () => {
 describe("Accessibility test", () => {
   it("should not fail any accessibility tests", async () => {
     const { container } = render(<ContinueRegistration />);
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
   test("progress bar marked as aria hidden", async () => {
     render(<ContinueRegistration />);
-    const progressText = await screen.findByText("38% complete");
+
+    const progressText = await screen.findByText(/38\s?%\s?complete/i);
     expect(progressText).toBeInTheDocument();
     expect(progressText).toHaveAttribute("aria-hidden", "true");
   });
@@ -76,7 +78,7 @@ describe("Continue registration analytics", () => {
           ["send", { hitType: "pageview", page: "/registration/address" }],
         ]);
       },
-      { timeout: 1000 }
+      { timeout: 1000 },
     );
   });
 });

@@ -17,7 +17,9 @@ const StyledRender = styled.span`
         color: ${(props) => props.theme.NIHR.Blue};
         text-decoration: none;
         background-color: ${(props) => props.theme.NIHR.Yellow};
-        box-shadow: 0 -2px ${(props) => props.theme.NIHR.Yellow}, 0 4px #212b32;
+        box-shadow:
+          0 -2px ${(props) => props.theme.NIHR.Yellow},
+          0 4px #212b32;
       }
       &:hover {
         color: ${(props) => props.theme.NIHR.Blue};
@@ -46,7 +48,7 @@ type Props = {
   richText: string;
 };
 
-const DTERichTextRender = ({ richText }: Props) => {
+function DTERichTextRender({ richText }: Props) {
   const clean = sanitizeHtml(richText, {
     allowedTags: ["p", "b", "ol", "ul", "li", "strong", "a"],
     allowedAttributes: {
@@ -71,6 +73,6 @@ const DTERichTextRender = ({ richText }: Props) => {
       }}
     />
   );
-};
+}
 
 export default DTERichTextRender;

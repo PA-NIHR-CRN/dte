@@ -2,7 +2,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useContext, useEffect } from "react";
 import DTERadio from "../UI/DTERadio/DTERadio";
 import DTEDetails from "../UI/DTEDetails/DTEDetails";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
@@ -10,6 +10,7 @@ import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import FormBaseProps from "./FormBaseProps";
 import Utils from "../../../Helper/Utils";
+import { ContentContext } from "../../../context/ContentContext";
 import Honeypot from "../Honeypot/Honeypot";
 
 export type Disability2FormData = {
@@ -22,7 +23,8 @@ interface Disability2FormProps extends FormBaseProps {
   onDataChange: (data: Disability2FormData) => void;
 }
 
-const Disability2Form = (props: Disability2FormProps) => {
+function Disability2Form(props: Disability2FormProps) {
+  const { content } = useContext(ContentContext);
   let labelElement: ReactNode;
   const {
     onDataChange,
@@ -35,9 +37,7 @@ const Disability2Form = (props: Disability2FormProps) => {
     onCancel,
   } = props;
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
     control,
     handleSubmit,
@@ -62,8 +62,7 @@ const Disability2Form = (props: Disability2FormProps) => {
     labelElement = (
       <>
         <DTEHeader as="h1" $variant={headerVariant}>
-          Do any of your conditions or illnesses reduce your ability to carry
-          out day to day activities?
+          Do any of your conditions or illnesses reduce your ability to carry out day to day activities?
         </DTEHeader>
         <DTEContent as="span" $displayMode="block">
           For example, eating, washing, walking or going shopping.
@@ -81,87 +80,82 @@ const Disability2Form = (props: Disability2FormProps) => {
   }, [isSubmitting]);
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <Honeypot />
-        <Controller
-          control={control}
-          name="disabilityDescription"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <DTERadio
-              id="disabilityDescriptionRadio"
-              name="disabilityDescription"
-              label={labelElement}
-              onChange={onChange}
-              error={error?.message}
+    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <Honeypot />
+      <Controller
+        control={control}
+        name="disabilityDescription"
+        render={({ field: { value, onChange }, fieldState: { error } }) => (
+          <DTERadio
+            id="disabilityDescriptionRadio"
+            name="disabilityDescription"
+            label={labelElement}
+            onChange={onChange}
+            error={error?.message}
+          >
+            <Radios.Radio
+              value="Yes, a lot"
+              defaultChecked={value === "Yes, a lot"}
+              aria-label="Yes, my condition reduces my ability to carry out day to day activities a lot"
+              aria-labelledby=""
             >
-              <Radios.Radio
-                value="Yes, a lot"
-                defaultChecked={value === "Yes, a lot"}
-                aria-label="Yes, my condition reduces my ability to carry out day to day activities a lot"
-                aria-labelledby=""
-              >
-                Yes, a lot
-              </Radios.Radio>
-              <Radios.Radio
-                value="Yes, a little"
-                defaultChecked={value === "Yes, a little"}
-                aria-label="Yes, my condition reduces my ability to carry out day to day activities a little"
-                aria-labelledby=""
-              >
-                Yes, a little
-              </Radios.Radio>
-              <Radios.Radio
-                value="Not at all"
-                defaultChecked={value === "Not at all"}
-                aria-label="No, my condition does not reduce my ability to carry out day to day activities at all"
-                aria-labelledby=""
-              >
-                Not at all
-              </Radios.Radio>
-              <DTEContent $radioList>or</DTEContent>
-              <Radios.Radio
-                value="Prefer not to say"
-                defaultChecked={value === "Prefer not to say"}
-                aria-label="I would prefer not to say how much my condition reduces my ability to carry out day to day activities"
-                aria-labelledby=""
-              >
-                Prefer not to say
-              </Radios.Radio>
-            </DTERadio>
-          )}
-          rules={{
-            validate: (value) => {
-              if (!value || value.length === 0)
-                return "Select whether any of your conditions or illnesses reduce your ability to carry out day to day activities";
-              return true;
-            },
-          }}
-        />
-        {!hideInfo && (
-          <DTEDetails summary="Why we are asking this question">
-            <DTEContent>
-              Some studies will require volunteers with disabilities, other
-              studies want to make sure they have a representative sample of the
-              population taking part in research studies. We may use this
-              information when contacting you about studies you may be
-              interested in.
-            </DTEContent>
-            <DTEContent>
-              If we find that people with disabilities are under represented in
-              signing up to be contacted about research we will look at how to
-              improve this.
-            </DTEContent>
-          </DTEDetails>
+              Yes, a lot
+            </Radios.Radio>
+            <Radios.Radio
+              value="Yes, a little"
+              defaultChecked={value === "Yes, a little"}
+              aria-label="Yes, my condition reduces my ability to carry out day to day activities a little"
+              aria-labelledby=""
+            >
+              Yes, a little
+            </Radios.Radio>
+            <Radios.Radio
+              value="Not at all"
+              defaultChecked={value === "Not at all"}
+              aria-label="No, my condition does not reduce my ability to carry out day to day activities at all"
+              aria-labelledby=""
+            >
+              Not at all
+            </Radios.Radio>
+            <DTEContent $radioList>or</DTEContent>
+            <Radios.Radio
+              value="Prefer not to say"
+              defaultChecked={value === "Prefer not to say"}
+              aria-label="I would prefer not to say how much my condition reduces my ability to carry out day to day activities"
+              aria-labelledby=""
+            >
+              {content["reusable-prefer-not-to-say"]}
+            </Radios.Radio>
+          </DTERadio>
         )}
-        <FormNavigationButtons
-          nextButtonText={disability2NextButtonText || "Continue"}
-          showCancelButton={disability2ShowCancelButton || false}
-          onCancel={onCancel}
-        />
-      </form>
-    </>
+        rules={{
+          validate: (value) => {
+            if (!value || value.length === 0)
+              return "Select whether any of your conditions or illnesses reduce your ability to carry out day to day activities";
+            return true;
+          },
+        }}
+      />
+      {!hideInfo && (
+        <DTEDetails summary="Why we are asking this question">
+          <DTEContent>
+            Some studies will require volunteers with disabilities, other studies want to make sure they have a
+            representative sample of the population taking part in research studies. We may use this information when
+            contacting you about studies you may be interested in.
+          </DTEContent>
+          <DTEContent>
+            If we find that people with disabilities are under represented in signing up to be contacted about research
+            we will look at how to improve this.
+          </DTEContent>
+        </DTEDetails>
+      )}
+      <FormNavigationButtons
+        nextButtonText={disability2NextButtonText || content["reusable-button-continue"]}
+        showCancelButton={disability2ShowCancelButton || false}
+        onCancel={onCancel}
+      />
+    </form>
   );
-};
+}
 
 export default Disability2Form;

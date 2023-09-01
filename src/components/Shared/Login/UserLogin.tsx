@@ -15,6 +15,7 @@ import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import CheckYourEmail from "../FormElements/CommonElements/CheckYourEmail";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import DTEBackLink from "../UI/DTEBackLink/DTEBackLink";
+import { ContentContext } from "../../../context/ContentContext";
 import UserLoginForm from "./UserLoginForm/UserLoginForm";
 import Honeypot from "../Honeypot/Honeypot";
 
@@ -40,6 +41,7 @@ interface UserLoginProps {
 }
 const UserLogin = (props: UserLoginProps) => {
   const { nested } = props;
+  const { content } = useContext(ContentContext);
   const {
     control,
     handleSubmit,
@@ -59,22 +61,13 @@ const UserLogin = (props: UserLoginProps) => {
   }, [isSubmitSuccessful]);
 
   const history = useHistory();
-  const {
-    persistLastNonLoginUrl,
-    lastUrl,
-    isAuthenticated,
-    logOutToken,
-    saveToken,
-    setMfaDetails,
-    setUserMfaEmail,
-  } = useContext(AuthContext);
+  const { persistLastNonLoginUrl, lastUrl, isAuthenticated, logOutToken, saveToken, setMfaDetails, setUserMfaEmail } =
+    useContext(AuthContext);
 
-  const [loginResponse, setLoginResponse] = useState<
-    DTEAxiosResponse | undefined
-  >(undefined);
-  const [resendDTEResponse, setResendDTEResponse] = useState<
-    DTEAxiosResponse | undefined
-  >(undefined);
+  const { persistLastNonLoginUrl, lastUrl, isAuthenticated, logOutToken, saveToken } = useContext(AuthContext);
+
+  const [loginResponse, setLoginResponse] = useState<DTEAxiosResponse | undefined>(undefined);
+  const [resendDTEResponse, setResendDTEResponse] = useState<DTEAxiosResponse | undefined>(undefined);
 
   const [email, setEmail] = useState<string>();
 
@@ -105,11 +98,7 @@ const UserLogin = (props: UserLoginProps) => {
       setMfaDetails(result?.errors[0]?.detail as string);
       history.push(`/MfaSmsChallenge`);
     }
-    if (
-      result?.errors?.some(
-        (e) => e.customCode === "Software_Token_Mfa_Challenge"
-      )
-    ) {
+    if (result?.errors?.some((e) => e.customCode === "Software_Token_Mfa_Challenge")) {
       setMfaDetails(result?.errors[0]?.detail as string);
       history.push("/MfaTokenChallenge");
     }
@@ -121,10 +110,7 @@ const UserLogin = (props: UserLoginProps) => {
     }
   };
 
-  const [{ loading: loadingLogin, error: errorLogin }, login] = useAxiosFetch(
-    {},
-    { manual: true }
-  );
+  const [{ loading: loadingLogin, error: errorLogin }, login] = useAxiosFetch({}, { manual: true });
 
   useEffect(() => {
     if (isAuthenticated()) {
@@ -135,9 +121,7 @@ const UserLogin = (props: UserLoginProps) => {
     }
   }, []);
 
-  const [
-    { response: resendResponse, loading: resendLoading, error: resendError },
-  ] = useAxiosFetch(
+  const [{ response: resendResponse, loading: resendLoading, error: resendError }] = useAxiosFetch(
     {
       url: `${process.env.REACT_APP_BASE_API}/users/resendverificationemail`,
       method: "POST",
@@ -179,14 +163,25 @@ const UserLogin = (props: UserLoginProps) => {
             detail =
               "You have not set up MFA for your account. Please check your email for instructions on how to set up MFA.";
           } else {
-            detail =
-              "You have not given permission to access your account. Please";
+            detail = "You have not given permission to access your account. Please";
           }
 
           return {
             ...e,
-            detail,
-            customCode,
+            ...(e?.customCode === "Authentication_Not_Authorized"
+              ? {
+                  detail: (
+                    <>
+                      <p>{content["signin-error-authentication-not-authorized"]}</p>
+                      <p>{content["signin-error-authentication-not-authorized2"]}</p>
+                    </>
+                  ),
+                  customCode: "NO_CHANGE",
+                }
+              : {
+                  detail: <>{content["signin-error-authentication-generic"]}</>,
+                  customCode: "NO_CHANGE",
+                }),
           };
         });
       }
@@ -198,109 +193,59 @@ const UserLogin = (props: UserLoginProps) => {
     <>
       {nested ? (
         <>
-          {loadingLogin && <LoadingIndicator text="Signing In..." />}
-          {resendLoading && (
-            <LoadingIndicator text="Resending verification email..." />
-          )}
-          <ErrorMessageSummary
-            renderSummary={!isSubmitting}
-            errors={formErrors}
-          />
+          {loadingLogin && <LoadingIndicator text={content["signin-loading-signin"]} />}
+          {resendLoading && <LoadingIndicator text={content["signin-loading-resend"]} />}
+          <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
           {!resendDTEResponse?.isSuccess &&
-            !resendDTEResponse?.errors?.some(
-              (e) => e.customCode === "Mfa_Setup_Challenge"
-            ) && (
+            !resendDTEResponse?.errors?.some((e) => e.customCode === "Mfa_Setup_Challenge") && (
               <ErrorMessageContainer
                 axiosErrors={[errorLogin, resendError]}
-                DTEAxiosErrors={injectCallIntoError([
-                  loginResponse?.errors,
-                  resendDTEResponse?.errors,
-                ])}
+                DTEAxiosErrors={injectCallIntoError([loginResponse?.errors, resendDTEResponse?.errors])}
               />
             )}
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <Honeypot />
-            <UserLoginForm
-              control={control}
-              loadingLogin={loadingLogin}
-              setValue={setValue}
-              nested
-            />
+            <UserLoginForm control={control} loadingLogin={loadingLogin} setValue={setValue} nested />
           </form>
         </>
       ) : (
-        <DocumentTitle title="Sign in or register - Volunteer Registration - Be Part of Research">
+        <DocumentTitle title={content["signin-document-title"]}>
           <>
-            {loadingLogin && <LoadingIndicator text="Signing In..." />}
-            {resendLoading && (
-              <LoadingIndicator text="Resending verification email..." />
-            )}
+            {loadingLogin && <LoadingIndicator text={content["signin-loading-signin"]} />}
+            {resendLoading && <LoadingIndicator text={content["signin-loading-resend"]} />}
             {!loadingLogin && !resendLoading && (
-              <Grid
-                container
-                alignItems="center"
-                direction="row"
-                justifyContent="flex-start"
-              >
+              <Grid container alignItems="center" direction="row" justifyContent="flex-start">
                 <Grid item sm={2} md={1} />
                 <StyledGridElementLeft item xs={12} sm={10} md={11}>
-                  <DTEBackLink href="/Participants/Options" linkText="Back" />
+                  <DTEBackLink href="/Participants/Options" linkText={content["reusable-back-link"]} />
                 </StyledGridElementLeft>
               </Grid>
             )}
-            <Grid
-              container
-              justifyContent="center"
-              alignItems="center"
-              role="main"
-              id="main"
-            >
+            <Grid container justifyContent="center" alignItems="center" role="main" id="main">
               <LoginWrapper item xs={12} sm={8} md={6} lg={5} xl={4}>
-                {!loadingLogin &&
-                  !resendLoading &&
-                  !resendDTEResponse?.isSuccess && (
-                    <>
-                      <DTEHeader as="h1">
-                        Sign in to Be Part of Research
-                      </DTEHeader>
-                      <ErrorMessageSummary
-                        renderSummary={!isSubmitting}
-                        errors={formErrors}
-                      />
-                      {!resendDTEResponse?.isSuccess &&
-                        !resendDTEResponse?.errors?.some(
-                          (e) => e.customCode === "Mfa_Setup_Challenge"
-                        ) && (
-                          <ErrorMessageContainer
-                            axiosErrors={[errorLogin, resendError]}
-                            DTEAxiosErrors={injectCallIntoError([
-                              loginResponse?.errors,
-                              resendDTEResponse?.errors,
-                            ])}
-                          />
-                        )}
-                      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                        <Honeypot />
-                        <UserLoginForm
-                          control={control}
-                          loadingLogin={loadingLogin}
-                          setValue={setValue}
+                {!loadingLogin && !resendLoading && !resendDTEResponse?.isSuccess && (
+                  <>
+                    <DTEHeader as="h1">Sign in to Be Part of Research</DTEHeader>
+                    <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
+                    {!resendDTEResponse?.isSuccess &&
+                      !resendDTEResponse?.errors?.some((e) => e.customCode === "Mfa_Setup_Challenge") && (
+                        <ErrorMessageContainer
+                          axiosErrors={[errorLogin, resendError]}
+                          DTEAxiosErrors={injectCallIntoError([loginResponse?.errors, resendDTEResponse?.errors])}
                         />
-                      </form>
-                      <ButtonWrapper>
-                        <DTERouteLink
-                          to="/Participants/register"
-                          disabled={loadingLogin}
-                          $outlined
-                        >
-                          Register with Be Part of Research
-                        </DTERouteLink>
-                      </ButtonWrapper>
-                    </>
-                  )}
-                {resendDTEResponse?.isSuccess && (
-                  <CheckYourEmail emailAddress={email} />
+                      )}
+                    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                      <Honeypot />
+                      <UserLoginForm control={control} loadingLogin={loadingLogin} setValue={setValue} />
+                    </form>
+                    <ButtonWrapper>
+                      <DTERouteLink to="/Participants/register" disabled={loadingLogin} $outlined>
+                        {content["signin-button-registerwithbpor"]}
+                      </DTERouteLink>
+                    </ButtonWrapper>
+                  </>
                 )}
+                {resendDTEResponse?.isSuccess && <CheckYourEmail emailAddress={email} />}
               </LoginWrapper>
             </Grid>
           </>

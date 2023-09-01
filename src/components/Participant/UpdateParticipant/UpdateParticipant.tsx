@@ -1,10 +1,4 @@
-import React, {
-  ReactNode,
-  useEffect,
-  useState,
-  useRef,
-  useContext,
-} from "react";
+import React, { ReactNode, useEffect, useState, useRef, useContext } from "react";
 import ReactGA from "react-ga";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
@@ -18,31 +12,21 @@ import DTEBackLink from "../../Shared/UI/DTEBackLink/DTEBackLink";
 import DTELinkButton from "../../Shared/UI/DTELinkButton/DTELinkButton";
 import DTEContent from "../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEHeader from "../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
-import AddressForm, {
-  AddressFormData,
-} from "../../Shared/FormElements/AddressForm";
-import DisabilityForm, {
-  DisabilityFormData,
-} from "../../Shared/FormElements/DisabilityForm";
+import AddressForm, { AddressFormData } from "../../Shared/FormElements/AddressForm";
+import DisabilityForm, { DisabilityFormData } from "../../Shared/FormElements/DisabilityForm";
 import DOBForm, { DOBFormData } from "../../Shared/FormElements/DOBForm";
-import Ethnicity1Form, {
-  Ethnicity1FormData,
-} from "../../Shared/FormElements/EthnicityFormComponents/Ethnicity1Form";
-import Ethnicity2Form, {
-  Ethnicity2FormData,
-} from "../../Shared/FormElements/EthnicityFormComponents/Ethnicity2Form";
+import Ethnicity1Form, { Ethnicity1FormData } from "../../Shared/FormElements/EthnicityFormComponents/Ethnicity1Form";
+import Ethnicity2Form, { Ethnicity2FormData } from "../../Shared/FormElements/EthnicityFormComponents/Ethnicity2Form";
 import { HealthConditionFormData } from "../../Shared/FormElements/HealthConditionForm";
-import MobileNumberForm, {
-  MobileFormData,
-} from "../../Shared/FormElements/MobileNumberForm";
+import MobileNumberForm, { MobileFormData } from "../../Shared/FormElements/MobileNumberForm";
 import SexForm, { SexFormData } from "../../Shared/FormElements/SexForm";
 import NameForm, { NameFormData } from "../../Shared/FormElements/NameForm";
 import Utils from "../../../Helper/Utils";
-import Disability2Form, {
-  Disability2FormData,
-} from "../../Shared/FormElements/Disability2Form";
+import Disability2Form, { Disability2FormData } from "../../Shared/FormElements/Disability2Form";
 import { AuthContext } from "../../../context/AuthContext";
-import ethnicities from "../../../data/ethnicityData";
+import { ContentContext } from "../../../context/ContentContext";
+import { UserContext } from "../../../context/UserContext";
+import getEthnicities from "../../../data/ethnicityData";
 
 interface UserDataState {
   address: AddressFormData;
@@ -74,20 +58,18 @@ const StyledHiddenText = styled.span`
   white-space: nowrap;
 `;
 
-const UpdateParticipant = () => {
+function UpdateParticipant() {
+  const { content } = useContext(ContentContext);
+  const ethnicities = getEthnicities(content);
   const { isNhsLinkedAccount } = useContext(AuthContext);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [currentPage, setCurrentPage] = useState<string>("main");
-  const [pageTitle, setPageTitle] = useState(
-    "Personal details - Volunteer Account - Be Part of Research"
-  );
+  const { currentPage, setCurrentPage } = useContext(UserContext);
+  const [pageTitle, setPageTitle] = useState("Personal details - Volunteer Account - Be Part of Research");
   const [gaURL, setGaURL] = useState("/MyAccount/PersonalDetails");
   const [userData, setUserData] = React.useState<UserDataState>();
   const [cancelData, setCancelData] = React.useState<UserDataState>();
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
 
   const getDetailsURL = `${process.env.REACT_APP_BASE_API}/participants/details`;
   const [{ response, loading, error }] = useAxiosFetch(
@@ -102,13 +84,7 @@ const UpdateParticipant = () => {
   );
 
   const getDemographicsURL = `${process.env.REACT_APP_BASE_API}/participants/demographics`;
-  const [
-    {
-      response: demographicsResponse,
-      loading: demographicsLoading,
-      error: demographicsError,
-    },
-  ] = useAxiosFetch(
+  const [{ response: demographicsResponse, loading: demographicsLoading, error: demographicsError }] = useAxiosFetch(
     {
       url: getDemographicsURL,
       method: "GET",
@@ -130,64 +106,44 @@ const UpdateParticipant = () => {
   const handlePageTitle = (page: string) => {
     switch (page) {
       case "name":
-        setPageTitle(
-          "What is your name? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-address-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/name");
         break;
       case "address":
-        setPageTitle(
-          "What is your home address? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-address-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/address");
         break;
       case "dob":
-        setPageTitle(
-          "What is your date of birth? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-date-of-birth-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/dateofbirth");
         break;
       case "mobile":
-        setPageTitle(
-          "What is your phone number? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-phone-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/phonenumber");
         break;
       case "sex":
       case "gender":
-        setPageTitle(
-          "What is your sex? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-sex-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/sex");
         break;
       case "ethnicity1":
-        setPageTitle(
-          "What is your ethnic group? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-ethnic-group-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/ethnicgroup");
         break;
       case "ethnicity2":
-        setPageTitle(
-          "Which of the following best describes your ethnic background? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-ethnic-background-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/ethnicbackground");
         break;
       case "disability":
-        setPageTitle(
-          "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-disability-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/conditions");
         break;
       case "disability2":
-        setPageTitle(
-          "Do any of your conditions or illnesses reduce your ability to carry out day-to-day activities? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-reduced-ability-document-title"]);
         setGaURL("/MyAccount/PersonalDetails/reducedability");
         break;
       default:
-        setPageTitle(
-          "Personal details - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["update-personal-details-document-title"]);
         setGaURL("/MyAccount/PersonalDetails");
     }
   };
@@ -217,22 +173,13 @@ const UpdateParticipant = () => {
       formattedAddress = address.address.addressLine1;
     }
     if (address.address.addressLine2) {
-      formattedAddress = lineManagement(
-        formattedAddress,
-        address.address.addressLine2
-      );
+      formattedAddress = lineManagement(formattedAddress, address.address.addressLine2);
     }
     if (address.address.addressLine3) {
-      formattedAddress = lineManagement(
-        formattedAddress,
-        address.address.addressLine3
-      );
+      formattedAddress = lineManagement(formattedAddress, address.address.addressLine3);
     }
     if (address.address.addressLine4) {
-      formattedAddress = lineManagement(
-        formattedAddress,
-        address.address.addressLine4
-      );
+      formattedAddress = lineManagement(formattedAddress, address.address.addressLine4);
     }
     if (address.address.town) {
       formattedAddress = lineManagement(formattedAddress, address.address.town);
@@ -256,10 +203,8 @@ const UpdateParticipant = () => {
       Utils.ConvertResponseToDTEResponse(response)?.isSuccess &&
       Utils.ConvertResponseToDTEResponse(demographicsResponse)?.isSuccess
     ) {
-      const DTEDetailsResponse =
-        Utils.ConvertResponseToDTEResponse(response)?.content;
-      const DTEDemographicsResponse =
-        Utils.ConvertResponseToDTEResponse(demographicsResponse)?.content;
+      const DTEDetailsResponse = Utils.ConvertResponseToDTEResponse(response)?.content;
+      const DTEDemographicsResponse = Utils.ConvertResponseToDTEResponse(demographicsResponse)?.content;
       if (DTEDetailsResponse && DTEDemographicsResponse) {
         const stateData: UserDataState = {
           address: {
@@ -281,36 +226,20 @@ const UpdateParticipant = () => {
             lastName: DTEDetailsResponse.lastname || "",
           },
           dob: {
-            day: new Date(DTEDemographicsResponse.dateOfBirth)
-              .getDate()
-              .toString(),
-            month: (
-              new Date(DTEDemographicsResponse.dateOfBirth).getMonth() + 1
-            ).toString(),
-            year: new Date(DTEDemographicsResponse.dateOfBirth)
-              .getFullYear()
-              .toString(),
+            day: new Date(DTEDemographicsResponse.dateOfBirth).getDate().toString(),
+            month: (new Date(DTEDemographicsResponse.dateOfBirth).getMonth() + 1).toString(),
+            year: new Date(DTEDemographicsResponse.dateOfBirth).getFullYear().toString(),
           },
           disability: {
-            disability: parseTriStateBoolean(
-              DTEDemographicsResponse.disability,
-              "notSaying"
-            ),
+            disability: parseTriStateBoolean(DTEDemographicsResponse.disability, "notSaying"),
           },
           disabilityDescription: {
-            disability: parseTriStateBoolean(
-              DTEDemographicsResponse.disability,
-              "notSaying"
-            ),
-            disabilityDescription:
-              DTEDemographicsResponse.disabilityDescription,
+            disability: parseTriStateBoolean(DTEDemographicsResponse.disability, "notSaying"),
+            disabilityDescription: DTEDemographicsResponse.disabilityDescription,
           },
           sex: {
             sexAtBirth: DTEDemographicsResponse.sexRegisteredAtBirth,
-            genderAtBirth: parseTriStateBoolean(
-              DTEDemographicsResponse.genderIsSameAsSexRegisteredAtBirth,
-              "noSay"
-            ),
+            genderAtBirth: parseTriStateBoolean(DTEDemographicsResponse.genderIsSameAsSexRegisteredAtBirth, "noSay"),
           },
           ethnicity1: {
             ethnicity: DTEDemographicsResponse.ethnicGroup,
@@ -329,11 +258,7 @@ const UpdateParticipant = () => {
   }, [response, demographicsResponse, userData]);
 
   const [
-    {
-      response: demographicsPostResponse,
-      loading: demographicsPostLoading,
-      error: demographicsPostError,
-    },
+    { response: demographicsPostResponse, loading: demographicsPostLoading, error: demographicsPostError },
     demographicsPost,
   ] = useAxiosFetch(
     {
@@ -342,19 +267,13 @@ const UpdateParticipant = () => {
     { useCache: false, manual: true }
   );
 
-  const [
-    {
-      response: detailsPostResponse,
-      loading: detailsPostLoading,
-      error: detailsPostError,
-    },
-    detailsPost,
-  ] = useAxiosFetch(
-    {
-      method: "PUT",
-    },
-    { useCache: false, manual: true }
-  );
+  const [{ response: detailsPostResponse, loading: detailsPostLoading, error: detailsPostError }, detailsPost] =
+    useAxiosFetch(
+      {
+        method: "PUT",
+      },
+      { useCache: false, manual: true }
+    );
 
   type FormDataType =
     | AddressFormData
@@ -374,10 +293,7 @@ const UpdateParticipant = () => {
     updateCancelState?: boolean;
   };
 
-  const mapDataToStateObject = (
-    source: string,
-    data: FormDataType
-  ): MappedDataType => {
+  const mapDataToStateObject = (source: string, data: FormDataType): MappedDataType => {
     if (!userData) return { data: undefined, screen: "main" };
     switch (source) {
       case "Address": {
@@ -403,8 +319,7 @@ const UpdateParticipant = () => {
               ...userData,
               disability: disabilityData,
               disabilityDescription: {
-                disabilityDescription:
-                  userData.disabilityDescription.disabilityDescription,
+                disabilityDescription: userData.disabilityDescription.disabilityDescription,
                 disability: "yes",
               },
             },
@@ -426,8 +341,7 @@ const UpdateParticipant = () => {
         };
       }
       case "DisabilityDescription": {
-        const disabilityDescriptionData: Disability2FormData =
-          data as Disability2FormData;
+        const disabilityDescriptionData: Disability2FormData = data as Disability2FormData;
         return {
           data: {
             ...userData,
@@ -463,8 +377,7 @@ const UpdateParticipant = () => {
         };
       }
       case "EthnicityBackground": {
-        const ethnicityBackgroundData: Ethnicity2FormData =
-          data as Ethnicity2FormData;
+        const ethnicityBackgroundData: Ethnicity2FormData = data as Ethnicity2FormData;
         return {
           data: { ...userData, ethnicity2: ethnicityBackgroundData },
           screen: "main",
@@ -526,9 +439,7 @@ const UpdateParticipant = () => {
             ).toISOString(),
             sexRegisteredAtBirth: mappedData.data.sex.sexAtBirth,
             genderIsSameAsSexRegisteredAtBirth:
-              mappedData.data.sex.genderAtBirth === "noSay"
-                ? null
-                : mappedData.data.sex.genderAtBirth === "yes",
+              mappedData.data.sex.genderAtBirth === "noSay" ? null : mappedData.data.sex.genderAtBirth === "yes",
             ethnicGroup: mappedData.data.ethnicity1.ethnicity,
             ethnicBackground: mappedData.data.ethnicity2.background,
             disability:
@@ -580,14 +491,14 @@ const UpdateParticipant = () => {
       <StyledWrapper role="main" id="main" ref={containerRef}>
         {(loading || demographicsLoading) && <LoadingIndicator />}
         {(detailsPostLoading || demographicsPostLoading) && (
-          <LoadingIndicator text="Updating your details..." />
+          <LoadingIndicator text={content["reusable-loading-updating-details"]} />
         )}
         <Container>
           {currentPage === "main" && <DTEBackLink href="/" linkText="Back" />}
           {currentPage === "main" && (
             <>
               <DTEHeader as="h1" $variant={headerVariant}>
-                Personal details
+                {content["reusable-personal-details-header"]}
               </DTEHeader>
               {userData && !(detailsPostLoading || demographicsPostLoading) && (
                 <>
@@ -628,11 +539,9 @@ const UpdateParticipant = () => {
                       </dl>
                       <div className="govuk-details__text">
                         <DTEContent>
-                          If your name or date of birth is incorrect or out of
-                          date, contact your GP surgery and ask them to update
-                          your details. They will then update your NHS record.
-                          Any changes made there will appear in your Be Part of
-                          Research account when you sign in.
+                          If your name or date of birth is incorrect or out of date, contact your GP surgery and ask
+                          them to update your details. They will then update your NHS record. Any changes made there
+                          will appear in your Be Part of Research account when you sign in.
                         </DTEContent>
                       </div>
                     </>
@@ -649,9 +558,7 @@ const UpdateParticipant = () => {
                           </DTEContent>
                         </dd>
                         <dd className="govuk-summary-list__actions">
-                          <DTELinkButton
-                            onClick={() => setCurrentDisplayPage("name")}
-                          >
+                          <DTELinkButton onClick={() => setCurrentDisplayPage("name")}>
                             Change <StyledHiddenText>name</StyledHiddenText>
                           </DTELinkButton>
                         </dd>
@@ -659,53 +566,46 @@ const UpdateParticipant = () => {
                     )}
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
-                        <DTEContent>Home address</DTEContent>
+                        <DTEContent>{content["reusable-home-address"]}</DTEContent>
                       </dt>
-                      <dd className="govuk-summary-list__value">
-                        {formatDisplayAddress(userData.address)}
-                      </dd>
+                      <dd className="govuk-summary-list__value">{formatDisplayAddress(userData.address)}</dd>
                       <dd className="govuk-summary-list__actions">
-                        <DTELinkButton
-                          onClick={() => setCurrentDisplayPage("address")}
-                        >
-                          Change{" "}
-                          <StyledHiddenText>home address</StyledHiddenText>
+                        <DTELinkButton onClick={() => setCurrentDisplayPage("address")}>
+                          {content["reusable-change"]}{" "}
+                          <StyledHiddenText>{content["reusable-home-address"].toLowerCase()}</StyledHiddenText>
                         </DTELinkButton>
                       </dd>
                     </div>
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
-                        <DTEContent>Phone number</DTEContent>
+                        <DTEContent>{content["reusable-phone-number"]}</DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">
-                        {userData.mobile.mobileNumber ||
-                        userData.mobile.landlineNumber ? (
+                        {userData.mobile.mobileNumber || userData.mobile.landlineNumber ? (
                           <>
                             {userData.mobile.mobileNumber && (
                               <DTEContent>
-                                Mobile
+                                {content["reusable-mobile"]}
                                 <br />
                                 {userData.mobile.mobileNumber}
                               </DTEContent>
                             )}
                             {userData.mobile.landlineNumber && (
                               <DTEContent>
-                                Landline
+                                {content["reusable-landline"]}
                                 <br />
                                 {userData.mobile.landlineNumber}
                               </DTEContent>
                             )}
                           </>
                         ) : (
-                          <DTEContent>Not provided</DTEContent>
+                          <DTEContent>{content["reusable-not-provided"]}</DTEContent>
                         )}
                       </dd>
                       <dd className="govuk-summary-list__actions">
-                        <DTELinkButton
-                          onClick={() => setCurrentDisplayPage("mobile")}
-                        >
-                          Change{" "}
-                          <StyledHiddenText>phone number</StyledHiddenText>
+                        <DTELinkButton onClick={() => setCurrentDisplayPage("mobile")}>
+                          {content["reusable-change"]}{" "}
+                          <StyledHiddenText>{content["reusable-phone-number"].toLowerCase()}</StyledHiddenText>
                         </DTELinkButton>
                       </dd>
                     </div>
@@ -729,120 +629,97 @@ const UpdateParticipant = () => {
                           </DTEContent>
                         </dd>
                         <dd className="govuk-summary-list__actions">
-                          <DTELinkButton
-                            onClick={() => setCurrentDisplayPage("dob")}
-                          >
-                            Change{" "}
-                            <StyledHiddenText>date of birth</StyledHiddenText>
+                          <DTELinkButton onClick={() => setCurrentDisplayPage("dob")}>
+                            {content["reusable-change"]} <StyledHiddenText>date of birth</StyledHiddenText>
                           </DTELinkButton>
                         </dd>
                       </div>
                     )}
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
-                        <DTEContent>Sex registered at birth</DTEContent>
+                        <DTEContent>{content["reusable-sex-registered-at-birth"]}</DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
-                          {userData.sex.sexAtBirth.charAt(0).toUpperCase() +
-                            userData.sex.sexAtBirth.slice(1)}
+                          {userData.sex.sexAtBirth.charAt(0).toUpperCase() + userData.sex.sexAtBirth.slice(1)}
                         </DTEContent>
                       </dd>
                       <dd className="govuk-summary-list__actions">
-                        <DTELinkButton
-                          onClick={() => setCurrentDisplayPage("sex")}
-                        >
-                          Change{" "}
+                        <DTELinkButton onClick={() => setCurrentDisplayPage("sex")}>
+                          {content["reusable-change"]}{" "}
                           <StyledHiddenText>
-                            sex registered at birth
+                            {content["reusable-sex-registered-at-birth"].toLowerCase()}
                           </StyledHiddenText>
                         </DTELinkButton>
                       </dd>
                     </div>
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
-                        <DTEContent>
-                          Gender identity same as sex registered at birth
-                        </DTEContent>
+                        <DTEContent>{content["reusable-gender-identity-same-as-sex-registered-at-birth"]}</DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
                           {userData.sex.genderAtBirth === "noSay"
-                            ? "Prefer not to say"
-                            : userData.sex.genderAtBirth
-                                .charAt(0)
-                                .toUpperCase() +
-                              userData.sex.genderAtBirth.slice(1)}
+                            ? content["reusable-prefer-not-to-say"]
+                            : userData.sex.genderAtBirth.charAt(0).toUpperCase() + userData.sex.genderAtBirth.slice(1)}
                         </DTEContent>
                       </dd>
                       <dd className="govuk-summary-list__actions">
-                        <DTELinkButton
-                          onClick={() => setCurrentDisplayPage("sex")}
-                        >
-                          Change{" "}
+                        <DTELinkButton onClick={() => setCurrentDisplayPage("sex")}>
+                          {content["reusable-change"]}{" "}
                           <StyledHiddenText>
-                            gender identity same as sex registered at birth
+                            {content["reusable-gender-identity-same-as-sex-registered-at-birth"].toLowerCase()}
                           </StyledHiddenText>
                         </DTELinkButton>
                       </dd>
                     </div>
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
-                        <DTEContent>Ethnic group</DTEContent>
+                        <DTEContent>{content["reusable-ethnic-group"]}</DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
-                          {ethnicities[userData.ethnicity1.ethnicity].longName}
+                          {ethnicities[userData.ethnicity1.ethnicity as keyof typeof ethnicities].longName}
                         </DTEContent>
                       </dd>
                       <dd className="govuk-summary-list__actions">
-                        <DTELinkButton
-                          onClick={() => setCurrentDisplayPage("ethnicity1")}
-                        >
-                          Change{" "}
-                          <StyledHiddenText>ethnic group</StyledHiddenText>
+                        <DTELinkButton onClick={() => setCurrentDisplayPage("ethnicity1")}>
+                          {content["reusable-change"]}{" "}
+                          <StyledHiddenText>{content["reusable-ethnic-group"].toLowerCase()}</StyledHiddenText>
                         </DTELinkButton>
                       </dd>
                     </div>
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
-                        <DTEContent>Ethnic background</DTEContent>
+                        <DTEContent>{content["reusable-ethnic-background"]}</DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">
-                        <DTEContent>
-                          {userData.ethnicity2.background}
-                        </DTEContent>
+                        <DTEContent>{userData.ethnicity2.background}</DTEContent>
                       </dd>
                       <dd className="govuk-summary-list__actions">
-                        <DTELinkButton
-                          onClick={() => setCurrentDisplayPage("ethnicity2")}
-                        >
-                          Change{" "}
-                          <StyledHiddenText>ethnic background</StyledHiddenText>
+                        <DTELinkButton onClick={() => setCurrentDisplayPage("ethnicity2")}>
+                          {content["reusable-change"]}{" "}
+                          <StyledHiddenText>{content["reusable-ethnic-background"].toLowerCase()}</StyledHiddenText>
                         </DTELinkButton>
                       </dd>
                     </div>
                     <div className="govuk-summary-list__row">
                       <dt className="govuk-summary-list__key">
-                        <DTEContent>Long-term conditions or illness</DTEContent>
+                        <DTEContent>{content["reusable-long-term-conditions-or-illness"]}</DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
                           {userData.disability.disability === "notSaying"
-                            ? "Prefer not to say"
-                            : userData.disability.disability
-                                .charAt(0)
-                                .toUpperCase() +
+                            ? content["reusable-prefer-not-to-say"]
+                            : userData.disability.disability.charAt(0).toUpperCase() +
                               userData.disability.disability.slice(1)}
                         </DTEContent>
                       </dd>
                       <dd className="govuk-summary-list__actions">
-                        <DTELinkButton
-                          onClick={() => setCurrentDisplayPage("disability")}
-                        >
-                          Change{" "}
+                        <DTELinkButton onClick={() => setCurrentDisplayPage("disability")}>
+                          {content["reusable-change"]}{" "}
                           <StyledHiddenText>
-                            long-term conditions or illness
+                            {content["reusable-long-term-conditions-or-illness"].toLowerCase()}
                           </StyledHiddenText>
                         </DTELinkButton>
                       </dd>
@@ -850,25 +727,16 @@ const UpdateParticipant = () => {
                     {userData.disability.disability === "yes" ? (
                       <div className="govuk-summary-list__row">
                         <dt className="govuk-summary-list__key">
-                          <DTEContent>
-                            Reduced ability to carry out daily activities
-                          </DTEContent>
+                          <DTEContent>{content["reusable-reduced-ability-to-carry-out-daily-activities"]}</DTEContent>
                         </dt>
                         <dd className="govuk-summary-list__value">
-                          <DTEContent>
-                            {
-                              userData.disabilityDescription
-                                .disabilityDescription
-                            }
-                          </DTEContent>
+                          <DTEContent>{userData.disabilityDescription.disabilityDescription}</DTEContent>
                         </dd>
                         <dd className="govuk-summary-list__actions">
-                          <DTELinkButton
-                            onClick={() => setCurrentDisplayPage("disability2")}
-                          >
-                            Change{" "}
+                          <DTELinkButton onClick={() => setCurrentDisplayPage("disability2")}>
+                            {content["reusable-change"]}{" "}
                             <StyledHiddenText>
-                              reduced ability to carry out daily activities
+                              {content["reusable-reduced-ability-to-carry-out-daily-activities"].toLowerCase()}
                             </StyledHiddenText>
                           </DTELinkButton>
                         </dd>
@@ -882,36 +750,25 @@ const UpdateParticipant = () => {
               {error && (
                 <ErrorMessageContainer
                   axiosErrors={[error]}
-                  DTEAxiosErrors={[
-                    Utils.ConvertResponseToDTEResponse(response)?.errors,
-                  ]}
+                  DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(response)?.errors]}
                 />
               )}
               {demographicsError && (
                 <ErrorMessageContainer
                   axiosErrors={[demographicsError]}
-                  DTEAxiosErrors={[
-                    Utils.ConvertResponseToDTEResponse(demographicsResponse)
-                      ?.errors,
-                  ]}
+                  DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(demographicsResponse)?.errors]}
                 />
               )}
               {demographicsPostError && (
                 <ErrorMessageContainer
                   axiosErrors={[demographicsPostError]}
-                  DTEAxiosErrors={[
-                    Utils.ConvertResponseToDTEResponse(demographicsPostResponse)
-                      ?.errors,
-                  ]}
+                  DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(demographicsPostResponse)?.errors]}
                 />
               )}
               {detailsPostError && (
                 <ErrorMessageContainer
                   axiosErrors={[detailsPostError]}
-                  DTEAxiosErrors={[
-                    Utils.ConvertResponseToDTEResponse(detailsPostResponse)
-                      ?.errors,
-                  ]}
+                  DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(detailsPostResponse)?.errors]}
                 />
               )}
             </>
@@ -928,7 +785,7 @@ const UpdateParticipant = () => {
                 firstName: userData?.name.firstName || "",
                 lastName: userData?.name.lastName || "",
               }}
-              nextButtonText="Save"
+              nextButtonText={content["reusable-save"]}
               showCancelButton
             />
           </Container>
@@ -957,7 +814,7 @@ const UpdateParticipant = () => {
                   postcode: "",
                 }
               }
-              nextButtonText="Save"
+              nextButtonText={content["reusable-save"]}
               showCancelButton
             />
           </Container>
@@ -979,19 +836,17 @@ const UpdateParticipant = () => {
                   disability: "no",
                 }
               }
-              nextButtonText="Save"
+              nextButtonText={content["reusable-save"]}
               hideHeader
               showCancelButton
               instructionText={
                 <>
                   <DTEHeader as="h1" $variant={headerVariant}>
-                    Do you have any health conditions that have lasted, or are
-                    expected to last, for 12 months or more?
+                    Do you have any health conditions that have lasted, or are expected to last, for 12 months or more?
                   </DTEHeader>
                   <DTEContent as="span" $displayMode="block">
-                    If Yes, we will ask you a further question about the impact
-                    of your conditions or illness. Both questions will need to
-                    be answered before your changes can be saved.
+                    If Yes, we will ask you a further question about the impact of your conditions or illness. Both
+                    questions will need to be answered before your changes can be saved.
                   </DTEContent>
                 </>
               }
@@ -1002,10 +857,7 @@ const UpdateParticipant = () => {
           <Container>
             <Disability2Form
               onDataChange={(data) => {
-                const mappedData = mapDataToStateObject(
-                  "DisabilityDescription",
-                  data
-                );
+                const mappedData = mapDataToStateObject("DisabilityDescription", data);
                 if (mappedData) {
                   handleUpdateUserDemographics(mappedData);
                 }
@@ -1016,10 +868,9 @@ const UpdateParticipant = () => {
               }}
               initialStateData={{
                 disability: userData?.disability.disability || "",
-                disabilityDescription:
-                  userData?.disabilityDescription.disabilityDescription,
+                disabilityDescription: userData?.disabilityDescription.disabilityDescription,
               }}
-              nextButtonText="Save"
+              nextButtonText={content["reusable-save"]}
               showCancelButton
             />
           </Container>
@@ -1051,12 +902,11 @@ const UpdateParticipant = () => {
                     What is your ethnic group?
                   </DTEHeader>
                   <DTEContent as="span" $displayMode="block">
-                    If you change your ethnic group you will also need to change
-                    your ethnic background in the next question.
+                    If you change your ethnic group you will also need to change your ethnic background in the next
+                    question.
                   </DTEContent>
                   <DTEContent as="span" $displayMode="block">
-                    Once both questions have been answered the changes can be
-                    saved.
+                    Once both questions have been answered the changes can be saved.
                   </DTEContent>
                 </>
               }
@@ -1067,10 +917,7 @@ const UpdateParticipant = () => {
           <Container>
             <Ethnicity2Form
               onDataChange={(data) => {
-                const mappedData = mapDataToStateObject(
-                  "EthnicityBackground",
-                  data
-                );
+                const mappedData = mapDataToStateObject("EthnicityBackground", data);
                 if (mappedData) {
                   handleUpdateUserDemographics(mappedData);
                 }
@@ -1086,7 +933,7 @@ const UpdateParticipant = () => {
                   background: "",
                 }
               }
-              nextButtonText="Save"
+              nextButtonText={content["reusable-save"]}
               showCancelButton
               ethnicity={userData?.ethnicity1.ethnicity || "other"}
             />
@@ -1110,7 +957,7 @@ const UpdateParticipant = () => {
                   landlineNumber: "",
                 }
               }
-              nextButtonText="Save"
+              nextButtonText={content["reusable-save"]}
               showCancelButton
             />
           </Container>
@@ -1134,7 +981,7 @@ const UpdateParticipant = () => {
                   year: "",
                 }
               }
-              nextButtonText="Save"
+              nextButtonText={content["reusable-save"]}
               showCancelButton
             />
           </Container>
@@ -1157,7 +1004,7 @@ const UpdateParticipant = () => {
                   genderAtBirth: "",
                 }
               }
-              nextButtonText="Save"
+              nextButtonText={content["reusable-save"]}
               showCancelButton
               hideNextQuestionText
             />
@@ -1166,6 +1013,6 @@ const UpdateParticipant = () => {
       </StyledWrapper>
     </DocumentTitle>
   );
-};
+}
 
 export default UpdateParticipant;

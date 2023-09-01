@@ -1,7 +1,11 @@
-const customCodeLookup = (code: string, detail?: string): string => {
-  const defaultLoginErrorMessage = "An error occurred while logging in";
-  const defaultRegistrationErrorMessage = "An error occurred while registering";
-  const defaultErrorMessage = "An error occurred";
+import { ReactNode, useContext } from "react";
+import { ContentContext } from "../../../context/ContentContext";
+
+const customCodeLookup = (code: string, detail?: string | ReactNode) => {
+  const { content } = useContext(ContentContext);
+  const defaultLoginErrorMessage = content["error-codes-default-login"];
+  const defaultRegistrationErrorMessage = content["error-codes-default-registration"];
+  const defaultErrorMessage = content["error-codes-default"];
   switch (code) {
     // Code used when the details have already been changed locally
     case "NO_CHANGE":
@@ -17,7 +21,7 @@ const customCodeLookup = (code: string, detail?: string): string => {
         case "Password attempts exceeded":
           return "Your user account is currently locked due to previous incorrect attempts to sign in - you can try again after a short wait.";
         case "Incorrect username or password.":
-          return "Enter the email address and password for a registered user account. If you registered using NHS login use the back button above and select NHS login to sign in.";
+          return content["signin-error-authentication-not-authorized-nhs"];
         default:
           return defaultLoginErrorMessage;
       }

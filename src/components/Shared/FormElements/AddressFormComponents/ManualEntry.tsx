@@ -1,11 +1,12 @@
 import { Grid } from "@material-ui/core";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Utils from "../../../../Helper/Utils";
 import ErrorMessageSummary from "../../ErrorMessageSummary/ErrorMessageSummary";
 import DTEInput from "../../UI/DTEInput/DTEInput";
 import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import { Details, ContinueButton } from "./PostcodeLookup";
+import { ContentContext } from "../../../../context/ContentContext";
 import Honeypot from "../../Honeypot/Honeypot";
 
 export type ManualEntryData = {
@@ -27,15 +28,9 @@ interface ManualEntryProps {
   onDataChange: (data: ManualEntryData) => void;
 }
 
-const ManualEntry = (props: ManualEntryProps) => {
-  const {
-    initialStateData,
-    onDataChange,
-    nextButtonText,
-    hideInfo,
-    showCancelButton,
-    onCancel,
-  } = props;
+function ManualEntry(props: ManualEntryProps) {
+  const { content } = useContext(ContentContext);
+  const { initialStateData, onDataChange, nextButtonText, hideInfo, showCancelButton, onCancel } = props;
   const {
     control,
     setValue,
@@ -72,10 +67,7 @@ const ManualEntry = (props: ManualEntryProps) => {
         <Controller
           control={control}
           name="addressLine1"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="addressLine1"
               label="Address line 1"
@@ -99,10 +91,7 @@ const ManualEntry = (props: ManualEntryProps) => {
         <Controller
           control={control}
           name="addressLine2"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="addressLine2"
               label="Address line 2 (optional)"
@@ -145,10 +134,7 @@ const ManualEntry = (props: ManualEntryProps) => {
         <Controller
           control={control}
           name="town"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="town"
               label="Town"
@@ -172,10 +158,7 @@ const ManualEntry = (props: ManualEntryProps) => {
         <Controller
           control={control}
           name="postcode"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="postcode"
               value={value}
@@ -221,7 +204,7 @@ const ManualEntry = (props: ManualEntryProps) => {
           <Grid item>{!hideInfo && <Details />}</Grid>
         </Grid>
         <ContinueButton
-          buttonText="Continue"
+          buttonText={content["reusable-button-continue"]}
           altButtonText={nextButtonText}
           showCancelButton={showCancelButton}
           onCancel={onCancel}
@@ -229,6 +212,6 @@ const ManualEntry = (props: ManualEntryProps) => {
       </form>
     </>
   );
-};
+}
 
 export default ManualEntry;

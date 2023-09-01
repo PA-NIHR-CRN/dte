@@ -16,6 +16,7 @@ beforeEach(() => {
 describe("RegistrationProcess", () => {
   it("loads and displays the registration stepper page", async () => {
     render(<RegistrationProcess />);
+
     expect(screen.getByText("Back")).toBeInTheDocument();
   });
 
@@ -27,7 +28,7 @@ describe("RegistrationProcess", () => {
           ["send", { hitType: "pageview", page: "/registration/name" }],
         ]);
       },
-      { timeout: 1000 }
+      { timeout: 1000 },
     );
   });
 });

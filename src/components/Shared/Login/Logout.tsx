@@ -18,13 +18,7 @@ function Logout() {
   }, [authenticatedUserId]);
 
   return (
-    <Grid
-      container
-      justifyContent="center"
-      alignItems="center"
-      role="main"
-      id="main"
-    >
+    <Grid container justifyContent="center" alignItems="center" role="main" id="main">
       <Grid item xs={12}>
         <LoadingIndicator text="Logging Out..." />
       </Grid>

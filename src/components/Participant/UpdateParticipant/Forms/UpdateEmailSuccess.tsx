@@ -4,7 +4,7 @@ import DTERouteLink from "../../../Shared/UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 
-const UpdateEmailSuccess = () => {
+function UpdateEmailSuccess() {
   return (
     <DocumentTitle title="Your email address has been updated - Volunteer Account - Be Part of Research">
       <StepWrapper>
@@ -14,6 +14,6 @@ const UpdateEmailSuccess = () => {
       </StepWrapper>
     </DocumentTitle>
   );
-};
+}
 
 export default UpdateEmailSuccess;

@@ -22,27 +22,16 @@ const Loader = styled.div.attrs({
   opacity: 1;
 `;
 
-function LoadingIndicator({
-  text = "Loading...",
-  colour = undefined,
-}: LoadingIndicatorProps) {
+function LoadingIndicator({ text = "Loading...", colour = undefined }: LoadingIndicatorProps) {
   const theme = useTheme() as typeof styledComponentsTheme;
   const defaultcolour = theme.NIHR.Blue;
   return (
     <Loader>
       <Box m={2} sx={{ display: "flex", justifyContent: "center" }}>
-        <Spinner
-          name="folding-cube"
-          color={colour ?? defaultcolour}
-          fadeIn="none"
-        />
+        <Spinner name="folding-cube" color={colour ?? defaultcolour} fadeIn="none" />
         {/* </div> */}
       </Box>
-      <Typography
-        variant="body1"
-        aria-live="assertive"
-        className="loader-message"
-      >
+      <Typography variant="body1" aria-live="assertive" className="loader-message">
         {text}
       </Typography>
     </Loader>

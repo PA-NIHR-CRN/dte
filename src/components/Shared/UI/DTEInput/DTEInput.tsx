@@ -23,8 +23,7 @@ type Props = {
 const StyledInput = styled(Input)`
   border-radius: 0.3rem;
   padding: 1em;
-  border-color: ${(Props) =>
-    Props.error ? Props.theme.NIHR.ErrorRed : Props.theme.NIHR.Grey};
+  border-color: ${(Props) => (Props.error ? Props.theme.NIHR.ErrorRed : Props.theme.NIHR.Grey)};
   &:focus {
     padding: 0.9em;
     border: 4px solid ${(Props) => Props.theme.NIHR.Blue};
@@ -33,7 +32,7 @@ const StyledInput = styled(Input)`
   }
 `;
 
-const DTEInput = ({
+function DTEInput({
   id,
   name,
   label,
@@ -48,7 +47,7 @@ const DTEInput = ({
   autoFocus,
   autocomplete,
   spellcheck,
-}: Props) => {
+}: Props) {
   const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (onValueChange) {
       onValueChange(e);
@@ -93,6 +92,6 @@ const DTEInput = ({
       spellCheck={spellcheck}
     />
   );
-};
+}
 
 export default DTEInput;

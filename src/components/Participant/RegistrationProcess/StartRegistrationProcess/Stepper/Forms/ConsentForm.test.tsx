@@ -19,15 +19,16 @@ describe("ConsentForm", () => {
         onDataChange={mockOnSubmit}
         initialStateData={{ consent: false, consentContact: false }}
         handleNoConsent={mockHandleNoConsent}
-      />
+      />,
     );
+
     expect(
-      screen.getByText("Yes, I consent and wish to register now")
+      screen.getByText("Yes, I consent and wish to register now"),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        "No, I do not consent and wish to cancel this registration"
-      )
+        "No, I do not consent and wish to cancel this registration",
+      ),
     ).toBeInTheDocument();
   });
 
@@ -39,11 +40,12 @@ describe("ConsentForm", () => {
         onDataChange={mockOnSubmit}
         initialStateData={{ consent: false, consentContact: false }}
         handleNoConsent={mockHandleNoConsent}
-      />
+      />,
     );
+
     fireEvent.click(screen.getByDisplayValue("consentContact"));
     fireEvent.click(
-      screen.getByText("Yes, I consent and wish to register now")
+      screen.getByText("Yes, I consent and wish to register now"),
     );
     await waitFor(() => {
       expect(mockOnSubmit).toHaveBeenCalledTimes(1);
@@ -58,18 +60,19 @@ describe("ConsentForm", () => {
         onDataChange={mockOnSubmit}
         initialStateData={{ consent: false, consentContact: false }}
         handleNoConsent={mockHandleNoConsent}
-      />
+      />,
     );
+
     fireEvent.click(
-      screen.getByText("Yes, I consent and wish to register now")
+      screen.getByText("Yes, I consent and wish to register now"),
     );
     await waitFor(() => {
       expect(mockOnSubmit).toHaveBeenCalledTimes(0);
     });
     expect(
       await screen.findByText(
-        "Confirm that the Privacy and Data Sharing Policy has been read and understood before giving consent"
-      )
+        "Confirm that the Privacy and Data Sharing Policy has been read and understood before giving consent",
+      ),
     ).toBeInTheDocument();
   });
 
@@ -81,12 +84,13 @@ describe("ConsentForm", () => {
         onDataChange={mockOnSubmit}
         initialStateData={{ consent: false, consentContact: false }}
         handleNoConsent={mockHandleNoConsent}
-      />
+      />,
     );
+
     fireEvent.click(
       screen.getByText(
-        "No, I do not consent and wish to cancel this registration"
-      )
+        "No, I do not consent and wish to cancel this registration",
+      ),
     );
     await waitFor(() => {
       expect(mockHandleNoConsent).toHaveBeenCalledTimes(1);
@@ -103,8 +107,9 @@ describe("Accessibility test", () => {
         onDataChange={mockOnSubmit}
         initialStateData={{ consent: false, consentContact: false }}
         handleNoConsent={mockHandleNoConsent}
-      />
+      />,
     );
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

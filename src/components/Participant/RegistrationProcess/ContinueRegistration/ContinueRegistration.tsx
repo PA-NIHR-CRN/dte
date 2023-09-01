@@ -1,44 +1,26 @@
 import { useHistory } from "react-router-dom";
-import React, {
-  useEffect,
-  createRef,
-  useState,
-  useMemo,
-  useContext,
-} from "react";
+import React, { useEffect, createRef, useState, useMemo, useContext } from "react";
 import ReactGA from "react-ga";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
 import { Grid } from "@material-ui/core";
 import StepWrapper from "../../../Shared/StepWrapper/StepWrapper";
-import AddressForm, {
-  AddressFormData,
-} from "../../../Shared/FormElements/AddressForm";
+import AddressForm, { AddressFormData } from "../../../Shared/FormElements/AddressForm";
 import DTEContent from "../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEBackLink from "../../../Shared/UI/DTEBackLink/DTEBackLink";
-import DTEStepper, {
-  LinearProgressPropsData,
-} from "../../../Shared/UI/DTEStepper/DTEStepper";
+import DTEStepper, { LinearProgressPropsData } from "../../../Shared/UI/DTEStepper/DTEStepper";
 import { ContinueRegistrationState } from "../../../../types/ParticipantTypes";
 import CheckAnswersForm from "./Forms/CheckAnswersForm";
-import DisabilityForm, {
-  DisabilityFormData,
-} from "../../../Shared/FormElements/DisabilityForm";
-import Disability2Form, {
-  Disability2FormData,
-} from "../../../Shared/FormElements/Disability2Form";
+import DisabilityForm, { DisabilityFormData } from "../../../Shared/FormElements/DisabilityForm";
+import Disability2Form, { Disability2FormData } from "../../../Shared/FormElements/Disability2Form";
 import Ethnicity1Form, {
   Ethnicity1FormData,
 } from "../../../Shared/FormElements/EthnicityFormComponents/Ethnicity1Form";
 import Ethnicity2Form, {
   Ethnicity2FormData,
 } from "../../../Shared/FormElements/EthnicityFormComponents/Ethnicity2Form";
-import HealthConditionsForm, {
-  HealthConditionFormData,
-} from "../../../Shared/FormElements/HealthConditionForm";
-import MobileNumberForm, {
-  MobileFormData,
-} from "../../../Shared/FormElements/MobileNumberForm";
+import HealthConditionsForm, { HealthConditionFormData } from "../../../Shared/FormElements/HealthConditionForm";
+import MobileNumberForm, { MobileFormData } from "../../../Shared/FormElements/MobileNumberForm";
 import SexForm, { SexFormData } from "../../../Shared/FormElements/SexForm";
 import YouAreNowRegisteredForm from "./Forms/YouAreNowRegisteredForm";
 import useAxiosFetch from "../../../../hooks/useAxiosFetch";
@@ -46,6 +28,8 @@ import { AuthContext } from "../../../../context/AuthContext";
 import LoadingIndicator from "../../../Shared/LoadingIndicator/LoadingIndicator";
 import Utils from "../../../../Helper/Utils";
 import ConsentForm from "../StartRegistrationProcess/Stepper/Forms/ConsentForm";
+import { ContentContext } from "../../../../context/ContentContext";
+import { UserContext } from "../../../../context/UserContext";
 
 const PercentageGrid = styled(Grid)`
   && {
@@ -54,17 +38,21 @@ const PercentageGrid = styled(Grid)`
   }
 `;
 
-const ContinueRegistration = () => {
+function ContinueRegistration() {
+  const { content } = useContext(ContentContext);
   const { isNhsLinkedAccount, isInNHSApp } = useContext(AuthContext);
+  const {
+    continueRegistrationActiveStep: activeStep,
+    setContinueRegistrationActiveStep: setActiveStep,
+    continueRegistrationData: registrationData,
+    setContinueRegistrationData: setRegistrationData,
+  } = useContext(UserContext);
   const history = useHistory();
   const [isUserConsented, setIsUserConsented] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState("");
-  const [activeStep, setActiveStep] = useState(0);
+  const [loadingText, setLoadingText] = useState(content["reusable-loading"]);
   const [changing, setChanging] = useState(false);
-  const [pageTitle, setPageTitle] = useState(
-    "What is your home address? - Volunteer Registration - Be Part of Research"
-  );
+  const [pageTitle, setPageTitle] = useState(content["register2-address-document-title"]);
   const [gaURL, setGaURL] = useState("/registration/address");
   useEffect(() => {
     if (activeStep === 8) {
@@ -90,44 +78,7 @@ const ContinueRegistration = () => {
     updatePageTitle(activeStep);
   }, [activeStep]);
 
-  const [cancelData, setCancelData] =
-    useState<ContinueRegistrationState | null>(null);
-  const [registrationData, setRegistrationData] =
-    useState<ContinueRegistrationState>({
-      addressFormData: {
-        address: {
-          addressLine1: "",
-          addressLine2: "",
-          addressLine3: "",
-          addressLine4: "",
-          town: "",
-        },
-        postcode: "",
-      } as AddressFormData,
-      mobileFormData: {
-        mobileNumber: undefined,
-        landlineNumber: undefined,
-      } as MobileFormData,
-      ethnicity1FormData: {
-        ethnicity: "",
-      } as Ethnicity1FormData,
-      ethnicity2FormData: {
-        background: "",
-      } as Ethnicity2FormData,
-      disabilityFormData: {
-        disability: "",
-      } as DisabilityFormData,
-      disability2FormData: {
-        disabilityDescription: "",
-      } as Disability2FormData,
-      healthConditionFormData: {
-        conditions: [],
-      } as HealthConditionFormData,
-      sexFormData: {
-        sexAtBirth: "",
-        genderAtBirth: "",
-      } as SexFormData,
-    });
+  const [cancelData, setCancelData] = useState<ContinueRegistrationState | null>(null);
 
   const LinearProps: LinearProgressPropsData = {
     "aria-label": "Registration",
@@ -190,8 +141,7 @@ const ContinueRegistration = () => {
         case "healthConditionFormData":
           return {
             ...oldRegistrationData,
-            healthConditionFormData:
-              incommingFormData as HealthConditionFormData,
+            healthConditionFormData: incommingFormData as HealthConditionFormData,
           };
         case "sexFormData":
           return {
@@ -209,8 +159,7 @@ const ContinueRegistration = () => {
       if (
         changing &&
         activeStep !== 3 &&
-        (activeStep !== 5 ||
-          registrationData.disabilityFormData.disability !== "yes")
+        (activeStep !== 5 || registrationData.disabilityFormData.disability !== "yes")
       ) {
         setActiveStep(8);
       } else {
@@ -224,10 +173,7 @@ const ContinueRegistration = () => {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => {
-      if (
-        registrationData.disabilityFormData.disability !== "yes" &&
-        activeStep === 5
-      ) {
+      if (registrationData.disabilityFormData.disability !== "yes" && activeStep === 5) {
         return prevActiveStep + 2;
       }
       return prevActiveStep + 1;
@@ -236,10 +182,7 @@ const ContinueRegistration = () => {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => {
-      if (
-        registrationData.disabilityFormData.disability !== "yes" &&
-        activeStep === 7
-      ) {
+      if (registrationData.disabilityFormData.disability !== "yes" && activeStep === 7) {
         return prevActiveStep - 2;
       }
       return prevActiveStep - 1;
@@ -254,7 +197,7 @@ const ContinueRegistration = () => {
   };
 
   const nextButtonText = useMemo(
-    () => (changing ? "Save" : "Continue"),
+    () => (changing ? content["reusable-save"] : content["reusable-button-continue"]),
     [changing]
   );
 
@@ -263,9 +206,7 @@ const ContinueRegistration = () => {
       case 0:
         return (
           <AddressForm
-            onDataChange={(data: AddressFormData) =>
-              handleRegistrationDataChange(data, "addressFormData")
-            }
+            onDataChange={(data: AddressFormData) => handleRegistrationDataChange(data, "addressFormData")}
             initialStateData={registrationData.addressFormData}
             showCancelButton={changing}
             onCancel={handleCancel}
@@ -275,9 +216,7 @@ const ContinueRegistration = () => {
       case 1:
         return (
           <MobileNumberForm
-            onDataChange={(data: MobileFormData) =>
-              handleRegistrationDataChange(data, "mobileFormData")
-            }
+            onDataChange={(data: MobileFormData) => handleRegistrationDataChange(data, "mobileFormData")}
             initialStateData={registrationData.mobileFormData}
             showCancelButton={changing}
             onCancel={handleCancel}
@@ -287,9 +226,7 @@ const ContinueRegistration = () => {
       case 2:
         return (
           <SexForm
-            onDataChange={(data: SexFormData) =>
-              handleRegistrationDataChange(data, "sexFormData")
-            }
+            onDataChange={(data: SexFormData) => handleRegistrationDataChange(data, "sexFormData")}
             initialStateData={registrationData.sexFormData}
             showCancelButton={changing}
             onCancel={handleCancel}
@@ -300,22 +237,19 @@ const ContinueRegistration = () => {
         return changing ? (
           <Ethnicity1Form
             onDataChange={(data: Ethnicity1FormData) => {
-              setRegistrationData(
-                (oldRegistrationData: ContinueRegistrationState) => {
-                  return {
-                    ...oldRegistrationData,
-                    ethnicity1FormData: data,
-                    ethnicity2FormData:
-                      data.ethnicity ===
-                      cancelData?.ethnicity1FormData.ethnicity
-                        ? oldRegistrationData.ethnicity2FormData
-                        : {
-                            background: "",
-                            otherText: undefined,
-                          },
-                  };
-                }
-              );
+              setRegistrationData((oldRegistrationData: ContinueRegistrationState) => {
+                return {
+                  ...oldRegistrationData,
+                  ethnicity1FormData: data,
+                  ethnicity2FormData:
+                    data.ethnicity === cancelData?.ethnicity1FormData.ethnicity
+                      ? oldRegistrationData.ethnicity2FormData
+                      : {
+                          background: "",
+                          otherText: undefined,
+                        },
+                };
+              });
             }}
             initialStateData={registrationData.ethnicity1FormData}
             showCancelButton
@@ -323,18 +257,14 @@ const ContinueRegistration = () => {
           />
         ) : (
           <Ethnicity1Form
-            onDataChange={(data: Ethnicity1FormData) =>
-              handleRegistrationDataChange(data, "ethnicity1FormData")
-            }
+            onDataChange={(data: Ethnicity1FormData) => handleRegistrationDataChange(data, "ethnicity1FormData")}
             initialStateData={registrationData.ethnicity1FormData}
           />
         );
       case 4:
         return (
           <Ethnicity2Form
-            onDataChange={(data: Ethnicity2FormData) =>
-              handleRegistrationDataChange(data, "ethnicity2FormData")
-            }
+            onDataChange={(data: Ethnicity2FormData) => handleRegistrationDataChange(data, "ethnicity2FormData")}
             initialStateData={registrationData.ethnicity2FormData}
             ethnicity={registrationData.ethnicity1FormData.ethnicity}
             showCancelButton={changing}
@@ -346,22 +276,19 @@ const ContinueRegistration = () => {
         return changing ? (
           <DisabilityForm
             onDataChange={(data: DisabilityFormData) => {
-              setRegistrationData(
-                (oldRegistrationData: ContinueRegistrationState) => {
-                  return {
-                    ...oldRegistrationData,
-                    disabilityFormData: data,
-                    disability2FormData: {
-                      disability: "",
-                      disabilityDescription:
-                        data.disability === "yes"
-                          ? oldRegistrationData.disability2FormData
-                              .disabilityDescription
-                          : undefined,
-                    },
-                  };
-                }
-              );
+              setRegistrationData((oldRegistrationData: ContinueRegistrationState) => {
+                return {
+                  ...oldRegistrationData,
+                  disabilityFormData: data,
+                  disability2FormData: {
+                    disability: "",
+                    disabilityDescription:
+                      data.disability === "yes"
+                        ? oldRegistrationData.disability2FormData.disabilityDescription
+                        : undefined,
+                  },
+                };
+              });
               if (data.disability === "no") {
                 setCancelData((oldCancelData: any) => {
                   return {
@@ -381,9 +308,7 @@ const ContinueRegistration = () => {
           />
         ) : (
           <DisabilityForm
-            onDataChange={(data: DisabilityFormData) =>
-              handleRegistrationDataChange(data, "disabilityFormData")
-            }
+            onDataChange={(data: DisabilityFormData) => handleRegistrationDataChange(data, "disabilityFormData")}
             initialStateData={registrationData.disabilityFormData}
             nextButtonText={nextButtonText}
           />
@@ -391,9 +316,7 @@ const ContinueRegistration = () => {
       case 6:
         return (
           <Disability2Form
-            onDataChange={(data: Disability2FormData) =>
-              handleRegistrationDataChange(data, "disability2FormData")
-            }
+            onDataChange={(data: Disability2FormData) => handleRegistrationDataChange(data, "disability2FormData")}
             initialStateData={registrationData.disability2FormData}
             showCancelButton={changing}
             onCancel={handleCancel}
@@ -413,19 +336,10 @@ const ContinueRegistration = () => {
           />
         );
       case 8:
-        return (
-          <CheckAnswersForm
-            initialStateData={registrationData}
-            changeStep={setActiveStep}
-          />
-        );
+        return <CheckAnswersForm initialStateData={registrationData} changeStep={setActiveStep} />;
       case 9:
         return (
-          <YouAreNowRegisteredForm
-            data={registrationData}
-            setLoading={setLoading}
-            setLoadingText={setLoadingText}
-          />
+          <YouAreNowRegisteredForm data={registrationData} setLoading={setLoading} setLoadingText={setLoadingText} />
         );
 
       default:
@@ -440,63 +354,43 @@ const ContinueRegistration = () => {
   const updatePageTitle = (step: number) => {
     switch (step) {
       case 1:
-        setPageTitle(
-          "What is your phone number? - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-phone-document-title"]);
         setGaURL("/registration/phone");
         break;
       case 2:
-        setPageTitle(
-          "Sex and gender identity - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-sex-gender-document-title"]);
         setGaURL("/registration/sex");
         break;
       case 3:
-        setPageTitle(
-          "What is your ethnic group? - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-ethnic-group-document-title"]);
         setGaURL("/registration/ethnicgroup");
         break;
       case 4:
-        setPageTitle(
-          "Which of the following best describes your ethnic background? - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-ethnic-background-document-title"]);
         setGaURL("/registration/ethnicbackground");
         break;
       case 5:
-        setPageTitle(
-          "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more? - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-disability-document-title"]);
         setGaURL("/registration/conditions");
         break;
       case 6:
-        setPageTitle(
-          "Do any of your conditions or illnesses reduce your ability to carry out day-to-day activities? - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-reduced-ability-document-title"]);
         setGaURL("/registration/reducedability");
         break;
       case 7:
-        setPageTitle(
-          "Which areas of research are you interested in? - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-health-conditions-document-title"]);
         setGaURL("/registration/areasofresearch");
         break;
       case 8:
-        setPageTitle(
-          "Check your answers before completing your registration - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-check-your-answers-document-title"]);
         setGaURL("/registration/checkyouranswers");
         break;
       case 9:
-        setPageTitle(
-          "Thank you for registering with Be Part of Research - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle(content["register2-you-are-now-registered-document-title"]);
         setGaURL("/registration/complete");
         break;
       default:
-        setPageTitle(
-          "What is your home address? - Volunteer Registration - Be Part of Research"
-        );
+        setPageTitle(content["register2-address-document-title"]);
         setGaURL("/registration/address");
     }
   };
@@ -537,14 +431,12 @@ const ContinueRegistration = () => {
 
   // add a post request to the consent endpoint
   const handleConsent = () => {
-    postConsent().then((res) =>
-      setIsUserConsented(res.data.content.userConsents)
-    );
+    postConsent().then((res) => setIsUserConsented(res.data.content.userConsents));
   };
 
   // if consent is not given, redirect to the consent page
   if (loadingDetails) {
-    return <LoadingIndicator />;
+    return <LoadingIndicator text={content["reusable-loading"]} />;
   }
 
   return isUserConsented || !isNhsLinkedAccount ? (
@@ -555,21 +447,16 @@ const ContinueRegistration = () => {
             {!(activeStep === 0 || activeStep === 8 || activeStep === 9) && (
               <div className="nhsuk-width-container ">
                 <DTEBackLink
-                  title="Return to previous page"
-                  linkText="Back"
+                  title={content["reusable-aria-go-back"]}
+                  linkText={content["reusable-back-link"]}
                   onClick={handleBack}
-                  ariaLabel="Return to previous page"
+                  ariaLabel={content["reusable-aria-go-back"]}
                 />
               </div>
             )}
 
             <div className="nhs-app-provider-banner">
-              <div className="nhsuk-width-container">
-                <strong>
-                  This service is provided by the National Institute for Health
-                  and Care Research
-                </strong>
-              </div>
+              <div className="nhsuk-width-container">{content["reusable-nhs-app-provider-banner"]}</div>
             </div>
           </>
         )}
@@ -590,34 +477,24 @@ const ContinueRegistration = () => {
                   ref={stepperRef}
                 />
               )}
-              <PercentageGrid
-                justifyContent="space-between"
-                alignItems="center"
-                container
-              >
+              <PercentageGrid justifyContent="space-between" alignItems="center" container>
                 {changing ? (
                   <Grid item />
                 ) : (
                   <Grid item>
-                    {!(
-                      activeStep === 0 ||
-                      activeStep === 8 ||
-                      activeStep === 9
-                    ) &&
-                      !isInNHSApp && (
-                        <DTEBackLink
-                          title="Return to previous page"
-                          linkText="Back"
-                          onClick={handleBack}
-                        />
-                      )}
+                    {!(activeStep === 0 || activeStep === 8 || activeStep === 9) && !isInNHSApp && (
+                      <DTEBackLink
+                        title={content["reusable-aria-go-back"]}
+                        linkText={content["reusable-back-link"]}
+                        onClick={handleBack}
+                      />
+                    )}
                   </Grid>
                 )}
                 <Grid item>
                   {activeStep < 9 && (
                     <DTEContent aria-hidden>
-                      {calculatePercentageComplete(activeStep + 5, 13)}%
-                      complete
+                      {calculatePercentageComplete(activeStep + 5, 13)}%{content["reusable-progress-complete"]}
                     </DTEContent>
                   )}
                 </Grid>
@@ -633,12 +510,7 @@ const ContinueRegistration = () => {
     <>
       {isInNHSApp && (
         <div className="nhs-app-provider-banner">
-          <div className="nhsuk-width-container">
-            <strong>
-              This service is provided by the National Institute for Health and
-              Care Research
-            </strong>
-          </div>
+          <div className="nhsuk-width-container">{content["reusable-nhs-app-provider-banner"]}</div>
         </div>
       )}
       <StepWrapper>
@@ -655,6 +527,6 @@ const ContinueRegistration = () => {
       </StepWrapper>
     </>
   );
-};
+}
 
 export default ContinueRegistration;

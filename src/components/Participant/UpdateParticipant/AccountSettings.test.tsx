@@ -45,17 +45,20 @@ afterEach(() => {
 describe("Account Settings display tests", () => {
   it("must not have accessibility violations", async () => {
     const { container } = render(<AccountSettings />);
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it("must render without crashing", async () => {
     const { container } = render(<AccountSettings />);
+
     expect(container).toBeInTheDocument();
   });
 
   it("must render the correct title", async () => {
     render(<AccountSettings />);
+
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
     expect(header.textContent).toBe("Account settings");
@@ -63,9 +66,10 @@ describe("Account Settings display tests", () => {
 
   it("must display the data retrieved from the server correctly", async () => {
     render(<AccountSettings />);
+
     expect(await screen.findByText("Email address")).toBeInTheDocument();
     expect(
-      await screen.findByText("first.last@domain.com")
+      await screen.findByText("first.last@domain.com"),
     ).toBeInTheDocument();
     expect(await screen.findByText("Password")).toBeInTheDocument();
 
@@ -90,7 +94,7 @@ describe("Account Settings analytics", () => {
           ["send", { hitType: "pageview", page: "/AccountSettings" }],
         ]);
       },
-      { timeout: 1000 }
+      { timeout: 1000 },
     );
   });
 });

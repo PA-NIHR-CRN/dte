@@ -6,7 +6,7 @@ export interface EthnicityNavigationButtonsProps {
   studyType: string;
 }
 
-const EthnicityInformation = (props: EthnicityNavigationButtonsProps) => {
+function EthnicityInformation(props: EthnicityNavigationButtonsProps) {
   const { hideInfo, studyType } = props;
 
   return (
@@ -14,19 +14,17 @@ const EthnicityInformation = (props: EthnicityNavigationButtonsProps) => {
       {!hideInfo && (
         <DTEDetails summary="Why we are asking this question">
           <DTEContent>
-            Many studies want to make sure they have a representative sample of
-            the population taking part in research studies, and some may be
-            looking for people from specific ethnic {studyType}.
+            Many studies want to make sure they have a representative sample of the population taking part in research
+            studies, and some may be looking for people from specific ethnic {studyType}.
           </DTEContent>
           <DTEContent>
-            If we find that some ethnic {studyType} are under represented when
-            people are signing up to be contacted about research we will look at
-            how to improve this.
+            If we find that some ethnic {studyType} are under represented when people are signing up to be contacted
+            about research we will look at how to improve this.
           </DTEContent>
         </DTEDetails>
       )}
     </>
   );
-};
+}
 
 export default EthnicityInformation;

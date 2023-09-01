@@ -1,46 +1,35 @@
-import { Ethnicities } from "../types/ReferenceData/Ethnicities";
-
-const ethnicities: Ethnicities = {
+const getEthnicities = (content: any) => ({
   asian: {
-    longName: "Asian or Asian British",
+    longName: content["reusable-asian"],
     shortName: "asian",
     description:
       "Includes any Asian background, for example, Bangladeshi, Chinese, Indian, Pakistani or other South or East Asian",
     backgrounds: ["Bangladeshi", "Chinese", "Indian", "Pakistani"],
   },
   black: {
-    longName: "Black, African, Black British or Caribbean",
+    longName: content["reusable-black"],
     shortName: "black",
     description: "Includes any Black background",
     backgrounds: ["African", "Black British", "Caribbean"],
   },
   mixed: {
-    longName: "Mixed or multiple ethnic groups",
+    longName: content["reusable-mixed"],
     shortName: "mixed",
     description: "Includes any Mixed background",
-    backgrounds: [
-      "Asian and White",
-      "Black African and White",
-      "Black Caribbean and White",
-    ],
+    backgrounds: ["Asian and White", "Black African and White", "Black Caribbean and White"],
   },
   white: {
-    longName: "White",
+    longName: content["reusable-white"],
     shortName: "white",
     description: "Includes any White background",
-    backgrounds: [
-      "British, English, Northern Irish, Scottish, or Welsh",
-      "Irish",
-      "Irish Traveller",
-      "Roma",
-    ],
+    backgrounds: ["British, English, Northern Irish, Scottish, or Welsh", "Irish", "Irish Traveller", "Roma"],
   },
   other: {
-    longName: "Other ethnic group",
+    longName: content["reusable-other"],
     shortName: "other",
     description: "Includes Arab",
     backgrounds: ["Arab"],
   },
-};
+});
 
-export default ethnicities;
+export default getEthnicities;

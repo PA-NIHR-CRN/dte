@@ -37,20 +37,20 @@ interface PostcodeLookupProps {
   onDataChange: (data: PostcodeLookupData) => void;
 }
 
-export const Details = () => {
+export function Details() {
   return (
     <DTEDetails summary="Why we are asking this question">
       <DTEContent>
-        Study teams need a postal address to send you communications by post, if
-        you choose for them to contact you this way.
+        Study teams need a postal address to send you communications by post, if you choose for them to contact you this
+        way.
       </DTEContent>
       <DTEContent>
-        Some studies only recruit from specific locations, we may use this
-        information when contacting you about studies you may be interested in.
+        Some studies only recruit from specific locations, we may use this information when contacting you about studies
+        you may be interested in.
       </DTEContent>
     </DTEDetails>
   );
-};
+}
 
 interface ContinueButtonProps {
   buttonText: string;
@@ -59,16 +59,10 @@ interface ContinueButtonProps {
   onCancel?: () => void;
 }
 
-export const ContinueButton = (props: ContinueButtonProps) => {
+export function ContinueButton(props: ContinueButtonProps) {
   const { buttonText, altButtonText, showCancelButton, onCancel } = props;
   return (
-    <Grid
-      container
-      direction="row"
-      justifyContent="flex-start"
-      alignItems="center"
-      spacing={1}
-    >
+    <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
       <Grid item>
         <DTEButton>{altButtonText || buttonText}</DTEButton>
       </Grid>
@@ -81,16 +75,10 @@ export const ContinueButton = (props: ContinueButtonProps) => {
       )}
     </Grid>
   );
-};
+}
 
-const PostcodeLookup = (props: PostcodeLookupProps) => {
-  const {
-    initialStateData,
-    showCancelButton,
-    hideInfo,
-    onCancel,
-    onDataChange,
-  } = props;
+function PostcodeLookup(props: PostcodeLookupProps) {
+  const { initialStateData, showCancelButton, hideInfo, onCancel, onDataChange } = props;
   const {
     control,
     handleSubmit,
@@ -112,9 +100,7 @@ const PostcodeLookup = (props: PostcodeLookupProps) => {
   const onPostcodeSubmit = async (formData: PostcodeLookupData) => {
     await getAddresses(
       {
-        url: `${
-          process.env.REACT_APP_BASE_API
-        }/location/postcode/${formData.postcode.replace(/[^A-Za-z0-9]/g, "")}`,
+        url: `${process.env.REACT_APP_BASE_API}/location/postcode/${formData.postcode.replace(/[^A-Za-z0-9]/g, "")}`,
         method: "GET",
       },
       {
@@ -141,9 +127,7 @@ const PostcodeLookup = (props: PostcodeLookupProps) => {
           addressLine3: "",
           addressLine4: "",
           town: "",
-          fullAddress: `${content.length} ${
-            content.length === 1 ? "address" : "addresses"
-          } found`,
+          fullAddress: `${content.length} ${content.length === 1 ? "address" : "addresses"} found`,
           postcode: "",
         },
         ...content.map((addressFromApi: address) => {
@@ -174,28 +158,23 @@ const PostcodeLookup = (props: PostcodeLookupProps) => {
   return (
     <>
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
-      {response &&
-        (!Utils.ConvertResponseToDTEResponse(response)?.isSuccess ||
-          addresses?.length === 1) && (
-          <ErrorMessageContainer
-            simpleErrors={[
-              {
-                detail:
-                  "We cannot find a match for the postcode entered. Please try again or enter your address manually.",
-              },
-            ]}
-          />
-        )}
+      {response && (!Utils.ConvertResponseToDTEResponse(response)?.isSuccess || addresses?.length === 1) && (
+        <ErrorMessageContainer
+          simpleErrors={[
+            {
+              detail:
+                "We cannot find a match for the postcode entered. Please try again or enter your address manually.",
+            },
+          ]}
+        />
+      )}
       {loading && <LoadingIndicator text="Loading addresses" />}
       <form onSubmit={handleSubmit(onPostcodeSubmit)}>
         <Honeypot />
         <Controller
           control={control}
           name="postcode"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="postcode"
               value={value}
@@ -223,18 +202,10 @@ const PostcodeLookup = (props: PostcodeLookupProps) => {
         />
         <Grid container direction="column" spacing={3}>
           <Grid item>
-            <ContinueButton
-              buttonText="Find address"
-              showCancelButton={showCancelButton}
-              onCancel={onCancel}
-            />
+            <ContinueButton buttonText="Find address" showCancelButton={showCancelButton} onCancel={onCancel} />
           </Grid>
           <Grid item>
-            <DTELinkButton
-              onClick={() =>
-                onDataChange({ postcode: "", addresses: [], manualEntry: true })
-              }
-            >
+            <DTELinkButton onClick={() => onDataChange({ postcode: "", addresses: [], manualEntry: true })}>
               Enter your address manually
             </DTELinkButton>
           </Grid>
@@ -243,6 +214,6 @@ const PostcodeLookup = (props: PostcodeLookupProps) => {
       </form>
     </>
   );
-};
+}
 
 export default PostcodeLookup;

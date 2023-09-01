@@ -1,5 +1,5 @@
 import { axe, toHaveNoViolations } from "jest-axe";
-import { render, screen } from "../../../../Helper/test-utils";
+import { render, screen, waitFor } from "../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 
 import StartRegistrationProcess from "./StartRegistrationProcess";
@@ -17,14 +17,15 @@ describe("StartRegistrationProcess accessibility tests", () => {
 describe("StartRegistrationProcess functionality tests", () => {
   it("should render without crashing", async () => {
     render(<StartRegistrationProcess />);
+
     expect(
-      screen.getByText("Register with Be Part of Research")
+      screen.getByText("Register with Be Part of Research"),
     ).toBeInTheDocument();
 
     expect(
       screen.getByText(
-        "A simple registration process will capture your basic information, including contact details."
-      )
+        "A simple registration process will capture your basic information, including contact details.",
+      ),
     ).toBeInTheDocument();
     expect(screen.getByText("You can sign up if you:")).toBeInTheDocument();
     expect(screen.getByText("have an email address")).toBeInTheDocument();

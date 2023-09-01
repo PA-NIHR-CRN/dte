@@ -101,7 +101,7 @@ export default [
     key="accountclosed"
   />,
   <Route
-    path="/Participants/Register/Questions"
+    path={["/Participants/Register/Questions", "/Cyfranogwyr/Cofrestru/Cwestiynau"]}
     component={RegsitrationProcess}
     strict
     exact
@@ -115,7 +115,7 @@ export default [
     key="continueregistration"
   />,
   <Route
-    path="/Participants/Register"
+    path={["/Participants/Register", "/Cyfranogwyr/Cofrestrwch"]}
     render={() => {
       ReactGA.pageview("/register");
       return <StartRegistrationProcess />;

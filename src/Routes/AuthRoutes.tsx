@@ -38,7 +38,7 @@ const redirect = (pathOrigin: string) => {
 export default [
   /* Auth Routes */
   <Route
-    path="/UserLogin"
+    path={["/UserLogin", "/MewngofnodiDefnyddiwr"]}
     render={(props) => {
       ReactGA.pageview(props.location.pathname);
       return <UserLogin />;
@@ -46,7 +46,7 @@ export default [
     key="userlogin"
   />,
   <Route
-    path="/Participants/Options"
+    path={["/Participants/Options", "/Cyfranogwyr/Dewisiadau"]}
     render={() => {
       ReactGA.pageview("/Participants/Options");
       return <LoginOptions />;

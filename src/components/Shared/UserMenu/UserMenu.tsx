@@ -8,9 +8,7 @@ import { AuthContext } from "../../../context/AuthContext";
 
 function UserMenu() {
   const { isAuthenticated } = useContext(AuthContext);
-  const [anchorElement, setAnchorElement] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElement, setAnchorElement] = React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorElement);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -34,13 +32,7 @@ function UserMenu() {
     >
       {!isAuthenticated() ? (
         <>
-          <ListItemLink
-            to="/UserLogin"
-            primary="Login"
-            icon={<AccountCircle />}
-            onClick={handleMenuClose}
-            key=""
-          />
+          <ListItemLink to="/UserLogin" primary="Login" icon={<AccountCircle />} onClick={handleMenuClose} key="" />
           <ListItemLink
             to="/UserRegistration"
             primary="Create Account"

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -15,6 +15,8 @@ import DTELinkButton from "../../Shared/UI/DTELinkButton/DTELinkButton";
 import UpdateEmailForm from "./Forms/UpdateEmailForm";
 import UpdatePasswordForm from "./Forms/UpdatePasswordForm";
 import DTEContent from "../../Shared/UI/DTETypography/DTEContent/DTEContent";
+import { ContentContext } from "../../../context/ContentContext";
+import { UserContext } from "../../../context/UserContext";
 
 interface UserDataState {
   currentEmail: string;
@@ -37,18 +39,15 @@ const StyledHiddenText = styled.span`
   white-space: nowrap;
 `;
 
-const AccountSettings = () => {
+function AccountSettings() {
+  const { content } = useContext(ContentContext);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [currentPage, setCurrentPage] = useState<string>("main");
-  const [pageTitle, setPageTitle] = useState(
-    "Account settings - Volunteer Account - Be Part of Research"
-  );
+  const { currentAccountPage: currentPage, setCurrentAccountPage: setCurrentPage } = useContext(UserContext);
+  const [pageTitle, setPageTitle] = useState("Account settings - Volunteer Account - Be Part of Research");
   const [gaURL, setGaURL] = useState("/AccountSettings");
   const theme = useTheme();
   const [userData, setUserData] = useState<UserDataState>();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const [{ response, loading, error }] = useAxiosFetch(
     {
       url: `${process.env.REACT_APP_BASE_API}/participants/details`,
@@ -63,21 +62,15 @@ const AccountSettings = () => {
   const handlePageTitle = (page: string) => {
     switch (page) {
       case "email":
-        setPageTitle(
-          "What is your new email address? - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle("What is your new email address? - Volunteer Account - Be Part of Research");
         setGaURL("/AccountSettings/ChangeEmail");
         break;
       case "password":
-        setPageTitle(
-          "Change your password - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle("Change your password - Volunteer Account - Be Part of Research");
         setGaURL("/AccountSettings/ChangePassword");
         break;
       default:
-        setPageTitle(
-          "Account settings - Volunteer Account - Be Part of Research"
-        );
+        setPageTitle("Account settings - Volunteer Account - Be Part of Research");
         setGaURL("/AccountSettings");
     }
   };
@@ -93,8 +86,7 @@ const AccountSettings = () => {
 
   useEffect(() => {
     if (!userData && Utils.ConvertResponseToDTEResponse(response)?.isSuccess) {
-      const DTEDetailsResponse =
-        Utils.ConvertResponseToDTEResponse(response)?.content;
+      const DTEDetailsResponse = Utils.ConvertResponseToDTEResponse(response)?.content;
       if (DTEDetailsResponse) {
         const stateData: UserDataState = {
           currentEmail: DTEDetailsResponse.email,
@@ -111,13 +103,13 @@ const AccountSettings = () => {
   return (
     <DocumentTitle title={pageTitle}>
       <StyledWrapper role="main" id="main" ref={containerRef}>
-        {loading && <LoadingIndicator />}
+        {loading && <LoadingIndicator text={content["reusable-loading"]} />}
         <Container>
           {currentPage === "main" && <DTEBackLink href="/" linkText="Back" />}
           {currentPage === "main" && (
             <>
               <DTEHeader as="h1" $variant={headerVariant}>
-                Account settings
+                {content["reusable-account-settings-header"]}
               </DTEHeader>
               {userData && (
                 <dl className="govuk-summary-list">
@@ -129,11 +121,8 @@ const AccountSettings = () => {
                       <DTEContent>{userData.currentEmail}</DTEContent>
                     </dd>
                     <dd className="govuk-summary-list__actions">
-                      <DTELinkButton
-                        onClick={() => setCurrentDisplayPage("email")}
-                      >
-                        Change{" "}
-                        <StyledHiddenText>email address</StyledHiddenText>
+                      <DTELinkButton onClick={() => setCurrentDisplayPage("email")}>
+                        {content["reusable-change"]} <StyledHiddenText>email address</StyledHiddenText>
                       </DTELinkButton>
                     </dd>
                   </div>
@@ -143,9 +132,7 @@ const AccountSettings = () => {
                     </dt>
                     <dd className="govuk-summary-list__value" />
                     <dd className="govuk-summary-list__actions">
-                      <DTELinkButton
-                        onClick={() => setCurrentDisplayPage("password")}
-                      >
+                      <DTELinkButton onClick={() => setCurrentDisplayPage("password")}>
                         Change <StyledHiddenText>password</StyledHiddenText>
                       </DTELinkButton>
                     </dd>
@@ -155,30 +142,26 @@ const AccountSettings = () => {
               {error && (
                 <ErrorMessageContainer
                   axiosErrors={[error]}
-                  DTEAxiosErrors={[
-                    Utils.ConvertResponseToDTEResponse(response)?.errors,
-                  ]}
+                  DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(response)?.errors]}
                 />
               )}
             </>
           )}
           {currentPage === "email" && (
-            <>
-              <UpdateEmailForm
-                onCancel={() => {
-                  setCurrentDisplayPage("main");
-                }}
-                nextButtonText="Save"
-                showCancelButton
-              />
-            </>
+            <UpdateEmailForm
+              onCancel={() => {
+                setCurrentDisplayPage("main");
+              }}
+              nextButtonText={content["reusable-save"]}
+              showCancelButton
+            />
           )}
           {currentPage === "password" && (
             <UpdatePasswordForm
               onCancel={() => {
                 setCurrentDisplayPage("main");
               }}
-              nextButtonText="Save"
+              nextButtonText={content["reusable-save"]}
               showCancelButton
             />
           )}
@@ -186,6 +169,6 @@ const AccountSettings = () => {
       </StyledWrapper>
     </DocumentTitle>
   );
-};
+}
 
 export default AccountSettings;

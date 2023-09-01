@@ -28,7 +28,7 @@ const StyledTextArea = styled(Textarea)`
   }
 `;
 
-const DTETextArea = ({
+function DTETextArea({
   id,
   name,
   label,
@@ -41,7 +41,7 @@ const DTETextArea = ({
   type,
   rows,
   disabled,
-}: Props) => {
+}: Props) {
   const handleValueChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (onValueChange) {
       onValueChange(e);
@@ -66,6 +66,6 @@ const DTETextArea = ({
       onBlur={onValueBlur}
     />
   );
-};
+}
 
 export default DTETextArea;
