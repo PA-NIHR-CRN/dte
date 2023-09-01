@@ -15,11 +15,12 @@ const Honeypot = () => {
   return (
     <input
       type="text"
-      style={{ position: "absolute", left: "-9999px" }}
+      style={{ display: "none" }}
       onChange={handleChange}
       aria-hidden="true"
       tabIndex={-1}
       name="faxNumber"
+      autoComplete="off"
     />
   );
 };

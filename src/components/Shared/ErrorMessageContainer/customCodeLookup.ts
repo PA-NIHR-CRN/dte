@@ -73,6 +73,8 @@ const customCodeLookup = (code: string, detail?: string): string => {
       return "Enter the correct security code";
     case "MFA_User_Not_Found":
       return "Your user account has not yet been verified. We can send you the email again.";
+    case "Mfa_Used_Token":
+      return "This security code has already been used. Please enter a new code when your authenticator app refreshes.";
     default:
       return defaultErrorMessage || "An unexpected error occurred";
   }
