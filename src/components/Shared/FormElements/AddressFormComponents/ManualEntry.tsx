@@ -5,7 +5,7 @@ import Utils from "../../../../Helper/Utils";
 import ErrorMessageSummary from "../../ErrorMessageSummary/ErrorMessageSummary";
 import DTEInput from "../../UI/DTEInput/DTEInput";
 import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
-import { Details, ContinueButton } from "./PostcodeLookup";
+import { ContinueButton } from "./PostcodeLookup";
 import { ContentContext } from "../../../../context/ContentContext";
 import Honeypot from "../../Honeypot/Honeypot";
 
@@ -70,7 +70,7 @@ function ManualEntry(props: ManualEntryProps) {
           render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="addressLine1"
-              label="Address line 1"
+              label={content["register2-address-input-address1"]}
               onValueChange={onChange}
               onValueBlur={onBlur}
               error={error?.message}
@@ -84,7 +84,7 @@ function ManualEntry(props: ManualEntryProps) {
                 return true;
               }
               setValue("addressLine1", "");
-              return "Enter the first line of your address";
+              return content["register2-address-validation-address1-required"];
             },
           }}
         />
@@ -94,7 +94,7 @@ function ManualEntry(props: ManualEntryProps) {
           render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="addressLine2"
-              label="Address line 2 (optional)"
+              label={content["register2-address-input-address2"]}
               onValueChange={onChange}
               onValueBlur={onBlur}
               error={error?.message}
@@ -109,7 +109,7 @@ function ManualEntry(props: ManualEntryProps) {
           render={({ field: { value, onChange, onBlur } }) => (
             <DTEInput
               id="addressLine3"
-              label="Address line 3 (optional)"
+              label={content["register2-address-input-address3"]}
               onValueChange={onChange}
               onValueBlur={onBlur}
               value={value}
@@ -123,7 +123,7 @@ function ManualEntry(props: ManualEntryProps) {
           render={({ field: { value, onChange, onBlur } }) => (
             <DTEInput
               id="addressLine4"
-              label="Address line 4 (optional)"
+              label={content["register2-address-input-address4"]}
               onValueChange={onChange}
               onValueBlur={onBlur}
               value={value}
@@ -137,7 +137,7 @@ function ManualEntry(props: ManualEntryProps) {
           render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="town"
-              label="Town"
+              label={content["register2-address-input-town"]}
               onValueChange={onChange}
               onValueBlur={onBlur}
               error={error?.message}
@@ -151,7 +151,7 @@ function ManualEntry(props: ManualEntryProps) {
                 return true;
               }
               setValue("town", "");
-              return "Enter the town of your address";
+              return content["register2-address-validation-town-required"];
             },
           }}
         />
@@ -165,7 +165,7 @@ function ManualEntry(props: ManualEntryProps) {
               onValueChange={onChange}
               onValueBlur={onBlur}
               error={error?.message}
-              label="Postcode (optional)"
+              label={content["register2-address-input-postcode"]}
               autocomplete="postal-code"
             />
           )}
@@ -179,7 +179,7 @@ function ManualEntry(props: ManualEntryProps) {
               ) {
                 return true;
               }
-              return "Enter a real postcode";
+              return content["register2-address-validation-postcode-invalid"];
             },
           }}
         />
@@ -198,10 +198,10 @@ function ManualEntry(props: ManualEntryProps) {
                 })
               }
             >
-              Find your address by postcode
+              {content["register2-address-button-find-by-postcode"]}
             </DTELinkButton>
           </Grid>
-          <Grid item>{!hideInfo && <Details />}</Grid>
+          <Grid item>{!hideInfo && content["register2-address"]}</Grid>
         </Grid>
         <ContinueButton
           buttonText={content["reusable-button-continue"]}
