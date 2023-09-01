@@ -33,7 +33,7 @@ const SessionTimeoutModal = () => {
     const now = new Date();
 
     const secondsSinceLastActivity = Math.ceil(
-      (now.getTime() - lastActivityDateTime.getTime()) / 1000
+      (now.getTime() - lastActivityDateTime.getTime()) / 1000,
     );
 
     // eslint-disable-next-line no-console
@@ -49,7 +49,7 @@ const SessionTimeoutModal = () => {
     // Notify other tabs of activity via local storage
     window.localStorage.setItem(
       lastActivityStorageKey,
-      lastActivityDateTime.toISOString()
+      lastActivityDateTime.toISOString(),
     );
   };
 
@@ -160,7 +160,7 @@ const SessionTimeoutModal = () => {
     function checkShowWarning() {
       if (sessionState.expiryInfo.isLoggedIn) {
         setShowSessionTimeoutWarning(
-          sessionState.secondsSinceLastActivity >= showWarningAfterSecs
+          sessionState.secondsSinceLastActivity >= showWarningAfterSecs,
         );
       }
     }
@@ -186,7 +186,7 @@ const SessionTimeoutModal = () => {
               .duration(
                 sessionState.expiryInfo.duration -
                   sessionState.secondsSinceLastActivity,
-                "seconds"
+                "seconds",
               )
               .humanize(true)}
           </DTEHeader>

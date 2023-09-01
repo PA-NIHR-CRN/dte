@@ -24,7 +24,7 @@ describe("AddressForm", () => {
       <AddressForm
         initialStateData={testData}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
   });
 
@@ -34,7 +34,7 @@ describe("AddressForm", () => {
       <AddressForm
         initialStateData={testData}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
     fireEvent.change(screen.getByLabelText("Postcode"), {
       target: { value: "Not a valid postcode" },
@@ -57,7 +57,7 @@ describe("Accessibility test", () => {
       <AddressForm
         initialStateData={testData}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

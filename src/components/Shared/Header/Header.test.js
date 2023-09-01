@@ -14,7 +14,7 @@ describe("Header Component Tests", () => {
     shallow(
       <Router>
         <Header />
-      </Router>
+      </Router>,
     );
   });
 

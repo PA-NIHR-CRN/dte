@@ -10,25 +10,25 @@ import {
 import useAxiosFetch from "../hooks/useAxiosFetch";
 
 export const AuthContext = createContext<AuthContextProps>(
-  {} as AuthContextProps
+  {} as AuthContextProps,
 );
 
 const sessionRefreshCheckInterval = 10 * 1000;
 
 export const AuthProvider = (props: { children: any }) => {
   const [authenticatedEmail, setAuthenticatedEmail] = useState<string | null>(
-    null
+    null,
   );
   const [authenticatedEmailVerified, setAuthenticatedEmailVerified] = useState<
     boolean | null
   >(null);
   const [authenticatedMobile, setAuthenticatedMobile] = useState<string | null>(
-    null
+    null,
   );
   const [authenticatedMobileVerified, setAuthenticatedMobileVerified] =
     useState<boolean | null>(null);
   const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(
-    null
+    null,
   );
   const [authenticatedFirstname, setAuthenticatedFirstname] = useState<
     string | null
@@ -64,7 +64,7 @@ export const AuthProvider = (props: { children: any }) => {
       url: `${baseUrl}/users/logout`,
       withCredentials: true,
     },
-    { useCache: false, manual: true }
+    { useCache: false, manual: true },
   );
 
   const [{ loading: refreshSessionTokenLoading }, refreshSessionToken] =
@@ -74,7 +74,7 @@ export const AuthProvider = (props: { children: any }) => {
         url: `${baseUrl}/users/refreshsession`,
         withCredentials: true,
       },
-      { useCache: false, manual: true }
+      { useCache: false, manual: true },
     );
 
   useEffect(() => {
@@ -167,10 +167,10 @@ export const AuthProvider = (props: { children: any }) => {
   };
 
   const [lastUrl, setLastUrl] = useState<string | null>(
-    localStorage.getItem("currentUrl")
+    localStorage.getItem("currentUrl"),
   );
   const [prevUrl, setPrevUrl] = useState<string | null>(
-    localStorage.getItem("previousUrl")
+    localStorage.getItem("previousUrl"),
   );
 
   const persistLastUrl = (url: string) => {
@@ -182,7 +182,7 @@ export const AuthProvider = (props: { children: any }) => {
   };
 
   const [lastNonLoginUrl, setLastNonLoginUrl] = useState(
-    localStorage.getItem("lastNonLoginUrl")
+    localStorage.getItem("lastNonLoginUrl"),
   );
   const persistLastNonLoginUrl = (url: string) => {
     if (!url) {

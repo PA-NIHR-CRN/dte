@@ -23,7 +23,7 @@ describe("MobileNumberForm", () => {
       <MobileNumberForm
         initialStateData={data}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
   });
 
@@ -33,7 +33,7 @@ describe("MobileNumberForm", () => {
       <MobileNumberForm
         initialStateData={data}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
     fireEvent.change(screen.getByLabelText("Mobile number"), {
       target: { value: "123456789" },
@@ -41,8 +41,8 @@ describe("MobileNumberForm", () => {
     fireEvent.click(screen.getByText("Continue"));
     expect(
       await screen.findByText(
-        "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982"
-      )
+        "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982",
+      ),
     ).toBeInTheDocument();
   });
 
@@ -52,7 +52,7 @@ describe("MobileNumberForm", () => {
       <MobileNumberForm
         initialStateData={data}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
     fireEvent.change(screen.getByLabelText("Landline number"), {
       target: { value: "123456789" },
@@ -60,8 +60,8 @@ describe("MobileNumberForm", () => {
     fireEvent.click(screen.getByText("Continue"));
     expect(
       await screen.findByText(
-        "Enter a valid landline number, like 01632 960 001 or +44 1632 960 001"
-      )
+        "Enter a valid landline number, like 01632 960 001 or +44 1632 960 001",
+      ),
     ).toBeInTheDocument();
   });
 
@@ -71,7 +71,7 @@ describe("MobileNumberForm", () => {
       <MobileNumberForm
         initialStateData={data}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
     fireEvent.click(screen.getByText("Continue"));
     await waitFor(() => {
@@ -88,7 +88,7 @@ describe("MobileNumberForm", () => {
       <MobileNumberForm
         initialStateData={data}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
     fireEvent.change(screen.getByLabelText("Landline number"), {
       target: { value: "01234567890" },
@@ -108,7 +108,7 @@ describe("MobileNumberForm", () => {
       <MobileNumberForm
         initialStateData={data}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
     fireEvent.change(screen.getByLabelText("Mobile number"), {
       target: { value: "+441111111111" },
@@ -128,7 +128,7 @@ describe("MobileNumberForm", () => {
       <MobileNumberForm
         initialStateData={data}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
     fireEvent.change(screen.getByLabelText("Mobile number"), {
       target: { value: "+441111111111" },
@@ -153,7 +153,7 @@ describe("Accessibility test", () => {
       <MobileNumberForm
         initialStateData={data}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -167,7 +167,7 @@ describe("Mobile Number Form must display error summary header on invalid submis
       <MobileNumberForm
         initialStateData={data}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
     userEvent.type(screen.getByLabelText("Landline number"), "123456789");
     userEvent.click(screen.getByText("Continue"));

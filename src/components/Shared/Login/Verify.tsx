@@ -50,7 +50,7 @@ const Verify = () => {
     },
     {
       useCache: false,
-    }
+    },
   );
 
   useEffect(() => {
@@ -135,7 +135,7 @@ const Verify = () => {
                 </DTEHeader>
                 {convertErrorsToResponse(
                   Utils.ConvertResponseToDTEResponse(confirmationResponse)
-                    ?.errors
+                    ?.errors,
                 )}
               </>
             </DocumentTitle>

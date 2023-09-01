@@ -20,15 +20,15 @@ describe("NoConsent tests", () => {
   it("displays the correct content", async () => {
     render(<NoConsent />);
     expect(
-      screen.getByText("Your registration has been cancelled")
+      screen.getByText("Your registration has been cancelled"),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Your data has not been stored.")
+      screen.getByText("Your data has not been stored."),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Thank you for your interest in Be Part of Research. We hope to see you back again soon."
-      )
+        "Thank you for your interest in Be Part of Research. We hope to see you back again soon.",
+      ),
     ).toBeInTheDocument();
   });
 });

@@ -23,7 +23,7 @@ describe("DTETimeline", () => {
     const { container } = render(
       <ul>
         <DTETimelineItem />
-      </ul>
+      </ul>,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

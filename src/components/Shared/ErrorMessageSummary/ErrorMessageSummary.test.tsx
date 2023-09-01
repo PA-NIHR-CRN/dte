@@ -12,7 +12,7 @@ const errors = {
 describe("Error Message Summary must render correctly", () => {
   it("should not fail any accessibility tests", async () => {
     const { container } = render(
-      <ErrorMessageSummary renderSummary errors={errors} />
+      <ErrorMessageSummary renderSummary errors={errors} />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -42,12 +42,12 @@ describe.each([
         <ErrorMessageSummary
           renderSummary={renderSummary}
           errors={formErrors}
-        />
+        />,
       );
       expect(screen.queryByRole("alert")).toBeNull();
       expect(screen.queryByText("There is a problem")).toBeNull();
       expect(screen.queryByText("Error: Enter an email address")).toBeNull();
       expect(screen.queryByText("Error: Enter a password")).toBeNull();
     });
-  }
+  },
 );

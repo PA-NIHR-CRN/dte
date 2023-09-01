@@ -51,7 +51,7 @@ describe("SelectAddress", () => {
         addresses={testData.addresses}
         postcode={testData.postcode}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
   });
 
@@ -62,7 +62,7 @@ describe("SelectAddress", () => {
         addresses={testData.addresses}
         postcode={testData.postcode}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
 
     await waitFor(() => {
@@ -70,13 +70,13 @@ describe("SelectAddress", () => {
       expect(addressSelect).toBeInTheDocument();
       fireEvent.click(addressSelect);
       expect(
-        screen.getByText("9, TRAPS LANE, NEW MALDEN, KT3 4RS")
+        screen.getByText("9, TRAPS LANE, NEW MALDEN, KT3 4RS"),
       ).toBeInTheDocument();
       expect(
-        screen.getByText("FIVE STONES, TRAPS LANE, NEW MALDEN, KT3 4RS")
+        screen.getByText("FIVE STONES, TRAPS LANE, NEW MALDEN, KT3 4RS"),
       ).toBeInTheDocument();
       expect(
-        screen.getByText("MALDEN GOLF CLUB, TRAPS LANE, NEW MALDEN, KT3 4RS")
+        screen.getByText("MALDEN GOLF CLUB, TRAPS LANE, NEW MALDEN, KT3 4RS"),
       ).toBeInTheDocument();
     });
   });
@@ -88,7 +88,7 @@ describe("SelectAddress", () => {
         addresses={testData.addresses}
         postcode={testData.postcode}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
 
     await waitFor(() => {
@@ -109,7 +109,7 @@ describe("SelectAddress", () => {
         addresses={testData.addresses}
         postcode={testData.postcode}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
 
     await waitFor(() => {
@@ -129,7 +129,7 @@ describe("Accessibility test", () => {
         addresses={testData.addresses}
         postcode={testData.postcode}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

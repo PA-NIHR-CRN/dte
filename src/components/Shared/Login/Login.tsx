@@ -38,7 +38,7 @@ const Login = () => {
     {
       manual: true,
       useCache: false,
-    }
+    },
   );
 
   const returnToOriginatingPage = () => {

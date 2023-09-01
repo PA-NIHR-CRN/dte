@@ -48,7 +48,7 @@ const rows = [
   createData(
     "View All Studies and Study Requests",
     "/Admin/Studies",
-    Role.Admin
+    Role.Admin,
   ),
   // createData("List All Studies", "/Admin/Studies", Role.Admin),
 
@@ -58,49 +58,49 @@ const rows = [
   createData(
     "View Participants for Study",
     "/Researchers/Studies/:studyid/Participants",
-    Role.Researcher
+    Role.Researcher,
   ),
   createData(
     "View Participants for Study by Status",
     "/Researchers/Studies/:studyid/Participants/:statusid",
-    Role.Researcher
+    Role.Researcher,
   ),
   createData(
     "View Participants for Study by Site",
     "/Researchers/Studies/:studyid/Sites/:siteid/Participants",
-    Role.Researcher
+    Role.Researcher,
   ),
   createData("Your Studies", "/Researchers/Studies", Role.Researcher),
   createData(
     "View Study Details",
     "/Researchers/Study/:studyid",
-    Role.Researcher
+    Role.Researcher,
   ),
   createData(
     "Setup Study",
     "/Researchers/Study/:studyid/Setup",
-    Role.Researcher
+    Role.Researcher,
   ),
   createData("Registration flow start", "/Participants/register", Role.None),
   createData(
     "Registration flow stepper",
     "/Participants/register/questions",
-    Role.None
+    Role.None,
   ),
   createData(
     "Continue Registration stepper",
     "/Participants/register/continue/questions",
-    Role.Participant
+    Role.Participant,
   ),
   createData(
     "Contine self referral",
     "/Participants/SelfReferral/Continue/12345",
-    Role.Participant
+    Role.Participant,
   ),
   createData(
     "Edit personal details",
     "/Participants/MyDetails",
-    Role.Participant
+    Role.Participant,
   ),
 ];
 
@@ -449,7 +449,7 @@ function Testing() {
                   <Grid item xs={12} md={5}>
                     <DTERichTextRender
                       richText={JSON.stringify(
-                        "<p>Populated <strong>with </strong>data items</p><ul><li>list 1</li><li>list 2</li><li>list 3</li></ul><p></p><p><a href='https://www.google.com' target='_blank'>Link to another page</a></p>"
+                        "<p>Populated <strong>with </strong>data items</p><ul><li>list 1</li><li>list 2</li><li>list 3</li></ul><p></p><p><a href='https://www.google.com' target='_blank'>Link to another page</a></p>",
                       )}
                     />
                   </Grid>

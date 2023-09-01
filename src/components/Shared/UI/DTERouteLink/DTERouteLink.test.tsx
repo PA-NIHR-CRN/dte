@@ -23,7 +23,7 @@ describe("DTERouteLink styling tests", () => {
     render(
       <DTERouteLink renderStyle="standard" to="/">
         Link text
-      </DTERouteLink>
+      </DTERouteLink>,
     );
     const link = await screen.findByRole("link");
     expect(link).toHaveClass("standard-route");
@@ -49,7 +49,7 @@ describe("DTERouteLink target", () => {
     render(
       <DTERouteLink target="_blank" to="/">
         Link text
-      </DTERouteLink>
+      </DTERouteLink>,
     );
     const link = await screen.findByRole("link");
     expect(link).toHaveAttribute("target");
@@ -59,7 +59,7 @@ describe("DTERouteLink target", () => {
     render(
       <DTERouteLink target="_blank" to="/">
         Link text
-      </DTERouteLink>
+      </DTERouteLink>,
     );
     const link = await screen.findByRole("link");
     const relValue = link.getAttribute("target");

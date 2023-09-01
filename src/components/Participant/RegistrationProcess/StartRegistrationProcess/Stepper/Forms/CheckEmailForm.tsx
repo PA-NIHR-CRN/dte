@@ -27,7 +27,7 @@ const CheckEmailForm = (props: CheckEmailFormProps) => {
     parseInt(initialStateData.dobFormData.year, 10),
     parseInt(initialStateData.dobFormData.month, 10) - 1,
     parseInt(initialStateData.dobFormData.day, 10),
-    12
+    12,
   ).toISOString();
 
   const [{ response, loading, error }] = useAxiosFetch(
@@ -43,7 +43,7 @@ const CheckEmailForm = (props: CheckEmailFormProps) => {
         consentRegistration: true,
       },
     },
-    { useCache: false }
+    { useCache: false },
   );
 
   useEffect(() => {
@@ -91,7 +91,7 @@ const CheckEmailForm = (props: CheckEmailFormProps) => {
           {Utils.ConvertResponseToDTEResponse(response)?.errors && !loading && (
             <>
               {Utils.ConvertResponseToDTEResponse(response)?.errors.some(
-                (e) => e?.customCode === "User_Not_In_Allow_List_Error"
+                (e) => e?.customCode === "User_Not_In_Allow_List_Error",
               ) && (
                 <DocumentTitle title="Unable to create account - Volunteer Registration - Be Part of Research">
                   <>
@@ -116,7 +116,7 @@ const CheckEmailForm = (props: CheckEmailFormProps) => {
                 </DocumentTitle>
               )}
               {Utils.ConvertResponseToDTEResponse(response)?.errors.some(
-                (e) => e?.customCode === "SignUp_Error_Username_Exists"
+                (e) => e?.customCode === "SignUp_Error_Username_Exists",
               ) && (
                 <DocumentTitle title="Unable to create account - Volunteer Registration - Be Part of Research">
                   <>
@@ -136,10 +136,10 @@ const CheckEmailForm = (props: CheckEmailFormProps) => {
                 </DocumentTitle>
               )}
               {!Utils.ConvertResponseToDTEResponse(response)?.errors.some(
-                (e) => e?.customCode === "User_Not_In_Allow_List_Error"
+                (e) => e?.customCode === "User_Not_In_Allow_List_Error",
               ) &&
                 !Utils.ConvertResponseToDTEResponse(response)?.errors.some(
-                  (e) => e?.customCode === "SignUp_Error_Username_Exists"
+                  (e) => e?.customCode === "SignUp_Error_Username_Exists",
                 ) && (
                   <ErrorMessageContainer
                     DTEAxiosErrors={[

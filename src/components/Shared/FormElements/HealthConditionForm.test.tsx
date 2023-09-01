@@ -20,7 +20,7 @@ describe("HealthConditionForm", () => {
       <HealthConditionForm
         initialStateData={blankTestData}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
   });
 
@@ -30,7 +30,7 @@ describe("HealthConditionForm", () => {
       <HealthConditionForm
         initialStateData={populatedTestData}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
   });
 });
@@ -42,7 +42,7 @@ describe("Accessibility test", () => {
       <HealthConditionForm
         initialStateData={blankTestData}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -54,7 +54,7 @@ describe("Accessibility test", () => {
       <HealthConditionForm
         initialStateData={populatedTestData}
         onDataChange={mockOnDataChange}
-      />
+      />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

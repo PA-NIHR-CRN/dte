@@ -21,7 +21,7 @@ describe("DTECheckList", () => {
           },
         ]}
         onValueChange={jest.fn()}
-      />
+      />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

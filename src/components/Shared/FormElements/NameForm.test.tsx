@@ -19,7 +19,7 @@ describe("NameForm", () => {
   it("should render the form", () => {
     const mockOnDataChange = jest.fn();
     render(
-      <NameForm onDataChange={mockOnDataChange} initialStateData={data} />
+      <NameForm onDataChange={mockOnDataChange} initialStateData={data} />,
     );
   });
 });
@@ -28,7 +28,7 @@ describe("Accessibility test", () => {
   it("should not fail any accessibility tests", async () => {
     const mockOnDataChange = jest.fn();
     const { container } = render(
-      <NameForm initialStateData={data} onDataChange={mockOnDataChange} />
+      <NameForm initialStateData={data} onDataChange={mockOnDataChange} />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -189,7 +189,7 @@ describe("Cancel button visibility must be correct", () => {
         onDataChange={jest.fn()}
         initialStateData={data}
         showCancelButton
-      />
+      />,
     );
     const buttons = await screen.findAllByRole("button");
     expect(buttons).toHaveLength(1);
@@ -203,7 +203,7 @@ describe("Cancel button visibility must be correct", () => {
         onCancel={jest.fn()}
         initialStateData={data}
         showCancelButton
-      />
+      />,
     );
     const buttons = await screen.findAllByRole("button");
     expect(buttons).toHaveLength(2);
@@ -221,7 +221,7 @@ describe("Cancel button must fire correct event", () => {
         onCancel={cancelEvent}
         initialStateData={data}
         showCancelButton
-      />
+      />,
     );
     const buttons = await screen.findAllByRole("button");
     const cancelButton = buttons[1];

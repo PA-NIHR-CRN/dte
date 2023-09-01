@@ -17,7 +17,7 @@ const tagManagerArgs = {
 
 const CookieBanner = () => {
   const [cookiesAccepted, setCookiesAccepted] = useState(
-    Cookies.get("cookiesAccepted") || null
+    Cookies.get("cookiesAccepted") || null,
   );
   const [confirmationBannerShow, setConfirmationBannerShow] = useState(false);
   const [cookieBannerHide, setCookieBannerHide] = useState(true);

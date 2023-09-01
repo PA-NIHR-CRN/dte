@@ -51,7 +51,7 @@ describe("Password Form", () => {
         initialStateData={data}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
   });
 });
@@ -65,7 +65,7 @@ describe("Accessibility test", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -81,7 +81,7 @@ describe("Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const passwordInput = await screen.findByLabelText("Create your password");
     expect(passwordInput).toHaveAttribute("required");
@@ -95,7 +95,7 @@ describe("Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const passwordInput = await screen.findByLabelText("Create your password");
     const ariaRequiredValue = passwordInput.getAttribute("aria-required");
@@ -111,7 +111,7 @@ describe("Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const passwordInput = await screen.findByLabelText("Create your password");
     const typeValue = passwordInput.getAttribute("type");
@@ -127,7 +127,7 @@ describe("Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const passwordInput = await screen.findByLabelText("Create your password");
     const autoCompleteValue = passwordInput.getAttribute("autocomplete");
@@ -143,7 +143,7 @@ describe("Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const passwordInput = await screen.findByLabelText("Create your password");
     const spellCheckValue = passwordInput.getAttribute("spellcheck");
@@ -161,10 +161,10 @@ describe("Confirm Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     expect(passwordConfInput).toHaveAttribute("required");
   });
@@ -177,10 +177,10 @@ describe("Confirm Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     const ariaRequiredValue = passwordConfInput.getAttribute("aria-required");
     expect(passwordConfInput).toHaveAttribute("aria-required");
@@ -195,10 +195,10 @@ describe("Confirm Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     const typeValue = passwordConfInput.getAttribute("type");
     expect(passwordConfInput).toHaveAttribute("type");
@@ -213,10 +213,10 @@ describe("Confirm Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     const spellCheckValue = passwordConfInput.getAttribute("spellcheck");
     expect(passwordConfInput).toHaveAttribute("spellcheck");
@@ -233,7 +233,7 @@ describe("Validation must fail if both fields are empty", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
@@ -493,15 +493,15 @@ describe.each([
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
     const passwordInputBox = await screen.findByLabelText(
-      "Create your password"
+      "Create your password",
     );
     const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     fireEvent.change(passwordInputBox, { target: { value: password } });
     fireEvent.change(passwordConfInputBox, { target: { value: password } });
@@ -521,15 +521,15 @@ describe("Validation must fail for non matching entries", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
     const passwordInputBox = await screen.findByLabelText(
-      "Create your password"
+      "Create your password",
     );
     const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     fireEvent.change(passwordInputBox, { target: { value: "1" } });
     fireEvent.change(passwordConfInputBox, { target: { value: "2" } });
@@ -537,10 +537,10 @@ describe("Validation must fail for non matching entries", () => {
     const errors = await screen.findAllByRole("presentation");
     expect(errors).toHaveLength(2);
     expect(errors[0].textContent).toBe(
-      "Error: Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter and 1 symbol"
+      "Error: Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter and 1 symbol",
     );
     expect(errors[1].textContent).toBe(
-      "Error: Enter the same password as above"
+      "Error: Enter the same password as above",
     );
   });
 
@@ -552,15 +552,15 @@ describe("Validation must fail for non matching entries", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
     const passwordInputBox = await screen.findByLabelText(
-      "Create your password"
+      "Create your password",
     );
     const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     fireEvent.change(passwordInputBox, {
       target: { value: "passwordElephant123!" },
@@ -570,7 +570,7 @@ describe("Validation must fail for non matching entries", () => {
     const errors = await screen.findAllByRole("presentation");
     expect(errors).toHaveLength(1);
     expect(errors[0].textContent).toBe(
-      "Error: Enter the same password as above"
+      "Error: Enter the same password as above",
     );
   });
 });
@@ -584,15 +584,15 @@ describe("Validation must pass for matching valid entries", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
     const passwordInputBox = await screen.findByLabelText(
-      "Create your password"
+      "Create your password",
     );
     const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password"
+      "Confirm your password",
     );
     fireEvent.change(passwordInputBox, {
       target: { value: "passwordElephant123!" },
@@ -615,7 +615,7 @@ describe("Password Form must display error summary header on invalid submission"
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />
+      />,
     );
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];

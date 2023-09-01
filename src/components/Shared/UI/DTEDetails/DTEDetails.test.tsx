@@ -9,7 +9,7 @@ describe("DTEDetails Accessibility tests", () => {
     const { container } = render(
       <DTEDetails summary="summary text">
         <p>Content</p>
-      </DTEDetails>
+      </DTEDetails>,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

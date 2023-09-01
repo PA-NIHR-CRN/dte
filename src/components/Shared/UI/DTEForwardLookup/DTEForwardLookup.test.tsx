@@ -19,7 +19,7 @@ describe("Test suite for DTEForwardLookup component accessibility", () => {
         data={[]}
         values={[]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -34,7 +34,7 @@ describe("Test suite for DTEForwardLookup component accessibility", () => {
         data={["item1", "item2"]}
         values={[]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -49,7 +49,7 @@ describe("Test suite for DTEForwardLookup component accessibility", () => {
         data={["item1", "item2"]}
         values={["item1"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -64,7 +64,7 @@ describe("Test suite for DTEForwardLookup component accessibility", () => {
         data={[]}
         values={[]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const inputBox = await screen.findByLabelText("test");
@@ -101,7 +101,7 @@ describe("Test suite for DTEForwardLookup data handling", () => {
         data={["item1", "item1"]}
         values={[]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const inputBox = await screen.findByLabelText("test label");
@@ -122,7 +122,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={[]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const selectedArea = await screen.findByTestId("test-selected-area");
@@ -139,11 +139,11 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const selectedCount = await screen.findByTestId(
-      "test2-selected-area-count"
+      "test2-selected-area-count",
     );
     expect(selectedCount).toBeInTheDocument();
     expect(selectedCount.innerHTML).toBe("You have 1 area selected");
@@ -158,11 +158,11 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1", "item2"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const selectedCount = await screen.findByTestId(
-      "test3-selected-area-count"
+      "test3-selected-area-count",
     );
     expect(selectedCount).toBeInTheDocument();
     expect(selectedCount.innerHTML).toBe("You have 2 areas selected");
@@ -177,7 +177,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const selectedButtons = await screen.findAllByRole("button");
@@ -194,7 +194,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1", "item2"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const selectedButtons = await screen.findAllByRole("button");
@@ -212,7 +212,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={[]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const resultCount = await screen.findByTestId("test-result-area-count");
@@ -229,7 +229,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={[]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const searchInput = await screen.findByLabelText("test");
@@ -248,7 +248,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={[]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const searchInput = await screen.findByLabelText("test");
@@ -267,7 +267,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1", "item4"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const selectedButtons = await screen.findAllByRole("button");
@@ -285,7 +285,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1", "item2"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const initialSelectedButtons = await screen.findAllByRole("button");
@@ -306,7 +306,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1", "item2"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     let selectedButtons = await screen.findAllByRole("button");
@@ -336,7 +336,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1", "item2"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     let selectedButtons = await screen.findAllByRole("button");
@@ -366,7 +366,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1", "item2"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     let selectedButtons = await screen.findAllByRole("button");
@@ -396,7 +396,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1", "item2"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const selectedButtons = await screen.findAllByRole("button");
@@ -427,7 +427,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1", "item2"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     let selectedButtons = await screen.findAllByRole("button");
@@ -472,7 +472,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1", "item2"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     let selectedButtons = await screen.findAllByRole("button");
@@ -517,7 +517,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1", "item2"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     let selectedButtons = await screen.findAllByRole("button");
@@ -562,7 +562,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const inputBox = await screen.findByLabelText("test label");
@@ -581,7 +581,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const inputBox = await screen.findByLabelText("test label");
@@ -600,7 +600,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const inputBox = await screen.findByLabelText("test label");
@@ -621,7 +621,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const inputBox = await screen.findByLabelText("test label");
@@ -642,7 +642,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={[]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const initialSelectedButtons = await screen.queryAllByRole("button");
@@ -668,7 +668,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1", "item2"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     let selectedButtons = await screen.findAllByRole("button");
@@ -695,7 +695,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2", "item3"]}
         values={["item2"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     let selectedButtons = await screen.findAllByRole("button");
@@ -731,7 +731,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={[]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const inputBox = await screen.findByLabelText("test label");
@@ -756,7 +756,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={[]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const inputBox = await screen.findByLabelText("test label");
@@ -777,7 +777,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={[]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const inputBox = screen.getByLabelText("test label");
@@ -800,7 +800,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
         data={["item1", "item2"]}
         values={["item1"]}
         onSelectedValuesChange={mockOnSelectedChange}
-      />
+      />,
     );
 
     const inputBox = screen.getByLabelText("test label");

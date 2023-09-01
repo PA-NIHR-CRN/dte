@@ -68,7 +68,8 @@ const StyledEditor = styled.div`
             color: ${(props) => props.theme.NIHR.Blue};
             text-decoration: none;
             background-color: ${(props) => props.theme.NIHR.Yellow};
-            box-shadow: 0 -2px ${(props) => props.theme.NIHR.Yellow},
+            box-shadow:
+              0 -2px ${(props) => props.theme.NIHR.Yellow},
               0 4px #212b32;
           }
           &:hover {
@@ -133,10 +134,10 @@ const DTERichTextEditor = ({
     DTERichTextValidators.isHtml(value || "")
       ? EditorState.createWithContent(
           ContentState.createFromBlockArray(
-            convertFromHTML(value || "").contentBlocks
-          )
+            convertFromHTML(value || "").contentBlocks,
+          ),
         )
-      : EditorState.createWithContent(ContentState.createFromText(value || ""))
+      : EditorState.createWithContent(ContentState.createFromText(value || "")),
   );
   const inValidState = error !== "" && error !== undefined;
 

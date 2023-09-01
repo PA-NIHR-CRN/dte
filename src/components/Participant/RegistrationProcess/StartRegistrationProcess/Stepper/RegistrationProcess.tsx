@@ -35,7 +35,7 @@ const RegsitrationProcess = () => {
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
   const [registrationPageTitle, setRegistrationPageTitle] = useState(
-    "What is your name? - Volunteer Registration - Be Part of Research"
+    "What is your name? - Volunteer Registration - Be Part of Research",
   );
   const [gaURL, setGaURL] = useState("/registration/name");
   const [registrationData, setRegistrationData] =
@@ -88,7 +88,7 @@ const RegsitrationProcess = () => {
       | PasswordFormData
       | ConsentFormData
       | any,
-    form: string
+    form: string,
   ) => {
     setRegistrationData((oldRegistrationData) => {
       switch (form) {
@@ -236,43 +236,43 @@ const RegsitrationProcess = () => {
     switch (step) {
       case 1:
         setRegistrationPageTitle(
-          "What is your date of birth? - Volunteer Registration - Be Part of Research"
+          "What is your date of birth? - Volunteer Registration - Be Part of Research",
         );
         setGaURL("/registration/dateofbirth");
         break;
       case 2:
         setRegistrationPageTitle(
-          "What is your email address? - Volunteer Registration - Be Part of Research"
+          "What is your email address? - Volunteer Registration - Be Part of Research",
         );
         setGaURL("/registration/email");
         break;
       case 3:
         setRegistrationPageTitle(
-          "Create a password - Volunteer Registration - Be Part of Research"
+          "Create a password - Volunteer Registration - Be Part of Research",
         );
         setGaURL("/registration/password");
         break;
       case 4:
         setRegistrationPageTitle(
-          "Consent to process your data and be contacted - Volunteer Registration - Be Part of Research"
+          "Consent to process your data and be contacted - Volunteer Registration - Be Part of Research",
         );
         setGaURL("/registration/consent");
         break;
       case 5:
         setRegistrationPageTitle(
-          "Registering your account - Volunteer Registration - Be Part of Research"
+          "Registering your account - Volunteer Registration - Be Part of Research",
         );
         setGaURL("/registration/registering");
         break;
       case 6:
         setRegistrationPageTitle(
-          "Your registration has been cancelled - Volunteer Registration - Be Part of Research"
+          "Your registration has been cancelled - Volunteer Registration - Be Part of Research",
         );
         setGaURL("/registration/cancelled");
         break;
       default:
         setRegistrationPageTitle(
-          "What is your name? - Volunteer Registration - Be Part of Research"
+          "What is your name? - Volunteer Registration - Be Part of Research",
         );
         setGaURL("/registration/name");
     }

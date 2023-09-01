@@ -119,7 +119,7 @@ const PostcodeLookup = (props: PostcodeLookupProps) => {
       },
       {
         manual: true,
-      }
+      },
     ).catch(() => {
       // swallow 404 axios error -
     });
@@ -127,7 +127,7 @@ const PostcodeLookup = (props: PostcodeLookupProps) => {
       formData.postcode
         .toUpperCase()
         .replace(/[^A-Z0-9]/g, "")
-        .replace(/[A-Z0-9]{3}$/, " $&")
+        .replace(/[A-Z0-9]{3}$/, " $&"),
     );
   };
 
@@ -212,7 +212,7 @@ const PostcodeLookup = (props: PostcodeLookupProps) => {
               const cleaned = value.replace(/[^A-Za-z0-9]/g, "");
               if (
                 cleaned.match(
-                  /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})$/
+                  /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})$/,
                 )
               ) {
                 return true;
