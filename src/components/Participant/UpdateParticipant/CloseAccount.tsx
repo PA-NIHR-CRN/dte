@@ -55,7 +55,7 @@ const CloseAccount = () => {
     {
       method: "DELETE",
     },
-    { useCache: false, manual: true },
+    { useCache: false, manual: true }
   );
 
   const handleConfirmCloseAccount = async () => {

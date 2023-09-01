@@ -30,7 +30,7 @@ beforeAll(() => {
             };
           }
           return new Error("Incorrect MFA Code");
-        },
+        }
       );
       this.post(
         `${process.env.REACT_APP_BASE_API}/users/resendmfachallenge`,
@@ -42,7 +42,7 @@ beforeAll(() => {
             conversationId: null,
             version: 1,
           };
-        },
+        }
       );
     },
   });

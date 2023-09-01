@@ -105,12 +105,11 @@ const ErrorMessageContainer = ({
       DTEAxiosErrors &&
       DTEAxiosErrors.length > 0 &&
       DTEAxiosErrors.some(
-        (item) => item !== undefined && item !== null && item.length > 0,
+        (item) => item !== undefined && item !== null && item.length > 0
       )
     ) {
-      mapErrorCodeToSummary(DTEAxiosErrors).forEach(
-        (mappedErrors: any) =>
-          mappedErrors?.forEach((error: any) => errors.push(error.detail)),
+      mapErrorCodeToSummary(DTEAxiosErrors).forEach((mappedErrors: any) =>
+        mappedErrors?.forEach((error: any) => errors.push(error.detail))
       );
     }
     if (simpleErrors && simpleErrors.length > 0) {
@@ -121,14 +120,14 @@ const ErrorMessageContainer = ({
         (innerAxiosError: AxiosError<any> | undefined) =>
           innerAxiosError &&
           innerAxiosError.response?.data?.error?.length > 0 &&
-          errors.push(customCodeLookup(innerAxiosError?.response?.data.error)),
+          errors.push(customCodeLookup(innerAxiosError?.response?.data.error))
       );
 
       axiosErrors.forEach(
         (innerAxiosError: AxiosError<any> | undefined) =>
           innerAxiosError &&
           innerAxiosError.message.length > 0 &&
-          errors.push(customCodeLookup(innerAxiosError.message)),
+          errors.push(customCodeLookup(innerAxiosError.message))
       );
     }
     if (axiosError) {

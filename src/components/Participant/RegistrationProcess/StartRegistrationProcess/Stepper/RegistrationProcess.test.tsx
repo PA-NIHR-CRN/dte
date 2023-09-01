@@ -27,7 +27,7 @@ describe("RegistrationProcess", () => {
           ["send", { hitType: "pageview", page: "/registration/name" }],
         ]);
       },
-      { timeout: 1000 },
+      { timeout: 1000 }
     );
   });
 });

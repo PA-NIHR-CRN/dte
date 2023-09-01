@@ -63,7 +63,7 @@ const ContinueRegistration = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [changing, setChanging] = useState(false);
   const [pageTitle, setPageTitle] = useState(
-    "What is your home address? - Volunteer Registration - Be Part of Research",
+    "What is your home address? - Volunteer Registration - Be Part of Research"
   );
   const [gaURL, setGaURL] = useState("/registration/address");
   useEffect(() => {
@@ -148,7 +148,7 @@ const ContinueRegistration = () => {
       | Disability2FormData
       | HealthConditionFormData
       | SexFormData,
-    form: string,
+    form: string
   ) => {
     setRegistrationData((oldRegistrationData: ContinueRegistrationState) => {
       switch (form) {
@@ -255,7 +255,7 @@ const ContinueRegistration = () => {
 
   const nextButtonText = useMemo(
     () => (changing ? "Save" : "Continue"),
-    [changing],
+    [changing]
   );
 
   const getStepContent = (step: number) => {
@@ -314,7 +314,7 @@ const ContinueRegistration = () => {
                             otherText: undefined,
                           },
                   };
-                },
+                }
               );
             }}
             initialStateData={registrationData.ethnicity1FormData}
@@ -360,7 +360,7 @@ const ContinueRegistration = () => {
                           : undefined,
                     },
                   };
-                },
+                }
               );
               if (data.disability === "no") {
                 setCancelData((oldCancelData: any) => {
@@ -441,61 +441,61 @@ const ContinueRegistration = () => {
     switch (step) {
       case 1:
         setPageTitle(
-          "What is your phone number? - Volunteer Registration - Be Part of Research",
+          "What is your phone number? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/phone");
         break;
       case 2:
         setPageTitle(
-          "Sex and gender identity - Volunteer Registration - Be Part of Research",
+          "Sex and gender identity - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/sex");
         break;
       case 3:
         setPageTitle(
-          "What is your ethnic group? - Volunteer Registration - Be Part of Research",
+          "What is your ethnic group? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/ethnicgroup");
         break;
       case 4:
         setPageTitle(
-          "Which of the following best describes your ethnic background? - Volunteer Registration - Be Part of Research",
+          "Which of the following best describes your ethnic background? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/ethnicbackground");
         break;
       case 5:
         setPageTitle(
-          "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more? - Volunteer Registration - Be Part of Research",
+          "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/conditions");
         break;
       case 6:
         setPageTitle(
-          "Do any of your conditions or illnesses reduce your ability to carry out day-to-day activities? - Volunteer Registration - Be Part of Research",
+          "Do any of your conditions or illnesses reduce your ability to carry out day-to-day activities? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/reducedability");
         break;
       case 7:
         setPageTitle(
-          "Which areas of research are you interested in? - Volunteer Registration - Be Part of Research",
+          "Which areas of research are you interested in? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/areasofresearch");
         break;
       case 8:
         setPageTitle(
-          "Check your answers before completing your registration - Volunteer Registration - Be Part of Research",
+          "Check your answers before completing your registration - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/checkyouranswers");
         break;
       case 9:
         setPageTitle(
-          "Thank you for registering with Be Part of Research - Volunteer Account - Be Part of Research",
+          "Thank you for registering with Be Part of Research - Volunteer Account - Be Part of Research"
         );
         setGaURL("/registration/complete");
         break;
       default:
         setPageTitle(
-          "What is your home address? - Volunteer Registration - Be Part of Research",
+          "What is your home address? - Volunteer Registration - Be Part of Research"
         );
         setGaURL("/registration/address");
     }
@@ -509,7 +509,7 @@ const ContinueRegistration = () => {
     {
       manual: false,
       useCache: false,
-    },
+    }
   );
 
   useEffect(() => {
@@ -532,13 +532,13 @@ const ContinueRegistration = () => {
     {
       manual: true,
       useCache: false,
-    },
+    }
   );
 
   // add a post request to the consent endpoint
   const handleConsent = () => {
     postConsent().then((res) =>
-      setIsUserConsented(res.data.content.userConsents),
+      setIsUserConsented(res.data.content.userConsents)
     );
   };
 

@@ -67,7 +67,7 @@ const MfaChangeNumberConfirmEmail = () => {
         mfaDetails,
       },
     },
-    { useCache: false, manual: prevUrl === "/MfaChangePhoneNumber" },
+    { useCache: false, manual: prevUrl === "/MfaChangePhoneNumber" }
   );
 
   const handleResendCode = async () => {

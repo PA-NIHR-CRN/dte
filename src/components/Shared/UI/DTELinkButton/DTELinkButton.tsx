@@ -46,9 +46,7 @@ const StyledButton = styled(Button)<
 
     &:focus {
       background-color: ${(props) => props.theme.NIHR.Yellow};
-      box-shadow:
-        0 -2px ${(props) => props.theme.NIHR.Yellow},
-        0 4px #0b0c0c;
+      box-shadow: 0 -2px ${(props) => props.theme.NIHR.Yellow}, 0 4px #0b0c0c;
       color: ${(props) => props.theme.NIHR.Blue};
       text-decoration: none;
     }

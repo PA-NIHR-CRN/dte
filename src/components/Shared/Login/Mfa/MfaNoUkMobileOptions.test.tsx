@@ -32,7 +32,7 @@ describe("Accessibility test", () => {
     const { container } = render(
       <Router>
         <MfaNoUkMobileOptions />
-      </Router>,
+      </Router>
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -44,10 +44,10 @@ describe("MfaNoUkMobileOptions renders correctly", () => {
     render(
       <Router>
         <MfaNoUkMobileOptions />
-      </Router>,
+      </Router>
     );
     expect(
-      screen.getByRole("heading", { name: "Please select an option" }),
+      screen.getByRole("heading", { name: "Please select an option" })
     ).toBeInTheDocument();
   });
 
@@ -55,11 +55,11 @@ describe("MfaNoUkMobileOptions renders correctly", () => {
     render(
       <Router>
         <MfaNoUkMobileOptions />
-      </Router>,
+      </Router>
     );
     expect(screen.getByTestId("ukLandlineRadio-fieldset")).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Continue" }),
+      screen.getByRole("button", { name: "Continue" })
     ).toBeInTheDocument();
   });
 
@@ -67,7 +67,7 @@ describe("MfaNoUkMobileOptions renders correctly", () => {
     render(
       <Router>
         <MfaNoUkMobileOptions />
-      </Router>,
+      </Router>
     );
     const backLink = screen.getByRole("link", { name: "Back" });
     userEvent.click(backLink);
@@ -83,11 +83,11 @@ describe("MfaNoUkMobileOptions renders correctly", () => {
           <Route path="/">
             <MfaNoUkMobileOptions />
           </Route>
-        </MemoryRouter>,
+        </MemoryRouter>
       );
 
       const option = screen.getByLabelText(
-        "Provide a UK landline number. Our automated service will call you and read out a 6 digit code, so please have a pen and paper handy",
+        "Provide a UK landline number. Our automated service will call you and read out a 6 digit code, so please have a pen and paper handy"
       );
       userEvent.click(option);
       const continueButton = screen.getByRole("button", { name: "Continue" });
@@ -104,11 +104,11 @@ describe("MfaNoUkMobileOptions renders correctly", () => {
           <Route path="/">
             <MfaNoUkMobileOptions />
           </Route>
-        </MemoryRouter>,
+        </MemoryRouter>
       );
 
       const option = screen.getByLabelText(
-        "Use an online authenticator application: We also have the option to use (TBC or TBC) in order to authenticate your account.",
+        "Use an online authenticator application: We also have the option to use (TBC or TBC) in order to authenticate your account."
       );
       userEvent.click(option);
       const continueButton = screen.getByRole("button", { name: "Continue" });

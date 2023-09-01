@@ -68,7 +68,7 @@ const MfaTotpChallenge = () => {
         (e) =>
           e.customCode === "Not_Authorized" &&
           e.detail ===
-            "Too many invalid credentials attempts. User temporarily locked. Please try again after few seconds.",
+            "Too many invalid credentials attempts. User temporarily locked. Please try again after few seconds."
       )
     ) {
       history.push("/MfaLockedOut");

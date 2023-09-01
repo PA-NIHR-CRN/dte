@@ -56,7 +56,7 @@ const Home = () => {
     {
       manual: false,
       useCache: false,
-    },
+    }
   );
 
   useEffect(() => {

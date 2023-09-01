@@ -35,7 +35,7 @@ const MfaLandlineSetup = () => {
   });
   const [{ loading: setupMfaLoading }, postSetupInfo] = useAxiosFetch(
     {},
-    { useCache: false, manual: true },
+    { useCache: false, manual: true }
   );
 
   const onSubmit = async (data: any) => {

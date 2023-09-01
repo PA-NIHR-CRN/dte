@@ -42,7 +42,7 @@ beforeEach(() => {
             conversationId: null,
             version: 1,
           };
-        },
+        }
       );
     },
   });
@@ -75,23 +75,23 @@ describe("Close Account display tests", () => {
     render(<CloseAccount />);
     expect(
       await screen.findByText(
-        "If you have changed your mind and wish to close your account, you are withdrawing your consent for Be Part of Research to process and store your personal information.",
-      ),
+        "If you have changed your mind and wish to close your account, you are withdrawing your consent for Be Part of Research to process and store your personal information."
+      )
     ).toBeInTheDocument();
     expect(
       await screen.findByText(
-        "Be Part of Research will no longer contact you about areas of research you have expressed an interest in.",
-      ),
+        "Be Part of Research will no longer contact you about areas of research you have expressed an interest in."
+      )
     ).toBeInTheDocument();
     expect(
       await screen.findByText(
-        /When closing your account Be Part of Research will keep some anonymous data to help improve the service. To find out more please read the/,
-      ),
+        /When closing your account Be Part of Research will keep some anonymous data to help improve the service. To find out more please read the/
+      )
     ).toBeInTheDocument();
     expect(
       await screen.findByText(
-        "To take part in the future you can register again.",
-      ),
+        "To take part in the future you can register again."
+      )
     ).toBeInTheDocument();
 
     const links = await screen.findAllByRole("link");
@@ -100,7 +100,7 @@ describe("Close Account display tests", () => {
     expect(links[0]).toHaveTextContent("Back");
     expect(links[1]).toHaveAttribute(
       "href",
-      "https://bepartofresearch.nihr.ac.uk/site-policies/privacy-policy/",
+      "https://bepartofresearch.nihr.ac.uk/site-policies/privacy-policy/"
     );
     expect(links[1]).toHaveAttribute("target", "_blank");
     expect(links[1]).toHaveTextContent("Be Part of Research Privacy Policy");
@@ -119,7 +119,7 @@ describe("Close Account functional tests", () => {
     const confirmButtons = await screen.findAllByRole("button");
     expect(confirmButtons).toHaveLength(2);
     expect(
-      await screen.findByText("Confirm if you want to close your account"),
+      await screen.findByText("Confirm if you want to close your account")
     ).toBeInTheDocument();
     expect(confirmButtons[0]).toHaveTextContent("Confirm");
     expect(confirmButtons[1]).toHaveTextContent("Cancel");
@@ -132,7 +132,7 @@ describe("Close Account functional tests", () => {
     const confirmButtons = await screen.findAllByRole("button");
     userEvent.click(confirmButtons[1]);
     expect(
-      screen.queryByText("Confirm if you want to close your account"),
+      screen.queryByText("Confirm if you want to close your account")
     ).not.toBeInTheDocument();
     const postCancelButtons = await screen.findAllByRole("button");
     expect(postCancelButtons).toHaveLength(1);
@@ -148,7 +148,7 @@ describe("Close Account functional tests", () => {
     server.pretender.handledRequest = (verb, path) => {
       expect(verb).toBe("DELETE");
       expect(path).toBe(
-        `${process.env.REACT_APP_BASE_API}/users/deleteparticipantaccount`,
+        `${process.env.REACT_APP_BASE_API}/users/deleteparticipantaccount`
       );
     };
   });
@@ -162,7 +162,7 @@ describe("Close Account functional tests", () => {
     server.pretender.handledRequest = (verb, path) => {
       expect(verb).toBe("DELETE");
       expect(path).toBe(
-        `${process.env.REACT_APP_BASE_API}/users/deleteparticipantaccount`,
+        `${process.env.REACT_APP_BASE_API}/users/deleteparticipantaccount`
       );
       expect(path).not.toHaveBeenCalled();
     };
@@ -178,7 +178,7 @@ describe("Close Account functional tests", () => {
     const confirmButtons = await screen.findAllByRole("button");
     userEvent.click(confirmButtons[0]);
     await waitForElementToBeRemoved(
-      await screen.findByText(/Closing your account.../),
+      await screen.findByText(/Closing your account.../)
     );
     expect(mockHistoryPush).toHaveBeenCalledTimes(1);
     expect(mockHistoryPush).toHaveBeenCalledWith("/Participants/accountclosed");
@@ -194,7 +194,7 @@ describe("Account closed analytics", () => {
           ["send", { hitType: "pageview", page: "/MyAccount/CloseAccount" }],
         ]);
       },
-      { timeout: 1000 },
+      { timeout: 1000 }
     );
   });
 });

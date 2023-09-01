@@ -24,7 +24,7 @@ const StudyDetailsHeader = (props: StudyDetailsHeaderProps) => {
       url: `${process.env.REACT_APP_BASE_API}/studies/${studyid}`,
       method: "GET",
     },
-    { manual: true, useCache: true },
+    { manual: true, useCache: true }
   );
 
   useEffect(() => {

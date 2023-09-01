@@ -20,7 +20,7 @@ beforeAll(() => {
             conversationId: null,
             version: 1,
           };
-        },
+        }
       );
     },
   });
@@ -187,7 +187,7 @@ describe.each([
         expect(await screen.findByText(validationError)).toBeInTheDocument();
       });
     });
-  },
+  }
 );
 
 describe.each([
@@ -222,16 +222,16 @@ describe.each([
       userEvent.click(screen.getByText("Reset your password"));
       await waitFor(async () => {
         expect(
-          screen.queryByText("Enter an email address"),
+          screen.queryByText("Enter an email address")
         ).not.toBeInTheDocument();
         expect(
           screen.queryByText(
-            "Enter an email address in the correct format, like name@example.com",
-          ),
+            "Enter an email address in the correct format, like name@example.com"
+          )
         ).not.toBeInTheDocument();
       });
     });
-  },
+  }
 );
 
 describe("Forgotten Password must display error summary header on invalid submission", () => {
@@ -255,7 +255,7 @@ describe("Functional requirements must be met", () => {
     userEvent.click(submitButton);
     server.pretender.handledRequest = (path) => {
       expect(path).toBe(
-        `${process.env.REACT_APP_BASE_API}/users/forgotpassword`,
+        `${process.env.REACT_APP_BASE_API}/users/forgotpassword`
       );
     };
   });

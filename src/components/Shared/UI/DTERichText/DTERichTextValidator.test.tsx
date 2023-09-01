@@ -41,7 +41,7 @@ describe("DTERichTextValidators minCharacterLength", () => {
   it("minCharacterLength must return true for populated html string above minimum length", async () => {
     const results = DTERichTextValidators.minCharacterLength(
       "<p>123456</p>",
-      5,
+      5
     );
     expect(results).toBeTruthy();
   });
@@ -79,7 +79,7 @@ describe("DTERichTextValidators characterLengthRange", () => {
     const results = DTERichTextValidators.characterLengthRange(
       "<p>1</p>",
       4,
-      6,
+      6
     );
     expect(results).toBeFalsy();
   });
@@ -88,7 +88,7 @@ describe("DTERichTextValidators characterLengthRange", () => {
     const results = DTERichTextValidators.characterLengthRange(
       "<p>1234567</p>",
       4,
-      6,
+      6
     );
     expect(results).toBeFalsy();
   });
@@ -97,7 +97,7 @@ describe("DTERichTextValidators characterLengthRange", () => {
     const results = DTERichTextValidators.characterLengthRange(
       "<p>12345</p>",
       4,
-      6,
+      6
     );
     expect(results).toBeTruthy();
   });

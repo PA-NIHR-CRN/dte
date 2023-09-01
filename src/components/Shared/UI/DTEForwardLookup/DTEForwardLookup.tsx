@@ -119,7 +119,7 @@ const DTEForwardLookup = ({
     let filtered: string[] = [];
     if (filter !== "") {
       filtered = data.filter((element) =>
-        element.toLowerCase().includes(filter.toLowerCase()),
+        element.toLowerCase().includes(filter.toLowerCase())
       );
     }
     filtered = filtered
@@ -146,14 +146,14 @@ const DTEForwardLookup = ({
   const handleInputValueChanged = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     setCheckBoxDataList(
-      buildCheckBoxList(buildCheckBoxFilteredList(e.target.value)),
+      buildCheckBoxList(buildCheckBoxFilteredList(e.target.value))
     );
     setCheckBoxExpanded(true);
   };
 
   const handleRemoveSelectedChoice = (index: number) => {
     setSelectedData((oldSelectedData) =>
-      oldSelectedData.filter((_, i) => i !== index),
+      oldSelectedData.filter((_, i) => i !== index)
     );
     if (checkBoxDataList) {
       const mappedCheckboxes = checkBoxDataList;
@@ -168,7 +168,7 @@ const DTEForwardLookup = ({
 
   const handleRemoveSelectedChoiceKeyDown = (
     e: KeyboardEvent<HTMLButtonElement>,
-    index: number,
+    index: number
   ) => {
     if (e.code === "Enter" || e.code === "NumpadEnter" || e.code === "Space") {
       const selectedText = selectedData[index];
@@ -180,7 +180,7 @@ const DTEForwardLookup = ({
       });
       setCheckBoxDataList(checkBoxes);
       setSelectedData((oldSelectedData) =>
-        oldSelectedData.filter((_, i) => i !== index),
+        oldSelectedData.filter((_, i) => i !== index)
       );
     }
   };
@@ -197,13 +197,13 @@ const DTEForwardLookup = ({
     });
 
     const nonAffectedSelectedItems = selectedData.filter(
-      (x) => !checkBoxValues.includes(x),
+      (x) => !checkBoxValues.includes(x)
     );
 
     setSelectedData(
       [...nonAffectedSelectedItems, ...addedData]
         .filter((v, i, a) => a.findIndex((t) => t === v) === i)
-        .sort((a, b) => (a > b && 1) || -1),
+        .sort((a, b) => (a > b && 1) || -1)
     );
 
     setCheckBoxDataList(e);
@@ -277,7 +277,7 @@ const DTEForwardLookup = ({
             onClick={() => {
               setInputValue("");
               setCheckBoxDataList(
-                buildCheckBoxList(buildCheckBoxFilteredList("")),
+                buildCheckBoxList(buildCheckBoxFilteredList(""))
               );
             }}
             disabled={inputValue === ""}

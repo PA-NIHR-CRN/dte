@@ -54,7 +54,7 @@ const AreasOfResearch = () => {
     {
       manual: false,
       useCache: false,
-    },
+    }
   );
 
   const parseTriStateBoolean = (value: boolean, nullValue: string) => {
@@ -103,7 +103,7 @@ const AreasOfResearch = () => {
             sexAtBirth: response.sexRegisteredAtBirth,
             genderAtBirth: parseTriStateBoolean(
               response.genderIsSameAsSexRegisteredAtBirth,
-              "noSay",
+              "noSay"
             ),
           },
           ethnicity1: {
@@ -132,7 +132,7 @@ const AreasOfResearch = () => {
     {
       method: "PUT",
     },
-    { useCache: false, manual: true },
+    { useCache: false, manual: true }
   );
 
   const handleSave = async (data: HealthConditionFormData) => {
@@ -155,7 +155,7 @@ const AreasOfResearch = () => {
             parseInt(userData.dob.year, 10),
             parseInt(userData.dob.month, 10) - 1,
             parseInt(userData.dob.day, 10),
-            12,
+            12
           ).toISOString(),
           sexRegisteredAtBirth: userData.sex.sexAtBirth,
           genderIsSameAsSexRegisteredAtBirth:

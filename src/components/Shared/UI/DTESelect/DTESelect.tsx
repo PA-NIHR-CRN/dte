@@ -82,7 +82,7 @@ const DTESelect = memo(
         {optionElements}
       </StyledSelect>
     );
-  },
+  }
 );
 
 export default DTESelect;

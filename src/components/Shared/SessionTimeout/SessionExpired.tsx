@@ -38,7 +38,7 @@ function SessionExpired() {
               onClick={() =>
                 isInNHSApp
                   ? window.nhsapp.navigation.goToPage(
-                      window.nhsapp.navigation.HOME_PAGE,
+                      window.nhsapp.navigation.HOME_PAGE
                     )
                   : gotoLogin()
               }

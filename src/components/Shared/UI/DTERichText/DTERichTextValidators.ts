@@ -32,7 +32,7 @@ export default class DTERichTextValidators {
   static characterLengthRange = (
     data: string,
     minLength: number,
-    maxLength: number,
+    maxLength: number
   ) => {
     const clean = sanitizeHtml(data, {
       allowedTags: [],
@@ -45,7 +45,7 @@ export default class DTERichTextValidators {
       /\s?<!doctype html>|(<html\b[^>]*>|<body\b[^>]*>|<x-[^>]+>)+/i;
     const full = new RegExp(
       htmlTags.map((tag) => `<${tag}\\b[^>]*>`).join("|"),
-      "i",
+      "i"
     );
 
     const checker = data.trim().slice(0, 1000);

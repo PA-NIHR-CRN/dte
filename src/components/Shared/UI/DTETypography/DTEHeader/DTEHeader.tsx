@@ -12,7 +12,7 @@ interface DTEHeaderProps {
 const getStyleData = (
   props: DTEHeaderProps & { theme: any },
   styleElement: "size" | "height",
-  platform: "desktop" | "mobile",
+  platform: "desktop" | "mobile"
 ) => {
   if (styleElement === "size") {
     if (platform === "desktop") {
@@ -66,7 +66,7 @@ const getStyleData = (
 const getColour = (
   props: DTEHeaderProps & {
     theme: any;
-  },
+  }
 ) => {
   switch (props.$color) {
     case "blue":

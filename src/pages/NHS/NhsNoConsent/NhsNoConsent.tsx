@@ -47,7 +47,7 @@ const NhsNoConsent = () => {
               to="/"
               onClick={() =>
                 window.nhsapp.navigation.goToPage(
-                  window.nhsapp.navigation.HOME_PAGE,
+                  window.nhsapp.navigation.HOME_PAGE
                 )
               }
               renderStyle="standard"
@@ -73,7 +73,7 @@ const NhsNoConsent = () => {
           <DTEButton
             onClick={() =>
               window.nhsapp.navigation.openBrowserOverlay(
-                "https://bepartofresearch.nihr.ac.uk/",
+                "https://bepartofresearch.nihr.ac.uk/"
               )
             }
           >

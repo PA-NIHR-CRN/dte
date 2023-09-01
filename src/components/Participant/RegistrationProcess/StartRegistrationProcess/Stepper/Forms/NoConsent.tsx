@@ -32,7 +32,7 @@ const NoConsent = () => {
         <DTEButton
           onClick={() =>
             window.nhsapp.navigation.openBrowserOverlay(
-              "https://bepartofresearch.nihr.ac.uk/",
+              "https://bepartofresearch.nihr.ac.uk/"
             )
           }
         >

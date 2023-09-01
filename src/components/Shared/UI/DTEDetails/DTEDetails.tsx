@@ -17,9 +17,7 @@ const StyledDetailsSummary = styled(Details.Summary)`
       text-decoration: none;
       color: ${(props) => props.theme.NIHR.Blue};
       background-color: ${(props) => props.theme.NIHR.Yellow};
-      box-shadow:
-        0 -2px ${(props) => props.theme.NIHR.Yellow},
-        0 4px #212b32;
+      box-shadow: 0 -2px ${(props) => props.theme.NIHR.Yellow}, 0 4px #212b32;
     }
     &:hover {
       color: ${(props) => props.theme.NIHR.Blue};

@@ -100,7 +100,7 @@ describe("Confirm Password must have correct attributes", () => {
   it("must have a required attribute", async () => {
     render(<ResetPassword />);
     const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password",
+      "Confirm your password"
     );
     expect(passwordConfInput).toHaveAttribute("required");
   });
@@ -108,7 +108,7 @@ describe("Confirm Password must have correct attributes", () => {
   it("must have a aria-required attribute of true", async () => {
     render(<ResetPassword />);
     const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password",
+      "Confirm your password"
     );
     const ariaRequiredValue = passwordConfInput.getAttribute("aria-required");
     expect(passwordConfInput).toHaveAttribute("aria-required");
@@ -118,7 +118,7 @@ describe("Confirm Password must have correct attributes", () => {
   it("must have a type attribute of password", async () => {
     render(<ResetPassword />);
     const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password",
+      "Confirm your password"
     );
     const typeValue = passwordConfInput.getAttribute("type");
     expect(passwordConfInput).toHaveAttribute("type");
@@ -128,7 +128,7 @@ describe("Confirm Password must have correct attributes", () => {
   it("must have a spellcheck attribute set to false", async () => {
     render(<ResetPassword />);
     const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password",
+      "Confirm your password"
     );
     const spellCheckValue = passwordConfInput.getAttribute("spellcheck");
     expect(passwordConfInput).toHaveAttribute("spellcheck");
@@ -392,10 +392,10 @@ describe.each([
     render(<ResetPassword />);
     const continueButton = await screen.findByText("Save");
     const passwordInputBox = await screen.findByLabelText(
-      "Create your password",
+      "Create your password"
     );
     const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password",
+      "Confirm your password"
     );
     fireEvent.change(passwordInputBox, { target: { value: password } });
     fireEvent.change(passwordConfInputBox, { target: { value: password } });
@@ -411,10 +411,10 @@ describe("Validation must fail for non matching entries", () => {
     render(<ResetPassword />);
     const continueButton = await screen.findByText("Save");
     const passwordInputBox = await screen.findByLabelText(
-      "Create your password",
+      "Create your password"
     );
     const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password",
+      "Confirm your password"
     );
     fireEvent.change(passwordInputBox, { target: { value: "1" } });
     fireEvent.change(passwordConfInputBox, { target: { value: "2" } });
@@ -422,10 +422,10 @@ describe("Validation must fail for non matching entries", () => {
     const errors = await screen.findAllByRole("presentation");
     expect(errors).toHaveLength(2);
     expect(errors[0].textContent).toBe(
-      "Error: Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter and 1 symbol",
+      "Error: Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter and 1 symbol"
     );
     expect(errors[1].textContent).toBe(
-      "Error: Enter the same password as above",
+      "Error: Enter the same password as above"
     );
   });
 
@@ -433,10 +433,10 @@ describe("Validation must fail for non matching entries", () => {
     render(<ResetPassword />);
     const continueButton = await screen.findByText("Save");
     const passwordInputBox = await screen.findByLabelText(
-      "Create your password",
+      "Create your password"
     );
     const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password",
+      "Confirm your password"
     );
     fireEvent.change(passwordInputBox, {
       target: { value: "passwordElephant123!" },
@@ -446,7 +446,7 @@ describe("Validation must fail for non matching entries", () => {
     const errors = await screen.findAllByRole("presentation");
     expect(errors).toHaveLength(1);
     expect(errors[0].textContent).toBe(
-      "Error: Enter the same password as above",
+      "Error: Enter the same password as above"
     );
   });
 });
@@ -456,10 +456,10 @@ describe("Validation must pass for matching valid entries", () => {
     render(<ResetPassword />);
     const continueButton = await screen.findByText("Save");
     const passwordInputBox = await screen.findByLabelText(
-      "Create your password",
+      "Create your password"
     );
     const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password",
+      "Confirm your password"
     );
     fireEvent.change(passwordInputBox, {
       target: { value: "passwordElephant123!" },
@@ -495,7 +495,7 @@ describe("Password reset analytics", () => {
           ["send", { hitType: "pageview", page: "/ResetPassword/choose" }],
         ]);
       },
-      { timeout: 1000 },
+      { timeout: 1000 }
     );
   });
 });

@@ -17,20 +17,20 @@ export type UseAxiosFetchResult = [
   AxiosFetchResponseValues,
   (
     refetchConfig?: AxiosRequestConfig | undefined,
-    refetchOptions?: Options | undefined,
+    refetchOptions?: Options | undefined
   ) => AxiosPromise<any>,
-  () => void,
+  () => void
 ];
 
 const useAxiosFetch = (
   config: AxiosRequestConfig,
-  options?: Options | undefined,
+  options?: Options | undefined
 ): UseAxiosFetchResult => {
   const [data, setData] = useState<any>(undefined);
   const [error, setError] = useState<AxiosError<any> | undefined>(undefined);
   const [loading, setLoading] = useState<undefined | boolean>(false);
   const [response, setResponse] = useState<AxiosResponse<any> | undefined>(
-    undefined,
+    undefined
   );
 
   let configSpread: AxiosRequestConfig = config;
@@ -79,7 +79,7 @@ const useAxiosFetch = (
 
   const clearAndRefetch = (
     refetchConfig?: AxiosRequestConfig | undefined,
-    refetchOptions?: Options | undefined,
+    refetchOptions?: Options | undefined
   ) => {
     clear();
     return refetch(refetchConfig, refetchOptions).catch();

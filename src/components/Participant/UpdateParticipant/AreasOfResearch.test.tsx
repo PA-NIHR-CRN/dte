@@ -49,7 +49,7 @@ beforeEach(() => {
             conversationId: null,
             version: 1,
           };
-        },
+        }
       );
       this.get(
         `${process.env.REACT_APP_BASE_API}/referencedata/health/healthconditions`,
@@ -74,13 +74,13 @@ beforeEach(() => {
             conversationId: null,
             version: 1,
           };
-        },
+        }
       );
       this.put(
         `${process.env.REACT_APP_BASE_API}/participants/demographics`,
         () => {
           return { message: "Success" };
-        },
+        }
       );
     },
   });
@@ -107,26 +107,26 @@ describe("Areas Of Research display tests", () => {
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
     expect(header.textContent).toBe(
-      "Which areas of research are you interested in?",
+      "Which areas of research are you interested in?"
     );
   });
 
   it("must display the data retrieved from the server correctly", async () => {
     render(<AreasOfResearch />);
     const intro1 = await screen.findByText(
-      "Start entering details below to see different areas of research. You can select as many options as you like.",
+      "Start entering details below to see different areas of research. You can select as many options as you like."
     );
     expect(intro1).toBeInTheDocument();
 
     const intro2 = await screen.findByText(
-      /For example, you can enter a health condition like 'diabetes', 'heart disease' or 'COVID-19'. You can take part whether you have a health condition or not by entering '/,
+      /For example, you can enter a health condition like 'diabetes', 'heart disease' or 'COVID-19'. You can take part whether you have a health condition or not by entering '/
     );
     expect(intro2).toBeInTheDocument();
     const links = screen.getAllByRole("link");
     expect(links).toHaveLength(1);
     expect(links[0]).toHaveAttribute(
       "href",
-      "https://bepartofresearch.nihr.ac.uk/taking-part/volunteering-without-a-condition/",
+      "https://bepartofresearch.nihr.ac.uk/taking-part/volunteering-without-a-condition/"
     );
     expect(links[0]).toHaveTextContent("healthy volunteer");
 
@@ -141,7 +141,7 @@ describe("Areas Of Research display tests", () => {
     expect(editorButtons[4]).toHaveTextContent("Save");
     expect(editorButtons[5]).toHaveTextContent("Cancel");
     const extraInfoDetails = await screen.findByText(
-      "Why we are asking this question",
+      "Why we are asking this question"
     );
     expect(extraInfoDetails).toBeInTheDocument();
   });
@@ -205,11 +205,11 @@ describe("Update Areas Of Research", () => {
     expect(healthConditionOptions).toHaveLength(2);
     expect(healthConditionOptions[0]).toHaveAttribute(
       "value",
-      "Actinic keratoses (solar keratoses)",
+      "Actinic keratoses (solar keratoses)"
     );
     expect(healthConditionOptions[1]).toHaveAttribute(
       "value",
-      "Solar keratoses",
+      "Solar keratoses"
     );
 
     await waitFor(() => {
@@ -220,7 +220,7 @@ describe("Update Areas Of Research", () => {
     expect(editorButtons).toHaveLength(7);
     expect(editorButtons[0]).toHaveTextContent("Achalasia");
     expect(editorButtons[1]).toHaveTextContent(
-      "Actinic keratoses (solar keratoses)",
+      "Actinic keratoses (solar keratoses)"
     );
     expect(editorButtons[2]).toHaveTextContent("Gigantism");
     expect(editorButtons[3]).toHaveTextContent("Vestibular schwannoma");

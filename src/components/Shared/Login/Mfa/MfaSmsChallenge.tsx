@@ -82,7 +82,7 @@ const MfaSmsChallenge = () => {
         mfaDetails,
       },
     },
-    { useCache: false, manual: false },
+    { useCache: false, manual: false }
   );
 
   const onSubmit = async (data: any) => {
@@ -104,7 +104,7 @@ const MfaSmsChallenge = () => {
         (e) =>
           e.customCode === "Not_Authorized" &&
           e.detail ===
-            "Too many invalid credentials attempts. User temporarily locked. Please try again after few seconds.",
+            "Too many invalid credentials attempts. User temporarily locked. Please try again after few seconds."
       )
     ) {
       history.push("/MfaLockedOut");
@@ -272,7 +272,7 @@ const MfaSmsChallenge = () => {
                           history.push(
                             prevUrl === "/MfaChangePhoneNumber"
                               ? "/MfaChangePhoneNumber"
-                              : "/MfaSmsSetup",
+                              : "/MfaSmsSetup"
                           );
                         }}
                         customStyles={{ textAlign: "left" }}

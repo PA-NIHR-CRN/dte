@@ -29,7 +29,7 @@ const NhsLoginCallback = () => {
     {
       manual: true,
       useCache: false,
-    },
+    }
   );
 
   useEffect(() => {

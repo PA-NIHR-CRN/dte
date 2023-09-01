@@ -44,7 +44,7 @@ describe("ManualEntry", () => {
       <ManualEntry
         initialStateData={testData}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
   });
 
@@ -54,7 +54,7 @@ describe("ManualEntry", () => {
       <ManualEntry
         initialStateData={testData}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     await waitFor(() => {
@@ -73,7 +73,7 @@ describe("ManualEntry", () => {
       <ManualEntry
         initialStateData={emptyData}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     await waitFor(() => {
@@ -99,7 +99,7 @@ describe("ManualEntry", () => {
       <ManualEntry
         initialStateData={emptyData}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     await waitFor(() => {
@@ -107,10 +107,10 @@ describe("ManualEntry", () => {
       expect(mockOnDataChange).not.toHaveBeenCalled();
 
       expect(
-        screen.getByText("Enter the first line of your address"),
+        screen.getByText("Enter the first line of your address")
       ).toBeInTheDocument();
       expect(
-        screen.getByText("Enter the town of your address"),
+        screen.getByText("Enter the town of your address")
       ).toBeInTheDocument();
     });
   });
@@ -121,7 +121,7 @@ describe("ManualEntry", () => {
       <ManualEntry
         initialStateData={whitespaceData}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     await waitFor(() => {
@@ -129,10 +129,10 @@ describe("ManualEntry", () => {
       expect(mockOnDataChange).not.toHaveBeenCalled();
 
       expect(
-        screen.getByText("Enter the first line of your address"),
+        screen.getByText("Enter the first line of your address")
       ).toBeInTheDocument();
       expect(
-        screen.getByText("Enter the town of your address"),
+        screen.getByText("Enter the town of your address")
       ).toBeInTheDocument();
     });
   });
@@ -145,7 +145,7 @@ describe("Accessibility test", () => {
       <ManualEntry
         initialStateData={testData}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -159,7 +159,7 @@ describe("Manual Entry must display error summary header on invalid submission",
       <ManualEntry
         initialStateData={emptyData}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     await waitFor(() => {

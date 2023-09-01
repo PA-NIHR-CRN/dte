@@ -74,7 +74,7 @@ const YouAreNowRegisteredForm = (props: YouAreNowRegisteredFormProps) => {
         healthConditionInterests: data.healthConditionFormData.conditions,
       },
     },
-    { useCache: false },
+    { useCache: false }
   );
 
   useEffect(() => {

@@ -27,7 +27,7 @@ const NhsAppLanding = () => {
     {
       manual: false,
       useCache: false,
-    },
+    }
   );
 
   useEffect(() => {

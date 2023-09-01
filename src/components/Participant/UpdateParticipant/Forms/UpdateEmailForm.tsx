@@ -55,7 +55,7 @@ const UpdateEmailForm = ({ onCancel }: FormBaseProps) => {
     {
       method: "POST",
     },
-    { useCache: false, manual: true },
+    { useCache: false, manual: true }
   );
 
   const handleChangeEmail = async (data: UpdateEmailFormData) => {

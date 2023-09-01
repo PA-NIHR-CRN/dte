@@ -17,7 +17,7 @@ describe("DTESelect tests", () => {
           { value: "test", text: "test" },
           { value: "test2", text: "test2", testID: "testID" },
         ]}
-      />,
+      />
     );
     expect(screen.getByLabelText("testlabel")).toBeInTheDocument();
     expect(screen.getByText("test")).toBeInTheDocument();
@@ -36,7 +36,7 @@ describe("DTESelect tests", () => {
           { value: "test", text: "test", testID: "testID" },
           { value: "test2", text: "test2", testID: "testID2" },
         ]}
-      />,
+      />
     );
     fireEvent.change(screen.getByLabelText("testlabel"), {
       target: { value: "test2" },
@@ -58,7 +58,7 @@ describe("DTESelect accessibility tests", () => {
         required={false}
         onValueChange={jest.fn()}
         options={[{ value: "test", text: "test" }]}
-      />,
+      />
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

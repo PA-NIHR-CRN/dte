@@ -26,7 +26,7 @@ function ForgottenPassword() {
     formState: { errors: formErrors, isSubmitting },
   } = useForm({ mode: "onSubmit", reValidateMode: "onSubmit" });
   const [pageTitle, setPageTitle] = useState(
-    "Reset password - Volunteer Account - Be Part of Research",
+    "Reset password - Volunteer Account - Be Part of Research"
   );
   const [submitResponse, setSubmitResponse] = useState<
     DTEAxiosResponse | undefined
@@ -45,14 +45,14 @@ function ForgottenPassword() {
       },
       {
         manual: true,
-      },
+      }
     ).catch(() => {
       // swallow 404 axios error -
     });
     const result = Utils.ConvertResponseToDTEResponse(res);
     setSubmitResponse(result);
     setPageTitle(
-      "Check your email to reset password - Volunteer Account - Be Part of Research",
+      "Check your email to reset password - Volunteer Account - Be Part of Research"
     );
   };
   useEffect(() => {
@@ -169,7 +169,7 @@ function ForgottenPassword() {
                               },
                               {
                                 manual: true,
-                              },
+                              }
                             ).catch(() => {
                               // swallow 404 axios error -
                             });

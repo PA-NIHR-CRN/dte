@@ -21,7 +21,7 @@ const ResendEmail = ({ userId }: ResendEmailProps) => {
         userId,
       },
     },
-    { useCache: false, manual: true },
+    { useCache: false, manual: true }
   );
   return userId ? (
     <>

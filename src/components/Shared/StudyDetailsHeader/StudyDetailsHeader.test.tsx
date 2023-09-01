@@ -52,7 +52,7 @@ afterEach(() => {
 describe("StudyDetailsHeader accessibility tests", () => {
   it("is accessible", async () => {
     const { container } = render(
-      <StudyDetailsHeader title="Hello world" studyid="123" />,
+      <StudyDetailsHeader title="Hello world" studyid="123" />
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -70,8 +70,8 @@ describe("StudyDetailsHeader tests", () => {
     render(<StudyDetailsHeader studyid="12343" />);
     expect(
       await screen.findByText(
-        "Characterising new-onset type 1 diabetes and supporting type 1 diabetes research",
-      ),
+        "Characterising new-onset type 1 diabetes and supporting type 1 diabetes research"
+      )
     ).toBeInTheDocument();
   });
 });

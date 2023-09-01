@@ -65,7 +65,7 @@ describe("Account Settings display tests", () => {
     render(<AccountSettings />);
     expect(await screen.findByText("Email address")).toBeInTheDocument();
     expect(
-      await screen.findByText("first.last@domain.com"),
+      await screen.findByText("first.last@domain.com")
     ).toBeInTheDocument();
     expect(await screen.findByText("Password")).toBeInTheDocument();
 
@@ -90,7 +90,7 @@ describe("Account Settings analytics", () => {
           ["send", { hitType: "pageview", page: "/AccountSettings" }],
         ]);
       },
-      { timeout: 1000 },
+      { timeout: 1000 }
     );
   });
 });

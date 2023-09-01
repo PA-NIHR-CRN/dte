@@ -66,7 +66,7 @@ const NhsPreRegistration = () => {
                       label: "Be Part of Research",
                     },
                     () => {},
-                    ["https://bepartofresearch.nihr.ac.uk/volunteer-service/"],
+                    ["https://bepartofresearch.nihr.ac.uk/volunteer-service/"]
                   )
                 }
               >

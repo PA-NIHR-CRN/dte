@@ -29,7 +29,7 @@ describe("DTETable accessibility tests", () => {
             ),
           },
         ]}
-      />,
+      />
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -61,7 +61,7 @@ describe("DTETable tests", () => {
             ),
           },
         ]}
-      />,
+      />
     );
   });
 });

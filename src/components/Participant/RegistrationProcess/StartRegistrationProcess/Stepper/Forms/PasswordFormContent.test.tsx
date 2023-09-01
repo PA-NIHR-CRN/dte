@@ -168,8 +168,8 @@ describe.each([
               requireUppercase: uppercase,
               allowedPasswordSymbols:
                 "^ $ * . , [ ] { } ( ) ? \" ! @ # % & / \\ , > < ' : ; | _ ~ `",
-            },
-          ),
+            }
+          )
       );
 
       render(
@@ -178,10 +178,10 @@ describe.each([
           onDataChange={mockOnDataChange}
           setLoading={mockSetLoading}
           setLoadingText={mockSetLoadingText}
-        />,
+        />
       );
       const policy = await screen.findByText(expectedContent);
       expect(policy).toBeInTheDocument();
     });
-  },
+  }
 );

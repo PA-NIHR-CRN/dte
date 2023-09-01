@@ -27,7 +27,7 @@ function UserRegistration() {
       },
       {
         manual: true,
-      },
+      }
     ).catch(() => {
       // swallow 404 axios error -
     });

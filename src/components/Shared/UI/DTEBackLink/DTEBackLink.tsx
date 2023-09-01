@@ -20,9 +20,7 @@ const StyledBackLink = styled(Link)`
     &:focus {
       text-decoration: none;
       background-color: ${(props) => props.theme.NIHR.Yellow};
-      box-shadow:
-        0 -2px ${(props) => props.theme.NIHR.Yellow},
-        0 4px #212b32;
+      box-shadow: 0 -2px ${(props) => props.theme.NIHR.Yellow}, 0 4px #212b32;
     }
     &:hover {
       color: ${(props) => props.theme.NIHR.Blue};

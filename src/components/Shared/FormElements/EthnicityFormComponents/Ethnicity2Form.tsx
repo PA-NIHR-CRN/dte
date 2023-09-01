@@ -66,13 +66,13 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
         ethnicities.black.backgrounds,
         ethnicities.mixed.backgrounds,
         ethnicities.white.backgrounds,
-        ethnicities.other.backgrounds,
+        ethnicities.other.backgrounds
       )
       .includes(initialStateData.background) &&
       initialStateData.background !== "other" &&
       initialStateData.background !== ""
       ? initialStateData.background
-      : undefined,
+      : undefined
   );
 
   const {
@@ -90,7 +90,7 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
             ethnicities.black.backgrounds,
             ethnicities.mixed.backgrounds,
             ethnicities.white.backgrounds,
-            ethnicities.other.backgrounds,
+            ethnicities.other.backgrounds
           )
           .includes(initialStateData.background) &&
         initialStateData.background !== ""
@@ -174,7 +174,7 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
                               {backgroundName}
                             </Radios.Radio>
                           );
-                        },
+                        }
                       )}
                       <Radios.Radio
                         value="other"
@@ -185,7 +185,7 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
                               ethnicities.mixed.backgrounds,
                               ethnicities.white.backgrounds,
                               ethnicities.other.backgrounds,
-                              [""],
+                              [""]
                             )
                             .includes(value)
                         }

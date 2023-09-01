@@ -15,7 +15,7 @@ describe("DTEStepper", () => {
         nextButton={<></>}
         steps={5}
         LinearProgressProps={LinearProps}
-      />,
+      />
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

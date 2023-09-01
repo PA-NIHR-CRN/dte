@@ -54,7 +54,7 @@ beforeEach(() => {
             conversationId: null,
             version: 1,
           };
-        },
+        }
       );
     },
   });
@@ -76,7 +76,7 @@ describe("PostcodeLookup", () => {
       <PostcodeLookup
         initialStateData={emptyData}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
   });
 
@@ -86,7 +86,7 @@ describe("PostcodeLookup", () => {
       <PostcodeLookup
         initialStateData={emptyData}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     await waitFor(() => {
@@ -100,7 +100,7 @@ describe("PostcodeLookup", () => {
       <PostcodeLookup
         initialStateData={emptyData}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     await waitFor(() => {
@@ -119,7 +119,7 @@ describe("PostcodeLookup", () => {
       <PostcodeLookup
         initialStateData={emptyData}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     await waitFor(() => {
@@ -134,7 +134,7 @@ describe("PostcodeLookup", () => {
       <PostcodeLookup
         initialStateData={emptyData}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     await waitFor(() => {
@@ -154,7 +154,7 @@ describe("Accessibility test", () => {
       <PostcodeLookup
         initialStateData={emptyData}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -168,7 +168,7 @@ describe("Postcode Lookup must display error summary header on invalid submissio
       <PostcodeLookup
         initialStateData={emptyData}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     await waitFor(() => {

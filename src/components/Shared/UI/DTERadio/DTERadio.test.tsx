@@ -17,7 +17,7 @@ describe("DTERadio", () => {
         <Radios.Radio value="test">Test</Radios.Radio>
         <Radios.Radio value="test2">Test2</Radios.Radio>
         <Radios.Radio value="test3">Test3</Radios.Radio>
-      </DTERadio>,
+      </DTERadio>
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -37,7 +37,7 @@ describe("DTERadio contains the correct elements", () => {
           Yes
         </Radios.Radio>
         <Radios.Radio value="no">No</Radios.Radio>
-      </DTERadio>,
+      </DTERadio>
     );
 
     const fieldsetElement = await screen.findByTestId("testRadio-fieldset");
@@ -56,7 +56,7 @@ describe("DTERadio contains the correct elements", () => {
           Yes
         </Radios.Radio>
         <Radios.Radio value="no">No</Radios.Radio>
-      </DTERadio>,
+      </DTERadio>
     );
 
     const legendElement = await screen.findByTestId("testRadio-legend");
@@ -75,7 +75,7 @@ describe("DTERadio contains the correct elements", () => {
           Yes
         </Radios.Radio>
         <Radios.Radio value="no">No</Radios.Radio>
-      </DTERadio>,
+      </DTERadio>
     );
 
     const fieldsetElement = await screen.findByTestId("testRadio-fieldset");
@@ -99,7 +99,7 @@ describe("DTERadio contains the correct elements", () => {
           Yes
         </Radios.Radio>
         <Radios.Radio value="no">No</Radios.Radio>
-      </DTERadio>,
+      </DTERadio>
     );
 
     const fieldsetElement = await screen.findByTestId("testRadio-fieldset");
@@ -108,7 +108,7 @@ describe("DTERadio contains the correct elements", () => {
     expect(fieldsetElement).toBeInTheDocument();
     expect(fieldsetElement).toHaveAttribute("aria-describedby");
     expect(fieldsetAriaDescribedByAttribute).toEqual(
-      "testRadio--error-message testRadio-legend",
+      "testRadio--error-message testRadio-legend"
     );
   });
 
@@ -125,7 +125,7 @@ describe("DTERadio contains the correct elements", () => {
           Yes
         </Radios.Radio>
         <Radios.Radio value="no">No</Radios.Radio>
-      </DTERadio>,
+      </DTERadio>
     );
 
     const infoText = await screen.findByTestId("testRadio-info");
@@ -146,7 +146,7 @@ describe("DTERadio contains the correct elements", () => {
           Yes
         </Radios.Radio>
         <Radios.Radio value="no">No</Radios.Radio>
-      </DTERadio>,
+      </DTERadio>
     );
 
     const fieldsetElement = await screen.findByTestId("testRadio-fieldset");
@@ -155,7 +155,7 @@ describe("DTERadio contains the correct elements", () => {
     expect(fieldsetElement).toBeInTheDocument();
     expect(fieldsetElement).toHaveAttribute("aria-describedby");
     expect(fieldsetAriaDescribedByAttribute).toEqual(
-      "testRadio-legend testRadio-info",
+      "testRadio-legend testRadio-info"
     );
   });
 });

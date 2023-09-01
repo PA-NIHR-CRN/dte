@@ -5,7 +5,7 @@ import LoadingIndicator from "../../../components/Shared/LoadingIndicator/Loadin
 const NhsAppIntegration = () => {
   const { search } = useLocation();
   const assertedLoginIdentity = new URLSearchParams(search).get(
-    "assertedLoginIdentity",
+    "assertedLoginIdentity"
   );
 
   useEffect(() => {

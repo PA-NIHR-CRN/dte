@@ -9,7 +9,7 @@ export interface ManualLoginContextProps {
 }
 
 export const ManualLoginContext = createContext<ManualLoginContextProps>(
-  {} as ManualLoginContextProps,
+  {} as ManualLoginContextProps
 );
 
 const ManualLoginProvider: FC = ({ children }) => {

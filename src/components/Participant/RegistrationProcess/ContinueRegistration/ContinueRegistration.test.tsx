@@ -76,7 +76,7 @@ describe("Continue registration analytics", () => {
           ["send", { hitType: "pageview", page: "/registration/address" }],
         ]);
       },
-      { timeout: 1000 },
+      { timeout: 1000 }
     );
   });
 });

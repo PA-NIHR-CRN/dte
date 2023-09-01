@@ -41,7 +41,7 @@ const AccountSettings = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState<string>("main");
   const [pageTitle, setPageTitle] = useState(
-    "Account settings - Volunteer Account - Be Part of Research",
+    "Account settings - Volunteer Account - Be Part of Research"
   );
   const [gaURL, setGaURL] = useState("/AccountSettings");
   const theme = useTheme();
@@ -57,26 +57,26 @@ const AccountSettings = () => {
     {
       manual: false,
       useCache: false,
-    },
+    }
   );
 
   const handlePageTitle = (page: string) => {
     switch (page) {
       case "email":
         setPageTitle(
-          "What is your new email address? - Volunteer Account - Be Part of Research",
+          "What is your new email address? - Volunteer Account - Be Part of Research"
         );
         setGaURL("/AccountSettings/ChangeEmail");
         break;
       case "password":
         setPageTitle(
-          "Change your password - Volunteer Account - Be Part of Research",
+          "Change your password - Volunteer Account - Be Part of Research"
         );
         setGaURL("/AccountSettings/ChangePassword");
         break;
       default:
         setPageTitle(
-          "Account settings - Volunteer Account - Be Part of Research",
+          "Account settings - Volunteer Account - Be Part of Research"
         );
         setGaURL("/AccountSettings");
     }

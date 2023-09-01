@@ -4,7 +4,7 @@ import Utils from "../Helper/Utils";
 import customCodeLookup from "../components/Shared/ErrorMessageContainer/customCodeLookup";
 
 const useInlineServerError = (
-  serverResponse: void | AxiosResponse<any> | undefined,
+  serverResponse: void | AxiosResponse<any> | undefined
 ) => {
   const [convertedError, setConvertedError] = useState<string | null>(null);
 

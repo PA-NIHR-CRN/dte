@@ -16,7 +16,7 @@ describe("DTEPaper", () => {
     const { container } = render(
       <DTEPaper onClickClose={mockOnClickClose} $buttonLabel="Close Form">
         Paper content
-      </DTEPaper>,
+      </DTEPaper>
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

@@ -93,7 +93,7 @@ const AddressForm = (props: AddressFormProps) => {
 
   const handleDataChange = (
     data: PostcodeLookupData | ManualEntryData | SelectAddressData,
-    stage: string,
+    stage: string
   ) => {
     setAddressData((oldData: AddressFormState) => {
       switch (stage) {

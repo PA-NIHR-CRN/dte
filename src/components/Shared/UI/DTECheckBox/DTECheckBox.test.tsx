@@ -9,7 +9,7 @@ describe("DTECheckBox", () => {
     const { container } = render(
       <label>
         <DTECheckBox value="This is text" />
-      </label>,
+      </label>
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

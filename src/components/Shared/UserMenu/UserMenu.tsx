@@ -9,7 +9,7 @@ import { AuthContext } from "../../../context/AuthContext";
 function UserMenu() {
   const { isAuthenticated } = useContext(AuthContext);
   const [anchorElement, setAnchorElement] = React.useState<null | HTMLElement>(
-    null,
+    null
   );
   const isMenuOpen = Boolean(anchorElement);
 

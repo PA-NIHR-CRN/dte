@@ -97,7 +97,7 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
 
     expect(screen.getByText(/address line 1/)).toBeInTheDocument();
@@ -114,7 +114,7 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
 
     expect(screen.getByText(/Phone number/)).toBeInTheDocument();
@@ -130,7 +130,7 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
 
     expect(screen.getByText("Sex registered at birth")).toBeInTheDocument();
@@ -143,11 +143,11 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
 
     expect(
-      screen.getByText("Gender identity same as sex registered at birth"),
+      screen.getByText("Gender identity same as sex registered at birth")
     ).toBeInTheDocument();
     expect(screen.getByText("Prefer not to say")).toBeInTheDocument();
   });
@@ -158,7 +158,7 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
 
     expect(screen.getByText("Ethnic group")).toBeInTheDocument();
@@ -171,7 +171,7 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
 
     expect(screen.getByText("Ethnic background")).toBeInTheDocument();
@@ -184,11 +184,11 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
 
     expect(
-      screen.getByText("Long-term conditions or illness"),
+      screen.getByText("Long-term conditions or illness")
     ).toBeInTheDocument();
     expect(screen.getByText("Yes")).toBeInTheDocument();
   });
@@ -199,11 +199,11 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
 
     expect(
-      screen.getByText("Reduced ability to carry out daily activities"),
+      screen.getByText("Reduced ability to carry out daily activities")
     ).toBeInTheDocument();
     expect(screen.getByText("Yes, a little")).toBeInTheDocument();
   });
@@ -214,7 +214,7 @@ describe("Check Answers Form displays data correctly", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
 
     expect(screen.getByText("Areas of research")).toBeInTheDocument();
@@ -229,13 +229,13 @@ describe("Check Answers Form Layout", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
 
     const header = screen.getByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
     expect(header).toHaveTextContent(
-      "Check your answers before completing your registration",
+      "Check your answers before completing your registration"
     );
   });
 
@@ -245,25 +245,25 @@ describe("Check Answers Form Layout", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
 
     const changeButtons = await screen.findAllByRole("button");
     expect(changeButtons[0]).toHaveTextContent("Change home address");
     expect(changeButtons[1]).toHaveTextContent("Change phone number");
     expect(changeButtons[2]).toHaveTextContent(
-      "Change sex registered at birth",
+      "Change sex registered at birth"
     );
     expect(changeButtons[3]).toHaveTextContent(
-      "Change gender identity same as sex registered at birth",
+      "Change gender identity same as sex registered at birth"
     );
     expect(changeButtons[4]).toHaveTextContent("Change ethnic group");
     expect(changeButtons[5]).toHaveTextContent("Change ethnic background");
     expect(changeButtons[6]).toHaveTextContent(
-      "Change long-term conditions or illness",
+      "Change long-term conditions or illness"
     );
     expect(changeButtons[7]).toHaveTextContent(
-      "Change reduced ability to carry out daily activities",
+      "Change reduced ability to carry out daily activities"
     );
     expect(changeButtons[8]).toHaveTextContent("Change areas of research");
   });
@@ -274,12 +274,12 @@ describe("Check Answers Form Layout", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
 
     const buttons = screen.getAllByRole("button");
     const submitButtons = buttons.filter(
-      (x) => x.textContent === "Complete registration",
+      (x) => x.textContent === "Complete registration"
     );
     expect(submitButtons).toHaveLength(1);
   });
@@ -290,7 +290,7 @@ describe("Check Answers Form Layout", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
 
     const changeButton = screen.getAllByText("Change")[4];
@@ -308,7 +308,7 @@ describe("Accessibility test", () => {
       <CheckAnswersForm
         initialStateData={blankTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -320,7 +320,7 @@ describe("Accessibility test", () => {
       <CheckAnswersForm
         initialStateData={populatedTestData}
         changeStep={mockChangeStep}
-      />,
+      />
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

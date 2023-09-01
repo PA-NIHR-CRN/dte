@@ -112,7 +112,7 @@ const DTERadio = memo(
         </StyledRadio>
       </StyledFieldset>
     );
-  },
+  }
 );
 
 export default DTERadio;

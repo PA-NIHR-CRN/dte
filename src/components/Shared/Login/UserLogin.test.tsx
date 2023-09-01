@@ -35,7 +35,7 @@ beforeEach(() => {
             conversationId: null,
             version: 1,
           };
-        },
+        }
       );
     },
   });
@@ -56,7 +56,7 @@ describe("User Login must render correctly", () => {
     const loginButton = screen.getAllByRole("button")[1];
     const links = screen.getAllByRole("link");
     expect(
-      screen.getByText("Sign in to Be Part of Research"),
+      screen.getByText("Sign in to Be Part of Research")
     ).toBeInTheDocument();
     const email = screen.getByLabelText("Email address");
     expect(email).toBeInTheDocument();
@@ -256,7 +256,7 @@ describe.each([
         expect(await screen.findByText(validationError)).toBeInTheDocument();
       });
     });
-  },
+  }
 );
 
 describe.each([
@@ -291,16 +291,16 @@ describe.each([
       userEvent.click(screen.getByText("Sign in"));
       await waitFor(async () => {
         expect(
-          screen.queryByText("Enter your email address"),
+          screen.queryByText("Enter your email address")
         ).not.toBeInTheDocument();
         expect(
           screen.queryByText(
-            "Enter an email address in the correct format, like name@example.com",
-          ),
+            "Enter an email address in the correct format, like name@example.com"
+          )
         ).not.toBeInTheDocument();
       });
     });
-  },
+  }
 );
 
 describe("User Login functions correctly", () => {
@@ -308,7 +308,7 @@ describe("User Login functions correctly", () => {
     render(<UserLogin />);
     userEvent.click(screen.getByText("Sign in"));
     expect(
-      await screen.findByText("Enter an email address"),
+      await screen.findByText("Enter an email address")
     ).toBeInTheDocument();
     expect(await screen.findByText("Enter a password")).toBeInTheDocument();
   });
@@ -331,7 +331,7 @@ describe("User Login functions correctly", () => {
           errors: [],
           conversationId: null,
           version: 1,
-        }),
+        })
       );
     };
   });
@@ -369,8 +369,8 @@ describe("Non Validated Account processes correctly", () => {
     expect(await screen.findByText("There is a problem")).toBeInTheDocument();
     expect(
       await screen.findByText(
-        "Enter the email address and password for a registered user account. If you registered using NHS login use the back button above and select NHS login to sign in.",
-      ),
+        "Enter the email address and password for a registered user account. If you registered using NHS login use the back button above and select NHS login to sign in."
+      )
     ).toBeInTheDocument();
     const buttons = await screen.findAllByRole("button");
     expect(buttons).toHaveLength(2);
@@ -421,8 +421,8 @@ describe("Unknown Account processes correctly", () => {
     expect(await screen.findByText("There is a problem")).toBeInTheDocument();
     expect(
       await screen.findByText(
-        "Enter the email address and password for a registered user account. If you registered using NHS login use the back button above and select NHS login to sign in.",
-      ),
+        "Enter the email address and password for a registered user account. If you registered using NHS login use the back button above and select NHS login to sign in."
+      )
     ).toBeInTheDocument();
     const buttons = await screen.findAllByRole("button");
     const links = screen.getAllByRole("link");

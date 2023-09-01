@@ -79,9 +79,7 @@ const StyledListItemButton = styled(ListItemButton)`
       color: ${(Props) => Props.theme.NIHR.Blue};
       border-color: ${(Props) => Props.theme.NIHR.Yellow};
       background-color: ${(Props) => Props.theme.NIHR.Yellow};
-      box-shadow:
-        0 -2px ${(Props) => Props.theme.NIHR.Yellow},
-        0 4px #212b32;
+      box-shadow: 0 -2px ${(Props) => Props.theme.NIHR.Yellow}, 0 4px #212b32;
     }
   }
 `;
