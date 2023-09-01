@@ -126,18 +126,6 @@ export const AuthProvider = (props: { children: any }) => {
         const mobileVerified = decodedToken?.phone_number_verified;
         setAuthenticatedMobileVerified(mobileVerified);
 
-        const admin = decodedToken?.["cognito:groups"]?.includes("Admin");
-        setAuthenticatedIsAdmin(admin);
-
-        const researcher =
-          !decodedToken?.["cognito:groups"]?.includes("Admin") &&
-          decodedToken?.["cognito:username"]?.includes("idg");
-        setAuthenticatedIsResearcher(researcher);
-
-        const participant =
-          !decodedToken?.["cognito:username"]?.includes("idg") ||
-          (!researcher && !admin);
-        setAuthenticatedIsParticipant(participant);
         return true;
       }
     }

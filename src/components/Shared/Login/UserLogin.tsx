@@ -1,21 +1,15 @@
 import { useState, useEffect, useContext } from "react";
 import { Grid } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
 import { AuthContext } from "../../../context/AuthContext";
 import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContainer";
-import {
-  DTEAxiosResponse,
-  Role,
-  DTEAxiosError,
-} from "../../../types/AuthTypes";
-import Utils, { EmailRegex }  from "../../../Helper/Utils";
-import DTEInput from "../UI/DTEInput/DTEInput";
-import DTEButton from "../UI/DTEButton/DTEButton";
+import { DTEAxiosResponse, DTEAxiosError } from "../../../types/AuthTypes";
+import Utils from "../../../Helper/Utils";
 import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import CheckYourEmail from "../FormElements/CommonElements/CheckYourEmail";
@@ -237,10 +231,6 @@ const UserLogin = (props: UserLoginProps) => {
       ) : (
         <DocumentTitle title="Sign in or register - Volunteer Registration - Be Part of Research">
           <>
-            {shouldRedirect && (
-              <Redirect push to={`/Login#id_token=${token}`} />
-
-            )}
             {loadingLogin && <LoadingIndicator text="Signing In..." />}
             {resendLoading && (
               <LoadingIndicator text="Resending verification email..." />
