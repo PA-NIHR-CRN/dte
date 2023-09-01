@@ -11,16 +11,13 @@ function NhsUnableToMatch() {
       <DTEHeader as="h1">There is a problem</DTEHeader>
       {isInNHSApp ? (
         <DTEContent>
-          Please contact us by email at bepartofresearch@nihr.ac.uk so that we
-          can identify and resolve the cause of the issue.
+          Please contact us by email at bepartofresearch@nihr.ac.uk so that we can identify and resolve the cause of the
+          issue.
         </DTEContent>
       ) : (
         <DTEContent>
-          Please contact us by email at{" "}
-          <a href="mailto:bepartofresearch@nihr.ac.uk">
-            bepartofresearch@nihr.ac.uk
-          </a>{" "}
-          so that we can identify and resolve the cause of the issue.
+          Please contact us by email at <a href="mailto:bepartofresearch@nihr.ac.uk">bepartofresearch@nihr.ac.uk</a> so
+          that we can identify and resolve the cause of the issue.
         </DTEContent>
       )}
     </StepWrapper>

@@ -6,9 +6,7 @@ import { ContentContext } from "../../../context/ContentContext";
 function NhsAppIntegration() {
   const { content } = useContext(ContentContext);
   const { search } = useLocation();
-  const assertedLoginIdentity = new URLSearchParams(search).get(
-    "assertedLoginIdentity",
-  );
+  const assertedLoginIdentity = new URLSearchParams(search).get("assertedLoginIdentity");
 
   useEffect(() => {
     const redirectUri = process.env.REACT_APP_BASE_URL;

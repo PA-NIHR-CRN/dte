@@ -38,81 +38,62 @@ const StyledCheckboxes = styled(Checkboxes)`
   }
 `;
 
-const DTECheckList = memo(
-  ({
-    id,
-    name,
-    label,
-    hint,
-    error,
-    values,
-    onValueChange,
-    escKeyPressed,
-  }: Props) => {
-    const [checkBoxList, setCheckBoxList] = useState<ICheckBoxElement[]>([]);
-    const [renderToggle, setRenderToggle] = useState(false);
-    useMemo(() => {}, [renderToggle]);
+const DTECheckList = memo(({ id, name, label, hint, error, values, onValueChange, escKeyPressed }: Props) => {
+  const [checkBoxList, setCheckBoxList] = useState<ICheckBoxElement[]>([]);
+  const [renderToggle, setRenderToggle] = useState(false);
+  useMemo(() => {}, [renderToggle]);
 
-    const handleOnChange = (e: any) => {
-      const updatedList = checkBoxList;
-      const valuesIndex = checkBoxList.findIndex(
-        (x) => x.value === e.target.value,
-      );
-      if (valuesIndex > -1) {
-        updatedList[valuesIndex].checked = e.target.checked;
-      }
-      setCheckBoxList(updatedList);
-      onValueChange(updatedList);
-      setRenderToggle(!renderToggle);
-    };
+  const handleOnChange = (e: any) => {
+    const updatedList = checkBoxList;
+    const valuesIndex = checkBoxList.findIndex((x) => x.value === e.target.value);
+    if (valuesIndex > -1) {
+      updatedList[valuesIndex].checked = e.target.checked;
+    }
+    setCheckBoxList(updatedList);
+    onValueChange(updatedList);
+    setRenderToggle(!renderToggle);
+  };
 
-    useEffect(() => {
-      setCheckBoxList(values);
-    }, [values]);
+  useEffect(() => {
+    setCheckBoxList(values);
+  }, [values]);
 
-    const checkBoxElements = values.map((item) => (
-      <Checkboxes.Box
-        key={item.value}
-        value={item.value}
-        disabled={item.disabled}
-        conditional={item.conditional}
-        onClick={(e: any) => handleOnChange(e)}
-        onKeyPress={(e: any) => handleOnChange(e)}
-        checked={item.checked}
+  const checkBoxElements = values.map((item) => (
+    <Checkboxes.Box
+      key={item.value}
+      value={item.value}
+      disabled={item.disabled}
+      conditional={item.conditional}
+      onClick={(e: any) => handleOnChange(e)}
+      onKeyPress={(e: any) => handleOnChange(e)}
+      checked={item.checked}
+    >
+      {item.text}
+    </Checkboxes.Box>
+  ));
+
+  return error !== "" && error !== undefined ? (
+    <StyledFieldset>
+      <StyledFieldsetLegend>{label}</StyledFieldsetLegend>
+      <StyledCheckboxes
+        name={name}
+        id={id}
+        hint={hint}
+        error={error}
+        onKeyDown={(e) => escKeyPressed(e)}
+        role="application"
       >
-        {item.text}
-      </Checkboxes.Box>
-    ));
-
-    return error !== "" && error !== undefined ? (
-      <StyledFieldset>
-        <StyledFieldsetLegend>{label}</StyledFieldsetLegend>
-        <StyledCheckboxes
-          name={name}
-          id={id}
-          hint={hint}
-          error={error}
-          onKeyDown={(e) => escKeyPressed(e)}
-          role="application"
-        >
-          {checkBoxElements}
-        </StyledCheckboxes>
-      </StyledFieldset>
-    ) : (
-      <StyledFieldset>
-        <StyledFieldsetLegend>{label}</StyledFieldsetLegend>
-        <StyledCheckboxes
-          name={name}
-          id={id}
-          hint={hint}
-          onKeyDown={(e) => escKeyPressed(e)}
-          role="application"
-        >
-          {checkBoxElements}
-        </StyledCheckboxes>
-      </StyledFieldset>
-    );
-  },
-);
+        {checkBoxElements}
+      </StyledCheckboxes>
+    </StyledFieldset>
+  ) : (
+    <StyledFieldset>
+      <StyledFieldsetLegend>{label}</StyledFieldsetLegend>
+      <StyledCheckboxes name={name} id={id} hint={hint} onKeyDown={(e) => escKeyPressed(e)} role="application">
+        {checkBoxElements}
+      </StyledCheckboxes>
+    </StyledFieldset>
+  );
+});
 
 export default DTECheckList;

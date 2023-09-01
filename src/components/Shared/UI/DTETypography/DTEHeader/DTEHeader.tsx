@@ -12,7 +12,7 @@ interface DTEHeaderProps {
 const getStyleData = (
   props: DTEHeaderProps & { theme: any },
   styleElement: "size" | "height",
-  platform: "desktop" | "mobile",
+  platform: "desktop" | "mobile"
 ) => {
   if (styleElement === "size") {
     if (platform === "desktop") {
@@ -66,7 +66,7 @@ const getStyleData = (
 const getColour = (
   props: DTEHeaderProps & {
     theme: any;
-  },
+  }
 ) => {
   switch (props.$color) {
     case "blue":
@@ -89,10 +89,7 @@ const DTEHeader = styled.h1<DTEHeaderProps>`
   margin-bottom: 0.5em;
 
   // Desktop
-  ${(props) =>
-    props.$platform === undefined
-      ? props.theme.breakpoints.up("sm")
-      : "@media all"} {
+  ${(props) => (props.$platform === undefined ? props.theme.breakpoints.up("sm") : "@media all")} {
     ${(props) =>
       (props.$platform === undefined || props.$platform === "desktop") &&
       `font-size: ${getStyleData(props, "size", "desktop")};
@@ -100,10 +97,7 @@ const DTEHeader = styled.h1<DTEHeaderProps>`
   }
 
   // Mobile
-  ${(props) =>
-    props.$platform === undefined
-      ? props.theme.breakpoints.down("xs")
-      : "@media all"} {
+  ${(props) => (props.$platform === undefined ? props.theme.breakpoints.down("xs") : "@media all")} {
     ${(props) =>
       (props.$platform === undefined || props.$platform === "mobile") &&
       `font-size: ${getStyleData(props, "size", "mobile")};

@@ -78,9 +78,7 @@ const DropdownChild = styled.div`
 `;
 
 interface DTEDropdownProps {
-  children?:
-    | ReactElement<typeof DropdownChild>[]
-    | ReactElement<typeof DropdownChild>;
+  children?: ReactElement<typeof DropdownChild>[] | ReactElement<typeof DropdownChild>;
   text?: string;
   description?: string;
 }
@@ -95,13 +93,8 @@ const DTEDropdown = forwardRef((props: DTEDropdownProps, ref) => {
 
   return (
     <Container>
-      <Header
-        onClick={() => setIsOpen(!isOpen)}
-        type="button"
-        aria-label={description}
-      >
-        {text || "Actions"}{" "}
-        {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+      <Header onClick={() => setIsOpen(!isOpen)} type="button" aria-label={description}>
+        {text || "Actions"} {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </Header>
       {isOpen && <Content>{children}</Content>}
     </Container>

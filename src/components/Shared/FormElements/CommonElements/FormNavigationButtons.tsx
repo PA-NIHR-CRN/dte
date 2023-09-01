@@ -12,13 +12,7 @@ function FormNavigationButtons(props: FormNavigationButtonsProps) {
   const { nextButtonText, showCancelButton, onCancel } = props;
 
   return (
-    <Grid
-      container
-      direction="row"
-      justifyContent="flex-start"
-      alignItems="center"
-      spacing={1}
-    >
+    <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
       <Grid item>
         <DTEButton>{nextButtonText}</DTEButton>
       </Grid>

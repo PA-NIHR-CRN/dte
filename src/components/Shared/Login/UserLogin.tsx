@@ -10,11 +10,7 @@ import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContainer";
 import DTEInput from "../UI/DTEInput/DTEInput";
 import DTEButton from "../UI/DTEButton/DTEButton";
-import {
-  DTEAxiosResponse,
-  Role,
-  DTEAxiosError,
-} from "../../../types/AuthTypes";
+import { DTEAxiosResponse, Role, DTEAxiosError } from "../../../types/AuthTypes";
 import Utils, { EmailRegex } from "../../../Helper/Utils";
 import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
@@ -60,22 +56,11 @@ function UserLogin() {
   });
 
   const history = useHistory();
-  const {
-    persistLastNonLoginUrl,
-    lastUrl,
-    isAuthenticated,
-    isAuthenticatedRole,
-    logOutToken,
-    token,
-    saveToken,
-  } = useContext(AuthContext);
+  const { persistLastNonLoginUrl, lastUrl, isAuthenticated, isAuthenticatedRole, logOutToken, token, saveToken } =
+    useContext(AuthContext);
 
-  const [loginResponse, setLoginResponse] = useState<
-    DTEAxiosResponse | undefined
-  >(undefined);
-  const [resendDTEResponse, setResendDTEResponse] = useState<
-    DTEAxiosResponse | undefined
-  >(undefined);
+  const [loginResponse, setLoginResponse] = useState<DTEAxiosResponse | undefined>(undefined);
+  const [resendDTEResponse, setResendDTEResponse] = useState<DTEAxiosResponse | undefined>(undefined);
 
   const [email, setEmail] = useState<string>();
 
@@ -97,7 +82,7 @@ function UserLogin() {
       },
       {
         manual: true,
-      },
+      }
     ).catch(() => {
       // swallow 404 axios error -
     });
@@ -109,10 +94,7 @@ function UserLogin() {
     }
   };
 
-  const [{ loading: loadingLogin, error: errorLogin }, login] = useAxiosFetch(
-    {},
-    { manual: true },
-  );
+  const [{ loading: loadingLogin, error: errorLogin }, login] = useAxiosFetch({}, { manual: true });
 
   useEffect(() => {
     if (isAuthenticated() && isAuthenticatedRole(Role.Participant)) {
@@ -124,9 +106,7 @@ function UserLogin() {
     }
   }, []);
 
-  const [
-    { response: resendResponse, loading: resendLoading, error: resendError },
-  ] = useAxiosFetch(
+  const [{ response: resendResponse, loading: resendLoading, error: resendError }] = useAxiosFetch(
     {
       url: `${process.env.REACT_APP_BASE_API}/users/resendverificationemail`,
       method: "POST",
@@ -134,7 +114,7 @@ function UserLogin() {
         email,
       },
     },
-    { useCache: false, manual: true },
+    { useCache: false, manual: true }
   );
 
   useEffect(() => {
@@ -159,12 +139,8 @@ function UserLogin() {
               ? {
                   detail: (
                     <>
-                      <p>
-                        {content["signin-error-authentication-not-authorized"]}
-                      </p>
-                      <p>
-                        {content["signin-error-authentication-not-authorized2"]}
-                      </p>
+                      <p>{content["signin-error-authentication-not-authorized"]}</p>
+                      <p>{content["signin-error-authentication-not-authorized2"]}</p>
                     </>
                   ),
                   customCode: "NO_CHANGE",
@@ -184,155 +160,109 @@ function UserLogin() {
     <DocumentTitle title={content["signin-document-title"]}>
       <>
         {shouldRedirect && <Redirect push to={`/Login#id_token=${token}`} />}
-        {loadingLogin && (
-          <LoadingIndicator text={content["signin-loading-signin"]} />
-        )}
-        {resendLoading && (
-          <LoadingIndicator text={content["signin-loading-resend"]} />
-        )}
+        {loadingLogin && <LoadingIndicator text={content["signin-loading-signin"]} />}
+        {resendLoading && <LoadingIndicator text={content["signin-loading-resend"]} />}
         {!loadingLogin && !resendLoading && (
-          <Grid
-            container
-            alignItems="center"
-            direction="row"
-            justifyContent="flex-start"
-          >
+          <Grid container alignItems="center" direction="row" justifyContent="flex-start">
             <Grid item sm={2} md={1} />
             <StyledGridElementLeft item xs={12} sm={10} md={11}>
-              <DTEBackLink
-                href="/Participants/Options"
-                linkText={content["reusable-back-link"]}
-              />
+              <DTEBackLink href="/Participants/Options" linkText={content["reusable-back-link"]} />
             </StyledGridElementLeft>
           </Grid>
         )}
-        <Grid
-          container
-          justifyContent="center"
-          alignItems="center"
-          role="main"
-          id="main"
-        >
+        <Grid container justifyContent="center" alignItems="center" role="main" id="main">
           <LoginWrapper item xs={12} sm={8} md={6} lg={5} xl={4}>
-            {!loadingLogin &&
-              !resendLoading &&
-              !resendDTEResponse?.isSuccess && (
-                <>
-                  <DTEHeader as="h1">{content["signin-header"]}</DTEHeader>
-                  <ErrorMessageSummary
-                    renderSummary={!isSubmitting}
-                    errors={formErrors}
+            {!loadingLogin && !resendLoading && !resendDTEResponse?.isSuccess && (
+              <>
+                <DTEHeader as="h1">{content["signin-header"]}</DTEHeader>
+                <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
+                {!resendDTEResponse?.isSuccess && (
+                  <ErrorMessageContainer
+                    axiosErrors={[errorLogin, resendError]}
+                    DTEAxiosErrors={injectCallIntoError([loginResponse?.errors, resendDTEResponse?.errors])}
                   />
-                  {!resendDTEResponse?.isSuccess && (
-                    <ErrorMessageContainer
-                      axiosErrors={[errorLogin, resendError]}
-                      DTEAxiosErrors={injectCallIntoError([
-                        loginResponse?.errors,
-                        resendDTEResponse?.errors,
-                      ])}
-                    />
-                  )}
-                  <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                    <Controller
-                      control={control}
-                      name="email"
-                      render={({
-                        field: { value, onChange, onBlur },
-                        fieldState: { error },
-                      }) => (
-                        <DTEInput
-                          id="email"
-                          value={value}
-                          onValueChange={onChange}
-                          onValueBlur={onBlur}
-                          error={error?.message}
-                          label={content["reusable-text-email-address"]}
-                          required
-                          disabled={loadingLogin}
-                          type="email"
-                          spellcheck={false}
-                          autocomplete="username"
-                        />
-                      )}
-                      rules={{
-                        required: {
-                          value: true,
-                          message:
-                            content["reusable-email-validation-required"],
-                        },
+                )}
+                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                  <Controller
+                    control={control}
+                    name="email"
+                    render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+                      <DTEInput
+                        id="email"
+                        value={value}
+                        onValueChange={onChange}
+                        onValueBlur={onBlur}
+                        error={error?.message}
+                        label={content["reusable-text-email-address"]}
+                        required
+                        disabled={loadingLogin}
+                        type="email"
+                        spellcheck={false}
+                        autocomplete="username"
+                      />
+                    )}
+                    rules={{
+                      required: {
+                        value: true,
+                        message: content["reusable-email-validation-required"],
+                      },
 
-                        pattern: {
-                          value: EmailRegex,
-                          message:
-                            content["reusable-email-validation-invalid-format"],
-                        },
-                      }}
-                    />
-                    <Controller
-                      control={control}
-                      name="password"
-                      render={({ fieldState: { error } }) => (
-                        <PasswordShowHide
-                          id="password"
-                          onValueChange={(e) =>
-                            setValue("password", e.target.value)
-                          }
-                          error={error?.message}
-                          label={content["reusable-text-password"]}
-                          required
-                          disabled={loadingLogin}
-                          spellcheck={false}
-                          autocomplete="current-password"
-                          buttonAriaLabelHide={
-                            content["reusable-aria-hide-password"]
-                          }
-                          buttonAriaLabelShow={
-                            content["reusable-aria-show-password"]
-                          }
-                        />
-                      )}
-                      rules={{
-                        required: {
-                          value: true,
-                          message:
-                            content["reusable-password-validation-required"],
-                        },
-                      }}
-                    />
-                    <DTEContent>
-                      {content["reusable-text-forgotten-password"]}
-                      <DTERouteLink
-                        to="/ForgottenPassword"
-                        renderStyle="standard"
-                        ariaLabel={content["signin-aria-reset-password"]}
-                      >
-                        {content["reusable-link-forgotten-password"]}
-                      </DTERouteLink>
-                    </DTEContent>
-                    <ButtonWrapper>
-                      <DTEButton disabled={loadingLogin}>
-                        {content["reusable-button-signin"]}
-                      </DTEButton>
-                    </ButtonWrapper>
-                  </form>
-                  <ButtonWrapper>
+                      pattern: {
+                        value: EmailRegex,
+                        message: content["reusable-email-validation-invalid-format"],
+                      },
+                    }}
+                  />
+                  <Controller
+                    control={control}
+                    name="password"
+                    render={({ fieldState: { error } }) => (
+                      <PasswordShowHide
+                        id="password"
+                        onValueChange={(e) => setValue("password", e.target.value)}
+                        error={error?.message}
+                        label={content["reusable-text-password"]}
+                        required
+                        disabled={loadingLogin}
+                        spellcheck={false}
+                        autocomplete="current-password"
+                        buttonAriaLabelHide={content["reusable-aria-hide-password"]}
+                        buttonAriaLabelShow={content["reusable-aria-show-password"]}
+                      />
+                    )}
+                    rules={{
+                      required: {
+                        value: true,
+                        message: content["reusable-password-validation-required"],
+                      },
+                    }}
+                  />
+                  <DTEContent>
+                    {content["reusable-text-forgotten-password"]}
                     <DTERouteLink
-                      to={
-                        language === "en-GB"
-                          ? "/Participants/register"
-                          : "/Cyfranogwyr/Cofrestrwch"
-                      }
-                      disabled={loadingLogin}
-                      $outlined
+                      to="/ForgottenPassword"
+                      renderStyle="standard"
+                      ariaLabel={content["signin-aria-reset-password"]}
                     >
-                      {content["signin-button-registerwithbpor"]}
+                      {content["reusable-link-forgotten-password"]}
                     </DTERouteLink>
+                  </DTEContent>
+                  <ButtonWrapper>
+                    <DTEButton disabled={loadingLogin}>{content["reusable-button-signin"]}</DTEButton>
                   </ButtonWrapper>
-                </>
-              )}
-            {resendDTEResponse?.isSuccess && (
-              <CheckYourEmail emailAddress={email} />
+                </form>
+                <ButtonWrapper>
+                  <DTERouteLink
+                    to={language === "en-GB" ? "/Participants/register" : "/Cyfranogwyr/Cofrestrwch"}
+                    disabled={loadingLogin}
+                    $outlined
+                  >
+                    {content["signin-button-registerwithbpor"]}
+                  </DTERouteLink>
+                </ButtonWrapper>
+              </>
             )}
+            {resendDTEResponse?.isSuccess && <CheckYourEmail emailAddress={email} />}
           </LoginWrapper>
         </Grid>
       </>

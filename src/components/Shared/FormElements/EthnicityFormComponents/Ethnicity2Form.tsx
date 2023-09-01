@@ -26,18 +26,9 @@ interface Ethnicity2FormProps extends FormBaseProps {
   ethnicity: string;
 }
 
-function ConditionalInput(props: {
-  value: string;
-  onValueChange: (e: ChangeEvent<HTMLInputElement>) => void;
-}) {
+function ConditionalInput(props: { value: string; onValueChange: (e: ChangeEvent<HTMLInputElement>) => void }) {
   const { value, onValueChange } = props;
-  return (
-    <DTEInput
-      value={value}
-      onValueChange={onValueChange}
-      label="How would you describe your background?"
-    />
-  );
+  return <DTEInput value={value} onValueChange={onValueChange} label="How would you describe your background?" />;
 }
 
 function Ethnicity2Form(props: Ethnicity2FormProps) {
@@ -57,22 +48,20 @@ function Ethnicity2Form(props: Ethnicity2FormProps) {
   let labelElement: ReactNode;
   const ethnicities = getEthnicities(content);
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const [otherText, setOtherText] = useState<string | undefined>(
     !ethnicities.asian.backgrounds
       .concat(
         ethnicities.black.backgrounds,
         ethnicities.mixed.backgrounds,
         ethnicities.white.backgrounds,
-        ethnicities.other.backgrounds,
+        ethnicities.other.backgrounds
       )
       .includes(initialStateData.background) &&
       initialStateData.background !== "other" &&
       initialStateData.background !== ""
       ? initialStateData.background
-      : undefined,
+      : undefined
   );
 
   const {
@@ -90,10 +79,9 @@ function Ethnicity2Form(props: Ethnicity2FormProps) {
             ethnicities.black.backgrounds,
             ethnicities.mixed.backgrounds,
             ethnicities.white.backgrounds,
-            ethnicities.other.backgrounds,
+            ethnicities.other.backgrounds
           )
-          .includes(initialStateData.background) &&
-        initialStateData.background !== ""
+          .includes(initialStateData.background) && initialStateData.background !== ""
           ? "other"
           : initialStateData.background,
     },
@@ -102,9 +90,7 @@ function Ethnicity2Form(props: Ethnicity2FormProps) {
   const preOnDataChange = (data: Ethnicity2FormData) => {
     onDataChange({
       background:
-        data.background === "other" && otherText && otherText.trim() !== ""
-          ? otherText.trim()
-          : data.background.trim(),
+        data.background === "other" && otherText && otherText.trim() !== "" ? otherText.trim() : data.background.trim(),
     });
   };
 
@@ -116,19 +102,14 @@ function Ethnicity2Form(props: Ethnicity2FormProps) {
 
   if (!hideHeader) {
     labelElement = (
-      <DTEHeader
-        as="h1"
-        $variant={headerVariant}
-      >{`Which of the following best describes your ${
+      <DTEHeader as="h1" $variant={headerVariant}>{`Which of the following best describes your ${
         ethnicities[ethnicity as keyof typeof ethnicities].longName
       } background?`}</DTEHeader>
     );
   } else if (instructionText) {
     labelElement = instructionText;
   } else {
-    labelElement = (
-      <DTEContent>Studies may need this information for [reason].</DTEContent>
-    );
+    labelElement = <DTEContent>Studies may need this information for [reason].</DTEContent>;
   }
 
   useEffect(() => {
@@ -140,11 +121,7 @@ function Ethnicity2Form(props: Ethnicity2FormProps) {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <form
-          onSubmit={handleSubmit(preOnDataChange)}
-          data-testid="background-form"
-          noValidate
-        >
+        <form onSubmit={handleSubmit(preOnDataChange)} data-testid="background-form" noValidate>
           <Controller
             control={control}
             name="background"
@@ -158,9 +135,7 @@ function Ethnicity2Form(props: Ethnicity2FormProps) {
               >
                 {ethnicities[ethnicity as keyof typeof ethnicities] && (
                   <>
-                    {ethnicities[
-                      ethnicity as keyof typeof ethnicities
-                    ].backgrounds.map((backgroundName: string) => {
+                    {ethnicities[ethnicity as keyof typeof ethnicities].backgrounds.map((backgroundName: string) => {
                       return (
                         <Radios.Radio
                           value={backgroundName}
@@ -182,16 +157,14 @@ function Ethnicity2Form(props: Ethnicity2FormProps) {
                             ethnicities.mixed.backgrounds,
                             ethnicities.white.backgrounds,
                             ethnicities.other.backgrounds,
-                            [""],
+                            [""]
                           )
                           .includes(value)
                       }
                       conditional={
                         <ConditionalInput
                           value={otherText || ""}
-                          onValueChange={(e) =>
-                            setOtherText(e.currentTarget.value)
-                          }
+                          onValueChange={(e) => setOtherText(e.currentTarget.value)}
                         />
                       }
                       key="other"
@@ -199,10 +172,7 @@ function Ethnicity2Form(props: Ethnicity2FormProps) {
                       {ethnicity === "other"
                         ? "Any other ethnic group"
                         : `Another ${
-                            ethnicity === "mixed"
-                              ? ethnicity
-                              : ethnicity.charAt(0).toUpperCase() +
-                                ethnicity.slice(1)
+                            ethnicity === "mixed" ? ethnicity : ethnicity.charAt(0).toUpperCase() + ethnicity.slice(1)
                           } background`}
                     </Radios.Radio>
                   </>
@@ -216,14 +186,9 @@ function Ethnicity2Form(props: Ethnicity2FormProps) {
               },
             }}
           />
-          <EthnicityInformation
-            hideInfo={hideInfo || false}
-            studyType="backgrounds"
-          />
+          <EthnicityInformation hideInfo={hideInfo || false} studyType="backgrounds" />
           <FormNavigationButtons
-            nextButtonText={
-              nextButtonText || content["reusable-button-continue"]
-            }
+            nextButtonText={nextButtonText || content["reusable-button-continue"]}
             showCancelButton={showCancelButton || false}
             onCancel={onCancel}
           />

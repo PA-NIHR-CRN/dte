@@ -27,10 +27,7 @@ interface ExternalLinkProps extends BaseLinkProps {
   href: string;
 }
 
-const determineClassName = (
-  renderStyle: "standard" | undefined,
-  inverted: boolean,
-) => {
+const determineClassName = (renderStyle: "standard" | undefined, inverted: boolean) => {
   switch (renderStyle) {
     case "standard":
       return inverted ? "standard-route inverted" : "standard-route";

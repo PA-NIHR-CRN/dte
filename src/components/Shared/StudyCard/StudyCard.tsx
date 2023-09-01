@@ -30,11 +30,7 @@ function StudyCard(props: StudyCardProps) {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
+        <Typography className={classes.title} color="textSecondary" gutterBottom>
           {study.studyCpmsId}
         </Typography>
         <DTEHeader as="h2" $variant="h4">

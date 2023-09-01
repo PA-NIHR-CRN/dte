@@ -5,8 +5,7 @@ const DTEDateInput = styled(DateInput)`
   && {
     input {
       border-radius: 0.3rem;
-      border-color: ${(Props) =>
-        Props.error ? Props.theme.NIHR.ErrorRed : Props.theme.NIHR.Grey};
+      border-color: ${(Props) => (Props.error ? Props.theme.NIHR.ErrorRed : Props.theme.NIHR.Grey)};
       &:focus {
         border: 4px solid ${(Props) => Props.theme.NIHR.Blue};
         box-shadow: none;

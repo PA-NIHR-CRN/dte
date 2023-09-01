@@ -87,8 +87,7 @@ const StyledListItemButton = styled(ListItemButton)`
 `;
 
 export default function FooterLinksPanel(props: FooterLinksPanelProps) {
-  const { links, seperators, isMobile, ariaLabel, heading, isAccordion } =
-    props;
+  const { links, seperators, isMobile, ariaLabel, heading, isAccordion } = props;
   const linkCount = links.length;
   const panelId = useMemo(() => heading.replace(/\s/g, ""), []);
 
@@ -105,21 +104,8 @@ export default function FooterLinksPanel(props: FooterLinksPanelProps) {
           <NavHeading aria-label={ariaLabel}>{heading}</NavHeading>
           <NavStyled isMobile={isMobile}>
             {links.map((link, i) => (
-              <li
-                className={
-                  seperators && linkCount !== i + 1 && !isMobile
-                    ? "seperator"
-                    : ""
-                }
-                key={link.name}
-              >
-                <DTERouteLink
-                  to={link.url}
-                  renderStyle="standard"
-                  target="_blank"
-                  external
-                  inverted
-                >
+              <li className={seperators && linkCount !== i + 1 && !isMobile ? "seperator" : ""} key={link.name}>
+                <DTERouteLink to={link.url} renderStyle="standard" target="_blank" external inverted>
                   {link.name}
                 </DTERouteLink>
               </li>
@@ -134,11 +120,7 @@ export default function FooterLinksPanel(props: FooterLinksPanelProps) {
     <Grid container direction="column">
       <Grid item xs={12}>
         <List sx={{ color: "white" }} component="nav" aria-label={ariaLabel}>
-          <StyledListItemButton
-            aria-expanded={open}
-            aria-controls={panelId}
-            onClick={handleClick}
-          >
+          <StyledListItemButton aria-expanded={open} aria-controls={panelId} onClick={handleClick}>
             <ListItemText id={panelId} primary={heading} />
             {open ? <ExpandLess /> : <ExpandMore />}
           </StyledListItemButton>
@@ -146,14 +128,7 @@ export default function FooterLinksPanel(props: FooterLinksPanelProps) {
             <AccordionElementStyled>
               {links.map((link) => (
                 <li key={link.name}>
-                  <DTERouteLink
-                    to={link.url}
-                    renderStyle="standard"
-                    target="_blank"
-                    key={link.name}
-                    inverted
-                    external
-                  >
+                  <DTERouteLink to={link.url} renderStyle="standard" target="_blank" key={link.name} inverted external>
                     {link.name}
                     <br />
                   </DTERouteLink>

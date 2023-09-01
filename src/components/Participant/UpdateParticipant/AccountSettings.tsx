@@ -42,19 +42,12 @@ const StyledHiddenText = styled.span`
 function AccountSettings() {
   const { content } = useContext(ContentContext);
   const containerRef = useRef<HTMLDivElement>(null);
-  const {
-    currentAccountPage: currentPage,
-    setCurrentAccountPage: setCurrentPage,
-  } = useContext(UserContext);
-  const [pageTitle, setPageTitle] = useState(
-    "Account settings - Volunteer Account - Be Part of Research",
-  );
+  const { currentAccountPage: currentPage, setCurrentAccountPage: setCurrentPage } = useContext(UserContext);
+  const [pageTitle, setPageTitle] = useState("Account settings - Volunteer Account - Be Part of Research");
   const [gaURL, setGaURL] = useState("/AccountSettings");
   const theme = useTheme();
   const [userData, setUserData] = useState<UserDataState>();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const [{ response, loading, error }] = useAxiosFetch(
     {
       url: `${process.env.REACT_APP_BASE_API}/participants/details`,
@@ -63,27 +56,21 @@ function AccountSettings() {
     {
       manual: false,
       useCache: false,
-    },
+    }
   );
 
   const handlePageTitle = (page: string) => {
     switch (page) {
       case "email":
-        setPageTitle(
-          "What is your new email address? - Volunteer Account - Be Part of Research",
-        );
+        setPageTitle("What is your new email address? - Volunteer Account - Be Part of Research");
         setGaURL("/AccountSettings/ChangeEmail");
         break;
       case "password":
-        setPageTitle(
-          "Change your password - Volunteer Account - Be Part of Research",
-        );
+        setPageTitle("Change your password - Volunteer Account - Be Part of Research");
         setGaURL("/AccountSettings/ChangePassword");
         break;
       default:
-        setPageTitle(
-          "Account settings - Volunteer Account - Be Part of Research",
-        );
+        setPageTitle("Account settings - Volunteer Account - Be Part of Research");
         setGaURL("/AccountSettings");
     }
   };
@@ -99,8 +86,7 @@ function AccountSettings() {
 
   useEffect(() => {
     if (!userData && Utils.ConvertResponseToDTEResponse(response)?.isSuccess) {
-      const DTEDetailsResponse =
-        Utils.ConvertResponseToDTEResponse(response)?.content;
+      const DTEDetailsResponse = Utils.ConvertResponseToDTEResponse(response)?.content;
       if (DTEDetailsResponse) {
         const stateData: UserDataState = {
           currentEmail: DTEDetailsResponse.email,
@@ -135,11 +121,8 @@ function AccountSettings() {
                       <DTEContent>{userData.currentEmail}</DTEContent>
                     </dd>
                     <dd className="govuk-summary-list__actions">
-                      <DTELinkButton
-                        onClick={() => setCurrentDisplayPage("email")}
-                      >
-                        {content["reusable-change"]}{" "}
-                        <StyledHiddenText>email address</StyledHiddenText>
+                      <DTELinkButton onClick={() => setCurrentDisplayPage("email")}>
+                        {content["reusable-change"]} <StyledHiddenText>email address</StyledHiddenText>
                       </DTELinkButton>
                     </dd>
                   </div>
@@ -149,9 +132,7 @@ function AccountSettings() {
                     </dt>
                     <dd className="govuk-summary-list__value" />
                     <dd className="govuk-summary-list__actions">
-                      <DTELinkButton
-                        onClick={() => setCurrentDisplayPage("password")}
-                      >
+                      <DTELinkButton onClick={() => setCurrentDisplayPage("password")}>
                         Change <StyledHiddenText>password</StyledHiddenText>
                       </DTELinkButton>
                     </dd>
@@ -161,9 +142,7 @@ function AccountSettings() {
               {error && (
                 <ErrorMessageContainer
                   axiosErrors={[error]}
-                  DTEAxiosErrors={[
-                    Utils.ConvertResponseToDTEResponse(response)?.errors,
-                  ]}
+                  DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(response)?.errors]}
                 />
               )}
             </>

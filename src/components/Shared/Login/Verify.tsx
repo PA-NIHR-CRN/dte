@@ -23,9 +23,7 @@ function Verify() {
   const history = useHistory();
   const { search } = useLocation();
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
 
   const code = new URLSearchParams(search).get("code");
   const userId = new URLSearchParams(search).get("userId");
@@ -33,13 +31,7 @@ function Verify() {
     history.push("/Participants/Register/Continue/Questions");
   }
   const confirmurl = `${process.env.REACT_APP_BASE_API}/users/confirmsignup`;
-  const [
-    {
-      response: confirmationResponse,
-      loading: confirmationLoading,
-      error: confirmationError,
-    },
-  ] = useAxiosFetch(
+  const [{ response: confirmationResponse, loading: confirmationLoading, error: confirmationError }] = useAxiosFetch(
     {
       url: confirmurl,
       method: "POST",
@@ -50,7 +42,7 @@ function Verify() {
     },
     {
       useCache: false,
-    },
+    }
   );
 
   useEffect(() => {
@@ -75,10 +67,7 @@ function Verify() {
           case "Confirm_SignUp_Error_Expired_Code":
             message = (
               <>
-                <DTEContent>
-                  This verification link has expired. We can send you the email
-                  again.
-                </DTEContent>
+                <DTEContent>This verification link has expired. We can send you the email again.</DTEContent>
                 <ResendEmail userId={userId || ""} />
               </>
             );
@@ -87,8 +76,7 @@ function Verify() {
             message = (
               <>
                 <DTEContent>
-                  This verification link has already been used. Please sign in
-                  to continue registration.
+                  This verification link has already been used. Please sign in to continue registration.
                 </DTEContent>
                 <DTERouteLink to="/UserLogin">Sign in</DTERouteLink>
               </>
@@ -98,8 +86,7 @@ function Verify() {
             message = (
               <>
                 <DTEContent>
-                  There may have been a technical issue. You can try to sign in
-                  to continue your registration.
+                  There may have been a technical issue. You can try to sign in to continue your registration.
                 </DTEContent>
                 <DTERouteLink to="/UserLogin">Sign in</DTERouteLink>
               </>
@@ -114,20 +101,15 @@ function Verify() {
     <>
       {confirmationLoading && <LoadingIndicator text="Verifying Account..." />}
       <StepWrapper>
-        {Utils.ConvertResponseToDTEResponse(confirmationResponse)
-          ?.isSuccess && (
+        {Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
           <DocumentTitle title="Your email address has been verified - Volunteer Registration - Be Part of Research">
             <>
               <DTEHeader as="h1" $variant={headerVariant}>
                 Your email address has been verified
               </DTEHeader>
               <Grid item xs={12} sm={10}>
-                <DTEContent>
-                  Please sign in to continue registration.
-                </DTEContent>
-                <DTERouteLink to="/Participants/Register/Continue/Questions">
-                  Sign in
-                </DTERouteLink>
+                <DTEContent>Please sign in to continue registration.</DTEContent>
+                <DTERouteLink to="/Participants/Register/Continue/Questions">Sign in</DTERouteLink>
               </Grid>
             </>
           </DocumentTitle>
@@ -139,16 +121,11 @@ function Verify() {
                 <DTEHeader as="h1" $variant={headerVariant}>
                   Unable to verify your email address
                 </DTEHeader>
-                {convertErrorsToResponse(
-                  Utils.ConvertResponseToDTEResponse(confirmationResponse)
-                    ?.errors,
-                )}
+                {convertErrorsToResponse(Utils.ConvertResponseToDTEResponse(confirmationResponse)?.errors)}
               </>
             </DocumentTitle>
           )}
-        {confirmationError && (
-          <ErrorMessageContainer axiosError={confirmationError} />
-        )}
+        {confirmationError && <ErrorMessageContainer axiosError={confirmationError} />}
       </StepWrapper>
     </>
   );

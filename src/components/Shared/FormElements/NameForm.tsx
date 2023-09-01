@@ -22,19 +22,10 @@ interface NameFormProps extends FormBaseProps {
 
 function NameForm(props: NameFormProps) {
   const { content } = useContext(ContentContext);
-  const {
-    onDataChange,
-    initialStateData,
-    nextButtonText,
-    hideHeader,
-    instructionText,
-    showCancelButton,
-    onCancel,
-  } = props;
+  const { onDataChange, initialStateData, nextButtonText, hideHeader, instructionText, showCancelButton, onCancel } =
+    props;
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
     control,
     setValue,
@@ -74,10 +65,7 @@ function NameForm(props: NameFormProps) {
             <Controller
               control={control}
               name="firstName"
-              render={({
-                field: { value, onChange, onBlur },
-                fieldState: { error },
-              }) => (
+              render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                 <DTEInput
                   id="firstName"
                   value={value}
@@ -96,19 +84,14 @@ function NameForm(props: NameFormProps) {
                     return true;
                   }
                   setValue("firstName", "");
-                  return content[
-                    "register-name-validation-first-name-required"
-                  ];
+                  return content["register-name-validation-first-name-required"];
                 },
               }}
             />
             <Controller
               control={control}
               name="lastName"
-              render={({
-                field: { value, onChange, onBlur },
-                fieldState: { error },
-              }) => (
+              render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                 <DTEInput
                   id="lastName"
                   value={value}
@@ -132,9 +115,7 @@ function NameForm(props: NameFormProps) {
               }}
             />
             <FormNavigationButtons
-              nextButtonText={
-                nextButtonText || content["reusable-button-continue"]
-              }
+              nextButtonText={nextButtonText || content["reusable-button-continue"]}
               showCancelButton={showCancelButton || false}
               onCancel={onCancel}
             />

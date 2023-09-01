@@ -16,32 +16,14 @@ const StyledDTEHR = styled(DTEHR)`
   margin-top: 2.5em;
 `;
 
-const getTextStyles = (
-  node: any,
-  parentNodeType: string | undefined,
-): React.CSSProperties | undefined => {
-  if (
-    node.nodeType !== "text" ||
-    (typeof parentNodeType === "string" && parentNodeType.startsWith("heading"))
-  )
+const getTextStyles = (node: any, parentNodeType: string | undefined): React.CSSProperties | undefined => {
+  if (node.nodeType !== "text" || (typeof parentNodeType === "string" && parentNodeType.startsWith("heading")))
     return undefined;
 
   return {
-    fontWeight: node.marks.some(
-      (mark: { type: string }) => mark.type === "bold",
-    )
-      ? "bold"
-      : "normal",
-    fontStyle: node.marks.some(
-      (mark: { type: string }) => mark.type === "italic",
-    )
-      ? "italic"
-      : "normal",
-    textDecoration: node.marks.some(
-      (mark: { type: string }) => mark.type === "underline",
-    )
-      ? "underline"
-      : "none",
+    fontWeight: node.marks.some((mark: { type: string }) => mark.type === "bold") ? "bold" : "normal",
+    fontStyle: node.marks.some((mark: { type: string }) => mark.type === "italic") ? "italic" : "normal",
+    textDecoration: node.marks.some((mark: { type: string }) => mark.type === "underline") ? "underline" : "none",
   };
 };
 
@@ -65,56 +47,30 @@ const renderContent = (node: any, parentNodeType?: string) => {
   }
   switch (node.nodeType) {
     case "document":
-      return node.content.map((childNode: any) =>
-        renderContent(childNode, node.nodeType),
-      );
+      return node.content.map((childNode: any) => renderContent(childNode, node.nodeType));
     case "heading-1":
       return (
-        <DTEHeader as="h1">
-          {node.content.map((childNode: any) =>
-            renderContent(childNode, node.nodeType),
-          )}
-        </DTEHeader>
+        <DTEHeader as="h1">{node.content.map((childNode: any) => renderContent(childNode, node.nodeType))}</DTEHeader>
       );
     case "heading-2":
       return (
-        <DTEHeader as="h2">
-          {node.content.map((childNode: any) =>
-            renderContent(childNode, node.nodeType),
-          )}
-        </DTEHeader>
+        <DTEHeader as="h2">{node.content.map((childNode: any) => renderContent(childNode, node.nodeType))}</DTEHeader>
       );
     case "heading-3":
       return (
-        <DTEHeader as="h3">
-          {node.content.map((childNode: any) =>
-            renderContent(childNode, node.nodeType),
-          )}
-        </DTEHeader>
+        <DTEHeader as="h3">{node.content.map((childNode: any) => renderContent(childNode, node.nodeType))}</DTEHeader>
       );
     case "heading-4":
       return (
-        <DTEHeader as="h4">
-          {node.content.map((childNode: any) =>
-            renderContent(childNode, node.nodeType),
-          )}
-        </DTEHeader>
+        <DTEHeader as="h4">{node.content.map((childNode: any) => renderContent(childNode, node.nodeType))}</DTEHeader>
       );
     case "paragraph":
-      return (
-        <DTEContent>
-          {node.content.map((childNode: any) =>
-            renderContent(childNode, node.nodeType),
-          )}
-        </DTEContent>
-      );
+      return <DTEContent>{node.content.map((childNode: any) => renderContent(childNode, node.nodeType))}</DTEContent>;
     case "text":
       if (parentNodeType && parentNodeType.startsWith("heading")) {
         return node.value;
       }
-      return (
-        <span style={getTextStyles(node, parentNodeType)}>{node.value}</span>
-      );
+      return <span style={getTextStyles(node, parentNodeType)}>{node.value}</span>;
     case "hyperlink":
       return (
         <DTERouteLink
@@ -158,9 +114,7 @@ const renderContent = (node: any, parentNodeType?: string) => {
 
         return (
           <DTEDetails summary={summary}>
-            {contentNode.content.map((childNode: any) =>
-              renderContent(childNode, contentNode.nodeType),
-            )}
+            {contentNode.content.map((childNode: any) => renderContent(childNode, contentNode.nodeType))}
           </DTEDetails>
         );
       } else {

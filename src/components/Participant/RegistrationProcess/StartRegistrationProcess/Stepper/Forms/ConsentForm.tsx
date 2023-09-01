@@ -60,9 +60,7 @@ function ConsentForm(props: ConsentFormProps) {
               values={[
                 {
                   value: "consentContact",
-                  text: (
-                    <>{content["register-consent-confirmation-check-text"]}</>
-                  ),
+                  text: <>{content["register-consent-confirmation-check-text"]}</>,
                   checked: value,
                   disabled: false,
                 },
@@ -71,10 +69,7 @@ function ConsentForm(props: ConsentFormProps) {
           )}
           rules={{
             validate: (value) => {
-              return (
-                value ||
-                content["register-consent-confirmation-check-validation"]
-              );
+              return value || content["register-consent-confirmation-check-validation"];
             },
           }}
         />
@@ -84,12 +79,7 @@ function ConsentForm(props: ConsentFormProps) {
           name="consent"
           render={({ field: { onChange }, fieldState: { error } }) => (
             <>
-              <Grid
-                container
-                direction="column"
-                justifyContent="flex-start"
-                spacing={2}
-              >
+              <Grid container direction="column" justifyContent="flex-start" spacing={2}>
                 <Grid item>
                   <DTEButton
                     onClick={(e: any) => {

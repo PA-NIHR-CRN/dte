@@ -50,11 +50,7 @@ function DTETable(props: DTETableProps) {
         {columns.map((column) => (
           <StyledCol
             key={uuidv4()}
-            colWidth={
-              column?.width
-                ? `${(column.width / totalWidth) * 100}%`
-                : `${(1 / totalWidth) * 100}%`
-            }
+            colWidth={column?.width ? `${(column.width / totalWidth) * 100}%` : `${(1 / totalWidth) * 100}%`}
           />
         ))}
       </colgroup>

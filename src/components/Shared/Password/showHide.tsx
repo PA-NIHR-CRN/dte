@@ -113,15 +113,11 @@ function PasswordShowHide({
         aria-label={showPassword ? buttonAriaLabelHide : buttonAriaLabelShow}
         error={error}
       >
-        {showPassword
-          ? content["password-button-hide"]
-          : content["password-button-show"]}
+        {showPassword ? content["password-button-hide"] : content["password-button-show"]}
       </StyledButton>
 
       <span className="nhsuk-u-visually-hidden" aria-live="polite">
-        {showPassword
-          ? content["password-button-hide-aria"]
-          : content["password-button-show-aria"]}
+        {showPassword ? content["password-button-hide-aria"] : content["password-button-show-aria"]}
       </span>
     </StyledDiv>
   );

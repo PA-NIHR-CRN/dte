@@ -28,9 +28,7 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
   const history = useHistory();
   const { logOutToken } = useContext(AuthContext);
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
     control,
     handleSubmit,
@@ -46,17 +44,13 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
   });
 
   const [
-    {
-      response: updateUserEmailPostResponse,
-      loading: updateUserEmailPostLoading,
-      error: updateUserEmailPostError,
-    },
+    { response: updateUserEmailPostResponse, loading: updateUserEmailPostLoading, error: updateUserEmailPostError },
     updateUserEmailPost,
   ] = useAxiosFetch(
     {
       method: "POST",
     },
-    { useCache: false, manual: true },
+    { useCache: false, manual: true }
   );
 
   const handleChangeEmail = async (data: UpdateEmailFormData) => {
@@ -72,9 +66,7 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
   };
 
   useEffect(() => {
-    if (
-      Utils.ConvertResponseToDTEResponse(updateUserEmailPostResponse)?.isSuccess
-    ) {
+    if (Utils.ConvertResponseToDTEResponse(updateUserEmailPostResponse)?.isSuccess) {
       logOutToken();
       history.push("/Participants/EmailUpdated");
     }
@@ -86,26 +78,19 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
         What is your new email address?
       </DTEHeader>
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
-      {(updateUserEmailPostError ||
-        Utils.ConvertResponseToDTEResponse(updateUserEmailPostResponse)
-          ?.errors) && (
+      {(updateUserEmailPostError || Utils.ConvertResponseToDTEResponse(updateUserEmailPostResponse)?.errors) && (
         <ErrorMessageContainer description="Your email address has not been updated. The email address may already be registered or there may have been a technical issue.">
           <></>
         </ErrorMessageContainer>
       )}
-      {updateUserEmailPostLoading && (
-        <LoadingIndicator text={content["reusable-loading-updating-details"]} />
-      )}
+      {updateUserEmailPostLoading && <LoadingIndicator text={content["reusable-loading-updating-details"]} />}
       <Grid container>
         <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>
           <form onSubmit={handleSubmit(handleChangeEmail)} noValidate>
             <Controller
               control={control}
               name="emailAddress"
-              render={({
-                field: { value, onChange, onBlur },
-                fieldState: { error },
-              }) => (
+              render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                 <DTEInput
                   id="emailAddress"
                   value={value}
@@ -133,10 +118,7 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
             <Controller
               control={control}
               name="confirmEmailAddress"
-              render={({
-                field: { value, onChange, onBlur },
-                fieldState: { error },
-              }) => (
+              render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                 <DTEInput
                   id="confirmEmailAddress"
                   value={value}
@@ -168,16 +150,9 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
               }}
             />
             <DTEDetails summary="Why we are asking this question">
-              <DTEContent>
-                We need your email address so we can contact you when we find a
-                suitable study
-              </DTEContent>
+              <DTEContent>We need your email address so we can contact you when we find a suitable study</DTEContent>
             </DTEDetails>
-            <FormNavigationButtons
-              nextButtonText={content["reusable-save"]}
-              showCancelButton
-              onCancel={onCancel}
-            />
+            <FormNavigationButtons nextButtonText={content["reusable-save"]} showCancelButton onCancel={onCancel} />
           </form>
         </Grid>
       </Grid>

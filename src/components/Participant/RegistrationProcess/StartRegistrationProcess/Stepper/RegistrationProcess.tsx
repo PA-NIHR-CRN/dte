@@ -5,16 +5,12 @@ import styled from "styled-components";
 import DocumentTitle from "react-document-title";
 import { Grid } from "@material-ui/core";
 import StepWrapper from "../../../../Shared/StepWrapper/StepWrapper";
-import NameForm, {
-  NameFormData,
-} from "../../../../Shared/FormElements/NameForm";
+import NameForm, { NameFormData } from "../../../../Shared/FormElements/NameForm";
 import PasswordForm, { PasswordFormData } from "./Forms/PasswordForm";
 import DOBForm, { DOBFormData } from "../../../../Shared/FormElements/DOBForm";
 import EmailForm, { EmailFormData } from "./Forms/EmailForm";
 import DTEBackLink from "../../../../Shared/UI/DTEBackLink/DTEBackLink";
-import DTEStepper, {
-  LinearProgressPropsData,
-} from "../../../../Shared/UI/DTEStepper/DTEStepper";
+import DTEStepper, { LinearProgressPropsData } from "../../../../Shared/UI/DTEStepper/DTEStepper";
 import CheckEmailForm from "./Forms/CheckEmailForm";
 import DTEContent from "../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import ConsentForm, { ConsentFormData } from "./Forms/ConsentForm";
@@ -32,14 +28,11 @@ const PercentageGrid = styled(Grid)`
 
 function RegsitrationProcess() {
   const { content } = useContext(ContentContext);
-  const { activeStep, setActiveStep, registrationData, setRegistrationData } =
-    useContext(UserContext);
+  const { activeStep, setActiveStep, registrationData, setRegistrationData } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState(content["reusable-loading"]);
   const history = useHistory();
-  const [registrationPageTitle, setRegistrationPageTitle] = useState(
-    content["register-name-document-title"],
-  );
+  const [registrationPageTitle, setRegistrationPageTitle] = useState(content["register-name-document-title"]);
   const [gaURL, setGaURL] = useState("/registration/name");
 
   const stepperRef = createRef<HTMLElement>();
@@ -61,14 +54,8 @@ function RegsitrationProcess() {
   };
 
   const handleRegistrationDataChange = (
-    incommingFormData:
-      | NameFormData
-      | DOBFormData
-      | EmailFormData
-      | PasswordFormData
-      | ConsentFormData
-      | any,
-    form: string,
+    incommingFormData: NameFormData | DOBFormData | EmailFormData | PasswordFormData | ConsentFormData | any,
+    form: string
   ) => {
     setRegistrationData((oldRegistrationData) => {
       switch (form) {
@@ -147,18 +134,14 @@ function RegsitrationProcess() {
       case 0:
         return (
           <NameForm
-            onDataChange={(data: NameFormData) =>
-              handleRegistrationDataChange(data, "nameFormData")
-            }
+            onDataChange={(data: NameFormData) => handleRegistrationDataChange(data, "nameFormData")}
             initialStateData={registrationData.nameFormData}
           />
         );
       case 1:
         return (
           <DOBForm
-            onDataChange={(data: DOBFormData) =>
-              handleRegistrationDataChange(data, "dobFormData")
-            }
+            onDataChange={(data: DOBFormData) => handleRegistrationDataChange(data, "dobFormData")}
             initialStateData={registrationData.dobFormData}
             nextButtonText={content["reusable-button-continue"]}
           />
@@ -166,18 +149,14 @@ function RegsitrationProcess() {
       case 2:
         return (
           <EmailForm
-            onDataChange={(data: EmailFormData) =>
-              handleRegistrationDataChange(data, "emailFormData")
-            }
+            onDataChange={(data: EmailFormData) => handleRegistrationDataChange(data, "emailFormData")}
             initialStateData={registrationData.emailFormData}
           />
         );
       case 3:
         return (
           <PasswordForm
-            onDataChange={(data: PasswordFormData) =>
-              handleRegistrationDataChange(data, "passwordFormData")
-            }
+            onDataChange={(data: PasswordFormData) => handleRegistrationDataChange(data, "passwordFormData")}
             initialStateData={registrationData.passwordFormData}
             setLoading={setLoading}
             setLoadingText={setLoadingText}
@@ -186,20 +165,14 @@ function RegsitrationProcess() {
       case 4:
         return (
           <ConsentForm
-            onDataChange={(data: ConsentFormData) =>
-              handleRegistrationDataChange(data, "consentFormData")
-            }
+            onDataChange={(data: ConsentFormData) => handleRegistrationDataChange(data, "consentFormData")}
             initialStateData={registrationData.consentFormData}
             handleNoConsent={handleNoConsent}
           />
         );
       case 5:
         return (
-          <CheckEmailForm
-            initialStateData={registrationData}
-            setLoading={setLoading}
-            setLoadingText={setLoadingText}
-          />
+          <CheckEmailForm initialStateData={registrationData} setLoading={setLoading} setLoadingText={setLoadingText} />
         );
       case 6:
         return <NoConsent />;
@@ -215,9 +188,7 @@ function RegsitrationProcess() {
   const updateRegistrationPageTitle = (step: number) => {
     switch (step) {
       case 1:
-        setRegistrationPageTitle(
-          content["register-date-of-birth-document-title"],
-        );
+        setRegistrationPageTitle(content["register-date-of-birth-document-title"]);
         setGaURL("/registration/dateofbirth");
         break;
       case 2:
@@ -233,9 +204,7 @@ function RegsitrationProcess() {
         setGaURL("/registration/consent");
         break;
       case 5:
-        setRegistrationPageTitle(
-          content["register-check-email-registering-document-title"],
-        );
+        setRegistrationPageTitle(content["register-check-email-registering-document-title"]);
         setGaURL("/registration/registering");
         break;
       case 6:
@@ -265,11 +234,7 @@ function RegsitrationProcess() {
               }}
               ref={stepperRef}
             />
-            <PercentageGrid
-              justifyContent="space-between"
-              alignItems="center"
-              container
-            >
+            <PercentageGrid justifyContent="space-between" alignItems="center" container>
               <Grid item>
                 {activeStep !== 6 && (
                   <DTEBackLink
@@ -282,8 +247,7 @@ function RegsitrationProcess() {
               </Grid>
               <Grid item>
                 <DTEContent aria-hidden>
-                  {calculatePercentageComplete(activeStep, 13)}%{" "}
-                  {content["reusable-progress-complete"]}
+                  {calculatePercentageComplete(activeStep, 13)}% {content["reusable-progress-complete"]}
                 </DTEContent>
               </Grid>
             </PercentageGrid>

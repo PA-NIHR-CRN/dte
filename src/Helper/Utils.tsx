@@ -5,11 +5,8 @@ import { DTEAxiosResponse } from "../types/AuthTypes";
 export default class Utils {
   static IsCPMSStatusDTEReady(statusName: string) {
     if (statusName) {
-      const supportedStatuses =
-        process.env.REACT_APP_DTE_READY_STATUS_LIST?.split("#");
-      const language = supportedStatuses?.find(
-        (status: any) => status === statusName,
-      );
+      const supportedStatuses = process.env.REACT_APP_DTE_READY_STATUS_LIST?.split("#");
+      const language = supportedStatuses?.find((status: any) => status === statusName);
       return !!language;
     }
     return false;
@@ -51,9 +48,7 @@ export default class Utils {
     return "";
   };
 
-  static ConvertResponseToDTEResponse = (
-    resp?: AxiosResponse<any> | void,
-  ): DTEAxiosResponse | undefined => {
+  static ConvertResponseToDTEResponse = (resp?: AxiosResponse<any> | void): DTEAxiosResponse | undefined => {
     if (!resp) {
       return undefined;
     }
@@ -78,17 +73,12 @@ export default class Utils {
   };
 
   static FocusOnError = () => {
-    const inputWithError = document.getElementsByClassName(
-      "nhsuk-error-message",
-    )[0];
+    const inputWithError = document.getElementsByClassName("nhsuk-error-message")[0];
     if (inputWithError && inputWithError.id) {
       const regex = /--error-message/g;
       const errorId = inputWithError.id.replace(regex, "");
       const errorElement = document.getElementById(errorId);
-      if (
-        errorElement?.tagName === "INPUT" ||
-        errorElement?.tagName === "SELECT"
-      ) {
+      if (errorElement?.tagName === "INPUT" || errorElement?.tagName === "SELECT") {
         errorElement.focus();
       } else {
         errorElement?.getElementsByTagName("input")[0].focus();
@@ -98,5 +88,5 @@ export default class Utils {
 }
 export const EmailRegex = new RegExp(
   // eslint-disable-next-line no-useless-escape
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 );

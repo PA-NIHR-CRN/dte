@@ -27,7 +27,7 @@ function CheckEmailForm(props: CheckEmailFormProps) {
     parseInt(initialStateData.dobFormData.year, 10),
     parseInt(initialStateData.dobFormData.month, 10) - 1,
     parseInt(initialStateData.dobFormData.day, 10),
-    12,
+    12
   ).toISOString();
 
   const [{ response, loading, error }] = useAxiosFetch(
@@ -43,7 +43,7 @@ function CheckEmailForm(props: CheckEmailFormProps) {
         consentRegistration: true,
       },
     },
-    { useCache: false },
+    { useCache: false }
   );
 
   useEffect(() => {
@@ -81,20 +81,16 @@ function CheckEmailForm(props: CheckEmailFormProps) {
         {/* Successfully hit the end point and response is positive */}
         {Utils.ConvertResponseToDTEResponse(response)?.isSuccess && (
           <DocumentTitle title={content["register-check-email-document-title"]}>
-            <CheckYourEmail
-              emailAddress={initialStateData?.emailFormData?.emailAddress}
-            />
+            <CheckYourEmail emailAddress={initialStateData?.emailFormData?.emailAddress} />
           </DocumentTitle>
         )}
         {/* Successfully hit the end point and response is negative */}
         {Utils.ConvertResponseToDTEResponse(response)?.errors && !loading && (
           <>
             {Utils.ConvertResponseToDTEResponse(response)?.errors.some(
-              (e) => e?.customCode === "SignUp_Error_Username_Exists",
+              (e) => e?.customCode === "SignUp_Error_Username_Exists"
             ) && (
-              <DocumentTitle
-                title={content["register-check-email-fail-document-title"]}
-              >
+              <DocumentTitle title={content["register-check-email-fail-document-title"]}>
                 <>
                   <DTEHeader as="h1" $variant="h2">
                     {content["register-check-email-fail-header"]}
@@ -104,14 +100,8 @@ function CheckEmailForm(props: CheckEmailFormProps) {
               </DocumentTitle>
             )}
             {!Utils.ConvertResponseToDTEResponse(response)?.errors.some(
-              (e) => e?.customCode === "SignUp_Error_Username_Exists",
-            ) && (
-              <ErrorMessageContainer
-                DTEAxiosErrors={[
-                  Utils.ConvertResponseToDTEResponse(response)?.errors,
-                ]}
-              />
-            )}
+              (e) => e?.customCode === "SignUp_Error_Username_Exists"
+            ) && <ErrorMessageContainer DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(response)?.errors]} />}
           </>
         )}
       </Grid>

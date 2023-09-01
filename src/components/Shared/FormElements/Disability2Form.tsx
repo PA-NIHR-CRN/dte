@@ -36,9 +36,7 @@ function Disability2Form(props: Disability2FormProps) {
     onCancel,
   } = props;
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
     control,
     handleSubmit,
@@ -63,8 +61,7 @@ function Disability2Form(props: Disability2FormProps) {
     labelElement = (
       <>
         <DTEHeader as="h1" $variant={headerVariant}>
-          Do any of your conditions or illnesses reduce your ability to carry
-          out day to day activities?
+          Do any of your conditions or illnesses reduce your ability to carry out day to day activities?
         </DTEHeader>
         <DTEContent as="span" $displayMode="block">
           For example, eating, washing, walking or going shopping.
@@ -140,23 +137,18 @@ function Disability2Form(props: Disability2FormProps) {
       {!hideInfo && (
         <DTEDetails summary="Why we are asking this question">
           <DTEContent>
-            Some studies will require volunteers with disabilities, other
-            studies want to make sure they have a representative sample of the
-            population taking part in research studies. We may use this
-            information when contacting you about studies you may be interested
-            in.
+            Some studies will require volunteers with disabilities, other studies want to make sure they have a
+            representative sample of the population taking part in research studies. We may use this information when
+            contacting you about studies you may be interested in.
           </DTEContent>
           <DTEContent>
-            If we find that people with disabilities are under represented in
-            signing up to be contacted about research we will look at how to
-            improve this.
+            If we find that people with disabilities are under represented in signing up to be contacted about research
+            we will look at how to improve this.
           </DTEContent>
         </DTEDetails>
       )}
       <FormNavigationButtons
-        nextButtonText={
-          disability2NextButtonText || content["reusable-button-continue"]
-        }
+        nextButtonText={disability2NextButtonText || content["reusable-button-continue"]}
         showCancelButton={disability2ShowCancelButton || false}
         onCancel={onCancel}
       />

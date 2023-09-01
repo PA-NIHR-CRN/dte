@@ -35,9 +35,7 @@ function MobileNumberForm(props: MobileNumberFormProps) {
     instructionText,
   } = props;
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
     control,
     handleSubmit,
@@ -75,20 +73,13 @@ function MobileNumberForm(props: MobileNumberFormProps) {
           What is your phone number? (optional)
         </DTEHeader>
       )}
-      {instructionText || (
-        <DTEContent>
-          You may provide either a mobile or a landline number if you choose.
-        </DTEContent>
-      )}
+      {instructionText || <DTEContent>You may provide either a mobile or a landline number if you choose.</DTEContent>}
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
       <form onSubmit={handleSubmit(onDataChangePreProcessing)}>
         <Controller
           control={control}
           name="mobileNumber"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="mobileNumber"
               value={value}
@@ -104,18 +95,14 @@ function MobileNumberForm(props: MobileNumberFormProps) {
           rules={{
             pattern: {
               value: phoneNumberRegEx,
-              message:
-                "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982",
+              message: "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982",
             },
           }}
         />
         <Controller
           control={control}
           name="landlineNumber"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="landlineNumber"
               value={value}
@@ -131,22 +118,17 @@ function MobileNumberForm(props: MobileNumberFormProps) {
           rules={{
             pattern: {
               value: phoneNumberRegEx,
-              message:
-                "Enter a valid landline number, like 01632 960 001 or +44 1632 960 001",
+              message: "Enter a valid landline number, like 01632 960 001 or +44 1632 960 001",
             },
           }}
         />
 
         {!hideInfo && (
           <DTEDetails summary="Why we are asking this question">
+            <DTEContent>Study teams may need to have a contact phone number for volunteers.</DTEContent>
             <DTEContent>
-              Study teams may need to have a contact phone number for
-              volunteers.
-            </DTEContent>
-            <DTEContent>
-              Some studies will offer text messages as a way to contact
-              volunteers, they will need your mobile number if you choose for
-              them to contact you in this way.
+              Some studies will offer text messages as a way to contact volunteers, they will need your mobile number if
+              you choose for them to contact you in this way.
             </DTEContent>
           </DTEDetails>
         )}

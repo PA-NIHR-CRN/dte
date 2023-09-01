@@ -1,12 +1,5 @@
 /* eslint-disable react/prop-types */
-import {
-  FC,
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  ReactNode,
-} from "react";
+import { FC, useState, useEffect, useContext, createContext, ReactNode } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 
@@ -15,9 +8,7 @@ export interface ManualLoginContextProps {
   setManualLoginRequired: any;
 }
 
-export const ManualLoginContext = createContext<ManualLoginContextProps>(
-  {} as ManualLoginContextProps,
-);
+export const ManualLoginContext = createContext<ManualLoginContextProps>({} as ManualLoginContextProps);
 
 interface ManualLoginProviderProps {
   children: ReactNode;
