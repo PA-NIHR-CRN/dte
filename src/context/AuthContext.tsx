@@ -21,6 +21,11 @@ export const AuthProvider = (props: { children: any }) => {
   const [authenticatedEmailVerified, setAuthenticatedEmailVerified] = useState<
     boolean | null
   >(null);
+  const [authenticatedMobile, setAuthenticatedMobile] = useState<string | null>(
+    null
+  );
+  const [authenticatedMobileVerified, setAuthenticatedMobileVerified] =
+    useState<boolean | null>(null);
   const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(
     null
   );
@@ -34,6 +39,10 @@ export const AuthProvider = (props: { children: any }) => {
   const [isNhsLinkedAccount, setIsNhsLinkedAccount] = useState<boolean>(false);
   const [token, setToken] = useState<string | null | undefined>(null);
   const [isInNHSApp, setIsInNHSApp] = useState<boolean>(false);
+  const [mfaDetails, setMfaDetails] = useState<string>("");
+  const [enteredMfaMobile, setEnteredMfaMobile] = useState<string>("");
+  const [userMfaEmail, setUserMfaEmail] =
+    useState<string>("your email address");
 
   const baseUrl = process.env.REACT_APP_BASE_API;
 
@@ -111,6 +120,24 @@ export const AuthProvider = (props: { children: any }) => {
         const emailVerified = decodedToken?.email_verified;
         setAuthenticatedEmailVerified(emailVerified);
 
+        const mobile = decodedToken?.phone_number;
+        setAuthenticatedMobile(mobile);
+
+        const mobileVerified = decodedToken?.phone_number_verified;
+        setAuthenticatedMobileVerified(mobileVerified);
+
+        const admin = decodedToken?.["cognito:groups"]?.includes("Admin");
+        setAuthenticatedIsAdmin(admin);
+
+        const researcher =
+          !decodedToken?.["cognito:groups"]?.includes("Admin") &&
+          decodedToken?.["cognito:username"]?.includes("idg");
+        setAuthenticatedIsResearcher(researcher);
+
+        const participant =
+          !decodedToken?.["cognito:username"]?.includes("idg") ||
+          (!researcher && !admin);
+        setAuthenticatedIsParticipant(participant);
         return true;
       }
     }
@@ -219,11 +246,20 @@ export const AuthProvider = (props: { children: any }) => {
         lastNonLoginUrl,
         authenticatedEmail,
         authenticatedEmailVerified,
+        authenticatedMobile,
+        authenticatedMobileVerified,
         authenticatedUserId,
         authenticatedFirstname,
         authenticatedLastname,
         isInNHSApp,
         getSessionExpiry,
+        mfaDetails,
+        setMfaDetails,
+        setEnteredMfaMobile,
+        enteredMfaMobile,
+        setAuthenticatedMobile,
+        userMfaEmail,
+        setUserMfaEmail,
       }}
     >
       {/* eslint-disable-next-line react/destructuring-assignment */}

@@ -13,6 +13,7 @@ import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import Utils from "../../../Helper/Utils";
+import Honeypot from "../Honeypot/Honeypot";
 
 export type DOBFormData = {
   day: string;
@@ -84,6 +85,7 @@ const DOBForm = (props: DOBFormProps) => {
             noValidate
             onInvalid={() => {}}
           >
+            <Honeypot />
             <StyledFieldset aria-describedby="date-of-birth-legend date-of-birth-hint">
               <StyledFieldsetLegend id="date-of-birth-legend">
                 {!hideHeader && (

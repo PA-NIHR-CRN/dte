@@ -19,6 +19,7 @@ import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../Password/showHide";
 import ThreeWords from "../Password/threeWords";
+import Honeypot from "../Honeypot/Honeypot";
 
 interface PasswordPolicy {
   minimumLength: number;
@@ -241,6 +242,7 @@ function ResetPassword() {
                             noValidate
                             onInvalid={() => {}}
                           >
+                            <Honeypot />
                             <Controller
                               control={control}
                               name="password"

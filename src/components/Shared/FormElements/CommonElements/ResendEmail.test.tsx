@@ -12,15 +12,13 @@ describe("ResendEmail Accessibility test", () => {
   });
 
   it("must not fail any accessibility tests for empty data", async () => {
-    const { container } = render(<ResendEmail emailAddress="" />);
+    const { container } = render(<ResendEmail userId="" />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it("must not fail any accessibility tests for populated data", async () => {
-    const { container } = render(
-      <ResendEmail emailAddress="email@domain.com" />
-    );
+    const { container } = render(<ResendEmail userId="email@domain.com" />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
