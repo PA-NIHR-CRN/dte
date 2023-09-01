@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { Grid } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
 import { AuthContext } from "../../../context/AuthContext";
@@ -10,7 +10,7 @@ import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContainer";
 import DTEInput from "../UI/DTEInput/DTEInput";
 import DTEButton from "../UI/DTEButton/DTEButton";
-import { DTEAxiosResponse, Role, DTEAxiosError } from "../../../types/AuthTypes";
+import { DTEAxiosResponse, DTEAxiosError } from "../../../types/AuthTypes";
 import Utils, { EmailRegex } from "../../../Helper/Utils";
 import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
@@ -56,15 +56,13 @@ function UserLogin() {
   });
 
   const history = useHistory();
-  const { persistLastNonLoginUrl, lastUrl, isAuthenticated, isAuthenticatedRole, logOutToken, token, saveToken } =
-    useContext(AuthContext);
+
+  const { persistLastNonLoginUrl, lastUrl, isAuthenticated, logOutToken, saveToken } = useContext(AuthContext);
 
   const [loginResponse, setLoginResponse] = useState<DTEAxiosResponse | undefined>(undefined);
   const [resendDTEResponse, setResendDTEResponse] = useState<DTEAxiosResponse | undefined>(undefined);
 
   const [email, setEmail] = useState<string>();
-
-  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   useEffect(() => {
     setValue("password", "");
@@ -97,9 +95,8 @@ function UserLogin() {
   const [{ loading: loadingLogin, error: errorLogin }, login] = useAxiosFetch({}, { manual: true });
 
   useEffect(() => {
-    if (isAuthenticated() && isAuthenticatedRole(Role.Participant)) {
-      // redirect back as we are already logged in.
-      setShouldRedirect(true);
+    if (isAuthenticated()) {
+      history.push("/");
     } else {
       logOutToken();
       persistLastNonLoginUrl(lastUrl ?? "");
@@ -126,6 +123,8 @@ function UserLogin() {
   useEffect(() => {
     if (document.getElementsByClassName("nhsuk-error-message")[0]) {
       Utils.FocusOnError();
+    } else if (document.getElementsByClassName("error-summary")[0]) {
+      document.getElementsByTagName("input")[0].focus();
     }
   }, [isSubmitting]);
 
@@ -159,7 +158,6 @@ function UserLogin() {
   return (
     <DocumentTitle title={content["signin-document-title"]}>
       <>
-        {shouldRedirect && <Redirect push to={`/Login#id_token=${token}`} />}
         {loadingLogin && <LoadingIndicator text={content["signin-loading-signin"]} />}
         {resendLoading && <LoadingIndicator text={content["signin-loading-resend"]} />}
         {!loadingLogin && !resendLoading && (

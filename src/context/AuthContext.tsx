@@ -1,7 +1,7 @@
 import { useState, createContext, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
-import { JWTDeCode, AuthContextProps, Role, SessionExpiryInfo } from "../types/AuthTypes";
+import { JWTDeCode, AuthContextProps, SessionExpiryInfo } from "../types/AuthTypes";
 import useAxiosFetch from "../hooks/useAxiosFetch";
 import { useHistory } from "react-router-dom";
 
@@ -15,12 +15,6 @@ export function AuthProvider(props: { children: any }) {
   const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(null);
   const [authenticatedFirstname, setAuthenticatedFirstname] = useState<string | null>(null);
   const [authenticatedLastname, setAuthenticatedLastname] = useState<string | null>(null);
-
-  const [authenticatedIsAdmin, setAuthenticatedIsAdmin] = useState<boolean | null>(null);
-
-  const [authenticatedIsParticipant, setAuthenticatedIsParticipant] = useState<boolean | null>(true);
-
-  const [authenticatedIsResearcher, setAuthenticatedIsResearcher] = useState<boolean | null>(null);
   const [isNhsLinkedAccount, setIsNhsLinkedAccount] = useState<boolean>(false);
   const [token, setToken] = useState<string | null | undefined>(null);
   const [isInNHSApp, setIsInNHSApp] = useState<boolean>(false);
@@ -100,15 +94,6 @@ export function AuthProvider(props: { children: any }) {
         const emailVerified = decodedToken?.email_verified;
         setAuthenticatedEmailVerified(emailVerified);
 
-        const admin = decodedToken?.["cognito:groups"]?.includes("Admin");
-        setAuthenticatedIsAdmin(admin);
-
-        const researcher =
-          !decodedToken?.["cognito:groups"]?.includes("Admin") && decodedToken?.["cognito:username"]?.includes("idg");
-        setAuthenticatedIsResearcher(researcher);
-
-        const participant = !decodedToken?.["cognito:username"]?.includes("idg") || (!researcher && !admin);
-        setAuthenticatedIsParticipant(participant);
         return true;
       }
     }
@@ -176,42 +161,22 @@ export function AuthProvider(props: { children: any }) {
     return new SessionExpiryInfo(expiryCookie);
   };
 
-  const isAuthenticatedRole = (role: Role) => {
-    if (role === Role.None) {
-      return true;
-    }
-
-    if (isAuthenticated()) {
-      switch (role) {
-        case Role.Admin:
-          return authenticatedIsAdmin ?? false;
-        case Role.Participant:
-          return authenticatedIsParticipant ?? false;
-        case Role.Researcher:
-          return authenticatedIsResearcher ?? false;
-        default:
-          break;
-      }
-    }
-    return false;
-  };
-
-  const logOutToken = () => {
+  const logOutToken = async () => {
     if (isAuthenticated() && !logoutLoading) {
-      logout().then(() => {
-        setToken(null);
-        setAuthenticatedUserId(null);
-        setAuthenticatedEmail(null);
-        setAuthenticatedEmailVerified(null);
-        setAuthenticatedFirstname(null);
-        setAuthenticatedLastname(null);
-        setLastNonLoginUrl(null);
-        setPrevUrl(null);
-        setLastUrl(null);
-        setIsNhsLinkedAccount(false);
-        setAuthenticatedIsParticipant(true);
-        history.push("/Participants/Options");
-      });
+      await logout();
+      // Clear user-related cookies
+      Cookies.remove(".BPOR.Session.Expiry");
+
+      setToken(null);
+      setAuthenticatedUserId(null);
+      setAuthenticatedEmail(null);
+      setAuthenticatedEmailVerified(null);
+      setAuthenticatedFirstname(null);
+      setAuthenticatedLastname(null);
+      setLastNonLoginUrl(null);
+      setPrevUrl(null);
+      setLastUrl(null);
+      setIsNhsLinkedAccount(false);
     }
   };
 
@@ -222,7 +187,6 @@ export function AuthProvider(props: { children: any }) {
         saveToken,
         logOutToken,
         isAuthenticated,
-        isAuthenticatedRole,
         persistLastUrl,
         persistLastNonLoginUrl,
         setIsNhsLinkedAccount,
