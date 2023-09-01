@@ -7,6 +7,7 @@ import DTEInput from "../../UI/DTEInput/DTEInput";
 import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import { Details, ContinueButton } from "./PostcodeLookup";
 import { ContentContext } from "../../../../context/ContentContext";
+import Honeypot from "../../Honeypot/Honeypot";
 
 export type ManualEntryData = {
   addressLine1: string;
@@ -62,6 +63,7 @@ function ManualEntry(props: ManualEntryProps) {
     <>
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />{" "}
       <form onSubmit={handleSubmit(onSubmit)}>
+        <Honeypot />
         <Controller
           control={control}
           name="addressLine1"

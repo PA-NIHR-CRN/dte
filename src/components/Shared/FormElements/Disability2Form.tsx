@@ -11,6 +11,7 @@ import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import FormBaseProps from "./FormBaseProps";
 import Utils from "../../../Helper/Utils";
 import { ContentContext } from "../../../context/ContentContext";
+import Honeypot from "../Honeypot/Honeypot";
 
 export type Disability2FormData = {
   disability?: string;
@@ -80,6 +81,7 @@ function Disability2Form(props: Disability2FormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <Honeypot />
       <Controller
         control={control}
         name="disabilityDescription"

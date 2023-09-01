@@ -6,6 +6,7 @@ import DTEButton from "../UI/DTEButton/DTEButton";
 import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import { ContentContext } from "../../../context/ContentContext";
+import Honeypot from "../Honeypot/Honeypot";
 
 // eslint-disable-next-line
 const reactGTMModule = require("react-gtm-module");
@@ -93,6 +94,7 @@ function CookieBanner() {
     <div>
       {confirmationBannerShow && (
         <form method="POST">
+          <Honeypot />
           <div
             className="govuk-cookie-banner GDSCookieBanner"
             data-nosnippet

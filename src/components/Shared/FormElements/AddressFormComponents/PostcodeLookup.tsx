@@ -11,6 +11,7 @@ import DTEButton from "../../UI/DTEButton/DTEButton";
 import DTEInput from "../../UI/DTEInput/DTEInput";
 import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import ErrorMessageSummary from "../../ErrorMessageSummary/ErrorMessageSummary";
+import Honeypot from "../../Honeypot/Honeypot";
 
 type address = {
   addressLine1: string;
@@ -169,6 +170,7 @@ function PostcodeLookup(props: PostcodeLookupProps) {
       )}
       {loading && <LoadingIndicator text="Loading addresses" />}
       <form onSubmit={handleSubmit(onPostcodeSubmit)}>
+        <Honeypot />
         <Controller
           control={control}
           name="postcode"

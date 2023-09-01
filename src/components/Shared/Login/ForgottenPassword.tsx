@@ -15,6 +15,7 @@ import { DTEAxiosResponse } from "../../../types/AuthTypes";
 import Utils, { EmailRegex } from "../../../Helper/Utils";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import { ContentContext } from "../../../context/ContentContext";
+import Honeypot from "../Honeypot/Honeypot";
 
 function ForgottenPassword() {
   const { content } = useContext(ContentContext);
@@ -71,6 +72,7 @@ function ForgottenPassword() {
                     <DTEContent>{content["resetpassword-body"]}</DTEContent>
                     <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
                     <form onSubmit={handleSubmit(onSubmit)} noValidate onInvalid={() => {}}>
+                        <Honeypot />
                       <Controller
                         control={control}
                         name="email"

@@ -12,6 +12,7 @@ import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import healthConditions from "../../../data/healthConditions";
 import { useContext } from "react";
 import { ContentContext } from "../../../context/ContentContext";
+import Honeypot from "../Honeypot/Honeypot";
 
 export type HealthConditionFormData = {
   conditions: string[];
@@ -74,6 +75,7 @@ function HealthConditionForm(props: HealthConditionFormProps) {
       <Grid container>
         <Grid item xs={12} sm={10} md={9} lg={8} xl={8}>
           <form onSubmit={handleSubmit(onDataChange)} noValidate>
+            <Honeypot />
             <Controller
               control={control}
               name="conditions"

@@ -10,6 +10,7 @@ import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import { ContentContext } from "../../../context/ContentContext";
+import Honeypot from "../Honeypot/Honeypot";
 
 export type NameFormData = {
   firstName: string;
@@ -62,6 +63,7 @@ function NameForm(props: NameFormProps) {
       <Grid container>
         <Grid item xs={12}>
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <Honeypot />
             <Controller
               control={control}
               name="firstName"

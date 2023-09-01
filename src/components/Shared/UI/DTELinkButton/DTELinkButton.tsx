@@ -16,6 +16,7 @@ type Props = {
   dark?: boolean;
   padded?: boolean;
   ariaLabel?: string;
+  customStyles?: React.CSSProperties;
 };
 
 const StyledButton = styled(Button)<Props & { $dark?: boolean; $padded?: boolean }>`
@@ -79,6 +80,7 @@ function DTELinkButton({
   dark,
   padded,
   ariaLabel,
+customStyles,
 }: Props) {
   return (
     <StyledButton
@@ -94,6 +96,7 @@ function DTELinkButton({
       $padded={padded}
       aria-label={ariaLabel}
       aria-labelledby=""
+      style={customStyles}
     >
       {children}
     </StyledButton>

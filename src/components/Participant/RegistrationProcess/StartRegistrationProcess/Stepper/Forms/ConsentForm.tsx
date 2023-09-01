@@ -8,6 +8,7 @@ import DTEHeader from "../../../../../Shared/UI/DTETypography/DTEHeader/DTEHeade
 import DTELinkButton from "../../../../../Shared/UI/DTELinkButton/DTELinkButton";
 import Utils from "../../../../../../Helper/Utils";
 import { ContentContext } from "../../../../../../context/ContentContext";
+import Honeypot from "../../../../../Shared/Honeypot/Honeypot";
 
 export type ConsentFormData = {
   consent: boolean;
@@ -47,6 +48,7 @@ function ConsentForm(props: ConsentFormProps) {
       <DTEHeader as="h1">{content["register-consent-header"]}</DTEHeader>
       {content["register-consent-body"]}
       <form onSubmit={handleSubmit(onDataChange)}>
+        <Honeypot />
         <Controller
           control={control}
           name="consentContact"

@@ -1,7 +1,5 @@
 /* eslint-disable camelcase */
 
-import { ReactNode } from "react";
-
 export interface JWTDeCode {
   "cognito:username": string;
   email: string;
@@ -11,6 +9,8 @@ export interface JWTDeCode {
   aud: number;
   exp: number;
   email_verified: boolean;
+  phone_number: string;
+  phone_number_verified: boolean;
   token_use: string;
   "cognito:groups": string[];
   sub: string;
@@ -29,12 +29,21 @@ export interface AuthContextProps {
   lastNonLoginUrl: string | null;
   authenticatedEmail: string | null;
   authenticatedEmailVerified: boolean | null;
+  authenticatedMobile: string | null;
+  authenticatedMobileVerified: boolean | null;
   authenticatedUserId: string | null;
   authenticatedFirstname: string | null;
   authenticatedLastname: string | null;
   isNhsLinkedAccount: boolean;
   setIsNhsLinkedAccount: (isNhsLinkedAccount: boolean) => void;
   getSessionExpiry: () => SessionExpiryInfo;
+  mfaDetails: string;
+  setMfaDetails: (mfaDetails: string) => void;
+  setEnteredMfaMobile: (enteredMfaMobile: string) => void;
+  enteredMfaMobile: string;
+  setAuthenticatedMobile: (authenticatedMobile: string) => void;
+  userMfaEmail: string;
+  setUserMfaEmail: (userMfaEmail: string) => void;
 }
 
 export interface DTEAxiosResponse {
@@ -45,7 +54,7 @@ export interface DTEAxiosResponse {
 
 export interface DTEAxiosError {
   code?: string;
-  detail?: string | ReactNode;
+  detail?: string;
   customCode?: string;
   service?: string;
   component?: string;

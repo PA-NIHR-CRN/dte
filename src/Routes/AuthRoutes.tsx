@@ -17,6 +17,16 @@ import Under18ErrorPage from "../pages/NHS/Under18";
 import NhsUnableToMatch from "../pages/NHS/NhsUnableToMatch";
 import NhsAppLanding from "../pages/NHS/NhsAppLanding/NhsAppLanding";
 import CookiePage from "../pages/CookiePage/CookiePage";
+import MfaSmsSetup from "../components/Shared/Login/Mfa/MfaSmsSetup";
+import MfaSmsChallenge from "../components/Shared/Login/Mfa/MfaSmsChallenge";
+import MfaTokenSetup from "../components/Shared/Login/Mfa/MfaTokenSetup";
+import MfaTokenChallenge from "../components/Shared/Login/Mfa/MfaTokenChallenge";
+import MfaNoUkMobileOptions from "../components/Shared/Login/Mfa/MfaNoUkMobileOptions";
+import MfaChangeNumberConfirmEmail from "../components/Shared/Login/Mfa/MfaChangeNumberConfirmEmail";
+import MfaChangePhoneNumber from "../components/Shared/Login/Mfa/MfaChangePhoneNumber";
+import MfaSecurityCodeExpired from "../components/Shared/Login/Mfa/MfaSecurityCodeExpired";
+import MfaSessionExpired from "../components/Shared/Login/Mfa/MfaSessionExpired";
+import MfaLockedOut from "../components/Shared/Login/Mfa/MfaLockedOut";
 
 const redirect = (pathOrigin: string) => {
   const { persistLastNonLoginUrl, prevUrl, lastUrl } = useContext(AuthContext);
@@ -156,6 +166,96 @@ export default [
     }}
     strict
     key="nhsapplanding"
+  />,
+  <Route
+    path="/MfaSmsSetup"
+    render={() => {
+      ReactGA.pageview("MfaSmsSetup");
+      return <MfaSmsSetup />;
+    }}
+    strict
+    key="MfaSmsSetup"
+  />,
+  <Route
+    path="/MfaSmsChallenge"
+    render={() => {
+      ReactGA.pageview("MfaSmsChallenge");
+      return <MfaSmsChallenge />;
+    }}
+    strict
+    key="MfaSmsChallenge"
+  />,
+  <Route
+    path="/MfaTokenSetup"
+    render={() => {
+      ReactGA.pageview("MfaTokenSetup");
+      return <MfaTokenSetup />;
+    }}
+    strict
+    key="MfaTokenSetup"
+  />,
+  <Route
+    path="/MfaTokenChallenge"
+    render={() => {
+      ReactGA.pageview("MfaTokenChallenge");
+      return <MfaTokenChallenge />;
+    }}
+    strict
+    key="MfaTokenChallenge"
+  />,
+  <Route
+    path="/MfaNoUkMobileOptions"
+    render={() => {
+      ReactGA.pageview("MfaNoUkMobileOptions");
+      return <MfaNoUkMobileOptions />;
+    }}
+    strict
+    key="MfaNoUkMobileOptions"
+  />,
+  <Route
+    path="/MfaChangeNumberConfirmEmail"
+    render={() => {
+      ReactGA.pageview("MfaChangeNumberConfirmEmail");
+      return <MfaChangeNumberConfirmEmail />;
+    }}
+    strict
+    key="MfaChangeNumberConfirmEmail"
+  />,
+  <Route
+    path="/MfaChangePhoneNumber"
+    render={() => {
+      ReactGA.pageview("MfaChangePhoneNumber");
+      return <MfaChangePhoneNumber />;
+    }}
+    strict
+    key="MfaChangePhoneNumber"
+  />,
+  <Route
+    path="/MfaSecurityCodeExpired"
+    render={() => {
+      ReactGA.pageview("MfaSecurityCodeExpired");
+      return <MfaSecurityCodeExpired />;
+    }}
+    strict
+    key="MfaSecurityCodeExpired"
+  />,
+  <Route
+    path="/MfaSessionExpired"
+    render={() => {
+      ReactGA.pageview("MfaSessionExpired");
+      return <MfaSessionExpired />;
+    }}
+    strict
+    key="MfaSessionExpired"
+  />,
+  <Route
+    path="/MfaLockedOut"
+    render={() => {
+      ReactGA.pageview("MfaLockedOut");
+      return <MfaLockedOut />;
+    }}
+    strict
+    key="MfaLockedOut"
   />,
   <Route path="/Verify" component={Verify} strict key="verify" />,
   <Route path="/callback" component={NhsLoginCallback} strict key="callback" />,

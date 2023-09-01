@@ -21,6 +21,7 @@ import PasswordShowHide from "../Password/showHide";
 import ThreeWords from "../Password/threeWords";
 import { ContentContext } from "../../../context/ContentContext";
 import commonPasswords from "../../../data/commonPassword";
+import Honeypot from "../Honeypot/Honeypot";
 
 interface PasswordPolicy {
   minimumLength: number;
@@ -199,6 +200,7 @@ function ResetPassword() {
                           <DTEContent>{policyBuilder}</DTEContent>
                           <ThreeWords />
                           <form onSubmit={handleSubmit(onSubmit)} noValidate onInvalid={() => {}}>
+                          <Honeypot />
                             <Controller
                               control={control}
                               name="password"

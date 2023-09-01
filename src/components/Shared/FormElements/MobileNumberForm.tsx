@@ -11,6 +11,7 @@ import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import Utils from "../../../Helper/Utils";
 import { ContentContext } from "../../../context/ContentContext";
+import Honeypot from "../Honeypot/Honeypot";
 
 export type MobileFormData = {
   mobileNumber?: string;
@@ -76,6 +77,7 @@ function MobileNumberForm(props: MobileNumberFormProps) {
       {instructionText || <DTEContent>You may provide either a mobile or a landline number if you choose.</DTEContent>}
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
       <form onSubmit={handleSubmit(onDataChangePreProcessing)}>
+        <Honeypot />
         <Controller
           control={control}
           name="mobileNumber"

@@ -9,7 +9,7 @@ const customCodeLookup = (code: string, detail?: string | ReactNode) => {
   switch (code) {
     // Code used when the details have already been changed locally
     case "NO_CHANGE":
-      return detail;
+      return detail || "";
     case "User_Not_In_Allow_List_Error":
       return "Email address is not recognised by the service - contact bepartofresearch@nihr.ac.uk to sign up.";
     case "InternalServerError":
@@ -69,8 +69,18 @@ const customCodeLookup = (code: string, detail?: string | ReactNode) => {
       return defaultErrorMessage;
     case "Unknown_Error_Getting_Addresses_From_LocationService_Error":
       return defaultErrorMessage;
+    case "MFA_Session_Expired":
+      return "Your session has expired. Please sign in again.";
+    case "MFA_Code_Mismatch":
+      return "Enter the correct security code";
+    case "MFA_Code_Expired":
+      return "Enter the correct security code";
+    case "MFA_User_Not_Found":
+      return "Your user account has not yet been verified. We can send you the email again.";
+    case "Mfa_Used_Token":
+      return "This security code has already been used. Please enter a new code when your authenticator app refreshes.";
     default:
-      return defaultErrorMessage;
+      return defaultErrorMessage || "An unexpected error occurred";
   }
 };
 
