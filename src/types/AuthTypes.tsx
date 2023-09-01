@@ -54,7 +54,7 @@ export interface DTEAxiosResponse {
 
 export interface DTEAxiosError {
   code?: string;
-  detail?: string;
+  detail: string | JSX.Element;
   customCode?: string;
   service?: string;
   component?: string;

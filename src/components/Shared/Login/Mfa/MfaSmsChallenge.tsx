@@ -20,15 +20,8 @@ import Honeypot from "../../Honeypot/Honeypot";
 
 const MfaSmsChallenge = () => {
   const [isCodeResent, setIsCodeResent] = useState<boolean>(false);
-  const {
-    mfaDetails,
-    saveToken,
-    setMfaDetails,
-    enteredMfaMobile,
-    prevUrl,
-    setEnteredMfaMobile,
-    setUserMfaEmail,
-  } = useContext(AuthContext);
+  const { mfaDetails, saveToken, setMfaDetails, enteredMfaMobile, prevUrl, setEnteredMfaMobile, setUserMfaEmail } =
+    useContext(AuthContext);
   const history = useHistory();
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -46,8 +39,7 @@ const MfaSmsChallenge = () => {
     history.push("/");
   }
 
-  const [mobilePhoneNumber, setMobilePhoneNumber] =
-    useState<string>("your mobile phone");
+  const [mobilePhoneNumber, setMobilePhoneNumber] = useState<string>("your mobile phone");
 
   const {
     control,
@@ -60,10 +52,10 @@ const MfaSmsChallenge = () => {
       mfaCode: "",
     },
   });
-  const [
-    { response: SMSMfaResponse, loading: SMSMfaLoading, error: setupMfaError },
-    postMfaCode,
-  ] = useAxiosFetch({}, { useCache: false, manual: true });
+  const [{ response: SMSMfaResponse, loading: SMSMfaLoading, error: setupMfaError }, postMfaCode] = useAxiosFetch(
+    {},
+    { useCache: false, manual: true }
+  );
 
   const [convertedError, setConvertedError] = useState<any>(null);
   const serverError = useInlineServerError(SMSMfaResponse);
@@ -161,17 +153,10 @@ const MfaSmsChallenge = () => {
 
   const handleErrors = (error: any, responseError: any) => {
     const response = Utils.ConvertResponseToDTEResponse(responseError);
-    if (
-      response?.errors?.some((e: any) => e?.customCode === "Sms_Mfa_Challenge")
-    ) {
+    if (response?.errors?.some((e: any) => e?.customCode === "Sms_Mfa_Challenge")) {
       return null;
     }
-    return (
-      <ErrorMessageContainer
-        axiosErrors={[error]}
-        DTEAxiosErrors={[serverError ? [] : response?.errors]}
-      />
-    );
+    return <ErrorMessageContainer axiosErrors={[error]} DTEAxiosErrors={[serverError ? [] : response?.errors]} />;
   };
   const urlList = ["/MfaSmsSetup", "/MfaChangePhoneNumber"];
 
@@ -184,27 +169,19 @@ const MfaSmsChallenge = () => {
   return (
     <DocumentTitle title="MFA Challenge SMS">
       <StepWrapper>
-        {urlList.includes(prevUrl as string) && (
-          <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
-        )}
+        {urlList.includes(prevUrl as string) && <DTEBackLink onClick={() => history.goBack()} linkText="Back" />}
         <DTEHeader as="h1">Check your mobile phone</DTEHeader>
-        {setupMfaError || SMSMfaResponse
-          ? handleErrors(setupMfaError, SMSMfaResponse)
-          : null}
+        {setupMfaError || SMSMfaResponse ? handleErrors(setupMfaError, SMSMfaResponse) : null}
         <DTEContent>
-          Enter the 6 digit security code we&apos;ve sent to{" "}
-          {enteredMfaMobile || removePlus(mobilePhoneNumber)}
+          Enter the 6 digit security code we&apos;ve sent to {enteredMfaMobile || removePlus(mobilePhoneNumber)}
           {enteredMfaMobile && " to confirm this is your mobile phone number"}.
           <br />
           <br />
-          You need to use this code within <strong>5 minutes</strong> or it will
-          expire.
+          You need to use this code within <strong>5 minutes</strong> or it will expire.
         </DTEContent>
         {isCodeResent && (
           <div className="govuk-details__text">
-            <DTEContent role="alert">
-              You have been sent a new security code.
-            </DTEContent>
+            <DTEContent role="alert">You have been sent a new security code.</DTEContent>
           </div>
         )}
         <form onSubmit={interceptSubmit} noValidate>
@@ -212,10 +189,7 @@ const MfaSmsChallenge = () => {
           <Controller
             control={control}
             name="mfaCode"
-            render={({
-              field: { value, onChange, onBlur },
-              fieldState: { error },
-            }) => (
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
               <DTEInput
                 label="Security code"
                 id="mfaCode"
@@ -245,16 +219,11 @@ const MfaSmsChallenge = () => {
           />
           <DTEDetails summary="Not received your security code?">
             <>
-              <DTEContent>
-                When we are really busy, it may take a bit longer for your code
-                to arrive.
-              </DTEContent>
+              <DTEContent>When we are really busy, it may take a bit longer for your code to arrive.</DTEContent>
 
               {urlList.includes(prevUrl as string) ? (
                 <>
-                  <DTEContent>
-                    If you still did not get a security code:
-                  </DTEContent>
+                  <DTEContent>If you still did not get a security code:</DTEContent>
                   <ul>
                     <li>
                       <DTELinkButton
@@ -269,26 +238,17 @@ const MfaSmsChallenge = () => {
                       <DTELinkButton
                         disabled={SMSMfaLoading || isSubmitting}
                         onClick={() => {
-                          history.push(
-                            prevUrl === "/MfaChangePhoneNumber"
-                              ? "/MfaChangePhoneNumber"
-                              : "/MfaSmsSetup"
-                          );
+                          history.push(prevUrl === "/MfaChangePhoneNumber" ? "/MfaChangePhoneNumber" : "/MfaSmsSetup");
                         }}
                         customStyles={{ textAlign: "left" }}
                       >
-                        enter your{" "}
-                        {prevUrl === "/MfaChangePhoneNumber" && "new"} mobile
-                        phone number again
+                        enter your {prevUrl === "/MfaChangePhoneNumber" && "new"} mobile phone number again
                       </DTELinkButton>
                     </li>
                   </ul>
                 </>
               ) : (
-                <DTELinkButton
-                  onClick={handleResendCode}
-                  disabled={SMSMfaLoading || isSubmitting}
-                >
+                <DTELinkButton onClick={handleResendCode} disabled={SMSMfaLoading || isSubmitting}>
                   Send your security code again
                 </DTELinkButton>
               )}

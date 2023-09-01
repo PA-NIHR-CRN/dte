@@ -19,8 +19,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const MfaChangePhoneNumber = () => {
-  const { mfaDetails, setMfaDetails, setEnteredMfaMobile, enteredMfaMobile } =
-    useContext(AuthContext);
+  const { mfaDetails, setMfaDetails, setEnteredMfaMobile, enteredMfaMobile } = useContext(AuthContext);
   const history = useHistory();
 
   const {
@@ -35,10 +34,7 @@ const MfaChangePhoneNumber = () => {
     },
   });
 
-  const [{ loading: setupMfaLoading }, postSetupInfo] = useAxiosFetch(
-    {},
-    { useCache: false, manual: true }
-  );
+  const [{ loading: setupMfaLoading }, postSetupInfo] = useAxiosFetch({}, { useCache: false, manual: true });
 
   const onSubmit = async (data: any) => {
     const { phoneNumber } = data;
@@ -69,19 +65,13 @@ const MfaChangePhoneNumber = () => {
       <StepWrapper>
         <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
         <DTEHeader as="h1">Enter your new mobile phone number</DTEHeader>
-        <DTEContent>
-          We will send you a 6 digit security code to confirm your mobile phone
-          number.
-        </DTEContent>
+        <DTEContent>We will send you a 6 digit security code to confirm your mobile phone number.</DTEContent>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Honeypot />
           <Controller
             control={control}
             name="phoneNumber"
-            render={({
-              field: { value, onChange, onBlur },
-              fieldState: { error },
-            }) => (
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
               <DTEInput
                 label="New UK mobile phone number"
                 id="mobilePhoneNumber"
@@ -99,21 +89,17 @@ const MfaChangePhoneNumber = () => {
             rules={{
               required: {
                 value: true,
-                message:
-                  "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982",
+                message: "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982",
               },
 
               pattern: {
                 value: MobileRegex,
-                message:
-                  "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982",
+                message: "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982",
               },
             }}
           />
           <ButtonWrapper>
-            <DTEButton disabled={setupMfaLoading || isSubmitting}>
-              Continue
-            </DTEButton>
+            <DTEButton disabled={setupMfaLoading || isSubmitting}>Continue</DTEButton>
           </ButtonWrapper>
         </form>
       </StepWrapper>

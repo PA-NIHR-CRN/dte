@@ -3,16 +3,16 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useContext, useEffect } from "react";
 import DTERadio from "../../UI/DTERadio/DTERadio";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
-import ethnicitiesStatic from "../../../../data/ethnicityData";
 import FormBaseProps from "../FormBaseProps";
-import { Ethnicities } from "../../../../types/ReferenceData/Ethnicities";
 import EthnicityInformation from "./EthnicityInformation";
 import FormNavigationButtons from "../CommonElements/FormNavigationButtons";
 import Utils from "../../../../Helper/Utils";
 import Honeypot from "../../Honeypot/Honeypot";
+import getEthnicities from "../../../../data/ethnicityData";
+import { ContentContext } from "../../../../context/ContentContext";
 
 export type Ethnicity1FormData = {
   ethnicity: string;
@@ -24,6 +24,7 @@ interface Ethnicity1FormProps extends FormBaseProps {
 }
 
 const Ethnicity1Form = (props: Ethnicity1FormProps) => {
+  const { content } = useContext(ContentContext);
   const {
     onDataChange,
     initialStateData,
@@ -35,11 +36,9 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
     instructionText,
   } = props;
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   let labelElement: ReactNode;
-  const ethnicities: Ethnicities = ethnicitiesStatic;
+  const ethnicities = getEthnicities(content);
 
   const {
     control,
@@ -62,8 +61,7 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
 
   const preOnDataChange = (data: Ethnicity1FormData & { other: string }) => {
     onDataChange({
-      ethnicity:
-        data.ethnicity === "other" && data.other ? data.other : data.ethnicity,
+      ethnicity: data.ethnicity === "other" && data.other ? data.other : data.ethnicity,
     });
   };
 
@@ -87,19 +85,12 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
     <>
       <Grid container>
         <Grid item xs={12}>
-          <form
-            onSubmit={handleSubmit(preOnDataChange)}
-            data-testid="ethnicity-form"
-            noValidate
-          >
+          <form onSubmit={handleSubmit(preOnDataChange)} data-testid="ethnicity-form" noValidate>
             <Honeypot />
             <Controller
               control={control}
               name="ethnicity"
-              render={({
-                field: { value, onChange },
-                fieldState: { error },
-              }) => (
+              render={({ field: { value, onChange }, fieldState: { error } }) => (
                 <DTERadio
                   id="ethnicityRadio"
                   name="ethnicity"
@@ -129,10 +120,7 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
                 },
               }}
             />
-            <EthnicityInformation
-              hideInfo={hideInfo || false}
-              studyType="groups"
-            />
+            <EthnicityInformation hideInfo={hideInfo || false} studyType="groups" />
             <FormNavigationButtons
               nextButtonText={nextButtonText || "Continue"}
               showCancelButton={showCancelButton || false}

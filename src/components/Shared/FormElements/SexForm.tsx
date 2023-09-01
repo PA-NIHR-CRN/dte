@@ -85,7 +85,7 @@ function SexForm(props: SexFormProps) {
       <Grid item xs={12}>
         {questionHeader}
         <form onSubmit={handleSubmit(onDataChange)} noValidate>
-<Honeypot />
+          <Honeypot />
           <Controller
             control={control}
             name="sexAtBirth"

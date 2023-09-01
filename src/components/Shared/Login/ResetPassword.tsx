@@ -200,7 +200,7 @@ function ResetPassword() {
                           <DTEContent>{policyBuilder}</DTEContent>
                           <ThreeWords />
                           <form onSubmit={handleSubmit(onSubmit)} noValidate onInvalid={() => {}}>
-                          <Honeypot />
+                            <Honeypot />
                             <Controller
                               control={control}
                               name="password"

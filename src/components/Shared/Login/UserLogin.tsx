@@ -61,8 +61,7 @@ const UserLogin = (props: UserLoginProps) => {
   }, [isSubmitSuccessful]);
 
   const history = useHistory();
-  const { persistLastNonLoginUrl, lastUrl, isAuthenticated, logOutToken, saveToken, setMfaDetails, setUserMfaEmail } =
-    useContext(AuthContext);
+  const { setMfaDetails, setUserMfaEmail } = useContext(AuthContext);
 
   const { persistLastNonLoginUrl, lastUrl, isAuthenticated, logOutToken, saveToken } = useContext(AuthContext);
 
@@ -150,22 +149,6 @@ const UserLogin = (props: UserLoginProps) => {
     return errors.map((error) => {
       if (error) {
         return error.map((e) => {
-          let detail;
-          const customCode = "NO_CHANGE";
-
-          if (e?.customCode === "Authentication_Not_Authorized") {
-            detail = `Enter the email address and password for a registered user account.${
-              !nested
-                ? " If you registered using NHS login use the back button above and select NHS login to sign in."
-                : ""
-            }`;
-          } else if (e.customCode === "Mfa_Setup_Challenge") {
-            detail =
-              "You have not set up MFA for your account. Please check your email for instructions on how to set up MFA.";
-          } else {
-            detail = "You have not given permission to access your account. Please";
-          }
-
           return {
             ...e,
             ...(e?.customCode === "Authentication_Not_Authorized"
@@ -179,7 +162,7 @@ const UserLogin = (props: UserLoginProps) => {
                   customCode: "NO_CHANGE",
                 }
               : {
-                  detail: <>{content["signin-error-authentication-generic"]}</>,
+                  detail: <>{content["signin-error-authentication-generic"] as string}</>,
                   customCode: "NO_CHANGE",
                 }),
           };

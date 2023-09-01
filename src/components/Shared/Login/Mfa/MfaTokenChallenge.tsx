@@ -15,13 +15,7 @@ import useInlineServerError from "../../../../hooks/useInlineServerError";
 import Honeypot from "../../Honeypot/Honeypot";
 
 const MfaTotpChallenge = () => {
-  const {
-    mfaDetails,
-    saveToken,
-    setMfaDetails,
-    setEnteredMfaMobile,
-    setUserMfaEmail,
-  } = useContext(AuthContext);
+  const { mfaDetails, saveToken, setMfaDetails, setEnteredMfaMobile, setUserMfaEmail } = useContext(AuthContext);
   const history = useHistory();
   const [convertedError, setConvertedError] = useState<any>(null);
 
@@ -40,14 +34,10 @@ const MfaTotpChallenge = () => {
       mfaCode: "",
     },
   });
-  const [
-    {
-      response: TokenMfaResponse,
-      loading: TokenMfaLoading,
-      error: setupMfaError,
-    },
-    postMfaCode,
-  ] = useAxiosFetch({}, { useCache: false, manual: true });
+  const [{ response: TokenMfaResponse, loading: TokenMfaLoading, error: setupMfaError }, postMfaCode] = useAxiosFetch(
+    {},
+    { useCache: false, manual: true }
+  );
 
   const onSubmit = async (data: any) => {
     const { mfaCode } = data;
@@ -108,26 +98,18 @@ const MfaTotpChallenge = () => {
         <DTEHeader as="h1">Check your authenticator app</DTEHeader>
         <ErrorMessageContainer
           axiosErrors={[setupMfaError]}
-          DTEAxiosErrors={[
-            serverError
-              ? []
-              : Utils.ConvertResponseToDTEResponse(TokenMfaResponse)?.errors,
-          ]}
+          DTEAxiosErrors={[serverError ? [] : Utils.ConvertResponseToDTEResponse(TokenMfaResponse)?.errors]}
         />
         <DTEContent>
-          Enter the 6 digit security code from your authenticator app to
-          complete verification. Entering the code incorrectly too many times
-          will temporarily prevent you from signing in.
+          Enter the 6 digit security code from your authenticator app to complete verification. Entering the code
+          incorrectly too many times will temporarily prevent you from signing in.
         </DTEContent>
         <form onSubmit={interceptSubmit} noValidate>
           <Honeypot />
           <Controller
             control={control}
             name="mfaCode"
-            render={({
-              field: { value, onChange, onBlur },
-              fieldState: { error },
-            }) => (
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
               <DTEInput
                 label="Security code"
                 id="mfaCode"

@@ -24,8 +24,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const MfaChangeNumberConfirmEmail = () => {
-  const { mfaDetails, prevUrl, userMfaEmail, setUserMfaEmail } =
-    useContext(AuthContext);
+  const { mfaDetails, prevUrl, userMfaEmail, setUserMfaEmail } = useContext(AuthContext);
   const [isCodeResent, setIsCodeResent] = useState<boolean>(false);
   const history = useHistory();
   const [userEmail, setUserEmail] = useState<string>(userMfaEmail);
@@ -56,10 +55,7 @@ const MfaChangeNumberConfirmEmail = () => {
       mfaCode: "",
     },
   });
-  const [
-    { response: userEmailRespose, loading: getEmailOtpLoading },
-    resendCode,
-  ] = useAxiosFetch(
+  const [{ response: userEmailRespose, loading: getEmailOtpLoading }, resendCode] = useAxiosFetch(
     {
       url: `${process.env.REACT_APP_BASE_API}/users/sendmfaotpemail`,
       method: "POST",
@@ -77,11 +73,7 @@ const MfaChangeNumberConfirmEmail = () => {
   };
 
   const [
-    {
-      response: validateEmailOtpRespose,
-      loading: validateEmailOtpLoading,
-      error: validateEmailOtpError,
-    },
+    { response: validateEmailOtpRespose, loading: validateEmailOtpLoading, error: validateEmailOtpError },
     validateEmailOtp,
   ] = useAxiosFetch({}, { useCache: false, manual: true });
   const [convertedError, setConvertedError] = useState<any>(null);
@@ -139,32 +131,21 @@ const MfaChangeNumberConfirmEmail = () => {
           <LoadingIndicator />
         ) : (
           <>
-            {prevUrl !== "/MfaSecurityCodeExpired" && (
-              <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
-            )}
+            {prevUrl !== "/MfaSecurityCodeExpired" && <DTEBackLink onClick={() => history.goBack()} linkText="Back" />}
             <DTEHeader as="h1">Check your email</DTEHeader>
             <ErrorMessageContainer
               axiosErrors={[validateEmailOtpError]}
-              DTEAxiosErrors={[
-                serverError
-                  ? []
-                  : Utils.ConvertResponseToDTEResponse(validateEmailOtpRespose)
-                      ?.errors,
-              ]}
+              DTEAxiosErrors={[serverError ? [] : Utils.ConvertResponseToDTEResponse(validateEmailOtpRespose)?.errors]}
             />
             <DTEContent>
-              Enter the 6 digit security code we’ve sent to {userEmail} to
-              confirm this is your email address.
+              Enter the 6 digit security code we’ve sent to {userEmail} to confirm this is your email address.
             </DTEContent>
             <DTEContent>
-              You need to use this code within <strong>5 minutes</strong> or it
-              will expire.
+              You need to use this code within <strong>5 minutes</strong> or it will expire.
             </DTEContent>
             {isCodeResent && (
               <div className="govuk-details__text">
-                <DTEContent role="alert">
-                  You have been sent a new security code.
-                </DTEContent>
+                <DTEContent role="alert">You have been sent a new security code.</DTEContent>
               </div>
             )}
             <form noValidate onSubmit={interceptSubmit}>
@@ -172,10 +153,7 @@ const MfaChangeNumberConfirmEmail = () => {
               <Controller
                 control={control}
                 name="mfaCode"
-                render={({
-                  field: { value, onChange, onBlur },
-                  fieldState: { error },
-                }) => (
+                render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                   <DTEInput
                     label="Security code"
                     id="mfaCode"
@@ -213,13 +191,8 @@ const MfaChangeNumberConfirmEmail = () => {
               />
               <DTEDetails summary="Not received your security code?">
                 <>
-                  <DTEContent>
-                    When we are really busy, it may take a bit longer for your
-                    code to arrive.
-                  </DTEContent>
-                  <DTEContent>
-                    If you still did not get a security code:
-                  </DTEContent>
+                  <DTEContent>When we are really busy, it may take a bit longer for your code to arrive.</DTEContent>
+                  <DTEContent>If you still did not get a security code:</DTEContent>
 
                   <ul className="govuk-list govuk-list--bullet">
                     <li>
@@ -227,10 +200,7 @@ const MfaChangeNumberConfirmEmail = () => {
                     </li>
                     <li>
                       <DTEContent>
-                        <DTELinkButton
-                          onClick={handleResendCode}
-                          disabled={validateEmailOtpLoading || isSubmitting}
-                        >
+                        <DTELinkButton onClick={handleResendCode} disabled={validateEmailOtpLoading || isSubmitting}>
                           send your security code again
                         </DTELinkButton>
                       </DTEContent>
@@ -239,9 +209,7 @@ const MfaChangeNumberConfirmEmail = () => {
                 </>
               </DTEDetails>
               <ButtonWrapper>
-                <DTEButton disabled={getEmailOtpLoading || isSubmitting}>
-                  Continue
-                </DTEButton>
+                <DTEButton disabled={getEmailOtpLoading || isSubmitting}>Continue</DTEButton>
               </ButtonWrapper>
             </form>
           </>

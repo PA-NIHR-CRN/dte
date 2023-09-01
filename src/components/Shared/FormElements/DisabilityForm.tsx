@@ -34,9 +34,7 @@ const DisabilityForm = (props: DisabilityFormProps) => {
     onCancel,
   } = props;
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
     control,
     handleSubmit,
@@ -52,8 +50,7 @@ const DisabilityForm = (props: DisabilityFormProps) => {
   if (!hideHeader) {
     labelElement = (
       <DTEHeader as="h1" $variant={headerVariant}>
-        Do you have any health conditions that have lasted, or are expected to
-        last, for 12 months or more?
+        Do you have any health conditions that have lasted, or are expected to last, for 12 months or more?
       </DTEHeader>
     );
   } else {
@@ -84,8 +81,7 @@ const DisabilityForm = (props: DisabilityFormProps) => {
                 infoText="This includes any physical and mental health conditions or illnesses."
               >
                 <DTEContent aria-hidden="true">
-                  This includes any physical and mental health conditions or
-                  illnesses.
+                  This includes any physical and mental health conditions or illnesses.
                 </DTEContent>
                 <Radios.Radio
                   value="yes"
@@ -104,10 +100,7 @@ const DisabilityForm = (props: DisabilityFormProps) => {
                   No
                 </Radios.Radio>
                 <DTEContent $radioList>or</DTEContent>
-                <Radios.Radio
-                  value="notSaying"
-                  defaultChecked={value === "notSaying"}
-                >
+                <Radios.Radio value="notSaying" defaultChecked={value === "notSaying"}>
                   Prefer not to say
                 </Radios.Radio>
               </DTERadio>
@@ -124,16 +117,13 @@ const DisabilityForm = (props: DisabilityFormProps) => {
         {!hideInfo && (
           <DTEDetails summary="Why we are asking this question">
             <DTEContent>
-              Some studies will require volunteers with disabilities, other
-              studies want to make sure they have a representative sample of the
-              population taking part in research studies. We may use this
-              information when contacting you about studies you may be
-              interested in.
+              Some studies will require volunteers with disabilities, other studies want to make sure they have a
+              representative sample of the population taking part in research studies. We may use this information when
+              contacting you about studies you may be interested in.
             </DTEContent>
             <DTEContent>
-              If we find that people with disabilities are under represented in
-              signing up to be contacted about research we will look at how to
-              improve this.
+              If we find that people with disabilities are under represented in signing up to be contacted about
+              research we will look at how to improve this.
             </DTEContent>
           </DTEDetails>
         )}

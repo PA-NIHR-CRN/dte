@@ -3,41 +3,26 @@ import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
 import { JWTDeCode, AuthContextProps, SessionExpiryInfo } from "../types/AuthTypes";
 import useAxiosFetch from "../hooks/useAxiosFetch";
-import { useHistory } from "react-router-dom";
 
 export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
 const sessionRefreshCheckInterval = 10 * 1000;
 
 export const AuthProvider = (props: { children: any }) => {
-  const [authenticatedEmail, setAuthenticatedEmail] = useState<string | null>(
-    null
-  );
-  const [authenticatedEmailVerified, setAuthenticatedEmailVerified] = useState<
-    boolean | null
-  >(null);
-  const [authenticatedMobile, setAuthenticatedMobile] = useState<string | null>(
-    null
-  );
-  const [authenticatedMobileVerified, setAuthenticatedMobileVerified] =
-    useState<boolean | null>(null);
-  const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(
-    null
-  );
-  const [authenticatedFirstname, setAuthenticatedFirstname] = useState<
-    string | null
-  >(null);
-  const [authenticatedLastname, setAuthenticatedLastname] = useState<
-    string | null
-  >(null);
+  const [authenticatedEmail, setAuthenticatedEmail] = useState<string | null>(null);
+  const [authenticatedEmailVerified, setAuthenticatedEmailVerified] = useState<boolean | null>(null);
+  const [authenticatedMobile, setAuthenticatedMobile] = useState<string | null>(null);
+  const [authenticatedMobileVerified, setAuthenticatedMobileVerified] = useState<boolean | null>(null);
+  const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(null);
+  const [authenticatedFirstname, setAuthenticatedFirstname] = useState<string | null>(null);
+  const [authenticatedLastname, setAuthenticatedLastname] = useState<string | null>(null);
 
   const [isNhsLinkedAccount, setIsNhsLinkedAccount] = useState<boolean>(false);
   const [token, setToken] = useState<string | null | undefined>(null);
   const [isInNHSApp, setIsInNHSApp] = useState<boolean>(false);
   const [mfaDetails, setMfaDetails] = useState<string>("");
   const [enteredMfaMobile, setEnteredMfaMobile] = useState<string>("");
-  const [userMfaEmail, setUserMfaEmail] =
-    useState<string>("your email address");
+  const [userMfaEmail, setUserMfaEmail] = useState<string>("your email address");
 
   const baseUrl = process.env.REACT_APP_BASE_API;
 
@@ -242,4 +227,4 @@ export const AuthProvider = (props: { children: any }) => {
       {props.children}
     </AuthContext.Provider>
   );
-}
+};

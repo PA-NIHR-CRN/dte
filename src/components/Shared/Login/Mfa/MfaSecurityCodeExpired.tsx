@@ -43,10 +43,7 @@ const MfaSecurityCodeExpired = () => {
           <DTEDetails summary="I do not have access to my mobile phone">
             <DTEContent>
               If you do not have access to your mobile phone, you can{" "}
-              <DTERouteLink
-                to="/MfaChangeNumberConfirmEmail"
-                renderStyle="standard"
-              >
+              <DTERouteLink to="/MfaChangeNumberConfirmEmail" renderStyle="standard">
                 change your mobile phone number securely.
               </DTERouteLink>
             </DTEContent>

@@ -80,7 +80,7 @@ function DTELinkButton({
   dark,
   padded,
   ariaLabel,
-customStyles,
+  customStyles,
 }: Props) {
   return (
     <StyledButton

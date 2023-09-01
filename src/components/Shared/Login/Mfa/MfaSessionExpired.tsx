@@ -12,8 +12,7 @@ const LinkWrapper = styled.div`
 `;
 
 const MfaSessionExpired = () => {
-  const { setMfaDetails, setUserMfaEmail, setEnteredMfaMobile } =
-    useContext(AuthContext);
+  const { setMfaDetails, setUserMfaEmail, setEnteredMfaMobile } = useContext(AuthContext);
 
   useEffect(() => {
     setMfaDetails("");

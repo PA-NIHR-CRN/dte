@@ -72,7 +72,7 @@ function ForgottenPassword() {
                     <DTEContent>{content["resetpassword-body"]}</DTEContent>
                     <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
                     <form onSubmit={handleSubmit(onSubmit)} noValidate onInvalid={() => {}}>
-                        <Honeypot />
+                      <Honeypot />
                       <Controller
                         control={control}
                         name="email"

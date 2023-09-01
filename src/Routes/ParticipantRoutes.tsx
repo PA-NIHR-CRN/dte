@@ -16,13 +16,7 @@ import Newsletter from "../components/Participant/UpdateParticipant/Newsletter";
 import NhsPreRegistration from "../pages/NHS/NhsPreRegistration";
 
 export default [
-  <ProtectedRoute
-    path="/Participants/MyDetails"
-    component={UpdateParticipant}
-    strict
-    exact
-    key="updateparticipant"
-  />,
+  <ProtectedRoute path="/Participants/MyDetails" component={UpdateParticipant} strict exact key="updateparticipant" />,
   <ProtectedRoute
     path="/Participants/AccountSettings"
     render={() => {
@@ -83,13 +77,7 @@ export default [
     exact
     key="home"
   />,
-  <ProtectedRoute
-    path="/Participants/CloseAccount"
-    component={CloseAccount}
-    strict
-    exact
-    key="closeaccount"
-  />,
+  <ProtectedRoute path="/Participants/CloseAccount" component={CloseAccount} strict exact key="closeaccount" />,
   <Route
     path="/Participants/AccountClosed"
     render={() => {

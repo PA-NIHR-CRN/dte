@@ -41,9 +41,7 @@ const DOBForm = (props: DOBFormProps) => {
     instructionText,
   } = props;
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
     control,
     handleSubmit,
@@ -80,11 +78,7 @@ const DOBForm = (props: DOBFormProps) => {
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
       <Grid container>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <form
-            onSubmit={handleSubmit(interceptSubmit)}
-            noValidate
-            onInvalid={() => {}}
-          >
+          <form onSubmit={handleSubmit(interceptSubmit)} noValidate onInvalid={() => {}}>
             <Honeypot />
             <StyledFieldset aria-describedby="date-of-birth-legend date-of-birth-hint">
               <StyledFieldsetLegend id="date-of-birth-legend">
@@ -98,19 +92,14 @@ const DOBForm = (props: DOBFormProps) => {
                 {instructionText || (
                   <>
                     <DTEContent>For example, 31 3 1980</DTEContent>
-                    <DTEContent>
-                      You must be 18 or over to use this service
-                    </DTEContent>
+                    <DTEContent>You must be 18 or over to use this service</DTEContent>
                   </>
                 )}
               </div>
               <Controller
                 control={control}
                 name="dob"
-                render={({
-                  field: { value, onChange },
-                  fieldState: { error },
-                }) =>
+                render={({ field: { value, onChange }, fieldState: { error } }) =>
                   error !== undefined ? (
                     <DTEDateInput
                       id="dob"
@@ -272,11 +261,7 @@ const DOBForm = (props: DOBFormProps) => {
                 rules={{
                   validate: (value) => {
                     // 1.2.2.1
-                    if (
-                      value.day === "" &&
-                      value.month === "" &&
-                      value.year === ""
-                    ) {
+                    if (value.day === "" && value.month === "" && value.year === "") {
                       return "Enter a date of birth";
                     }
 
@@ -287,17 +272,11 @@ const DOBForm = (props: DOBFormProps) => {
                       ...(value.year === "" ? ["year"] : []),
                     ];
                     if (missingFields.length > 0) {
-                      return `Date of birth must include a ${missingFields.join(
-                        " and "
-                      )}`;
+                      return `Date of birth must include a ${missingFields.join(" and ")}`;
                     }
 
                     // 1.4
-                    if (
-                      !/^\d+$/.test(value.day) ||
-                      !/^\d+$/.test(value.month) ||
-                      !/^\d+$/.test(value.year)
-                    ) {
+                    if (!/^\d+$/.test(value.day) || !/^\d+$/.test(value.month) || !/^\d+$/.test(value.year)) {
                       return "Date of birth must be a real date";
                     }
 
@@ -313,9 +292,7 @@ const DOBForm = (props: DOBFormProps) => {
                       rangeErrors.push("Month must be number between 1 and 12");
                     }
                     if (value.year === "" || year <= 1900) {
-                      rangeErrors.push(
-                        "Year must be a number that is 1900 or more"
-                      );
+                      rangeErrors.push("Year must be a number that is 1900 or more");
                     }
                     if (rangeErrors.length > 0) {
                       return rangeErrors.join(", ");
@@ -325,11 +302,7 @@ const DOBForm = (props: DOBFormProps) => {
                     const d = new Date(year, month - 1, day);
                     if (
                       !(d instanceof Date && !Number.isNaN(d)) ||
-                      !(
-                        d.getFullYear() === year &&
-                        d.getMonth() === month - 1 &&
-                        d.getDate() === day
-                      )
+                      !(d.getFullYear() === year && d.getMonth() === month - 1 && d.getDate() === day)
                     ) {
                       return "Date of birth must be a real date";
                     }
@@ -352,14 +325,10 @@ const DOBForm = (props: DOBFormProps) => {
             {!hideInfo && (
               <DTEDetails summary="Why we are asking this question">
                 <DTEContent>
-                  Many studies want to make sure they have people of different
-                  ages taking part in research studies, and some are looking for
-                  specific age groups only.
+                  Many studies want to make sure they have people of different ages taking part in research studies, and
+                  some are looking for specific age groups only.
                 </DTEContent>
-                <DTEContent>
-                  You have to be 18 or over to sign up for an account with Be
-                  Part of Research.
-                </DTEContent>
+                <DTEContent>You have to be 18 or over to sign up for an account with Be Part of Research.</DTEContent>
               </DTEDetails>
             )}
             <FormNavigationButtons

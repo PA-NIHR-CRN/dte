@@ -33,10 +33,7 @@ const MfaLandlineSetup = () => {
       phoneNumber: "",
     },
   });
-  const [{ loading: setupMfaLoading }, postSetupInfo] = useAxiosFetch(
-    {},
-    { useCache: false, manual: true }
-  );
+  const [{ loading: setupMfaLoading }, postSetupInfo] = useAxiosFetch({}, { useCache: false, manual: true });
 
   const onSubmit = async (data: any) => {
     const { phoneNumber } = data;
@@ -61,18 +58,14 @@ const MfaLandlineSetup = () => {
         <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
         <DTEHeader as="h1">Enter your landline number</DTEHeader>
         <DTEContent>
-          Our automated service will call you and read out a 6-digit code, so
-          please have a pen and paper handy.
+          Our automated service will call you and read out a 6-digit code, so please have a pen and paper handy.
         </DTEContent>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Honeypot />
           <Controller
             control={control}
             name="phoneNumber"
-            render={({
-              field: { value, onChange, onBlur },
-              fieldState: { error },
-            }) => (
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
               <DTEInput
                 label="Landline number"
                 id="phoneNumber"
