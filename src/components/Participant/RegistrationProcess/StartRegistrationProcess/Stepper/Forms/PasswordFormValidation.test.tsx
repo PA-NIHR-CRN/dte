@@ -8,6 +8,7 @@ import {
 } from "../../../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import PasswordForm from "./PasswordForm";
+import weakPasswords from "../../../../../../data/weakPasswords";
 
 expect.extend(toHaveNoViolations);
 
@@ -24,6 +25,7 @@ beforeAll(() => {
           requireUppercase: true,
           allowedPasswordSymbols:
             "^ $ * . , [ ] { } ( ) ? \" ! @ # % & / \\ , > < ' : ; | _ ~ `",
+          weakPasswords,
         };
       });
     },
