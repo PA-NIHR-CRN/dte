@@ -2,33 +2,50 @@ const getEthnicities = (content: any) => ({
   asian: {
     longName: content["reusable-asian"],
     shortName: "asian",
-    description:
-      "Includes any Asian background, for example, Bangladeshi, Chinese, Indian, Pakistani or other South or East Asian",
-    backgrounds: ["Bangladeshi", "Chinese", "Indian", "Pakistani"],
+    description: content["register2-ethnic-background-asian-description"],
+    backgrounds: [
+      content["register2-ethnic-background-bangladeshi"],
+      content["register2-ethnic-background-chinese"],
+      content["register2-ethnic-background-indian"],
+      content["register2-ethnic-background-pakistani"],
+    ],
   },
   black: {
     longName: content["reusable-black"],
     shortName: "black",
-    description: "Includes any Black background",
-    backgrounds: ["African", "Black British", "Caribbean"],
+    description: content["register2-ethnic-background-black-description"],
+    backgrounds: [
+      content["register2-ethnic-background-african"],
+      content["register2-ethnic-background-black-british"],
+      content["register2-ethnic-background-carribean"],
+    ],
   },
   mixed: {
     longName: content["reusable-mixed"],
     shortName: "mixed",
-    description: "Includes any Mixed background",
-    backgrounds: ["Asian and White", "Black African and White", "Black Caribbean and White"],
+    description: content["register2-ethnic-background-mixed-description"],
+    backgrounds: [
+      content["register2-ethnic-background-asian-white"],
+      content["register2-ethnic-background-black-african-white"],
+      content["register2-ethnic-background-black-carribean-white"],
+    ],
   },
   white: {
     longName: content["reusable-white"],
     shortName: "white",
-    description: "Includes any White background",
-    backgrounds: ["British, English, Northern Irish, Scottish, or Welsh", "Irish", "Irish Traveller", "Roma"],
+    description: content["register2-ethnic-background-white-description"],
+    backgrounds: [
+      content["register2-ethnic-background-british"],
+      content["register2-ethnic-background-irish"],
+      content["register2-ethnic-background-irish-traveller"],
+      content["register2-ethnic-background-roma"],
+    ],
   },
   other: {
     longName: content["reusable-other"],
     shortName: "other",
-    description: "Includes Arab",
-    backgrounds: ["Arab"],
+    description: content["register2-ethnic-background-arab-description"],
+    backgrounds: [content["register2-ethnic-background-arab"]],
   },
 });
 

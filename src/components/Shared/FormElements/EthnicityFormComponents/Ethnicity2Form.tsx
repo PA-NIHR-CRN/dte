@@ -9,7 +9,6 @@ import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import DTEInput from "../../UI/DTEInput/DTEInput";
 import FormBaseProps from "../FormBaseProps";
-import EthnicityInformation from "./EthnicityInformation";
 import FormNavigationButtons from "../CommonElements/FormNavigationButtons";
 import Utils from "../../../../Helper/Utils";
 import Honeypot from "../../Honeypot/Honeypot";
@@ -27,9 +26,13 @@ interface Ethnicity2FormProps extends FormBaseProps {
   ethnicity: string;
 }
 
-const ConditionalInput = (props: { value: string; onValueChange: (e: ChangeEvent<HTMLInputElement>) => void }) => {
-  const { value, onValueChange } = props;
-  return <DTEInput value={value} onValueChange={onValueChange} label="How would you describe your background?" />;
+const ConditionalInput = (props: {
+  value: string;
+  label: string;
+  onValueChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}) => {
+  const { value, label, onValueChange } = props;
+  return <DTEInput value={value} onValueChange={onValueChange} label={label} />;
 };
 
 const Ethnicity2Form = (props: Ethnicity2FormProps) => {
@@ -102,10 +105,11 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
   }, [otherText]);
 
   if (!hideHeader) {
+    const ethnicityLongName = ethnicities[ethnicity as keyof typeof ethnicities].longName;
     labelElement = (
-      <DTEHeader as="h1" $variant={headerVariant}>{`Which of the following best describes your ${
-        ethnicities[ethnicity as keyof typeof ethnicities].longName
-      } background?`}</DTEHeader>
+      <DTEHeader as="h1" $variant={headerVariant}>
+        {(content["register2-ethnicity2-header"] as string).replace("{{ethnicity}}", ethnicityLongName)}
+      </DTEHeader>
     );
   } else if (instructionText) {
     labelElement = instructionText;
@@ -118,6 +122,8 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
       Utils.FocusOnError();
     }
   }, [isSubmitting]);
+
+  const ethnicityLabel = ethnicity === "mixed" ? ethnicity : ethnicity.charAt(0).toUpperCase() + ethnicity.slice(1);
 
   return (
     <>
@@ -144,7 +150,10 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
                             value={backgroundName}
                             defaultChecked={value === backgroundName}
                             key={backgroundName}
-                            aria-label={`My background is most closely described as ${backgroundName}`}
+                            aria-label={(content["register2-ethnic-background-aria-background"] as string).replace(
+                              "{{backgroundName}}",
+                              backgroundName
+                            )}
                             aria-labelledby=""
                           >
                             {backgroundName}
@@ -167,16 +176,18 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
                         conditional={
                           <ConditionalInput
                             value={otherText || ""}
+                            label={content["register2-ethnic-background-input-describe"]}
                             onValueChange={(e) => setOtherText(e.currentTarget.value)}
                           />
                         }
                         key="other"
                       >
                         {ethnicity === "other"
-                          ? "Any other ethnic group"
-                          : `Another ${
-                              ethnicity === "mixed" ? ethnicity : ethnicity.charAt(0).toUpperCase() + ethnicity.slice(1)
-                            } background`}
+                          ? content["register2-ethnic-background-other"]
+                          : (content["register2-ethnic-background-other-has-ethnicity"] as string).replace(
+                              "{{ethnicity}}",
+                              ethnicityLabel
+                            )}
                       </Radios.Radio>
                     </>
                   )}
@@ -184,12 +195,12 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
               )}
               rules={{
                 validate: (value) => {
-                  if (value === "") return "Select your ethnic background";
+                  if (value === "") return content["register2-ethnic-background-validation-background-required"];
                   return true;
                 },
               }}
             />
-            <EthnicityInformation hideInfo={hideInfo || false} studyType="backgrounds" />
+            {!hideInfo && content["register2-ethnic-background"]}
             <FormNavigationButtons
               nextButtonText={nextButtonText || "Continue"}
               showCancelButton={showCancelButton || false}
