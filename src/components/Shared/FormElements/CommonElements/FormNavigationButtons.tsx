@@ -5,11 +5,12 @@ import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 export interface FormNavigationButtonsProps {
   showCancelButton?: boolean;
   nextButtonText: string;
+  cancelButtonText?: string;
   onCancel?: () => void;
 }
 
 function FormNavigationButtons(props: FormNavigationButtonsProps) {
-  const { nextButtonText, showCancelButton, onCancel } = props;
+  const { nextButtonText, showCancelButton, cancelButtonText, onCancel } = props;
 
   return (
     <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
@@ -19,7 +20,7 @@ function FormNavigationButtons(props: FormNavigationButtonsProps) {
       {showCancelButton && onCancel && (
         <Grid item>
           <DTELinkButton type="button" padded onClick={() => onCancel()}>
-            Cancel
+            {cancelButtonText}
           </DTELinkButton>
         </Grid>
       )}

@@ -124,6 +124,7 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
             <FormNavigationButtons
               nextButtonText={nextButtonText || "Continue"}
               showCancelButton={showCancelButton || false}
+              cancelButtonText={content["reusable-cancel"]}
               onCancel={onCancel}
             />
           </form>

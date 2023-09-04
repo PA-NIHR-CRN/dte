@@ -152,6 +152,7 @@ function Disability2Form(props: Disability2FormProps) {
       <FormNavigationButtons
         nextButtonText={disability2NextButtonText || content["reusable-button-continue"]}
         showCancelButton={disability2ShowCancelButton || false}
+        cancelButtonText={content["reusable-cancel"]}
         onCancel={onCancel}
       />
     </form>

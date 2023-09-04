@@ -154,7 +154,12 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
             <DTEDetails summary="Why we are asking this question">
               <DTEContent>We need your email address so we can contact you when we find a suitable study</DTEContent>
             </DTEDetails>
-            <FormNavigationButtons nextButtonText={content["reusable-save"]} showCancelButton onCancel={onCancel} />
+            <FormNavigationButtons
+              nextButtonText={content["reusable-save"]}
+              cancelButtonText={content["reusable-cancel"]}
+              showCancelButton
+              onCancel={onCancel}
+            />
           </form>
         </Grid>
       </Grid>

@@ -365,7 +365,12 @@ function UpdatePasswordForm(props: FormBaseProps) {
                     },
                   }}
                 />
-                <FormNavigationButtons nextButtonText={content["reusable-save"]} showCancelButton onCancel={onCancel} />
+                <FormNavigationButtons
+                  nextButtonText={content["reusable-save"]}
+                  cancelButtonText={content["reusable-cancel"]}
+                  showCancelButton
+                  onCancel={onCancel}
+                />
               </form>
             </Grid>
           </Grid>

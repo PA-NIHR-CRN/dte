@@ -2,7 +2,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useContext, useEffect } from "react";
 import DTERadio from "../UI/DTERadio/DTERadio";
 import DTEDetails from "../UI/DTEDetails/DTEDetails";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
@@ -11,6 +11,7 @@ import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import FormBaseProps from "./FormBaseProps";
 import Utils from "../../../Helper/Utils";
 import Honeypot from "../Honeypot/Honeypot";
+import { ContentContext } from "../../../context/ContentContext";
 
 export type DisabilityFormData = {
   disability: string;
@@ -33,6 +34,7 @@ const DisabilityForm = (props: DisabilityFormProps) => {
     showCancelButton: disabilityShowCancelButton,
     onCancel,
   } = props;
+  const { content } = useContext(ContentContext);
   const theme = useTheme();
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
@@ -130,6 +132,7 @@ const DisabilityForm = (props: DisabilityFormProps) => {
         <FormNavigationButtons
           nextButtonText={disabilityNextButtonText || "Continue"}
           showCancelButton={disabilityShowCancelButton || false}
+          cancelButtonText={content["reusable-cancel"]}
           onCancel={onCancel}
         />
       </form>

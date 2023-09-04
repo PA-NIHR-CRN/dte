@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Fieldset } from "nhsuk-react-components";
@@ -14,6 +14,7 @@ import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import Utils from "../../../Helper/Utils";
 import Honeypot from "../Honeypot/Honeypot";
+import { ContentContext } from "../../../context/ContentContext";
 
 export type DOBFormData = {
   day: string;
@@ -40,6 +41,7 @@ const DOBForm = (props: DOBFormProps) => {
     onCancel,
     instructionText,
   } = props;
+  const { content } = useContext(ContentContext);
   const theme = useTheme();
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
@@ -334,6 +336,7 @@ const DOBForm = (props: DOBFormProps) => {
             <FormNavigationButtons
               nextButtonText={nextButtonText || "Continue"}
               showCancelButton={showCancelButton || false}
+              cancelButtonText={content["reusable-cancel"]}
               onCancel={onCancel}
             />
           </form>

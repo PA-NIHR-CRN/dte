@@ -106,6 +106,7 @@ function HealthConditionForm(props: HealthConditionFormProps) {
             <FormNavigationButtons
               nextButtonText={nextButtonText || content["reusable-button-continue"]}
               showCancelButton={showCancelButton || false}
+              cancelButtonText={content["reusable-cancel"]}
               onCancel={onCancel}
             />
           </form>
