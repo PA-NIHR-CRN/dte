@@ -2,6 +2,7 @@ import { createServer, Response, Server } from "miragejs";
 import { render, screen } from "../../../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import PasswordForm from "./PasswordForm";
+import weakPasswords from "../../../../../../data/weakPasswords";
 
 const data = {
   password: "",
@@ -168,6 +169,7 @@ describe.each([
               requireUppercase: uppercase,
               allowedPasswordSymbols:
                 "^ $ * . , [ ] { } ( ) ? \" ! @ # % & / \\ , > < ' : ; | _ ~ `",
+              weakPasswords,
             }
           )
       );
