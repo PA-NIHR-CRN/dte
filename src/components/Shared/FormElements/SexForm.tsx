@@ -5,7 +5,6 @@ import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
 import { ReactNode, useContext, useEffect } from "react";
 import DTERadio from "../UI/DTERadio/DTERadio";
-import DTEDetails from "../UI/DTEDetails/DTEDetails";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormBaseProps from "./FormBaseProps";
@@ -54,14 +53,12 @@ function SexForm(props: SexFormProps) {
     },
   });
 
-  const sexHeader = <DTEHeader as="h2">What is your sex?</DTEHeader>;
-  const genderHeader = (
-    <DTEHeader as="h2">Is the gender you identify with the same as your sex registered at birth?</DTEHeader>
-  );
+  const sexHeader = <DTEHeader as="h2">{content["register2-sexgender-input-sex"]}</DTEHeader>;
+  const genderHeader = <DTEHeader as="h2">{content["register2-sexgender-input-gender"]}</DTEHeader>;
   if (!hideHeader) {
     questionHeader = (
       <DTEHeader as="h1" $variant={headerVariant}>
-        Sex and gender identity
+        {content["register2-sexgender-header"]}
       </DTEHeader>
     );
   } else if (instructionText) {
@@ -95,29 +92,34 @@ function SexForm(props: SexFormProps) {
                 name="SexAtBirth"
                 label={sexHeader}
                 error={error?.message}
-                infoText={!hideNextQuestionText ? "This question is about your sex registered at birth." : ""}
+                infoText={!hideNextQuestionText ? content["register2-sexgender-info-sex"] : ""}
                 onChange={onChange}
                 onBlur={onBlur}
               >
                 {!hideNextQuestionText && (
-                  <DTEContent aria-hidden="true">This question is about your sex registered at birth.</DTEContent>
+                  <DTEContent aria-hidden="true">{content["register2-sexgender-info-sex"]}</DTEContent>
                 )}
                 <Radios.Radio
                   value="female"
                   defaultChecked={value === "female"}
-                  aria-label="I am Female"
+                  aria-label={content["register2-sexgender-aria-female"]}
                   aria-labelledby=""
                 >
                   {content["reusable-female"]}
                 </Radios.Radio>
-                <Radios.Radio value="male" defaultChecked={value === "male"} aria-label="I am Male" aria-labelledby="">
+                <Radios.Radio
+                  value="male"
+                  defaultChecked={value === "male"}
+                  aria-label={content["register2-sexgender-aria-male"]}
+                  aria-labelledby=""
+                >
                   {content["reusable-male"]}
                 </Radios.Radio>
               </DTERadio>
             )}
             rules={{
               validate: (value) => {
-                if (value === "") return "Select if you are Female or Male";
+                if (value === "") return content["register2-sexgender-validation-sex-required"];
                 return true;
               },
             }}
@@ -136,24 +138,24 @@ function SexForm(props: SexFormProps) {
                 <Radios.Radio
                   value="yes"
                   defaultChecked={value === "yes"}
-                  aria-label="Yes, the gender I identify with is the same as my registered sex at birth"
+                  aria-label={content["register2-sexgender-aria-gender-yes"]}
                   aria-labelledby=""
                 >
-                  Yes
+                  {content["reusable-yes"]}
                 </Radios.Radio>
                 <Radios.Radio
                   value="no"
                   defaultChecked={value === "no"}
-                  aria-label="No, the gender I identify with is not the same as my registered sex at birth"
+                  aria-label={content["register2-sexgender-aria-gender-no"]}
                   aria-labelledby=""
                 >
-                  No
+                  {content["reusable-no"]}
                 </Radios.Radio>
-                <DTEContent $radioList>or</DTEContent>
+                <DTEContent $radioList>{content["reusable-or"]}</DTEContent>
                 <Radios.Radio
                   value="noSay"
                   defaultChecked={value === "noSay"}
-                  aria-label="I prefer not to say whether the gender I identify with is the same as my registered sex at birth "
+                  aria-label={content["register2-sexgender-aria-gender-prefer-not-say"]}
                   aria-labelledby=""
                 >
                   {content["reusable-prefer-not-to-say"]}
@@ -162,29 +164,16 @@ function SexForm(props: SexFormProps) {
             )}
             rules={{
               validate: (value) => {
-                if (value === "")
-                  return "Select whether the gender you identify with is the same as your sex registered at birth";
+                if (value === "") return content["register2-sexgender-validation-gender-required"];
                 return true;
               },
             }}
           />
-          {!hideInfo && (
-            <DTEDetails summary="Why we are asking this question">
-              <DTEContent>
-                Some studies can only include people of a specific sex, or may be focused on people whose gender differs
-                from their assigned sex at birth. We may use this information when contacting you about studies you may
-                be interested in.
-              </DTEContent>
-              <DTEContent>
-                We&apos;re also asking this so we can make sure there is a mix of different people taking part in
-                research. We want to make sure everyone 18 and over in the UK feels able to take part in research if
-                they wish to and look to improve our service where our data shows this may not be the case.
-              </DTEContent>
-            </DTEDetails>
-          )}
+          {!hideInfo && content["register2-sexgender"]}
           <FormNavigationButtons
             nextButtonText={nextButtonText || content["reusable-button-continue"]}
             showCancelButton={showCancelButton || false}
+            cancelButtonText={content["reusable-cancel"]}
             onCancel={onCancel}
           />
         </form>
