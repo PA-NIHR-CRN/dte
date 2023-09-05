@@ -4,7 +4,6 @@ import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
 import { ReactNode, useContext, useEffect } from "react";
 import DTERadio from "../UI/DTERadio/DTERadio";
-import DTEDetails from "../UI/DTEDetails/DTEDetails";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
@@ -62,11 +61,9 @@ function Disability2Form(props: Disability2FormProps) {
     labelElement = (
       <>
         <DTEHeader as="h1" $variant={headerVariant}>
-          Do any of your conditions or illnesses reduce your ability to carry out day to day activities?
+          {content["register2-disability2-header"]}
         </DTEHeader>
-        <DTEContent as="span" $displayMode="block">
-          For example, eating, washing, walking or going shopping.
-        </DTEContent>
+        {content["register2-disability2-instruction-text"]}
       </>
     );
   } else {
@@ -96,32 +93,32 @@ function Disability2Form(props: Disability2FormProps) {
             <Radios.Radio
               value="Yes, a lot"
               defaultChecked={value === "Yes, a lot"}
-              aria-label="Yes, my condition reduces my ability to carry out day to day activities a lot"
+              aria-label={content["register2-disability2-aria-yes-lots"]}
               aria-labelledby=""
             >
-              Yes, a lot
+              {content["register2-disability2-input-yes-lots"]}
             </Radios.Radio>
             <Radios.Radio
               value="Yes, a little"
               defaultChecked={value === "Yes, a little"}
-              aria-label="Yes, my condition reduces my ability to carry out day to day activities a little"
+              aria-label={content["register2-disability2-aria-yes-little"]}
               aria-labelledby=""
             >
-              Yes, a little
+              {content["register2-disability2-input-yes-little"]}
             </Radios.Radio>
             <Radios.Radio
               value="Not at all"
               defaultChecked={value === "Not at all"}
-              aria-label="No, my condition does not reduce my ability to carry out day to day activities at all"
+              aria-label={content["register2-disability2-aria-not-at-all"]}
               aria-labelledby=""
             >
-              Not at all
+              {content["register2-disability2-input-not-at-all"]}
             </Radios.Radio>
-            <DTEContent $radioList>or</DTEContent>
+            <DTEContent $radioList>{content["reusable-or"]}</DTEContent>
             <Radios.Radio
               value="Prefer not to say"
               defaultChecked={value === "Prefer not to say"}
-              aria-label="I would prefer not to say how much my condition reduces my ability to carry out day to day activities"
+              aria-label={content["register2-disability2-aria-prefer-not-say"]}
               aria-labelledby=""
             >
               {content["reusable-prefer-not-to-say"]}
@@ -130,25 +127,12 @@ function Disability2Form(props: Disability2FormProps) {
         )}
         rules={{
           validate: (value) => {
-            if (!value || value.length === 0)
-              return "Select whether any of your conditions or illnesses reduce your ability to carry out day to day activities";
+            if (!value || value.length === 0) return content["register2-disability2-validation-description-required"];
             return true;
           },
         }}
       />
-      {!hideInfo && (
-        <DTEDetails summary="Why we are asking this question">
-          <DTEContent>
-            Some studies will require volunteers with disabilities, other studies want to make sure they have a
-            representative sample of the population taking part in research studies. We may use this information when
-            contacting you about studies you may be interested in.
-          </DTEContent>
-          <DTEContent>
-            If we find that people with disabilities are under represented in signing up to be contacted about research
-            we will look at how to improve this.
-          </DTEContent>
-        </DTEDetails>
-      )}
+      {!hideInfo && content["register2-disability"]}
       <FormNavigationButtons
         nextButtonText={disability2NextButtonText || content["reusable-button-continue"]}
         showCancelButton={disability2ShowCancelButton || false}
