@@ -109,7 +109,7 @@ function MobileNumberForm(props: MobileNumberFormProps) {
               onValueChange={onChange}
               onValueBlur={onBlur}
               error={error?.message}
-              label={content["register2-phone-input-mobile"]}
+              label={content["register2-phone-input-landline"]}
               autocomplete="tel"
               spellcheck={false}
               type="tel"
