@@ -16,9 +16,11 @@ import Utils from "../../../Helper/Utils";
 import { DTEAxiosError } from "../../../types/AuthTypes";
 import ResendEmail from "../FormElements/CommonElements/ResendEmail";
 import UserLogin from "./UserLogin";
+import { ContentContext } from "../../../context/ContentContext";
 
 // Component for the Redirect from IDG login
 function Verify() {
+  const { content } = useContext(ContentContext);
   const { logOutToken } = useContext(AuthContext);
   const history = useHistory();
   const { search } = useLocation();
@@ -67,7 +69,7 @@ function Verify() {
           case "Confirm_SignUp_Error_Expired_Code":
             message = (
               <>
-                <DTEContent>This verification link has expired. We can send you the email again.</DTEContent>
+                <DTEContent>{content["verify-email-error-expired"]}</DTEContent>
                 <ResendEmail userId={userId || ""} />
               </>
             );
@@ -75,20 +77,16 @@ function Verify() {
           case "Confirm_SignUp_Error_User_Already_Confirmed":
             message = (
               <>
-                <DTEContent>
-                  This verification link has already been used. Please sign in to continue registration.
-                </DTEContent>
-                <DTERouteLink to="/UserLogin">Sign in</DTERouteLink>
+                <DTEContent>{content["verify-email-error-already-used"]}</DTEContent>
+                <DTERouteLink to="/UserLogin">{content["reusable-button-signin"]}</DTERouteLink>
               </>
             );
             break;
           default:
             message = (
               <>
-                <DTEContent>
-                  There may have been a technical issue. You can try to sign in to continue your registration.
-                </DTEContent>
-                <DTERouteLink to="/UserLogin">Sign in</DTERouteLink>
+                <DTEContent>{content["verify-email-error-technical"]}</DTEContent>
+                <DTERouteLink to="/UserLogin">{content["reusable-button-signin"]}</DTERouteLink>
               </>
             );
         }
@@ -102,22 +100,22 @@ function Verify() {
       {confirmationLoading && <LoadingIndicator text="Verifying Account..." />}
       <StepWrapper>
         {Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
-          <DocumentTitle title="Your email address has been verified - Volunteer Registration - Be Part of Research">
+          <DocumentTitle title={content["verify-email-success-document-title"]}>
             <>
               <DTEHeader as="h1" $variant={headerVariant}>
-                Your email address has been verified
+                {content["verify-email-success-header"]}
               </DTEHeader>
-              <DTEContent>Please sign in to continue registration.</DTEContent>
+              {content["verify-email-continue-registration"]}
               <UserLogin nested />
             </>
           </DocumentTitle>
         )}
         {!Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess &&
           Utils.ConvertResponseToDTEResponse(confirmationResponse)?.errors && (
-            <DocumentTitle title="Unable to verify your email address - Volunteer Registration - Be Part of Research">
+            <DocumentTitle title={content["verify-email-failure-document-title"]}>
               <>
                 <DTEHeader as="h1" $variant={headerVariant}>
-                  Unable to verify your email address
+                  {content["verify-email-failure-header"]}
                 </DTEHeader>
                 {convertErrorsToResponse(Utils.ConvertResponseToDTEResponse(confirmationResponse)?.errors)}
               </>
