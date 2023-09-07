@@ -5,19 +5,6 @@ import Adapter from "enzyme-adapter-react-16";
 import "./Helper/translations";
 import { fetchContent } from "./Helper/contenful/contentHandler";
 
-jest.mock("react-ga", () => ({
-  initialize: jest.fn(),
-  pageview: jest.fn(),
-}));
-
-jest.mock("react-gtm-module", () => ({
-  initialize: jest.fn(),
-}));
-
-jest.mock("react-hotjar", () => ({
-  initialize: jest.fn(),
-}));
-
 beforeAll(async () => {
   await fetchContent();
   window.nhsapp = {
