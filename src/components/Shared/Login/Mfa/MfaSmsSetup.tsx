@@ -4,23 +4,22 @@ import { Controller, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import DocumentTitle from "react-document-title";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
-import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import DTEInput from "../../UI/DTEInput/DTEInput";
 import DTEButton from "../../UI/DTEButton/DTEButton";
 import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import Utils, { MobileRegex } from "../../../../Helper/Utils";
 import { AuthContext } from "../../../../context/AuthContext";
-import DTEDetails from "../../UI/DTEDetails/DTEDetails";
-import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 import LoadingIndicator from "../../LoadingIndicator/LoadingIndicator";
 import Honeypot from "../../Honeypot/Honeypot";
+import { ContentContext } from "../../../../context/ContentContext";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
 `;
 
 const MfaSmsSetup = () => {
+  const { content } = useContext(ContentContext);
   const { mfaDetails, setMfaDetails, setEnteredMfaMobile, prevUrl, enteredMfaMobile } = useContext(AuthContext);
   const history = useHistory();
   if (!mfaDetails) {
@@ -84,16 +83,14 @@ const MfaSmsSetup = () => {
   }, [isSubmitting]);
 
   return (
-    <DocumentTitle title="Enter your mobile phone number">
+    <DocumentTitle title={content["mfa-setup-document-title"]}>
       <StepWrapper>
         {setupMfaLoading ? (
           <LoadingIndicator />
         ) : (
           <>
-            <DTEHeader as="h1">Enter your mobile phone number</DTEHeader>
-            <DTEContent>
-              We will send you a 6 digit security code to your phone to confirm your mobile number.
-            </DTEContent>
+            <DTEHeader as="h1">{content["mfa-setup-header"]}</DTEHeader>
+            {content["mfa-setup-instruction-text"]}
             <form noValidate onSubmit={handleSubmit(onSubmit)}>
               <Honeypot />
               <Controller
@@ -101,7 +98,7 @@ const MfaSmsSetup = () => {
                 name="phoneNumber"
                 render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                   <DTEInput
-                    label="UK mobile phone number"
+                    label={content["mfa-setup-input-phone"]}
                     id="mobilePhoneNumber"
                     type="tel"
                     required
@@ -120,28 +117,17 @@ const MfaSmsSetup = () => {
                 rules={{
                   required: {
                     value: true,
-                    message: "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982",
+                    message: content["mfa-setup-validation-phone-required"],
                   },
-
                   pattern: {
                     value: MobileRegex,
-                    message: "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982",
+                    message: content["mfa-setup-validation-phone-invalid"],
                   },
                 }}
               />
-              <DTEDetails summary="Use another way to secure my account">
-                <>
-                  <DTEContent>
-                    If you do not have a UK mobile phone number or do not want to use this method, you can{" "}
-                    <DTERouteLink disabled={setupMfaLoading || isSubmitting} to="/MfaTokenSetup" renderStyle="standard">
-                      use an authenticator app to secure your account
-                    </DTERouteLink>
-                    .
-                  </DTEContent>
-                </>
-              </DTEDetails>
+              {content["mfa-setup"]}
               <ButtonWrapper>
-                <DTEButton disabled={setupMfaLoading || isSubmitting}>Continue</DTEButton>
+                <DTEButton disabled={setupMfaLoading || isSubmitting}>{content["reusable-button-continue"]}</DTEButton>
               </ButtonWrapper>
             </form>
           </>
