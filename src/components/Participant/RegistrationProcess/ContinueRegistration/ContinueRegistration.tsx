@@ -494,7 +494,7 @@ function ContinueRegistration() {
                 <Grid item>
                   {activeStep < 9 && (
                     <DTEContent aria-hidden>
-                      {calculatePercentageComplete(activeStep + 5, 13)}%{content["reusable-progress-complete"]}
+                      {calculatePercentageComplete(activeStep + 5, 13)}% {content["reusable-progress-complete"]}
                     </DTEContent>
                   )}
                 </Grid>

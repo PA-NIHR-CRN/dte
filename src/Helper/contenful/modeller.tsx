@@ -47,25 +47,52 @@ const renderContent = (node: any, parentNodeType?: string) => {
   }
   switch (node.nodeType) {
     case "document":
-      return node.content.map((childNode: any) => renderContent(childNode, node.nodeType));
+      return node.content.map((childNode: any, index: number) => (
+        <React.Fragment key={index}>{renderContent(childNode, node.nodeType)}</React.Fragment>
+      ));
     case "heading-1":
       return (
-        <DTEHeader as="h1">{node.content.map((childNode: any) => renderContent(childNode, node.nodeType))}</DTEHeader>
+        <DTEHeader as="h1">
+          {node.content.map((childNode: any, index: number) => (
+            <React.Fragment key={index}>{renderContent(childNode, node.nodeType)}</React.Fragment>
+          ))}
+        </DTEHeader>
       );
     case "heading-2":
       return (
-        <DTEHeader as="h2">{node.content.map((childNode: any) => renderContent(childNode, node.nodeType))}</DTEHeader>
+        <DTEHeader as="h2">
+          {node.content.map((childNode: any, index: number) => (
+            <React.Fragment key={index}>{renderContent(childNode, node.nodeType)}</React.Fragment>
+          ))}
+        </DTEHeader>
       );
+
     case "heading-3":
       return (
-        <DTEHeader as="h3">{node.content.map((childNode: any) => renderContent(childNode, node.nodeType))}</DTEHeader>
+        <DTEHeader as="h3">
+          {node.content.map((childNode: any, index: number) => (
+            <React.Fragment key={index}>{renderContent(childNode, node.nodeType)}</React.Fragment>
+          ))}
+        </DTEHeader>
       );
+
     case "heading-4":
       return (
-        <DTEHeader as="h4">{node.content.map((childNode: any) => renderContent(childNode, node.nodeType))}</DTEHeader>
+        <DTEHeader as="h4">
+          {node.content.map((childNode: any, index: number) => (
+            <React.Fragment key={index}>{renderContent(childNode, node.nodeType)}</React.Fragment>
+          ))}
+        </DTEHeader>
       );
+
     case "paragraph":
-      return <DTEContent>{node.content.map((childNode: any) => renderContent(childNode, node.nodeType))}</DTEContent>;
+      return (
+        <DTEContent>
+          {node.content.map((childNode: any, index: number) => (
+            <React.Fragment key={index}>{renderContent(childNode, node.nodeType)}</React.Fragment>
+          ))}
+        </DTEContent>
+      );
     case "text":
       if (parentNodeType && parentNodeType.startsWith("heading")) {
         return node.value;
@@ -79,11 +106,20 @@ const renderContent = (node: any, parentNodeType?: string) => {
           target={node.data.uri.startsWith("http") ? "_blank" : undefined}
           renderStyle="standard"
         >
-          {node.content.map(renderContent)}
+          {node.content.map((childNode: any, index: number) => (
+            <React.Fragment key={index}>{renderContent(childNode)}</React.Fragment>
+          ))}
         </DTERouteLink>
       );
     case "ordered-list":
-      return <ol>{node.content.map(renderContent)}</ol>;
+      return (
+        <ol>
+          {node.content.map((childNode: any, index: number) => (
+            <React.Fragment key={index}>{renderContent(childNode)}</React.Fragment>
+          ))}
+        </ol>
+      );
+
     case "embedded-entry-block":
       const contentTypeID = node?.data?.target?.sys?.contentType?.sys?.id;
 
@@ -114,7 +150,9 @@ const renderContent = (node: any, parentNodeType?: string) => {
 
         return (
           <DTEDetails summary={summary}>
-            {contentNode.content.map((childNode: any) => renderContent(childNode, contentNode.nodeType))}
+            {node.content.map((childNode: any, index: number) => (
+              <React.Fragment key={index}>{renderContent(childNode, contentNode.nodeType)}</React.Fragment>
+            ))}
           </DTEDetails>
         );
       } else {
@@ -122,9 +160,21 @@ const renderContent = (node: any, parentNodeType?: string) => {
       break;
 
     case "unordered-list":
-      return <ul>{node.content.map(renderContent)}</ul>;
+      return (
+        <ul>
+          {node.content.map((childNode: any, index: number) => (
+            <React.Fragment key={index}>{renderContent(childNode)}</React.Fragment>
+          ))}
+        </ul>
+      );
     case "list-item":
-      return <li>{node.content.map(renderContent)}</li>;
+      return (
+        <li>
+          {node.content.map((childNode: any, index: number) => (
+            <React.Fragment key={index}>{renderContent(childNode)}</React.Fragment>
+          ))}
+        </li>
+      );
     case "hr":
       return <StyledDTEHR />;
     case "table":
@@ -146,7 +196,11 @@ const renderContent = (node: any, parentNodeType?: string) => {
     case "blockquote":
       return (
         <div className="govuk-details__text">
-          <DTEContent>{node.content.map(renderContent)}</DTEContent>
+          <DTEContent>
+            {node.content.map((childNode: any, index: number) => (
+              <React.Fragment key={index}>{renderContent(childNode)}</React.Fragment>
+            ))}
+          </DTEContent>
         </div>
       );
     default:
