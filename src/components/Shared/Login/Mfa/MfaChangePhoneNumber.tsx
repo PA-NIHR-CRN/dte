@@ -13,12 +13,14 @@ import Utils, { MobileRegex } from "../../../../Helper/Utils";
 import { AuthContext } from "../../../../context/AuthContext";
 import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 import Honeypot from "../../Honeypot/Honeypot";
+import { ContentContext } from "../../../../context/ContentContext";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
 `;
 
 const MfaChangePhoneNumber = () => {
+  const { content } = useContext(ContentContext);
   const { mfaDetails, setMfaDetails, setEnteredMfaMobile, enteredMfaMobile } = useContext(AuthContext);
   const history = useHistory();
 
@@ -61,11 +63,11 @@ const MfaChangePhoneNumber = () => {
   }, [isSubmitting]);
 
   return (
-    <DocumentTitle title="Enter your new mobile phone number">
+    <DocumentTitle title={content["mfa-change-phone-document-title"]}>
       <StepWrapper>
         <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
-        <DTEHeader as="h1">Enter your new mobile phone number</DTEHeader>
-        <DTEContent>We will send you a 6 digit security code to confirm your mobile phone number.</DTEContent>
+        <DTEHeader as="h1">{content["mfa-change-phone-header"]}</DTEHeader>
+        <DTEContent>{content["mfa-change-phone-instruction-text"]}</DTEContent>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Honeypot />
           <Controller
@@ -73,7 +75,7 @@ const MfaChangePhoneNumber = () => {
             name="phoneNumber"
             render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
               <DTEInput
-                label="New UK mobile phone number"
+                label={content["mfa-change-phone-input-phone"]}
                 id="mobilePhoneNumber"
                 type="tel"
                 required
@@ -89,17 +91,17 @@ const MfaChangePhoneNumber = () => {
             rules={{
               required: {
                 value: true,
-                message: "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982",
+                message: content["mfa-change-phone-validation-phone-required"],
               },
 
               pattern: {
                 value: MobileRegex,
-                message: "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982",
+                message: content["mfa-change-phone-validation-phone-invalid"],
               },
             }}
           />
           <ButtonWrapper>
-            <DTEButton disabled={setupMfaLoading || isSubmitting}>Continue</DTEButton>
+            <DTEButton disabled={setupMfaLoading || isSubmitting}>{content["reusable-button-continue"]}</DTEButton>
           </ButtonWrapper>
         </form>
       </StepWrapper>
