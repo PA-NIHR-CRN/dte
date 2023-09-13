@@ -13,8 +13,10 @@ import Utils from "../../../../Helper/Utils";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
 import useInlineServerError from "../../../../hooks/useInlineServerError";
 import Honeypot from "../../Honeypot/Honeypot";
+import { ContentContext } from "../../../../context/ContentContext";
 
 const MfaTotpChallenge = () => {
+  const { content } = useContext(ContentContext);
   const { mfaDetails, saveToken, setMfaDetails, setEnteredMfaMobile, setUserMfaEmail } = useContext(AuthContext);
   const history = useHistory();
   const [convertedError, setConvertedError] = useState<any>(null);
@@ -93,17 +95,14 @@ const MfaTotpChallenge = () => {
   };
 
   return (
-    <DocumentTitle title="Check your authenticator app - Volunteer Registration - Be Part of Research">
+    <DocumentTitle title={content["mfa-token-challenge-document-title"]}>
       <StepWrapper>
-        <DTEHeader as="h1">Check your authenticator app</DTEHeader>
+        <DTEHeader as="h1">{content["mfa-token-challenge-header"]}</DTEHeader>
         <ErrorMessageContainer
           axiosErrors={[setupMfaError]}
           DTEAxiosErrors={[serverError ? [] : Utils.ConvertResponseToDTEResponse(TokenMfaResponse)?.errors]}
         />
-        <DTEContent>
-          Enter the 6 digit security code from your authenticator app to complete verification. Entering the code
-          incorrectly too many times will temporarily prevent you from signing in.
-        </DTEContent>
+        <DTEContent>{content["mfa-token-challenge-instruction-text"]}</DTEContent>
         <form onSubmit={interceptSubmit} noValidate>
           <Honeypot />
           <Controller
@@ -111,7 +110,7 @@ const MfaTotpChallenge = () => {
             name="mfaCode"
             render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
               <DTEInput
-                label="Security code"
+                label={content["mfa-token-challenge-input-security-code"]}
                 id="mfaCode"
                 type="text"
                 required
@@ -127,17 +126,17 @@ const MfaTotpChallenge = () => {
             rules={{
               required: {
                 value: true,
-                message: "Enter a valid security code",
+                message: content["mfa-token-challenge-validation-security-code-required"],
               },
 
               pattern: {
                 value: /^\d{6}$/,
-                message: "Enter a valid security code",
+                message: content["mfa-token-challenge-validation-security-code-invalid"],
               },
             }}
           />
           <DTEButton type="submit" disabled={TokenMfaLoading || isSubmitting}>
-            Send security code
+            {content["mfa-token-challenge-button-send-security-code"]}
           </DTEButton>
         </form>
       </StepWrapper>

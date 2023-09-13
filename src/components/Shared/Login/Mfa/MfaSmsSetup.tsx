@@ -83,14 +83,14 @@ const MfaSmsSetup = () => {
   }, [isSubmitting]);
 
   return (
-    <DocumentTitle title={content["mfa-setup-document-title"]}>
+    <DocumentTitle title={content["mfa-sms-setup-document-title"]}>
       <StepWrapper>
         {setupMfaLoading ? (
           <LoadingIndicator />
         ) : (
           <>
-            <DTEHeader as="h1">{content["mfa-setup-header"]}</DTEHeader>
-            {content["mfa-setup-instruction-text"]}
+            <DTEHeader as="h1">{content["mfa-sms-setup-header"]}</DTEHeader>
+            {content["mfa-sms-setup-instruction-text"]}
             <form noValidate onSubmit={handleSubmit(onSubmit)}>
               <Honeypot />
               <Controller
@@ -98,7 +98,7 @@ const MfaSmsSetup = () => {
                 name="phoneNumber"
                 render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                   <DTEInput
-                    label={content["mfa-setup-input-phone"]}
+                    label={content["mfa-sms-setup-input-phone"]}
                     id="mobilePhoneNumber"
                     type="tel"
                     required
@@ -117,15 +117,15 @@ const MfaSmsSetup = () => {
                 rules={{
                   required: {
                     value: true,
-                    message: content["mfa-setup-validation-phone-required"],
+                    message: content["mfa-sms-setup-validation-phone-required"],
                   },
                   pattern: {
                     value: MobileRegex,
-                    message: content["mfa-setup-validation-phone-invalid"],
+                    message: content["mfa-sms-setup-validation-phone-invalid"],
                   },
                 }}
               />
-              {content["mfa-setup"]}
+              {content["mfa-sms-setup"]}
               <ButtonWrapper>
                 <DTEButton disabled={setupMfaLoading || isSubmitting}>{content["reusable-button-continue"]}</DTEButton>
               </ButtonWrapper>

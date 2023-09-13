@@ -7,24 +7,26 @@ import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import { AuthContext } from "../../../../context/AuthContext";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
-import DTEDetails from "../../UI/DTEDetails/DTEDetails";
+import { ContentContext } from "../../../../context/ContentContext";
 
 const LinkWrapper = styled.div`
   margin: 1rem 0;
 `;
 
 const MfaSecurityCodeExpired = () => {
+  const { content } = useContext(ContentContext);
   const { mfaDetails, prevUrl } = useContext(AuthContext);
   const history = useHistory();
+
   if (!mfaDetails) {
     history.push("/");
   }
 
   return (
-    <DocumentTitle title="Security code expired">
+    <DocumentTitle title={content["mfa-security-code-expired-document-title"]}>
       <StepWrapper>
-        <DTEHeader as="h1">Security code expired</DTEHeader>
-        <DTEContent>The security code you entered has expired.</DTEContent>
+        <DTEHeader as="h1">{content["mfa-security-code-expired-header"]}</DTEHeader>
+        <DTEContent>{content["mfa-security-code-expired-body"]}</DTEContent>
         <LinkWrapper>
           <DTEContent>
             <DTERouteLink
@@ -35,20 +37,11 @@ const MfaSecurityCodeExpired = () => {
               }
               renderStyle="standard"
             >
-              Send your security code again
+              {content["mfa-security-code-expired-link-resend-code"]}
             </DTERouteLink>
           </DTEContent>
         </LinkWrapper>
-        {prevUrl === "/MfaSmsChallenge" && (
-          <DTEDetails summary="I do not have access to my mobile phone">
-            <DTEContent>
-              If you do not have access to your mobile phone, you can{" "}
-              <DTERouteLink to="/MfaChangeNumberConfirmEmail" renderStyle="standard">
-                change your mobile phone number securely.
-              </DTERouteLink>
-            </DTEContent>
-          </DTEDetails>
-        )}
+        {content["mfa-security-code-expired-page"]}
       </StepWrapper>
     </DocumentTitle>
   );
