@@ -2,12 +2,7 @@ import { axe, toHaveNoViolations } from "jest-axe";
 import { createServer, Server } from "miragejs";
 import "@testing-library/jest-dom";
 import MfaSmsChallenge from "./MfaSmsChallenge";
-import {
-  render,
-  screen,
-  userEvent,
-  waitFor,
-} from "../../../../Helper/test-utils";
+import { render, screen, userEvent, waitFor } from "../../../../Helper/test-utils";
 
 expect.extend(toHaveNoViolations);
 
@@ -16,25 +11,9 @@ let server: Server;
 beforeAll(() => {
   server = createServer({
     routes() {
-      this.post(
-        `${process.env.REACT_APP_BASE_API}/users/respondtomfachallenge`,
-        (schema, request) => {
-          const { mfaCode, mfaDetails } = JSON.parse(request.requestBody);
-          if (mfaCode === "123456" && mfaDetails) {
-            return {
-              content: null,
-              isSuccess: true,
-              errors: [],
-              conversationId: null,
-              version: 1,
-            };
-          }
-          return new Error("Incorrect MFA Code");
-        }
-      );
-      this.post(
-        `${process.env.REACT_APP_BASE_API}/users/resendmfachallenge`,
-        () => {
+      this.post(`${process.env.REACT_APP_BASE_API}/users/respondtomfachallenge`, (schema, request) => {
+        const { mfaCode, mfaDetails } = JSON.parse(request.requestBody);
+        if (mfaCode === "123456" && mfaDetails) {
           return {
             content: null,
             isSuccess: true,
@@ -43,7 +22,28 @@ beforeAll(() => {
             version: 1,
           };
         }
-      );
+        return new Error("Incorrect MFA Code");
+      });
+      this.post(`${process.env.REACT_APP_BASE_API}/users/resendmfachallenge`, () => {
+        return {
+          content: null,
+          isSuccess: true,
+          errors: [],
+          conversationId: null,
+          version: 1,
+        };
+      });
+      this.post(`${process.env.REACT_APP_BASE_API}/users/getmaskedmobile`, () => {
+        return {
+          content: {
+            response: "*******1234",
+          },
+          isSuccess: true,
+          errors: [],
+          conversationId: null,
+          version: 1,
+        };
+      });
     },
   });
 });
