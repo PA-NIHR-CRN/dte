@@ -10,18 +10,22 @@ process.on("unhandledRejection", (reason, promise) => {
 });
 
 beforeAll(async () => {
-  await fetchContent().catch(console.error);
-  window.nhsapp = {
-    tools: {
-      isOpenInNHSApp: jest.fn().mockReturnValue(false),
-    },
-    navigation: {
-      openBrowserOverlay: jest.fn(),
-      goToHomepage: jest.fn(),
-      goToPage: jest.fn(),
-      HOME_PAGE: 0,
-    },
-  };
+  try {
+    await fetchContent().catch(console.error);
+    window.nhsapp = {
+      tools: {
+        isOpenInNHSApp: jest.fn().mockReturnValue(false),
+      },
+      navigation: {
+        openBrowserOverlay: jest.fn(),
+        goToHomepage: jest.fn(),
+        goToPage: jest.fn(),
+        HOME_PAGE: 0,
+      },
+    };
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 configure({ adapter: new Adapter() });

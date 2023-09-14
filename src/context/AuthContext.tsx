@@ -174,20 +174,24 @@ export const AuthProvider = (props: { children: any }) => {
 
   const logOutToken = async () => {
     if (isAuthenticated() && !logoutLoading) {
-      await logout().catch(console.error);
-      // Clear user-related cookies
-      Cookies.remove(".BPOR.Session.Expiry");
+      try {
+        await logout();
+        // Clear user-related cookies
+        Cookies.remove(".BPOR.Session.Expiry");
 
-      setToken(null);
-      setAuthenticatedUserId(null);
-      setAuthenticatedEmail(null);
-      setAuthenticatedEmailVerified(null);
-      setAuthenticatedFirstname(null);
-      setAuthenticatedLastname(null);
-      setLastNonLoginUrl(null);
-      setPrevUrl(null);
-      setLastUrl(null);
-      setIsNhsLinkedAccount(false);
+        setToken(null);
+        setAuthenticatedUserId(null);
+        setAuthenticatedEmail(null);
+        setAuthenticatedEmailVerified(null);
+        setAuthenticatedFirstname(null);
+        setAuthenticatedLastname(null);
+        setLastNonLoginUrl(null);
+        setPrevUrl(null);
+        setLastUrl(null);
+        setIsNhsLinkedAccount(false);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 

@@ -11,22 +11,28 @@ let server: Server;
 beforeAll(() => {
   server = createServer({
     routes() {
-      this.post(
-        `${process.env.REACT_APP_BASE_API}/users/setupsmsmfa`,
-        (schema, request) => {
-          const { phoneNumber, mfaDetails } = JSON.parse(request.requestBody);
-          if (phoneNumber === "1234567890" && mfaDetails) {
-            return {
-              content: null,
-              isSuccess: true,
-              errors: [],
-              conversationId: null,
-              version: 1,
-            };
-          }
-          return new Error("Incorrect Phone Number");
+      this.post(`${process.env.REACT_APP_BASE_API}/users/setupsmsmfa`, (schema, request) => {
+        const { phoneNumber, mfaDetails } = JSON.parse(request.requestBody);
+        if (phoneNumber === "1234567890" && mfaDetails) {
+          return {
+            content: null,
+            isSuccess: true,
+            errors: [],
+            conversationId: null,
+            version: 1,
+          };
         }
-      );
+        return new Error("Incorrect Phone Number");
+      });
+      this.post(`${process.env.REACT_APP_BASE_API}/users/reissuesession`, () => {
+        return {
+          content: null,
+          isSuccess: true,
+          errors: [],
+          conversationId: null,
+          version: 1,
+        };
+      });
     },
   });
 });
@@ -52,17 +58,13 @@ describe("Render MFA SMS Setup Form", () => {
 describe("Phone Number input must have correct attributes", () => {
   it("must have a required attribute", async () => {
     render(<MfaSmsSetup />);
-    const phoneNumberInput = await screen.findByLabelText(
-      "UK mobile phone number"
-    );
+    const phoneNumberInput = await screen.findByLabelText("UK mobile phone number");
     expect(phoneNumberInput).toHaveAttribute("required");
   });
 
   it("must have a type attribute of tel", async () => {
     render(<MfaSmsSetup />);
-    const phoneNumberInput = await screen.findByLabelText(
-      "UK mobile phone number"
-    );
+    const phoneNumberInput = await screen.findByLabelText("UK mobile phone number");
     const typeValue = phoneNumberInput.getAttribute("type");
     expect(phoneNumberInput).toHaveAttribute("type");
     expect(typeValue).toBe("tel");
@@ -70,9 +72,7 @@ describe("Phone Number input must have correct attributes", () => {
 
   it("must have a autocomplete attribute of tel-national", async () => {
     render(<MfaSmsSetup />);
-    const phoneNumberInput = await screen.findByLabelText(
-      "UK mobile phone number"
-    );
+    const phoneNumberInput = await screen.findByLabelText("UK mobile phone number");
     const autocompleteValue = phoneNumberInput.getAttribute("autocomplete");
     expect(phoneNumberInput).toHaveAttribute("autocomplete");
     expect(autocompleteValue).toBe("tel-national");
@@ -80,9 +80,7 @@ describe("Phone Number input must have correct attributes", () => {
 
   it("must have a spellcheck attribute set to false", async () => {
     render(<MfaSmsSetup />);
-    const phoneNumberInput = await screen.findByLabelText(
-      "UK mobile phone number"
-    );
+    const phoneNumberInput = await screen.findByLabelText("UK mobile phone number");
     const spellcheckValue = phoneNumberInput.getAttribute("spellcheck");
     expect(phoneNumberInput).toHaveAttribute("spellcheck");
     expect(spellcheckValue).toBe("false");
@@ -92,9 +90,7 @@ describe("Phone Number input must have correct attributes", () => {
 describe("Functional requirements must be met", () => {
   it("must send a post request when the validation rules are met", async () => {
     render(<MfaSmsSetup />);
-    const phoneNumberInput = await screen.findByLabelText(
-      "UK mobile phone number"
-    );
+    const phoneNumberInput = await screen.findByLabelText("UK mobile phone number");
     userEvent.type(phoneNumberInput, "1234567890");
     const submitButton = await screen.findByText("Continue");
     userEvent.click(submitButton);
