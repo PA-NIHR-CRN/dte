@@ -10,7 +10,7 @@ process.on("unhandledRejection", (reason, promise) => {
 });
 
 beforeAll(async () => {
-  await fetchContent();
+  await fetchContent().catch(console.error);
   window.nhsapp = {
     tools: {
       isOpenInNHSApp: jest.fn().mockReturnValue(false),

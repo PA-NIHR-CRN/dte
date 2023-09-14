@@ -174,7 +174,7 @@ export const AuthProvider = (props: { children: any }) => {
 
   const logOutToken = async () => {
     if (isAuthenticated() && !logoutLoading) {
-      await logout();
+      await logout().catch(console.error);
       // Clear user-related cookies
       Cookies.remove(".BPOR.Session.Expiry");
 

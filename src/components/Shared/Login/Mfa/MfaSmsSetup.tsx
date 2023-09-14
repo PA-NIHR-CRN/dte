@@ -47,7 +47,7 @@ const MfaSmsSetup = () => {
         data: {
           mfaDetails,
         },
-      });
+      }).catch(console.error);
       const result = Utils.ConvertResponseToDTEResponse(res);
       if (result?.errors?.some((e) => e.customCode === "Mfa_Reissue_Session")) {
         setMfaDetails(result?.errors[0]?.detail as string);
