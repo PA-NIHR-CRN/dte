@@ -150,7 +150,7 @@ const renderContent = (node: any, parentNodeType?: string) => {
 
         return (
           <DTEDetails summary={summary}>
-            {node.content.map((childNode: any, index: number) => (
+            {contentNode.content.map((childNode: any, index: number) => (
               <React.Fragment key={index}>{renderContent(childNode, contentNode.nodeType)}</React.Fragment>
             ))}
           </DTEDetails>
