@@ -333,7 +333,7 @@ describe("Update participant phone number", () => {
     expect(landlineEditor).toHaveValue("09876543210");
     expect(extraInfoDetails).toBeInTheDocument();
     fireEvent.click(extraInfoDetails);
-    const explanation1 = await screen.findByText(/Study teams may need to have a contact phone number for volunteers./);
+    const explanation1 = await screen.findByText(/Study teams may need to have a contact phone number for volunteers/);
     const explanation2 = await screen.findByText(
       /Some studies will offer text messages as a way to contact volunteers, they will need your mobile number if you choose for them to contact you in this way./
     );
