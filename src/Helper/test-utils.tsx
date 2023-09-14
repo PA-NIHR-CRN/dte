@@ -19,6 +19,7 @@ interface RenderProps {
 }
 
 function AllTheProviders({ children, initialRoutes }: RenderProps) {
+  const MuiTheme = useTheme();
   const [mockContent, setMockContent] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -32,7 +33,6 @@ function AllTheProviders({ children, initialRoutes }: RenderProps) {
 
   if (isLoading) return <div data-testid="loadingContent">Loading...</div>;
 
-  const MuiTheme = useTheme();
   return (
     <AuthProvider>
       <UserProvider>
