@@ -70,9 +70,11 @@ const MfaTokenSetup = () => {
     const { username, secretCode } = tokenCodeResponse?.data?.content;
     setSecretKey(secretCode);
     const qrCode = `otpauth://totp/BePartOfResearch:${username}?secret=${secretCode}&issuer=Cognito`;
-    generateQR(qrCode).then((res) => {
-      setQrSrc(res as string);
-    });
+    generateQR(qrCode)
+      .then((res) => {
+        setQrSrc(res as string);
+      })
+      .catch(console.error);
   }, [tokenCodeResponse]);
 
   const [{ response: totpMfaResponse, loading: totpMfaLoading, error: totpMfaError }, postMfaCode] = useAxiosFetch(

@@ -431,7 +431,9 @@ function ContinueRegistration() {
 
   // add a post request to the consent endpoint
   const handleConsent = () => {
-    postConsent().then((res) => setIsUserConsented(res.data.content.userConsents));
+    postConsent()
+      .then((res) => setIsUserConsented(res.data.content.userConsents))
+      .catch(console.error);
   };
 
   // if consent is not given, redirect to the consent page
