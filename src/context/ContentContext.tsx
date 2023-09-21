@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext, ReactNode, useContext, useRef } from "react";
+import { useEffect, useState, createContext, ReactNode, useContext } from "react";
 import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
@@ -26,7 +26,6 @@ export function ContentProvider({ children }: ContentProviderProps) {
   const { isAuthenticated } = useContext(AuthContext);
   const defaultLanguage = "en-GB";
   const [language, setLanguage] = useState<string>(Cookies.get("selectedLanguage") || defaultLanguage);
-  const [serverLanguage, setServerLanguage] = useState<string>(Cookies.get("selectedLanguage") || defaultLanguage);
   const [content, setContent] = useState<any>(null); // Define a more specific type if known
   const [contentLoading, setContentLoading] = useState(true);
   const { i18n } = useTranslation();
