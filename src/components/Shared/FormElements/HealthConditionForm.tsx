@@ -10,6 +10,7 @@ import FormBaseProps from "./FormBaseProps";
 import DTEForwardLookup from "../UI/DTEForwardLookup/DTEForwardLookup";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import healthConditions from "../../../data/healthConditions";
+import Honeypot from "../Honeypot/Honeypot";
 
 export type HealthConditionFormData = {
   conditions: string[];
@@ -76,6 +77,7 @@ const HealthConditionForm = (props: HealthConditionFormProps) => {
       <Grid container>
         <Grid item xs={12} sm={10} md={9} lg={8} xl={8}>
           <form onSubmit={handleSubmit(onDataChange)} noValidate>
+            <Honeypot />
             <Controller
               control={control}
               name="conditions"

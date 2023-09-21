@@ -6,6 +6,7 @@ import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTESelect from "../../UI/DTESelect/DTESelect";
 import { Details, ContinueButton } from "./PostcodeLookup";
 import Utils from "../../../../Helper/Utils";
+import Honeypot from "../../Honeypot/Honeypot";
 
 type address = {
   addressLine1: string;
@@ -113,6 +114,7 @@ const SelectAddress = (props: SelectAddressProps) => {
         </Grid>
       </Grid>
       <form onSubmit={handleSubmit(hijackOnDataChange)}>
+        <Honeypot />
         <Controller
           control={control}
           name="address"

@@ -15,7 +15,6 @@ import FormBaseProps from "../../../Shared/FormElements/FormBaseProps";
 import ErrorMessageSummary from "../../../Shared/ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../../../Shared/Password/showHide";
 import ThreeWords from "../../../Shared/Password/threeWords";
-import commonPasswords from "../../../../data/commonPassword";
 
 export type UpdatePasswordFormData = {
   currentPassword: string;
@@ -30,6 +29,7 @@ interface PasswordPolicy {
   requireSymbols: boolean;
   requireUppercase: boolean;
   allowedPasswordSymbols?: string;
+  weakPasswords: string[];
 }
 
 const UpdatePasswordForm = (props: FormBaseProps) => {
@@ -360,19 +360,22 @@ const UpdatePasswordForm = (props: FormBaseProps) => {
                         );
                       }
 
+                      const strippedPassword = value.replace(/[^a-zA-Z]/g, "");
+
+                      passwordError = errorBuilder(
+                        passwordError,
+                        passwordPolicy.weakPasswords.includes(
+                          strippedPassword.toLowerCase()
+                        ),
+                        "is not a commonly used password",
+                        "is not a commonly used password",
+                        true
+                      );
+
                       let finalErrorMessage = passwordError.replace(
                         /,([^,]*)$/,
                         ` and$1`
                       );
-
-                      const isCommonPassword = commonPasswords.includes(
-                        value.toLowerCase()
-                      );
-                      if (isCommonPassword) {
-                        finalErrorMessage +=
-                          ". You cannot use a commonly used password";
-                        validationSuccess = false;
-                      }
 
                       if (passwordPolicy.allowedPasswordSymbols) {
                         finalErrorMessage = finalErrorMessage.replace(

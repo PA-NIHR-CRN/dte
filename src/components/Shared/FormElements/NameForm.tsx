@@ -9,6 +9,7 @@ import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
+import Honeypot from "../Honeypot/Honeypot";
 
 export type NameFormData = {
   firstName: string;
@@ -69,6 +70,7 @@ const NameForm = (props: NameFormProps) => {
       <Grid container>
         <Grid item xs={12}>
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <Honeypot />
             <Controller
               control={control}
               name="firstName"

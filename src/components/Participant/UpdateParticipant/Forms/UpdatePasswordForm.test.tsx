@@ -7,6 +7,7 @@ import {
   waitForElementToBeRemoved,
 } from "../../../../Helper/test-utils";
 import AccountSettings from "../AccountSettings";
+import weakPasswords from "../../../../data/weakPasswords";
 
 expect.extend(toHaveNoViolations);
 
@@ -53,6 +54,7 @@ beforeEach(() => {
           requireUppercase: true,
           allowedPasswordSymbols:
             "^ $ * . , [ ] { } ( ) ? \" ! @ # % & / \\ , > < ' : ; | _ ~ `",
+          weakPasswords,
         };
       });
       this.post(

@@ -369,7 +369,7 @@ describe("Non Validated Account processes correctly", () => {
     expect(await screen.findByText("There is a problem")).toBeInTheDocument();
     expect(
       await screen.findByText(
-        "Enter the email address and password for a registered user account."
+        "Enter the email address and password for a registered user account. If you registered using NHS login use the back button above and select NHS login to sign in."
       )
     ).toBeInTheDocument();
     const buttons = await screen.findAllByRole("button");
@@ -421,7 +421,7 @@ describe("Unknown Account processes correctly", () => {
     expect(await screen.findByText("There is a problem")).toBeInTheDocument();
     expect(
       await screen.findByText(
-        "Enter the email address and password for a registered user account."
+        "Enter the email address and password for a registered user account. If you registered using NHS login use the back button above and select NHS login to sign in."
       )
     ).toBeInTheDocument();
     const buttons = await screen.findAllByRole("button");

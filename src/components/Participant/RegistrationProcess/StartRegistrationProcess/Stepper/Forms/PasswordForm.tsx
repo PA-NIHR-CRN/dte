@@ -12,7 +12,7 @@ import ErrorMessageContainer from "../../../../../Shared/ErrorMessageContainer/E
 import ErrorMessageSummary from "../../../../../Shared/ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../../../../../Shared/Password/showHide";
 import ThreeWords from "../../../../../Shared/Password/threeWords";
-import commonPasswords from "../../../../../../data/commonPassword";
+import Honeypot from "../../../../../Shared/Honeypot/Honeypot";
 
 export type PasswordFormData = {
   password: string;
@@ -26,6 +26,7 @@ interface PasswordPolicy {
   requireSymbols: boolean;
   requireUppercase: boolean;
   allowedPasswordSymbols?: string;
+  weakPasswords: string[];
 }
 
 interface PasswordFormProps {
@@ -192,6 +193,7 @@ const PasswordForm = (props: PasswordFormProps) => {
           <Grid container>
             <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>
               <form onSubmit={handleSubmit(onDataChange)} noValidate>
+                <Honeypot />
                 <Controller
                   control={control}
                   name="password"
@@ -297,19 +299,22 @@ const PasswordForm = (props: PasswordFormProps) => {
                         );
                       }
 
+                      const strippedPassword = value.replace(/[^a-zA-Z]/g, "");
+
+                      passwordError = errorConstructor(
+                        passwordError,
+                        passwordPolicy.weakPasswords.includes(
+                          strippedPassword.toLowerCase()
+                        ),
+                        "is not a commonly used password",
+                        "is not a commonly used password",
+                        true
+                      );
+
                       let finalErrorMessage = passwordError.replace(
                         /,([^,]*)$/,
                         ` and$1`
                       );
-
-                      const isCommonPassword = commonPasswords.includes(
-                        value.toLowerCase()
-                      );
-                      if (isCommonPassword) {
-                        finalErrorMessage +=
-                          ". You cannot use a commonly used password";
-                        validationSuccess = false;
-                      }
 
                       if (passwordPolicy.allowedPasswordSymbols) {
                         finalErrorMessage = finalErrorMessage.replace(
