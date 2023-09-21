@@ -208,7 +208,7 @@ const UserLogin = (props: UserLoginProps) => {
               <LoginWrapper item xs={12} sm={8} md={6} lg={5} xl={4}>
                 {!loadingLogin && !resendLoading && !resendDTEResponse?.isSuccess && (
                   <>
-                    <DTEHeader as="h1">Sign in to Be Part of Research</DTEHeader>
+                    <DTEHeader as="h1">{content["signin-header"]}</DTEHeader>
                     <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
                     {!resendDTEResponse?.isSuccess &&
                       !resendDTEResponse?.errors?.some((e) => e.customCode === "Mfa_Setup_Challenge") && (

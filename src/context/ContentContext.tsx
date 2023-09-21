@@ -1,10 +1,12 @@
-import { useEffect, useState, createContext, ReactNode } from "react";
+import { useEffect, useState, createContext, ReactNode, useContext, useRef } from "react";
 import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
-import "moment/locale/cy"; // Welsh
+import "moment/locale/cy";
 import "moment/locale/en-gb";
 import fetchAndTransformContent from "../Helper/contenful/fetchAndTransformContent";
+import { AuthContext } from "./AuthContext";
+import useAxiosFetch from "../hooks/useAxiosFetch";
 
 // Define the type for the content context value
 interface ContentContextType {
@@ -21,28 +23,55 @@ interface ContentProviderProps {
 }
 
 export function ContentProvider({ children }: ContentProviderProps) {
+  const { isAuthenticated } = useContext(AuthContext);
   const defaultLanguage = "en-GB";
   const [language, setLanguage] = useState<string>(Cookies.get("selectedLanguage") || defaultLanguage);
+  const [serverLanguage, setServerLanguage] = useState<string>(Cookies.get("selectedLanguage") || defaultLanguage);
   const [content, setContent] = useState<any>(null); // Define a more specific type if known
   const [contentLoading, setContentLoading] = useState(true);
   const { i18n } = useTranslation();
 
-  const changeLanguage = async (language: string) => {
-    await i18n.changeLanguage(language);
-    moment.locale(language);
-  };
+  const [, putSelectedLocale] = useAxiosFetch(
+    {},
+    {
+      manual: true,
+      useCache: false,
+    }
+  );
 
-  useEffect(() => {
-    setContentLoading(true);
-    fetchAndTransformContent(language, 100)
+  const contentfulFetch = (selectedLanguage: string) => {
+    fetchAndTransformContent(selectedLanguage, 100)
       .then((transformedContent) => {
         setContent(transformedContent);
-        return changeLanguage(language);
       })
       .catch(console.error)
       .finally(() => {
         setContentLoading(false);
       });
+  };
+
+  const changeLanguage = async (language: string) => {
+    if (!language) return;
+
+    await i18n.changeLanguage(language);
+    moment.locale(language);
+    Cookies.set("selectedLanguage", language);
+
+    if (isAuthenticated()) {
+      putSelectedLocale({
+        url: `${process.env.REACT_APP_BASE_API}/participants/selectedlocale`,
+        method: "PUT",
+        data: {
+          selectedLocale: language,
+        },
+      });
+    }
+  };
+
+  useEffect(() => {
+    setContentLoading(true);
+    contentfulFetch(language);
+    changeLanguage(language);
   }, [language]);
 
   return (

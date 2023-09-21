@@ -47,7 +47,7 @@ const StyledDTEHR = styled(DTEHR)`
 `;
 
 function Home() {
-  const { content } = useContext(ContentContext);
+  const { content, setLanguage } = useContext(ContentContext);
   const { setCurrentPage, setCurrentAccountPage } = useContext(UserContext);
   const history = useHistory();
   const getDemographicsURL = `${process.env.REACT_APP_BASE_API}/participants/demographics`;
@@ -65,6 +65,8 @@ function Home() {
 
   useEffect(() => {
     if (response) {
+      const converetResponse = Utils.ConvertResponseToDTEResponse(response);
+      setLanguage(converetResponse?.content.selectedLocale);
       if (!Utils.ConvertResponseToDTEResponse(response)?.isSuccess) {
         history.push("/Participants/register/continue/questions");
       }

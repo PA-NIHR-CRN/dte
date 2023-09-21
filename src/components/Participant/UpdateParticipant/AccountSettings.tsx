@@ -40,7 +40,7 @@ const StyledHiddenText = styled.span`
 `;
 
 function AccountSettings() {
-  const { content } = useContext(ContentContext);
+  const { content, setLanguage } = useContext(ContentContext);
   const containerRef = useRef<HTMLDivElement>(null);
   const { currentAccountPage: currentPage, setCurrentAccountPage: setCurrentPage } = useContext(UserContext);
   const [pageTitle, setPageTitle] = useState("Account settings - Volunteer Account - Be Part of Research");
@@ -92,6 +92,7 @@ function AccountSettings() {
           currentEmail: DTEDetailsResponse.email,
         };
         setUserData(stateData);
+        setLanguage(response?.data?.selectedLocale);
       }
     }
   }, [response, userData]);

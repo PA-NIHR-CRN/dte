@@ -11,6 +11,7 @@ import DTEButton from "../../../../../Shared/UI/DTEButton/DTEButton";
 import DTEHeader from "../../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import CheckYourEmail from "../../../../../Shared/FormElements/CommonElements/CheckYourEmail";
 import { ContentContext } from "../../../../../../context/ContentContext";
+import Cookies from "js-cookie";
 
 interface CheckEmailFormProps {
   initialStateData: RegistrationProcessState;
@@ -41,6 +42,7 @@ function CheckEmailForm(props: CheckEmailFormProps) {
         password: initialStateData?.passwordFormData?.password,
         dateOfBirth: dob,
         consentRegistration: true,
+        selectedLocale: Cookies.get("selectedLanguage") || "en-GB",
       },
     },
     { useCache: false }

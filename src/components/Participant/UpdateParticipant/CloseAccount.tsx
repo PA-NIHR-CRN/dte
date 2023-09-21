@@ -81,47 +81,47 @@ function CloseAccount() {
   }, [requireConf]);
 
   return (
-    <DocumentTitle title="Close your account - Volunteer Account - Be Part of Research">
+    <DocumentTitle title={content["closeaccount-document-title"]}>
       <Container>
         <div role="main" id="main">
-          <DTEBackLink href="/" linkText="Back" />
+          <DTEBackLink href="/" linkText={content["reusable-back-link"]} />
           <DTEHeader as="h1" $variant={headerVariant}>
             {content["reusable-header-close-account"]}
           </DTEHeader>
-          {isNhsLinkedAccount ? (
-            <DTEContent $marginBottom="medium">
-              If you have changed your mind and wish to withdraw your consent to be contacted, this will have no effect
-              on your NHS login account.
-            </DTEContent>
+          {!isNhsLinkedAccount ? (
+            <>
+              <DTEContent $marginBottom="medium">
+                If you have changed your mind and wish to withdraw your consent to be contacted, this will have no
+                effect on your NHS login account.
+              </DTEContent>
+              <DTEContent $marginBottom="medium">
+                Be Part of Research will no longer contact you about areas of research you have expressed an interest
+                in.
+              </DTEContent>
+              <DTEContent $marginBottom="medium">
+                When closing your account Be Part of Research will keep some anonymous data to help improve the service.
+                To find out more please read the{" "}
+                <DTERouteLink
+                  external
+                  target="_blank"
+                  renderStyle="standard"
+                  to="https://bepartofresearch.nihr.ac.uk/site-policies/privacy-policy/"
+                >
+                  Be Part of Research Privacy Policy
+                </DTERouteLink>
+                .
+              </DTEContent>
+              <DTEContent $marginBottom="medium">To take part in the future you can register again.</DTEContent>
+            </>
           ) : (
-            <DTEContent $marginBottom="medium">
-              {" "}
-              If you have changed your mind and wish to close your account, you are withdrawing your consent for Be Part
-              of Research to process and store your personal information.
-            </DTEContent>
+            content["closeaccount-page"]
           )}
-          <DTEContent $marginBottom="medium">
-            Be Part of Research will no longer contact you about areas of research you have expressed an interest in.
-          </DTEContent>
-          <DTEContent $marginBottom="medium">
-            When closing your account Be Part of Research will keep some anonymous data to help improve the service. To
-            find out more please read the{" "}
-            <DTERouteLink
-              external
-              target="_blank"
-              renderStyle="standard"
-              to="https://bepartofresearch.nihr.ac.uk/site-policies/privacy-policy/"
-            >
-              Be Part of Research Privacy Policy
-            </DTERouteLink>
-            .
-          </DTEContent>
-          <DTEContent $marginBottom="medium">To take part in the future you can register again.</DTEContent>
+
           {requireConf ? (
             <DTEButton onClick={() => setRequireConf(false)}>Close your account</DTEButton>
           ) : (
             <>
-              {closeUserAccountLoading && <LoadingIndicator text="Closing your account..." />}
+              {closeUserAccountLoading && <LoadingIndicator text={content["closeaccount-loading-close"]} />}
               {(closeUserAccountError || Utils.ConvertResponseToDTEResponse(closeUserAccountResponse)?.errors) && (
                 <ErrorMessageContainer
                   axiosErrors={[closeUserAccountError]}
@@ -131,17 +131,17 @@ function CloseAccount() {
 
               <StyledErrorSummary>
                 <DTEContent as="b" $marginBottom="small">
-                  Confirm if you want to close your account
+                  {content["closeaccount-button-close-confirm"]}
                 </DTEContent>
                 <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
                   <Grid item>
                     <DTEButton $danger onClick={() => handleConfirmCloseAccount()}>
-                      Confirm
+                      {content["reusable-confirm"]}
                     </DTEButton>
                   </Grid>
                   <Grid item>
                     <DTELinkButton type="button" padded onClick={() => setRequireConf(true)}>
-                      Cancel
+                      {content["reusable-cancel"]}
                     </DTELinkButton>
                   </Grid>
                 </Grid>

@@ -30,6 +30,7 @@ import Utils from "../../../../Helper/Utils";
 import ConsentForm from "../StartRegistrationProcess/Stepper/Forms/ConsentForm";
 import { ContentContext } from "../../../../context/ContentContext";
 import { UserContext } from "../../../../context/UserContext";
+import Cookies from "js-cookie";
 
 const PercentageGrid = styled(Grid)`
   && {
@@ -39,7 +40,7 @@ const PercentageGrid = styled(Grid)`
 `;
 
 function ContinueRegistration() {
-  const { content } = useContext(ContentContext);
+  const { content, setLanguage } = useContext(ContentContext);
   const { isNhsLinkedAccount, isInNHSApp } = useContext(AuthContext);
   const {
     continueRegistrationActiveStep: activeStep,
@@ -412,6 +413,9 @@ function ContinueRegistration() {
       if (consent) {
         setIsUserConsented(consent.consentRegistration);
       }
+      const currentLanguageSelected = Cookies.get("selectedLanguage");
+      if (currentLanguageSelected === response?.data?.selectedLocale) return;
+      setLanguage(response?.data?.selectedLocale);
     }
   }, [response]);
 
@@ -421,6 +425,7 @@ function ContinueRegistration() {
       method: "POST",
       data: {
         consentRegistration: true,
+        selectedLocale: Cookies.get("selectedLanguage") || "en-GB",
       },
     },
     {
