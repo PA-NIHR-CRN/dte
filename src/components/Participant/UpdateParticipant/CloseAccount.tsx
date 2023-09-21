@@ -11,7 +11,6 @@ import { AuthContext } from "../../../context/AuthContext";
 import DTEHeader from "../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEBackLink from "../../Shared/UI/DTEBackLink/DTEBackLink";
 import DTEContent from "../../Shared/UI/DTETypography/DTEContent/DTEContent";
-import DTERouteLink from "../../Shared/UI/DTERouteLink/DTERouteLink";
 import DTEButton from "../../Shared/UI/DTEButton/DTEButton";
 import Container from "../../Shared/Container/Container";
 import DTELinkButton from "../../Shared/UI/DTELinkButton/DTELinkButton";
@@ -88,34 +87,7 @@ function CloseAccount() {
           <DTEHeader as="h1" $variant={headerVariant}>
             {content["reusable-header-close-account"]}
           </DTEHeader>
-          {!isNhsLinkedAccount ? (
-            <>
-              <DTEContent $marginBottom="medium">
-                If you have changed your mind and wish to withdraw your consent to be contacted, this will have no
-                effect on your NHS login account.
-              </DTEContent>
-              <DTEContent $marginBottom="medium">
-                Be Part of Research will no longer contact you about areas of research you have expressed an interest
-                in.
-              </DTEContent>
-              <DTEContent $marginBottom="medium">
-                When closing your account Be Part of Research will keep some anonymous data to help improve the service.
-                To find out more please read the{" "}
-                <DTERouteLink
-                  external
-                  target="_blank"
-                  renderStyle="standard"
-                  to="https://bepartofresearch.nihr.ac.uk/site-policies/privacy-policy/"
-                >
-                  Be Part of Research Privacy Policy
-                </DTERouteLink>
-                .
-              </DTEContent>
-              <DTEContent $marginBottom="medium">To take part in the future you can register again.</DTEContent>
-            </>
-          ) : (
-            content["closeaccount-page"]
-          )}
+          {isNhsLinkedAccount ? content["closeaccount-page-nhs"] : content["closeaccount-page"]}
 
           {requireConf ? (
             <DTEButton onClick={() => setRequireConf(false)}>Close your account</DTEButton>
