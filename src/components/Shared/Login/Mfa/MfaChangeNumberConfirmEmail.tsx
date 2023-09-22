@@ -133,7 +133,9 @@ const MfaChangeNumberConfirmEmail = () => {
           <LoadingIndicator />
         ) : (
           <>
-            {prevUrl !== "/MfaSecurityCodeExpired" && <DTEBackLink onClick={() => history.goBack()} linkText="Back" />}
+            {prevUrl !== "/MfaSecurityCodeExpired" && (
+              <DTEBackLink onClick={() => history.goBack()} linkText={content["reusable-back-link"]} />
+            )}
             <DTEHeader as="h1">{content["mfa-change-phone-confirm-header"]}</DTEHeader>
             <ErrorMessageContainer
               axiosErrors={[validateEmailOtpError]}

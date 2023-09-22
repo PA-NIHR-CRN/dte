@@ -11,7 +11,7 @@ const customCodeLookup = (code: string, detail?: string | ReactNode) => {
     case "NO_CHANGE":
       return detail || "";
     case "User_Not_In_Allow_List_Error":
-      return "Email address is not recognised by the service - contact bepartofresearch@nihr.ac.uk to sign up.";
+      return content["error-message-email-not-recognised"];
     case "InternalServerError":
       return defaultErrorMessage;
     case "Authentication_Error":
@@ -19,16 +19,16 @@ const customCodeLookup = (code: string, detail?: string | ReactNode) => {
     case "Authentication_Not_Authorized":
       switch (detail) {
         case "Password attempts exceeded":
-          return "Your user account is currently locked due to previous incorrect attempts to sign in - you can try again after a short wait.";
+          return content["error-message-lock-out"];
         case "Incorrect username or password.":
           return content["signin-error-authentication-not-authorized-nhs"];
         default:
           return defaultLoginErrorMessage;
       }
     case "Authentication_User_Not_Confirmed":
-      return "Your user account has not yet been verified. We can send you the email again.";
+      return content["error-message-account-not-verified"];
     case "Change_Email_Error_Unauthorised":
-      return "Your email address has not been updated. The email address may already be registered or there may have been a technical issue.";
+      return content["error-message-email-not-updated"];
     case "Password_Validation_Error":
       return defaultLoginErrorMessage;
     case "SignUp_Error":
@@ -70,17 +70,17 @@ const customCodeLookup = (code: string, detail?: string | ReactNode) => {
     case "Unknown_Error_Getting_Addresses_From_LocationService_Error":
       return defaultErrorMessage;
     case "MFA_Session_Expired":
-      return "Your session has expired. Please sign in again.";
+      return content["error-message-mfa-session-expired"];
     case "MFA_Code_Mismatch":
-      return "Enter the correct security code";
+      return content["error-message-mfa-code-mismatch"];
     case "MFA_Code_Expired":
-      return "Enter the correct security code";
+      return content["error-message-mfa-code-mismatch"];
     case "MFA_User_Not_Found":
-      return "Your user account has not yet been verified. We can send you the email again.";
+      return content["error-message-mfa-account-unverified"];
     case "Mfa_Used_Token":
-      return "This security code has already been used. Please enter a new code when your authenticator app refreshes.";
+      return content["error-message-mfa-code-used"];
     default:
-      return defaultErrorMessage || "An unexpected error occurred";
+      return defaultErrorMessage || content["error-message-generic"];
   }
 };
 

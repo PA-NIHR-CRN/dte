@@ -24,7 +24,10 @@ function NhsNoConsent() {
       )}
       <StepWrapper>
         {!isInNHSApp && (
-          <DTEBackLink linkText="Back" onClick={() => window.history.go(state === "ssointegration" ? -2 : -3)} />
+          <DTEBackLink
+            linkText={content["reusable-back-link"]}
+            onClick={() => window.history.go(state === "ssointegration" ? -2 : -3)}
+          />
         )}
         <DTEHeader as="h1" $variant="h2">
           {content["register-no-consent-header"]}

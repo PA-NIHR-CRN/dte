@@ -150,7 +150,7 @@ function Home() {
               <DTEHR />
               <StyledDTEHeader as="h2" $variant="h3">
                 <DTERouteLink to="/Participants/CloseAccount" renderStyle="standard">
-                  {content["reusable-header-close-account"]}
+                  {content["reusable-close-your-account"]}
                   <ArrowForwardRoundedIcon />
                 </DTERouteLink>
               </StyledDTEHeader>

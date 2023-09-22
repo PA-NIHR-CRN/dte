@@ -176,7 +176,9 @@ const MfaSmsChallenge = () => {
   return (
     <DocumentTitle title={content["mfa-sms-challenge-document-title"]}>
       <StepWrapper>
-        {urlList.includes(prevUrl as string) && <DTEBackLink onClick={() => history.goBack()} linkText="Back" />}
+        {urlList.includes(prevUrl as string) && (
+          <DTEBackLink onClick={() => history.goBack()} linkText={content["reusable-back-link"]} />
+        )}
         <DTEHeader as="h1">{content["mfa-sms-challenge-header"]}</DTEHeader>
         {setupMfaError || SMSMfaResponse ? handleErrors(setupMfaError, SMSMfaResponse) : null}
         <DTEContent>

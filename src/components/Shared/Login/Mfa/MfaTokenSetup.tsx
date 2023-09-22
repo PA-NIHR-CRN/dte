@@ -130,7 +130,7 @@ const MfaTokenSetup = () => {
           <LoadingIndicator />
         ) : (
           <>
-            <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
+            <DTEBackLink onClick={() => history.goBack()} linkText={content["reusable-back-link"]} />
             <DTEHeader as="h1">{content["mfa-token-setup-header"]}</DTEHeader>
             {content["mfa-token-setup-instruction-text"]}
             <form onSubmit={handleSubmit(onSubmit)} noValidate>

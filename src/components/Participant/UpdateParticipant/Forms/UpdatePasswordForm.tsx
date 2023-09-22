@@ -180,7 +180,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
       {passwordPolicy && (
         <>
           <DTEHeader as="h1" $variant={headerVariant}>
-            Change your password
+            {content["update-password-header"]}
           </DTEHeader>
           <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
           <ErrorMessageContainer
@@ -212,8 +212,8 @@ function UpdatePasswordForm(props: FormBaseProps) {
                       required
                       autocomplete="current-password"
                       spellcheck={false}
-                      buttonAriaLabelShow="Show the entered current password on screen"
-                      buttonAriaLabelHide="Hide the entered current password on screen"
+                      buttonAriaLabelHide={content["update-password-aria-hide-password-current"]}
+                      buttonAriaLabelShow={content["update-password-aria-show-password-current"]}
                     />
                   )}
                   rules={{

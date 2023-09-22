@@ -64,7 +64,7 @@ function UpdateParticipant() {
   const { isNhsLinkedAccount } = useContext(AuthContext);
   const containerRef = useRef<HTMLDivElement>(null);
   const { currentPage, setCurrentPage } = useContext(UserContext);
-  const [pageTitle, setPageTitle] = useState("Personal details - Volunteer Account - Be Part of Research");
+  const [pageTitle, setPageTitle] = useState(content["update-personal-details-document-title"]);
   const [gaURL, setGaURL] = useState("/MyAccount/PersonalDetails");
   const [userData, setUserData] = React.useState<UserDataState>();
   const [cancelData, setCancelData] = React.useState<UserDataState>();
@@ -494,7 +494,7 @@ function UpdateParticipant() {
           <LoadingIndicator text={content["reusable-loading-updating-details"]} />
         )}
         <Container>
-          {currentPage === "main" && <DTEBackLink href="/" linkText="Back" />}
+          {currentPage === "main" && <DTEBackLink href="/" linkText={content["reusable-back-link"]} />}
           {currentPage === "main" && (
             <>
               <DTEHeader as="h1" $variant={headerVariant}>
@@ -518,7 +518,7 @@ function UpdateParticipant() {
                         </div>
                         <div className="govuk-summary-list__row">
                           <dt className="govuk-summary-list__key">
-                            <DTEContent>Date of birth</DTEContent>
+                            <DTEContent>{content["reusable-text-date-of-birth"]}</DTEContent>
                           </dt>
                           <dd className="govuk-summary-list__value">
                             <DTEContent>
@@ -537,20 +537,14 @@ function UpdateParticipant() {
                           <dd className="govuk-summary-list__actions" />
                         </div>
                       </dl>
-                      <div className="govuk-details__text">
-                        <DTEContent>
-                          If your name or date of birth is incorrect or out of date, contact your GP surgery and ask
-                          them to update your details. They will then update your NHS record. Any changes made there
-                          will appear in your Be Part of Research account when you sign in.
-                        </DTEContent>
-                      </div>
+                      <div className="govuk-details__text">{content["accountsettings-text-nhs-instruction"]}</div>
                     </>
                   )}
                   <dl className="govuk-summary-list">
                     {!isNhsLinkedAccount && (
                       <div className="govuk-summary-list__row">
                         <dt className="govuk-summary-list__key">
-                          <DTEContent>Name</DTEContent>
+                          <DTEContent>{content["reusable-text-name"]}</DTEContent>
                         </dt>
                         <dd className="govuk-summary-list__value">
                           <DTEContent>
@@ -559,7 +553,8 @@ function UpdateParticipant() {
                         </dd>
                         <dd className="govuk-summary-list__actions">
                           <DTELinkButton onClick={() => setCurrentDisplayPage("name")}>
-                            Change <StyledHiddenText>name</StyledHiddenText>
+                            {content["reusable-change"]}{" "}
+                            <StyledHiddenText>{content["reusable-text-name"].toLowerCase()}</StyledHiddenText>
                           </DTELinkButton>
                         </dd>
                       </div>
@@ -612,7 +607,7 @@ function UpdateParticipant() {
                     {!isNhsLinkedAccount && (
                       <div className="govuk-summary-list__row">
                         <dt className="govuk-summary-list__key">
-                          <DTEContent>Date of birth</DTEContent>
+                          <DTEContent>{content["reusable-text-date-of-birth"]}</DTEContent>
                         </dt>
                         <dd className="govuk-summary-list__value">
                           <DTEContent>
@@ -630,7 +625,8 @@ function UpdateParticipant() {
                         </dd>
                         <dd className="govuk-summary-list__actions">
                           <DTELinkButton onClick={() => setCurrentDisplayPage("dob")}>
-                            {content["reusable-change"]} <StyledHiddenText>date of birth</StyledHiddenText>
+                            {content["reusable-change"]}{" "}
+                            <StyledHiddenText>{content["reusable-text-date-of-birth"].toLowerCase()}</StyledHiddenText>
                           </DTELinkButton>
                         </dd>
                       </div>
@@ -842,11 +838,10 @@ function UpdateParticipant() {
               instructionText={
                 <>
                   <DTEHeader as="h1" $variant={headerVariant}>
-                    Do you have any health conditions that have lasted, or are expected to last, for 12 months or more?
+                    {content["register2-disability1-header"]}
                   </DTEHeader>
                   <DTEContent as="span" $displayMode="block">
-                    If Yes, we will ask you a further question about the impact of your conditions or illness. Both
-                    questions will need to be answered before your changes can be saved.
+                    {content["accountsettings-disability1-instruction-text"]}
                   </DTEContent>
                 </>
               }
@@ -899,14 +894,13 @@ function UpdateParticipant() {
               instructionText={
                 <>
                   <DTEHeader as="h1" $variant={headerVariant}>
-                    What is your ethnic group?
+                    {content["register2-ethnicity1-header"]}
                   </DTEHeader>
                   <DTEContent as="span" $displayMode="block">
-                    If you change your ethnic group you will also need to change your ethnic background in the next
-                    question.
+                    {content["accountsettings-ethnicity1-instruction-text1"]}
                   </DTEContent>
                   <DTEContent as="span" $displayMode="block">
-                    Once both questions have been answered the changes can be saved.
+                    {content["accountsettings-ethnicity1-instruction-text2"]}
                   </DTEContent>
                 </>
               }

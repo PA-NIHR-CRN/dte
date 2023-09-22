@@ -157,7 +157,7 @@ function AreasOfResearch() {
   return (
     <DocumentTitle title={content["account-health-conditions-document-title"]}>
       <StyledWrapper role="main" id="main" ref={containerRef}>
-        {demographicsLoading && <LoadingIndicator text="Loading your details..." />}
+        {demographicsLoading && <LoadingIndicator text={content["reusable-loading-loading-details"]} />}
         {demographicsPostLoading && <LoadingIndicator text={content["reusable-loading-updating-details"]} />}
         <Container>
           <ErrorMessageContainer

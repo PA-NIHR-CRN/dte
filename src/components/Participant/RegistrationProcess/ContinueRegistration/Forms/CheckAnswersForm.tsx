@@ -87,7 +87,7 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
             {" "}
             {initialStateData.mobileFormData.mobileNumber && (
               <DTEContent>
-                Mobile
+                {content["reusable-mobile"]}
                 <br />
                 {initialStateData.mobileFormData.mobileNumber}
               </DTEContent>

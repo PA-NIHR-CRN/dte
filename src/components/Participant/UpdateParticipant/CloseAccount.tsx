@@ -85,12 +85,12 @@ function CloseAccount() {
         <div role="main" id="main">
           <DTEBackLink href="/" linkText={content["reusable-back-link"]} />
           <DTEHeader as="h1" $variant={headerVariant}>
-            {content["reusable-header-close-account"]}
+            {content["reusable-close-your-account"]}
           </DTEHeader>
           {isNhsLinkedAccount ? content["closeaccount-page-nhs"] : content["closeaccount-page"]}
 
           {requireConf ? (
-            <DTEButton onClick={() => setRequireConf(false)}>Close your account</DTEButton>
+            <DTEButton onClick={() => setRequireConf(false)}>{content["reusable-close-your-account"]}</DTEButton>
           ) : (
             <>
               {closeUserAccountLoading && <LoadingIndicator text={content["closeaccount-loading-close"]} />}

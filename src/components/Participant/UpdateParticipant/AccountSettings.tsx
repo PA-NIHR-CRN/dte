@@ -43,7 +43,7 @@ function AccountSettings() {
   const { content, setLanguage } = useContext(ContentContext);
   const containerRef = useRef<HTMLDivElement>(null);
   const { currentAccountPage: currentPage, setCurrentAccountPage: setCurrentPage } = useContext(UserContext);
-  const [pageTitle, setPageTitle] = useState("Account settings - Volunteer Account - Be Part of Research");
+  const [pageTitle, setPageTitle] = useState(content["accountsettings-document-title"]);
   const [gaURL, setGaURL] = useState("/AccountSettings");
   const theme = useTheme();
   const [userData, setUserData] = useState<UserDataState>();
@@ -62,15 +62,15 @@ function AccountSettings() {
   const handlePageTitle = (page: string) => {
     switch (page) {
       case "email":
-        setPageTitle("What is your new email address? - Volunteer Account - Be Part of Research");
+        setPageTitle(content["accountsettings-change-email-document-title"]);
         setGaURL("/AccountSettings/ChangeEmail");
         break;
       case "password":
-        setPageTitle("Change your password - Volunteer Account - Be Part of Research");
+        setPageTitle(content["accountsettings-change-password-document-title"]);
         setGaURL("/AccountSettings/ChangePassword");
         break;
       default:
-        setPageTitle("Account settings - Volunteer Account - Be Part of Research");
+        setPageTitle(content["accountsettings-document-title"]);
         setGaURL("/AccountSettings");
     }
   };
@@ -106,7 +106,7 @@ function AccountSettings() {
       <StyledWrapper role="main" id="main" ref={containerRef}>
         {loading && <LoadingIndicator text={content["reusable-loading"]} />}
         <Container>
-          {currentPage === "main" && <DTEBackLink href="/" linkText="Back" />}
+          {currentPage === "main" && <DTEBackLink href="/" linkText={content["reusable-back-link"]} />}
           {currentPage === "main" && (
             <>
               <DTEHeader as="h1" $variant={headerVariant}>
@@ -116,25 +116,27 @@ function AccountSettings() {
                 <dl className="govuk-summary-list">
                   <div className="govuk-summary-list__row">
                     <dt className="govuk-summary-list__key">
-                      <DTEContent>Email address</DTEContent>
+                      <DTEContent>{content["reusable-text-email-address"]}</DTEContent>
                     </dt>
                     <dd className="govuk-summary-list__value">
                       <DTEContent>{userData.currentEmail}</DTEContent>
                     </dd>
                     <dd className="govuk-summary-list__actions">
                       <DTELinkButton onClick={() => setCurrentDisplayPage("email")}>
-                        {content["reusable-change"]} <StyledHiddenText>email address</StyledHiddenText>
+                        {content["reusable-change"]}{" "}
+                        <StyledHiddenText>{content["reusable-text-email-address"].toLowerCase()}</StyledHiddenText>
                       </DTELinkButton>
                     </dd>
                   </div>
                   <div className="govuk-summary-list__row">
                     <dt className="govuk-summary-list__key">
-                      <DTEContent>Password</DTEContent>
+                      <DTEContent>{content["reusable-text-password"]}</DTEContent>
                     </dt>
                     <dd className="govuk-summary-list__value" />
                     <dd className="govuk-summary-list__actions">
                       <DTELinkButton onClick={() => setCurrentDisplayPage("password")}>
-                        Change <StyledHiddenText>password</StyledHiddenText>
+                        {content["reusable-change"]}{" "}
+                        <StyledHiddenText>{content["reusable-text-password"].toLowerCase()}</StyledHiddenText>
                       </DTELinkButton>
                     </dd>
                   </div>

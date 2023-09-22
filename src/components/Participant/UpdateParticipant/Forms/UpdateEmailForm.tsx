@@ -11,8 +11,6 @@ import ErrorMessageContainer from "../../../Shared/ErrorMessageContainer/ErrorMe
 import LoadingIndicator from "../../../Shared/LoadingIndicator/LoadingIndicator";
 import DTEInput from "../../../Shared/UI/DTEInput/DTEInput";
 import DTEHeader from "../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
-import DTEContent from "../../../Shared/UI/DTETypography/DTEContent/DTEContent";
-import DTEDetails from "../../../Shared/UI/DTEDetails/DTEDetails";
 import FormBaseProps from "../../../Shared/FormElements/FormBaseProps";
 import FormNavigationButtons from "../../../Shared/FormElements/CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../../../Shared/ErrorMessageSummary/ErrorMessageSummary";
@@ -76,11 +74,11 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
   return (
     <>
       <DTEHeader as="h1" $variant={headerVariant}>
-        What is your new email address?
+        {content["update-email-header"]}
       </DTEHeader>
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
       {(updateUserEmailPostError || Utils.ConvertResponseToDTEResponse(updateUserEmailPostResponse)?.errors) && (
-        <ErrorMessageContainer description="Your email address has not been updated. The email address may already be registered or there may have been a technical issue.">
+        <ErrorMessageContainer description={content["update-email-error-message"]}>
           <></>
         </ErrorMessageContainer>
       )}
@@ -127,7 +125,7 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
                   onValueChange={onChange}
                   onValueBlur={onBlur}
                   error={error?.message}
-                  label="Confirm your new email address"
+                  label={content["update-email-label-confirm-email"]}
                   required
                   type="email"
                   autocomplete="email"
@@ -137,7 +135,7 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
               rules={{
                 required: {
                   value: true,
-                  message: "Confirm your new email address",
+                  message: content["update-email-label-confirm-email"],
                 },
                 pattern: {
                   value: EmailRegex,
@@ -147,13 +145,11 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
                   if (value === getValues().emailAddress) {
                     return true;
                   }
-                  return "Enter the same email address as above";
+                  return content["update-email-validation-match"];
                 },
               }}
             />
-            <DTEDetails summary="Why we are asking this question">
-              <DTEContent>We need your email address so we can contact you when we find a suitable study</DTEContent>
-            </DTEDetails>
+            {content["update-email-page"]}
             <FormNavigationButtons
               nextButtonText={content["reusable-save"]}
               cancelButtonText={content["reusable-cancel"]}

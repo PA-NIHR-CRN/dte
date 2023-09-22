@@ -97,7 +97,7 @@ function Verify() {
 
   return (
     <>
-      {confirmationLoading && <LoadingIndicator text="Verifying Account..." />}
+      {confirmationLoading && <LoadingIndicator text={content["verify-loading-verifying"]} />}
       <StepWrapper>
         {Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
           <DocumentTitle title={content["verify-email-success-document-title"]}>
