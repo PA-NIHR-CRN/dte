@@ -12,7 +12,6 @@ import ErrorMessageContainer from "../../../../../Shared/ErrorMessageContainer/E
 import ErrorMessageSummary from "../../../../../Shared/ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../../../../../Shared/Password/showHide";
 import ThreeWords from "../../../../../Shared/Password/threeWords";
-import commonPasswords from "../../../../../../data/weakPassword";
 import { ContentContext } from "../../../../../../context/ContentContext";
 import Honeypot from "../../../../../Shared/Honeypot/Honeypot";
 
