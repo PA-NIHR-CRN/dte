@@ -1,14 +1,9 @@
 import { axe, toHaveNoViolations } from "jest-axe";
 import { createServer, Server } from "miragejs";
-import {
-  render,
-  screen,
-  fireEvent,
-  userEvent,
-  waitFor,
-} from "../../../../../../Helper/test-utils";
+import { render, screen, fireEvent, userEvent, waitFor } from "../../../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import PasswordForm from "./PasswordForm";
+import weakPasswords from "../../../../../../data/weakPassword";
 
 expect.extend(toHaveNoViolations);
 
@@ -23,8 +18,8 @@ beforeAll(() => {
           requireNumbers: true,
           requireSymbols: true,
           requireUppercase: true,
-          allowedPasswordSymbols:
-            "^ $ * . , [ ] { } ( ) ? \" ! @ # % & / \\ , > < ' : ; | _ ~ `",
+          allowedPasswordSymbols: "^ $ * . , [ ] { } ( ) ? \" ! @ # % & / \\ , > < ' : ; | _ ~ `",
+          weakPasswords,
         };
       });
     },
@@ -52,7 +47,7 @@ describe("Password Form", () => {
         initialStateData={data}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
   });
 });
@@ -66,7 +61,7 @@ describe("Accessibility test", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
     const results = await axe(container);
@@ -83,7 +78,7 @@ describe("Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
     const passwordInput = await screen.findByLabelText("Create your password");
@@ -98,7 +93,7 @@ describe("Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
     const passwordInput = await screen.findByLabelText("Create your password");
@@ -115,7 +110,7 @@ describe("Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
     const passwordInput = await screen.findByLabelText("Create your password");
@@ -132,7 +127,7 @@ describe("Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
     const passwordInput = await screen.findByLabelText("Create your password");
@@ -149,7 +144,7 @@ describe("Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
     const passwordInput = await screen.findByLabelText("Create your password");
@@ -168,12 +163,10 @@ describe("Confirm Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
-    const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password",
-    );
+    const passwordConfInput = await screen.findByLabelText("Confirm your password");
     expect(passwordConfInput).toHaveAttribute("required");
   });
 
@@ -185,12 +178,10 @@ describe("Confirm Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
-    const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password",
-    );
+    const passwordConfInput = await screen.findByLabelText("Confirm your password");
     const ariaRequiredValue = passwordConfInput.getAttribute("aria-required");
     expect(passwordConfInput).toHaveAttribute("aria-required");
     expect(ariaRequiredValue).toBe("true");
@@ -204,12 +195,10 @@ describe("Confirm Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
-    const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password",
-    );
+    const passwordConfInput = await screen.findByLabelText("Confirm your password");
     const typeValue = passwordConfInput.getAttribute("type");
     expect(passwordConfInput).toHaveAttribute("type");
     expect(typeValue).toBe("password");
@@ -223,12 +212,10 @@ describe("Confirm Password must have correct attributes", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
-    const passwordConfInput = await screen.findByLabelText(
-      "Confirm your password",
-    );
+    const passwordConfInput = await screen.findByLabelText("Confirm your password");
     const spellCheckValue = passwordConfInput.getAttribute("spellcheck");
     expect(passwordConfInput).toHaveAttribute("spellcheck");
     expect(spellCheckValue).toBe("false");
@@ -244,7 +231,7 @@ describe("Validation must fail if both fields are empty", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
     const buttons = await screen.findAllByRole("button");
@@ -278,14 +265,8 @@ describe.each([
     " ",
     "Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter, 1 number, 1 symbol and does not include spaces",
   ],
-  [
-    "1a",
-    "Enter a password that is at least 12 characters long and includes at least 1 capital letter and 1 symbol",
-  ],
-  [
-    "1A",
-    "Enter a password that is at least 12 characters long and includes at least 1 lowercase letter and 1 symbol",
-  ],
+  ["1a", "Enter a password that is at least 12 characters long and includes at least 1 capital letter and 1 symbol"],
+  ["1A", "Enter a password that is at least 12 characters long and includes at least 1 lowercase letter and 1 symbol"],
   [
     "1!",
     "Enter a password that is at least 12 characters long and includes at least 1 capital letter and 1 lowercase letter",
@@ -294,22 +275,13 @@ describe.each([
     "1 ",
     "Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter, 1 symbol and does not include spaces",
   ],
-  [
-    "aA",
-    "Enter a password that is at least 12 characters long and includes at least 1 number and 1 symbol",
-  ],
-  [
-    "a!",
-    "Enter a password that is at least 12 characters long and includes at least 1 capital letter and 1 number",
-  ],
+  ["aA", "Enter a password that is at least 12 characters long and includes at least 1 number and 1 symbol"],
+  ["a!", "Enter a password that is at least 12 characters long and includes at least 1 capital letter and 1 number"],
   [
     "l ",
     "Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 number, 1 symbol and does not include spaces",
   ],
-  [
-    "A!",
-    "Enter a password that is at least 12 characters long and includes at least 1 lowercase letter and 1 number",
-  ],
+  ["A!", "Enter a password that is at least 12 characters long and includes at least 1 lowercase letter and 1 number"],
   [
     "A ",
     "Enter a password that is at least 12 characters long and includes at least 1 lowercase letter, 1 number, 1 symbol and does not include spaces",
@@ -318,22 +290,13 @@ describe.each([
     "! ",
     "Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter, 1 number and does not include spaces",
   ],
-  [
-    "1aB",
-    "Enter a password that is at least 12 characters long and includes at least 1 symbol",
-  ],
-  [
-    "1A!",
-    "Enter a password that is at least 12 characters long and includes at least 1 lowercase letter",
-  ],
+  ["1aB", "Enter a password that is at least 12 characters long and includes at least 1 symbol"],
+  ["1A!", "Enter a password that is at least 12 characters long and includes at least 1 lowercase letter"],
   [
     "1! ",
     "Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter and does not include spaces",
   ],
-  [
-    "1a!",
-    "Enter a password that is at least 12 characters long and includes at least 1 capital letter",
-  ],
+  ["1a!", "Enter a password that is at least 12 characters long and includes at least 1 capital letter"],
   [
     "1a ",
     "Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 symbol and does not include spaces",
@@ -342,10 +305,7 @@ describe.each([
     "1A ",
     "Enter a password that is at least 12 characters long and includes at least 1 lowercase letter, 1 symbol and does not include spaces",
   ],
-  [
-    "fG!",
-    "Enter a password that is at least 12 characters long and includes at least 1 number",
-  ],
+  ["fG!", "Enter a password that is at least 12 characters long and includes at least 1 number"],
   [
     "f! ",
     "Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 number and does not include spaces",
@@ -371,102 +331,48 @@ describe.each([
     "aV! ",
     "Enter a password that is at least 12 characters long and includes at least 1 number and does not include spaces",
   ],
-  [
-    "1aS! ",
-    "Enter a password that is at least 12 characters long and does not include spaces",
-  ],
+  ["1aS! ", "Enter a password that is at least 12 characters long and does not include spaces"],
   ["passwordElephant!", "Enter a password that includes at least 1 number"],
-  [
-    "password Elephant!",
-    "Enter a password that includes at least 1 number and does not include spaces",
-  ],
-  [
-    "PASSWORDELEPHANT1!",
-    "Enter a password that includes at least 1 lowercase letter",
-  ],
-  [
-    "PASSWORD ELEPHANT1!",
-    "Enter a password that includes at least 1 lowercase letter and does not include spaces",
-  ],
-  [
-    "passwordelephant1!",
-    "Enter a password that includes at least 1 capital letter",
-  ],
-  [
-    "password elephant1!",
-    "Enter a password that includes at least 1 capital letter and does not include spaces",
-  ],
+  ["password Elephant!", "Enter a password that includes at least 1 number and does not include spaces"],
+  ["PASSWORDELEPHANT1!", "Enter a password that includes at least 1 lowercase letter"],
+  ["PASSWORD ELEPHANT1!", "Enter a password that includes at least 1 lowercase letter and does not include spaces"],
+  ["passwordelephant1!", "Enter a password that includes at least 1 capital letter"],
+  ["password elephant1!", "Enter a password that includes at least 1 capital letter and does not include spaces"],
   ["passwordElephant1", "Enter a password that includes at least 1 symbol"],
-  [
-    "password Elephant1",
-    "Enter a password that includes at least 1 symbol and does not include spaces",
-  ],
-  [
-    "PASSWORDELEPHANT!",
-    "Enter a password that includes at least 1 lowercase letter and 1 number",
-  ],
+  ["password Elephant1", "Enter a password that includes at least 1 symbol and does not include spaces"],
+  ["PASSWORDELEPHANT!", "Enter a password that includes at least 1 lowercase letter and 1 number"],
   [
     "PASSWORD ELEPHANT!",
     "Enter a password that includes at least 1 lowercase letter, 1 number and does not include spaces",
   ],
-  [
-    "1234567890!!",
-    "Enter a password that includes at least 1 capital letter and 1 lowercase letter",
-  ],
+  ["1234567890!!", "Enter a password that includes at least 1 capital letter and 1 lowercase letter"],
   [
     "12345 67890!!",
     "Enter a password that includes at least 1 capital letter, 1 lowercase letter and does not include spaces",
   ],
-  [
-    "ELEPHANTPASSWORD1",
-    "Enter a password that includes at least 1 lowercase letter and 1 symbol",
-  ],
+  ["ELEPHANTPASSWORD1", "Enter a password that includes at least 1 lowercase letter and 1 symbol"],
   [
     "ELEPHANT PASSWORD1",
     "Enter a password that includes at least 1 lowercase letter, 1 symbol and does not include spaces",
   ],
-  [
-    "elephantpassword!",
-    "Enter a password that includes at least 1 capital letter and 1 number",
-  ],
+  ["elephantpassword!", "Enter a password that includes at least 1 capital letter and 1 number"],
   [
     "elephant password!",
     "Enter a password that includes at least 1 capital letter, 1 number and does not include spaces",
   ],
-  [
-    "elephantpassword1",
-    "Enter a password that includes at least 1 capital letter and 1 symbol",
-  ],
+  ["elephantpassword1", "Enter a password that includes at least 1 capital letter and 1 symbol"],
   [
     "elephant password1",
     "Enter a password that includes at least 1 capital letter, 1 symbol and does not include spaces",
   ],
   ["elephantPassword!", "Enter a password that includes at least 1 number"],
-  [
-    "elephant Password!",
-    "Enter a password that includes at least 1 number and does not include spaces",
-  ],
-  [
-    "ELEPHANTPASSWORD1!",
-    "Enter a password that includes at least 1 lowercase letter",
-  ],
-  [
-    "ELEPHANT PASSWORD1!",
-    "Enter a password that includes at least 1 lowercase letter and does not include spaces",
-  ],
-  [
-    "elephantpassword1!",
-    "Enter a password that includes at least 1 capital letter",
-  ],
-  [
-    "elephant password1!",
-    "Enter a password that includes at least 1 capital letter and does not include spaces",
-  ],
+  ["elephant Password!", "Enter a password that includes at least 1 number and does not include spaces"],
+  ["ELEPHANTPASSWORD1!", "Enter a password that includes at least 1 lowercase letter"],
+  ["ELEPHANT PASSWORD1!", "Enter a password that includes at least 1 lowercase letter and does not include spaces"],
+  ["elephantpassword1!", "Enter a password that includes at least 1 capital letter"],
+  ["elephant password1!", "Enter a password that includes at least 1 capital letter and does not include spaces"],
   ["elephantPassword1", "Enter a password that includes at least 1 symbol"],
-  [
-    "elephant Password1",
-    "Enter a password that includes at least 1 symbol and does not include spaces",
-  ],
+  ["elephant Password1", "Enter a password that includes at least 1 symbol and does not include spaces"],
   ["elephantPassword1! ", "Enter a password that does not include spaces"],
   [
     "Pass1!£",
@@ -505,17 +411,13 @@ describe.each([
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
-    const passwordInputBox = await screen.findByLabelText(
-      "Create your password",
-    );
-    const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password",
-    );
+    const passwordInputBox = await screen.findByLabelText("Create your password");
+    const passwordConfInputBox = await screen.findByLabelText("Confirm your password");
     fireEvent.change(passwordInputBox, { target: { value: password } });
     fireEvent.change(passwordConfInputBox, { target: { value: password } });
     fireEvent.click(continueButton);
@@ -534,28 +436,22 @@ describe("Validation must fail for non matching entries", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
-    const passwordInputBox = await screen.findByLabelText(
-      "Create your password",
-    );
-    const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password",
-    );
+    const passwordInputBox = await screen.findByLabelText("Create your password");
+    const passwordConfInputBox = await screen.findByLabelText("Confirm your password");
     fireEvent.change(passwordInputBox, { target: { value: "1" } });
     fireEvent.change(passwordConfInputBox, { target: { value: "2" } });
     fireEvent.click(continueButton);
     const errors = await screen.findAllByRole("presentation");
     expect(errors).toHaveLength(2);
     expect(errors[0].textContent).toBe(
-      "Error: Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter and 1 symbol",
+      "Error: Enter a password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter and 1 symbol"
     );
-    expect(errors[1].textContent).toBe(
-      "Error: Enter the same password as above",
-    );
+    expect(errors[1].textContent).toBe("Error: Enter the same password as above");
   });
 
   it("Invalid Match must show for valid password and non match", async () => {
@@ -566,17 +462,13 @@ describe("Validation must fail for non matching entries", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
-    const passwordInputBox = await screen.findByLabelText(
-      "Create your password",
-    );
-    const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password",
-    );
+    const passwordInputBox = await screen.findByLabelText("Create your password");
+    const passwordConfInputBox = await screen.findByLabelText("Confirm your password");
     fireEvent.change(passwordInputBox, {
       target: { value: "passwordElephant123!" },
     });
@@ -584,9 +476,7 @@ describe("Validation must fail for non matching entries", () => {
     fireEvent.click(continueButton);
     const errors = await screen.findAllByRole("presentation");
     expect(errors).toHaveLength(1);
-    expect(errors[0].textContent).toBe(
-      "Error: Enter the same password as above",
-    );
+    expect(errors[0].textContent).toBe("Error: Enter the same password as above");
   });
 });
 
@@ -599,17 +489,13 @@ describe("Validation must pass for matching valid entries", () => {
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
     const buttons = await screen.findAllByRole("button");
     const continueButton = buttons[2];
-    const passwordInputBox = await screen.findByLabelText(
-      "Create your password",
-    );
-    const passwordConfInputBox = await screen.findByLabelText(
-      "Confirm your password",
-    );
+    const passwordInputBox = await screen.findByLabelText("Create your password");
+    const passwordConfInputBox = await screen.findByLabelText("Confirm your password");
     fireEvent.change(passwordInputBox, {
       target: { value: "passwordElephant123!" },
     });
@@ -631,7 +517,7 @@ describe("Password Form must display error summary header on invalid submission"
         onDataChange={mockOnDataChange}
         setLoading={mockSetLoading}
         setLoadingText={mockSetLoadingText}
-      />,
+      />
     );
 
     const buttons = await screen.findAllByRole("button");
