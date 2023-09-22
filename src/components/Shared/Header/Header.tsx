@@ -9,6 +9,7 @@ import DTEPhaseBanner from "../UI/DTEPhaseBanner/DTEPhaseBanner";
 import { ContentContext } from "../../../context/ContentContext";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import DTELinkButton from "../UI/DTELinkButton/DTELinkButton";
+import usePathname from "../../../hooks/usePathname";
 
 const StyledHeader = styled.header`
   margin-top: 0.5em;
@@ -119,6 +120,11 @@ const NHSLogo = styled.img.attrs({
 export default function Header() {
   const { showBacklink } = useContext(AppContext);
   const { setLanguage, language, content } = useContext(ContentContext);
+
+  const pathname = usePathname();
+  const pathsNotToShow = ["/ForgottenPassword"];
+  const shouldShowLanguageSelector = !pathsNotToShow.includes(pathname);
+
   return (
     <>
       <StyledHeader>
@@ -157,21 +163,23 @@ export default function Header() {
             <DTEPhaseBanner phase="BETA" url="https://bepartofresearch.nihr.ac.uk/about/#contact-form" />
           </StyledGridElementLeft>
           <StyledGridElementRight item xs={4} sm={3} md={3}>
-            <LanguageSelector>
-              <DTEContent>
-                {language !== "en-GB" ? (
-                  <DTELinkButton onClick={() => setLanguage("en-GB")}>English</DTELinkButton>
-                ) : (
-                  "English"
-                )}{" "}
-                |{" "}
-                {language !== "cy-GB" ? (
-                  <DTELinkButton onClick={() => setLanguage("cy-GB")}>Cymraeg</DTELinkButton>
-                ) : (
-                  "Cymraeg"
-                )}
-              </DTEContent>
-            </LanguageSelector>
+            {shouldShowLanguageSelector && (
+              <LanguageSelector>
+                <DTEContent>
+                  {language !== "en-GB" ? (
+                    <DTELinkButton onClick={() => setLanguage("en-GB")}>English</DTELinkButton>
+                  ) : (
+                    "English"
+                  )}{" "}
+                  |{" "}
+                  {language !== "cy-GB" ? (
+                    <DTELinkButton onClick={() => setLanguage("cy-GB")}>Cymraeg</DTELinkButton>
+                  ) : (
+                    "Cymraeg"
+                  )}
+                </DTEContent>
+              </LanguageSelector>
+            )}
           </StyledGridElementRight>
           <Grid item sm={2} md={1} />
         </Grid>

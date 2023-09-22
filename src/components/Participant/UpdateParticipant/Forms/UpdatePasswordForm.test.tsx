@@ -1,13 +1,8 @@
 import { axe, toHaveNoViolations } from "jest-axe";
 import { createServer, Response, Server } from "miragejs";
-import {
-  userEvent,
-  render,
-  screen,
-  waitForElementToBeRemoved,
-  waitFor,
-} from "../../../../Helper/test-utils";
+import { userEvent, render, screen, waitForElementToBeRemoved, waitFor } from "../../../../Helper/test-utils";
 import AccountSettings from "../AccountSettings";
+import weakPasswords from "../../../../data/weakPassword";
 
 expect.extend(toHaveNoViolations);
 
@@ -52,22 +47,19 @@ beforeEach(() => {
           requireNumbers: true,
           requireSymbols: true,
           requireUppercase: true,
-          allowedPasswordSymbols:
-            "^ $ * . , [ ] { } ( ) ? \" ! @ # % & / \\ , > < ' : ; | _ ~ `",
+          allowedPasswordSymbols: "^ $ * . , [ ] { } ( ) ? \" ! @ # % & / \\ , > < ' : ; | _ ~ `",
+          weakPasswords,
         };
       });
-      this.post(
-        `${process.env.REACT_APP_BASE_API}/users/changepassword`,
-        () => {
-          return {
-            content: null,
-            isSuccess: true,
-            errors: [],
-            conversationId: null,
-            version: 1,
-          };
-        },
-      );
+      this.post(`${process.env.REACT_APP_BASE_API}/users/changepassword`, () => {
+        return {
+          content: null,
+          isSuccess: true,
+          errors: [],
+          conversationId: null,
+          version: 1,
+        };
+      });
     },
   });
 });
@@ -110,24 +102,14 @@ describe("Update Password display tests", () => {
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
-    const currentPasswordEditor = await screen.findByLabelText(
-      "Current password",
-    );
-    const newPasswordEditor = await screen.findByLabelText(
-      "Create new password",
-    );
-    const confirmNewPasswordEditor = await screen.findByLabelText(
-      "Confirm new password",
-    );
+    const currentPasswordEditor = await screen.findByLabelText("Current password");
+    const newPasswordEditor = await screen.findByLabelText("Create new password");
+    const confirmNewPasswordEditor = await screen.findByLabelText("Confirm new password");
 
     expect(currentPasswordEditor).toBeInTheDocument();
-    expect(currentPasswordEditor.getAttribute("autocomplete")).toEqual(
-      "current-password",
-    );
+    expect(currentPasswordEditor.getAttribute("autocomplete")).toEqual("current-password");
     expect(newPasswordEditor).toBeInTheDocument();
-    expect(newPasswordEditor.getAttribute("autocomplete")).toEqual(
-      "new-password",
-    );
+    expect(newPasswordEditor.getAttribute("autocomplete")).toEqual("new-password");
     expect(confirmNewPasswordEditor).toBeInTheDocument();
     expect(confirmNewPasswordEditor.getAttribute("autocomplete")).toBeNull();
   });
@@ -138,15 +120,9 @@ describe("Update Password display tests", () => {
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
-    const currentPasswordEditor = await screen.findByLabelText(
-      "Current password",
-    );
-    const newPasswordEditor = await screen.findByLabelText(
-      "Create new password",
-    );
-    const confirmNewPasswordEditor = await screen.findByLabelText(
-      "Confirm new password",
-    );
+    const currentPasswordEditor = await screen.findByLabelText("Current password");
+    const newPasswordEditor = await screen.findByLabelText("Create new password");
+    const confirmNewPasswordEditor = await screen.findByLabelText("Confirm new password");
 
     expect(currentPasswordEditor).toBeInTheDocument();
     expect(currentPasswordEditor).toHaveDisplayValue("");
@@ -185,15 +161,9 @@ describe("Update Password must show correct error messages", () => {
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
-    const currentPasswordEditor = await screen.findByLabelText(
-      "Current password",
-    );
-    const newPasswordEditor = await screen.findByLabelText(
-      "Create new password",
-    );
-    const confirmNewPasswordEditor = await screen.findByLabelText(
-      "Confirm new password",
-    );
+    const currentPasswordEditor = await screen.findByLabelText("Current password");
+    const newPasswordEditor = await screen.findByLabelText("Create new password");
+    const confirmNewPasswordEditor = await screen.findByLabelText("Confirm new password");
     const editorButtons = await screen.findAllByRole("button");
 
     userEvent.type(currentPasswordEditor, "V4l1dP4ssW0rd!");
@@ -244,10 +214,7 @@ describe.each([
     "1 ",
     "Enter a new password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter, 1 symbol and does not include spaces",
   ],
-  [
-    "aA",
-    "Enter a new password that is at least 12 characters long and includes at least 1 number and 1 symbol",
-  ],
+  ["aA", "Enter a new password that is at least 12 characters long and includes at least 1 number and 1 symbol"],
   [
     "a!",
     "Enter a new password that is at least 12 characters long and includes at least 1 capital letter and 1 number",
@@ -268,22 +235,13 @@ describe.each([
     "! ",
     "Enter a new password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter, 1 number and does not include spaces",
   ],
-  [
-    "1aB",
-    "Enter a new password that is at least 12 characters long and includes at least 1 symbol",
-  ],
-  [
-    "1A!",
-    "Enter a new password that is at least 12 characters long and includes at least 1 lowercase letter",
-  ],
+  ["1aB", "Enter a new password that is at least 12 characters long and includes at least 1 symbol"],
+  ["1A!", "Enter a new password that is at least 12 characters long and includes at least 1 lowercase letter"],
   [
     "1! ",
     "Enter a new password that is at least 12 characters long and includes at least 1 capital letter, 1 lowercase letter and does not include spaces",
   ],
-  [
-    "1a!",
-    "Enter a new password that is at least 12 characters long and includes at least 1 capital letter",
-  ],
+  ["1a!", "Enter a new password that is at least 12 characters long and includes at least 1 capital letter"],
   [
     "1a ",
     "Enter a new password that is at least 12 characters long and includes at least 1 capital letter, 1 symbol and does not include spaces",
@@ -292,10 +250,7 @@ describe.each([
     "1A ",
     "Enter a new password that is at least 12 characters long and includes at least 1 lowercase letter, 1 symbol and does not include spaces",
   ],
-  [
-    "fG!",
-    "Enter a new password that is at least 12 characters long and includes at least 1 number",
-  ],
+  ["fG!", "Enter a new password that is at least 12 characters long and includes at least 1 number"],
   [
     "f! ",
     "Enter a new password that is at least 12 characters long and includes at least 1 capital letter, 1 number and does not include spaces",
@@ -321,102 +276,48 @@ describe.each([
     "aV! ",
     "Enter a new password that is at least 12 characters long and includes at least 1 number and does not include spaces",
   ],
-  [
-    "1aS! ",
-    "Enter a new password that is at least 12 characters long and does not include spaces",
-  ],
+  ["1aS! ", "Enter a new password that is at least 12 characters long and does not include spaces"],
   ["passwordElephant!", "Enter a new password that includes at least 1 number"],
-  [
-    "password Elephant!",
-    "Enter a new password that includes at least 1 number and does not include spaces",
-  ],
-  [
-    "PASSWORDELEPHANT1!",
-    "Enter a new password that includes at least 1 lowercase letter",
-  ],
-  [
-    "PASSWORD ELEPHANT1!",
-    "Enter a new password that includes at least 1 lowercase letter and does not include spaces",
-  ],
-  [
-    "passwordelephant1!",
-    "Enter a new password that includes at least 1 capital letter",
-  ],
-  [
-    "password elephant1!",
-    "Enter a new password that includes at least 1 capital letter and does not include spaces",
-  ],
+  ["password Elephant!", "Enter a new password that includes at least 1 number and does not include spaces"],
+  ["PASSWORDELEPHANT1!", "Enter a new password that includes at least 1 lowercase letter"],
+  ["PASSWORD ELEPHANT1!", "Enter a new password that includes at least 1 lowercase letter and does not include spaces"],
+  ["passwordelephant1!", "Enter a new password that includes at least 1 capital letter"],
+  ["password elephant1!", "Enter a new password that includes at least 1 capital letter and does not include spaces"],
   ["passwordElephant1", "Enter a new password that includes at least 1 symbol"],
-  [
-    "password Elephant1",
-    "Enter a new password that includes at least 1 symbol and does not include spaces",
-  ],
-  [
-    "PASSWORDELEPHANT!",
-    "Enter a new password that includes at least 1 lowercase letter and 1 number",
-  ],
+  ["password Elephant1", "Enter a new password that includes at least 1 symbol and does not include spaces"],
+  ["PASSWORDELEPHANT!", "Enter a new password that includes at least 1 lowercase letter and 1 number"],
   [
     "PASSWORD ELEPHANT!",
     "Enter a new password that includes at least 1 lowercase letter, 1 number and does not include spaces",
   ],
-  [
-    "1234567890!!",
-    "Enter a new password that includes at least 1 capital letter and 1 lowercase letter",
-  ],
+  ["1234567890!!", "Enter a new password that includes at least 1 capital letter and 1 lowercase letter"],
   [
     "12345 67890!!",
     "Enter a new password that includes at least 1 capital letter, 1 lowercase letter and does not include spaces",
   ],
-  [
-    "ELEPHANTPASSWORD1",
-    "Enter a new password that includes at least 1 lowercase letter and 1 symbol",
-  ],
+  ["ELEPHANTPASSWORD1", "Enter a new password that includes at least 1 lowercase letter and 1 symbol"],
   [
     "ELEPHANT PASSWORD1",
     "Enter a new password that includes at least 1 lowercase letter, 1 symbol and does not include spaces",
   ],
-  [
-    "elephantpassword!",
-    "Enter a new password that includes at least 1 capital letter and 1 number",
-  ],
+  ["elephantpassword!", "Enter a new password that includes at least 1 capital letter and 1 number"],
   [
     "elephant password!",
     "Enter a new password that includes at least 1 capital letter, 1 number and does not include spaces",
   ],
-  [
-    "elephantpassword1",
-    "Enter a new password that includes at least 1 capital letter and 1 symbol",
-  ],
+  ["elephantpassword1", "Enter a new password that includes at least 1 capital letter and 1 symbol"],
   [
     "elephant password1",
     "Enter a new password that includes at least 1 capital letter, 1 symbol and does not include spaces",
   ],
   ["elephantPassword!", "Enter a new password that includes at least 1 number"],
-  [
-    "elephant Password!",
-    "Enter a new password that includes at least 1 number and does not include spaces",
-  ],
-  [
-    "ELEPHANTPASSWORD1!",
-    "Enter a new password that includes at least 1 lowercase letter",
-  ],
-  [
-    "ELEPHANT PASSWORD1!",
-    "Enter a new password that includes at least 1 lowercase letter and does not include spaces",
-  ],
-  [
-    "elephantpassword1!",
-    "Enter a new password that includes at least 1 capital letter",
-  ],
-  [
-    "elephant password1!",
-    "Enter a new password that includes at least 1 capital letter and does not include spaces",
-  ],
+  ["elephant Password!", "Enter a new password that includes at least 1 number and does not include spaces"],
+  ["ELEPHANTPASSWORD1!", "Enter a new password that includes at least 1 lowercase letter"],
+  ["ELEPHANT PASSWORD1!", "Enter a new password that includes at least 1 lowercase letter and does not include spaces"],
+  ["elephantpassword1!", "Enter a new password that includes at least 1 capital letter"],
+  ["elephant password1!", "Enter a new password that includes at least 1 capital letter and does not include spaces"],
   ["elephantPassword1", "Enter a new password that includes at least 1 symbol"],
-  [
-    "elephant Password1",
-    "Enter a new password that includes at least 1 symbol and does not include spaces",
-  ],
+  ["elephant Password1", "Enter a new password that includes at least 1 symbol and does not include spaces"],
   ["elephantPassword1! ", "Enter a new password that does not include spaces"],
   [
     "Pass1!£",
@@ -446,39 +347,30 @@ describe.each([
     "elephantPassword1!£ ",
     "Enter a new password that does not include spaces and only includes symbols from this list ^$*.,[]{}()?\"!@#%&/\\,><':;|_~`",
   ],
-])(
-  "Update Password must show correct error message for invalid new passwords",
-  (password, expectedError) => {
-    test(`for ${password}, returns ${expectedError}`, async () => {
-      render(<AccountSettings />);
-      await waitFor(() => {
-        expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
-      });
-      const changeButtons = await screen.findAllByText("Change");
-      userEvent.click(changeButtons[1]);
-
-      const currentPasswordEditor = await screen.findByLabelText(
-        "Current password",
-      );
-      const newPasswordEditor = await screen.findByLabelText(
-        "Create new password",
-      );
-      const confirmNewPasswordEditor = await screen.findByLabelText(
-        "Confirm new password",
-      );
-      const editorButtons = await screen.findAllByRole("button");
-
-      userEvent.type(currentPasswordEditor, "V4l1dP4ssW0rd!");
-      userEvent.type(newPasswordEditor, password);
-      userEvent.type(confirmNewPasswordEditor, password);
-      userEvent.click(editorButtons[3]);
-
-      const alerts = await screen.findAllByRole("presentation");
-      expect(alerts).toHaveLength(1);
-      expect(alerts[0]).toHaveTextContent(expectedError);
+])("Update Password must show correct error message for invalid new passwords", (password, expectedError) => {
+  test(`for ${password}, returns ${expectedError}`, async () => {
+    render(<AccountSettings />);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
     });
-  },
-);
+    const changeButtons = await screen.findAllByText("Change");
+    userEvent.click(changeButtons[1]);
+
+    const currentPasswordEditor = await screen.findByLabelText("Current password");
+    const newPasswordEditor = await screen.findByLabelText("Create new password");
+    const confirmNewPasswordEditor = await screen.findByLabelText("Confirm new password");
+    const editorButtons = await screen.findAllByRole("button");
+
+    userEvent.type(currentPasswordEditor, "V4l1dP4ssW0rd!");
+    userEvent.type(newPasswordEditor, password);
+    userEvent.type(confirmNewPasswordEditor, password);
+    userEvent.click(editorButtons[3]);
+
+    const alerts = await screen.findAllByRole("presentation");
+    expect(alerts).toHaveLength(1);
+    expect(alerts[0]).toHaveTextContent(expectedError);
+  });
+});
 
 describe("Update Password must handle valid user operations", () => {
   it("must return to the Account Settings screen on cancel", async () => {
@@ -493,9 +385,7 @@ describe("Update Password must handle valid user operations", () => {
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
     expect(header.textContent).toBe("Account settings");
-    expect(
-      await screen.findByText("first.last@domain.com"),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("first.last@domain.com")).toBeInTheDocument();
   });
 
   it("must redirect to password updated page after updating the password", async () => {
@@ -508,15 +398,9 @@ describe("Update Password must handle valid user operations", () => {
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
-    const currentPasswordEditor = await screen.findByLabelText(
-      "Current password",
-    );
-    const newPasswordEditor = await screen.findByLabelText(
-      "Create new password",
-    );
-    const confirmNewPasswordEditor = await screen.findByLabelText(
-      "Confirm new password",
-    );
+    const currentPasswordEditor = await screen.findByLabelText("Current password");
+    const newPasswordEditor = await screen.findByLabelText("Create new password");
+    const confirmNewPasswordEditor = await screen.findByLabelText("Confirm new password");
     const editorButtons = await screen.findAllByRole("button");
 
     userEvent.type(currentPasswordEditor, "V4l1dP4ssW0rd!");
@@ -532,59 +416,46 @@ describe("Update Password must handle valid user operations", () => {
         JSON.stringify({
           oldPassword: "V4l1dP4ssW0rd!",
           newPassword: "L0ngV4l1dP4ssW0rd!",
-        }),
+        })
       );
     };
 
-    await waitForElementToBeRemoved(
-      await screen.findByText("Updating your details..."),
-    );
+    await waitForElementToBeRemoved(await screen.findByText("Updating your details..."));
     expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-    expect(mockHistoryPush).toHaveBeenCalledWith(
-      "/Participants/PasswordUpdated",
-    );
+    expect(mockHistoryPush).toHaveBeenCalledWith("/Participants/PasswordUpdated");
   });
 });
 
 describe("Update Password must handle server errors", () => {
   it("must show the correct message when the access token is invalid", async () => {
-    server.post(
-      `${process.env.REACT_APP_BASE_API}/users/changepassword`,
-      () => {
-        return {
-          content: null,
-          isSuccess: false,
-          errors: [
-            {
-              service: "StudyAPi",
-              component: "UserService",
-              exceptionName: "NotAuthorizedException",
-              httpStatusName: "InternalServerError",
-              httpStatusCode: 500,
-              httpResponseString: null,
-              customCode: "Change_Password_Error_Unauthorised",
-              detail: "Invalid Access Token",
-            },
-          ],
-          conversationId: null,
-          version: 1,
-        };
-      },
-    );
+    server.post(`${process.env.REACT_APP_BASE_API}/users/changepassword`, () => {
+      return {
+        content: null,
+        isSuccess: false,
+        errors: [
+          {
+            service: "StudyAPi",
+            component: "UserService",
+            exceptionName: "NotAuthorizedException",
+            httpStatusName: "InternalServerError",
+            httpStatusCode: 500,
+            httpResponseString: null,
+            customCode: "Change_Password_Error_Unauthorised",
+            detail: "Invalid Access Token",
+          },
+        ],
+        conversationId: null,
+        version: 1,
+      };
+    });
     render(<AccountSettings />);
 
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
-    const currentPasswordEditor = await screen.findByLabelText(
-      "Current password",
-    );
-    const newPasswordEditor = await screen.findByLabelText(
-      "Create new password",
-    );
-    const confirmNewPasswordEditor = await screen.findByLabelText(
-      "Confirm new password",
-    );
+    const currentPasswordEditor = await screen.findByLabelText("Current password");
+    const newPasswordEditor = await screen.findByLabelText("Create new password");
+    const confirmNewPasswordEditor = await screen.findByLabelText("Confirm new password");
     const editorButtons = await screen.findAllByRole("button");
 
     userEvent.type(currentPasswordEditor, "V4l1dP4ssW0rd!");
@@ -595,32 +466,23 @@ describe("Update Password must handle server errors", () => {
     expect(await screen.findByText("There is a problem")).toBeInTheDocument();
     expect(
       await screen.findByText(
-        "Your password has not been updated. You may not have entered the current password correctly or there may have been a technical issue.",
-      ),
+        "Your password has not been updated. You may not have entered the current password correctly or there may have been a technical issue."
+      )
     ).toBeInTheDocument();
   });
 
   it("must show the correct message when the api gateway is down", async () => {
-    server.post(
-      `${process.env.REACT_APP_BASE_API}/users/changepassword`,
-      () => {
-        return new Response(504);
-      },
-    );
+    server.post(`${process.env.REACT_APP_BASE_API}/users/changepassword`, () => {
+      return new Response(504);
+    });
     render(<AccountSettings />);
 
     const changeButtons = await screen.findAllByText("Change");
     userEvent.click(changeButtons[1]);
 
-    const currentPasswordEditor = await screen.findByLabelText(
-      "Current password",
-    );
-    const newPasswordEditor = await screen.findByLabelText(
-      "Create new password",
-    );
-    const confirmNewPasswordEditor = await screen.findByLabelText(
-      "Confirm new password",
-    );
+    const currentPasswordEditor = await screen.findByLabelText("Current password");
+    const newPasswordEditor = await screen.findByLabelText("Create new password");
+    const confirmNewPasswordEditor = await screen.findByLabelText("Confirm new password");
     const editorButtons = await screen.findAllByRole("button");
 
     userEvent.type(currentPasswordEditor, "V4l1dP4ssW0rd!");
@@ -631,8 +493,8 @@ describe("Update Password must handle server errors", () => {
     expect(await screen.findByText("There is a problem")).toBeInTheDocument();
     expect(
       await screen.findByText(
-        "Your password has not been updated. You may not have entered the current password correctly or there may have been a technical issue.",
-      ),
+        "Your password has not been updated. You may not have entered the current password correctly or there may have been a technical issue."
+      )
     ).toBeInTheDocument();
   });
 });

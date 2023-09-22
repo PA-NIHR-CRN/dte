@@ -15,7 +15,6 @@ import FormBaseProps from "../../../Shared/FormElements/FormBaseProps";
 import ErrorMessageSummary from "../../../Shared/ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../../../Shared/Password/showHide";
 import ThreeWords from "../../../Shared/Password/threeWords";
-import commonPasswords from "../../../../data/commonPassword";
 import { ContentContext } from "../../../../context/ContentContext";
 import Honeypot from "../../../Shared/Honeypot/Honeypot";
 
@@ -32,6 +31,7 @@ interface PasswordPolicy {
   requireSymbols: boolean;
   requireUppercase: boolean;
   allowedPasswordSymbols?: string;
+  weakPasswords: string[];
 }
 
 function UpdatePasswordForm(props: FormBaseProps) {
@@ -318,13 +318,17 @@ function UpdatePasswordForm(props: FormBaseProps) {
                         );
                       }
 
-                      let finalErrorMessage = passwordError.replace(/,([^,]*)$/, ` ${content["reusable-text-and"]}$1`);
+                      const strippedPassword = value.replace(/[^a-zA-Z]/g, "");
 
-                      const isCommonPassword = commonPasswords.includes(value.toLowerCase());
-                      if (isCommonPassword) {
-                        finalErrorMessage += `. ${content["register-password-policy-builder-symbol-list"]}`;
-                        validationSuccess = false;
-                      }
+                      passwordError = errorConstructor(
+                        passwordError,
+                        passwordPolicy.weakPasswords.includes(strippedPassword.toLowerCase()),
+                        content["register-password-policy-builder-common-passwords"],
+                        content["register-password-policy-builder-common-passwords"],
+                        true
+                      );
+
+                      let finalErrorMessage = passwordError.replace(/,([^,]*)$/, ` ${content["reusable-text-and"]}$1`);
 
                       if (passwordPolicy.allowedPasswordSymbols) {
                         finalErrorMessage = finalErrorMessage.replace(

@@ -20,7 +20,7 @@ import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../Password/showHide";
 import ThreeWords from "../Password/threeWords";
 import { ContentContext } from "../../../context/ContentContext";
-import commonPasswords from "../../../data/commonPassword";
+import commonPasswords from "../../../data/weakPassword";
 import Honeypot from "../Honeypot/Honeypot";
 
 interface PasswordPolicy {
