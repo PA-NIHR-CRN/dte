@@ -1,5 +1,5 @@
 import { axe, toHaveNoViolations } from "jest-axe";
-import { render, screen, waitFor } from "../../../../Helper/test-utils";
+import { render, screen } from "../../../../Helper/test-utils";
 import UpdateEmailSuccess from "./UpdateEmailSuccess";
 
 expect.extend(toHaveNoViolations);
@@ -25,13 +25,11 @@ describe("Update Email Success display tests", () => {
     expect(header).toBeInTheDocument();
     expect(header.textContent).toBe("Your email address has been updated");
 
-    expect(
-      await screen.findByText("You need to sign back in to your account."),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("You need to sign back in to your account.")).toBeInTheDocument();
 
     const links = screen.getAllByRole("link");
     expect(links).toHaveLength(1);
-    expect(links[0]).toHaveAttribute("href", "/");
+    expect(links[0]).toHaveAttribute("href", "/Participants/Options");
     expect(links[0]).toHaveTextContent("Sign in");
   });
 });

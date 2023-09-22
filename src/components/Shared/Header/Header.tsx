@@ -118,11 +118,11 @@ const NHSLogo = styled.img.attrs({
 
 export default function Header() {
   const { showBacklink } = useContext(AppContext);
-  const { setLanguage, language } = useContext(ContentContext);
+  const { setLanguage, language, content } = useContext(ContentContext);
   return (
     <>
       <StyledHeader>
-        <StyledSkipToMain href="#main"> Skip to Main Content</StyledSkipToMain>
+        <StyledSkipToMain href="#main">{content["accessibility-hidden-skip-to-main"]}</StyledSkipToMain>
         <Grid container alignItems="center" direction="row" justifyContent="flex-start">
           <Grid item sm={2} md={1} />
           <StyledGridElementLeft item xs={8} sm={6} md={7}>
