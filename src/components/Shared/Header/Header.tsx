@@ -10,6 +10,8 @@ import { ContentContext } from "../../../context/ContentContext";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import DTELinkButton from "../UI/DTELinkButton/DTELinkButton";
 import usePathname from "../../../hooks/usePathname";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const StyledHeader = styled.header`
   margin-top: 0.5em;
@@ -121,9 +123,19 @@ export default function Header() {
   const { showBacklink } = useContext(AppContext);
   const { setLanguage, language, content } = useContext(ContentContext);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const pathname = usePathname();
   const pathsNotToShow = ["/ForgottenPassword"];
   const shouldShowLanguageSelector = !pathsNotToShow.includes(pathname);
+
+  const LanguageComponent = () => (
+    <DTEContent>
+      {language !== "en-GB" ? <DTELinkButton onClick={() => setLanguage("en-GB")}>English</DTELinkButton> : "English"} |{" "}
+      {language !== "cy-GB" ? <DTELinkButton onClick={() => setLanguage("cy-GB")}>Cymraeg</DTELinkButton> : "Cymraeg"}
+    </DTEContent>
+  );
 
   return (
     <>
@@ -162,25 +174,19 @@ export default function Header() {
           <StyledGridElementLeft item xs={8} sm={6} md={7}>
             <DTEPhaseBanner phase="BETA" url="https://bepartofresearch.nihr.ac.uk/about/#contact-form" />
           </StyledGridElementLeft>
-          <StyledGridElementRight item xs={4} sm={3} md={3}>
-            {shouldShowLanguageSelector && (
-              <LanguageSelector>
-                <DTEContent>
-                  {language !== "en-GB" ? (
-                    <DTELinkButton onClick={() => setLanguage("en-GB")}>English</DTELinkButton>
-                  ) : (
-                    "English"
-                  )}{" "}
-                  |{" "}
-                  {language !== "cy-GB" ? (
-                    <DTELinkButton onClick={() => setLanguage("cy-GB")}>Cymraeg</DTELinkButton>
-                  ) : (
-                    "Cymraeg"
-                  )}
-                </DTEContent>
-              </LanguageSelector>
-            )}
-          </StyledGridElementRight>
+          {isMobile ? (
+            <Grid container alignItems="center" direction="row" justifyContent="flex-start">
+              <Grid item sm={2} md={1} />
+              <StyledGridElementLeft item xs={12} sm={6} md={7}>
+                {shouldShowLanguageSelector && <LanguageComponent />}
+              </StyledGridElementLeft>
+            </Grid>
+          ) : (
+            <StyledGridElementRight item xs={4} sm={3} md={3}>
+              <LanguageSelector>{shouldShowLanguageSelector && <LanguageComponent />}</LanguageSelector>
+            </StyledGridElementRight>
+          )}
+
           <Grid item sm={2} md={1} />
         </Grid>
       </StyledHeader>
