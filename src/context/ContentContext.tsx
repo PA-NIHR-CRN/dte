@@ -54,7 +54,10 @@ export function ContentProvider({ children }: ContentProviderProps) {
 
     await i18n.changeLanguage(language);
     moment.locale(language);
-    Cookies.set("selectedLanguage", language);
+    Cookies.set("selectedLanguage", language, {
+      path: "/",
+      domain: process.env.REACT_APP_COOKIE_DOMAIN || ".bepartofresearch.nihr.ac.uk",
+    });
 
     if (isAuthenticated()) {
       putSelectedLocale({
