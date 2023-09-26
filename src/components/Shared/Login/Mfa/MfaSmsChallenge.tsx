@@ -36,10 +36,6 @@ const MfaSmsChallenge = () => {
     }
   }, [setCodeResent]);
 
-  if (!mfaDetails) {
-    history.push("/");
-  }
-
   const [mobilePhoneNumber, setMobilePhoneNumber] = useState<string>("your mobile phone");
 
   const {
@@ -172,6 +168,10 @@ const MfaSmsChallenge = () => {
   const codeInstructionText = enteredMfaMobile
     ? content["mfa-sms-challenge-code-instruction-text-mobile"]
     : content["mfa-sms-challenge-code-instruction-text"];
+
+  if (!mfaDetails) {
+    history.push("/");
+  }
 
   return (
     <DocumentTitle title={content["mfa-sms-challenge-document-title"]}>
