@@ -1,8 +1,7 @@
 import { ReactNode, useContext } from "react";
 import { ContentContext } from "../../../context/ContentContext";
 
-const customCodeLookup = (code: string, detail?: string | ReactNode) => {
-  const { content } = useContext(ContentContext);
+const customCodeLookup = (code: string, content: any, detail?: string | ReactNode) => {
   const defaultLoginErrorMessage = content["error-codes-default-login"];
   const defaultRegistrationErrorMessage = content["error-codes-default-registration"];
   const defaultErrorMessage = content["error-codes-default"];

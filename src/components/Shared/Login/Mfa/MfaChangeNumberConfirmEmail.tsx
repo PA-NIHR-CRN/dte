@@ -79,7 +79,7 @@ const MfaChangeNumberConfirmEmail = () => {
     validateEmailOtp,
   ] = useAxiosFetch({}, { useCache: false, manual: true });
   const [convertedError, setConvertedError] = useState<any>(null);
-  const serverError = useInlineServerError(validateEmailOtpRespose);
+  const serverError = useInlineServerError(validateEmailOtpRespose, content);
 
   useEffect(() => {
     if (serverError) {

@@ -41,7 +41,7 @@ const MfaTotpChallenge = () => {
     }
   }, [isSubmitting, convertedError, TokenMfaResponse]);
 
-  const serverError = useInlineServerError(TokenMfaResponse);
+  const serverError = useInlineServerError(TokenMfaResponse, content);
 
   useEffect(() => {
     if (serverError) {

@@ -38,7 +38,7 @@ const StyledErrorSummary = styled(ErrorSummary)`
   }
 `;
 
-const mapErrorCodeToSummary = (errors: (DTEAxiosError[] | undefined)[]) => {
+const mapErrorCodeToSummary = (errors: (DTEAxiosError[] | undefined)[], content: any) => {
   // For each failed request
   return errors.map((error) => {
     if (error) {
@@ -46,7 +46,7 @@ const mapErrorCodeToSummary = (errors: (DTEAxiosError[] | undefined)[]) => {
       return error.map((e) => {
         return {
           ...e,
-          ...(e.customCode ? { detail: customCodeLookup(e.customCode, e.detail) } : {}),
+          ...(e.customCode ? { detail: customCodeLookup(e.customCode, content, e.detail) } : {}),
         };
       });
     }
@@ -98,7 +98,7 @@ function ErrorMessageContainer({
       DTEAxiosErrors.length > 0 &&
       DTEAxiosErrors.some((item) => item !== undefined && item !== null && item.length > 0)
     ) {
-      mapErrorCodeToSummary(DTEAxiosErrors).forEach(
+      mapErrorCodeToSummary(DTEAxiosErrors, content).forEach(
         (mappedErrors: any) => mappedErrors?.forEach((error: any) => errors.push(error.detail))
       );
     }
@@ -110,19 +110,19 @@ function ErrorMessageContainer({
         (innerAxiosError: AxiosError<any> | undefined) =>
           innerAxiosError &&
           innerAxiosError.response?.data?.error?.length > 0 &&
-          errors.push(customCodeLookup(innerAxiosError?.response?.data.error))
+          errors.push(customCodeLookup(innerAxiosError?.response?.data.error, content))
       );
 
       axiosErrors.forEach(
         (innerAxiosError: AxiosError<any> | undefined) =>
           innerAxiosError &&
           innerAxiosError.message.length > 0 &&
-          errors.push(customCodeLookup(innerAxiosError.message))
+          errors.push(customCodeLookup(innerAxiosError.message, content))
       );
     }
     if (axiosError) {
       if (axiosError.message && axiosError.message.length > 0) {
-        errors.push(customCodeLookup(axiosError.message));
+        errors.push(customCodeLookup(axiosError.message, content));
       }
     }
 

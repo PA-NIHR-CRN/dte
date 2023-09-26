@@ -55,7 +55,7 @@ const MfaSmsChallenge = () => {
   );
 
   const [convertedError, setConvertedError] = useState<any>(null);
-  const serverError = useInlineServerError(SMSMfaResponse);
+  const serverError = useInlineServerError(SMSMfaResponse, content);
 
   useEffect(() => {
     if (serverError) {

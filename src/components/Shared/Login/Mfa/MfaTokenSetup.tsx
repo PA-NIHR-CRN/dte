@@ -81,7 +81,7 @@ const MfaTokenSetup = () => {
     {},
     { useCache: false, manual: true }
   );
-  const convertedError = useInlineServerError(totpMfaResponse);
+  const convertedError = useInlineServerError(totpMfaResponse, content);
   const copySecretKey = () => {
     navigator.clipboard.writeText(secretKey);
   };
