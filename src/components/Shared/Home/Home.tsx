@@ -66,7 +66,9 @@ function Home() {
   useEffect(() => {
     if (response) {
       const converetResponse = Utils.ConvertResponseToDTEResponse(response);
-      setLanguage(converetResponse?.content.selectedLocale);
+      if (converetResponse?.content?.selectedLocale) {
+        setLanguage(converetResponse?.content.selectedLocale);
+      }
       if (!Utils.ConvertResponseToDTEResponse(response)?.isSuccess) {
         history.push("/Participants/register/continue/questions");
       }
