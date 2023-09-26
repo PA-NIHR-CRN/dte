@@ -414,8 +414,10 @@ function ContinueRegistration() {
         setIsUserConsented(consent.consentRegistration);
       }
       const currentLanguageSelected = Cookies.get("selectedLanguage");
-      if (currentLanguageSelected === response?.data?.selectedLocale) return;
-      setLanguage(response?.data?.selectedLocale);
+      if (!response?.data?.selectedLocale) return;
+      if (currentLanguageSelected !== response?.data?.selectedLocale) {
+        setLanguage(response?.data?.selectedLocale);
+      }
     }
   }, [response]);
 
