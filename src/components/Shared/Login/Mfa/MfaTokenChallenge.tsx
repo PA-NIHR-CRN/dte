@@ -20,11 +20,6 @@ const MfaTotpChallenge = () => {
   const { mfaDetails, saveToken, setMfaDetails, setEnteredMfaMobile, setUserMfaEmail } = useContext(AuthContext);
   const history = useHistory();
   const [convertedError, setConvertedError] = useState<any>(null);
-
-  if (!mfaDetails) {
-    history.push("/");
-  }
-
   const {
     control,
     handleSubmit,
@@ -40,6 +35,23 @@ const MfaTotpChallenge = () => {
     {},
     { useCache: false, manual: true }
   );
+  useEffect(() => {
+    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
+      Utils.FocusOnError();
+    }
+  }, [isSubmitting, convertedError, TokenMfaResponse]);
+
+  const serverError = useInlineServerError(TokenMfaResponse);
+
+  useEffect(() => {
+    if (serverError) {
+      setConvertedError(serverError);
+    }
+  }, [serverError]);
+
+  if (!mfaDetails) {
+    history.push("/");
+  }
 
   const onSubmit = async (data: any) => {
     const { mfaCode } = data;
@@ -73,20 +85,6 @@ const MfaTotpChallenge = () => {
       history.push("/");
     }
   };
-
-  useEffect(() => {
-    if (document.getElementsByClassName("nhsuk-error-message")[0]) {
-      Utils.FocusOnError();
-    }
-  }, [isSubmitting, convertedError, TokenMfaResponse]);
-
-  const serverError = useInlineServerError(TokenMfaResponse);
-
-  useEffect(() => {
-    if (serverError) {
-      setConvertedError(serverError);
-    }
-  }, [serverError]);
 
   const interceptSubmit = (e: any) => {
     e.preventDefault();
