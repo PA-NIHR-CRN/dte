@@ -1,5 +1,4 @@
-import { ReactNode, useContext } from "react";
-import { ContentContext } from "../../../context/ContentContext";
+import { ReactNode } from "react";
 
 const customCodeLookup = (code: string, content: any, detail?: string | ReactNode) => {
   const defaultLoginErrorMessage = content["error-codes-default-login"];
