@@ -75,7 +75,7 @@ function App() {
         <div className="App Site">
           <AppRoot />
           {contentLoading ? (
-            <LoadingIndicator />
+            <LoadingIndicator ariaLive="off" />
           ) : (
             <>
               <AppContext.Provider

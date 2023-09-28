@@ -108,6 +108,7 @@ const DOBForm = (props: DOBFormProps) => {
                       aria-describedby="dob--error-message"
                     >
                       <DTEDateInput.Day
+                        label={content["reusable-text-day"]}
                         id="date-of-birth-day"
                         name="date-of-birth-day"
                         required
@@ -131,6 +132,7 @@ const DOBForm = (props: DOBFormProps) => {
                         }}
                       />
                       <DTEDateInput.Month
+                        label={content["reusable-text-month"]}
                         id="date-of-birth-month"
                         name="date-of-birth-month"
                         required
@@ -154,6 +156,7 @@ const DOBForm = (props: DOBFormProps) => {
                         }}
                       />
                       <DTEDateInput.Year
+                        label={content["reusable-text-year"]}
                         id="date-of-birth-year"
                         name="date-of-birth-year"
                         required
@@ -180,6 +183,7 @@ const DOBForm = (props: DOBFormProps) => {
                   ) : (
                     <DTEDateInput id="date-of-birth">
                       <DTEDateInput.Day
+                        label={content["reusable-text-day"]}
                         id="date-of-birth-day"
                         name="date-of-birth-day"
                         required
@@ -203,6 +207,7 @@ const DOBForm = (props: DOBFormProps) => {
                         }}
                       />
                       <DTEDateInput.Month
+                        label={content["reusable-text-month"]}
                         id="date-of-birth-month"
                         name="date-of-birth-month"
                         required
@@ -226,6 +231,7 @@ const DOBForm = (props: DOBFormProps) => {
                         }}
                       />
                       <DTEDateInput.Year
+                        label={content["reusable-text-year"]}
                         id="date-of-birth-year"
                         name="date-of-birth-year"
                         required
@@ -260,9 +266,9 @@ const DOBForm = (props: DOBFormProps) => {
 
                     // 1.2.2.2 and 1.2.2.3
                     const missingFields = [
-                      ...(value.day === "" ? [content["reusable-text-day"]] : []),
-                      ...(value.month === "" ? [content["reusable-text-month"]] : []),
-                      ...(value.year === "" ? [content["reusable-text-year"]] : []),
+                      ...(value.day === "" ? [content["reusable-text-day"].toLowerCase()] : []),
+                      ...(value.month === "" ? [content["reusable-text-month"].toLowerCase()] : []),
+                      ...(value.year === "" ? [content["reusable-text-year"].toLowerCase()] : []),
                     ];
                     if (missingFields.length > 0) {
                       return `${content["register-date-of-birth-validation-required"]} ${missingFields.join(

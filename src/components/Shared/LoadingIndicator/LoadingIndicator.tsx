@@ -8,6 +8,7 @@ import { styledComponentsTheme } from "../../../theme";
 interface LoadingIndicatorProps {
   text?: string;
   colour?: string;
+  ariaLive?: "assertive" | "off" | "polite" | undefined;
 }
 const Loader = styled.div.attrs({
   alt: "Loader",
@@ -22,7 +23,7 @@ const Loader = styled.div.attrs({
   opacity: 1;
 `;
 
-function LoadingIndicator({ text = "Loading...", colour = undefined }: LoadingIndicatorProps) {
+function LoadingIndicator({ text = "Loading...", colour = undefined, ariaLive = "assertive" }: LoadingIndicatorProps) {
   const theme = useTheme() as typeof styledComponentsTheme;
   const defaultcolour = theme.NIHR.Blue;
   return (
@@ -31,7 +32,7 @@ function LoadingIndicator({ text = "Loading...", colour = undefined }: LoadingIn
         <Spinner name="folding-cube" color={colour ?? defaultcolour} fadeIn="none" />
         {/* </div> */}
       </Box>
-      <Typography variant="body1" aria-live="assertive" className="loader-message">
+      <Typography variant="body1" aria-live={ariaLive} className="loader-message">
         {text}
       </Typography>
     </Loader>
