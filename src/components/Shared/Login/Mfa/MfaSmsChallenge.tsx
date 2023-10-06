@@ -221,7 +221,7 @@ const MfaSmsChallenge = () => {
 
               pattern: {
                 value: /^\d{6}$/,
-                message: content["mfa-sms-challenge-validation-code-inva  lid"],
+                message: content["mfa-sms-challenge-validation-code-invalid"],
               },
             }}
           />
