@@ -20,17 +20,8 @@ import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../Password/showHide";
 import ThreeWords from "../Password/threeWords";
 import { ContentContext } from "../../../context/ContentContext";
-import commonPasswords from "../../../data/weakPassword";
 import Honeypot from "../Honeypot/Honeypot";
-
-interface PasswordPolicy {
-  minimumLength: number;
-  requireLowercase: boolean;
-  requireNumbers: boolean;
-  requireSymbols: boolean;
-  requireUppercase: boolean;
-  allowedPasswordSymbols?: string;
-}
+import validatePassword, { PasswordPolicy } from "../../../Helper/passwordValidation";
 
 const StyledDTEContent = styled(DTEContent)`
   && {
@@ -43,10 +34,6 @@ function ResetPassword() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   let requirePolicyComma: boolean;
-  let requireErrorMessageComma: boolean;
-  let minLengthErrorOccured: boolean;
-  let validationSuccess = true;
-  let includesStatement = "";
   const [policyBuilder, setPolicyBuilder] = useState("");
   const [passwordPolicy, setPasswordPolicy] = useState<PasswordPolicy>();
   const {
@@ -82,27 +69,6 @@ function ResetPassword() {
       }
       returnedValue += clauseText;
       requirePolicyComma = true;
-    }
-    return returnedValue;
-  };
-
-  const errorConstructor = (
-    errorConstructor: string,
-    errorClause: boolean,
-    errorCommaClauseText: string,
-    errorNonCommaClauseText: string,
-    errorSpecialConstructor?: boolean
-  ) => {
-    let returnedValue = errorConstructor;
-    if (errorClause) {
-      if (requireErrorMessageComma || (minLengthErrorOccured && errorSpecialConstructor)) {
-        returnedValue += `, ${includesStatement}${errorCommaClauseText}`;
-      } else {
-        returnedValue += `${includesStatement}${errorNonCommaClauseText}`;
-      }
-      requireErrorMessageComma = true;
-      includesStatement = "";
-      validationSuccess = false;
     }
     return returnedValue;
   };
@@ -222,100 +188,7 @@ function ResetPassword() {
                                   value: true,
                                   message: content["reusable-password-validation-required"],
                                 },
-                                validate: (value) => {
-                                  let passwordError = `${content["reusable-password-validation-required"]} ${content["reusable-text-that"]} `;
-                                  requireErrorMessageComma = false;
-                                  validationSuccess = true;
-                                  const regExMinLength = new RegExp(`^.{${passwordPolicy.minimumLength},}$`);
-                                  if (!regExMinLength.test(value)) {
-                                    passwordError += `${content["reusable-text-is"]} ${content["register-password-policy-builder-at-least"]} ${passwordPolicy.minimumLength} ${content["register-password-policy-builder-char-long"]}`;
-                                    minLengthErrorOccured = true;
-                                    includesStatement = ` ${content["reusable-text-and"]} ${content["reusable-text-includes"]} `;
-                                    validationSuccess = false;
-                                  } else {
-                                    includesStatement = `${content["reusable-text-includes"]} `;
-                                  }
-
-                                  if (passwordPolicy.requireUppercase) {
-                                    passwordError = errorConstructor(
-                                      passwordError,
-                                      !/[A-Z]/.test(value),
-                                      `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-uppercase"]}`,
-                                      `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-uppercase"]}`
-                                    );
-                                  }
-                                  if (passwordPolicy.requireLowercase) {
-                                    passwordError = errorConstructor(
-                                      passwordError,
-                                      !/[a-z]/.test(value),
-                                      `${content["register-password-policy-builder-include-lowercase"]}`,
-                                      `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-lowercase"]}`
-                                    );
-                                  }
-                                  if (passwordPolicy.requireNumbers) {
-                                    passwordError = errorConstructor(
-                                      passwordError,
-                                      !/\d/.test(value),
-                                      `${content["register-password-policy-builder-include-numbers"]}`,
-                                      `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-numbers"]}`
-                                    );
-                                  }
-                                  if (passwordPolicy.requireSymbols && passwordPolicy.allowedPasswordSymbols) {
-                                    const regExSymbols = new RegExp(
-                                      `[\\${passwordPolicy.allowedPasswordSymbols.replace(/ /g, "\\")}]`
-                                    );
-
-                                    passwordError = errorConstructor(
-                                      passwordError,
-                                      !regExSymbols.test(value),
-                                      `${content["register-password-policy-builder-include-symbols"]}`,
-                                      `${content["register-password-policy-builder-at-least"]} ${content["register-password-policy-builder-include-symbols"]}`
-                                    );
-                                  }
-
-                                  includesStatement = "";
-
-                                  passwordError = errorConstructor(
-                                    passwordError,
-                                    !/^[^ ]+$/.test(value),
-                                    content["register-password-policy-builder-include-no-spaces"],
-                                    content["register-password-policy-builder-include-no-spaces"],
-                                    true
-                                  );
-
-                                  if (passwordPolicy.allowedPasswordSymbols) {
-                                    const regExIllegal = new RegExp(
-                                      `[^a-zA-Z0-9 \\${passwordPolicy.allowedPasswordSymbols.replace(/ /g, "\\")}]`
-                                    );
-                                    passwordError = errorConstructor(
-                                      passwordError,
-                                      regExIllegal.test(value),
-                                      `${content["register-password-policy-builder-symbol-list"]} ##allowedsymbols##`,
-                                      `${content["register-password-policy-builder-symbol-list"]} ##allowedsymbols##`,
-                                      true
-                                    );
-                                  }
-
-                                  let finalErrorMessage = passwordError.replace(
-                                    /,([^,]*)$/,
-                                    ` ${content["reusable-text-and"]}$1`
-                                  );
-
-                                  const isCommonPassword = commonPasswords.includes(value.toLowerCase());
-                                  if (isCommonPassword) {
-                                    finalErrorMessage += `. ${content["register-password-policy-builder-symbol-list"]}`;
-                                    validationSuccess = false;
-                                  }
-
-                                  if (passwordPolicy.allowedPasswordSymbols) {
-                                    finalErrorMessage = finalErrorMessage.replace(
-                                      `##allowedsymbols##`,
-                                      passwordPolicy.allowedPasswordSymbols.replace(/ /g, "")
-                                    );
-                                  }
-
-                                  return validationSuccess ? true : finalErrorMessage;
-                                },
+                                validate: (value) => validatePassword(value, passwordPolicy, content),
                               }}
                             />
                             <Controller

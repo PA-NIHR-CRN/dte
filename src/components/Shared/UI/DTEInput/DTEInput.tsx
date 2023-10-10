@@ -54,26 +54,28 @@ function DTEInput({
     }
   };
   return error !== "" && error !== undefined ? (
-    <StyledInput
-      id={id}
-      name={name}
-      label={label}
-      error={error}
-      hint={hint}
-      required={required}
-      aria-describedby={`${id}--error-message`}
-      aria-required={required}
-      aria-invalid
-      disabled={disabled}
-      value={value}
-      type={type}
-      onChange={handleValueChange}
-      onBlur={onValueBlur}
-      autoFocus={autoFocus}
-      autoComplete={autocomplete}
-      spellCheck={spellcheck}
-      errorProps={{ role: "presentation" }}
-    />
+    <pre>
+      <StyledInput
+        id={id}
+        name={name}
+        label={label}
+        error={error}
+        hint={hint}
+        required={required}
+        aria-describedby={`${id}--error-message`}
+        aria-required={required}
+        aria-invalid
+        disabled={disabled}
+        value={value}
+        type={type}
+        onChange={handleValueChange}
+        onBlur={onValueBlur}
+        autoFocus={autoFocus}
+        autoComplete={autocomplete}
+        spellCheck={spellcheck}
+        errorProps={{ role: "presentation" }}
+      />
+    </pre>
   ) : (
     <StyledInput
       id={id}
