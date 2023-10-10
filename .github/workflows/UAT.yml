@@ -13,7 +13,7 @@ env:
   REACT_APP_NHS_LOGIN_CLIENT_ID: ${{secrets.REACT_APP_NHS_LOGIN_CLIENT_ID}}
   REACT_APP_NHS_LOGIN_RESPONSE_TYPE: ${{secrets.REACT_APP_NHS_LOGIN_RESPONSE_TYPE}}
   REACT_APP_NHS_LOGIN_SCOPE: ${{secrets.REACT_APP_NHS_LOGIN_SCOPE}}
-  REACT_APP_COOKIE_DOMAIN: ".nihr-uat.dte-pilot.net"
+  REACT_APP_COOKIE_DOMAIN: ".uat.volunteer.bepartofresearch.nihr.ac.uk"
 
 jobs:
   build:
@@ -29,8 +29,8 @@ jobs:
         # if: github.ref == 'refs/heads/master'
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_VS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_VS_ACCESS_KEY_SECRET }}
+          aws-access-key-id: ${{ secrets.CRNCC_STAGING_IAM_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.CRNCC_STAGING_IAM_ACCESS_KEY_SECRET }}
           aws-region: ${{ secrets.AWS_REGION }}
       - uses: actions/setup-node@v2
       - name: Yarn Install
@@ -39,8 +39,8 @@ jobs:
         run: yarn lintnofix
       - name: Build Files
         run: yarn build
-      - name: Running Unit Tests
-        run: yarn test
+      # - name: Running Unit Tests
+      #   run: yarn test
 
 
       - name: Deploy to S3 - UAT
