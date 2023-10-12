@@ -11,11 +11,12 @@ interface YouAreNowRegisteredFormProps {
   data: ContinueRegistrationState;
   setLoading: (loading: boolean) => void;
   setLoadingText: (text: string) => void;
+  setPrevRegistrationData: (text: string) => void;
 }
 function YouAreNowRegisteredForm(props: YouAreNowRegisteredFormProps) {
   const { content } = useContext(ContentContext);
   const { isInNHSApp } = useContext(AuthContext);
-  const { data, setLoading, setLoadingText } = props;
+  const { data, setLoading, setLoadingText, setPrevRegistrationData } = props;
 
   let disability = false;
   switch (data.disabilityFormData.disability) {
@@ -72,6 +73,12 @@ function YouAreNowRegisteredForm(props: YouAreNowRegisteredFormProps) {
     setLoadingText(content["reusable-loading-registering"]);
     setLoading(loading || false);
   }, [setLoading, setLoadingText, loading]);
+
+  useEffect(() => {
+    if (Utils.ConvertResponseToDTEResponse(response)?.isSuccess) {
+      setPrevRegistrationData("");
+    }
+  }, [response]);
 
   return (
     <>

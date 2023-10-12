@@ -127,7 +127,18 @@ export default function Header() {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const pathname = usePathname();
-  const pathsNotToShow = ["/ForgottenPassword"];
+  const pathsNotToShow = [
+    "/ForgottenPassword",
+    "/MfaLockedOut",
+    "/MfaSessionExpired",
+    "/MfaSecurityCodeExpired",
+    "/MfaChangePhoneNumber",
+    "/MfaChangeNumberConfirmEmail",
+    "/MfaTokenChallenge",
+    "/MfaTokenSetup",
+    "/MfaSmsChallenge",
+    "/MfaSmsSetup",
+  ];
   const shouldShowLanguageSelector = !pathsNotToShow.includes(pathname);
 
   const LanguageComponent = () => (

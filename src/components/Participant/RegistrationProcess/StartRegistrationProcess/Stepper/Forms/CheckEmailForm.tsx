@@ -12,6 +12,7 @@ import DTEHeader from "../../../../../Shared/UI/DTETypography/DTEHeader/DTEHeade
 import CheckYourEmail from "../../../../../Shared/FormElements/CommonElements/CheckYourEmail";
 import { ContentContext } from "../../../../../../context/ContentContext";
 import Cookies from "js-cookie";
+import { UserContext } from "../../../../../../context/UserContext";
 
 interface CheckEmailFormProps {
   initialStateData: RegistrationProcessState;
@@ -21,6 +22,7 @@ interface CheckEmailFormProps {
 
 function CheckEmailForm(props: CheckEmailFormProps) {
   const { content } = useContext(ContentContext);
+  const { setRegistrationData } = useContext(UserContext);
   const { initialStateData, setLoadingText, setLoading } = props;
   const history = useHistory();
 
@@ -56,6 +58,28 @@ function CheckEmailForm(props: CheckEmailFormProps) {
   useEffect(() => {
     if (Utils.ConvertResponseToDTEResponse(response)?.isSuccess) {
       ReactGA.pageview("/register/checkemail");
+      setRegistrationData({
+        nameFormData: {
+          firstName: "",
+          lastName: "",
+        },
+        dobFormData: {
+          day: "",
+          month: "",
+          year: "",
+        },
+        emailFormData: {
+          emailAddress: "",
+        },
+        passwordFormData: {
+          password: "",
+          password2: "",
+        },
+        consentFormData: {
+          consent: false,
+          consentContact: false,
+        },
+      });
     } else {
       ReactGA.pageview("/register/failed");
     }

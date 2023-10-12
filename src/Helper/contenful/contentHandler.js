@@ -3,7 +3,7 @@ import fetchAndTransformContent from "./fetchAndTransformContent";
 let content = null;
 
 async function fetchContent() {
-  content = await fetchAndTransformContent("en-GB", 500);
+  content = await fetchAndTransformContent("en-GB", 1000);
 }
 
 function getContent() {

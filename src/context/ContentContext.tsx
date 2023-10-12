@@ -8,9 +8,8 @@ import fetchAndTransformContent from "../Helper/contenful/fetchAndTransformConte
 import { AuthContext } from "./AuthContext";
 import useAxiosFetch from "../hooks/useAxiosFetch";
 
-// Define the type for the content context value
 interface ContentContextType {
-  content: any; // Define a more specific type if known
+  content: any;
   contentLoading: boolean;
   language: string;
   setLanguage: (language: string) => void;
@@ -26,7 +25,7 @@ export function ContentProvider({ children }: ContentProviderProps) {
   const { isAuthenticated } = useContext(AuthContext);
   const defaultLanguage = "en-GB";
   const [language, setLanguage] = useState<string>(Cookies.get("selectedLanguage") || defaultLanguage);
-  const [content, setContent] = useState<any>(null); // Define a more specific type if known
+  const [content, setContent] = useState<any>(null);
   const [contentLoading, setContentLoading] = useState(true);
   const { i18n } = useTranslation();
 
@@ -39,7 +38,7 @@ export function ContentProvider({ children }: ContentProviderProps) {
   );
 
   const contentfulFetch = (selectedLanguage: string) => {
-    fetchAndTransformContent(selectedLanguage, 100)
+    fetchAndTransformContent(selectedLanguage, 1000)
       .then((transformedContent) => {
         setContent(transformedContent);
       })

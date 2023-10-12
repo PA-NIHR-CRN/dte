@@ -98,7 +98,7 @@ const DisabilityForm = (props: DisabilityFormProps) => {
                 >
                   {content["reusable-no"]}
                 </Radios.Radio>
-                <DTEContent $radioList>or</DTEContent>
+                <DTEContent $radioList>{content["reusable-or"]}</DTEContent>
                 <Radios.Radio value="notSaying" defaultChecked={value === "notSaying"}>
                   {content["reusable-prefer-not-to-say"]}
                 </Radios.Radio>

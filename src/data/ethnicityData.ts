@@ -9,6 +9,7 @@ const getEthnicities = (content: any) => ({
       content["register2-ethnic-background-indian"],
       content["register2-ethnic-background-pakistani"],
     ],
+    additionalDesc: "asian",
   },
   black: {
     longName: content["reusable-black"],
@@ -19,6 +20,7 @@ const getEthnicities = (content: any) => ({
       content["register2-ethnic-background-black-british"],
       content["register2-ethnic-background-carribean"],
     ],
+    additionalDesc: "black",
   },
   mixed: {
     longName: content["reusable-mixed"],
@@ -29,6 +31,7 @@ const getEthnicities = (content: any) => ({
       content["register2-ethnic-background-black-african-white"],
       content["register2-ethnic-background-black-carribean-white"],
     ],
+    additionalDesc: content["register2-ethnic-background-mixed-short"],
   },
   white: {
     longName: content["reusable-white"],
@@ -40,12 +43,14 @@ const getEthnicities = (content: any) => ({
       content["register2-ethnic-background-irish-traveller"],
       content["register2-ethnic-background-roma"],
     ],
+    additionalDesc: "white",
   },
   other: {
     longName: content["reusable-other"],
     shortName: "other",
     description: content["register2-ethnic-background-arab-description"],
     backgrounds: [content["register2-ethnic-background-arab"]],
+    additionalDesc: "other",
   },
 });
 

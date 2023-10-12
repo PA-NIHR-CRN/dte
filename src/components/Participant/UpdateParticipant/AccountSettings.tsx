@@ -40,7 +40,7 @@ const StyledHiddenText = styled.span`
 `;
 
 function AccountSettings() {
-  const { content, setLanguage } = useContext(ContentContext);
+  const { content } = useContext(ContentContext);
   const containerRef = useRef<HTMLDivElement>(null);
   const { currentAccountPage: currentPage, setCurrentAccountPage: setCurrentPage } = useContext(UserContext);
   const [pageTitle, setPageTitle] = useState(content["accountsettings-document-title"]);
@@ -92,7 +92,6 @@ function AccountSettings() {
           currentEmail: DTEDetailsResponse.email,
         };
         setUserData(stateData);
-        setLanguage(response?.data?.selectedLocale);
       }
     }
   }, [response, userData]);

@@ -55,6 +55,8 @@ function ContinueRegistration() {
   const [changing, setChanging] = useState(false);
   const [pageTitle, setPageTitle] = useState(content["register2-address-document-title"]);
   const [gaURL, setGaURL] = useState("/registration/address");
+  const [prevRegistrationData, setPrevRegistrationData] = useState(JSON.stringify(registrationData));
+
   useEffect(() => {
     if (activeStep === 8) {
       setChanging(true);
@@ -86,7 +88,7 @@ function ContinueRegistration() {
   };
 
   useEffect(() => {
-    setLoadingText("Loading questions...");
+    setLoadingText(content["reusable-loading-questions"]);
     setLoading(loading || false);
   }, [loading, setLoadingText, setLoading]);
 
@@ -156,16 +158,19 @@ function ContinueRegistration() {
   };
 
   useEffect(() => {
-    if (registrationData.addressFormData.address.addressLine1) {
-      if (
-        changing &&
-        activeStep !== 3 &&
-        (activeStep !== 5 || registrationData.disabilityFormData.disability !== "yes")
-      ) {
-        setActiveStep(8);
-      } else {
-        handleNext();
+    if (JSON.stringify(registrationData) !== prevRegistrationData) {
+      if (registrationData.addressFormData.address.addressLine1) {
+        if (
+          changing &&
+          activeStep !== 3 &&
+          (activeStep !== 5 || registrationData.disabilityFormData.disability !== "yes")
+        ) {
+          setActiveStep(8);
+        } else {
+          handleNext();
+        }
       }
+      setPrevRegistrationData(JSON.stringify(registrationData));
     }
     if (activeStep !== 3 && activeStep !== 5) {
       setCancelData(registrationData);
@@ -340,7 +345,12 @@ function ContinueRegistration() {
         return <CheckAnswersForm initialStateData={registrationData} changeStep={setActiveStep} />;
       case 9:
         return (
-          <YouAreNowRegisteredForm data={registrationData} setLoading={setLoading} setLoadingText={setLoadingText} />
+          <YouAreNowRegisteredForm
+            data={registrationData}
+            setLoading={setLoading}
+            setLoadingText={setLoadingText}
+            setPrevRegistrationData={setPrevRegistrationData}
+          />
         );
 
       default:
@@ -510,6 +520,7 @@ function ContinueRegistration() {
               </PercentageGrid>
             </div>
             {loading && <LoadingIndicator text={loadingText} />}
+            <DTEContent>{activeStep}</DTEContent>
             <StepWrapper>{getStepContent(activeStep)}</StepWrapper>
           </>
         )}

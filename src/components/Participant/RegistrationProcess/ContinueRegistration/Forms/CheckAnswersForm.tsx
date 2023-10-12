@@ -6,6 +6,8 @@ import DTEContent from "../../../../Shared/UI/DTETypography/DTEContent/DTEConten
 import DTEButton from "../../../../Shared/UI/DTEButton/DTEButton";
 import DTELinkButton from "../../../../Shared/UI/DTELinkButton/DTELinkButton";
 import { ContentContext } from "../../../../../context/ContentContext";
+import mapParticipantBackgrounds from "../../../../../Helper/mapParticipantBackgrounds/mapParticipantBackgrounds";
+import mapParticipantDisabilityDesc from "../../../../../Helper/mapParticipantDisabilityDesc/mapParticipantDisabilityDesc";
 
 interface CheckAnswersFormProps {
   initialStateData: ContinueRegistrationState;
@@ -172,7 +174,9 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
             <DTEContent>{content["reusable-ethnic-background"]}</DTEContent>
           </dt>
           <dd className="govuk-summary-list__value">
-            <DTEContent>{initialStateData.ethnicity2FormData.background}</DTEContent>
+            <DTEContent>
+              {mapParticipantBackgrounds(initialStateData.ethnicity2FormData.background, content)}
+            </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(4)}>
@@ -207,7 +211,12 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
               <DTEContent>{content["reusable-reduced-ability-to-carry-out-daily-activities"]}</DTEContent>
             </dt>
             <dd className="govuk-summary-list__value">
-              <DTEContent>{initialStateData.disability2FormData.disabilityDescription}</DTEContent>
+              <DTEContent>
+                {mapParticipantDisabilityDesc(
+                  initialStateData.disability2FormData.disabilityDescription as string,
+                  content
+                )}
+              </DTEContent>
             </dd>
             <dd className="govuk-summary-list__actions">
               <DTELinkButton onClick={() => changeStep(6)}>

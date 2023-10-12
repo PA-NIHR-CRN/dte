@@ -86,7 +86,7 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
             ethnicities.other.backgrounds
           )
           .includes(initialStateData.background) && initialStateData.background !== ""
-          ? "other"
+          ? content["reusable-other"]
           : initialStateData.background,
     },
   });
@@ -123,7 +123,13 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
     }
   }, [isSubmitting]);
 
-  const ethnicityLabel = ethnicity === "mixed" ? ethnicity : ethnicity.charAt(0).toUpperCase() + ethnicity.slice(1);
+  const ethnicityEntry = ethnicities[ethnicity as keyof typeof ethnicities];
+  const defaultName = "Unknown"; // or any other fallback value
+
+  const ethnicityLabel =
+    ethnicity === "mixed" || !ethnicityEntry
+      ? ethnicityEntry?.additionalDesc || defaultName
+      : ethnicityEntry.longName.charAt(0).toUpperCase() + ethnicityEntry.longName.slice(1);
 
   return (
     <>

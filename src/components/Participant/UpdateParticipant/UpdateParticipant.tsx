@@ -27,6 +27,8 @@ import { AuthContext } from "../../../context/AuthContext";
 import { ContentContext } from "../../../context/ContentContext";
 import { UserContext } from "../../../context/UserContext";
 import getEthnicities from "../../../data/ethnicityData";
+import mapParticipantBackgrounds from "../../../Helper/mapParticipantBackgrounds/mapParticipantBackgrounds";
+import mapParticipantDisabilityDesc from "../../../Helper/mapParticipantDisabilityDesc/mapParticipantDisabilityDesc";
 
 interface UserDataState {
   address: AddressFormData;
@@ -637,7 +639,8 @@ function UpdateParticipant() {
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
-                          {userData.sex.sexAtBirth.charAt(0).toUpperCase() + userData.sex.sexAtBirth.slice(1)}
+                          {userData.sex.sexAtBirth === "female" && content["reusable-female"]}
+                          {userData.sex.sexAtBirth === "male" && content["reusable-male"]}
                         </DTEContent>
                       </dd>
                       <dd className="govuk-summary-list__actions">
@@ -655,9 +658,9 @@ function UpdateParticipant() {
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
-                          {userData.sex.genderAtBirth === "noSay"
-                            ? content["reusable-prefer-not-to-say"]
-                            : userData.sex.genderAtBirth.charAt(0).toUpperCase() + userData.sex.genderAtBirth.slice(1)}
+                          {userData.sex.genderAtBirth === "yes" && content["reusable-yes"]}
+                          {userData.sex.genderAtBirth === "no" && content["reusable-no"]}
+                          {userData.sex.genderAtBirth === "noSay" && content["reusable-prefer-not-to-say"]}
                         </DTEContent>
                       </dd>
                       <dd className="govuk-summary-list__actions">
@@ -690,7 +693,7 @@ function UpdateParticipant() {
                         <DTEContent>{content["reusable-ethnic-background"]}</DTEContent>
                       </dt>
                       <dd className="govuk-summary-list__value">
-                        <DTEContent>{userData.ethnicity2.background}</DTEContent>
+                        <DTEContent>{mapParticipantBackgrounds(userData.ethnicity2.background, content)}</DTEContent>
                       </dd>
                       <dd className="govuk-summary-list__actions">
                         <DTELinkButton onClick={() => setCurrentDisplayPage("ethnicity2")}>
@@ -705,10 +708,9 @@ function UpdateParticipant() {
                       </dt>
                       <dd className="govuk-summary-list__value">
                         <DTEContent>
-                          {userData.disability.disability === "notSaying"
-                            ? content["reusable-prefer-not-to-say"]
-                            : userData.disability.disability.charAt(0).toUpperCase() +
-                              userData.disability.disability.slice(1)}
+                          {userData.disability.disability === "yes" && content["reusable-yes"]}
+                          {userData.disability.disability === "no" && content["reusable-no"]}
+                          {userData.disability.disability === "notSaying" && content["reusable-prefer-not-to-say"]}
                         </DTEContent>
                       </dd>
                       <dd className="govuk-summary-list__actions">
@@ -726,7 +728,12 @@ function UpdateParticipant() {
                           <DTEContent>{content["reusable-reduced-ability-to-carry-out-daily-activities"]}</DTEContent>
                         </dt>
                         <dd className="govuk-summary-list__value">
-                          <DTEContent>{userData.disabilityDescription.disabilityDescription}</DTEContent>
+                          <DTEContent>
+                            {mapParticipantDisabilityDesc(
+                              userData.disabilityDescription.disabilityDescription as string,
+                              content
+                            )}
+                          </DTEContent>
                         </dd>
                         <dd className="govuk-summary-list__actions">
                           <DTELinkButton onClick={() => setCurrentDisplayPage("disability2")}>
@@ -929,7 +936,7 @@ function UpdateParticipant() {
               }
               nextButtonText={content["reusable-save"]}
               showCancelButton
-              ethnicity={userData?.ethnicity1.ethnicity || "other"}
+              ethnicity={userData?.ethnicity1.ethnicity || content["reusable-other"]}
             />
           </Container>
         )}

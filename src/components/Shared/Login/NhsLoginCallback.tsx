@@ -5,6 +5,7 @@ import Utils from "../../../Helper/Utils";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import { AuthContext } from "../../../context/AuthContext";
 import { ContentContext } from "../../../context/ContentContext";
+import Cookies from "js-cookie";
 
 const userIsUnderageErrorCode = "User_Is_Underage";
 const unableToMatchAccounts = "Unable_To_Match_Accounts";
@@ -27,6 +28,7 @@ function NhsLoginCallback() {
       data: {
         code: authCode,
         redirectUrl: `${process.env.REACT_APP_BASE_URL}/callback`,
+        selectedLocale: Cookies.get("selectedLanguage") || "en-GB",
       },
     },
     {
