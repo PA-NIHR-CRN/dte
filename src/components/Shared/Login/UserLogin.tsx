@@ -298,7 +298,9 @@ const UserLogin = () => {
                     </DTERouteLink>
                   </DTEContent>
                   <ButtonWrapper>
-                    <DTEButton disabled={loadingLogin}>Sign in</DTEButton>
+                    <DTEButton disabled={loadingLogin} testId="sign-in-button">
+                      Sign in
+                    </DTEButton>
                   </ButtonWrapper>
                 </form>
                 <ButtonWrapper>

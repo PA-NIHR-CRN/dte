@@ -11,7 +11,6 @@ describe("DTECheckList", () => {
         id="test"
         name="test"
         label="test"
-        required={false}
         values={[
           {
             value: "test",
@@ -21,6 +20,7 @@ describe("DTECheckList", () => {
           },
         ]}
         onValueChange={jest.fn()}
+        escKeyPressed={jest.fn()}
       />
     );
     const results = await axe(container);

@@ -7,6 +7,7 @@ interface DTEHeaderProps {
   $weight?: "normal" | "bold" | "lighter";
   $align?: "center" | "right";
   $platform?: "mobile" | "desktop";
+  testId?: string;
 }
 
 const getStyleData = (
@@ -80,7 +81,9 @@ const getColour = (
   }
 };
 
-const DTEHeader = styled.h1<DTEHeaderProps>`
+const DTEHeader = styled.h1.attrs<DTEHeaderProps>((props) => ({
+  "data-testid": props.testId,
+}))<DTEHeaderProps>`
   font-weight: ${(props) => (props.$weight ? props.$weight : "bold")};
   font-stretch: normal;
   font-style: normal;

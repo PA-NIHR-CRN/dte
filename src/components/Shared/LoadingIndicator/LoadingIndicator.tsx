@@ -11,6 +11,7 @@ interface LoadingIndicatorProps {
 }
 const Loader = styled.div.attrs({
   alt: "Loader",
+  "data-testid": "loader",
 })`
   display: flex;
   flex-direction: column;

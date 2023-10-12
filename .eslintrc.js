@@ -36,7 +36,7 @@ module.exports = {
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     "@typescript-eslint/no-empty-function": "off",
-    "react/require-default-props" : "off",
+    "react/require-default-props": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
     // note you must disable the base rule as it can report incorrect errors
@@ -65,11 +65,11 @@ module.exports = {
     // suppress errors for missing 'import React' in files
     "react/react-in-jsx-scope": "off",
     "no-empty-interface": "off",
-    'prettier/prettier': [
-      'error',
+    "prettier/prettier": [
+      "error",
       {
-        'endOfLine': 'auto',
-      }
-    ]
+        endOfLine: "auto",
+      },
+    ],
   },
 };

@@ -24,6 +24,7 @@ interface Props {
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
   ariaLabel?: string;
+  testId?: string;
 }
 
 export const baseButton = css<baseButtonProps>`
@@ -125,6 +126,7 @@ const DTEButton = ({
   onKeyDown,
   disabled,
   $danger,
+  testId,
 }: Props & baseButtonProps) => {
   return (
     <StyledButton
@@ -143,6 +145,7 @@ const DTEButton = ({
       disabled={disabled}
       $backArrow={$backArrow}
       $danger={$danger}
+      data-testid={testId}
     >
       {$backArrow ? (
         <Grid

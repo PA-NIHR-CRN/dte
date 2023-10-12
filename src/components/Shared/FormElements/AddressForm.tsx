@@ -173,7 +173,11 @@ const AddressForm = (props: AddressFormProps) => {
   return (
     <>
       {!hideHeader && (
-        <DTEHeader as="h1" $variant={headerVariant}>
+        <DTEHeader
+          as="h1"
+          $variant={headerVariant}
+          testId="address-form-header"
+        >
           What is your home address?
         </DTEHeader>
       )}
