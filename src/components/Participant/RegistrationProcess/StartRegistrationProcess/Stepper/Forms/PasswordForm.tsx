@@ -14,7 +14,7 @@ import PasswordShowHide from "../../../../../Shared/Password/showHide";
 import ThreeWords from "../../../../../Shared/Password/threeWords";
 import { ContentContext } from "../../../../../../context/ContentContext";
 import Honeypot from "../../../../../Shared/Honeypot/Honeypot";
-import validatePassword, { PasswordPolicy } from "../../../../../../Helper/passwordValidation";
+import validatePassword, { PasswordPolicy } from "../../../../../../Helper/passwordValidation/passwordValidation";
 
 export type PasswordFormData = {
   password: string;

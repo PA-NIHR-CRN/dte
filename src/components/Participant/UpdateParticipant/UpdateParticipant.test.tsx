@@ -222,7 +222,9 @@ describe("UpdateParticipant display tests", () => {
     expect(longTermIllnes).toBeInTheDocument();
     const longTermIllnesImpactHeader = await screen.findByText("Reduced ability to carry out daily activities");
     expect(longTermIllnesImpactHeader).toBeInTheDocument();
-    const longTermIllnesImpact = await screen.findByText("Prefer not to say");
+    const longTermIllnesImpact = await screen.findByText(
+      "I would prefer not to say how much my condition reduces my ability to carry out day to day activities"
+    );
     expect(longTermIllnesImpact).toBeInTheDocument();
   });
 
@@ -1063,7 +1065,9 @@ describe("Update participant Long Term Illness", () => {
     });
 
     const longTermIllness = await screen.findByText("Yes");
-    const longTermIllnessAbility = await screen.findByText("Prefer not to say");
+    const longTermIllnessAbility = await screen.findByText(
+      "I would prefer not to say how much my condition reduces my ability to carry out day to day activities"
+    );
     expect(longTermIllness).toBeInTheDocument();
     expect(longTermIllnessAbility).toBeInTheDocument();
   });
@@ -1141,7 +1145,9 @@ describe("Update participant Long Term Illness", () => {
     });
 
     const longTermIllness = await screen.findByText("Yes");
-    const longTermIllnessAbility = await screen.findByText("Prefer not to say");
+    const longTermIllnessAbility = await screen.findByText(
+      "I would prefer not to say how much my condition reduces my ability to carry out day to day activities"
+    );
     expect(longTermIllness).toBeInTheDocument();
     expect(longTermIllnessAbility).toBeInTheDocument();
   });

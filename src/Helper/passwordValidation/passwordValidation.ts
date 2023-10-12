@@ -28,12 +28,12 @@ const validatePassword = (
     validationSuccess = false;
   }
 
-  if (passwordPolicy.requireUppercase && !/[A-Z]/.test(value)) {
+  if (passwordPolicy.requireUppercase && !/[a-z]/.test(value)) {
     passwordErrors.push(`${content["register-password-policy-builder-includes-lowercase"]}`);
     validationSuccess = false;
   }
 
-  if (passwordPolicy.requireLowercase && !/[a-z]/.test(value)) {
+  if (passwordPolicy.requireLowercase && !/[A-Z]/.test(value)) {
     passwordErrors.push(`${content["register-password-policy-builder-includes-capital"]}`);
     validationSuccess = false;
   }

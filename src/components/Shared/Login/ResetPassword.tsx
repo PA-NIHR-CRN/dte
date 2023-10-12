@@ -21,7 +21,7 @@ import PasswordShowHide from "../Password/showHide";
 import ThreeWords from "../Password/threeWords";
 import { ContentContext } from "../../../context/ContentContext";
 import Honeypot from "../Honeypot/Honeypot";
-import validatePassword, { PasswordPolicy } from "../../../Helper/passwordValidation";
+import validatePassword, { PasswordPolicy } from "../../../Helper/passwordValidation/passwordValidation";
 
 const StyledDTEContent = styled(DTEContent)`
   && {
