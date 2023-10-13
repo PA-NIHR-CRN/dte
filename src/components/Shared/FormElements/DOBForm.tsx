@@ -325,7 +325,7 @@ const DOBForm = (props: DOBFormProps) => {
             </StyledFieldset>
             {!hideInfo && content["register-date-of-birth"]}
             <FormNavigationButtons
-              nextButtonText={nextButtonText || "Continue"}
+              nextButtonText={nextButtonText || content["reusable-continue"]}
               showCancelButton={showCancelButton || false}
               cancelButtonText={content["reusable-cancel"]}
               onCancel={onCancel}

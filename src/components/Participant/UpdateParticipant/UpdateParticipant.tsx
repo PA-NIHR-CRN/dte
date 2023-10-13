@@ -895,7 +895,7 @@ function UpdateParticipant() {
                   ethnicity: "",
                 }
               }
-              nextButtonText="Continue"
+              nextButtonText={content["reusable-continue"]}
               showCancelButton
               hideHeader
               instructionText={

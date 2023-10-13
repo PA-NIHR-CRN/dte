@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import React, { useEffect, createRef, useState, useMemo, useContext } from "react";
+import React, { useEffect, createRef, useState, useMemo, useContext, useRef } from "react";
 import ReactGA from "react-ga";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
@@ -56,6 +56,7 @@ function ContinueRegistration() {
   const [changing, setChanging] = useState(false);
   const [pageTitle, setPageTitle] = useState(content["register2-address-document-title"]);
   const [gaURL, setGaURL] = useState("/registration/address");
+  const justMounted = useRef(true);
 
   useEffect(() => {
     if (activeStep === 8) {
@@ -78,6 +79,7 @@ function ContinueRegistration() {
     if (stepperRef?.current) {
       stepperRef.current.focus();
     }
+    updatePageTitle(activeStep);
   }, [activeStep]);
 
   const [cancelData, setCancelData] = useState<ContinueRegistrationState | null>(null);
@@ -157,6 +159,10 @@ function ContinueRegistration() {
   };
 
   useEffect(() => {
+    if (justMounted.current) {
+      justMounted.current = false;
+      return;
+    }
     if (registrationData.addressFormData.address.addressLine1) {
       if (
         changing &&
@@ -168,6 +174,9 @@ function ContinueRegistration() {
         handleNext();
       }
     }
+  }, [registrationData]);
+
+  useEffect(() => {
     if (activeStep !== 3 && activeStep !== 5) {
       setCancelData(registrationData);
     }
@@ -216,8 +225,6 @@ function ContinueRegistration() {
           />
         );
       case 1:
-        setPageTitle(content["register2-phone-document-title"]);
-        setGaURL("/registration/phone");
         return (
           <MobileNumberForm
             onDataChange={(data: MobileFormData) => handleRegistrationDataChange(data, "mobileFormData")}
@@ -228,8 +235,6 @@ function ContinueRegistration() {
           />
         );
       case 2:
-        setPageTitle(content["register2-sex-gender-document-title"]);
-        setGaURL("/registration/sex");
         return (
           <SexForm
             onDataChange={(data: SexFormData) => handleRegistrationDataChange(data, "sexFormData")}
@@ -240,8 +245,6 @@ function ContinueRegistration() {
           />
         );
       case 3:
-        setPageTitle(content["register2-ethnic-group-document-title"]);
-        setGaURL("/registration/ethnicgroup");
         return changing ? (
           <Ethnicity1Form
             onDataChange={(data: Ethnicity1FormData) => {
@@ -270,8 +273,6 @@ function ContinueRegistration() {
           />
         );
       case 4:
-        setPageTitle(content["register2-ethnic-background-document-title"]);
-        setGaURL("/registration/ethnicbackground");
         return (
           <Ethnicity2Form
             onDataChange={(data: Ethnicity2FormData) => handleRegistrationDataChange(data, "ethnicity2FormData")}
@@ -283,8 +284,6 @@ function ContinueRegistration() {
           />
         );
       case 5:
-        setPageTitle(content["register2-disability-document-title"]);
-        setGaURL("/registration/conditions");
         return changing ? (
           <DisabilityForm
             onDataChange={(data: DisabilityFormData) => {
@@ -326,8 +325,6 @@ function ContinueRegistration() {
           />
         );
       case 6:
-        setPageTitle(content["register2-reduced-ability-document-title"]);
-        setGaURL("/registration/reducedability");
         return (
           <Disability2Form
             onDataChange={(data: Disability2FormData) => handleRegistrationDataChange(data, "disability2FormData")}
@@ -338,8 +335,6 @@ function ContinueRegistration() {
           />
         );
       case 7:
-        setPageTitle(content["register2-health-conditions-document-title"]);
-        setGaURL("/registration/areasofresearch");
         return (
           <HealthConditionsForm
             onDataChange={(data: HealthConditionFormData) =>
@@ -352,20 +347,66 @@ function ContinueRegistration() {
           />
         );
       case 8:
-        setPageTitle(content["register2-check-your-answers-document-title"]);
-        setGaURL("/registration/checkyouranswers");
         return <CheckAnswersForm initialStateData={registrationData} changeStep={setActiveStep} />;
       case 9:
-        setPageTitle(content["register2-you-are-now-registered-document-title"]);
-        setGaURL("/registration/complete");
         return (
           <YouAreNowRegisteredForm data={registrationData} setLoading={setLoading} setLoadingText={setLoadingText} />
         );
 
       default:
-        setPageTitle(content["register2-address-document-title"]);
-        setGaURL("/registration/address");
         return "Unknown step";
+    }
+  };
+
+  const updatePageTitle = (step: number) => {
+    switch (step) {
+      case 1:
+        setPageTitle("What is your phone number? - Volunteer Registration - Be Part of Research");
+        setGaURL("/registration/phone");
+        break;
+      case 2:
+        setPageTitle("Sex and gender identity - Volunteer Registration - Be Part of Research");
+        setGaURL("/registration/sex");
+        break;
+      case 3:
+        setPageTitle("What is your ethnic group? - Volunteer Registration - Be Part of Research");
+        setGaURL("/registration/ethnicgroup");
+        break;
+      case 4:
+        setPageTitle(
+          "Which of the following best describes your ethnic background? - Volunteer Registration - Be Part of Research"
+        );
+        setGaURL("/registration/ethnicbackground");
+        break;
+      case 5:
+        setPageTitle(
+          "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more? - Volunteer Registration - Be Part of Research"
+        );
+        setGaURL("/registration/conditions");
+        break;
+      case 6:
+        setPageTitle(
+          "Do any of your conditions or illnesses reduce your ability to carry out day-to-day activities? - Volunteer Registration - Be Part of Research"
+        );
+        setGaURL("/registration/reducedability");
+        break;
+      case 7:
+        setPageTitle("Which areas of research are you interested in? - Volunteer Registration - Be Part of Research");
+        setGaURL("/registration/areasofresearch");
+        break;
+      case 8:
+        setPageTitle(
+          "Check your answers before completing your registration - Volunteer Registration - Be Part of Research"
+        );
+        setGaURL("/registration/checkyouranswers");
+        break;
+      case 9:
+        setPageTitle("Thank you for registering with Be Part of Research - Volunteer Account - Be Part of Research");
+        setGaURL("/registration/complete");
+        break;
+      default:
+        setPageTitle("What is your home address? - Volunteer Registration - Be Part of Research");
+        setGaURL("/registration/address");
     }
   };
 
