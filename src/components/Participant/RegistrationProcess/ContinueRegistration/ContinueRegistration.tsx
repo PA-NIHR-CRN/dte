@@ -520,7 +520,6 @@ function ContinueRegistration() {
               </PercentageGrid>
             </div>
             {loading && <LoadingIndicator text={loadingText} />}
-            <DTEContent>{activeStep}</DTEContent>
             <StepWrapper>{getStepContent(activeStep)}</StepWrapper>
           </>
         )}
