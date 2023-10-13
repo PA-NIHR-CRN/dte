@@ -67,13 +67,13 @@ const customCodeLookup = (code: string, content: any, detail?: string | ReactNod
       return defaultErrorMessage;
     case "Unknown_Error_Getting_Addresses_From_LocationService_Error":
       return defaultErrorMessage;
-    case "MFA_Session_Expired":
+    case "Mfa_Session_Expired":
       return content["error-message-mfa-session-expired"];
-    case "MFA_Code_Mismatch":
+    case "Mfa_Code_Mismatch":
       return content["error-message-mfa-code-mismatch"];
-    case "MFA_Code_Expired":
+    case "Mfa_Code_Expired":
       return content["error-message-mfa-code-mismatch"];
-    case "MFA_User_Not_Found":
+    case "Mfa_User_Not_Found":
       return content["error-message-mfa-account-unverified"];
     case "Mfa_Used_Token":
       return content["error-message-mfa-code-used"];

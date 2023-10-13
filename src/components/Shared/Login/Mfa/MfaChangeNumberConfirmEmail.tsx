@@ -98,7 +98,7 @@ const MfaChangeNumberConfirmEmail = () => {
       },
     });
     const response = Utils.ConvertResponseToDTEResponse(res);
-    if (response?.errors?.some((e) => e.customCode === "MFA_Code_Expired")) {
+    if (response?.errors?.some((e) => e.customCode === "Mfa_Code_Expired")) {
       history.push("/MfaSecurityCodeExpired");
     }
     if (response?.isSuccess) {

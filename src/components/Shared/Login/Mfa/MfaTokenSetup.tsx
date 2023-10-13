@@ -102,7 +102,7 @@ const MfaTokenSetup = () => {
       setMfaDetails(result?.errors[0]?.detail as string);
       history.push("/MfaTokenChallenge");
     }
-    if (result?.errors?.some((e) => e.customCode === "MFA_Session_Expired")) {
+    if (result?.errors?.some((e) => e.customCode === "Mfa_Session_Expired")) {
       history.push("/MfaSessionExpired");
     }
     if (result?.isSuccess) {
@@ -120,7 +120,7 @@ const MfaTokenSetup = () => {
   }, [isSubmitting, totpMfaResponse, convertedError]);
 
   return (
-    <DocumentTitle title="MFA Setup Token">
+    <DocumentTitle title={content["mfa-token-setup-document-title"]}>
       <StepWrapper>
         <ErrorMessageContainer
           axiosErrors={[totpMfaError]}
