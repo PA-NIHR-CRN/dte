@@ -114,7 +114,7 @@ const DisabilityForm = (props: DisabilityFormProps) => {
         />
         {!hideInfo && content["register2-disability"]}
         <FormNavigationButtons
-          nextButtonText={disabilityNextButtonText || content["reusable-continue"]}
+          nextButtonText={disabilityNextButtonText || content["reusable-button-continue"]}
           showCancelButton={disabilityShowCancelButton || false}
           cancelButtonText={content["reusable-cancel"]}
           onCancel={onCancel}

@@ -208,7 +208,7 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
             />
             {!hideInfo && content["register2-ethnic-background"]}
             <FormNavigationButtons
-              nextButtonText={nextButtonText || content["reusable-continue"]}
+              nextButtonText={nextButtonText || content["reusable-button-continue"]}
               showCancelButton={showCancelButton || false}
               cancelButtonText={content["reusable-cancel"]}
               onCancel={onCancel}
