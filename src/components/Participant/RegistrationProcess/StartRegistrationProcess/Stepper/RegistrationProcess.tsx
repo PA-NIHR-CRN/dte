@@ -18,6 +18,7 @@ import NoConsent from "./Forms/NoConsent";
 import LoadingIndicator from "../../../../Shared/LoadingIndicator/LoadingIndicator";
 import { ContentContext } from "../../../../../context/ContentContext";
 import { UserContext } from "../../../../../context/UserContext";
+import calculatePercentageComplete from "../../../../../Helper/calculatePercentageComplete/calculatePercentageComplete";
 
 const PercentageGrid = styled(Grid)`
   && {
@@ -179,10 +180,6 @@ function RegsitrationProcess() {
       default:
         return "Unknown step";
     }
-  };
-
-  const calculatePercentageComplete = (step: number, totalSteps: number) => {
-    return Math.round((step / totalSteps) * 100);
   };
 
   const updateRegistrationPageTitle = (step: number) => {

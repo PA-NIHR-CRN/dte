@@ -70,26 +70,14 @@ afterAll(() => {
 
 describe("Demographics Api Success Tests", () => {
   it("must display the correct screen for a successfull post", async () => {
-    render(
-      <YouAreNowRegisteredForm
-        data={testData}
-        setLoading={mockSetLoading}
-        setLoadingText={mockSetLoadingText}
-        setPrevRegistrationData={mockSetPrevRegistrationData}
-      />
-    );
+    render(<YouAreNowRegisteredForm data={testData} setLoading={mockSetLoading} setLoadingText={mockSetLoadingText} />);
 
     expect(await screen.findByText("Thank you for registering for Be Part of Research")).toBeInTheDocument();
   });
 
   it("must not fail any accessibility tests for populated data", async () => {
     const { container } = render(
-      <YouAreNowRegisteredForm
-        data={testData}
-        setLoading={mockSetLoading}
-        setLoadingText={mockSetLoadingText}
-        setPrevRegistrationData={mockSetPrevRegistrationData}
-      />
+      <YouAreNowRegisteredForm data={testData} setLoading={mockSetLoading} setLoadingText={mockSetLoadingText} />
     );
 
     const results = await axe(container);
