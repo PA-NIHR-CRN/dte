@@ -35,7 +35,10 @@ git clone https://github.com/PA-NIHR-CRN/dte.git
 cd dte
 ```
 
-new comment 4. Install the required dependencies:
+new comment
+some other changes
+
+4. Install the required dependencies:
 
 ```
 yarn install
