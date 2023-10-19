@@ -132,6 +132,5 @@
     "*.{js,ts,tsx}": [
       "eslint --fix"
     ]
-  },
-  "packageManager": "yarn@3.6.4"
+  }
 }
