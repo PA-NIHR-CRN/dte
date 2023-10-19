@@ -1,16 +1,15 @@
 import styled from "styled-components";
 import React, { useEffect, useState } from "react";
-import DTEContent from "../DTETypography/DTEContent/DTEContent";
 
 const ButtonWrapper = styled.div`
   margin-top: 1rem;
+  margin-right: 2em;
 `;
 
 interface NhsLoginButtonProps {
-  helperText?: string;
   buttonText: string;
 }
-function NhsLoginButton({ helperText, buttonText }: NhsLoginButtonProps) {
+function NhsLoginButton({ buttonText }: NhsLoginButtonProps) {
   const [nhsLoginUrl, setNhsLoginUrl] = useState("");
 
   useEffect(() => {
@@ -26,9 +25,6 @@ function NhsLoginButton({ helperText, buttonText }: NhsLoginButtonProps) {
 
   return (
     <>
-      <div className="govuk-details__text">
-        <DTEContent>{helperText}</DTEContent>
-      </div>
       <ButtonWrapper>
         <a href={nhsLoginUrl} className="nhslogin-button" type="submit">
           {buttonText}

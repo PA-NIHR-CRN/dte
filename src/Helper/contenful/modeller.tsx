@@ -7,6 +7,7 @@ import React, { ReactNode } from "react";
 import DTETable from "../../components/Shared/UI/DTETable/DTETable";
 import DTEDetails from "../../components/Shared/UI/DTEDetails/DTEDetails";
 import DTEHR from "../../components/Shared/UI/DTEHR/DTEHR";
+import { Stack } from "@mui/material";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -40,15 +41,15 @@ const extractValueFromNode = (node: any) => {
   }
   return null;
 };
-
-const renderContent = (node: any, parentNodeType?: string) => {
+const renderedIndexes = new Set<number>();
+const renderContent = (node: any, parentNodeType?: string, currentIndex?: number, totalContent?: any[]) => {
   if (!node || !node.nodeType) {
     return null; // or some other default value
   }
   switch (node.nodeType) {
     case "document":
       return node.content.map((childNode: any, index: number) => (
-        <React.Fragment key={index}>{renderContent(childNode, node.nodeType)}</React.Fragment>
+        <React.Fragment key={index}>{renderContent(childNode, node.nodeType, index, node.content)}</React.Fragment>
       ));
     case "heading-1":
       return (
@@ -124,6 +125,13 @@ const renderContent = (node: any, parentNodeType?: string) => {
       const contentTypeID = node?.data?.target?.sys?.contentType?.sys?.id;
 
       if (contentTypeID === "button") {
+        if (currentIndex !== undefined && renderedIndexes.has(currentIndex)) {
+          return null;
+        }
+        currentIndex !== undefined && renderedIndexes.add(currentIndex);
+      }
+
+      if (contentTypeID === "button") {
         return (
           <ButtonWrapper>
             <DTERouteLink
@@ -138,11 +146,23 @@ const renderContent = (node: any, parentNodeType?: string) => {
           </ButtonWrapper>
         );
       } else if (contentTypeID === "nhsLoginButton") {
+        let nextNodeComponent = null;
+        if (totalContent && currentIndex !== undefined && totalContent[currentIndex + 1]) {
+          nextNodeComponent = totalContent[currentIndex + 1];
+          renderedIndexes.add(currentIndex + 1);
+        }
         return (
-          <NhsLoginButton
-            buttonText={node.data.target.fields.buttonText}
-            helperText={node.data.target.fields.helperText}
-          />
+          <>
+            {node.data.target.fields.showHelperText && (
+              <div className="govuk-details__text">
+                <DTEContent>{node.data.target.fields.helperText}</DTEContent>
+              </div>
+            )}
+            <Stack flexDirection="row">
+              <NhsLoginButton buttonText={node.data.target.fields.buttonText} />
+              {nextNodeComponent && renderContent(nextNodeComponent)}
+            </Stack>
+          </>
         );
       } else if (contentTypeID === "vsAccordion") {
         const summary = node.data.target.fields.summary;

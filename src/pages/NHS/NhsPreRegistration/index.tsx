@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import ReactGA from "react-ga";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import DTEContent from "../../../components/Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEDetails from "../../../components/Shared/UI/DTEDetails/DTEDetails";
 import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTERouteLink from "../../../components/Shared/UI/DTERouteLink/DTERouteLink";
 import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
-import DTEButton from "../../../components/Shared/UI/DTEButton/DTEButton";
 import React, { useContext } from "react";
 import { ContentContext } from "../../../context/ContentContext";
 
@@ -21,7 +20,6 @@ const AccordionWrapper = styled.div`
 
 function NhsPreRegistration() {
   const { content } = useContext(ContentContext);
-  const history = useHistory();
   return (
     <>
       <Helmet
@@ -62,36 +60,36 @@ function NhsPreRegistration() {
           </DTEDetails>
         </AccordionWrapper>
         <ButtonWrapper>
-          <DTEButton
+          <Link
+            to="/Participants/Register"
+            role="button"
+            draggable="false"
+            className="govuk-button govuk-button--start"
+            data-module="govuk-button"
+            style={{ backgroundColor: "#193e72" }}
             onClick={() => {
-              history.push("/Participants/Register");
               ReactGA.event({
                 category: "Internal Link Clicks",
                 action: "https://volunteer.bepartofresearch.nihr.ac.uk/Participants/Register",
                 label: "Register",
               });
             }}
-            ariaLabel="Continue to register for an account"
           >
-            {content["introduction-button-register"]}
-          </DTEButton>
+            {content["introduction-button-start-now"]}
+            <svg
+              className="govuk-button__start-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="17.5"
+              height="19"
+              viewBox="0 0 33 40"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+            </svg>
+          </Link>
         </ButtonWrapper>
-        <DTEContent>{content["introduction-text-account"]}</DTEContent>
-        <ButtonWrapper>
-          <DTEButton
-            $outlined
-            onClick={() => {
-              history.push("/Participants/Options");
-              ReactGA.event({
-                category: "Internal Link Clicks",
-                action: "https://volunteer.bepartofresearch.nihr.ac.uk/Participants/Options",
-                label: "Sign in",
-              });
-            }}
-          >
-            {content["reusable-button-signin"]}
-          </DTEButton>
-        </ButtonWrapper>
+        <ButtonWrapper>{content["introduction-text-sign-in"]}</ButtonWrapper>
       </StepWrapper>
     </>
   );

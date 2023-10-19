@@ -3,11 +3,11 @@ import { Control, Controller, UseFormSetValue } from "react-hook-form";
 import React, { useContext } from "react";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
-import DTEButton from "../../UI/DTEButton/DTEButton";
 import DTEInput from "../../UI/DTEInput/DTEInput";
 import { EmailRegex } from "../../../../Helper/Utils";
 import PasswordShowHide from "../../Password/showHide";
 import { ContentContext } from "../../../../context/ContentContext";
+import DTEButton from "../../UI/DTEButton/DTEButton";
 
 const ButtonWrapper = styled.div`
   margin-top: 1rem;
@@ -17,7 +17,6 @@ type UserLoginFormProps = {
   loadingLogin: boolean | undefined;
   control: Control<{ email: string; password: string }>;
   setValue: UseFormSetValue<{ email: string; password: string }>;
-  nested?: boolean;
 };
 
 const UserLoginForm: React.FC<UserLoginFormProps> = ({ loadingLogin, control, setValue }) => {

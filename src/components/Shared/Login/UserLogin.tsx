@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Grid } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -10,7 +10,6 @@ import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContainer";
 import { DTEAxiosResponse, DTEAxiosError } from "../../../types/AuthTypes";
 import Utils from "../../../Helper/Utils";
-import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import CheckYourEmail from "../FormElements/CommonElements/CheckYourEmail";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
@@ -188,7 +187,7 @@ const UserLogin = (props: UserLoginProps) => {
             )}
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <Honeypot />
-            <UserLoginForm control={control} loadingLogin={loadingLogin} setValue={setValue} nested />
+            <UserLoginForm control={control} loadingLogin={loadingLogin} setValue={setValue} />
           </form>
         </>
       ) : (
@@ -197,7 +196,7 @@ const UserLogin = (props: UserLoginProps) => {
             {loadingLogin && <LoadingIndicator text={content["signin-loading-signin"]} />}
             {resendLoading && <LoadingIndicator text={content["signin-loading-resend"]} />}
             {!loadingLogin && !resendLoading && (
-              <Grid container alignItems="center" direction="row" justifyContent="flex-start">
+              <Grid container alignItems="center" justifyContent="flex-start">
                 <Grid item sm={2} md={1} />
                 <StyledGridElementLeft item xs={12} sm={10} md={11}>
                   <DTEBackLink href="/Participants/Options" linkText={content["reusable-back-link"]} />
@@ -220,12 +219,8 @@ const UserLogin = (props: UserLoginProps) => {
                     <form onSubmit={handleSubmit(onSubmit)} noValidate>
                       <Honeypot />
                       <UserLoginForm control={control} loadingLogin={loadingLogin} setValue={setValue} />
+                      <ButtonWrapper>{content["signin-text-register"]}</ButtonWrapper>
                     </form>
-                    <ButtonWrapper>
-                      <DTERouteLink to="/Participants/register" disabled={loadingLogin} $outlined>
-                        {content["signin-button-registerwithbpor"]}
-                      </DTERouteLink>
-                    </ButtonWrapper>
                   </>
                 )}
                 {resendDTEResponse?.isSuccess && <CheckYourEmail emailAddress={email} />}
