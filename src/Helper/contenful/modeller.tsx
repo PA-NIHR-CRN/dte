@@ -1,13 +1,13 @@
+import React, { ReactNode } from "react";
+import styled from "styled-components";
+import { Stack } from "@mui/material";
 import DTEHeader from "../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../components/Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTERouteLink from "../../components/Shared/UI/DTERouteLink/DTERouteLink";
-import NhsLoginButton from "../../components/Shared/UI/NhsLoginButton";
-import styled from "styled-components";
-import React, { ReactNode } from "react";
 import DTETable from "../../components/Shared/UI/DTETable/DTETable";
 import DTEDetails from "../../components/Shared/UI/DTEDetails/DTEDetails";
 import DTEHR from "../../components/Shared/UI/DTEHR/DTEHR";
-import { Stack } from "@mui/material";
+import NhsLoginButton from "../../components/Shared/UI/NhsLoginButton";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -16,6 +16,25 @@ const ButtonWrapper = styled.div`
 const StyledDTEHR = styled(DTEHR)`
   margin-top: 2.5em;
 `;
+
+interface NodeType {
+  content: any[];
+  nodeType: string;
+}
+
+type HeaderType = "h1" | "h2" | "h3" | "h4";
+
+const HeaderMap: Record<string, HeaderType> = {
+  "heading-1": "h1",
+  "heading-2": "h2",
+  "heading-3": "h3",
+  "heading-4": "h4",
+};
+
+const renderHeader = (node: NodeType) => {
+  const headerType = HeaderMap[node.nodeType];
+  return <DTEHeader as={headerType}>{node.content.map((child) => renderContent(child, node.nodeType))}</DTEHeader>;
+};
 
 const getTextStyles = (node: any, parentNodeType: string | undefined): React.CSSProperties | undefined => {
   if (node.nodeType !== "text" || (typeof parentNodeType === "string" && parentNodeType.startsWith("heading")))
@@ -52,40 +71,10 @@ const renderContent = (node: any, parentNodeType?: string, currentIndex?: number
         <React.Fragment key={index}>{renderContent(childNode, node.nodeType, index, node.content)}</React.Fragment>
       ));
     case "heading-1":
-      return (
-        <DTEHeader as="h1">
-          {node.content.map((childNode: any, index: number) => (
-            <React.Fragment key={index}>{renderContent(childNode, node.nodeType)}</React.Fragment>
-          ))}
-        </DTEHeader>
-      );
     case "heading-2":
-      return (
-        <DTEHeader as="h2">
-          {node.content.map((childNode: any, index: number) => (
-            <React.Fragment key={index}>{renderContent(childNode, node.nodeType)}</React.Fragment>
-          ))}
-        </DTEHeader>
-      );
-
     case "heading-3":
-      return (
-        <DTEHeader as="h3">
-          {node.content.map((childNode: any, index: number) => (
-            <React.Fragment key={index}>{renderContent(childNode, node.nodeType)}</React.Fragment>
-          ))}
-        </DTEHeader>
-      );
-
     case "heading-4":
-      return (
-        <DTEHeader as="h4">
-          {node.content.map((childNode: any, index: number) => (
-            <React.Fragment key={index}>{renderContent(childNode, node.nodeType)}</React.Fragment>
-          ))}
-        </DTEHeader>
-      );
-
+      return renderHeader(node);
     case "paragraph":
       return (
         <DTEContent>
@@ -122,9 +111,13 @@ const renderContent = (node: any, parentNodeType?: string, currentIndex?: number
       );
 
     case "embedded-entry-block":
+      const { fields } = node.data.target;
       const contentTypeID = node?.data?.target?.sys?.contentType?.sys?.id;
 
-      if (contentTypeID === "button") {
+      const validButtonTexts = ["Register with email address", "Sign in with email address"];
+      const buttonText = fields.buttonText;
+
+      if (contentTypeID === "button" && validButtonTexts.includes(buttonText)) {
         if (currentIndex !== undefined && renderedIndexes.has(currentIndex)) {
           return null;
         }
@@ -135,13 +128,13 @@ const renderContent = (node: any, parentNodeType?: string, currentIndex?: number
         return (
           <ButtonWrapper>
             <DTERouteLink
-              to={node.data.target.fields.path}
-              $outlined={node.data.target.fields.outlined}
-              external={node.data.target.fields.external}
-              target={node.data.target.fields.external ? "_blank" : undefined}
-              ariaLabel={node.data.target.fields.ariaLabel}
+              to={fields.path}
+              $outlined={fields.outlined}
+              external={fields.external}
+              target={fields.external ? "_blank" : undefined}
+              ariaLabel={fields.ariaLabel}
             >
-              {node.data.target.fields.buttonText}
+              {fields.buttonText}
             </DTERouteLink>
           </ButtonWrapper>
         );
@@ -153,20 +146,20 @@ const renderContent = (node: any, parentNodeType?: string, currentIndex?: number
         }
         return (
           <>
-            {node.data.target.fields.showHelperText && (
+            {fields.showHelperText && (
               <div className="govuk-details__text">
-                <DTEContent>{node.data.target.fields.helperText}</DTEContent>
+                <DTEContent>{fields.helperText}</DTEContent>
               </div>
             )}
             <Stack flexDirection="row">
-              <NhsLoginButton buttonText={node.data.target.fields.buttonText} />
+              <NhsLoginButton buttonText={fields.buttonText} />
               {nextNodeComponent && renderContent(nextNodeComponent)}
             </Stack>
           </>
         );
       } else if (contentTypeID === "vsAccordion") {
-        const summary = node.data.target.fields.summary;
-        const contentNode = node.data.target.fields.content;
+        const summary = fields.summary;
+        const contentNode = fields.content;
 
         return (
           <DTEDetails summary={summary}>
@@ -175,7 +168,6 @@ const renderContent = (node: any, parentNodeType?: string, currentIndex?: number
             ))}
           </DTEDetails>
         );
-      } else {
       }
       break;
 
