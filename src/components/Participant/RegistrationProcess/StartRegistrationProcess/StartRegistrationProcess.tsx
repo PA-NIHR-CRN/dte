@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { Stack } from "@mui/material";
 import DTEButton from "../../../Shared/UI/DTEButton/DTEButton";
 import { useHistory } from "react-router-dom";
+import NhsLoginButton from "../../../Shared/UI/NhsLoginButton";
 
 function StartRegistrationProcess() {
   const { content } = useContext(ContentContext);
@@ -19,9 +20,7 @@ function StartRegistrationProcess() {
       <StepWrapper>
         {content["register-page"]}
         <Stack spacing={2} direction="row">
-          <a href="https://access.login.nhs.uk/enter-email">
-            <DTEButton $outlined>Continue to NHS login</DTEButton>
-          </a>
+          <NhsLoginButton buttonText="Continue to NHS login" />
           <a href="https://volunteer.bepartofresearch.nihr.ac.uk/Participants/Register/Questions">
             <DTEButton $padded>Register with email address</DTEButton>
           </a>
