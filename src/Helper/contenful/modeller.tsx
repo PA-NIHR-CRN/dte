@@ -114,7 +114,12 @@ const renderContent = (node: any, parentNodeType?: string, currentIndex?: number
       const { fields } = node.data.target;
       const contentTypeID = node?.data?.target?.sys?.contentType?.sys?.id;
 
-      const validButtonTexts = ["Register with email address", "Sign in with email address"];
+      const validButtonTexts = [
+        "Register with email address",
+        "Sign in with email address",
+        "Cofrestru gyda chyfeiriad e-bost",
+        "Mewngofnodwch gyda chyfeiriad e-bost",
+      ];
       const buttonText = fields.buttonText;
 
       if (contentTypeID === "button" && validButtonTexts.includes(buttonText)) {
