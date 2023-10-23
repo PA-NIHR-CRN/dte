@@ -18,6 +18,8 @@ import DTEBackLink from "../UI/DTEBackLink/DTEBackLink";
 import { ContentContext } from "../../../context/ContentContext";
 import UserLoginForm from "./UserLoginForm/UserLoginForm";
 import Honeypot from "../Honeypot/Honeypot";
+import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
+import DTELinkButton from "../UI/DTELinkButton/DTELinkButton";
 
 const StyledGridElementLeft = styled(Grid)`
   padding-left: 1em;
@@ -225,6 +227,14 @@ const UserLogin = (props: UserLoginProps) => {
                       <DTERouteLink to="/Participants/register" disabled={loadingLogin} $outlined>
                         {content["signin-button-registerwithbpor"]}
                       </DTERouteLink>
+                      <br></br>
+                      <DTEContent>
+                        Need an account?{" "}
+                        <DTELinkButton onClick={() => history.push("/Participants/register")}>
+                          Register here.
+                        </DTELinkButton>
+                      </DTEContent>
+                      <br></br>
                     </ButtonWrapper>
                   </>
                 )}
