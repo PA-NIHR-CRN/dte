@@ -40,6 +40,9 @@ function StartRegistrationProcess() {
         </DTEContent>
         <br></br>
         <br></br>
+        <DTEButton $outlined onClick={() => history.push("/Participants/introduction")}>
+          DEV BUTTON
+        </DTEButton>
       </StepWrapper>
     </DocumentTitle>
   );

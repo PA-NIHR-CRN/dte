@@ -10,6 +10,7 @@ import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
 import DTEButton from "../../../components/Shared/UI/DTEButton/DTEButton";
 import React, { useContext } from "react";
 import { ContentContext } from "../../../context/ContentContext";
+import DTELinkButton from "../../../components/Shared/UI/DTELinkButton/DTELinkButton";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -91,6 +92,16 @@ function NhsPreRegistration() {
           >
             {content["reusable-button-signin"]}
           </DTEButton>
+          <br></br>
+          <DTEButton $padded onClick={() => history.push("/Participants/Register")}>
+            Start now
+          </DTEButton>
+          <br></br>
+          <DTEContent>
+            If you already have an account, you can{" "}
+            <DTELinkButton onClick={() => history.push("/Participants/Options")}>sign in</DTELinkButton>
+          </DTEContent>
+          <br></br>
         </ButtonWrapper>
       </StepWrapper>
     </>
