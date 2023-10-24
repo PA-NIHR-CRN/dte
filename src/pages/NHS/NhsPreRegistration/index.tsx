@@ -93,15 +93,29 @@ function NhsPreRegistration() {
             {content["reusable-button-signin"]}
           </DTEButton>
           <br></br>
-          <DTEButton $padded onClick={() => history.push("/Participants/Register")}>
-            Start now
-          </DTEButton>
           <br></br>
+          <button
+            className="govuk-button govuk-button--start"
+            style={{ backgroundColor: "#00407a", color: "#ffffff" }}
+            onClick={() => history.push("/Participants/Register")}
+          >
+            Start now
+            <svg
+              className="govuk-button__start-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="17.5"
+              height="19"
+              viewBox="0 0 33 40"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+            </svg>
+          </button>
           <DTEContent>
             If you already have an account, you can{" "}
             <DTELinkButton onClick={() => history.push("/Participants/Options")}>sign in</DTELinkButton>
           </DTEContent>
-          <br></br>
         </ButtonWrapper>
       </StepWrapper>
     </>
