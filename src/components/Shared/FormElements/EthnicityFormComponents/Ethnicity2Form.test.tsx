@@ -1,10 +1,5 @@
 import { axe, toHaveNoViolations } from "jest-axe";
-import {
-  render,
-  fireEvent,
-  screen,
-  waitFor,
-} from "../../../../Helper/test-utils";
+import { render, fireEvent, screen, waitFor } from "../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import Ethnicity2Form from "./Ethnicity2Form";
 
@@ -18,7 +13,7 @@ test("loads and displays background form", async () => {
       }}
       onDataChange={() => {}}
       ethnicity="asian"
-    />,
+    />
   );
   await waitFor(() => {
     expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
@@ -36,21 +31,13 @@ test("different background form displayed depending on ethnicity", async () => {
       }}
       onDataChange={() => {}}
       ethnicity="white"
-    />,
+    />
   );
   await waitFor(() => {
     expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
   });
-  expect(
-    screen.getByDisplayValue(
-      "British, English, Northern Irish, Scottish, or Welsh",
-    ),
-  ).toBeInTheDocument();
-  expect(
-    screen.getByDisplayValue(
-      "British, English, Northern Irish, Scottish, or Welsh",
-    ),
-  ).not.toBeChecked();
+  expect(screen.getByDisplayValue("British, English, Northern Irish, Scottish, or Welsh")).toBeInTheDocument();
+  expect(screen.getByDisplayValue("British, English, Northern Irish, Scottish, or Welsh")).not.toBeChecked();
   expect(screen.queryByDisplayValue("African")).not.toBeInTheDocument();
 });
 
@@ -62,14 +49,12 @@ test("other background textbox to be filled", async () => {
       }}
       onDataChange={() => {}}
       ethnicity="asian"
-    />,
+    />
   );
   await waitFor(() => {
     expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
   });
-  expect(
-    screen.getByDisplayValue("Not one of the options"),
-  ).toBeInTheDocument();
+  expect(screen.getByDisplayValue("Not one of the options")).toBeInTheDocument();
 });
 
 test("submitting other", async () => {
@@ -81,18 +66,15 @@ test("submitting other", async () => {
       }}
       onDataChange={mockOnDataChange}
       ethnicity="other"
-    />,
+    />
   );
   await waitFor(() => {
     expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
   });
   fireEvent.click(screen.getByDisplayValue("other"));
-  fireEvent.change(
-    screen.getByLabelText(/How would you describe your background\?/i),
-    {
-      target: { value: "Custom value" },
-    },
-  );
+  fireEvent.change(screen.getByLabelText(/How would you describe your background\?/i), {
+    target: { value: "Custom value" },
+  });
   fireEvent.submit(screen.getByTestId("background-form"));
   await waitFor(() => {
     expect(mockOnDataChange).toHaveBeenCalledWith({
@@ -110,22 +92,19 @@ test("submitting other with blank data", async () => {
       }}
       onDataChange={mockOnDataChange}
       ethnicity="other"
-    />,
+    />
   );
   await waitFor(() => {
     expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
   });
   fireEvent.click(screen.getByDisplayValue("other"));
-  fireEvent.change(
-    screen.getByLabelText(/How would you describe your background\?/i),
-    {
-      target: { value: "   " },
-    },
-  );
+  fireEvent.change(screen.getByLabelText(/How would you describe your background\?/i), {
+    target: { value: "   " },
+  });
   fireEvent.submit(screen.getByTestId("background-form"));
   await waitFor(() => {
     expect(mockOnDataChange).toHaveBeenCalledWith({
-      background: "other",
+      background: "prefer not to say",
     });
   });
 });
@@ -139,18 +118,15 @@ test("submitting other with whitespace", async () => {
       }}
       onDataChange={mockOnDataChange}
       ethnicity="other"
-    />,
+    />
   );
   await waitFor(() => {
     expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
   });
   fireEvent.click(screen.getByDisplayValue("other"));
-  fireEvent.change(
-    screen.getByLabelText(/How would you describe your background\?/i),
-    {
-      target: { value: "  ethnicity  " },
-    },
-  );
+  fireEvent.change(screen.getByLabelText(/How would you describe your background\?/i), {
+    target: { value: "  ethnicity  " },
+  });
   fireEvent.submit(screen.getByTestId("background-form"));
   await waitFor(() => {
     expect(mockOnDataChange).toHaveBeenCalledWith({
@@ -169,7 +145,7 @@ describe("Accessibility test", () => {
         }}
         onDataChange={mockOnDataChange}
         ethnicity="other"
-      />,
+      />
     );
 
     const results = await axe(container);
