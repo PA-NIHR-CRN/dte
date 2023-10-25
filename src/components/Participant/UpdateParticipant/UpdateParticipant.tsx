@@ -86,7 +86,7 @@ function UpdateParticipant() {
   );
 
   const getDemographicsURL = `${process.env.REACT_APP_BASE_API}/participants/demographics`;
-  const [{ response: demographicsResponse, loading: demographicsLoading, error: demographicsError }] = useAxiosFetch(
+  const [{ response: demographicsResponse, error: demographicsError }] = useAxiosFetch(
     {
       url: getDemographicsURL,
       method: "GET",
