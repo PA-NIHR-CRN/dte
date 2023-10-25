@@ -16,7 +16,6 @@ import ErrorMessageSummary from "../../../Shared/ErrorMessageSummary/ErrorMessag
 import PasswordShowHide from "../../../Shared/Password/showHide";
 import ThreeWords from "../../../Shared/Password/threeWords";
 import { ContentContext } from "../../../../context/ContentContext";
-import Honeypot from "../../../Shared/Honeypot/Honeypot";
 import validatePassword, { PasswordPolicy } from "../../../../Helper/passwordValidation/passwordValidation";
 
 export type UpdatePasswordFormData = {
@@ -165,7 +164,6 @@ function UpdatePasswordForm(props: FormBaseProps) {
           <Grid container>
             <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>
               <form onSubmit={handleSubmit(submitForm)} noValidate>
-                <Honeypot />
                 <Controller
                   control={control}
                   name="currentPassword"

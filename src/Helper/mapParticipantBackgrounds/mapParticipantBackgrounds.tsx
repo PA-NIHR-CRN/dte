@@ -14,6 +14,7 @@ export enum EthnicBackground {
   IrishTraveller = "Irish Traveller",
   Roma = "Roma",
   Arab = "Arab",
+  PreferNotToSay = "prefer not to say",
 }
 
 const mapParticipantBackgrounds = (background: string, content: any) => {
@@ -33,11 +34,12 @@ const mapParticipantBackgrounds = (background: string, content: any) => {
     [EthnicBackground.IrishTraveller]: content["register2-ethnic-background-irish-traveller"],
     [EthnicBackground.Roma]: content["register2-ethnic-background-roma"],
     [EthnicBackground.Arab]: content["register2-ethnic-background-arab"],
+    [EthnicBackground.PreferNotToSay]: content["reusable-prefer-not-to-say"],
   };
 
   const enumValues = Object.values(EthnicBackground);
 
-  if (!background) {
+  if (!background || background === "other") {
     return content["reusable-other"];
   }
 

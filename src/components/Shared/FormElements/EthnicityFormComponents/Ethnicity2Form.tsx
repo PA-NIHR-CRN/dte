@@ -14,6 +14,7 @@ import Utils from "../../../../Helper/Utils";
 import Honeypot from "../../Honeypot/Honeypot";
 import getEthnicities from "../../../../data/ethnicityData";
 import { ContentContext } from "../../../../context/ContentContext";
+import mapParticipantBackgrounds from "../../../../Helper/mapParticipantBackgrounds/mapParticipantBackgrounds";
 
 export type Ethnicity2FormData = {
   background: string;
@@ -48,11 +49,12 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
     ethnicity,
     instructionText,
   } = props;
-
   let labelElement: ReactNode;
   const ethnicities = getEthnicities(content);
   const theme = useTheme();
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
+  const [ethnicityLongName, setEthnicityLongName] = useState<string | null>(null);
+
   const [otherText, setOtherText] = useState<string | undefined>(
     !ethnicities.asian.backgrounds
       .concat(
@@ -63,6 +65,7 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
       )
       .includes(initialStateData.background) &&
       initialStateData.background !== "other" &&
+      initialStateData.background !== "prefer not to say" &&
       initialStateData.background !== ""
       ? initialStateData.background
       : undefined
@@ -86,26 +89,39 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
             ethnicities.other.backgrounds
           )
           .includes(initialStateData.background) && initialStateData.background !== ""
-          ? content["reusable-other"]
+          ? "prefer not to say"
           : initialStateData.background,
     },
   });
 
   const preOnDataChange = (data: Ethnicity2FormData) => {
-    onDataChange({
-      background:
-        data.background === "other" && otherText && otherText.trim() !== "" ? otherText.trim() : data.background.trim(),
-    });
+    if (data.background === "other") {
+      if (otherText && otherText.trim() !== "") {
+        onDataChange({ background: otherText.trim() });
+      } else {
+        onDataChange({ background: "prefer not to say" });
+      }
+    } else {
+      onDataChange({ background: data.background.trim() });
+    }
   };
 
   useEffect(() => {
-    if (otherText?.trim() === "") {
-      setValue("background", "other");
+    if (otherText?.trim() === "" || otherText?.trim() === "prefer not to say" || otherText?.trim() === "other") {
+      setValue("background", "prefer not to say");
     }
   }, [otherText]);
 
-  if (!hideHeader) {
-    const ethnicityLongName = ethnicities[ethnicity as keyof typeof ethnicities].longName;
+  useEffect(() => {
+    const fetchedEthnicity = ethnicities[ethnicity as keyof typeof ethnicities];
+    if (fetchedEthnicity && fetchedEthnicity.longName) {
+      setEthnicityLongName(fetchedEthnicity.longName);
+    } else {
+      console.error(`Invalid ethnicity provided: ${ethnicity}`);
+    }
+  }, [ethnicity, ethnicities]);
+
+  if (!hideHeader && ethnicityLongName) {
     labelElement = (
       <DTEHeader as="h1" $variant={headerVariant}>
         {(content["register2-ethnicity2-header"] as string).replace("{{ethnicity}}", ethnicityLongName)}
@@ -154,7 +170,7 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
                         return (
                           <Radios.Radio
                             value={backgroundName}
-                            defaultChecked={value === backgroundName}
+                            checked={value === backgroundName}
                             key={backgroundName}
                             aria-label={(content["register2-ethnic-background-aria-background"] as string).replace(
                               "{{backgroundName}}",
@@ -162,13 +178,13 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
                             )}
                             aria-labelledby=""
                           >
-                            {backgroundName}
+                            {mapParticipantBackgrounds(backgroundName, content)}
                           </Radios.Radio>
                         );
                       })}
                       <Radios.Radio
                         value="other"
-                        defaultChecked={
+                        checked={
                           !ethnicities.asian.backgrounds
                             .concat(
                               ethnicities.black.backgrounds,
