@@ -32,6 +32,10 @@ function PasswordForm(props: PasswordFormProps) {
   const { content } = useContext(ContentContext);
   const { onDataChange, initialStateData, setLoading, setLoadingText } = props;
   let requirePolicyComma: boolean;
+  const [localFormData, setLocalFormData] = useState<PasswordFormData>({
+    password: "",
+    password2: "",
+  });
   const [policyBuilder, setPolicyBuilder] = useState("");
   const [passwordPolicy, setPasswordPolicy] = useState<PasswordPolicy>();
   const theme = useTheme();
@@ -119,6 +123,11 @@ function PasswordForm(props: PasswordFormProps) {
     }
   }, [isSubmitting]);
 
+  const handleValueChange = (field: keyof PasswordFormData, value: string) => {
+    setValue(field, value);
+    setLocalFormData((prevState) => ({ ...prevState, [field]: value }));
+  };
+
   return (
     <>
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
@@ -143,7 +152,7 @@ function PasswordForm(props: PasswordFormProps) {
                   render={({ fieldState: { error } }) => (
                     <PasswordShowHide
                       id="password"
-                      onValueChange={(e) => setValue("password", e.target.value)}
+                      onValueChange={(e) => handleValueChange("password", e.target.value)}
                       error={error?.message}
                       label={content["reusable-password-input-create"]}
                       required
@@ -151,6 +160,7 @@ function PasswordForm(props: PasswordFormProps) {
                       spellcheck={false}
                       buttonAriaLabelHide={content["reusable-aria-hide-password"]}
                       buttonAriaLabelShow={content["reusable-aria-show-password"]}
+                      value={localFormData.password}
                     />
                   )}
                   rules={{
@@ -167,13 +177,14 @@ function PasswordForm(props: PasswordFormProps) {
                   render={({ fieldState: { error } }) => (
                     <PasswordShowHide
                       id="password2"
-                      onValueChange={(e) => setValue("password2", e.target.value)}
+                      onValueChange={(e) => handleValueChange("password2", e.target.value)}
                       error={error?.message}
                       label={content["reusable-password-input-confirm"]}
                       required
                       spellcheck={false}
                       buttonAriaLabelHide={content["reusable-aria-hide-password-confirmation"]}
                       buttonAriaLabelShow={content["reusable-aria-show-password-confirmation"]}
+                      value={localFormData.password2}
                     />
                   )}
                   rules={{

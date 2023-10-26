@@ -28,7 +28,11 @@ function UpdatePasswordForm(props: FormBaseProps) {
   const { content } = useContext(ContentContext);
   const { onCancel } = props;
   let requiresPolicyComma: boolean;
-
+  const [localFormData, setLocalFormData] = useState<UpdatePasswordFormData>({
+    currentPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
+  });
   const history = useHistory();
   const [policyBuilder, setPolicyBuilder] = useState("");
   const [passwordPolicy, setPasswordPolicy] = useState<PasswordPolicy>();
@@ -139,6 +143,11 @@ function UpdatePasswordForm(props: FormBaseProps) {
     }).catch(() => {});
   };
 
+  const handleValueChange = (field: keyof UpdatePasswordFormData, value: string) => {
+    setValue(field, value);
+    setLocalFormData((prevState) => ({ ...prevState, [field]: value }));
+  };
+
   return (
     <>
       {policyLoading && <LoadingIndicator text={content["reusable-password-policy-loading"]} />}
@@ -170,7 +179,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
                   render={({ fieldState: { error } }) => (
                     <PasswordShowHide
                       id="currentPassword"
-                      onValueChange={(e) => setValue("currentPassword", e.target.value)}
+                      onValueChange={(e) => handleValueChange("currentPassword", e.target.value)}
                       error={error?.message}
                       label={content["update-password-input-current"]}
                       required
@@ -178,6 +187,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
                       spellcheck={false}
                       buttonAriaLabelHide={content["update-password-aria-hide-password-current"]}
                       buttonAriaLabelShow={content["update-password-aria-show-password-current"]}
+                      value={localFormData.currentPassword}
                     />
                   )}
                   rules={{
@@ -193,7 +203,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
                   render={({ fieldState: { error } }) => (
                     <PasswordShowHide
                       id="newPassword"
-                      onValueChange={(e) => setValue("newPassword", e.target.value)}
+                      onValueChange={(e) => handleValueChange("newPassword", e.target.value)}
                       error={error?.message}
                       label={content["update-password-input-create"]}
                       required
@@ -201,6 +211,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
                       spellcheck={false}
                       buttonAriaLabelHide={content["reusable-aria-hide-password"]}
                       buttonAriaLabelShow={content["reusable-aria-show-password"]}
+                      value={localFormData.newPassword}
                     />
                   )}
                   rules={{
@@ -217,13 +228,14 @@ function UpdatePasswordForm(props: FormBaseProps) {
                   render={({ fieldState: { error } }) => (
                     <PasswordShowHide
                       id="confirmNewPassword"
-                      onValueChange={(e) => setValue("confirmNewPassword", e.target.value)}
+                      onValueChange={(e) => handleValueChange("confirmNewPassword", e.target.value)}
                       error={error?.message}
                       label={content["update-password-input-confirm"]}
                       required
                       spellcheck={false}
                       buttonAriaLabelHide={content["reusable-aria-hide-password-confirmation"]}
                       buttonAriaLabelShow={content["reusable-aria-show-password-confirmation"]}
+                      value={localFormData.confirmNewPassword}
                     />
                   )}
                   rules={{

@@ -22,6 +22,7 @@ import ThreeWords from "../Password/threeWords";
 import { ContentContext } from "../../../context/ContentContext";
 import Honeypot from "../Honeypot/Honeypot";
 import validatePassword, { PasswordPolicy } from "../../../Helper/passwordValidation/passwordValidation";
+import { PasswordFormData } from "../../Participant/RegistrationProcess/StartRegistrationProcess/Stepper/Forms/PasswordForm";
 
 const StyledDTEContent = styled(DTEContent)`
   && {
@@ -33,6 +34,10 @@ function ResetPassword() {
   const { content } = useContext(ContentContext);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [localFormData, setLocalFormData] = useState<PasswordFormData>({
+    password: "",
+    password2: "",
+  });
   let requirePolicyComma: boolean;
   const [policyBuilder, setPolicyBuilder] = useState("");
   const [passwordPolicy, setPasswordPolicy] = useState<PasswordPolicy>();
@@ -144,6 +149,11 @@ function ResetPassword() {
     if (submitResponse?.isSuccess) ReactGA.pageview("/ResetPassword/updated");
   }, [passwordPolicy, submitResponse]);
 
+  const handleValueChange = (field: keyof PasswordFormData, value: string) => {
+    setValue(field, value);
+    setLocalFormData((prevState) => ({ ...prevState, [field]: value }));
+  };
+
   return (
     <DocumentTitle title={content["resetpassword-choose-password-document-title"]}>
       <Grid container justifyContent="center" alignItems="center">
@@ -173,7 +183,7 @@ function ResetPassword() {
                               render={({ fieldState: { error } }) => (
                                 <PasswordShowHide
                                   id="password"
-                                  onValueChange={(e) => setValue("password", e.target.value)}
+                                  onValueChange={(e) => handleValueChange("password", e.target.value)}
                                   error={error?.message}
                                   label={content["reusable-password-input-create"]}
                                   required
@@ -181,6 +191,7 @@ function ResetPassword() {
                                   spellcheck={false}
                                   buttonAriaLabelHide={content["reusable-aria-hide-password"]}
                                   buttonAriaLabelShow={content["reusable-aria-show-password"]}
+                                  value={localFormData.password}
                                 />
                               )}
                               rules={{
@@ -199,11 +210,12 @@ function ResetPassword() {
                                   id="password2"
                                   label={content["reusable-password-input-confirm"]}
                                   error={error?.message}
-                                  onValueChange={(e) => setValue("password2", e.target.value)}
+                                  onValueChange={(e) => handleValueChange("password2", e.target.value)}
                                   required
                                   spellcheck={false}
                                   buttonAriaLabelHide={content["reusable-aria-hide-password-confirmation"]}
                                   buttonAriaLabelShow={content["reusable-aria-show-password-confirmation"]}
+                                  value={localFormData.password2}
                                 />
                               )}
                               rules={{

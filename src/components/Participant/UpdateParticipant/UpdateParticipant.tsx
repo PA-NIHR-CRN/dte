@@ -29,6 +29,7 @@ import { UserContext } from "../../../context/UserContext";
 import getEthnicities from "../../../data/ethnicityData";
 import mapParticipantBackgrounds from "../../../Helper/mapParticipantBackgrounds/mapParticipantBackgrounds";
 import mapParticipantDisabilityDesc from "../../../Helper/mapParticipantDisabilityDesc/mapParticipantDisabilityDesc";
+import mapMonthDescription from "../../../Helper/mapParticipantDobMonths/mapParticipantDobMonths";
 
 interface UserDataState {
   address: AddressFormData;
@@ -488,6 +489,16 @@ function UpdateParticipant() {
     setCurrentDisplayPage(mappedData.screen);
   };
 
+  const formatDateOfBirth = (dob: DOBFormData) => {
+    const date = new Date(parseInt(dob.year, 10), parseInt(dob.month, 10) - 1, parseInt(dob.day, 10), 12);
+
+    const day = date.toLocaleString("en-GB", { day: "numeric" });
+    const year = date.toLocaleString("en-GB", { year: "numeric" });
+    const month = mapMonthDescription(date.toLocaleString("en-GB", { month: "long" }), content);
+
+    return `${day} ${month} ${year}`;
+  };
+
   return (
     <DocumentTitle title={pageTitle}>
       <StyledWrapper role="main" id="main" ref={containerRef}>
@@ -512,7 +523,7 @@ function UpdateParticipant() {
                           <dl className="govuk-summary-list">
                             <div className="govuk-summary-list__row">
                               <dt className="govuk-summary-list__key">
-                                <DTEContent>Name</DTEContent>
+                                <DTEContent>{content["reusable-text-name"]}</DTEContent>
                               </dt>
                               <dd className="govuk-summary-list__value">
                                 <DTEContent>
@@ -526,18 +537,7 @@ function UpdateParticipant() {
                                 <DTEContent>{content["reusable-text-date-of-birth"]}</DTEContent>
                               </dt>
                               <dd className="govuk-summary-list__value">
-                                <DTEContent>
-                                  {new Date(
-                                    parseInt(userData.dob.year, 10),
-                                    parseInt(userData.dob.month, 10) - 1,
-                                    parseInt(userData.dob.day, 10),
-                                    12
-                                  ).toLocaleString("en-GB", {
-                                    day: "numeric",
-                                    month: "long",
-                                    year: "numeric",
-                                  })}
-                                </DTEContent>
+                                <DTEContent>{formatDateOfBirth(userData.dob)}</DTEContent>
                               </dd>
                               <dd className="govuk-summary-list__actions" />
                             </div>
@@ -615,18 +615,7 @@ function UpdateParticipant() {
                               <DTEContent>{content["reusable-text-date-of-birth"]}</DTEContent>
                             </dt>
                             <dd className="govuk-summary-list__value">
-                              <DTEContent>
-                                {new Date(
-                                  parseInt(userData.dob.year, 10),
-                                  parseInt(userData.dob.month, 10) - 1,
-                                  parseInt(userData.dob.day, 10),
-                                  12
-                                ).toLocaleString("en-GB", {
-                                  day: "numeric",
-                                  month: "long",
-                                  year: "numeric",
-                                })}
-                              </DTEContent>
+                              <DTEContent>{formatDateOfBirth(userData.dob)}</DTEContent>
                             </dd>
                             <dd className="govuk-summary-list__actions">
                               <DTELinkButton onClick={() => setCurrentDisplayPage("dob")}>
