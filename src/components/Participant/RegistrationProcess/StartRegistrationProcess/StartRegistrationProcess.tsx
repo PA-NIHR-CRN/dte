@@ -38,11 +38,6 @@ function StartRegistrationProcess() {
           If you already have an account, you can{" "}
           <DTELinkButton onClick={() => history.push("/Participants/Options")}>sign in</DTELinkButton>
         </DTEContent>
-        <br></br>
-        <br></br>
-        <DTEButton $outlined onClick={() => history.push("/Participants/introduction")}>
-          DEV BUTTON
-        </DTEButton>
       </StepWrapper>
     </DocumentTitle>
   );
