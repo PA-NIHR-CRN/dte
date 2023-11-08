@@ -9,13 +9,50 @@ import DTERouteLink from "../../../components/Shared/UI/DTERouteLink/DTERouteLin
 import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
 import React, { useContext } from "react";
 import { ContentContext } from "../../../context/ContentContext";
+import { baseButton } from "../../../components/Shared/UI/DTEButton/DTEButton";
 
-const ButtonWrapper = styled.div`
-  margin: 1rem 0;
+interface WrapperProps {
+  margin?: string;
+}
+
+const StyledLink = styled(Link)`
+  text-underline-offset: 2.5px;
+  background-color: ${(props) => props.theme.NIHR.LinkBlue};
+  text-decoration-color: ${(props) => props.theme.NIHR.LinkBlue};
+  &:focus {
+    color: ${(props) => props.theme.NIHR.Blue};
+    text-decoration: none;
+    background-color: ${(props) => props.theme.NIHR.Yellow} !important;
+    box-shadow:
+      0 -2px ${(props) => props.theme.NIHR.Yellow},
+      0 4px ${(props) => props.theme.NIHR.Blue} !important;
+    border: 0.25rem solid ${(props) => props.theme.NIHR.Yellow} !important;
+  }
+  &:hover {
+    color: ${(props) => props.theme.NIHR.Blue};
+    text-decoration-color: ${(props) => props.theme.NIHR.Blue};
+    text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
+    &:focus {
+      text-decoration-line: none;
+      text-decoration-thickness: none;
+    }
+  }
+  &:visited {
+    color: ${(props) => props.theme.NIHR.LinkBlue};
+    &:focus {
+      color: ${(props) => props.theme.NIHR.Blue};
+    }
+    &:hover {
+      color: ${(props) => props.theme.NIHR.Blue};
+    }
+  }
+  &.button-route {
+    ${baseButton};
+  }
 `;
 
-const AccordionWrapper = styled.div`
-  margin: 2rem 0;
+const Wrapper = styled.div<WrapperProps>`
+  margin: ${({ margin }) => margin || "1rem 0"};
 `;
 
 function NhsPreRegistration() {
@@ -34,7 +71,7 @@ function NhsPreRegistration() {
       <StepWrapper>
         <DTEHeader as="h1">{content["introduction-header"]}</DTEHeader>
         {content["introduction-body"]}
-        <AccordionWrapper>
+        <Wrapper margin="2rem 0">
           <DTEDetails summary={content["introduction-accordion-header"]}>
             <DTEContent>
               {content["introduction-accordion-body1"]}{" "}
@@ -58,15 +95,14 @@ function NhsPreRegistration() {
               {content["introduction-accordion-body2"]}
             </DTEContent>
           </DTEDetails>
-        </AccordionWrapper>
-        <ButtonWrapper>
-          <Link
+        </Wrapper>
+        <Wrapper>
+          <StyledLink
             to="/Participants/Register"
             role="button"
             draggable="false"
-            className="govuk-button govuk-button--start"
+            className="govuk-button govuk-button--start button-route"
             data-module="govuk-button"
-            style={{ backgroundColor: "#193e72" }}
             onClick={() => {
               ReactGA.event({
                 category: "Internal Link Clicks",
@@ -87,9 +123,9 @@ function NhsPreRegistration() {
             >
               <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
             </svg>
-          </Link>
-        </ButtonWrapper>
-        <ButtonWrapper>{content["introduction-text-sign-in"]}</ButtonWrapper>
+          </StyledLink>
+        </Wrapper>
+        <Wrapper>{content["introduction-text-sign-in"]}</Wrapper>
       </StepWrapper>
     </>
   );

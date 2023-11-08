@@ -3,6 +3,7 @@ import Spinner from "react-spinkit";
 import { Typography, Box } from "@material-ui/core";
 import styled, { useTheme } from "styled-components";
 import { styledComponentsTheme } from "../../../theme";
+import Cookies from "js-cookie";
 
 /* See http://kyleamathews.github.io/react-spinkit/ for other spinner options  and colours */
 interface LoadingIndicatorProps {
@@ -23,7 +24,11 @@ const Loader = styled.div.attrs({
   opacity: 1;
 `;
 
-function LoadingIndicator({ text = "Loading...", colour = undefined, ariaLive = "assertive" }: LoadingIndicatorProps) {
+function LoadingIndicator({
+  text = Cookies.get("selectedLanguage") === "en-GB" ? "Loading..." : "Llwytho...",
+  colour = undefined,
+  ariaLive = "assertive",
+}: LoadingIndicatorProps) {
   const theme = useTheme() as typeof styledComponentsTheme;
   const defaultcolour = theme.NIHR.Blue;
   return (

@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import ReactGA from "react-ga";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
@@ -9,12 +9,9 @@ import { AuthContext } from "../../../context/AuthContext";
 import StepWrapper from "../StepWrapper/StepWrapper";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
-import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContainer";
 import Utils from "../../../Helper/Utils";
-import { DTEAxiosError } from "../../../types/AuthTypes";
-import ResendEmail from "../FormElements/CommonElements/ResendEmail";
 import UserLogin from "./UserLogin";
 import { ContentContext } from "../../../context/ContentContext";
 
@@ -61,40 +58,6 @@ function Verify() {
     }
   });
 
-  const convertErrorsToResponse = (errors: DTEAxiosError[] | undefined) => {
-    let message: ReactNode = <></>;
-    if (errors) {
-      errors.forEach((axiosError: DTEAxiosError) => {
-        switch (axiosError.customCode) {
-          case "Confirm_SignUp_Error_Expired_Code":
-            message = (
-              <>
-                <DTEContent>{content["verify-email-error-expired"]}</DTEContent>
-                <ResendEmail userId={userId || ""} />
-              </>
-            );
-            break;
-          case "Confirm_SignUp_Error_User_Already_Confirmed":
-            message = (
-              <>
-                <DTEContent>{content["verify-email-error-already-used"]}</DTEContent>
-                <DTERouteLink to="/UserLogin">{content["reusable-button-signin"]}</DTERouteLink>
-              </>
-            );
-            break;
-          default:
-            message = (
-              <>
-                <DTEContent>{content["verify-email-error-technical"]}</DTEContent>
-                <DTERouteLink to="/UserLogin">{content["reusable-button-signin"]}</DTERouteLink>
-              </>
-            );
-        }
-      });
-    }
-    return message;
-  };
-
   return (
     <>
       {confirmationLoading && <LoadingIndicator text={content["verify-loading-verifying"]} />}
@@ -110,17 +73,16 @@ function Verify() {
             </>
           </DocumentTitle>
         )}
-        {!Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess &&
-          Utils.ConvertResponseToDTEResponse(confirmationResponse)?.errors && (
-            <DocumentTitle title={content["verify-email-failure-document-title"]}>
-              <>
-                <DTEHeader as="h1" $variant={headerVariant}>
-                  {content["verify-email-failure-header"]}
-                </DTEHeader>
-                {convertErrorsToResponse(Utils.ConvertResponseToDTEResponse(confirmationResponse)?.errors)}
-              </>
-            </DocumentTitle>
-          )}
+        {!Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
+          <DocumentTitle title={content["verify-email-failure-document-title"]}>
+            <>
+              <DTEHeader as="h1" $variant={headerVariant}>
+                {content["verify-email-failure-header"]}
+              </DTEHeader>
+              <DTEContent>{content["verify-email-error-technical"]}</DTEContent>
+            </>
+          </DocumentTitle>
+        )}
         {confirmationError && <ErrorMessageContainer axiosError={confirmationError} />}
       </StepWrapper>
     </>

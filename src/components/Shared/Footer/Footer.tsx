@@ -197,7 +197,7 @@ export default function Footer() {
 
   const learnLinks = [
     {
-      name: content["footer-item-what-is-research"],
+      name: content["footer-item-what-is-health-and-care-research"],
       url: "https://bepartofresearch.nihr.ac.uk/about/What-is-health-and-care-research/",
     },
     {
@@ -205,7 +205,7 @@ export default function Footer() {
       url: "https://bepartofresearch.nihr.ac.uk/taking-part/why-take-part/",
     },
     {
-      name: content["footer-item-what-happens-next"],
+      name: content["footer-item-what-happens-on-a-study"],
       url: "https://bepartofresearch.nihr.ac.uk/taking-part/what-happens-on-a-study/",
     },
     {

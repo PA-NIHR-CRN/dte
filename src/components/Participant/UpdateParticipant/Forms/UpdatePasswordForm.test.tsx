@@ -1,6 +1,6 @@
 import { axe, toHaveNoViolations } from "jest-axe";
 import { createServer, Response, Server } from "miragejs";
-import { userEvent, render, screen, waitForElementToBeRemoved, waitFor } from "../../../../Helper/test-utils";
+import { userEvent, render, screen, waitForElementToBeRemoved } from "../../../../Helper/test-utils";
 import AccountSettings from "../AccountSettings";
 import weakPasswords from "../../../../data/weakPassword";
 
