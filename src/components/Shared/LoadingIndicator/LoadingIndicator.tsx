@@ -25,7 +25,7 @@ const Loader = styled.div.attrs({
 `;
 
 function LoadingIndicator({
-  text = Cookies.get("selectedLanguage") === "en-GB" ? "Loading..." : "Llwytho...",
+  text = Cookies.get("selectedLanguage") === "cy-GB" ? "Llwytho..." : "Loading...",
   colour = undefined,
   ariaLive = "assertive",
 }: LoadingIndicatorProps) {

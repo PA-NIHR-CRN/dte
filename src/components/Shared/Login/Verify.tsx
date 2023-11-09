@@ -59,33 +59,36 @@ function Verify() {
   });
 
   return (
-    <>
-      {confirmationLoading && <LoadingIndicator text={content["verify-loading-verifying"]} />}
-      <StepWrapper>
-        {Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
-          <DocumentTitle title={content["verify-email-success-document-title"]}>
-            <>
-              <DTEHeader as="h1" $variant={headerVariant}>
-                {content["verify-email-success-header"]}
-              </DTEHeader>
-              {content["verify-email-continue-registration"]}
-              <UserLogin nested />
-            </>
-          </DocumentTitle>
-        )}
-        {!Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
-          <DocumentTitle title={content["verify-email-failure-document-title"]}>
-            <>
-              <DTEHeader as="h1" $variant={headerVariant}>
-                {content["verify-email-failure-header"]}
-              </DTEHeader>
-              <DTEContent>{content["verify-email-error-technical"]}</DTEContent>
-            </>
-          </DocumentTitle>
-        )}
-        {confirmationError && <ErrorMessageContainer axiosError={confirmationError} />}
-      </StepWrapper>
-    </>
+    <StepWrapper>
+      {confirmationLoading ? (
+        <LoadingIndicator text={content["verify-loading-verifying"]} />
+      ) : (
+        <>
+          {Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
+            <DocumentTitle title={content["verify-email-success-document-title"]}>
+              <>
+                <DTEHeader as="h1" $variant={headerVariant}>
+                  {content["verify-email-success-header"]}
+                </DTEHeader>
+                {content["verify-email-continue-registration"]}
+                <UserLogin nested />
+              </>
+            </DocumentTitle>
+          )}
+          {!Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
+            <DocumentTitle title={content["verify-email-failure-document-title"]}>
+              <>
+                <DTEHeader as="h1" $variant={headerVariant}>
+                  {content["verify-email-failure-header"]}
+                </DTEHeader>
+                <DTEContent>{content["verify-email-error-technical"]}</DTEContent>
+              </>
+            </DocumentTitle>
+          )}
+          {confirmationError && <ErrorMessageContainer axiosError={confirmationError} />}
+        </>
+      )}
+    </StepWrapper>
   );
 }
 
