@@ -266,7 +266,7 @@ export default function Footer() {
         alignItems="center"
       >
         <Grid item xs={12} md={5} lg={4}>
-          <FollowUsText>Follow us </FollowUsText>
+          <FollowUsText>{content["footer-follow-us"]} </FollowUsText>
           <SocialIconContainer
             to={{ pathname: "https://www.facebook.com/OfficialNIHR/" }}
             target="_blank"
