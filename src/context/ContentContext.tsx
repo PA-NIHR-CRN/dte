@@ -55,7 +55,8 @@ export function ContentProvider({ children }: ContentProviderProps) {
     moment.locale(language);
     Cookies.set("selectedLanguage", language, {
       path: "/",
-      domain: process.env.REACT_APP_COOKIE_DOMAIN || ".bepartofresearch.nihr.ac.uk",
+      domain: ".nihr.ac.uk",
+      expires: 365,
     });
 
     if (isAuthenticated()) {
