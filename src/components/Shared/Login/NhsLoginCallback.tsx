@@ -55,7 +55,7 @@ function NhsLoginCallback() {
     const result = Utils.ConvertResponseToDTEResponse(response);
     if (result?.errors?.some((e) => e.customCode === userIsUnderageErrorCode)) {
       history.push(`/under18`);
-    } else if (result?.errors?.some((e) => e.customCode === unableToMatchAccounts)) {
+    } else if (result?.errors?.some((e) => e.detail === unableToMatchAccounts)) {
       history.push(`/unabletomatch`);
     } else if (result?.isSuccess) {
       saveToken(result?.content);
