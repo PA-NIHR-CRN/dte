@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  REACT_APP_BASE_API: ${{secrets.REACT_APP_BASE_API_QA}}
+  REACT_APP_BASE_API: ${{secrets.REACT_APP_BASE_API_OAT}}
   REACT_APP_LOGOUT_URL: ${{secrets.LOGOUT_URL_QA}}
   REACT_APP_RESEARCHER_AUTH_URL: ${{secrets.RESEARCHER_AUTH_URL_QA}}
   REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL_QA}}
