@@ -36,15 +36,31 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_VS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_VS_ACCESS_KEY_SECRET }}
           aws-region: ${{ secrets.AWS_REGION }}
+      - name: Log Environment Variables
+        run: |
+          echo "REACT_APP_BASE_API: $REACT_APP_BASE_API"
+          echo "REACT_APP_LOGOUT_URL: $REACT_APP_LOGOUT_URL"
+          echo "REACT_APP_RESEARCHER_AUTH_URL: $REACT_APP_RESEARCHER_AUTH_URL"
+          echo "REACT_APP_BASE_URL: $REACT_APP_BASE_URL"
+          echo "REACT_APP_NHS_SETTINGS_URL: $REACT_APP_NHS_SETTINGS_URL"
+          echo "REACT_APP_NHS_LOGIN_URL: $REACT_APP_NHS_LOGIN_URL"
+          echo "REACT_APP_NHS_LOGIN_CLIENT_ID: $REACT_APP_NHS_LOGIN_CLIENT_ID"
+          echo "REACT_APP_NHS_LOGIN_RESPONSE_TYPE: $REACT_APP_NHS_LOGIN_RESPONSE_TYPE"
+          echo "REACT_APP_NHS_LOGIN_SCOPE: $REACT_APP_NHS_LOGIN_SCOPE"
+          echo "REACT_APP_COOKIE_DOMAIN: $REACT_APP_COOKIE_DOMAIN"
+          echo "REACT_APP_CONTENTFUL_PREVIEW_MODE: $REACT_APP_CONTENTFUL_PREVIEW_MODE"
+          echo "REACT_APP_CONTENTFUL_PREVIEW_ACCESS_TOKEN: $REACT_APP_CONTENTFUL_PREVIEW_ACCESS_TOKEN"
+          echo "REACT_APP_CONTENTFUL_SPACE_ID: $REACT_APP_CONTENTFUL_SPACE_ID"
+          echo "REACT_APP_CONTENTFUL_DELIVERY_TOKEN: $REACT_APP_CONTENTFUL_DELIVERY_TOKEN"
+          echo "REACT_APP_CONTENTFUL_ENVIRONMENT: $REACT_APP_CONTENTFUL_ENVIRONMENT"
       - name: Yarn Install
         run: yarn install
-      - name: Runing  ESLint
+      - name: Running  ESLint
         run: yarn lintnofix
       - name: Build Files
         run: yarn build
       - name: Running Unit Tests
         run: yarn test
-
       - name: Deploy to S3 - QA
         shell: bash
         run: |
