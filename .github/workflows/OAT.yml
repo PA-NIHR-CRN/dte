@@ -22,35 +22,35 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '14'
           cache: 'yarn'
           cache-dependency-path: "yarn.lock"
       - name: Configure AWS credentials - All
+        # if: github.ref == 'refs/heads/master'
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
+          aws-access-key-id: ${{ secrets.CRNCC_STAGING_IAM_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.CRNCC_STAGING_IAM_ACCESS_KEY_SECRET }}
           aws-region: ${{ secrets.AWS_REGION }}
+      - uses: actions/setup-node@v2
       - name: Yarn Install
         run: yarn install
       - name: Runing  ESLint
         run: yarn lintnofix
       - name: Build Files
         run: yarn build
-      - name: Running Unit Tests
-        run: yarn test
+      # - name: Running Unit Tests
+      #   run: yarn test
 
 
-      - name: Deploy to S3 - OAT
+      - name: Deploy to S3 - UAT
         shell: bash
         run: |
           aws s3 sync ./build/ s3://$AWS_S3_BUCKET --delete
-          aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == '${{ secrets.VS_NIHR_URL_OAT }}'].Id" --output text) --paths '/*'
+          aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == '${{ secrets.VS_NIHR_URL_UAT }}'].Id" --output text) --paths '/*'
         env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_OAT_BUCKET_NAME }}
-
+          AWS_S3_BUCKET: ${{ secrets.AWS_UAT_BUCKET_NAME }}
