@@ -32,8 +32,8 @@ jobs:
         # if: github.ref == 'refs/heads/master'
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_VS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_VS_ACCESS_KEY_SECRET }}
+          aws-access-key-id: ${{ secrets.CRNCC_STAGING_IAM_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.CRNCC_STAGING_IAM_ACCESS_KEY_SECRET }}
           aws-region: ${{ secrets.AWS_REGION }}
       - uses: actions/setup-node@v2
       - name: Yarn Install
