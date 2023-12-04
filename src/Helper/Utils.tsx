@@ -99,7 +99,7 @@ export const EmailRegex = new RegExp(
 
 export const MobileRegex = new RegExp(
   // eslint-disable-next-line no-useless-escape
-  /^((\+44\s?|0)7([45789]\d{2}|624)\s?\d{3}\s?\d{3})$/
+  /^((\+44\s?7|07)\d{3}\s?\d{3}\s?\d{3})$/
 );
 
 export const LandlineRegex = new RegExp(
