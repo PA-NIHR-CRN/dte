@@ -37,8 +37,8 @@ jobs:
         run: yarn lintnofix
       - name: Build Files
         run: yarn build
-      # - name: Running Unit Tests
-      #   run: yarn test
+      - name: Running Unit Tests
+        run: yarn test
 
       - name: Deploy to S3 - QA
         shell: bash
