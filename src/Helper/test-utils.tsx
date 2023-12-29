@@ -4,7 +4,6 @@ import userEvent from "@testing-library/user-event";
 import { ThemeProvider } from "styled-components";
 import { useTheme, StylesProvider } from "@material-ui/core/styles";
 import { MemoryRouter } from "react-router-dom";
-import { SnackbarProvider } from "notistack";
 import { AppRoot, styledComponentsTheme } from "../theme";
 import { AuthProvider } from "../context/AuthContext";
 
@@ -19,18 +18,10 @@ const AllTheProviders = ({ children, initialRoutes }: RenderProps) => {
     <AuthProvider>
       <StylesProvider injectFirst>
         <ThemeProvider theme={{ ...styledComponentsTheme, ...MuiTheme }}>
-          <SnackbarProvider
-            maxSnack={3}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-          >
-            <AppRoot />
-            <MemoryRouter initialEntries={initialRoutes ?? ["/"]}>
-              {children}
-            </MemoryRouter>
-          </SnackbarProvider>
+          <AppRoot />
+          <MemoryRouter initialEntries={initialRoutes ?? ["/"]}>
+            {children}
+          </MemoryRouter>
         </ThemeProvider>
       </StylesProvider>
     </AuthProvider>
