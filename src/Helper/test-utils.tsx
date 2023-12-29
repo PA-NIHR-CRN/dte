@@ -41,3 +41,4 @@ const customRender = (
 
 export * from "@testing-library/react";
 export { customRender as render, userEvent };
+export { renderHook } from "@testing-library/react-hooks";
