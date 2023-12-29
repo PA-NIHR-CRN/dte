@@ -11,14 +11,7 @@ import Unauthorized from "./components/Shared/Unauthorized/Unauthorized";
 import { AuthContext } from "./context/AuthContext";
 import { AppRoot, styledComponentsTheme } from "./theme";
 import CookieBanner from "./components/Shared/Footer/CookieBanner";
-import { NHSApp } from "./types/AuthTypes";
 import SessionTimeoutModal from "./components/Shared/SessionTimeout/SessionTimeoutModal";
-
-declare global {
-  interface Window {
-    nhsapp: NHSApp;
-  }
-}
 
 function App() {
   const location = useLocation();
