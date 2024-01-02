@@ -7,6 +7,7 @@ expect.extend(toHaveNoViolations);
 
 const data = {
   sexAtBirth: "",
+  genderAtBirth: "",
 };
 
 describe("SexForm", () => {
