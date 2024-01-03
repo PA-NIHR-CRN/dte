@@ -187,6 +187,7 @@ const ManualEntry = (props: ManualEntryProps) => {
             />
           )}
           rules={{
+            required: "Enter your postcode",
             validate: (value) => {
               const cleaned = value.replace(/[^A-Za-z0-9]/g, "");
               if (
