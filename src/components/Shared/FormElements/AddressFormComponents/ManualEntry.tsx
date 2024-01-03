@@ -182,7 +182,7 @@ const ManualEntry = (props: ManualEntryProps) => {
               onValueChange={onChange}
               onValueBlur={onBlur}
               error={error?.message}
-              label="Postcode (optional)"
+              label="Postcode"
               autocomplete="postal-code"
             />
           )}
