@@ -17,6 +17,7 @@ import nihrlogo from "../../../images/NIHR-Logo.svg";
 import HCRwaleslogo from "../../../images/Health-and-Care-Research-Wales-full-colour-logo-CMYK.svg";
 import nhsScotlandlogo from "../../../images/nhs-research-scotland-logo.svg";
 import FooterLinksPanel from "./FooterLinksPanel";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 interface IsMobileProps {
   isMobile?: boolean;
@@ -277,7 +278,11 @@ export default function Footer() {
             aria-label="Facebook"
           >
             <SocialIconWrapper>
-              <SocialIcon aria-label="Facebook" icon={faFacebookF} size="xs" />
+              <SocialIcon
+                aria-label="Facebook"
+                icon={faFacebookF as IconProp}
+                size="xs"
+              />
             </SocialIconWrapper>
           </SocialIconContainer>
           <SocialIconContainer
@@ -286,7 +291,11 @@ export default function Footer() {
             aria-label="Twitter"
           >
             <SocialIconWrapper>
-              <SocialIcon aria-label="Twitter" icon={faTwitter} size="xs" />
+              <SocialIcon
+                aria-label="Twitter"
+                icon={faTwitter as IconProp}
+                size="xs"
+              />
             </SocialIconWrapper>
           </SocialIconContainer>
           <SocialIconContainer
@@ -295,7 +304,11 @@ export default function Footer() {
             aria-label="You Tube"
           >
             <SocialIconWrapper>
-              <SocialIcon aria-label="You Tube" icon={faYoutube} size="xs" />
+              <SocialIcon
+                aria-label="You Tube"
+                icon={faYoutube as IconProp}
+                size="xs"
+              />
             </SocialIconWrapper>
           </SocialIconContainer>
           <SocialIconContainer
@@ -304,7 +317,11 @@ export default function Footer() {
             aria-label="Linked In"
           >
             <SocialIconWrapper>
-              <SocialIcon aria-label="Linked In" icon={faLinkedin} size="xs" />
+              <SocialIcon
+                aria-label="Linked In"
+                icon={faLinkedin as IconProp}
+                size="xs"
+              />
             </SocialIconWrapper>
           </SocialIconContainer>
         </Grid>

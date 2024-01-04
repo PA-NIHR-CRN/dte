@@ -24,6 +24,7 @@ const MfaNoUkMobileOptions = () => {
     reValidateMode: "onSubmit",
     defaultValues: {
       ukLandline: "",
+      authenticationApp: "",
     },
   });
 
