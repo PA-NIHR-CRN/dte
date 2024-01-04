@@ -4,18 +4,13 @@ import userEvent from "@testing-library/user-event";
 import { ThemeProvider } from "styled-components";
 import { useTheme, StylesProvider } from "@material-ui/core/styles";
 import { MemoryRouter } from "react-router-dom";
-import { SnackbarProvider } from "notistack";
 import { AppRoot, styledComponentsTheme } from "../theme";
-import { AppContext, Theme } from "../context/AppContext";
 import { AuthProvider } from "../context/AuthContext";
-import ManualLoginProvider from "../context/ManualLoginContext";
 
 interface RenderProps {
   children?: any;
   initialRoutes?: { [name: string]: string }[];
 }
-
-// const { saveToken, logOutToken,isAuthenticated, } = useContext(AuthContext);
 
 const AllTheProviders = ({ children, initialRoutes }: RenderProps) => {
   const MuiTheme = useTheme();
@@ -23,33 +18,10 @@ const AllTheProviders = ({ children, initialRoutes }: RenderProps) => {
     <AuthProvider>
       <StylesProvider injectFirst>
         <ThemeProvider theme={{ ...styledComponentsTheme, ...MuiTheme }}>
-          <SnackbarProvider
-            maxSnack={3}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            // TransitionComponent={Slide}
-          >
-            <AppRoot />
-            <AppContext.Provider
-              value={{
-                lang: "de",
-                theme: Theme.Light,
-                setTheme: () => {},
-                showHeader: true,
-                setShowHeader: () => {},
-                showBacklink: false,
-                setShowBacklink: () => {},
-                showSplotches: false,
-                setShowSplotches: () => {},
-              }}
-            >
-              <MemoryRouter initialEntries={initialRoutes ?? ["/"]}>
-                <ManualLoginProvider>{children}</ManualLoginProvider>
-              </MemoryRouter>
-            </AppContext.Provider>
-          </SnackbarProvider>
+          <AppRoot />
+          <MemoryRouter initialEntries={initialRoutes ?? ["/"]}>
+            {children}
+          </MemoryRouter>
         </ThemeProvider>
       </StylesProvider>
     </AuthProvider>
@@ -69,3 +41,4 @@ const customRender = (
 
 export * from "@testing-library/react";
 export { customRender as render, userEvent };
+export { renderHook } from "@testing-library/react-hooks";

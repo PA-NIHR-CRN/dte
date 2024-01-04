@@ -3,7 +3,6 @@ import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
 import { MuiThemeProvider } from "@material-ui/core";
-import { SnackbarProvider } from "notistack";
 import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import theme from "./theme";
@@ -13,18 +12,10 @@ import ScrollToTop from "./Helper/ScrollToTop";
 ReactDOM.render(
   <AuthProvider>
     <MuiThemeProvider theme={theme}>
-      <SnackbarProvider
-        maxSnack={3}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-      >
-        <Router>
-          <ScrollToTop />
-          <App />
-        </Router>
-      </SnackbarProvider>
+      <Router>
+        <ScrollToTop />
+        <App />
+      </Router>
     </MuiThemeProvider>
   </AuthProvider>,
   document.getElementById("root")

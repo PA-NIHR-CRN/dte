@@ -1,10 +1,7 @@
 import { Grid } from "@material-ui/core";
-import { useContext } from "react";
 import styled from "styled-components";
 import bporlogo from "../../../images/BPoR_NIHR_colour-RGB.svg";
 import nhslogo from "../../../images/NHS_logo.svg";
-import { AppContext } from "../../../context/AppContext";
-import DTEBackLink from "../UI/DTEBackLink/DTEBackLink";
 import DTEPhaseBanner from "../UI/DTEPhaseBanner/DTEPhaseBanner";
 
 const StyledHeader = styled.header`
@@ -108,7 +105,6 @@ const NHSLogo = styled.img.attrs({
 })``;
 
 export default function Header() {
-  const { showBacklink } = useContext(AppContext);
   return (
     <>
       <StyledHeader>
@@ -121,22 +117,14 @@ export default function Header() {
         >
           <Grid item sm={2} md={1} />
           <StyledGridElementLeft item xs={8} sm={6} md={7}>
-            {showBacklink ? (
-              <DTEBackLink
-                linkText="Be Part of Research"
-                title="Be Part of Research"
-                href="https://bepartofresearch.nihr.ac.uk/"
-              />
-            ) : (
-              <StyledLink
-                target="_blank"
-                href="https://bepartofresearch.nihr.ac.uk/"
-                rel="noreferrer"
-                id="styledLogoLink"
-              >
-                <BPORLogo />
-              </StyledLink>
-            )}
+            <StyledLink
+              target="_blank"
+              href="https://bepartofresearch.nihr.ac.uk/"
+              rel="noreferrer"
+              id="styledLogoLink"
+            >
+              <BPORLogo />
+            </StyledLink>
           </StyledGridElementLeft>
           <StyledGridElementRight item xs={4} sm={3} md={3}>
             <StyledLogoLink

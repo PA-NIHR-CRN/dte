@@ -1,56 +1,7 @@
-// import { v5 as uuidv5, v4 as uuidv4 } from "uuid";
 import { AxiosResponse } from "axios";
 import { DTEAxiosResponse } from "../types/AuthTypes";
 
 export default class Utils {
-  static IsCPMSStatusDTEReady(statusName: string) {
-    if (statusName) {
-      const supportedStatuses =
-        process.env.REACT_APP_DTE_READY_STATUS_LIST?.split("#");
-      const language = supportedStatuses?.find(
-        (status: any) => status === statusName
-      );
-      return !!language;
-    }
-    return false;
-  }
-
-  static ConvertDate = (date: string) => {
-    if (date !== undefined) {
-      return new Date(parseInt(date, 10)).toLocaleDateString(undefined, {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
-    }
-    return "";
-  };
-
-  static ConvertDateWithTime = (date: string) => {
-    if (date !== undefined) {
-      return new Date(parseInt(date, 10)).toLocaleDateString(undefined, {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-      });
-    }
-    return "";
-  };
-
-  static ConvertDateForPicker = (date: string) => {
-    if (date !== undefined) {
-      return new Date(parseInt(date, 10)).toLocaleDateString(undefined, {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-      });
-    }
-    return "";
-  };
-
   static ConvertResponseToDTEResponse = (
     resp?: AxiosResponse<any> | void
   ): DTEAxiosResponse | undefined => {
