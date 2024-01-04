@@ -22,6 +22,7 @@
     "@mui/x-data-grid": "^5.2.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.4",
     "axios-hooks": "^2.7.0",
@@ -43,7 +44,6 @@
     "nhsuk-react-components": "^2.0.0",
     "nhsuk-react-components-extensions": "^1.5.4",
     "node-sass": "^9.0.0",
-    "notistack": "^1.0.10",
     "npm": "^8.11.0",
     "qrcode": "^1.5.3",
     "react": "^17.0.2",
@@ -144,5 +144,10 @@
   },
   "resolutions": {
     "@types/react": "17.0.74"
+},
+  "engines": {
+    "node": ">=14.0.0",
+    "yarn": ">=1.22.0",
+    "npm": "please-use-yarn"
   }
 }
