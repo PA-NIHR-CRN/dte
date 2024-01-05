@@ -63,7 +63,7 @@ describe("ManualEntry", () => {
       expect(screen.getByText("Address line 3 (optional)")).toBeInTheDocument();
       expect(screen.getByText("Address line 4 (optional)")).toBeInTheDocument();
       expect(screen.getByText("Town")).toBeInTheDocument();
-      expect(screen.getByText("Postcode (optional)")).toBeInTheDocument();
+      expect(screen.getByText("Postcode")).toBeInTheDocument(); // took away the word (optional)
     });
   });
 
@@ -85,8 +85,13 @@ describe("ManualEntry", () => {
         target: { value: "test town" },
       });
 
+      fireEvent.input(screen.getByLabelText("Postcode"), {
+        target: { value: "test postcode" }, // added test postcode value
+      });
+
       expect(screen.getByDisplayValue("test address 1")).toBeInTheDocument();
       expect(screen.getByDisplayValue("test town")).toBeInTheDocument();
+      expect(screen.getByDisplayValue("test postcode")).toBeInTheDocument();
 
       fireEvent.click(screen.getByText("Continue"));
       expect(mockOnDataChange).toHaveBeenCalled();
@@ -112,6 +117,7 @@ describe("ManualEntry", () => {
       expect(
         screen.getByText("Enter the town of your address")
       ).toBeInTheDocument();
+      expect(screen.getByText("Enter your postcode")).toBeInTheDocument();
     });
   });
 
@@ -134,6 +140,7 @@ describe("ManualEntry", () => {
       expect(
         screen.getByText("Enter the town of your address")
       ).toBeInTheDocument();
+      expect(screen.getByText("Enter a real postcode")).toBeInTheDocument();
     });
   });
 });
