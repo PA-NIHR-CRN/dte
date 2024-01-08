@@ -15,6 +15,29 @@ import AccountClosed from "../components/Participant/UpdateParticipant/AccountCl
 import Newsletter from "../components/Participant/UpdateParticipant/Newsletter";
 import NhsPreRegistration from "../pages/NHS/NhsPreRegistration";
 
+type VanityRoute = {
+  campaign: string;
+  source: string;
+};
+
+const getVanityRoutes = (routeConfig: VanityRoute[]) =>
+  routeConfig.map(({ campaign, source }) => (
+    <Route
+      path={`/${campaign}`}
+      render={() => {
+        ReactGA.pageview(
+          `/participants/introduction?utm_source=${source}&utm_medium=${
+            source === "poster" ? "print" : "referral"
+          }&utm_campaign=${campaign}`
+        );
+        return <NhsPreRegistration />;
+      }}
+      strict
+      exact
+      key={`${campaign}`}
+    />
+  ));
+
 export default [
   <ProtectedRoute
     path="/Participants/MyDetails"
@@ -63,78 +86,14 @@ export default [
     exact
     key="nhspreregistration"
   />,
-  <Route
-    path="/nhsenwl"
-    render={() => {
-      ReactGA.pageview(
-        "/participants/introduction?utm_source=poster&utm_medium=print&utm_campaign=nhsenwl"
-      );
-      return <NhsPreRegistration />;
-    }}
-    strict
-    exact
-    key="nhsenwl"
-  />,
-  <Route
-    path="/nhseswl"
-    render={() => {
-      ReactGA.pageview(
-        "/participants/introduction?utm_source=poster&utm_medium=print&utm_campaign=nhseswl"
-      );
-      return <NhsPreRegistration />;
-    }}
-    strict
-    exact
-    key="nhseswl"
-  />,
-  <Route
-    path="/nhsegp"
-    render={() => {
-      ReactGA.pageview(
-        "/participants/introduction?utm_source=poster&utm_medium=print&utm_campaign=nhsegp"
-      );
-      return <NhsPreRegistration />;
-    }}
-    strict
-    exact
-    key="nhsegp"
-  />,
-  <Route
-    path="/nhsegptext1"
-    render={() => {
-      ReactGA.pageview(
-        "/participants/introduction?utm_source=sms&utm_medium=referral&utm_campaign=nhsegptext1"
-      );
-      return <NhsPreRegistration />;
-    }}
-    strict
-    exact
-    key="nhsegptext1"
-  />,
-  <Route
-    path="/nhsegptext2"
-    render={() => {
-      ReactGA.pageview(
-        "/participants/introduction?utm_source=sms&utm_medium=referral&utm_campaign=nhsegptext2"
-      );
-      return <NhsPreRegistration />;
-    }}
-    strict
-    exact
-    key="nhsegptext2"
-  />,
-  <Route
-    path="/nhsegptext3"
-    render={() => {
-      ReactGA.pageview(
-        "/participants/introduction?utm_source=sms&utm_medium=referral&utm_campaign=nhsegptext3"
-      );
-      return <NhsPreRegistration />;
-    }}
-    strict
-    exact
-    key="nhsegptext3"
-  />,
+  ...getVanityRoutes([
+    { campaign: "nhsenwl", source: "poster" },
+    { campaign: "nhseswl", source: "poster" },
+    { campaign: "nhsegp", source: "poster" },
+    { campaign: "nhsegptext1", source: "sms" },
+    { campaign: "nhsegptext2", source: "sms" },
+    { campaign: "nhsegptext3", source: "sms" },
+  ]),
   <Route
     path="/Participants/PasswordUpdated"
     render={() => {
