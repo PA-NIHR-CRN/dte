@@ -64,6 +64,78 @@ export default [
     key="nhspreregistration"
   />,
   <Route
+    path="/nhsenwl"
+    render={() => {
+      ReactGA.pageview(
+        "/participants/introduction?utm_source=poster&utm_medium=print&utm_campaign=nhsenwl"
+      );
+      return <NhsPreRegistration />;
+    }}
+    strict
+    exact
+    key="nhsenwl"
+  />,
+  <Route
+    path="/nhseswl"
+    render={() => {
+      ReactGA.pageview(
+        "/participants/introduction?utm_source=poster&utm_medium=print&utm_campaign=nhseswl"
+      );
+      return <NhsPreRegistration />;
+    }}
+    strict
+    exact
+    key="nhseswl"
+  />,
+  <Route
+    path="/nhsegp"
+    render={() => {
+      ReactGA.pageview(
+        "/participants/introduction?utm_source=poster&utm_medium=print&utm_campaign=nhsegp"
+      );
+      return <NhsPreRegistration />;
+    }}
+    strict
+    exact
+    key="nhsegp"
+  />,
+  <Route
+    path="/nhsegptext1"
+    render={() => {
+      ReactGA.pageview(
+        "/participants/introduction?utm_source=sms&utm_medium=referral&utm_campaign=nhsegptext1"
+      );
+      return <NhsPreRegistration />;
+    }}
+    strict
+    exact
+    key="nhsegptext1"
+  />,
+  <Route
+    path="/nhsegptext2"
+    render={() => {
+      ReactGA.pageview(
+        "/participants/introduction?utm_source=sms&utm_medium=referral&utm_campaign=nhsegptext2"
+      );
+      return <NhsPreRegistration />;
+    }}
+    strict
+    exact
+    key="nhsegptext2"
+  />,
+  <Route
+    path="/nhsegptext3"
+    render={() => {
+      ReactGA.pageview(
+        "/participants/introduction?utm_source=sms&utm_medium=referral&utm_campaign=nhsegptext3"
+      );
+      return <NhsPreRegistration />;
+    }}
+    strict
+    exact
+    key="nhsegptext3"
+  />,
+  <Route
     path="/Participants/PasswordUpdated"
     render={() => {
       ReactGA.pageview("/AccountSettings/PasswordUpdated");
