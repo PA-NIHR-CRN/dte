@@ -97,6 +97,7 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.40.1",
     "@types/draftjs-to-html": "^0.8.1",
     "@types/jest": "^27.0.1",
     "@types/jest-axe": "^3.5.3",
@@ -144,7 +145,7 @@
   },
   "resolutions": {
     "@types/react": "17.0.74"
-},
+  },
   "engines": {
     "node": ">=14.0.0",
     "yarn": ">=1.22.0",
