@@ -45,7 +45,7 @@ jobs:
         run: yarn test
 
       - name: Deploy to S3 - Dev
-        if: github.ref == 'refs/heads/main'
+#        if: github.ref == 'refs/heads/main'
         shell: bash
         run: |
           aws s3 sync ./build/ s3://$AWS_S3_BUCKET --delete
