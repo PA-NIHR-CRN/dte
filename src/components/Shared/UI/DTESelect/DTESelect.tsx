@@ -28,6 +28,21 @@ const StyledSelect = styled(Select)`
     }
   }
 `;
+
+function capitalizeWords(input: string) {
+  const lowercasedInput = input.toLowerCase();
+  return lowercasedInput
+    .split(" ")
+    .map((word) => {
+      if (/\d/.test(word)) {
+        return word.toUpperCase();
+      } else {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      }
+    })
+    .join(" ");
+}
+
 const StyledSelectOption = styled(Select.Option)``;
 
 const DTESelect = memo(
@@ -48,7 +63,7 @@ const DTESelect = memo(
         key={option.value}
         data-testid={option?.testID}
       >
-        {option.text}
+        {capitalizeWords(option.text)}
       </StyledSelectOption>
     ));
 

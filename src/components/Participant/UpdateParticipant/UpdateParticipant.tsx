@@ -200,21 +200,35 @@ const UpdateParticipant = () => {
     handlePageTitle(currentPage);
   }, [currentPage]);
 
+  const capitalizeWords = (input: string) => {
+    return input
+      .toLowerCase()
+      .split(" ")
+      .map((word) => {
+        if (/\d/.test(word)) {
+          return word.toUpperCase();
+        } else {
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        }
+      })
+      .join(" ");
+  };
+
   const formatDisplayAddress = (address: any) => {
     let formattedAddress: ReactNode = <></>;
 
     const lineManagement = (builder: ReactNode, newElement: string) => {
-      const intialBuilder: ReactNode = `<>{newElement}</>`;
+      const intialBuilder: ReactNode = <>{capitalizeWords(newElement)}</>;
       const newLineBuilder: ReactNode = (
         <>
-          {builder} <br /> {newElement}
+          {builder} <br /> {capitalizeWords(newElement)}
         </>
       );
       return builder !== <></> ? newLineBuilder : intialBuilder;
     };
 
     if (address.address.addressLine1) {
-      formattedAddress = address.address.addressLine1;
+      formattedAddress = capitalizeWords(address.address.addressLine1);
     }
     if (address.address.addressLine2) {
       formattedAddress = lineManagement(

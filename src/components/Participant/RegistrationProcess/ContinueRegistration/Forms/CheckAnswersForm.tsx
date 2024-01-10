@@ -27,50 +27,70 @@ const StyledCheckHiddenText = styled.span`
 const CheckAnswersForm = (props: CheckAnswersFormProps) => {
   const { initialStateData, changeStep } = props;
 
+  const capitalizeWords = (input: string) => {
+    return input
+      .toLowerCase()
+      .split(" ")
+      .map((word) => {
+        if (/\d/.test(word)) {
+          return word.toUpperCase();
+        } else {
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        }
+      })
+      .join(" ");
+  };
+
   const formatCheckDisplayAddress = (address: any) => {
     let formattedCheckAddress: ReactNode = <></>;
 
     const lineManagement = (builder: ReactNode, newElement: string) => {
-      const intialBuilder: ReactNode = `<>{newElement}</>`;
+      const initialBuilder: ReactNode = <>{newElement}</>;
       const newLineBuilder: ReactNode = (
         <>
           {builder} <br /> {newElement}
         </>
       );
-      return builder !== <></> ? newLineBuilder : intialBuilder;
+      return builder !== <></> ? newLineBuilder : initialBuilder;
+    };
+
+    const capitalizeAddressPart = (addressPart: string) => {
+      return capitalizeWords(addressPart);
     };
 
     if (address.address.addressLine1) {
-      formattedCheckAddress = address.address.addressLine1;
+      formattedCheckAddress = capitalizeAddressPart(
+        address.address.addressLine1
+      );
     }
     if (address.address.addressLine2) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.address.addressLine2
+        capitalizeAddressPart(address.address.addressLine2)
       );
     }
     if (address.address.addressLine3) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.address.addressLine3
+        capitalizeAddressPart(address.address.addressLine3)
       );
     }
     if (address.address.addressLine4) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.address.addressLine4
+        capitalizeAddressPart(address.address.addressLine4)
       );
     }
     if (address.address.town) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.address.town
+        capitalizeAddressPart(address.address.town)
       );
     }
     if (address.postcode) {
       formattedCheckAddress = lineManagement(
         formattedCheckAddress,
-        address.postcode
+        capitalizeAddressPart(address.postcode)
       );
     }
     return (<DTEContent>{formattedCheckAddress}</DTEContent>) as ReactNode;
