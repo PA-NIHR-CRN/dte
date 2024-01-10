@@ -5,6 +5,7 @@ import DTEHeader from "../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEButton from "../../../../Shared/UI/DTEButton/DTEButton";
 import DTELinkButton from "../../../../Shared/UI/DTELinkButton/DTELinkButton";
+import { capitalizeWords } from "../../../../Shared/UI/DTESelect/DTESelect";
 
 interface CheckAnswersFormProps {
   initialStateData: ContinueRegistrationState;
@@ -26,20 +27,6 @@ const StyledCheckHiddenText = styled.span`
 
 const CheckAnswersForm = (props: CheckAnswersFormProps) => {
   const { initialStateData, changeStep } = props;
-
-  const capitalizeWords = (input: string) => {
-    return input
-      .toLowerCase()
-      .split(" ")
-      .map((word) => {
-        if (/\d/.test(word)) {
-          return word.toUpperCase();
-        } else {
-          return word.charAt(0).toUpperCase() + word.slice(1);
-        }
-      })
-      .join(" ");
-  };
 
   const formatCheckDisplayAddress = (address: any) => {
     let formattedCheckAddress: ReactNode = <></>;

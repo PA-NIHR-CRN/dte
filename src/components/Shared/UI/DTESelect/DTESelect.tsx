@@ -29,9 +29,9 @@ const StyledSelect = styled(Select)`
   }
 `;
 
-function capitalizeWords(input: string) {
-  const lowercasedInput = input.toLowerCase();
-  return lowercasedInput
+export const capitalizeWords = (input: string): string => {
+  return input
+    .toLowerCase()
     .split(" ")
     .map((word) => {
       if (/\d/.test(word)) {
@@ -41,7 +41,7 @@ function capitalizeWords(input: string) {
       }
     })
     .join(" ");
-}
+};
 
 const StyledSelectOption = styled(Select.Option)``;
 

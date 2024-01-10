@@ -43,6 +43,7 @@ import Disability2Form, {
 } from "../../Shared/FormElements/Disability2Form";
 import { AuthContext } from "../../../context/AuthContext";
 import ethnicities from "../../../data/ethnicityData";
+import { capitalizeWords } from "../../Shared/UI/DTESelect/DTESelect";
 
 interface UserDataState {
   address: AddressFormData;
@@ -199,20 +200,6 @@ const UpdateParticipant = () => {
   useEffect(() => {
     handlePageTitle(currentPage);
   }, [currentPage]);
-
-  const capitalizeWords = (input: string) => {
-    return input
-      .toLowerCase()
-      .split(" ")
-      .map((word) => {
-        if (/\d/.test(word)) {
-          return word.toUpperCase();
-        } else {
-          return word.charAt(0).toUpperCase() + word.slice(1);
-        }
-      })
-      .join(" ");
-  };
 
   const formatDisplayAddress = (address: any) => {
     let formattedAddress: ReactNode = <></>;
