@@ -43,7 +43,7 @@ import Disability2Form, {
 } from "../../Shared/FormElements/Disability2Form";
 import { AuthContext } from "../../../context/AuthContext";
 import ethnicities from "../../../data/ethnicityData";
-import { capitalizeWords } from "../../Shared/UI/DTESelect/DTESelect";
+import { capitaliseWords } from "../../Shared/UI/DTESelect/DTESelect";
 
 interface UserDataState {
   address: AddressFormData;
@@ -205,17 +205,17 @@ const UpdateParticipant = () => {
     let formattedAddress: ReactNode = <></>;
 
     const lineManagement = (builder: ReactNode, newElement: string) => {
-      const intialBuilder: ReactNode = <>{capitalizeWords(newElement)}</>;
+      const intialBuilder: ReactNode = <>{capitaliseWords(newElement)}</>;
       const newLineBuilder: ReactNode = (
         <>
-          {builder} <br /> {capitalizeWords(newElement)}
+          {builder} <br /> {capitaliseWords(newElement)}
         </>
       );
       return builder !== <></> ? newLineBuilder : intialBuilder;
     };
 
     if (address.address.addressLine1) {
-      formattedAddress = capitalizeWords(address.address.addressLine1);
+      formattedAddress = capitaliseWords(address.address.addressLine1);
     }
     if (address.address.addressLine2) {
       formattedAddress = lineManagement(

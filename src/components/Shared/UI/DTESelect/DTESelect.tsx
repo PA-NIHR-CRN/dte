@@ -29,7 +29,7 @@ const StyledSelect = styled(Select)`
   }
 `;
 
-export const capitalizeWords = (input: string): string => {
+export const capitaliseWords = (input: string): string => {
   return input
     .toLowerCase()
     .split(" ")
@@ -63,7 +63,7 @@ const DTESelect = memo(
         key={option.value}
         data-testid={option?.testID}
       >
-        {capitalizeWords(option.text)}
+        {capitaliseWords(option.text)}
       </StyledSelectOption>
     ));
 
