@@ -18,6 +18,8 @@ import bottomRightSplotch from "./images/bottomsplash.png";
 import CookieBanner from "./components/Shared/Footer/CookieBanner";
 import { NHSApp } from "./types/AuthTypes";
 import SessionTimeoutModal from "./components/Shared/SessionTimeout/SessionTimeoutModal";
+import useAxiosFetch from "./hooks/useAxiosFetch";
+import Utils, { clearCacheAndReload } from "./Helper/Utils";
 
 const TopLeftSplotch = styled.img.attrs({
   src: `${topLeftSplotch}`,
@@ -59,6 +61,24 @@ function App() {
   const location = useLocation();
   const { persistLastUrl, isInNHSApp } = useContext(AuthContext);
   const MuiTheme = useTheme();
+
+  const [{ response, loading }] = useAxiosFetch(
+    {
+      url: "/api/healthceck",
+      method: "GET",
+    },
+    {
+      useCache: false,
+      manual: false,
+    }
+  );
+
+  useEffect(() => {
+    if (loading) return;
+    if (response?.status === 503) {
+      clearCacheAndReload();
+    }
+  }, [response, loading]);
 
   // occurs on page change
   useEffect(() => {
