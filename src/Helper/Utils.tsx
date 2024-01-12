@@ -106,3 +106,14 @@ export const LandlineRegex = new RegExp(
   // eslint-disable-next-line no-useless-escape
   /^(?:\+44\s?|0)[1238]\d\s?(?:\d\s?){7,8}$/
 );
+
+export const capitaliseWords = (input: string) =>
+  input
+    .toLowerCase()
+    .split(" ")
+    .map((word) =>
+      /\d/.test(word)
+        ? word.toUpperCase()
+        : word.charAt(0).toUpperCase() + word.slice(1)
+    )
+    .join(" ");

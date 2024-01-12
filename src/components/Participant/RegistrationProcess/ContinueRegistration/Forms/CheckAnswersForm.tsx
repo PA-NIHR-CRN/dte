@@ -5,7 +5,7 @@ import DTEHeader from "../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEButton from "../../../../Shared/UI/DTEButton/DTEButton";
 import DTELinkButton from "../../../../Shared/UI/DTELinkButton/DTELinkButton";
-import { capitaliseWords } from "../../../../Shared/UI/DTESelect/DTESelect";
+import { capitaliseWords } from "../../../../../Helper/Utils";
 
 interface CheckAnswersFormProps {
   initialStateData: ContinueRegistrationState;
@@ -28,21 +28,33 @@ const StyledCheckHiddenText = styled.span`
 const CheckAnswersForm = (props: CheckAnswersFormProps) => {
   const { initialStateData, changeStep } = props;
 
-  const formatCheckDisplayAddress = (address: any) => {
+  const formatCheckDisplayAddress = (
+    address: any,
+    shouldCapitalise = false
+  ) => {
     let formattedCheckAddress: ReactNode = <></>;
 
-    const lineManagement = (builder: ReactNode, newElement: string) => {
-      const initialBuilder: ReactNode = <>{capitaliseWords(newElement)}</>;
+    const lineManagement = (
+      builder: ReactNode,
+      newElement: string,
+      shouldCapitalise = true
+    ) => {
+      const initialBuilder: ReactNode = (
+        <>{shouldCapitalise ? capitaliseWords(newElement) : newElement}</>
+      );
       const newLineBuilder: ReactNode = (
         <>
-          {builder} <br /> {capitaliseWords(newElement)}
+          {builder} <br />{" "}
+          {shouldCapitalise ? capitaliseWords(newElement) : newElement}
         </>
       );
       return builder !== <></> ? newLineBuilder : initialBuilder;
     };
 
     if (address.address.addressLine1) {
-      formattedCheckAddress = capitaliseWords(address.address.addressLine1);
+      formattedCheckAddress = shouldCapitalise
+        ? capitaliseWords(address.address.addressLine1)
+        : address.address.addressLine1;
     }
     if (address.address.addressLine2) {
       formattedCheckAddress = lineManagement(
@@ -74,6 +86,7 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
         address.postcode
       );
     }
+
     return (<DTEContent>{formattedCheckAddress}</DTEContent>) as ReactNode;
   };
 

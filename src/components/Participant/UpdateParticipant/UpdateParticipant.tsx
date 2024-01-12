@@ -43,7 +43,7 @@ import Disability2Form, {
 } from "../../Shared/FormElements/Disability2Form";
 import { AuthContext } from "../../../context/AuthContext";
 import ethnicities from "../../../data/ethnicityData";
-import { capitaliseWords } from "../../Shared/UI/DTESelect/DTESelect";
+import { capitaliseWords } from "../../../Helper/Utils";
 
 interface UserDataState {
   address: AddressFormData;
@@ -201,11 +201,17 @@ const UpdateParticipant = () => {
     handlePageTitle(currentPage);
   }, [currentPage]);
 
-  const formatDisplayAddress = (address: any) => {
+  const formatDisplayAddress = (address: any, shouldCapitalise = false) => {
     let formattedAddress: ReactNode = <></>;
 
-    const lineManagement = (builder: ReactNode, newElement: string) => {
-      const intialBuilder: ReactNode = <>{capitaliseWords(newElement)}</>;
+    const lineManagement = (
+      builder: ReactNode,
+      newElement: string,
+      shouldCapitalise = true
+    ) => {
+      const intialBuilder: ReactNode = (
+        <>{shouldCapitalise ? capitaliseWords(newElement) : newElement}</>
+      );
       const newLineBuilder: ReactNode = (
         <>
           {builder} <br /> {capitaliseWords(newElement)}
