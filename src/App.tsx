@@ -64,7 +64,7 @@ function App() {
 
   const [{ response, loading }] = useAxiosFetch(
     {
-      url: "/api/healthcheck",
+      url: `${process.env.REACT_APP_BASE_API}/healthcheck`,
       method: "GET",
     },
     {
