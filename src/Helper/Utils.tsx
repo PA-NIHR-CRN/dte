@@ -102,6 +102,11 @@ export const MobileRegex = new RegExp(
   /^((\+44\s?7|07)\d{3}\s?\d{3}\s?\d{3})$/
 );
 
+export const LandlineRegex = new RegExp(
+  // eslint-disable-next-line no-useless-escape
+  /^(?:\+44\s?|0)[1238]\d\s?(?:\d\s?){7,8}$/
+);
+
 export async function clearCacheAndReload() {
   if ("caches" in window) {
     try {
