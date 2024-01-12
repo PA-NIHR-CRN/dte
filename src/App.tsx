@@ -19,7 +19,7 @@ import CookieBanner from "./components/Shared/Footer/CookieBanner";
 import { NHSApp } from "./types/AuthTypes";
 import SessionTimeoutModal from "./components/Shared/SessionTimeout/SessionTimeoutModal";
 import useAxiosFetch from "./hooks/useAxiosFetch";
-import Utils, { clearCacheAndReload } from "./Helper/Utils";
+import { clearCacheAndReload } from "./Helper/Utils";
 
 const TopLeftSplotch = styled.img.attrs({
   src: `${topLeftSplotch}`,
