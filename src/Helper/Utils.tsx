@@ -106,17 +106,3 @@ export const LandlineRegex = new RegExp(
   // eslint-disable-next-line no-useless-escape
   /^(?:\+44\s?|0)[1238]\d\s?(?:\d\s?){7,8}$/
 );
-
-export async function clearCacheAndReload() {
-  if ("caches" in window) {
-    try {
-      const cacheNames = await caches.keys();
-      await Promise.all(cacheNames.map((name) => caches.delete(name)));
-      window.location.reload();
-    } catch (error) {
-      console.error("Error clearing caches:", error);
-    }
-  } else {
-    console.error("Caching is not supported");
-  }
-}

@@ -19,7 +19,7 @@ import CookieBanner from "./components/Shared/Footer/CookieBanner";
 import { NHSApp } from "./types/AuthTypes";
 import SessionTimeoutModal from "./components/Shared/SessionTimeout/SessionTimeoutModal";
 import useAxiosFetch from "./hooks/useAxiosFetch";
-import { clearCacheAndReload } from "./Helper/Utils";
+import { v4 as uuidv4 } from "uuid";
 
 const TopLeftSplotch = styled.img.attrs({
   src: `${topLeftSplotch}`,
@@ -76,7 +76,7 @@ function App() {
   useEffect(() => {
     if (loading) return;
     if (response?.status === 503) {
-      clearCacheAndReload();
+      window.location.href = `${process.env.REACT_APP_BASE_URL}/?v=${uuidv4()}`;
     }
   }, [response, loading]);
 
