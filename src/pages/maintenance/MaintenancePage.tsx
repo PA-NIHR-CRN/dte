@@ -8,7 +8,7 @@ const MaintenancePage = () => {
         <DTEHeader as="h1">Sorry, the service is unavailable</DTEHeader>
 
         <DTEContent>
-          You will be able to use the service from 9am on Tuesday 16th January
+          You will be able to use the service from 9am on Wednesday 17th January
           2024.
         </DTEContent>
         <DTEContent>
