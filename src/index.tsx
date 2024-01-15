@@ -9,22 +9,25 @@ import App from "./App";
 import theme from "./theme";
 import { AuthProvider } from "./context/AuthContext";
 import ScrollToTop from "./Helper/ScrollToTop";
+import { MaintenanceProvider } from "./context/MaintenanceContext";
 
 ReactDOM.render(
   <AuthProvider>
     <MuiThemeProvider theme={theme}>
-      <SnackbarProvider
-        maxSnack={3}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-      >
-        <Router>
-          <ScrollToTop />
-          <App />
-        </Router>
-      </SnackbarProvider>
+      <MaintenanceProvider>
+        <SnackbarProvider
+          maxSnack={3}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <Router>
+            <ScrollToTop />
+            <App />
+          </Router>
+        </SnackbarProvider>
+      </MaintenanceProvider>
     </MuiThemeProvider>
   </AuthProvider>,
   document.getElementById("root")

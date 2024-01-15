@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import styled, {
   ThemeProvider as StyledComponentsThemeProvider,
 } from "styled-components";
@@ -18,6 +18,11 @@ import bottomRightSplotch from "./images/bottomsplash.png";
 import CookieBanner from "./components/Shared/Footer/CookieBanner";
 import { NHSApp } from "./types/AuthTypes";
 import SessionTimeoutModal from "./components/Shared/SessionTimeout/SessionTimeoutModal";
+import useAxiosFetch from "./hooks/useAxiosFetch";
+import MaintenancePage from "./pages/maintenance/MaintenancePage";
+import LoadingIndicator from "./components/Shared/LoadingIndicator/LoadingIndicator";
+import { useMaintenance } from "./context/MaintenanceContext";
+import { setupAxiosInterceptors } from "./Helper/axiosSetup";
 
 const TopLeftSplotch = styled.img.attrs({
   src: `${topLeftSplotch}`,
@@ -52,13 +57,36 @@ declare global {
 }
 
 function App() {
-  const [theme, setTheme] = React.useState(Theme.Light);
-  const [showHeader, setShowHeader] = React.useState(true);
-  const [showSplotches, setShowSplotches] = React.useState(false);
-  const [showBacklink, setShowBacklink] = React.useState(false);
+  const [theme, setTheme] = useState(Theme.Light);
+  const [showHeader, setShowHeader] = useState(true);
+  const [showSplotches, setShowSplotches] = useState(false);
+  const [showBacklink, setShowBacklink] = useState(false);
   const location = useLocation();
   const { persistLastUrl, isInNHSApp } = useContext(AuthContext);
   const MuiTheme = useTheme();
+  const { setInMaintenanceMode, inMaintenanceMode } = useMaintenance();
+
+  const [{ error, loading }] = useAxiosFetch(
+    {
+      url: `${process.env.REACT_APP_BASE_API}/health`,
+      method: "GET",
+    },
+    {
+      useCache: false,
+      manual: false,
+    }
+  );
+
+  useEffect(() => {
+    setupAxiosInterceptors(setInMaintenanceMode);
+  }, [setInMaintenanceMode]);
+
+  // Initial API health check on mount
+  useEffect(() => {
+    if (error?.response?.status === 503) {
+      setInMaintenanceMode(true);
+    }
+  }, [error, setInMaintenanceMode]);
 
   // occurs on page change
   useEffect(() => {
@@ -73,49 +101,71 @@ function App() {
       <StyledComponentsThemeProvider
         theme={{ ...styledComponentsTheme, ...MuiTheme }}
       >
-        <div className="App Site">
-          <AppRoot />
-          <AppContext.Provider
-            value={{
-              lang: "de",
-              theme,
-              setTheme,
-              showHeader,
-              setShowHeader,
-              showBacklink,
-              setShowBacklink,
-              showSplotches,
-              setShowSplotches,
-            }}
-          >
-            <div className="Site-content">
-              <CookieBanner />
-              {showSplotches && (
-                <SplotchContainer aria-label="Top left splotch">
-                  <TopLeftSplotch />
-                </SplotchContainer>
-              )}
-              {!isInNHSApp && showHeader && <Header />}
-              <Switch>
-                {AuthRoutes}
-                {ParticipantRoutes}
-                <Route
-                  path="/Unauthorized"
-                  component={Unauthorized}
-                  key="unauthorized"
-                />
-                <Route path="*" component={PageNotFound} key="pagenotfound" />
-              </Switch>
-            </div>
-            {showSplotches && (
-              <SplotchContainer aria-label="Bottom right splotch">
-                <BottomRightSplotch />
-              </SplotchContainer>
+        {loading ? (
+          <div className="App Site">
+            <LoadingIndicator />
+          </div>
+        ) : (
+          <>
+            {inMaintenanceMode ? (
+              <div className="App Site">
+                <AppRoot />
+                <div className="Site-content">
+                  <Header />
+                  <MaintenancePage />
+                </div>
+              </div>
+            ) : (
+              <div className="App Site">
+                <AppRoot />
+                <AppContext.Provider
+                  value={{
+                    lang: "de",
+                    theme,
+                    setTheme,
+                    showHeader,
+                    setShowHeader,
+                    showBacklink,
+                    setShowBacklink,
+                    showSplotches,
+                    setShowSplotches,
+                  }}
+                >
+                  <div className="Site-content">
+                    <CookieBanner />
+                    {showSplotches && (
+                      <SplotchContainer aria-label="Top left splotch">
+                        <TopLeftSplotch />
+                      </SplotchContainer>
+                    )}
+                    {!isInNHSApp && showHeader && <Header />}
+                    <Switch>
+                      {AuthRoutes}
+                      {ParticipantRoutes}
+                      <Route
+                        path="/Unauthorized"
+                        component={Unauthorized}
+                        key="unauthorized"
+                      />
+                      <Route
+                        path="*"
+                        component={PageNotFound}
+                        key="pagenotfound"
+                      />
+                    </Switch>
+                  </div>
+                  {showSplotches && (
+                    <SplotchContainer aria-label="Bottom right splotch">
+                      <BottomRightSplotch />
+                    </SplotchContainer>
+                  )}
+                  {!isInNHSApp && <Footer />}
+                </AppContext.Provider>
+                <SessionTimeoutModal />
+              </div>
             )}
-            {!isInNHSApp && <Footer />}
-          </AppContext.Provider>
-          <SessionTimeoutModal />
-        </div>
+          </>
+        )}
       </StyledComponentsThemeProvider>
     </StylesProvider>
   );
