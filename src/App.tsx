@@ -21,6 +21,8 @@ import SessionTimeoutModal from "./components/Shared/SessionTimeout/SessionTimeo
 import useAxiosFetch from "./hooks/useAxiosFetch";
 import MaintenancePage from "./pages/maintenance/MaintenancePage";
 import LoadingIndicator from "./components/Shared/LoadingIndicator/LoadingIndicator";
+import { useMaintenance } from "./context/MaintenanceContext";
+import { setupAxiosInterceptors } from "./Helper/axiosSetup";
 
 const TopLeftSplotch = styled.img.attrs({
   src: `${topLeftSplotch}`,
@@ -62,9 +64,9 @@ function App() {
   const location = useLocation();
   const { persistLastUrl, isInNHSApp } = useContext(AuthContext);
   const MuiTheme = useTheme();
-  const [isInMaintenanceMode, setIsInMaintenanceMode] = useState(false);
+  const { setInMaintenanceMode, inMaintenanceMode } = useMaintenance();
 
-  const [{ loading, error }] = useAxiosFetch(
+  const [{ error, loading }] = useAxiosFetch(
     {
       url: `${process.env.REACT_APP_BASE_API}/health`,
       method: "GET",
@@ -76,13 +78,15 @@ function App() {
   );
 
   useEffect(() => {
-    if (loading) return;
-    console.log("error", error);
+    setupAxiosInterceptors(setInMaintenanceMode);
+  }, [setInMaintenanceMode]);
+
+  // Initial API health check on mount
+  useEffect(() => {
     if (error?.response?.status === 503) {
-      return setIsInMaintenanceMode(true);
+      setInMaintenanceMode(true);
     }
-    setIsInMaintenanceMode(false);
-  }, [loading, error]);
+  }, [error, setInMaintenanceMode]);
 
   // occurs on page change
   useEffect(() => {
@@ -103,7 +107,7 @@ function App() {
           </div>
         ) : (
           <>
-            {isInMaintenanceMode ? (
+            {inMaintenanceMode ? (
               <div className="App Site">
                 <AppRoot />
                 <div className="Site-content">
