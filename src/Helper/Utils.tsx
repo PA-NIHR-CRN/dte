@@ -1,6 +1,8 @@
 // import { v5 as uuidv5, v4 as uuidv4 } from "uuid";
 import { AxiosResponse } from "axios";
 import { DTEAxiosResponse } from "../types/AuthTypes";
+import { ReactNode } from "react";
+import DTEContent from "../components/Shared/UI/DTETypography/DTEContent/DTEContent";
 
 export default class Utils {
   static IsCPMSStatusDTEReady(statusName: string) {
@@ -117,3 +119,53 @@ export const capitaliseWords = (input: string) =>
         : word.charAt(0).toUpperCase() + word.slice(1)
     )
     .join(" ");
+
+export const formatDisplayAddress = (address: any) => {
+  let formattedCheckAddress: ReactNode = <></>;
+
+  const lineManagement = (builder: ReactNode, newElement: string) => {
+    const intialBuilder: ReactNode = `<>{newElement}</>`;
+    const newLineBuilder: ReactNode = (
+      <>
+        {builder} <br /> {newElement}
+      </>
+    );
+    return builder !== <></> ? newLineBuilder : intialBuilder;
+  };
+
+  if (address.address.addressLine1) {
+    formattedCheckAddress = capitaliseWords(address.address.addressLine1);
+  }
+  if (address.address.addressLine2) {
+    formattedCheckAddress = lineManagement(
+      formattedCheckAddress,
+      capitaliseWords(address.address.addressLine2)
+    );
+  }
+  if (address.address.addressLine3) {
+    formattedCheckAddress = lineManagement(
+      formattedCheckAddress,
+      capitaliseWords(address.address.addressLine3)
+    );
+  }
+  if (address.address.addressLine4) {
+    formattedCheckAddress = lineManagement(
+      formattedCheckAddress,
+      capitaliseWords(address.address.addressLine4)
+    );
+  }
+  if (address.address.town) {
+    formattedCheckAddress = lineManagement(
+      formattedCheckAddress,
+      capitaliseWords(address.address.town)
+    );
+  }
+  if (address.postcode) {
+    formattedCheckAddress = lineManagement(
+      formattedCheckAddress,
+      address.postcode
+    );
+  }
+
+  return (<DTEContent>{formattedCheckAddress}</DTEContent>) as ReactNode;
+};

@@ -1,11 +1,11 @@
-import { Fragment, ReactNode } from "react";
+import { Fragment } from "react";
 import styled from "styled-components";
 import { ContinueRegistrationState } from "../../../../../types/ParticipantTypes";
 import DTEHeader from "../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEButton from "../../../../Shared/UI/DTEButton/DTEButton";
 import DTELinkButton from "../../../../Shared/UI/DTELinkButton/DTELinkButton";
-import { capitaliseWords } from "../../../../../Helper/Utils";
+import { formatDisplayAddress } from "../../../../../Helper/Utils";
 
 interface CheckAnswersFormProps {
   initialStateData: ContinueRegistrationState;
@@ -28,68 +28,6 @@ const StyledCheckHiddenText = styled.span`
 const CheckAnswersForm = (props: CheckAnswersFormProps) => {
   const { initialStateData, changeStep } = props;
 
-  const formatCheckDisplayAddress = (
-    address: any,
-    shouldCapitalise = false
-  ) => {
-    let formattedCheckAddress: ReactNode = <></>;
-
-    const lineManagement = (
-      builder: ReactNode,
-      newElement: string,
-      shouldCapitalise = true
-    ) => {
-      const initialBuilder: ReactNode = (
-        <>{shouldCapitalise ? capitaliseWords(newElement) : newElement}</>
-      );
-      const newLineBuilder: ReactNode = (
-        <>
-          {builder} <br />{" "}
-          {shouldCapitalise ? capitaliseWords(newElement) : newElement}
-        </>
-      );
-      return builder !== <></> ? newLineBuilder : initialBuilder;
-    };
-
-    if (address.address.addressLine1) {
-      formattedCheckAddress = shouldCapitalise
-        ? capitaliseWords(address.address.addressLine1)
-        : address.address.addressLine1;
-    }
-    if (address.address.addressLine2) {
-      formattedCheckAddress = lineManagement(
-        formattedCheckAddress,
-        address.address.addressLine2
-      );
-    }
-    if (address.address.addressLine3) {
-      formattedCheckAddress = lineManagement(
-        formattedCheckAddress,
-        address.address.addressLine3
-      );
-    }
-    if (address.address.addressLine4) {
-      formattedCheckAddress = lineManagement(
-        formattedCheckAddress,
-        address.address.addressLine4
-      );
-    }
-    if (address.address.town) {
-      formattedCheckAddress = lineManagement(
-        formattedCheckAddress,
-        address.address.town
-      );
-    }
-    if (address.postcode) {
-      formattedCheckAddress = lineManagement(
-        formattedCheckAddress,
-        address.postcode
-      );
-    }
-
-    return (<DTEContent>{formattedCheckAddress}</DTEContent>) as ReactNode;
-  };
-
   return (
     <>
       <DTEHeader as="h1">
@@ -101,7 +39,7 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
             <DTEContent>Home address</DTEContent>
           </dt>
           <dd className="govuk-summary-list__value">
-            {formatCheckDisplayAddress(initialStateData.addressFormData)}
+            {formatDisplayAddress(initialStateData.addressFormData)}
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(0)}>

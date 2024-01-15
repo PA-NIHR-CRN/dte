@@ -37,7 +37,7 @@ import MobileNumberForm, {
 } from "../../Shared/FormElements/MobileNumberForm";
 import SexForm, { SexFormData } from "../../Shared/FormElements/SexForm";
 import NameForm, { NameFormData } from "../../Shared/FormElements/NameForm";
-import Utils from "../../../Helper/Utils";
+import Utils, { formatDisplayAddress } from "../../../Helper/Utils";
 import Disability2Form, {
   Disability2FormData,
 } from "../../Shared/FormElements/Disability2Form";
@@ -200,55 +200,6 @@ const UpdateParticipant = () => {
   useEffect(() => {
     handlePageTitle(currentPage);
   }, [currentPage]);
-
-  const formatDisplayAddress = (address: any, shouldCapitalise = false) => {
-    let formattedAddress: ReactNode = <></>;
-
-    const lineManagement = (
-      builder: ReactNode,
-      newElement: string,
-      shouldCapitalise = true
-    ) => {
-      const intialBuilder: ReactNode = (
-        <>{shouldCapitalise ? capitaliseWords(newElement) : newElement}</>
-      );
-      const newLineBuilder: ReactNode = (
-        <>
-          {builder} <br /> {capitaliseWords(newElement)}
-        </>
-      );
-      return builder !== <></> ? newLineBuilder : intialBuilder;
-    };
-
-    if (address.address.addressLine1) {
-      formattedAddress = capitaliseWords(address.address.addressLine1);
-    }
-    if (address.address.addressLine2) {
-      formattedAddress = lineManagement(
-        formattedAddress,
-        address.address.addressLine2
-      );
-    }
-    if (address.address.addressLine3) {
-      formattedAddress = lineManagement(
-        formattedAddress,
-        address.address.addressLine3
-      );
-    }
-    if (address.address.addressLine4) {
-      formattedAddress = lineManagement(
-        formattedAddress,
-        address.address.addressLine4
-      );
-    }
-    if (address.address.town) {
-      formattedAddress = lineManagement(formattedAddress, address.address.town);
-    }
-    if (address.postcode) {
-      formattedAddress = lineManagement(formattedAddress, address.postcode);
-    }
-    return (<DTEContent>{formattedAddress}</DTEContent>) as ReactNode;
-  };
 
   const parseTriStateBoolean = (value: boolean, nullValue: string) => {
     if (value === null) {
