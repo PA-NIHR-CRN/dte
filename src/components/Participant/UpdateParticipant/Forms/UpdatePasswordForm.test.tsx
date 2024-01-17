@@ -4,6 +4,7 @@ import { userEvent, render, screen, waitForElementToBeRemoved } from "../../../.
 import AccountSettings from "../AccountSettings";
 import weakPasswords from "../../../../data/weakPassword";
 
+
 expect.extend(toHaveNoViolations);
 
 let server: Server;

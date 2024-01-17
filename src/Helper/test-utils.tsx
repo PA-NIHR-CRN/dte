@@ -12,6 +12,8 @@ import ManualLoginProvider from "../context/ManualLoginContext";
 import { ContentContext } from "../context/ContentContext";
 import { getContent } from "./contenful/contentHandler";
 import { UserProvider } from "../context/UserContext";
+import { MaintenanceProvider } from "../context/MaintenanceContext";
+
 
 interface RenderProps {
   children?: any;
@@ -46,6 +48,7 @@ function AllTheProviders({ children, initialRoutes }: RenderProps) {
         >
           <StylesProvider injectFirst>
             <ThemeProvider theme={{ ...styledComponentsTheme, ...MuiTheme }}>
+              <MaintenanceProvider>
               <SnackbarProvider
                 maxSnack={3}
                 anchorOrigin={{
@@ -73,6 +76,7 @@ function AllTheProviders({ children, initialRoutes }: RenderProps) {
                   </MemoryRouter>
                 </AppContext.Provider>
               </SnackbarProvider>
+                </MaintenanceProvider>
             </ThemeProvider>
           </StylesProvider>
         </ContentContext.Provider>

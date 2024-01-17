@@ -3,6 +3,8 @@ import { render, screen, waitFor } from "../../../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import PasswordForm from "./PasswordForm";
 import weakPasswords from "../../../../../../data/weakPassword";
+import weakPasswords from "../../../../../../data/weakPasswords";
+
 
 const data = {
   password: "",
@@ -170,6 +172,7 @@ describe.each([
           }
         )
     );
+
 
     render(
       <PasswordForm

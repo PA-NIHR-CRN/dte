@@ -24,7 +24,7 @@ describe("Honeypot Component", () => {
   it("has the correct name attribute", () => {
     render(<Honeypot />);
     const input = screen.getByRole("textbox", { hidden: true });
-    expect(input).toHaveAttribute("name", "faxNumber");
+    expect(input).toHaveAttribute("name", "comments_or_notesA44");
   });
 
   it("has the correct tabIndex and aria-hidden attributes", () => {

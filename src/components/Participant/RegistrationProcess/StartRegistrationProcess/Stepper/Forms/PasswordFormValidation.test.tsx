@@ -4,6 +4,7 @@ import { render, screen, fireEvent, userEvent } from "../../../../../../Helper/t
 import "@testing-library/jest-dom";
 import PasswordForm from "./PasswordForm";
 import weakPasswords from "../../../../../../data/weakPassword";
+import weakPasswords from "../../../../../../data/weakPasswords";
 
 expect.extend(toHaveNoViolations);
 

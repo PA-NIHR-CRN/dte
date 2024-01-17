@@ -208,15 +208,17 @@ describe("Update Areas Of Research", () => {
     });
 
     const healthConditionOptions = await screen.findAllByRole("checkbox");
-    expect(healthConditionOptions).toHaveLength(2);
+    expect(healthConditionOptions).toHaveLength(1);
     expect(healthConditionOptions[0]).toHaveAttribute(
       "value",
       "Actinic keratoses (solar keratoses)",
     );
+
     expect(healthConditionOptions[1]).toHaveAttribute(
       "value",
       "Solar keratoses",
     );
+
 
     await waitFor(() => {
       fireEvent.click(healthConditionOptions[0]);

@@ -21,6 +21,17 @@ export type PasswordFormData = {
   password2: string;
 };
 
+
+interface PasswordPolicy {
+  minimumLength: number;
+  requireLowercase: boolean;
+  requireNumbers: boolean;
+  requireSymbols: boolean;
+  requireUppercase: boolean;
+  allowedPasswordSymbols?: string;
+  weakPasswords: string[];
+}
+
 interface PasswordFormProps {
   initialStateData: PasswordFormData;
   onDataChange: (data: PasswordFormData) => void;

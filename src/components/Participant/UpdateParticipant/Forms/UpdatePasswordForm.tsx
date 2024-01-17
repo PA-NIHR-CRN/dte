@@ -18,6 +18,7 @@ import ThreeWords from "../../../Shared/Password/threeWords";
 import { ContentContext } from "../../../../context/ContentContext";
 import validatePassword, { PasswordPolicy } from "../../../../Helper/passwordValidation/passwordValidation";
 
+
 export type UpdatePasswordFormData = {
   currentPassword: string;
   newPassword: string;
@@ -26,6 +27,7 @@ export type UpdatePasswordFormData = {
 
 function UpdatePasswordForm(props: FormBaseProps) {
   const { content } = useContext(ContentContext);
+
   const { onCancel } = props;
   let requiresPolicyComma: boolean;
   const [localFormData, setLocalFormData] = useState<UpdatePasswordFormData>({

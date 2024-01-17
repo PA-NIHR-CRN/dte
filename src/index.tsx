@@ -12,6 +12,7 @@ import ScrollToTop from "./Helper/ScrollToTop";
 import { ContentProvider } from "./context/ContentContext";
 import "./Helper/translations";
 import { UserProvider } from "./context/UserContext";
+import { MaintenanceProvider } from "./context/MaintenanceContext";
 
 const root = document.getElementById("root");
 
@@ -19,6 +20,7 @@ if (!root) throw new Error("Root element not found");
 
 const app = (
   <MuiThemeProvider theme={theme}>
+  <MaintenanceProvider>
     <SnackbarProvider
       maxSnack={3}
       anchorOrigin={{
@@ -37,7 +39,9 @@ const app = (
         </AuthProvider>
       </Router>
     </SnackbarProvider>
+    </MaintenanceProvider>
   </MuiThemeProvider>
+
 );
 
 ReactDOM.createRoot(root).render(app);
