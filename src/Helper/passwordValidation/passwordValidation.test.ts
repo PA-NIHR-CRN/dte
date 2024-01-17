@@ -1,5 +1,5 @@
 import validatePassword, { PasswordPolicy } from "./passwordValidation";
-import weakPasswords from "../../data/weakPassword";
+import weakPasswords from "../../data/weakPasswords";
 
 describe("validatePassword", () => {
   const policy: PasswordPolicy = {

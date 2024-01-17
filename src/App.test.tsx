@@ -19,12 +19,7 @@ describe("App", () => {
     beforeEach(() => {
       server.get(
         `${process.env.REACT_APP_BASE_API}/health`,
-        () =>
-          new Response(
-            200,
-            { "Content-Type": "application/json" },
-            { status: "UP" }
-          )
+        () => new Response(200, { "Content-Type": "application/json" }, { status: "UP" })
       );
     });
 
@@ -50,9 +45,7 @@ describe("App", () => {
       const { getByText, getByAltText } = render(<App />);
       await waitFor(() => {
         const footerElement = getByText("Follow us");
-        const footerLogoElement = getByAltText(
-          "Be Part Of Research footer Logo"
-        );
+        const footerLogoElement = getByAltText("Be Part Of Research footer Logo");
         expect(footerElement).toBeInTheDocument();
         expect(footerLogoElement).toBeInTheDocument();
       });
@@ -63,12 +56,7 @@ describe("App", () => {
     beforeEach(() => {
       server.get(
         `${process.env.REACT_APP_BASE_API}/health`,
-        () =>
-          new Response(
-            503,
-            { "Content-Type": "application/json" },
-            { status: "DOWN" }
-          )
+        () => new Response(503, { "Content-Type": "application/json" }, { status: "DOWN" })
       );
     });
 
@@ -94,9 +82,7 @@ describe("App", () => {
       const { getByText } = render(<App />);
 
       await waitFor(() => {
-        const maintenanceElement = getByText(
-          /Sorry, the service is unavailable/i
-        );
+        const maintenanceElement = getByText(/Sorry, the service is unavailable/i);
         expect(maintenanceElement).toBeInTheDocument();
       });
     });

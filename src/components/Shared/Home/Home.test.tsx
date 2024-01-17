@@ -1,11 +1,6 @@
 import { axe, toHaveNoViolations } from "jest-axe";
 import { createServer, Server } from "miragejs";
-import {
-  render,
-  screen,
-  waitFor,
-  waitForElementToBeRemoved,
-} from "../../../Helper/test-utils";
+import { render, screen, waitFor, waitForElementToBeRemoved } from "../../../Helper/test-utils";
 import Home from "./Home";
 
 expect.extend(toHaveNoViolations);
@@ -15,38 +10,35 @@ let server: Server;
 beforeEach(() => {
   server = createServer({
     routes() {
-      this.get(
-        `${process.env.REACT_APP_BASE_API}/participants/demographics`,
-        () => {
-          return {
-            content: {
-              mobileNumber: "01234567890",
-              landlineNumber: "09876543210",
-              address: {
-                addressLine1: "998",
-                addressLine2: "What Street",
-                addressLine3: "Dtoke Village",
-                addressLine4: "Slough Town",
-                town: "Buckinghamshire",
-                postcode: "ER4 9PL",
-              },
-              dateOfBirth: "1999-01-21T00:00:00+00:00",
-              sexRegisteredAtBirth: "male",
-              genderIsSameAsSexRegisteredAtBirth: false,
-              ethnicGroup: "asian",
-              ethnicBackground: "Pakistani",
-              disability: true,
-              disabilityDescription: "Prefer not to say",
-              healthConditionInterests: ["Aspirin"],
-              consentContact: false,
+      this.get(`${process.env.REACT_APP_BASE_API}/participants/demographics`, () => {
+        return {
+          content: {
+            mobileNumber: "01234567890",
+            landlineNumber: "09876543210",
+            address: {
+              addressLine1: "998",
+              addressLine2: "What Street",
+              addressLine3: "Dtoke Village",
+              addressLine4: "Slough Town",
+              town: "Buckinghamshire",
+              postcode: "ER4 9PL",
             },
-            isSuccess: true,
-            errors: [],
-            conversationId: null,
-            version: 1,
-          };
-        },
-      );
+            dateOfBirth: "1999-01-21T00:00:00+00:00",
+            sexRegisteredAtBirth: "male",
+            genderIsSameAsSexRegisteredAtBirth: false,
+            ethnicGroup: "asian",
+            ethnicBackground: "Pakistani",
+            disability: true,
+            disabilityDescription: "Prefer not to say",
+            healthConditionInterests: ["Aspirin"],
+            consentContact: false,
+          },
+          isSuccess: true,
+          errors: [],
+          conversationId: null,
+          version: 1,
+        };
+      });
     },
   });
 });
@@ -84,15 +76,10 @@ describe("Home screen render tests", () => {
     expect(links[2]).toHaveTextContent("Personal details");
     expect(links[3]).toHaveAttribute(
       "href",
-      "https://bepartofresearch.nihr.ac.uk/results/search-results?query=&location=",
+      "https://bepartofresearch.nihr.ac.uk/results/search-results?query=&location="
     );
-    expect(links[3]).toHaveTextContent(
-      "Search for studies on Be Part of Research",
-    );
-    expect(links[4]).toHaveAttribute(
-      "href",
-      "/Participants/BePartOfResearchNewsletter",
-    );
+    expect(links[3]).toHaveTextContent("Search for studies on Be Part of Research");
+    expect(links[4]).toHaveAttribute("href", "/Participants/BePartOfResearchNewsletter");
     expect(links[4]).toHaveTextContent("Be Part of Research Newsletter");
     expect(links[5]).toHaveAttribute("href", "/Participants/CloseAccount");
     expect(links[5]).toHaveTextContent("Close your account");

@@ -1,9 +1,7 @@
 // axiosSetup.ts
 import axios, { AxiosError } from "axios";
 
-export const setupAxiosInterceptors = (
-  onMaintenanceModeDetected: (inMaintenance: boolean) => void
-): void => {
+export const setupAxiosInterceptors = (onMaintenanceModeDetected: (inMaintenance: boolean) => void): void => {
   axios.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {

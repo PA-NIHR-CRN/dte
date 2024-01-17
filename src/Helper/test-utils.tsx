@@ -14,7 +14,6 @@ import { getContent } from "./contenful/contentHandler";
 import { UserProvider } from "../context/UserContext";
 import { MaintenanceProvider } from "../context/MaintenanceContext";
 
-
 interface RenderProps {
   children?: any;
   initialRoutes?: { [name: string]: string }[];
@@ -49,34 +48,34 @@ function AllTheProviders({ children, initialRoutes }: RenderProps) {
           <StylesProvider injectFirst>
             <ThemeProvider theme={{ ...styledComponentsTheme, ...MuiTheme }}>
               <MaintenanceProvider>
-              <SnackbarProvider
-                maxSnack={3}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                // TransitionComponent={Slide}
-              >
-                <AppRoot />
-                <AppContext.Provider
-                  value={{
-                    lang: "de",
-                    theme: Theme.Light,
-                    setTheme: () => {},
-                    showHeader: true,
-                    setShowHeader: () => {},
-                    showBacklink: false,
-                    setShowBacklink: () => {},
-                    showSplotches: false,
-                    setShowSplotches: () => {},
+                <SnackbarProvider
+                  maxSnack={3}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
                   }}
+                  // TransitionComponent={Slide}
                 >
-                  <MemoryRouter initialEntries={initialRoutes ?? ["/"]}>
-                    <ManualLoginProvider>{children}</ManualLoginProvider>
-                  </MemoryRouter>
-                </AppContext.Provider>
-              </SnackbarProvider>
-                </MaintenanceProvider>
+                  <AppRoot />
+                  <AppContext.Provider
+                    value={{
+                      lang: "de",
+                      theme: Theme.Light,
+                      setTheme: () => {},
+                      showHeader: true,
+                      setShowHeader: () => {},
+                      showBacklink: false,
+                      setShowBacklink: () => {},
+                      showSplotches: false,
+                      setShowSplotches: () => {},
+                    }}
+                  >
+                    <MemoryRouter initialEntries={initialRoutes ?? ["/"]}>
+                      <ManualLoginProvider>{children}</ManualLoginProvider>
+                    </MemoryRouter>
+                  </AppContext.Provider>
+                </SnackbarProvider>
+              </MaintenanceProvider>
             </ThemeProvider>
           </StylesProvider>
         </ContentContext.Provider>

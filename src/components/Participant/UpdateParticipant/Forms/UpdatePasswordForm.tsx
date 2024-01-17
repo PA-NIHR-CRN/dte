@@ -18,7 +18,6 @@ import ThreeWords from "../../../Shared/Password/threeWords";
 import { ContentContext } from "../../../../context/ContentContext";
 import validatePassword, { PasswordPolicy } from "../../../../Helper/passwordValidation/passwordValidation";
 
-
 export type UpdatePasswordFormData = {
   currentPassword: string;
   newPassword: string;

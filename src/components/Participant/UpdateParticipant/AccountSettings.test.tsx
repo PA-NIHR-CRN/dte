@@ -68,9 +68,7 @@ describe("Account Settings display tests", () => {
     render(<AccountSettings />);
 
     expect(await screen.findByText("Email address")).toBeInTheDocument();
-    expect(
-      await screen.findByText("first.last@domain.com"),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("first.last@domain.com")).toBeInTheDocument();
     expect(await screen.findByText("Password")).toBeInTheDocument();
 
     const links = screen.getAllByRole("link");
@@ -90,11 +88,9 @@ describe("Account Settings analytics", () => {
     render(<AccountSettings />);
     await waitFor(
       () => {
-        expect(ReactGA.testModeAPI.calls).toEqual([
-          ["send", { hitType: "pageview", page: "/AccountSettings" }],
-        ]);
+        expect(ReactGA.testModeAPI.calls).toEqual([["send", { hitType: "pageview", page: "/AccountSettings" }]]);
       },
-      { timeout: 1000 },
+      { timeout: 1000 }
     );
   });
 });

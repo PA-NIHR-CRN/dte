@@ -3,7 +3,6 @@ import { createServer, Server } from "miragejs";
 import { render, screen, fireEvent, userEvent } from "../../../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import PasswordForm from "./PasswordForm";
-import weakPasswords from "../../../../../../data/weakPassword";
 import weakPasswords from "../../../../../../data/weakPasswords";
 
 expect.extend(toHaveNoViolations);

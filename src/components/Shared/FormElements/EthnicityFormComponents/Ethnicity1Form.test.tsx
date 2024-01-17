@@ -1,10 +1,5 @@
 import { axe, toHaveNoViolations } from "jest-axe";
-import {
-  render,
-  fireEvent,
-  screen,
-  waitFor,
-} from "../../../../Helper/test-utils";
+import { render, fireEvent, screen, waitFor } from "../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import Ethnicity1Form from "./Ethnicity1Form";
 
@@ -17,7 +12,7 @@ test("loads and displays ethnicity form", async () => {
         ethnicity: "",
       }}
       onDataChange={() => {}}
-    />,
+    />
   );
   await waitFor(() => {
     expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
@@ -35,7 +30,7 @@ test("select a radio button and submit", async () => {
         ethnicity: "",
       }}
       onDataChange={mockOnDataChange}
-    />,
+    />
   );
   await waitFor(() => {
     expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
@@ -46,7 +41,7 @@ test("select a radio button and submit", async () => {
   await waitFor(() =>
     expect(mockOnDataChange).toHaveBeenCalledWith({
       ethnicity: "asian",
-    }),
+    })
   );
 });
 
@@ -57,7 +52,7 @@ test("pre-filled data entry", async () => {
         ethnicity: "black",
       }}
       onDataChange={() => {}}
-    />,
+    />
   );
   await waitFor(() => {
     expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
@@ -73,7 +68,7 @@ describe("Accessibility test", () => {
           ethnicity: "",
         }}
         onDataChange={() => {}}
-      />,
+      />
     );
 
     const results = await axe(container);

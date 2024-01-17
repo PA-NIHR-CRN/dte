@@ -14,12 +14,12 @@ describe("DisabilityForm", () => {
           disability: "",
         }}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
     expect(
       screen.getByText(
-        "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more?",
-      ),
+        "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more?"
+      )
     ).toBeInTheDocument();
   });
 
@@ -31,7 +31,7 @@ describe("DisabilityForm", () => {
           disability: "yes",
         }}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     expect(screen.getByDisplayValue("yes")).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe("DisabilityForm", () => {
           disability: "",
         }}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     expect(screen.getByDisplayValue("yes")).not.toBeChecked();
@@ -61,7 +61,7 @@ describe("DisabilityForm", () => {
           disability: "",
         }}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     expect(screen.getByDisplayValue("no")).not.toBeChecked();
@@ -81,7 +81,7 @@ describe("DisabilityForm", () => {
           disability: "",
         }}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     expect(screen.getByDisplayValue("yes")).not.toBeChecked();
@@ -102,7 +102,7 @@ describe("Accessibility test", () => {
           disability: "",
         }}
         onDataChange={mockOnDataChange}
-      />,
+      />
     );
 
     const results = await axe(container);

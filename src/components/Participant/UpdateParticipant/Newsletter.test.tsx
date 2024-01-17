@@ -33,7 +33,7 @@ describe("Areas Of Research display tests", () => {
     render(<Newsletter />);
 
     const text = await screen.findByText(
-      "As the Be Part of Research Volunteer Service is in 'private beta', it may take some time to hear about studies you can take part in. By signing up to our monthly newsletter, you'll receive all our latest news and hear of more opportunities to take part in research from across the UK.",
+      "As the Be Part of Research Volunteer Service is in 'private beta', it may take some time to hear about studies you can take part in. By signing up to our monthly newsletter, you'll receive all our latest news and hear of more opportunities to take part in research from across the UK."
     );
     expect(text).toBeInTheDocument();
   });
@@ -45,12 +45,10 @@ describe("Areas Of Research display tests", () => {
     expect(links).toHaveLength(2);
     expect(links[0].textContent).toBe("Back");
     expect(links[0]).toHaveAttribute("href", "/");
-    expect(links[1].textContent).toBe(
-      "Sign up to the Be Part of Research newsletter",
-    );
+    expect(links[1].textContent).toBe("Sign up to the Be Part of Research newsletter");
     expect(links[1]).toHaveAttribute(
       "href",
-      "https://nihr.us14.list-manage.com/subscribe?u=299dc02111e8a68172029095f&id=3b030a1027&utm_source=bpor-vs-website&utm_medium=referral&utm_campaign=bpor-newsletter",
+      "https://nihr.us14.list-manage.com/subscribe?u=299dc02111e8a68172029095f&id=3b030a1027&utm_source=bpor-vs-website&utm_medium=referral&utm_campaign=bpor-newsletter"
     );
     expect(links[1]).toHaveAttribute("target", "_blank");
   });

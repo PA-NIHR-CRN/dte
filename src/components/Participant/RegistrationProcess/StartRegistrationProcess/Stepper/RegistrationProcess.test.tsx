@@ -24,11 +24,9 @@ describe("RegistrationProcess", () => {
     render(<RegistrationProcess />);
     await waitFor(
       () => {
-        expect(ReactGA.testModeAPI.calls).toEqual([
-          ["send", { hitType: "pageview", page: "/registration/name" }],
-        ]);
+        expect(ReactGA.testModeAPI.calls).toEqual([["send", { hitType: "pageview", page: "/registration/name" }]]);
       },
-      { timeout: 1000 },
+      { timeout: 1000 }
     );
   });
 });

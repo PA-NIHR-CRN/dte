@@ -11,7 +11,7 @@ describe("LoadingIndicator Component Tests", () => {
     render(
       <StyledComponentsThemeProvider theme={styledComponentsTheme}>
         <LoadingIndicator />
-      </StyledComponentsThemeProvider>,
+      </StyledComponentsThemeProvider>
     );
     expect(screen.queryByText(loadingMessage)).toBeInTheDocument();
   });
@@ -21,7 +21,7 @@ describe("LoadingIndicator Component Tests", () => {
     render(
       <StyledComponentsThemeProvider theme={styledComponentsTheme}>
         <LoadingIndicator text={loadingMessage} />
-      </StyledComponentsThemeProvider>,
+      </StyledComponentsThemeProvider>
     );
     const loadingText = screen.queryByText(loadingMessage);
     expect(loadingText).toBeInTheDocument();

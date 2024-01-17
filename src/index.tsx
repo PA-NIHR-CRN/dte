@@ -20,28 +20,27 @@ if (!root) throw new Error("Root element not found");
 
 const app = (
   <MuiThemeProvider theme={theme}>
-  <MaintenanceProvider>
-    <SnackbarProvider
-      maxSnack={3}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-    >
-      <Router>
-        <AuthProvider>
-          <UserProvider>
-            <ContentProvider>
-              <ScrollToTop />
-              <App />
-            </ContentProvider>
-          </UserProvider>
-        </AuthProvider>
-      </Router>
-    </SnackbarProvider>
+    <MaintenanceProvider>
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <Router>
+          <AuthProvider>
+            <UserProvider>
+              <ContentProvider>
+                <ScrollToTop />
+                <App />
+              </ContentProvider>
+            </UserProvider>
+          </AuthProvider>
+        </Router>
+      </SnackbarProvider>
     </MaintenanceProvider>
   </MuiThemeProvider>
-
 );
 
 ReactDOM.createRoot(root).render(app);

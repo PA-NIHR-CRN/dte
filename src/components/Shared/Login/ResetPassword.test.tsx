@@ -4,7 +4,7 @@ import ReactGA from "react-ga";
 import { render, screen, fireEvent, userEvent, waitFor } from "../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import ResetPassword from "./ResetPassword";
-import weakPasswords from "../../../data/weakPassword";
+import weakPasswords from "../../../data/weakPasswords";
 
 expect.extend(toHaveNoViolations);
 

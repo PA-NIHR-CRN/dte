@@ -20,22 +20,12 @@ const testData = {
 describe("AddressForm", () => {
   it("renders", () => {
     const mockOnDataChange = jest.fn();
-    render(
-      <AddressForm
-        initialStateData={testData}
-        onDataChange={mockOnDataChange}
-      />,
-    );
+    render(<AddressForm initialStateData={testData} onDataChange={mockOnDataChange} />);
   });
 
   test("that the user has to enter a valid postcode", async () => {
     const mockOnDataChange = jest.fn();
-    render(
-      <AddressForm
-        initialStateData={testData}
-        onDataChange={mockOnDataChange}
-      />,
-    );
+    render(<AddressForm initialStateData={testData} onDataChange={mockOnDataChange} />);
 
     fireEvent.change(screen.getByLabelText("Postcode"), {
       target: { value: "Not a valid postcode" },
@@ -54,12 +44,7 @@ describe("AddressForm", () => {
 describe("Accessibility test", () => {
   it("should not fail any accessibility tests", async () => {
     const mockOnDataChange = jest.fn();
-    const { container } = render(
-      <AddressForm
-        initialStateData={testData}
-        onDataChange={mockOnDataChange}
-      />,
-    );
+    const { container } = render(<AddressForm initialStateData={testData} onDataChange={mockOnDataChange} />);
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();

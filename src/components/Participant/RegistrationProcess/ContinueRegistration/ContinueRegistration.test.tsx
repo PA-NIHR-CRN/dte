@@ -74,11 +74,9 @@ describe("Continue registration analytics", () => {
 
     await waitFor(
       () => {
-        expect(ReactGA.testModeAPI.calls).toEqual([
-          ["send", { hitType: "pageview", page: "/registration/address" }],
-        ]);
+        expect(ReactGA.testModeAPI.calls).toEqual([["send", { hitType: "pageview", page: "/registration/address" }]]);
       },
-      { timeout: 1000 },
+      { timeout: 1000 }
     );
   });
 });

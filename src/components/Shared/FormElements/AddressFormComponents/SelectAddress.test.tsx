@@ -1,10 +1,5 @@
 import { axe, toHaveNoViolations } from "jest-axe";
-import {
-  render,
-  fireEvent,
-  screen,
-  waitFor,
-} from "../../../../Helper/test-utils";
+import { render, fireEvent, screen, waitFor } from "../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import SelectAddress from "./SelectAddress";
 
@@ -47,48 +42,30 @@ describe("SelectAddress", () => {
   it("renders", () => {
     const mockOnDataChange = jest.fn();
     render(
-      <SelectAddress
-        addresses={testData.addresses}
-        postcode={testData.postcode}
-        onDataChange={mockOnDataChange}
-      />,
+      <SelectAddress addresses={testData.addresses} postcode={testData.postcode} onDataChange={mockOnDataChange} />
     );
   });
 
   it("renders a dropdown containing addresses", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <SelectAddress
-        addresses={testData.addresses}
-        postcode={testData.postcode}
-        onDataChange={mockOnDataChange}
-      />,
+      <SelectAddress addresses={testData.addresses} postcode={testData.postcode} onDataChange={mockOnDataChange} />
     );
 
     await waitFor(() => {
       const addressSelect = screen.getByLabelText("Select your address");
       expect(addressSelect).toBeInTheDocument();
       fireEvent.click(addressSelect);
-      expect(
-        screen.getByText("9, TRAPS LANE, NEW MALDEN, KT3 4RS"),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText("FIVE STONES, TRAPS LANE, NEW MALDEN, KT3 4RS"),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText("MALDEN GOLF CLUB, TRAPS LANE, NEW MALDEN, KT3 4RS"),
-      ).toBeInTheDocument();
+      expect(screen.getByText("9, TRAPS LANE, NEW MALDEN, KT3 4RS")).toBeInTheDocument();
+      expect(screen.getByText("FIVE STONES, TRAPS LANE, NEW MALDEN, KT3 4RS")).toBeInTheDocument();
+      expect(screen.getByText("MALDEN GOLF CLUB, TRAPS LANE, NEW MALDEN, KT3 4RS")).toBeInTheDocument();
     });
   });
 
   it("allows a user to select an address and submit", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <SelectAddress
-        addresses={testData.addresses}
-        postcode={testData.postcode}
-        onDataChange={mockOnDataChange}
-      />,
+      <SelectAddress addresses={testData.addresses} postcode={testData.postcode} onDataChange={mockOnDataChange} />
     );
 
     await waitFor(() => {
@@ -105,11 +82,7 @@ describe("SelectAddress", () => {
   it("prevents user from proceeding without selecting an address", async () => {
     const mockOnDataChange = jest.fn();
     render(
-      <SelectAddress
-        addresses={testData.addresses}
-        postcode={testData.postcode}
-        onDataChange={mockOnDataChange}
-      />,
+      <SelectAddress addresses={testData.addresses} postcode={testData.postcode} onDataChange={mockOnDataChange} />
     );
 
     await waitFor(() => {
@@ -125,11 +98,7 @@ describe("Accessibility test", () => {
   it("should not fail any accessibility tests", async () => {
     const mockOnDataChange = jest.fn();
     const { container } = render(
-      <SelectAddress
-        addresses={testData.addresses}
-        postcode={testData.postcode}
-        onDataChange={mockOnDataChange}
-      />,
+      <SelectAddress addresses={testData.addresses} postcode={testData.postcode} onDataChange={mockOnDataChange} />
     );
 
     const results = await axe(container);

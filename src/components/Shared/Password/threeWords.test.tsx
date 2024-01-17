@@ -7,13 +7,13 @@ describe("threeWords component test", () => {
 
     expect(
       screen.getByText(
-        /We recommend using three random words to generate your password, e.g. 'applenemobiro' as these are easy for you to remember and hard for others to guess./,
-      ),
+        /We recommend using three random words to generate your password, e.g. 'applenemobiro' as these are easy for you to remember and hard for others to guess./
+      )
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /You should avoid family and pet names, your favourite sports team, and dates and locations related to you./,
-      ),
+        /You should avoid family and pet names, your favourite sports team, and dates and locations related to you./
+      )
     ).toBeInTheDocument();
   });
 });
