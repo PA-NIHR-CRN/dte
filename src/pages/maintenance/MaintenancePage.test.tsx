@@ -8,7 +8,7 @@ describe("MaintenancePage", () => {
       name: /Sorry, the service is unavailable/i,
     });
     const contentElement1 = screen.getByText(
-      /You will be able to use the service from 9am on Wednesday 17th January 2024./i
+      /You will be able to use the service later./i
     );
     const contentElement2 = screen.getByText(
       /If you need to contact the Be Part of Research team please email/i

@@ -7,10 +7,7 @@ const MaintenancePage = () => {
       <div className="inset-text">
         <DTEHeader as="h1">Sorry, the service is unavailable</DTEHeader>
 
-        <DTEContent>
-          You will be able to use the service from 9:45am on Wednesday 17th
-          January 2024.
-        </DTEContent>
+        <DTEContent>You will be able to use the service later.</DTEContent>
         <DTEContent>
           If you need to contact the Be Part of Research team please email{" "}
           <a href="mailto:bepartofresearch@nihr.ac.uk">
