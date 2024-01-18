@@ -32,25 +32,42 @@ export default class NamePage {
   }
 
   // methods
+  // --- LOAD PAGE METHODS --- //
   async goTo() {
     await this.page.goto("Participants/Register/Questions");
   }
 
-  async componentsVisible() {
+  // --- ON LOAD METHODS --- //
+  // check button components are visible on load
+  async assertButtonsVisible() {
     await expect(this.backButton).toBeVisible();
-    await expect(this.progressDisplay).toBeVisible();
-    await expect(this.namePageHeading).toBeVisible();
-    await expect(this.firstNameLabel).toBeVisible();
-    await expect(this.firstNameInput).toBeVisible();
-    await expect(this.firstNameError).toBeHidden();
-    await expect(this.lastNameLabel).toBeVisible();
-    await expect(this.lastNameInput).toBeVisible();
-    await expect(this.lastNameError).toBeHidden();
     await expect(this.continueButton).toBeVisible();
   }
 
-  async correctContent() {
-    await expect(this.backButton).toHaveText("Back");
+  // check all text components are visible on load
+  async assertTextVisible() {
+    await expect(this.progressDisplay).toBeVisible();
+    await expect(this.namePageHeading).toBeVisible();
+  }
+
+  // check form components are visible on load
+  async assertFormVisible() {
+    await expect(this.firstNameLabel).toBeVisible();
+    await expect(this.firstNameInput).toBeVisible();
+    await expect(this.lastNameLabel).toBeVisible();
+    await expect(this.lastNameInput).toBeVisible();
+  }
+
+  // Check no error messages visible before continue button pressed
+  async assertErrorsHidden() {
+    await expect(this.firstNameError).toBeHidden();
+    await expect(this.lastNameError).toBeHidden();
+  }
+
+  // --- CORRECT CONTENT METHODS --- //
+  // check components have the correct text content
+  async assertCorrectContent() {
+    await expect(this.backButton).toContainText("Back");
     await expect(this.progressDisplay).toHaveText("0% complete");
     await expect(this.namePageHeading).toHaveText("What is your name?");
     await expect(this.firstNameLabel).toHaveText("First name");
@@ -58,43 +75,49 @@ export default class NamePage {
     await expect(this.continueButton).toHaveText("Continue");
   }
 
+  // --- CLICK METHODS --- //
+  // check for back button click
   async clickBack() {
     await this.backButton.click();
   }
 
+  async clickContinue() {
+    await this.continueButton.click();
+  }
+
+  // --- FILLING IN FORM METHODS --- //
+  // filling the first name input field
   async fillFirstName(firstName: string) {
     await this.firstNameInput.click();
     await expect(this.firstNameInput).toBeFocused();
     await this.firstNameInput.fill(firstName);
   }
 
+  // filling the last name input field
   async fillLastName(lastName: string) {
     await this.lastNameInput.click();
     await expect(this.lastNameInput).toBeFocused();
     await this.lastNameInput.fill(lastName);
   }
 
-  async validateInputs() {
-    const firstNameEmpty =
-      (await this.firstNameInput.inputValue()).trim() === "";
-    const lastNameEmpty = (await this.lastNameInput.inputValue()).trim() === "";
+  // --- ERROR CHECKING FORM --- //
+  async checkInputsFilled(firstName: string, lastName: string) {
+    const isFirstNameEmpty = firstName === "";
+    const isLastNameEmpty = lastName === "";
 
-    if (firstNameEmpty && lastNameEmpty) {
-      await expect(this.firstNameError).toHaveText("Enter your first name");
-      await expect(this.lastNameError).toHaveText("Enter your last name");
-    } else if (firstNameEmpty && !lastNameEmpty) {
-      await expect(this.firstNameError).toHaveText("Enter your first name");
-    } else if (!firstNameEmpty && lastNameEmpty) {
-      await expect(this.lastNameError).toHaveText("Enter your last name");
-    } else {
-      await expect(this.firstNameError).toBeHidden();
-      await expect(this.lastNameError).toBeHidden();
-    }
+    await expect(this.firstNameError).toHaveText(
+      isFirstNameEmpty ? "Enter your first name" : ""
+    );
+    await expect(this.lastNameError).toHaveText(
+      isLastNameEmpty ? "Enter your last name" : ""
+    );
+
+    await this.firstNameInput.clear();
+    await this.lastNameInput.clear();
   }
 
-  async clickContinue() {
-    await this.continueButton.click();
-    await this.validateInputs();
-    // Go to next page if no errors found
+  async checkInputsValid(firstName: string, lastName: string) {
+    const isFirstNameValid = typeof firstName === "number";
+    const isLastNameValid = typeof lastName === "number";
   }
 }

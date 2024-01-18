@@ -9,6 +9,8 @@ import NhsLogin from "../pages/NhsLogin";
 import MyAccountPage from "../pages/StageTwo/MyAccountPage";
 import PersonalDetailsPage from "../pages/StageTwo/PersonalDetailsPage";
 import NamePage from "../pages/StageOne/NamePage";
+import DateOfBirthPage from "../pages/StageOne/DateOfBirthPage";
+import EmailPage from "../pages/StageOne/EmailPage";
 
 type CustomFixtures = {
   cookieBanner: CookieBanner;
@@ -20,6 +22,8 @@ type CustomFixtures = {
   myAccountPage: MyAccountPage;
   personalDetailsPage: PersonalDetailsPage;
   namePage: NamePage;
+  dateOfBirthPage: DateOfBirthPage;
+  emailPage: EmailPage;
 };
 
 export const test = base.extend<CustomFixtures>({
@@ -51,6 +55,12 @@ export const test = base.extend<CustomFixtures>({
   },
   namePage: async ({ page }, use) => {
     await use(new NamePage(page));
+  },
+  dateOfBirthPage: async ({ page }, use) => {
+    await use(new DateOfBirthPage(page));
+  },
+  emailPage: async ({ page }, use) => {
+    await use(new EmailPage(page));
   },
 });
 
