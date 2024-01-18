@@ -1448,7 +1448,7 @@ describe("Update participant address", () => {
       "Address line 4 (optional)"
     );
     const townEditor = await screen.findByLabelText("Town");
-    const postCodeEditor = await screen.findByLabelText("Postcode (optional)");
+    const postCodeEditor = await screen.findByLabelText("Postcode");
     const manualAddressButtons = await screen.findAllByRole("button");
 
     expect(manualAddressButtons).toHaveLength(3);
