@@ -63,7 +63,7 @@ describe("ManualEntry", () => {
       expect(screen.getByText("Address line 3 (optional)")).toBeInTheDocument();
       expect(screen.getByText("Address line 4 (optional)")).toBeInTheDocument();
       expect(screen.getByText("Town")).toBeInTheDocument();
-      expect(screen.getByText("Postcode")).toBeInTheDocument(); // took away the word (optional)
+      expect(screen.getByText("Postcode")).toBeInTheDocument();
     });
   });
 
@@ -86,7 +86,7 @@ describe("ManualEntry", () => {
       });
 
       fireEvent.input(screen.getByLabelText("Postcode"), {
-        target: { value: "test postcode" }, // added test postcode value
+        target: { value: "test postcode" },
       });
 
       expect(screen.getByDisplayValue("test address 1")).toBeInTheDocument();
