@@ -24,8 +24,7 @@ const StyledAccordionMenu = styled(AccordionMenu)<{
     margin-bottom: 2em;
     border: none;
     border-top: ${(props) => (props.$outlined ? "1px solid #d8dde0" : "none")};
-    border-bottom: ${(props) =>
-      props.$outlined ? "1px solid #d8dde0" : "none"};
+    border-bottom: ${(props) => (props.$outlined ? "1px solid #d8dde0" : "none")};
     background-color: transparent;
 
     details {
@@ -65,8 +64,7 @@ const StyledAccordionMenu = styled(AccordionMenu)<{
         margin: 0;
         padding-top: 8px;
         padding-bottom: 8px;
-        border-left: ${(props) =>
-          props.$noSideBar ? "none" : "6px solid #becad0"};
+        border-left: ${(props) => (props.$noSideBar ? "none" : "6px solid #becad0")};
 
         p {
           padding: 8px;
@@ -91,14 +89,7 @@ const StyledAccordionSection = styled(DTEAccordionSection)`
   }
 `;
 
-const DTEAccordion = ({
-  id,
-  name,
-  sections,
-  outlined,
-  noSideBar,
-  bold,
-}: Props) => {
+function DTEAccordion({ id, name, sections, outlined, noSideBar, bold }: Props) {
   const handleOnChange = (e: any) => {
     if (!e.currentTarget.open) {
       e.currentTarget.setAttribute("aria-expanded", "true");
@@ -108,13 +99,7 @@ const DTEAccordion = ({
   };
 
   return (
-    <StyledAccordionMenu
-      id={id}
-      name={name}
-      $outlined={outlined}
-      $noSideBar={noSideBar}
-      $bold={bold}
-    >
+    <StyledAccordionMenu id={id} name={name} $outlined={outlined} $noSideBar={noSideBar} $bold={bold}>
       {sections.map((section) => (
         <StyledAccordionSection
           defaultOpen={section.isDefault}
@@ -127,11 +112,7 @@ const DTEAccordion = ({
           <div className="nhsuk-accordion-menu__subsection">
             {section.contentElements.map((element) => (
               <React.Fragment key={uuidv4()}>
-                {element?.text && (
-                  <p className="nhsuk-accordion-menu__subsection-content">
-                    {element.text}
-                  </p>
-                )}
+                {element?.text && <p className="nhsuk-accordion-menu__subsection-content">{element.text}</p>}
                 {element?.child && element.child}
               </React.Fragment>
             ))}
@@ -140,6 +121,6 @@ const DTEAccordion = ({
       ))}
     </StyledAccordionMenu>
   );
-};
+}
 
 export default DTEAccordion;

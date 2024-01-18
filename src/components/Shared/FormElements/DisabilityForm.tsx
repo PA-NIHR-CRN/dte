@@ -2,15 +2,15 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Radios } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useContext, useEffect } from "react";
 import DTERadio from "../UI/DTERadio/DTERadio";
-import DTEDetails from "../UI/DTEDetails/DTEDetails";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import FormBaseProps from "./FormBaseProps";
 import Utils from "../../../Helper/Utils";
 import Honeypot from "../Honeypot/Honeypot";
+import { ContentContext } from "../../../context/ContentContext";
 
 export type DisabilityFormData = {
   disability: string;
@@ -33,10 +33,9 @@ const DisabilityForm = (props: DisabilityFormProps) => {
     showCancelButton: disabilityShowCancelButton,
     onCancel,
   } = props;
+  const { content } = useContext(ContentContext);
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
     control,
     handleSubmit,
@@ -52,8 +51,7 @@ const DisabilityForm = (props: DisabilityFormProps) => {
   if (!hideHeader) {
     labelElement = (
       <DTEHeader as="h1" $variant={headerVariant}>
-        Do you have any health conditions that have lasted, or are expected to
-        last, for 12 months or more?
+        {content["register2-disability1-header"]}
       </DTEHeader>
     );
   } else {
@@ -81,65 +79,44 @@ const DisabilityForm = (props: DisabilityFormProps) => {
                 label={labelElement}
                 onChange={onChange}
                 error={error?.message}
-                infoText="This includes any physical and mental health conditions or illnesses."
+                infoText={content["register2-disability1-info-disability"]}
               >
-                <DTEContent aria-hidden="true">
-                  This includes any physical and mental health conditions or
-                  illnesses.
-                </DTEContent>
+                <DTEContent aria-hidden="true">{content["register2-disability1-info-disability"]}</DTEContent>
                 <Radios.Radio
                   value="yes"
                   defaultChecked={value === "yes"}
-                  aria-label="Yes, I have a physical or mental health condition that has, or is expected to last more than 12 months"
+                  aria-label={content["register2-disability1-aria-yes"]}
                   aria-labelledby=""
                 >
-                  Yes
+                  {content["reusable-yes"]}
                 </Radios.Radio>
                 <Radios.Radio
                   value="no"
                   defaultChecked={value === "no"}
-                  aria-label="No, I do not have a physical or mental health condition that has, or is expected to last more than 12 months"
+                  aria-label={content["register2-disability1-aria-no"]}
                   aria-labelledby=""
                 >
-                  No
+                  {content["reusable-no"]}
                 </Radios.Radio>
-                <DTEContent $radioList>or</DTEContent>
-                <Radios.Radio
-                  value="notSaying"
-                  defaultChecked={value === "notSaying"}
-                >
-                  Prefer not to say
+                <DTEContent $radioList>{content["reusable-or"]}</DTEContent>
+                <Radios.Radio value="notSaying" defaultChecked={value === "notSaying"}>
+                  {content["reusable-prefer-not-to-say"]}
                 </Radios.Radio>
               </DTERadio>
             </>
           )}
           rules={{
             validate: (value) => {
-              if (value === "")
-                return "Select whether you have any physical or mental health conditions or illness lasting or expected to last 12 months or more";
+              if (value === "") return content["register2-disability1-validation-disability-required"];
               return true;
             },
           }}
         />
-        {!hideInfo && (
-          <DTEDetails summary="Why we are asking this question">
-            <DTEContent>
-              Some studies will require volunteers with disabilities, other
-              studies want to make sure they have a representative sample of the
-              population taking part in research studies. We may use this
-              information when contacting you about studies you may be
-              interested in.
-            </DTEContent>
-            <DTEContent>
-              If we find that people with disabilities are under represented in
-              signing up to be contacted about research we will look at how to
-              improve this.
-            </DTEContent>
-          </DTEDetails>
-        )}
+        {!hideInfo && content["register2-disability"]}
         <FormNavigationButtons
-          nextButtonText={disabilityNextButtonText || "Continue"}
+          nextButtonText={disabilityNextButtonText || content["reusable-button-continue"]}
           showCancelButton={disabilityShowCancelButton || false}
+          cancelButtonText={content["reusable-cancel"]}
           onCancel={onCancel}
         />
       </form>

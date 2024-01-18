@@ -1,26 +1,24 @@
-import React, { useState, createRef, useEffect } from "react";
+import React, { useState, createRef, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import ReactGA from "react-ga";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
 import { Grid } from "@material-ui/core";
 import StepWrapper from "../../../../Shared/StepWrapper/StepWrapper";
-import NameForm, {
-  NameFormData,
-} from "../../../../Shared/FormElements/NameForm";
+import NameForm, { NameFormData } from "../../../../Shared/FormElements/NameForm";
 import PasswordForm, { PasswordFormData } from "./Forms/PasswordForm";
 import DOBForm, { DOBFormData } from "../../../../Shared/FormElements/DOBForm";
 import EmailForm, { EmailFormData } from "./Forms/EmailForm";
 import DTEBackLink from "../../../../Shared/UI/DTEBackLink/DTEBackLink";
-import DTEStepper, {
-  LinearProgressPropsData,
-} from "../../../../Shared/UI/DTEStepper/DTEStepper";
+import DTEStepper, { LinearProgressPropsData } from "../../../../Shared/UI/DTEStepper/DTEStepper";
 import CheckEmailForm from "./Forms/CheckEmailForm";
-import { RegistrationProcessState } from "../../../../../types/ParticipantTypes";
 import DTEContent from "../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import ConsentForm, { ConsentFormData } from "./Forms/ConsentForm";
 import NoConsent from "./Forms/NoConsent";
 import LoadingIndicator from "../../../../Shared/LoadingIndicator/LoadingIndicator";
+import { ContentContext } from "../../../../../context/ContentContext";
+import { UserContext } from "../../../../../context/UserContext";
+import calculatePercentageComplete from "../../../../../Helper/calculatePercentageComplete/calculatePercentageComplete";
 
 const PercentageGrid = styled(Grid)`
   && {
@@ -29,38 +27,14 @@ const PercentageGrid = styled(Grid)`
   }
 `;
 
-const RegsitrationProcess = () => {
+function RegsitrationProcess() {
+  const { content } = useContext(ContentContext);
+  const { activeStep, setActiveStep, registrationData, setRegistrationData } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState("");
+  const [loadingText, setLoadingText] = useState(content["reusable-loading"]);
   const history = useHistory();
-  const [activeStep, setActiveStep] = useState(0);
-  const [registrationPageTitle, setRegistrationPageTitle] = useState(
-    "What is your name? - Volunteer Registration - Be Part of Research"
-  );
+  const [registrationPageTitle, setRegistrationPageTitle] = useState(content["register-name-document-title"]);
   const [gaURL, setGaURL] = useState("/registration/name");
-  const [registrationData, setRegistrationData] =
-    useState<RegistrationProcessState>({
-      nameFormData: {
-        firstName: "",
-        lastName: "",
-      },
-      dobFormData: {
-        day: "",
-        month: "",
-        year: "",
-      } as DOBFormData,
-      emailFormData: {
-        emailAddress: "",
-      },
-      passwordFormData: {
-        password: "",
-        password2: "",
-      },
-      consentFormData: {
-        consent: false,
-        consentContact: false,
-      } as ConsentFormData,
-    });
 
   const stepperRef = createRef<HTMLElement>();
 
@@ -81,13 +55,7 @@ const RegsitrationProcess = () => {
   };
 
   const handleRegistrationDataChange = (
-    incommingFormData:
-      | NameFormData
-      | DOBFormData
-      | EmailFormData
-      | PasswordFormData
-      | ConsentFormData
-      | any,
+    incommingFormData: NameFormData | DOBFormData | EmailFormData | PasswordFormData | ConsentFormData | any,
     form: string
   ) => {
     setRegistrationData((oldRegistrationData) => {
@@ -130,7 +98,7 @@ const RegsitrationProcess = () => {
 
   const handleBack = () => {
     if (activeStep === 0) {
-      history.push("/Participants/register");
+      history.goBack();
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
     }
@@ -167,37 +135,29 @@ const RegsitrationProcess = () => {
       case 0:
         return (
           <NameForm
-            onDataChange={(data: NameFormData) =>
-              handleRegistrationDataChange(data, "nameFormData")
-            }
+            onDataChange={(data: NameFormData) => handleRegistrationDataChange(data, "nameFormData")}
             initialStateData={registrationData.nameFormData}
           />
         );
       case 1:
         return (
           <DOBForm
-            onDataChange={(data: DOBFormData) =>
-              handleRegistrationDataChange(data, "dobFormData")
-            }
+            onDataChange={(data: DOBFormData) => handleRegistrationDataChange(data, "dobFormData")}
             initialStateData={registrationData.dobFormData}
-            nextButtonText="Continue"
+            nextButtonText={content["reusable-button-continue"]}
           />
         );
       case 2:
         return (
           <EmailForm
-            onDataChange={(data: EmailFormData) =>
-              handleRegistrationDataChange(data, "emailFormData")
-            }
+            onDataChange={(data: EmailFormData) => handleRegistrationDataChange(data, "emailFormData")}
             initialStateData={registrationData.emailFormData}
           />
         );
       case 3:
         return (
           <PasswordForm
-            onDataChange={(data: PasswordFormData) =>
-              handleRegistrationDataChange(data, "passwordFormData")
-            }
+            onDataChange={(data: PasswordFormData) => handleRegistrationDataChange(data, "passwordFormData")}
             initialStateData={registrationData.passwordFormData}
             setLoading={setLoading}
             setLoadingText={setLoadingText}
@@ -206,20 +166,14 @@ const RegsitrationProcess = () => {
       case 4:
         return (
           <ConsentForm
-            onDataChange={(data: ConsentFormData) =>
-              handleRegistrationDataChange(data, "consentFormData")
-            }
+            onDataChange={(data: ConsentFormData) => handleRegistrationDataChange(data, "consentFormData")}
             initialStateData={registrationData.consentFormData}
             handleNoConsent={handleNoConsent}
           />
         );
       case 5:
         return (
-          <CheckEmailForm
-            initialStateData={registrationData}
-            setLoading={setLoading}
-            setLoadingText={setLoadingText}
-          />
+          <CheckEmailForm initialStateData={registrationData} setLoading={setLoading} setLoadingText={setLoadingText} />
         );
       case 6:
         return <NoConsent />;
@@ -228,52 +182,34 @@ const RegsitrationProcess = () => {
     }
   };
 
-  const calculatePercentageComplete = (step: number, totalSteps: number) => {
-    return Math.round((step / totalSteps) * 100);
-  };
-
   const updateRegistrationPageTitle = (step: number) => {
     switch (step) {
       case 1:
-        setRegistrationPageTitle(
-          "What is your date of birth? - Volunteer Registration - Be Part of Research"
-        );
+        setRegistrationPageTitle(content["register-date-of-birth-document-title"]);
         setGaURL("/registration/dateofbirth");
         break;
       case 2:
-        setRegistrationPageTitle(
-          "What is your email address? - Volunteer Registration - Be Part of Research"
-        );
+        setRegistrationPageTitle(content["register-email-document-title"]);
         setGaURL("/registration/email");
         break;
       case 3:
-        setRegistrationPageTitle(
-          "Create a password - Volunteer Registration - Be Part of Research"
-        );
+        setRegistrationPageTitle(content["register-password-document-title"]);
         setGaURL("/registration/password");
         break;
       case 4:
-        setRegistrationPageTitle(
-          "Consent to process your data and be contacted - Volunteer Registration - Be Part of Research"
-        );
+        setRegistrationPageTitle(content["register-consent-document-title"]);
         setGaURL("/registration/consent");
         break;
       case 5:
-        setRegistrationPageTitle(
-          "Registering your account - Volunteer Registration - Be Part of Research"
-        );
+        setRegistrationPageTitle(content["register-check-email-registering-document-title"]);
         setGaURL("/registration/registering");
         break;
       case 6:
-        setRegistrationPageTitle(
-          "Your registration has been cancelled - Volunteer Registration - Be Part of Research"
-        );
+        setRegistrationPageTitle(content["register-no-consent-document-title"]);
         setGaURL("/registration/cancelled");
         break;
       default:
-        setRegistrationPageTitle(
-          "What is your name? - Volunteer Registration - Be Part of Research"
-        );
+        setRegistrationPageTitle(content["register-name-document-title"]);
         setGaURL("/registration/name");
     }
   };
@@ -295,24 +231,20 @@ const RegsitrationProcess = () => {
               }}
               ref={stepperRef}
             />
-            <PercentageGrid
-              justifyContent="space-between"
-              alignItems="center"
-              container
-            >
+            <PercentageGrid justifyContent="space-between" alignItems="center" container>
               <Grid item>
                 {activeStep !== 6 && (
                   <DTEBackLink
-                    title="Return to previous page"
-                    linkText="Back"
-                    ariaLabel="Return to previous page"
+                    title={content["reusable-aria-go-back"]}
+                    linkText={content["reusable-back-link"]}
+                    ariaLabel={content["reusable-aria-go-back"]}
                     onClick={handleBack}
                   />
                 )}
               </Grid>
               <Grid item>
                 <DTEContent aria-hidden>
-                  {calculatePercentageComplete(activeStep, 13)}% complete
+                  {calculatePercentageComplete(activeStep, 13)}% {content["reusable-progress-complete"]}
                 </DTEContent>
               </Grid>
             </PercentageGrid>
@@ -323,6 +255,6 @@ const RegsitrationProcess = () => {
       </>
     </DocumentTitle>
   );
-};
+}
 
 export default RegsitrationProcess;

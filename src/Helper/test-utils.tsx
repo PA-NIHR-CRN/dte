@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { render, RenderOptions } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ThemeProvider } from "styled-components";
@@ -9,6 +9,9 @@ import { AppRoot, styledComponentsTheme } from "../theme";
 import { AppContext, Theme } from "../context/AppContext";
 import { AuthProvider } from "../context/AuthContext";
 import ManualLoginProvider from "../context/ManualLoginContext";
+import { ContentContext } from "../context/ContentContext";
+import { getContent } from "./contenful/contentHandler";
+import { UserProvider } from "../context/UserContext";
 import { MaintenanceProvider } from "../context/MaintenanceContext";
 
 interface RenderProps {
@@ -16,48 +19,70 @@ interface RenderProps {
   initialRoutes?: { [name: string]: string }[];
 }
 
-// const { saveToken, logOutToken,isAuthenticated, } = useContext(AuthContext);
-
-const AllTheProviders = ({ children, initialRoutes }: RenderProps) => {
+function AllTheProviders({ children, initialRoutes }: RenderProps) {
   const MuiTheme = useTheme();
+  const [mockContent, setMockContent] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const savedContent = getContent();
+
+    setMockContent(savedContent);
+    setIsLoading(false);
+  }, []);
+
+  if (isLoading) return <div data-testid="loadingContent">Loading...</div>;
+
   return (
     <AuthProvider>
-      <StylesProvider injectFirst>
-        <ThemeProvider theme={{ ...styledComponentsTheme, ...MuiTheme }}>
-          <MaintenanceProvider>
-            <SnackbarProvider
-              maxSnack={3}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              // TransitionComponent={Slide}
-            >
-              <AppRoot />
-              <AppContext.Provider
-                value={{
-                  lang: "de",
-                  theme: Theme.Light,
-                  setTheme: () => {},
-                  showHeader: true,
-                  setShowHeader: () => {},
-                  showBacklink: false,
-                  setShowBacklink: () => {},
-                  showSplotches: false,
-                  setShowSplotches: () => {},
-                }}
-              >
-                <MemoryRouter initialEntries={initialRoutes ?? ["/"]}>
-                  <ManualLoginProvider>{children}</ManualLoginProvider>
-                </MemoryRouter>
-              </AppContext.Provider>
-            </SnackbarProvider>
-          </MaintenanceProvider>
-        </ThemeProvider>
-      </StylesProvider>
+      <UserProvider>
+        <ContentContext.Provider
+          value={{
+            content: mockContent,
+            setLanguage: () => {},
+            contentLoading: false,
+            language: "en-GB",
+          }}
+        >
+          <StylesProvider injectFirst>
+            <ThemeProvider theme={{ ...styledComponentsTheme, ...MuiTheme }}>
+              <MaintenanceProvider>
+                <SnackbarProvider
+                  maxSnack={3}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  // TransitionComponent={Slide}
+                >
+                  <AppRoot />
+                  <AppContext.Provider
+                    value={{
+                      lang: "de",
+                      theme: Theme.Light,
+                      setTheme: () => {},
+                      showHeader: true,
+                      setShowHeader: () => {},
+                      showBacklink: false,
+                      setShowBacklink: () => {},
+                      showSplotches: false,
+                      setShowSplotches: () => {},
+                    }}
+                  >
+                    <MemoryRouter initialEntries={initialRoutes ?? ["/"]}>
+                      <ManualLoginProvider>{children}</ManualLoginProvider>
+                    </MemoryRouter>
+                  </AppContext.Provider>
+                </SnackbarProvider>
+              </MaintenanceProvider>
+            </ThemeProvider>
+          </StylesProvider>
+        </ContentContext.Provider>
+      </UserProvider>
     </AuthProvider>
   );
-};
+}
 
 const customRender = (
   ui: ReactElement,

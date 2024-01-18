@@ -1,7 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import styled, {
-  ThemeProvider as StyledComponentsThemeProvider,
-} from "styled-components";
+import styled, { ThemeProvider as StyledComponentsThemeProvider } from "styled-components";
 import { useTheme, StylesProvider } from "@material-ui/core/styles";
 import { Route, Switch, useLocation } from "react-router-dom";
 import Header from "./components/Shared/Header/Header";
@@ -18,6 +16,7 @@ import bottomRightSplotch from "./images/bottomsplash.png";
 import CookieBanner from "./components/Shared/Footer/CookieBanner";
 import { NHSApp } from "./types/AuthTypes";
 import SessionTimeoutModal from "./components/Shared/SessionTimeout/SessionTimeoutModal";
+import { ContentContext } from "./context/ContentContext";
 import useAxiosFetch from "./hooks/useAxiosFetch";
 import MaintenancePage from "./pages/maintenance/MaintenancePage";
 import LoadingIndicator from "./components/Shared/LoadingIndicator/LoadingIndicator";
@@ -57,6 +56,7 @@ declare global {
 }
 
 function App() {
+  const { contentLoading } = useContext(ContentContext);
   const [theme, setTheme] = useState(Theme.Light);
   const [showHeader, setShowHeader] = useState(true);
   const [showSplotches, setShowSplotches] = useState(false);
@@ -98,10 +98,8 @@ function App() {
 
   return (
     <StylesProvider injectFirst>
-      <StyledComponentsThemeProvider
-        theme={{ ...styledComponentsTheme, ...MuiTheme }}
-      >
-        {loading ? (
+      <StyledComponentsThemeProvider theme={{ ...styledComponentsTheme, ...MuiTheme }}>
+        {contentLoading || loading ? (
           <div className="App Site">
             <LoadingIndicator />
           </div>
@@ -142,16 +140,8 @@ function App() {
                     <Switch>
                       {AuthRoutes}
                       {ParticipantRoutes}
-                      <Route
-                        path="/Unauthorized"
-                        component={Unauthorized}
-                        key="unauthorized"
-                      />
-                      <Route
-                        path="*"
-                        component={PageNotFound}
-                        key="pagenotfound"
-                      />
+                      <Route path="/Unauthorized" component={Unauthorized} key="unauthorized" />
+                      <Route path="*" component={PageNotFound} key="pagenotfound" />
                     </Switch>
                   </div>
                   {showSplotches && (

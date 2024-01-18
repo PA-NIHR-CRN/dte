@@ -18,13 +18,9 @@ describe("NhsPreRegistration functionality tests", () => {
   it("should render without crashing", async () => {
     render(<NhsPreRegistration />);
 
+    expect(screen.getByRole("heading", { name: "Welcome to Be Part of Research" })).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: "Welcome to Be Part of Research" })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "Be Part of Research enables you to find and take part in a range of health and care research."
-      )
+      screen.getByText("Be Part of Research enables you to find and take part in a range of health and care research.")
     ).toBeInTheDocument();
     expect(
       screen.getByText(
@@ -41,52 +37,26 @@ describe("NhsPreRegistration functionality tests", () => {
         "It's easy to get involved. Simply sign up online and choose the health conditions you are interested in. You will be sent details of approved studies that match your interests to decide if you want to take part."
       )
     ).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "More information about registering with Be Part of Research"
-      )
-    ).toBeInTheDocument();
-    expect(screen.getByText("Register")).toBeInTheDocument();
-    expect(screen.getByText("Already have an account?")).toBeInTheDocument();
-    expect(screen.getByText("Sign in")).toBeInTheDocument();
+    expect(screen.getByText("More information about registering with Be Part of Research")).toBeInTheDocument();
+    expect(screen.getByText("Start now")).toBeInTheDocument();
+    expect(screen.getByText(/If you already have an account, you can/i)).toBeInTheDocument();
   });
 
   it("should open the accordion with text Find out more about Be Part of Research", async () => {
     render(<NhsPreRegistration />);
 
-    expect(
-      screen.getByText(
-        /Find out more information about registering your account with/
-      )
-    ).not.toBeVisible();
+    expect(screen.getByText(/Find out more information about registering your account with/)).not.toBeVisible();
 
-    expect(
-      screen.getByText(
-        /. Please use the back button on your device to return to this page./
-      )
-    ).not.toBeVisible();
+    expect(screen.getByText(/. Please use the back button on your device to return to this page./)).not.toBeVisible();
 
-    screen
-      .getByText("More information about registering with Be Part of Research")
-      .click();
+    screen.getByText("More information about registering with Be Part of Research").click();
 
-    expect(
-      screen.getByText(
-        /Find out more information about registering your account with/
-      )
-    ).toBeVisible();
+    expect(screen.getByText(/Find out more information about registering your account with/)).toBeVisible();
 
-    expect(
-      screen.getByText(
-        /. Please use the back button on your device to return to this page./
-      )
-    ).toBeVisible();
+    expect(screen.getByText(/. Please use the back button on your device to return to this page./)).toBeVisible();
     const links = await screen.findAllByRole("link");
-    expect(links).toHaveLength(1);
-    expect(links[0]).toHaveAttribute(
-      "href",
-      "https://bepartofresearch.nihr.ac.uk/volunteer-service/"
-    );
+    expect(links).toHaveLength(2);
+    expect(links[0]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/volunteer-service/");
     expect(links[0]).toHaveTextContent("Be Part of Research");
   });
 });

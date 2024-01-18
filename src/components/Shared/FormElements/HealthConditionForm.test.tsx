@@ -16,22 +16,12 @@ const populatedTestData = {
 describe("HealthConditionForm", () => {
   it("must render the form with no selected data", () => {
     const mockOnDataChange = jest.fn();
-    render(
-      <HealthConditionForm
-        initialStateData={blankTestData}
-        onDataChange={mockOnDataChange}
-      />
-    );
+    render(<HealthConditionForm initialStateData={blankTestData} onDataChange={mockOnDataChange} />);
   });
 
   it("must render the form with selected data", () => {
     const mockOnDataChange = jest.fn();
-    render(
-      <HealthConditionForm
-        initialStateData={populatedTestData}
-        onDataChange={mockOnDataChange}
-      />
-    );
+    render(<HealthConditionForm initialStateData={populatedTestData} onDataChange={mockOnDataChange} />);
   });
 });
 
@@ -39,10 +29,7 @@ describe("Accessibility test", () => {
   it("must not fail any accessibility tests for no selected data", async () => {
     const mockOnDataChange = jest.fn();
     const { container } = render(
-      <HealthConditionForm
-        initialStateData={blankTestData}
-        onDataChange={mockOnDataChange}
-      />
+      <HealthConditionForm initialStateData={blankTestData} onDataChange={mockOnDataChange} />
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -51,10 +38,7 @@ describe("Accessibility test", () => {
   it("must not fail any accessibility tests for selected data", async () => {
     const mockOnDataChange = jest.fn();
     const { container } = render(
-      <HealthConditionForm
-        initialStateData={populatedTestData}
-        onDataChange={mockOnDataChange}
-      />
+      <HealthConditionForm initialStateData={populatedTestData} onDataChange={mockOnDataChange} />
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import ReactGA from "react-ga";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
@@ -9,23 +9,20 @@ import { AuthContext } from "../../../context/AuthContext";
 import StepWrapper from "../StepWrapper/StepWrapper";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
-import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContainer";
 import Utils from "../../../Helper/Utils";
-import { DTEAxiosError } from "../../../types/AuthTypes";
-import ResendEmail from "../FormElements/CommonElements/ResendEmail";
 import UserLogin from "./UserLogin";
+import { ContentContext } from "../../../context/ContentContext";
 
 // Component for the Redirect from IDG login
-const Verify = () => {
+function Verify() {
+  const { content } = useContext(ContentContext);
   const { logOutToken } = useContext(AuthContext);
   const history = useHistory();
   const { search } = useLocation();
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
 
   const code = new URLSearchParams(search).get("code");
   const userId = new URLSearchParams(search).get("userId");
@@ -33,13 +30,7 @@ const Verify = () => {
     history.push("/Participants/Register/Continue/Questions");
   }
   const confirmurl = `${process.env.REACT_APP_BASE_API}/users/confirmsignup`;
-  const [
-    {
-      response: confirmationResponse,
-      loading: confirmationLoading,
-      error: confirmationError,
-    },
-  ] = useAxiosFetch(
+  const [{ response: confirmationResponse, loading: confirmationLoading, error: confirmationError }] = useAxiosFetch(
     {
       url: confirmurl,
       method: "POST",
@@ -67,85 +58,38 @@ const Verify = () => {
     }
   });
 
-  const convertErrorsToResponse = (errors: DTEAxiosError[] | undefined) => {
-    let message: ReactNode = <></>;
-    if (errors) {
-      errors.forEach((axiosError: DTEAxiosError) => {
-        switch (axiosError.customCode) {
-          case "Confirm_SignUp_Error_Expired_Code":
-            message = (
-              <>
-                <DTEContent>
-                  This verification link has expired. We can send you the email
-                  again.
-                </DTEContent>
-                <ResendEmail userId={userId || ""} />
-              </>
-            );
-            break;
-          case "Confirm_SignUp_Error_User_Already_Confirmed":
-            message = (
-              <>
-                <DTEContent>
-                  This verification link has already been used. Please sign in
-                  to continue registration.
-                </DTEContent>
-                <DTERouteLink to="/UserLogin">Sign in</DTERouteLink>
-              </>
-            );
-            break;
-          default:
-            message = (
-              <>
-                <DTEContent>
-                  There may have been a technical issue. You can try to sign in
-                  to continue your registration.
-                </DTEContent>
-                <DTERouteLink to="/UserLogin">Sign in</DTERouteLink>
-              </>
-            );
-        }
-      });
-    }
-    return message;
-  };
-
   return (
-    <>
-      {confirmationLoading && <LoadingIndicator text="Verifying Account..." />}
-      <StepWrapper>
-        {Utils.ConvertResponseToDTEResponse(confirmationResponse)
-          ?.isSuccess && (
-          <DocumentTitle title="Your email address has been verified - Volunteer Registration - Be Part of Research">
-            <>
-              <DTEHeader as="h1" $variant={headerVariant}>
-                Your email address has been verified
-              </DTEHeader>
-              <DTEContent>Please sign in to continue registration.</DTEContent>
-              <UserLogin nested />
-            </>
-          </DocumentTitle>
-        )}
-        {!Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess &&
-          Utils.ConvertResponseToDTEResponse(confirmationResponse)?.errors && (
-            <DocumentTitle title="Unable to verify your email address - Volunteer Registration - Be Part of Research">
+    <StepWrapper>
+      {confirmationLoading ? (
+        <LoadingIndicator text={content["verify-loading-verifying"]} />
+      ) : (
+        <>
+          {Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
+            <DocumentTitle title={content["verify-email-success-document-title"]}>
               <>
                 <DTEHeader as="h1" $variant={headerVariant}>
-                  Unable to verify your email address
+                  {content["verify-email-success-header"]}
                 </DTEHeader>
-                {convertErrorsToResponse(
-                  Utils.ConvertResponseToDTEResponse(confirmationResponse)
-                    ?.errors
-                )}
+                {content["verify-email-continue-registration"]}
+                <UserLogin nested />
               </>
             </DocumentTitle>
           )}
-        {confirmationError && (
-          <ErrorMessageContainer axiosError={confirmationError} />
-        )}
-      </StepWrapper>
-    </>
+          {!Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
+            <DocumentTitle title={content["verify-email-failure-document-title"]}>
+              <>
+                <DTEHeader as="h1" $variant={headerVariant}>
+                  {content["verify-email-failure-header"]}
+                </DTEHeader>
+                <DTEContent>{content["verify-email-error-technical"]}</DTEContent>
+              </>
+            </DocumentTitle>
+          )}
+          {confirmationError && <ErrorMessageContainer axiosError={confirmationError} />}
+        </>
+      )}
+    </StepWrapper>
   );
-};
+}
 
 export default Verify;

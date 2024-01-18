@@ -7,6 +7,7 @@ expect.extend(toHaveNoViolations);
 describe("ResendEmail Accessibility test", () => {
   it("must not fail any accessibility tests for null data", async () => {
     const { container } = render(<ResendEmail />);
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

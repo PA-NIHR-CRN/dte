@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
@@ -9,6 +9,7 @@ import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
+import { ContentContext } from "../../../context/ContentContext";
 import Honeypot from "../Honeypot/Honeypot";
 
 export type NameFormData = {
@@ -20,20 +21,12 @@ interface NameFormProps extends FormBaseProps {
   onDataChange: (data: NameFormData) => void;
 }
 
-const NameForm = (props: NameFormProps) => {
-  const {
-    onDataChange,
-    initialStateData,
-    nextButtonText,
-    hideHeader,
-    instructionText,
-    showCancelButton,
-    onCancel,
-  } = props;
+function NameForm(props: NameFormProps) {
+  const { content } = useContext(ContentContext);
+  const { onDataChange, initialStateData, nextButtonText, hideHeader, instructionText, showCancelButton, onCancel } =
+    props;
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
     control,
     setValue,
@@ -62,7 +55,7 @@ const NameForm = (props: NameFormProps) => {
     <>
       {!hideHeader && (
         <DTEHeader as="h1" $variant={headerVariant}>
-          What is your name?
+          {content["register-name-header"]}
         </DTEHeader>
       )}
       {instructionText}
@@ -74,17 +67,14 @@ const NameForm = (props: NameFormProps) => {
             <Controller
               control={control}
               name="firstName"
-              render={({
-                field: { value, onChange, onBlur },
-                fieldState: { error },
-              }) => (
+              render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                 <DTEInput
                   id="firstName"
                   value={value}
                   onValueChange={onChange}
                   onValueBlur={onBlur}
                   error={error?.message}
-                  label="First name"
+                  label={content["register-name-input-first-name"]}
                   required
                   autocomplete="given-name"
                   spellcheck={false}
@@ -96,24 +86,21 @@ const NameForm = (props: NameFormProps) => {
                     return true;
                   }
                   setValue("firstName", "");
-                  return "Enter your first name";
+                  return content["register-name-validation-first-name-required"];
                 },
               }}
             />
             <Controller
               control={control}
               name="lastName"
-              render={({
-                field: { value, onChange, onBlur },
-                fieldState: { error },
-              }) => (
+              render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                 <DTEInput
                   id="lastName"
                   value={value}
                   onValueChange={onChange}
                   onValueBlur={onBlur}
                   error={error?.message}
-                  label="Last name"
+                  label={content["register-name-input-last-name"]}
                   required
                   autocomplete="family-name"
                   spellcheck={false}
@@ -125,13 +112,14 @@ const NameForm = (props: NameFormProps) => {
                     return true;
                   }
                   setValue("lastName", "");
-                  return "Enter your last name";
+                  return content["register-name-validation-last-name-required"];
                 },
               }}
             />
             <FormNavigationButtons
-              nextButtonText={nextButtonText || "Continue"}
+              nextButtonText={nextButtonText || content["reusable-button-continue"]}
               showCancelButton={showCancelButton || false}
+              cancelButtonText={content["reusable-cancel"]}
               onCancel={onCancel}
             />
           </form>
@@ -139,6 +127,6 @@ const NameForm = (props: NameFormProps) => {
       </Grid>
     </>
   );
-};
+}
 
 export default NameForm;

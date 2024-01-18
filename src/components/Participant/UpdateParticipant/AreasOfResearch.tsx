@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
@@ -10,14 +10,13 @@ import { DisabilityFormData } from "../../Shared/FormElements/DisabilityForm";
 import { DOBFormData } from "../../Shared/FormElements/DOBForm";
 import { Ethnicity1FormData } from "../../Shared/FormElements/EthnicityFormComponents/Ethnicity1Form";
 import { Ethnicity2FormData } from "../../Shared/FormElements/EthnicityFormComponents/Ethnicity2Form";
-import HealthConditionForm, {
-  HealthConditionFormData,
-} from "../../Shared/FormElements/HealthConditionForm";
+import HealthConditionForm, { HealthConditionFormData } from "../../Shared/FormElements/HealthConditionForm";
 import { MobileFormData } from "../../Shared/FormElements/MobileNumberForm";
 import { SexFormData } from "../../Shared/FormElements/SexForm";
 import Utils from "../../../Helper/Utils";
 import { Disability2FormData } from "../../Shared/FormElements/Disability2Form";
 import ErrorMessageContainer from "../../Shared/ErrorMessageContainer/ErrorMessageContainer";
+import { ContentContext } from "../../../context/ContentContext";
 
 interface UserDataState {
   address: AddressFormData;
@@ -35,18 +34,13 @@ const StyledWrapper = styled.div`
   scroll-margin-top: 10em;
 `;
 
-const AreasOfResearch = () => {
+function AreasOfResearch() {
+  const { content } = useContext(ContentContext);
   const history = useHistory();
   const containerRef = useRef<HTMLDivElement>(null);
   const [userData, setUserData] = React.useState<UserDataState>();
   const getDemographicsURL = `${process.env.REACT_APP_BASE_API}/participants/demographics`;
-  const [
-    {
-      response: demographicsResponse,
-      loading: demographicsLoading,
-      error: demographicsError,
-    },
-  ] = useAxiosFetch(
+  const [{ response: demographicsResponse, loading: demographicsLoading, error: demographicsError }] = useAxiosFetch(
     {
       url: getDemographicsURL,
       method: "GET",
@@ -65,12 +59,8 @@ const AreasOfResearch = () => {
   };
 
   useEffect(() => {
-    if (
-      !userData &&
-      Utils.ConvertResponseToDTEResponse(demographicsResponse)?.isSuccess
-    ) {
-      const response =
-        Utils.ConvertResponseToDTEResponse(demographicsResponse)?.content;
+    if (!userData && Utils.ConvertResponseToDTEResponse(demographicsResponse)?.isSuccess) {
+      const response = Utils.ConvertResponseToDTEResponse(demographicsResponse)?.content;
       if (response) {
         const stateData: UserDataState = {
           address: {
@@ -101,10 +91,7 @@ const AreasOfResearch = () => {
           },
           sex: {
             sexAtBirth: response.sexRegisteredAtBirth,
-            genderAtBirth: parseTriStateBoolean(
-              response.genderIsSameAsSexRegisteredAtBirth,
-              "noSay"
-            ),
+            genderAtBirth: parseTriStateBoolean(response.genderIsSameAsSexRegisteredAtBirth, "noSay"),
           },
           ethnicity1: {
             ethnicity: response.ethnicGroup,
@@ -122,11 +109,7 @@ const AreasOfResearch = () => {
   }, [demographicsResponse, userData]);
 
   const [
-    {
-      response: demographicsPostResponse,
-      loading: demographicsPostLoading,
-      error: demographicsPostError,
-    },
+    { response: demographicsPostResponse, loading: demographicsPostLoading, error: demographicsPostError },
     demographicsPost,
   ] = useAxiosFetch(
     {
@@ -159,74 +142,54 @@ const AreasOfResearch = () => {
           ).toISOString(),
           sexRegisteredAtBirth: userData.sex.sexAtBirth,
           genderIsSameAsSexRegisteredAtBirth:
-            userData.sex.genderAtBirth === "noSay"
-              ? null
-              : userData.sex.genderAtBirth === "yes",
+            userData.sex.genderAtBirth === "noSay" ? null : userData.sex.genderAtBirth === "yes",
           ethnicGroup: userData.ethnicity1.ethnicity,
           ethnicBackground: userData.ethnicity2.background,
-          disability:
-            userData.disability.disability === "notSaying"
-              ? null
-              : userData.disability.disability === "yes",
+          disability: userData.disability.disability === "notSaying" ? null : userData.disability.disability === "yes",
           disabilityDescription:
-            userData.disability.disability === "yes"
-              ? userData.disabilityDescription.disabilityDescription
-              : null,
-          healthConditionInterests:
-            data.conditions.length > 0 ? data.conditions : null,
+            userData.disability.disability === "yes" ? userData.disabilityDescription.disabilityDescription : null,
+          healthConditionInterests: data.conditions.length > 0 ? data.conditions : null,
         },
       }).catch(() => {});
     }
   };
 
   return (
-    <DocumentTitle title="Which areas of research are you interested in? - Volunteer Account - Be Part of Research">
+    <DocumentTitle title={content["account-health-conditions-document-title"]}>
       <StyledWrapper role="main" id="main" ref={containerRef}>
-        {demographicsLoading && (
-          <LoadingIndicator text="Loading your details..." />
-        )}
-        {demographicsPostLoading && (
-          <LoadingIndicator text="Updating your details..." />
-        )}
+        {demographicsLoading && <LoadingIndicator text={content["reusable-loading-loading-details"]} />}
+        {demographicsPostLoading && <LoadingIndicator text={content["reusable-loading-updating-details"]} />}
         <Container>
           <ErrorMessageContainer
             axiosErrors={[demographicsPostError]}
-            DTEAxiosErrors={[
-              Utils.ConvertResponseToDTEResponse(demographicsPostResponse)
-                ?.errors,
-            ]}
+            DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(demographicsPostResponse)?.errors]}
           />
           <ErrorMessageContainer
             axiosErrors={[demographicsError]}
-            DTEAxiosErrors={[
-              Utils.ConvertResponseToDTEResponse(demographicsResponse)?.errors,
-            ]}
+            DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(demographicsResponse)?.errors]}
           />
-          {!demographicsLoading &&
-            Utils.ConvertResponseToDTEResponse(demographicsResponse)
-              ?.isSuccess &&
-            userData && (
-              <HealthConditionForm
-                onDataChange={async (data) => {
-                  await handleSave(data);
-                  history.push("/");
-                }}
-                onCancel={() => {
-                  history.push("/");
-                }}
-                initialStateData={
-                  userData?.healthConditions || {
-                    conditions: [],
-                  }
+          {!demographicsLoading && Utils.ConvertResponseToDTEResponse(demographicsResponse)?.isSuccess && userData && (
+            <HealthConditionForm
+              onDataChange={async (data) => {
+                await handleSave(data);
+                history.push("/");
+              }}
+              onCancel={() => {
+                history.push("/");
+              }}
+              initialStateData={
+                userData?.healthConditions || {
+                  conditions: [],
                 }
-                nextButtonText="Save"
-                showCancelButton
-              />
-            )}
+              }
+              nextButtonText={content["reusable-save"]}
+              showCancelButton
+            />
+          )}
         </Container>
       </StyledWrapper>
     </DocumentTitle>
   );
-};
+}
 
 export default AreasOfResearch;

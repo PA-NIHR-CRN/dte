@@ -6,9 +6,7 @@ expect.extend(toHaveNoViolations);
 
 describe("Test suite for DTEAccordion component", () => {
   it("should not fail any accessibility tests with empty sections", async () => {
-    const { container } = render(
-      <DTEAccordion sections={[]} id="test" name="test" />
-    );
+    const { container } = render(<DTEAccordion sections={[]} id="test" name="test" />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

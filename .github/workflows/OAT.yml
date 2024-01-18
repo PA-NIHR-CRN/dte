@@ -14,17 +14,19 @@ env:
   REACT_APP_NHS_LOGIN_CLIENT_ID: ${{secrets.REACT_APP_NHS_LOGIN_CLIENT_ID}}
   REACT_APP_NHS_LOGIN_RESPONSE_TYPE: ${{secrets.REACT_APP_NHS_LOGIN_RESPONSE_TYPE}}
   REACT_APP_NHS_LOGIN_SCOPE: ${{secrets.REACT_APP_NHS_LOGIN_SCOPE}}
-  REACT_APP_COOKIE_DOMAIN: ".bepartofresearch-beta.nihr.ac.uk"
+  REACT_APP_COOKIE_DOMAIN: ".nihr.ac.uk"
+  REACT_APP_CONTENTFUL_SPACE_ID: ${{secrets.REACT_APP_CONTENTFUL_SPACE_ID}}
+  REACT_APP_CONTENTFUL_DELIVERY_TOKEN: ${{secrets.REACT_APP_CONTENTFUL_DELIVERY_TOKEN}}
+  REACT_APP_CONTENTFUL_ENVIRONMENT: ${{secrets.REACT_APP_CONTENTFUL_ENVIRONMENT}}
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
           cache: 'yarn'
           cache-dependency-path: "yarn.lock"
       - name: Configure AWS credentials - All
@@ -33,6 +35,7 @@ jobs:
           aws-access-key-id: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.CRNCC_PROD_IAM_ACCESS_KEY_SECRET }}
           aws-region: ${{ secrets.AWS_REGION }}
+      - uses: actions/setup-node@v2
       - name: Yarn Install
         run: yarn install
       - name: Runing  ESLint
@@ -49,5 +52,4 @@ jobs:
           aws s3 sync ./build/ s3://$AWS_S3_BUCKET --delete
           aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == '${{ secrets.VS_NIHR_URL_OAT }}'].Id" --output text) --paths '/*'
         env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_OAT_BUCKET_NAME }}
-
+          AWS_S3_BUCKET: ${{ secrets.AWS_UAT_BUCKET_NAME }}

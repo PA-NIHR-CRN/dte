@@ -7,10 +7,7 @@ interface ErrorMessageSummaryProps {
   errors: Record<string, unknown>;
 }
 
-const ErrorMessageSummary = ({
-  renderSummary,
-  errors,
-}: ErrorMessageSummaryProps): ReactElement => {
+function ErrorMessageSummary({ renderSummary, errors }: ErrorMessageSummaryProps): ReactElement {
   return (
     <>
       {renderSummary && errors && Object.keys(errors).length > 0 && (
@@ -36,6 +33,6 @@ const ErrorMessageSummary = ({
       )}
     </>
   );
-};
+}
 
 export default ErrorMessageSummary;

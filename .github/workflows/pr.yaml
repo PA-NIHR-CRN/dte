@@ -6,6 +6,21 @@ on:
 
   workflow_dispatch:
 
+env:
+  REACT_APP_BASE_API: ${{secrets.REACT_APP_BASE_API_DEV}}
+  REACT_APP_LOGOUT_URL: ${{secrets.LOGOUT_URL_DEV}}
+  REACT_APP_RESEARCHER_AUTH_URL: ${{secrets.RESEARCHER_AUTH_URL_DEV}}
+  REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL_DEV}}
+  REACT_APP_NHS_SETTINGS_URL: ${{secrets.REACT_APP_NHS_SETTINGS_URL_SANDPIT}}
+  REACT_APP_NHS_LOGIN_URL: ${{secrets.REACT_APP_NHS_LOGIN_URL_SANDPIT}}
+  REACT_APP_NHS_LOGIN_CLIENT_ID: ${{secrets.REACT_APP_NHS_LOGIN_CLIENT_ID}}
+  REACT_APP_NHS_LOGIN_RESPONSE_TYPE: ${{secrets.REACT_APP_NHS_LOGIN_RESPONSE_TYPE}}
+  REACT_APP_NHS_LOGIN_SCOPE: ${{secrets.REACT_APP_NHS_LOGIN_SCOPE}}
+  REACT_APP_COOKIE_DOMAIN: ".nihr.ac.uk"
+  REACT_APP_CONTENTFUL_SPACE_ID: ${{secrets.REACT_APP_CONTENTFUL_SPACE_ID}}
+  REACT_APP_CONTENTFUL_DELIVERY_TOKEN: ${{secrets.REACT_APP_CONTENTFUL_DELIVERY_TOKEN}}
+  REACT_APP_CONTENTFUL_ENVIRONMENT: ${{secrets.REACT_APP_CONTENTFUL_ENVIRONMENT}}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,7 +28,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
           cache: 'yarn'
           cache-dependency-path: "yarn.lock"
       - name: Yarn Install

@@ -20,7 +20,9 @@ const StyledBackLink = styled(Link)`
     &:focus {
       text-decoration: none;
       background-color: ${(props) => props.theme.NIHR.Yellow};
-      box-shadow: 0 -2px ${(props) => props.theme.NIHR.Yellow}, 0 4px #212b32;
+      box-shadow:
+        0 -2px ${(props) => props.theme.NIHR.Yellow},
+        0 4px #212b32;
     }
     &:hover {
       color: ${(props) => props.theme.NIHR.Blue};
@@ -51,13 +53,7 @@ const StyledBackLink = styled(Link)`
   }
 `;
 
-const DTEBackLink = ({
-  linkText,
-  title,
-  ariaLabel,
-  href = "#",
-  onClick,
-}: Props) => {
+function DTEBackLink({ linkText, title, ariaLabel, href = "#", onClick }: Props) {
   return (
     <div className="nhsuk-back-link">
       <StyledBackLink
@@ -81,6 +77,6 @@ const DTEBackLink = ({
       </StyledBackLink>
     </div>
   );
-};
+}
 
 export default DTEBackLink;

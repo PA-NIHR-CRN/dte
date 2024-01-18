@@ -1,11 +1,12 @@
 import { Grid } from "@material-ui/core";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Utils from "../../../../Helper/Utils";
 import ErrorMessageSummary from "../../ErrorMessageSummary/ErrorMessageSummary";
 import DTEInput from "../../UI/DTEInput/DTEInput";
 import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
-import { Details, ContinueButton } from "./PostcodeLookup";
+import { ContinueButton } from "./PostcodeLookup";
+import { ContentContext } from "../../../../context/ContentContext";
 import Honeypot from "../../Honeypot/Honeypot";
 
 export type ManualEntryData = {
@@ -27,15 +28,9 @@ interface ManualEntryProps {
   onDataChange: (data: ManualEntryData) => void;
 }
 
-const ManualEntry = (props: ManualEntryProps) => {
-  const {
-    initialStateData,
-    onDataChange,
-    nextButtonText,
-    hideInfo,
-    showCancelButton,
-    onCancel,
-  } = props;
+function ManualEntry(props: ManualEntryProps) {
+  const { content } = useContext(ContentContext);
+  const { initialStateData, onDataChange, nextButtonText, hideInfo, showCancelButton, onCancel } = props;
   const {
     control,
     setValue,
@@ -72,13 +67,10 @@ const ManualEntry = (props: ManualEntryProps) => {
         <Controller
           control={control}
           name="addressLine1"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="addressLine1"
-              label="Address line 1"
+              label={content["register2-address-input-address1"]}
               onValueChange={onChange}
               onValueBlur={onBlur}
               error={error?.message}
@@ -92,20 +84,17 @@ const ManualEntry = (props: ManualEntryProps) => {
                 return true;
               }
               setValue("addressLine1", "");
-              return "Enter the first line of your address";
+              return content["register2-address-validation-address1-required"];
             },
           }}
         />
         <Controller
           control={control}
           name="addressLine2"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="addressLine2"
-              label="Address line 2 (optional)"
+              label={content["register2-address-input-address2"]}
               onValueChange={onChange}
               onValueBlur={onBlur}
               error={error?.message}
@@ -120,7 +109,7 @@ const ManualEntry = (props: ManualEntryProps) => {
           render={({ field: { value, onChange, onBlur } }) => (
             <DTEInput
               id="addressLine3"
-              label="Address line 3 (optional)"
+              label={content["register2-address-input-address3"]}
               onValueChange={onChange}
               onValueBlur={onBlur}
               value={value}
@@ -134,7 +123,7 @@ const ManualEntry = (props: ManualEntryProps) => {
           render={({ field: { value, onChange, onBlur } }) => (
             <DTEInput
               id="addressLine4"
-              label="Address line 4 (optional)"
+              label={content["register2-address-input-address4"]}
               onValueChange={onChange}
               onValueBlur={onBlur}
               value={value}
@@ -145,13 +134,10 @@ const ManualEntry = (props: ManualEntryProps) => {
         <Controller
           control={control}
           name="town"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="town"
-              label="Town"
+              label={content["register2-address-input-town"]}
               onValueChange={onChange}
               onValueBlur={onBlur}
               error={error?.message}
@@ -165,24 +151,21 @@ const ManualEntry = (props: ManualEntryProps) => {
                 return true;
               }
               setValue("town", "");
-              return "Enter the town of your address";
+              return content["register2-address-validation-town-required"];
             },
           }}
         />
         <Controller
           control={control}
           name="postcode"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="postcode"
               value={value}
               onValueChange={onChange}
               onValueBlur={onBlur}
               error={error?.message}
-              label="Postcode (optional)"
+              label={content["register2-address-input-postcode"]}
               autocomplete="postal-code"
             />
           )}
@@ -196,7 +179,7 @@ const ManualEntry = (props: ManualEntryProps) => {
               ) {
                 return true;
               }
-              return "Enter a real postcode";
+              return content["register2-address-validation-postcode-invalid"];
             },
           }}
         />
@@ -215,13 +198,13 @@ const ManualEntry = (props: ManualEntryProps) => {
                 })
               }
             >
-              Find your address by postcode
+              {content["register2-address-button-find-by-postcode"]}
             </DTELinkButton>
           </Grid>
-          <Grid item>{!hideInfo && <Details />}</Grid>
+          <Grid item>{!hideInfo && content["register2-address"]}</Grid>
         </Grid>
         <ContinueButton
-          buttonText="Continue"
+          buttonText={content["reusable-button-continue"]}
           altButtonText={nextButtonText}
           showCancelButton={showCancelButton}
           onCancel={onCancel}
@@ -229,6 +212,6 @@ const ManualEntry = (props: ManualEntryProps) => {
       </form>
     </>
   );
-};
+}
 
 export default ManualEntry;

@@ -1,10 +1,5 @@
 import { axe, toHaveNoViolations } from "jest-axe";
-import {
-  render,
-  fireEvent,
-  screen,
-  waitFor,
-} from "../../../../Helper/test-utils";
+import { render, fireEvent, screen, waitFor } from "../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import Ethnicity2Form from "./Ethnicity2Form";
 
@@ -20,6 +15,9 @@ test("loads and displays background form", async () => {
       ethnicity="asian"
     />
   );
+  await waitFor(() => {
+    expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+  });
   expect(screen.getByDisplayValue("Bangladeshi")).toBeInTheDocument();
   expect(screen.getByDisplayValue("Bangladeshi")).not.toBeChecked();
   expect(screen.queryByDisplayValue("African")).not.toBeInTheDocument();
@@ -35,16 +33,11 @@ test("different background form displayed depending on ethnicity", async () => {
       ethnicity="white"
     />
   );
-  expect(
-    screen.getByDisplayValue(
-      "British, English, Northern Irish, Scottish, or Welsh"
-    )
-  ).toBeInTheDocument();
-  expect(
-    screen.getByDisplayValue(
-      "British, English, Northern Irish, Scottish, or Welsh"
-    )
-  ).not.toBeChecked();
+  await waitFor(() => {
+    expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+  });
+  expect(screen.getByDisplayValue("British, English, Northern Irish, Scottish, or Welsh")).toBeInTheDocument();
+  expect(screen.getByDisplayValue("British, English, Northern Irish, Scottish, or Welsh")).not.toBeChecked();
   expect(screen.queryByDisplayValue("African")).not.toBeInTheDocument();
 });
 
@@ -58,10 +51,10 @@ test("other background textbox to be filled", async () => {
       ethnicity="asian"
     />
   );
-
-  expect(
-    screen.getByDisplayValue("Not one of the options")
-  ).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+  });
+  expect(screen.getByDisplayValue("Not one of the options")).toBeInTheDocument();
 });
 
 test("submitting other", async () => {
@@ -75,13 +68,13 @@ test("submitting other", async () => {
       ethnicity="other"
     />
   );
+  await waitFor(() => {
+    expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+  });
   fireEvent.click(screen.getByDisplayValue("other"));
-  fireEvent.change(
-    screen.getByLabelText(/How would you describe your background\?/i),
-    {
-      target: { value: "Custom value" },
-    }
-  );
+  fireEvent.change(screen.getByLabelText(/How would you describe your background\?/i), {
+    target: { value: "Custom value" },
+  });
   fireEvent.submit(screen.getByTestId("background-form"));
   await waitFor(() => {
     expect(mockOnDataChange).toHaveBeenCalledWith({
@@ -101,17 +94,17 @@ test("submitting other with blank data", async () => {
       ethnicity="other"
     />
   );
+  await waitFor(() => {
+    expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+  });
   fireEvent.click(screen.getByDisplayValue("other"));
-  fireEvent.change(
-    screen.getByLabelText(/How would you describe your background\?/i),
-    {
-      target: { value: "   " },
-    }
-  );
+  fireEvent.change(screen.getByLabelText(/How would you describe your background\?/i), {
+    target: { value: "   " },
+  });
   fireEvent.submit(screen.getByTestId("background-form"));
   await waitFor(() => {
     expect(mockOnDataChange).toHaveBeenCalledWith({
-      background: "other",
+      background: "prefer not to say",
     });
   });
 });
@@ -127,13 +120,13 @@ test("submitting other with whitespace", async () => {
       ethnicity="other"
     />
   );
+  await waitFor(() => {
+    expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+  });
   fireEvent.click(screen.getByDisplayValue("other"));
-  fireEvent.change(
-    screen.getByLabelText(/How would you describe your background\?/i),
-    {
-      target: { value: "  ethnicity  " },
-    }
-  );
+  fireEvent.change(screen.getByLabelText(/How would you describe your background\?/i), {
+    target: { value: "  ethnicity  " },
+  });
   fireEvent.submit(screen.getByTestId("background-form"));
   await waitFor(() => {
     expect(mockOnDataChange).toHaveBeenCalledWith({
@@ -154,6 +147,7 @@ describe("Accessibility test", () => {
         ethnicity="other"
       />
     );
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

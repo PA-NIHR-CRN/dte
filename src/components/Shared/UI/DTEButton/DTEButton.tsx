@@ -37,25 +37,19 @@ export const baseButton = css<baseButtonProps>`
     return props.theme.NIHR.Blue;
   }};
   margin: 0;
-  color: ${(props) =>
-    props.$outlined ? props.theme.NIHR.Blue : props.theme.NIHR.PrimaryWhite};
-  border: 0.25rem solid
-    ${(props) => (props.$danger ? props.theme.NIHR.Red : props.theme.NIHR.Blue)};
+  color: ${(props) => (props.$outlined ? props.theme.NIHR.Blue : props.theme.NIHR.PrimaryWhite)};
+  border: 0.25rem solid ${(props) => (props.$danger ? props.theme.NIHR.Red : props.theme.NIHR.Blue)};
   outline: 0.25rem solid transparent;
   ${(props) => props.$small && "padding: 2px; font-size: 16px; margin: 0 10px;"}
   ${(props) => props.$backArrow && "padding: 0; font-size: 16px;"}
     &:visited {
-    color: ${(props) =>
-      props.$outlined ? props.theme.NIHR.Blue : props.theme.NIHR.PrimaryWhite};
+    color: ${(props) => (props.$outlined ? props.theme.NIHR.Blue : props.theme.NIHR.PrimaryWhite)};
   }
   // Hover colour
   &:hover {
-    background-color: ${(props) =>
-      props.$danger ? props.theme.NIHR.Red : props.theme.NIHR.LightBlue};
+    background-color: ${(props) => (props.$danger ? props.theme.NIHR.Red : props.theme.NIHR.LightBlue)};
     border: ${(props) =>
-      props.$danger
-        ? `0.25rem solid ${props.theme.Red}`
-        : `0.25rem solid ${props.theme.NIHR.LightBlue}`};
+      props.$danger ? `0.25rem solid ${props.theme.Red}` : `0.25rem solid ${props.theme.NIHR.LightBlue}`};
     &:not(:focus) {
       color: ${(props) => props.$outlined && props.theme.NIHR.PrimaryWhite};
     }
@@ -108,7 +102,7 @@ const StyledGrid = styled(Grid)`
   padding-right: 1rem;
 `;
 
-const DTEButton = ({
+function DTEButton({
   id,
   name,
   label,
@@ -125,7 +119,7 @@ const DTEButton = ({
   onKeyDown,
   disabled,
   $danger,
-}: Props & baseButtonProps) => {
+}: Props & baseButtonProps) {
   return (
     <StyledButton
       id={id}
@@ -145,12 +139,7 @@ const DTEButton = ({
       $danger={$danger}
     >
       {$backArrow ? (
-        <Grid
-          container
-          direction="row"
-          justifyContent="flex-start"
-          alignItems="center"
-        >
+        <Grid container direction="row" justifyContent="flex-start" alignItems="center">
           <Grid item>{$backArrow && <StyledBackArrow $backArrow />}</Grid>
           <StyledGrid item>{children}</StyledGrid>
         </Grid>
@@ -159,6 +148,6 @@ const DTEButton = ({
       )}
     </StyledButton>
   );
-};
+}
 
 export default DTEButton;

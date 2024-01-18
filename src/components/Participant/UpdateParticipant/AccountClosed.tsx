@@ -1,20 +1,19 @@
 import DocumentTitle from "react-document-title";
 import Container from "../../Shared/Container/Container";
-import DTEContent from "../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEHeader from "../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import { useContext } from "react";
+import { ContentContext } from "../../../context/ContentContext";
 
-const AccountClosed = () => {
+function AccountClosed() {
+  const { content } = useContext(ContentContext);
   return (
-    <DocumentTitle title="Your account has been closed - Volunteer Account - Be Part of Research">
+    <DocumentTitle title={content["accountclosed-document-title"]}>
       <Container>
-        <DTEHeader as="h1">Your account has been closed</DTEHeader>
-        <DTEContent>Your personal data has been deleted.</DTEContent>
-        <DTEContent>
-          Thank you for your interest in Be Part of Research.
-        </DTEContent>
+        <DTEHeader as="h1">{content["accountclosed-header"]}</DTEHeader>
+        {content["accountclosed-page"]}
       </Container>
     </DocumentTitle>
   );
-};
+}
 
 export default AccountClosed;

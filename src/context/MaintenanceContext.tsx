@@ -5,23 +5,17 @@ interface MaintenanceContextType {
   setInMaintenanceMode: (inMaintenanceMode: boolean) => void;
 }
 
-const MaintenanceContext = createContext<MaintenanceContextType | undefined>(
-  undefined
-);
+const MaintenanceContext = createContext<MaintenanceContextType | undefined>(undefined);
 
 interface MaintenanceProviderProps {
   children: ReactNode;
 }
 
-export const MaintenanceProvider: React.FC<MaintenanceProviderProps> = ({
-  children,
-}) => {
+export const MaintenanceProvider: React.FC<MaintenanceProviderProps> = ({ children }) => {
   const [inMaintenanceMode, setInMaintenanceMode] = useState<boolean>(false);
 
   return (
-    <MaintenanceContext.Provider
-      value={{ inMaintenanceMode, setInMaintenanceMode }}
-    >
+    <MaintenanceContext.Provider value={{ inMaintenanceMode, setInMaintenanceMode }}>
       {children}
     </MaintenanceContext.Provider>
   );

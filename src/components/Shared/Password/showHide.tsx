@@ -1,10 +1,11 @@
-import React, { ChangeEvent, FocusEvent, useState } from "react";
+import React, { ChangeEvent, FocusEvent, useContext, useState } from "react";
 
 import { ButtonProps } from "@mui/material";
 import { Button } from "nhsuk-react-components";
 import styled from "styled-components";
 import DTEInput from "../UI/DTEInput/DTEInput";
 import { baseButton } from "../UI/DTEButton/DTEButton";
+import { ContentContext } from "../../../context/ContentContext";
 
 type Props = {
   id?: string;
@@ -60,7 +61,7 @@ const StyledButton = styled(Button)<StyledButtonProps>`
   }
 `;
 
-const PasswordShowHide = ({
+function PasswordShowHide({
   id,
   buttonAriaLabelShow,
   buttonAriaLabelHide,
@@ -76,9 +77,9 @@ const PasswordShowHide = ({
   autoFocus,
   autocomplete,
   spellcheck,
-}: Props) => {
+}: Props) {
   const [showPassword, setShowPassword] = useState(false);
-
+  const { content } = useContext(ContentContext);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -112,14 +113,14 @@ const PasswordShowHide = ({
         aria-label={showPassword ? buttonAriaLabelHide : buttonAriaLabelShow}
         error={error}
       >
-        {showPassword ? "Hide" : "Show"}
+        {showPassword ? content["password-button-hide"] : content["password-button-show"]}
       </StyledButton>
 
       <span className="nhsuk-u-visually-hidden" aria-live="polite">
-        {showPassword ? "Your Password is shown" : "Your Password is hidden"}
+        {showPassword ? content["password-button-hide-aria"] : content["password-button-show-aria"]}
       </span>
     </StyledDiv>
   );
-};
+}
 
 export default PasswordShowHide;

@@ -39,13 +39,7 @@ const getVanityRoutes = (routeConfig: VanityRoute[]) =>
   ));
 
 export default [
-  <ProtectedRoute
-    path="/Participants/MyDetails"
-    component={UpdateParticipant}
-    strict
-    exact
-    key="updateparticipant"
-  />,
+  <ProtectedRoute path="/Participants/MyDetails" component={UpdateParticipant} strict exact key="updateparticipant" />,
   <ProtectedRoute
     path="/Participants/AccountSettings"
     render={() => {
@@ -114,13 +108,7 @@ export default [
     exact
     key="home"
   />,
-  <ProtectedRoute
-    path="/Participants/CloseAccount"
-    component={CloseAccount}
-    strict
-    exact
-    key="closeaccount"
-  />,
+  <ProtectedRoute path="/Participants/CloseAccount" component={CloseAccount} strict exact key="closeaccount" />,
   <Route
     path="/Participants/AccountClosed"
     render={() => {
@@ -132,7 +120,7 @@ export default [
     key="accountclosed"
   />,
   <Route
-    path="/Participants/Register/Questions"
+    path={["/Participants/Register/Questions", "/Cyfranogwyr/Cofrestru/Cwestiynau"]}
     component={RegsitrationProcess}
     strict
     exact
@@ -146,7 +134,7 @@ export default [
     key="continueregistration"
   />,
   <Route
-    path="/Participants/Register"
+    path={["/Participants/Register", "/Cyfranogwyr/Cofrestrwch"]}
     render={() => {
       ReactGA.pageview("/register");
       return <StartRegistrationProcess />;
