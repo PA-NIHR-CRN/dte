@@ -10,7 +10,7 @@ const StyledGrid = styled(Grid)`
   padding: 1rem;
 `;
 
-const Container = (props: ContainerProps) => {
+function Container(props: ContainerProps) {
   const { children } = props;
 
   return (
@@ -21,6 +21,6 @@ const Container = (props: ContainerProps) => {
       </Grid>
     </StyledGrid>
   );
-};
+}
 
 export default Container;

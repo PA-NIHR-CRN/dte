@@ -4,8 +4,7 @@ import styled from "styled-components";
 const StyledErrorSummary = styled(ErrorSummary)<{ $success?: boolean }>`
   margin-bottom: 16px;
   padding: 16px;
-  border-color: ${(props) =>
-    props.$success ? props.theme.NIHR.LighterGreen : props.theme.NIHR.Red};
+  border-color: ${(props) => (props.$success ? props.theme.NIHR.LighterGreen : props.theme.NIHR.Red)};
   svg {
     vertical-align: middle;
     ${(props) => props.$success && `color: ${props.theme.NIHR.LighterGreen};`}

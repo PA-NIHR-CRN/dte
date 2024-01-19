@@ -23,8 +23,7 @@ type Props = {
 const StyledInput = styled(Input)`
   border-radius: 0.3rem;
   padding: 1em;
-  border-color: ${(Props) =>
-    Props.error ? Props.theme.NIHR.ErrorRed : Props.theme.NIHR.Grey};
+  border-color: ${(Props) => (Props.error ? Props.theme.NIHR.ErrorRed : Props.theme.NIHR.Grey)};
   &:focus {
     padding: 0.9em;
     border: 4px solid ${(Props) => Props.theme.NIHR.Blue};
@@ -33,7 +32,7 @@ const StyledInput = styled(Input)`
   }
 `;
 
-const DTEInput = ({
+function DTEInput({
   id,
   name,
   label,
@@ -48,33 +47,35 @@ const DTEInput = ({
   autoFocus,
   autocomplete,
   spellcheck,
-}: Props) => {
+}: Props) {
   const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (onValueChange) {
       onValueChange(e);
     }
   };
   return error !== "" && error !== undefined ? (
-    <StyledInput
-      id={id}
-      name={name}
-      label={label}
-      error={error}
-      hint={hint}
-      required={required}
-      aria-describedby={`${id}--error-message`}
-      aria-required={required}
-      aria-invalid
-      disabled={disabled}
-      value={value}
-      type={type}
-      onChange={handleValueChange}
-      onBlur={onValueBlur}
-      autoFocus={autoFocus}
-      autoComplete={autocomplete}
-      spellCheck={spellcheck}
-      errorProps={{ role: "presentation" }}
-    />
+    <pre>
+      <StyledInput
+        id={id}
+        name={name}
+        label={label}
+        error={error}
+        hint={hint}
+        required={required}
+        aria-describedby={`${id}--error-message`}
+        aria-required={required}
+        aria-invalid
+        disabled={disabled}
+        value={value}
+        type={type}
+        onChange={handleValueChange}
+        onBlur={onValueBlur}
+        autoFocus={autoFocus}
+        autoComplete={autocomplete}
+        spellCheck={spellcheck}
+        errorProps={{ role: "presentation" }}
+      />
+    </pre>
   ) : (
     <StyledInput
       id={id}
@@ -93,6 +94,6 @@ const DTEInput = ({
       spellCheck={spellcheck}
     />
   );
-};
+}
 
 export default DTEInput;

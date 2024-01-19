@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useContext } from "react";
 import { ErrorSummary } from "nhsuk-react-components";
 import { Box } from "@material-ui/core";
 import styled from "styled-components";
@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { DTEAxiosError } from "../../../types/AuthTypes";
 import customCodeLookup from "./customCodeLookup";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
+import { ContentContext } from "../../../context/ContentContext";
 
 interface SimpleError {
   detail: string;
@@ -37,7 +38,7 @@ const StyledErrorSummary = styled(ErrorSummary)`
   }
 `;
 
-const mapErrorCodeToSummary = (errors: (DTEAxiosError[] | undefined)[]) => {
+const mapErrorCodeToSummary = (errors: (DTEAxiosError[] | undefined)[], content: any) => {
   // For each failed request
   return errors.map((error) => {
     if (error) {
@@ -45,9 +46,7 @@ const mapErrorCodeToSummary = (errors: (DTEAxiosError[] | undefined)[]) => {
       return error.map((e) => {
         return {
           ...e,
-          ...(e.customCode
-            ? { detail: customCodeLookup(e.customCode, e.detail) }
-            : {}),
+          ...(e.customCode ? { detail: customCodeLookup(e.customCode, content, e.detail) } : {}),
         };
       });
     }
@@ -55,7 +54,7 @@ const mapErrorCodeToSummary = (errors: (DTEAxiosError[] | undefined)[]) => {
   });
 };
 
-const ErrorMessageContainer = ({
+function ErrorMessageContainer({
   description,
   DTEAxiosErrors,
   simpleErrors,
@@ -63,17 +62,14 @@ const ErrorMessageContainer = ({
   axiosErrors,
   children,
   nhsError,
-}: ErrorMessageContainerProps) => {
+}: ErrorMessageContainerProps) {
+  const { content } = useContext(ContentContext);
   if (nhsError) {
     return (
       <div className="error-summary">
         <StyledErrorSummary>
-          <StyledErrorSummary.Title key="title">
-            There is a problem
-          </StyledErrorSummary.Title>
-          <StyledErrorSummary.Body key="body">
-            {nhsError}
-          </StyledErrorSummary.Body>
+          <StyledErrorSummary.Title key="title">{content["error-summary-title-problem"]}</StyledErrorSummary.Title>
+          <StyledErrorSummary.Body key="body">{nhsError}</StyledErrorSummary.Body>
         </StyledErrorSummary>
       </div>
     );
@@ -82,15 +78,11 @@ const ErrorMessageContainer = ({
     return (
       <div className="error-summary">
         <StyledErrorSummary>
-          <StyledErrorSummary.Title key="title">
-            There is a problem
-          </StyledErrorSummary.Title>
+          <StyledErrorSummary.Title key="title">{content["error-summary-title-problem"]}</StyledErrorSummary.Title>
           <StyledErrorSummary.Body key="body">
             {description}
             <StyledErrorSummary.List key="list">
-              <StyledErrorSummary.Item key="children">
-                {children}
-              </StyledErrorSummary.Item>
+              <StyledErrorSummary.Item key="children">{children}</StyledErrorSummary.Item>
             </StyledErrorSummary.List>
           </StyledErrorSummary.Body>
         </StyledErrorSummary>
@@ -104,12 +96,10 @@ const ErrorMessageContainer = ({
     if (
       DTEAxiosErrors &&
       DTEAxiosErrors.length > 0 &&
-      DTEAxiosErrors.some(
-        (item) => item !== undefined && item !== null && item.length > 0
-      )
+      DTEAxiosErrors.some((item) => item !== undefined && item !== null && item.length > 0)
     ) {
-      mapErrorCodeToSummary(DTEAxiosErrors).forEach((mappedErrors: any) =>
-        mappedErrors?.forEach((error: any) => errors.push(error.detail))
+      mapErrorCodeToSummary(DTEAxiosErrors, content).forEach(
+        (mappedErrors: any) => mappedErrors?.forEach((error: any) => errors.push(error.detail))
       );
     }
     if (simpleErrors && simpleErrors.length > 0) {
@@ -120,19 +110,19 @@ const ErrorMessageContainer = ({
         (innerAxiosError: AxiosError<any> | undefined) =>
           innerAxiosError &&
           innerAxiosError.response?.data?.error?.length > 0 &&
-          errors.push(customCodeLookup(innerAxiosError?.response?.data.error))
+          errors.push(customCodeLookup(innerAxiosError?.response?.data.error, content))
       );
 
       axiosErrors.forEach(
         (innerAxiosError: AxiosError<any> | undefined) =>
           innerAxiosError &&
           innerAxiosError.message.length > 0 &&
-          errors.push(customCodeLookup(innerAxiosError.message))
+          errors.push(customCodeLookup(innerAxiosError.message, content))
       );
     }
     if (axiosError) {
       if (axiosError.message && axiosError.message.length > 0) {
-        errors.push(customCodeLookup(axiosError.message));
+        errors.push(customCodeLookup(axiosError.message, content));
       }
     }
 
@@ -143,9 +133,7 @@ const ErrorMessageContainer = ({
         <div className="error-summary">
           <Box pt={1} pb={1}>
             <StyledErrorSummary>
-              <StyledErrorSummary.Title key="title">
-                There is a problem
-              </StyledErrorSummary.Title>
+              <StyledErrorSummary.Title key="title">{content["error-summary-title-problem"]}</StyledErrorSummary.Title>
               <StyledErrorSummary.Body key="body">
                 {description}
                 <StyledErrorSummary.List key="list">
@@ -164,6 +152,6 @@ const ErrorMessageContainer = ({
   }
 
   return <></>;
-};
+}
 
 export default ErrorMessageContainer;

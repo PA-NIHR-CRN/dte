@@ -33,6 +33,7 @@ describe("DisabilityForm", () => {
         onDataChange={mockOnDataChange}
       />
     );
+
     expect(screen.getByDisplayValue("yes")).toBeInTheDocument();
   });
 
@@ -46,6 +47,7 @@ describe("DisabilityForm", () => {
         onDataChange={mockOnDataChange}
       />
     );
+
     expect(screen.getByDisplayValue("yes")).not.toBeChecked();
     fireEvent.click(screen.getByDisplayValue("yes"));
     expect(screen.getByDisplayValue("yes")).toBeChecked();
@@ -61,6 +63,7 @@ describe("DisabilityForm", () => {
         onDataChange={mockOnDataChange}
       />
     );
+
     expect(screen.getByDisplayValue("no")).not.toBeChecked();
     fireEvent.click(screen.getByDisplayValue("no"));
     expect(screen.getByDisplayValue("no")).toBeChecked();
@@ -80,6 +83,7 @@ describe("DisabilityForm", () => {
         onDataChange={mockOnDataChange}
       />
     );
+
     expect(screen.getByDisplayValue("yes")).not.toBeChecked();
     fireEvent.click(screen.getByDisplayValue("yes"));
     expect(screen.getByDisplayValue("yes")).toBeChecked();
@@ -100,6 +104,7 @@ describe("Accessibility test", () => {
         onDataChange={mockOnDataChange}
       />
     );
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

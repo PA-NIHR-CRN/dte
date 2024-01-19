@@ -10,7 +10,7 @@ const StyledGrid = styled(Grid)`
   padding: 1rem;
 `;
 
-const StepWrapper = (props: StepWrapperProps) => {
+function StepWrapper(props: StepWrapperProps) {
   const { children } = props;
 
   return (
@@ -21,6 +21,6 @@ const StepWrapper = (props: StepWrapperProps) => {
       </Grid>
     </StyledGrid>
   );
-};
+}
 
 export default StepWrapper;

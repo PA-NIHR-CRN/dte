@@ -1,10 +1,5 @@
 import { axe, toHaveNoViolations } from "jest-axe";
-import {
-  render,
-  fireEvent,
-  screen,
-  waitFor,
-} from "../../../../Helper/test-utils";
+import { render, fireEvent, screen, waitFor } from "../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import Ethnicity1Form from "./Ethnicity1Form";
 
@@ -19,6 +14,9 @@ test("loads and displays ethnicity form", async () => {
       onDataChange={() => {}}
     />
   );
+  await waitFor(() => {
+    expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+  });
   expect(screen.getByDisplayValue("asian")).toBeInTheDocument();
   expect(screen.getByDisplayValue("asian")).not.toBeChecked();
   expect(screen.getByDisplayValue("other")).not.toBeChecked();
@@ -34,6 +32,9 @@ test("select a radio button and submit", async () => {
       onDataChange={mockOnDataChange}
     />
   );
+  await waitFor(() => {
+    expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+  });
   fireEvent.click(screen.getByDisplayValue("asian"));
   expect(screen.getByDisplayValue("asian")).toBeChecked();
   fireEvent.submit(screen.getByTestId("ethnicity-form"));
@@ -53,6 +54,9 @@ test("pre-filled data entry", async () => {
       onDataChange={() => {}}
     />
   );
+  await waitFor(() => {
+    expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
+  });
   expect(screen.getByDisplayValue("black")).toBeChecked();
 });
 
@@ -66,6 +70,7 @@ describe("Accessibility test", () => {
         onDataChange={() => {}}
       />
     );
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

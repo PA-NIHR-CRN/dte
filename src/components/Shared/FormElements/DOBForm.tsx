@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Fieldset } from "nhsuk-react-components";
@@ -6,14 +6,13 @@ import styled from "styled-components";
 import { useTheme } from "@material-ui/core/styles";
 import { Controller, useForm } from "react-hook-form";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
-import DTEDetails from "../UI/DTEDetails/DTEDetails";
-import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import DTEDateInput from "../UI/DTEDateInput/DTEDateInput";
 import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import Utils from "../../../Helper/Utils";
 import Honeypot from "../Honeypot/Honeypot";
+import { ContentContext } from "../../../context/ContentContext";
 
 export type DOBFormData = {
   day: string;
@@ -40,10 +39,9 @@ const DOBForm = (props: DOBFormProps) => {
     onCancel,
     instructionText,
   } = props;
+  const { content } = useContext(ContentContext);
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
     control,
     handleSubmit,
@@ -80,37 +78,21 @@ const DOBForm = (props: DOBFormProps) => {
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
       <Grid container>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <form
-            onSubmit={handleSubmit(interceptSubmit)}
-            noValidate
-            onInvalid={() => {}}
-          >
+          <form onSubmit={handleSubmit(interceptSubmit)} noValidate onInvalid={() => {}}>
             <Honeypot />
             <StyledFieldset aria-describedby="date-of-birth-legend date-of-birth-hint">
               <StyledFieldsetLegend id="date-of-birth-legend">
                 {!hideHeader && (
                   <DTEHeader as="h1" $variant={headerVariant}>
-                    What is your date of birth?
+                    {content["register-date-of-birth-header"]}
                   </DTEHeader>
                 )}
               </StyledFieldsetLegend>
-              <div id="date-of-birth-hint">
-                {instructionText || (
-                  <>
-                    <DTEContent>For example, 31 3 1980</DTEContent>
-                    <DTEContent>
-                      You must be 18 or over to use this service
-                    </DTEContent>
-                  </>
-                )}
-              </div>
+              <div id="date-of-birth-hint">{instructionText || content["register-date-of-birth-body"]}</div>
               <Controller
                 control={control}
                 name="dob"
-                render={({
-                  field: { value, onChange },
-                  fieldState: { error },
-                }) =>
+                render={({ field: { value, onChange }, fieldState: { error } }) =>
                   error !== undefined ? (
                     <DTEDateInput
                       id="dob"
@@ -126,6 +108,7 @@ const DOBForm = (props: DOBFormProps) => {
                       aria-describedby="dob--error-message"
                     >
                       <DTEDateInput.Day
+                        label={content["reusable-text-day"]}
                         id="date-of-birth-day"
                         name="date-of-birth-day"
                         required
@@ -149,6 +132,7 @@ const DOBForm = (props: DOBFormProps) => {
                         }}
                       />
                       <DTEDateInput.Month
+                        label={content["reusable-text-month"]}
                         id="date-of-birth-month"
                         name="date-of-birth-month"
                         required
@@ -172,6 +156,7 @@ const DOBForm = (props: DOBFormProps) => {
                         }}
                       />
                       <DTEDateInput.Year
+                        label={content["reusable-text-year"]}
                         id="date-of-birth-year"
                         name="date-of-birth-year"
                         required
@@ -198,6 +183,7 @@ const DOBForm = (props: DOBFormProps) => {
                   ) : (
                     <DTEDateInput id="date-of-birth">
                       <DTEDateInput.Day
+                        label={content["reusable-text-day"]}
                         id="date-of-birth-day"
                         name="date-of-birth-day"
                         required
@@ -221,6 +207,7 @@ const DOBForm = (props: DOBFormProps) => {
                         }}
                       />
                       <DTEDateInput.Month
+                        label={content["reusable-text-month"]}
                         id="date-of-birth-month"
                         name="date-of-birth-month"
                         required
@@ -244,6 +231,7 @@ const DOBForm = (props: DOBFormProps) => {
                         }}
                       />
                       <DTEDateInput.Year
+                        label={content["reusable-text-year"]}
                         id="date-of-birth-year"
                         name="date-of-birth-year"
                         required
@@ -272,33 +260,25 @@ const DOBForm = (props: DOBFormProps) => {
                 rules={{
                   validate: (value) => {
                     // 1.2.2.1
-                    if (
-                      value.day === "" &&
-                      value.month === "" &&
-                      value.year === ""
-                    ) {
-                      return "Enter a date of birth";
+                    if (value.day === "" && value.month === "" && value.year === "") {
+                      return content["register-date-of-birth-validation-required"];
                     }
 
                     // 1.2.2.2 and 1.2.2.3
                     const missingFields = [
-                      ...(value.day === "" ? ["day"] : []),
-                      ...(value.month === "" ? ["month"] : []),
-                      ...(value.year === "" ? ["year"] : []),
+                      ...(value.day === "" ? [content["reusable-text-day"].toLowerCase()] : []),
+                      ...(value.month === "" ? [content["reusable-text-month"].toLowerCase()] : []),
+                      ...(value.year === "" ? [content["reusable-text-year"].toLowerCase()] : []),
                     ];
                     if (missingFields.length > 0) {
-                      return `Date of birth must include a ${missingFields.join(
-                        " and "
+                      return `${content["register-date-of-birth-validation-required"]} ${missingFields.join(
+                        ` ${content["reusable-text-and"]} `
                       )}`;
                     }
 
                     // 1.4
-                    if (
-                      !/^\d+$/.test(value.day) ||
-                      !/^\d+$/.test(value.month) ||
-                      !/^\d+$/.test(value.year)
-                    ) {
-                      return "Date of birth must be a real date";
+                    if (!/^\d+$/.test(value.day) || !/^\d+$/.test(value.month) || !/^\d+$/.test(value.year)) {
+                      return content["register-date-of-birth-validation-invalid"];
                     }
 
                     // 1.2.3
@@ -307,15 +287,13 @@ const DOBForm = (props: DOBFormProps) => {
                     const year = parseInt(value.year, 10);
                     const rangeErrors: string[] = [];
                     if (value.day === "" || day <= 0 || day > 31) {
-                      rangeErrors.push("Day must be a number between 1 and 31");
+                      rangeErrors.push(content["register-date-of-birth-validation-range-day"]);
                     }
                     if (value.month === "" || month <= 0 || month > 12) {
-                      rangeErrors.push("Month must be number between 1 and 12");
+                      rangeErrors.push(content["register-date-of-birth-validation-range-month"]);
                     }
                     if (value.year === "" || year <= 1900) {
-                      rangeErrors.push(
-                        "Year must be a number that is 1900 or more"
-                      );
+                      rangeErrors.push(content["register-date-of-birth-validation-range-year"]);
                     }
                     if (rangeErrors.length > 0) {
                       return rangeErrors.join(", ");
@@ -325,13 +303,9 @@ const DOBForm = (props: DOBFormProps) => {
                     const d = new Date(year, month - 1, day);
                     if (
                       !(d instanceof Date && !Number.isNaN(d)) ||
-                      !(
-                        d.getFullYear() === year &&
-                        d.getMonth() === month - 1 &&
-                        d.getDate() === day
-                      )
+                      !(d.getFullYear() === year && d.getMonth() === month - 1 && d.getDate() === day)
                     ) {
-                      return "Date of birth must be a real date";
+                      return content["register-date-of-birth-validation-invalid"];
                     }
 
                     // 1.2.6
@@ -342,29 +316,18 @@ const DOBForm = (props: DOBFormProps) => {
                       age -= 1;
                     }
                     if (age < 18) {
-                      return "You must be 18 or over to use this service";
+                      return content["register-date-of-birth-validation-age"];
                     }
                     return true;
                   },
                 }}
               />
             </StyledFieldset>
-            {!hideInfo && (
-              <DTEDetails summary="Why we are asking this question">
-                <DTEContent>
-                  Many studies want to make sure they have people of different
-                  ages taking part in research studies, and some are looking for
-                  specific age groups only.
-                </DTEContent>
-                <DTEContent>
-                  You have to be 18 or over to sign up for an account with Be
-                  Part of Research.
-                </DTEContent>
-              </DTEDetails>
-            )}
+            {!hideInfo && content["register-date-of-birth"]}
             <FormNavigationButtons
-              nextButtonText={nextButtonText || "Continue"}
+              nextButtonText={nextButtonText || content["reusable-button-continue"]}
               showCancelButton={showCancelButton || false}
+              cancelButtonText={content["reusable-cancel"]}
               onCancel={onCancel}
             />
           </form>
