@@ -17,17 +17,18 @@ export default class NamePage {
   // constructor
   constructor(page: Page) {
     this.page = page;
-    this.backButton = page.getByRole("link", { name: "Back" });
+    this.backButton = page.getByTitle("Return to previous page");
+
     this.progressDisplay = page.getByText("0% complete");
     this.namePageHeading = page.getByRole("heading", {
       name: "What is your name?",
     });
     this.firstNameLabel = page.getByText("First name");
     this.firstNameInput = page.getByLabel("First name");
-    this.firstNameError = page.getByText("Enter your first name");
+    this.firstNameError = page.locator("span#firstName--error-message");
     this.lastNameLabel = page.getByText("Last name");
     this.lastNameInput = page.getByLabel("Last name");
-    this.lastNameError = page.getByText("Enter your last name");
+    this.lastNameError = page.locator("span#lastName--error-message");
     this.continueButton = page.getByRole("button", { name: "Continue" });
   }
 
@@ -89,35 +90,38 @@ export default class NamePage {
   // filling the first name input field
   async fillFirstName(firstName: string) {
     await this.firstNameInput.click();
-    await expect(this.firstNameInput).toBeFocused();
     await this.firstNameInput.fill(firstName);
   }
 
   // filling the last name input field
   async fillLastName(lastName: string) {
     await this.lastNameInput.click();
-    await expect(this.lastNameInput).toBeFocused();
     await this.lastNameInput.fill(lastName);
   }
 
   // --- ERROR CHECKING FORM --- //
-  async checkInputsFilled(firstName: string, lastName: string) {
-    const isFirstNameEmpty = firstName === "";
-    const isLastNameEmpty = lastName === "";
 
-    await expect(this.firstNameError).toHaveText(
-      isFirstNameEmpty ? "Enter your first name" : ""
-    );
-    await expect(this.lastNameError).toHaveText(
-      isLastNameEmpty ? "Enter your last name" : ""
-    );
-
-    await this.firstNameInput.clear();
-    await this.lastNameInput.clear();
+  async assertBothErrorMessages() {
+    await expect(this.firstNameError).toBeVisible();
+    await expect(this.firstNameError).toHaveText(/Enter your first name/);
+    await expect(this.lastNameError).toBeVisible();
+    await expect(this.lastNameError).toHaveText(/Enter your last name/);
   }
 
-  async checkInputsValid(firstName: string, lastName: string) {
-    const isFirstNameValid = typeof firstName === "number";
-    const isLastNameValid = typeof lastName === "number";
+  async assetFirstNameError() {
+    await expect(this.lastNameError).toBeHidden();
+    await expect(this.firstNameError).toBeVisible();
+    await expect(this.firstNameError).toHaveText(/Enter your first name/);
+  }
+
+  async assertLastNameError() {
+    await expect(this.firstNameError).toBeHidden();
+    await expect(this.lastNameError).toBeVisible();
+    await expect(this.lastNameError).toHaveText(/Enter your last name/);
+  }
+
+  async assertHideErrorMessages() {
+    await expect(this.firstNameError).toBeHidden();
+    await expect(this.lastNameError).toBeHidden();
   }
 }

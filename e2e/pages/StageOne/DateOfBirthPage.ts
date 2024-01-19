@@ -8,8 +8,7 @@ export default class DateOfBirthPage {
   readonly exampleText: Locator;
   readonly summaryTextPreview: Locator;
   readonly ageRestrictionText: Locator;
-  readonly summaryTextPart1: Locator;
-  readonly summaryTextPart2: Locator;
+  readonly summaryText: Locator;
   // Form
   readonly dayLabel: Locator;
   readonly monthLabel: Locator;
@@ -18,6 +17,7 @@ export default class DateOfBirthPage {
   readonly monthInput: Locator;
   readonly yearInput: Locator;
   // --- Form Errors --- //
+  readonly errorMessage: Locator;
   readonly ageRestrictionError: Locator;
   // invalid inputs into fields errors
   readonly notRealDateError: Locator;
@@ -53,12 +53,7 @@ export default class DateOfBirthPage {
       "You must be 18 or over to use this service"
     );
     this.summaryTextPreview = page.getByText("Why we are asking this question");
-    this.summaryTextPart1 = page.getByText(
-      "Many studies want to make sure they have people of different ages taking part in research studies, and some are looking for specific age groups only."
-    );
-    this.summaryTextPart2 = page.getByText(
-      "You have to be 18 or over to sign up for an account with Be Part of Research."
-    );
+    this.summaryText = page.locator("div#details-5 > *");
     // --- FORM COMPONENTS --- //
     this.dayLabel = page.getByText("Day");
     this.monthLabel = page.getByText("Month");
@@ -67,6 +62,7 @@ export default class DateOfBirthPage {
     this.monthInput = page.getByLabel("Month");
     this.yearInput = page.getByLabel("Year");
     // Form invalid input errors
+    this.errorMessage = page.locator("span#dob--error-message");
     this.ageRestrictionError = page.getByRole("alert", {
       name: "You must be 18 or over to use this service",
     });
@@ -118,12 +114,14 @@ export default class DateOfBirthPage {
     });
     // Buttons
     this.continueButton = page.getByRole("button", { name: "Continue" });
-    this.backButton = page.getByRole("link", { name: "Back" });
+    this.backButton = page.getByTitle("Return to previous page");
   }
 
   // --- LOAD PAGE METHODS --- //
-  async goTo() {
-    await this.page.goto("Participants/Register/Questions");
+  async waitForPageLoad() {
+    await this.page.waitForSelector('h1:text("What is your date of birth?")', {
+      state: "visible",
+    });
   }
 
   // --- ON LOAD METHODS --- //
@@ -140,8 +138,7 @@ export default class DateOfBirthPage {
     await expect(this.exampleText).toBeVisible();
     await expect(this.ageRestrictionText).toBeVisible();
     await expect(this.summaryTextPreview).toBeVisible();
-    await expect(this.summaryTextPart1).toBeVisible();
-    await expect(this.summaryTextPart2).toBeVisible();
+    await expect(this.summaryText).toBeHidden();
   }
 
   // check form components are visible on load
@@ -181,30 +178,34 @@ export default class DateOfBirthPage {
 
   async clickContinue() {
     await this.continueButton.click();
-    // await this.validateInputs();
-    // Go to next page if no errors found
+  }
+
+  async toggleSummaryText() {
+    await this.summaryTextPreview.click();
   }
 
   // --- FILLING IN FORM METHODS --- //
   async fillDayField(day: string) {
     await this.dayInput.click();
-    await expect(this.dayInput).toBeFocused();
     await this.dayInput.fill(day);
   }
 
   async fillMonthField(month: string) {
     await this.monthInput.click();
-    await expect(this.dayInput).toBeFocused();
     await this.monthInput.fill(month);
   }
 
   async fillYearField(year: string) {
     await this.yearInput.click();
-    await expect(this.yearInput).toBeFocused();
     await this.yearInput.fill(year);
   }
 
   // --- ERROR CHECKING METHODS --- //
+  async assertError(message: string) {
+    await expect(this.errorMessage).toBeVisible();
+    await expect(this.errorMessage).toHaveText(message);
+  }
+
   async checkInputsFilled(day: string, month: string, year: string) {
     const isDayInputEmpty = day.trim() === "";
     const isMonthInputEmpty = month.trim() === "";

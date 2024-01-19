@@ -18,7 +18,9 @@ export default class EmailPage {
     this.page = page;
     // --- TEXT --- //
     this.progressDisplay = page.getByText("15% complete");
-    this.emailPageHeading = page.getByText("What is your email address?");
+    this.emailPageHeading = page.getByRole("heading", {
+      name: "What is your email address?",
+    });
     this.summaryTextPreview = page.getByText("Why we are asking this question");
     this.summaryText = page.getByText(
       "We need your email address so we can contact you when we find a suitable study"
@@ -26,22 +28,25 @@ export default class EmailPage {
 
     // --- FORM --- //
     this.emailLabel = page.getByText("Email address");
-    this.emailInput = page.getByLabel("Email address");
+    this.emailLabel = page.locator("label#emailAddress--label");
+    this.emailInput = page.locator("input#emailAddress");
     // form errors
-    this.invalidEmailError = page.getByRole("alert", {
-      name: "Enter an email address in the correct format, like name@example.com",
-    });
-    this.emptyFieldError = page.getByRole("alert", {
-      name: "Enter your email address",
-    });
+    this.invalidEmailError = page.locator(
+      '#emailAddress--error-message span:text("Enter an email address in the correct format, like name@example.com")'
+    );
+    this.emptyFieldError = page.locator(
+      '#emailAddress--error-message span:text("Enter your email address")'
+    );
     // --- BUTTONS --- //
-    this.backButton = page.getByRole("link", { name: "Back" });
+    this.backButton = page.getByTitle("Return to previous page");
     this.continueButton = page.getByRole("button", { name: "continue" });
   }
 
   // --- LOAD PAGE METHODS --- //
-  async goTo() {
-    await this.page.goto("Participants/Register/Questions");
+  async waitForPageLoad() {
+    await this.page.waitForSelector('h1:text("What is your email address?")', {
+      state: "visible",
+    });
   }
 
   // --- ON LOAD METHODS --- //
@@ -54,7 +59,7 @@ export default class EmailPage {
     await expect(this.progressDisplay).toBeVisible();
     await expect(this.emailPageHeading).toBeVisible();
     await expect(this.summaryTextPreview).toBeVisible();
-    await expect(this.summaryText).toBeVisible();
+    await expect(this.summaryText).toBeHidden();
   }
 
   async assertFormVisible() {
@@ -76,10 +81,13 @@ export default class EmailPage {
     await this.continueButton.click();
   }
 
+  async toggleSummaryText() {
+    await this.summaryTextPreview.click();
+  }
+
   // --- FILLING IN FORM METHODS --- //
   async assertFillEmailField(email: string) {
     await this.emailInput.click();
-    await expect(this.emailInput).toBeFocused();
     await this.emailInput.fill(email);
   }
 
