@@ -44,7 +44,7 @@ const DTESelect = memo(
     defaultValue,
     options,
     onValueChange,
-    isCapitalised = true,
+    isCapitalised = false,
   }: Props) => {
     const optionElements = options.map((option) => (
       <StyledSelectOption

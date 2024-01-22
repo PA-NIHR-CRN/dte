@@ -13,17 +13,10 @@ import ManualEntry, {
 import SelectAddress, {
   SelectAddressData,
 } from "./AddressFormComponents/SelectAddress";
-
-type address = {
-  addressLine1: string;
-  addressLine2: string;
-  addressLine3: string;
-  addressLine4: string;
-  town: string;
-};
+import { Address } from "../../../types/ParticipantTypes";
 
 export type AddressFormData = {
-  address: address;
+  address: Address;
   postcode: string;
   manualEntry?: boolean;
 };
