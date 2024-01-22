@@ -18,17 +18,16 @@ import NhsPreRegistration from "../pages/NHS/NhsPreRegistration";
 type VanityRoute = {
   campaign: string;
   source: string;
+  medium: string;
 };
 
 const getVanityRoutes = (routeConfig: VanityRoute[]) =>
-  routeConfig.map(({ campaign, source }) => (
+  routeConfig.map(({ campaign, source, medium }) => (
     <Route
       path={`/${campaign}`}
       render={() => {
         ReactGA.pageview(
-          `/participants/introduction?utm_source=${source}&utm_medium=${
-            source === "poster" ? "print" : "referral"
-          }&utm_campaign=${campaign}`
+          `/participants/introduction?utm_source=${source}&utm_medium=${medium}&utm_campaign=${campaign}`
         );
         return <NhsPreRegistration />;
       }}
@@ -81,12 +80,11 @@ export default [
     key="nhspreregistration"
   />,
   ...getVanityRoutes([
-    { campaign: "nhsenwl", source: "poster" },
-    { campaign: "nhseswl", source: "poster" },
-    { campaign: "nhsegp", source: "poster" },
-    { campaign: "nhsegptext1", source: "sms" },
-    { campaign: "nhsegptext2", source: "sms" },
-    { campaign: "nhsegptext3", source: "sms" },
+    { campaign: "nhsgp1", source: "sms", medium: "referral" },
+    { campaign: "nhsgp2", source: "sms", medium: "referral" },
+    { campaign: "nhsgp3", source: "sms", medium: "referral" },
+    { campaign: "nhsgp4", source: "sms", medium: "referral" },
+    { campaign: "nhsgp5", source: "leaflet", medium: "referral" },
   ]),
   <Route
     path="/Participants/PasswordUpdated"
