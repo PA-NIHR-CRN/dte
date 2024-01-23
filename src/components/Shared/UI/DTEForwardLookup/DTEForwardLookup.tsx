@@ -180,7 +180,6 @@ function DTEForwardLookup({ id, label, hint, values, error, data, onSelectedValu
         .filter((v, i, a) => a.findIndex((t) => t === v) === i)
         .sort((a, b) => (a > b && 1) || -1)
     );
-    
     setCheckBoxDataList(e);
   };
 
