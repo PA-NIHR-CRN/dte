@@ -30,7 +30,7 @@ interface Props {
 
 export const baseButton = css<baseButtonProps>`
   width: ${(props) => (props.$fullwidth ? "100%" : "auto")};
-  text-transform: ${(props) => (props.$removeuppercase ? "none" : "none")};
+  text-transform: ${(props) => (props.$removeuppercase ? "none" : "")};
   box-shadow: none;
   padding-left: ${(props) => (props.$padded ? "2em" : "1em")};
   padding-right: ${(props) => (props.$padded ? "2em" : "1em")};
