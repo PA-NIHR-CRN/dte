@@ -64,6 +64,7 @@ const StyledSelectedButton = styled(Button)<baseButtonProps>`
   && {
     ${baseButton};
     margin: 0.5em 0.5em 0 0;
+    text-transform: none;
   }
 `;
 
@@ -219,7 +220,6 @@ function DTEForwardLookup({ id, label, hint, values, error, data, onSelectedValu
             onClick={() => handleRemoveSelectedChoice(index)}
             onKeyDown={(e) => handleRemoveSelectedChoiceKeyDown(e, index)}
             $outlined
-            $removeuppercase
           >
             {button}
           </StyledSelectedButton>
