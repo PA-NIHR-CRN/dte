@@ -65,7 +65,7 @@ const DTECheckList = memo(({ id, name, label, hint, error, values, onValueChange
       disabled={item.disabled}
       conditional={item.conditional}
       onClick={(e: any) => handleOnChange(e)}
-      onKeyPress={(e: any) => handleOnChange(e)}
+      // onKeyPress={(e: any) => handleOnChange(e)}
       checked={item.checked}
     >
       {item.text}
