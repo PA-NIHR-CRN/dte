@@ -13,6 +13,7 @@ export interface baseButtonProps {
   $danger?: boolean;
   $padded?: boolean;
   $backArrow?: boolean;
+  $removeuppercase?: boolean;
 }
 interface Props {
   id?: string;
@@ -24,10 +25,12 @@ interface Props {
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
   ariaLabel?: string;
+  $removeuppercase?: boolean;
 }
 
 export const baseButton = css<baseButtonProps>`
   width: ${(props) => (props.$fullwidth ? "100%" : "auto")};
+  text-transform: ${(props) => (props.$removeuppercase ? "none" : "none")};
   box-shadow: none;
   padding-left: ${(props) => (props.$padded ? "2em" : "1em")};
   padding-right: ${(props) => (props.$padded ? "2em" : "1em")};
@@ -119,6 +122,7 @@ function DTEButton({
   onKeyDown,
   disabled,
   $danger,
+  $removeuppercase,
 }: Props & baseButtonProps) {
   return (
     <StyledButton
@@ -137,6 +141,7 @@ function DTEButton({
       disabled={disabled}
       $backArrow={$backArrow}
       $danger={$danger}
+      $removeuppercase={$removeuppercase}
     >
       {$backArrow ? (
         <Grid container direction="row" justifyContent="flex-start" alignItems="center">

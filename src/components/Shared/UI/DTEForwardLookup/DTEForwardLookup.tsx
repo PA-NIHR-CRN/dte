@@ -180,7 +180,7 @@ function DTEForwardLookup({ id, label, hint, values, error, data, onSelectedValu
         .filter((v, i, a) => a.findIndex((t) => t === v) === i)
         .sort((a, b) => (a > b && 1) || -1)
     );
-
+    
     setCheckBoxDataList(e);
   };
 
@@ -220,6 +220,7 @@ function DTEForwardLookup({ id, label, hint, values, error, data, onSelectedValu
             onClick={() => handleRemoveSelectedChoice(index)}
             onKeyDown={(e) => handleRemoveSelectedChoiceKeyDown(e, index)}
             $outlined
+            $removeuppercase
           >
             {button}
           </StyledSelectedButton>
