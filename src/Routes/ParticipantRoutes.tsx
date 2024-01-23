@@ -85,6 +85,8 @@ export default [
     { campaign: "nhsgp3", source: "sms", medium: "referral" },
     { campaign: "nhsgp4", source: "sms", medium: "referral" },
     { campaign: "nhsgp5", source: "leaflet", medium: "referral" },
+    { campaign: "nhsren1", source: "leaflet", medium: "referral" },
+    { campaign: "nhsren2", source: "leaflet", medium: "referral" },
   ]),
   <Route
     path="/Participants/PasswordUpdated"
