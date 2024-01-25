@@ -34,7 +34,7 @@ const whitespaceData = {
   addressLine3: "",
   addressLine4: "    ",
   town: "",
-  postcode: "",
+  postcode: "    ",
 };
 
 describe("ManualEntry", () => {
@@ -86,12 +86,12 @@ describe("ManualEntry", () => {
       });
 
       fireEvent.input(screen.getByLabelText("Postcode"), {
-        target: { value: "test postcode" },
+        target: { value: "SW1E 5DN" },
       });
 
       expect(screen.getByDisplayValue("test address 1")).toBeInTheDocument();
       expect(screen.getByDisplayValue("test town")).toBeInTheDocument();
-      expect(screen.getByDisplayValue("test postcode")).toBeInTheDocument();
+      expect(screen.getByDisplayValue("SW1E 5DN")).toBeInTheDocument();
 
       fireEvent.click(screen.getByText("Continue"));
       expect(mockOnDataChange).toHaveBeenCalled();
@@ -140,7 +140,7 @@ describe("ManualEntry", () => {
       expect(
         screen.getByText("Enter the town of your address")
       ).toBeInTheDocument();
-      expect(screen.getByText("Enter a real postcode")).toBeInTheDocument();
+      expect(screen.getByText("Enter your postcode")).toBeInTheDocument();
     });
   });
 });
