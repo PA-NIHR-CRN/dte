@@ -3,11 +3,13 @@ import Spinner from "react-spinkit";
 import { Typography, Box } from "@material-ui/core";
 import styled, { useTheme } from "styled-components";
 import { styledComponentsTheme } from "../../../theme";
+import Cookies from "js-cookie";
 
 /* See http://kyleamathews.github.io/react-spinkit/ for other spinner options  and colours */
 interface LoadingIndicatorProps {
   text?: string;
   colour?: string;
+  ariaLive?: "assertive" | "off" | "polite" | undefined;
 }
 const Loader = styled.div.attrs({
   alt: "Loader",
@@ -23,26 +25,19 @@ const Loader = styled.div.attrs({
 `;
 
 function LoadingIndicator({
-  text = "Loading...",
+  text = Cookies.get("selectedLanguage") === "cy-GB" ? "Llwytho..." : "Loading...",
   colour = undefined,
+  ariaLive = "assertive",
 }: LoadingIndicatorProps) {
   const theme = useTheme() as typeof styledComponentsTheme;
   const defaultcolour = theme.NIHR.Blue;
   return (
     <Loader>
       <Box m={2} sx={{ display: "flex", justifyContent: "center" }}>
-        <Spinner
-          name="folding-cube"
-          color={colour ?? defaultcolour}
-          fadeIn="none"
-        />
+        <Spinner name="folding-cube" color={colour ?? defaultcolour} fadeIn="none" />
         {/* </div> */}
       </Box>
-      <Typography
-        variant="body1"
-        aria-live="assertive"
-        className="loader-message"
-      >
+      <Typography variant="body1" aria-live={ariaLive} className="loader-message">
         {text}
       </Typography>
     </Loader>

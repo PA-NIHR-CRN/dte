@@ -1,48 +1,28 @@
 import { useState, createContext, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
-import {
-  JWTDeCode,
-  AuthContextProps,
-  SessionExpiryInfo,
-} from "../types/AuthTypes";
+import { JWTDeCode, AuthContextProps, SessionExpiryInfo } from "../types/AuthTypes";
 import useAxiosFetch from "../hooks/useAxiosFetch";
 
-export const AuthContext = createContext<AuthContextProps>(
-  {} as AuthContextProps
-);
+export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
 const sessionRefreshCheckInterval = 10 * 1000;
 
 export const AuthProvider = (props: { children: any }) => {
-  const [authenticatedEmail, setAuthenticatedEmail] = useState<string | null>(
-    null
-  );
-  const [authenticatedEmailVerified, setAuthenticatedEmailVerified] = useState<
-    boolean | null
-  >(null);
-  const [authenticatedMobile, setAuthenticatedMobile] = useState<string | null>(
-    null
-  );
-  const [authenticatedMobileVerified, setAuthenticatedMobileVerified] =
-    useState<boolean | null>(null);
-  const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(
-    null
-  );
-  const [authenticatedFirstname, setAuthenticatedFirstname] = useState<
-    string | null
-  >(null);
-  const [authenticatedLastname, setAuthenticatedLastname] = useState<
-    string | null
-  >(null);
+  const [authenticatedEmail, setAuthenticatedEmail] = useState<string | null>(null);
+  const [authenticatedEmailVerified, setAuthenticatedEmailVerified] = useState<boolean | null>(null);
+  const [authenticatedMobile, setAuthenticatedMobile] = useState<string | null>(null);
+  const [authenticatedMobileVerified, setAuthenticatedMobileVerified] = useState<boolean | null>(null);
+  const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(null);
+  const [authenticatedFirstname, setAuthenticatedFirstname] = useState<string | null>(null);
+  const [authenticatedLastname, setAuthenticatedLastname] = useState<string | null>(null);
 
   const [isNhsLinkedAccount, setIsNhsLinkedAccount] = useState<boolean>(false);
   const [token, setToken] = useState<string | null | undefined>(null);
   const [isInNHSApp, setIsInNHSApp] = useState<boolean>(false);
   const [mfaDetails, setMfaDetails] = useState<string>("");
   const [enteredMfaMobile, setEnteredMfaMobile] = useState<string>("");
-  const [userMfaEmail, setUserMfaEmail] =
-    useState<string>("your email address");
+  const [userMfaEmail, setUserMfaEmail] = useState<string>("your email address");
 
   const baseUrl = process.env.REACT_APP_BASE_API;
 
@@ -55,15 +35,14 @@ export const AuthProvider = (props: { children: any }) => {
     { useCache: false, manual: true }
   );
 
-  const [{ loading: refreshSessionTokenLoading }, refreshSessionToken] =
-    useAxiosFetch(
-      {
-        method: "GET",
-        url: `${baseUrl}/users/refreshsession`,
-        withCredentials: true,
-      },
-      { useCache: false, manual: true }
-    );
+  const [{ loading: refreshSessionTokenLoading }, refreshSessionToken] = useAxiosFetch(
+    {
+      method: "GET",
+      url: `${baseUrl}/users/refreshsession`,
+      withCredentials: true,
+    },
+    { useCache: false, manual: true }
+  );
 
   useEffect(() => {
     if (window.nhsapp.tools.isOpenInNHSApp()) {
@@ -78,7 +57,7 @@ export const AuthProvider = (props: { children: any }) => {
       console.debug(`refreshSession check: ${new Date().toISOString()}`);
       // eslint-disable-next-line no-console
       console.debug(`session.remaining: ${session.remaining}`);
-      if (session?.isLoggedIn && !refreshSessionTokenLoading) {
+      if (session?.isLoggedIn && !refreshSessionTokenLoading && process.env.NODE_ENV !== "development") {
         refreshSessionToken();
       }
     }, sessionRefreshCheckInterval);
@@ -142,12 +121,8 @@ export const AuthProvider = (props: { children: any }) => {
     }
   };
 
-  const [lastUrl, setLastUrl] = useState<string | null>(
-    localStorage.getItem("currentUrl")
-  );
-  const [prevUrl, setPrevUrl] = useState<string | null>(
-    localStorage.getItem("previousUrl")
-  );
+  const [lastUrl, setLastUrl] = useState<string | null>(localStorage.getItem("currentUrl"));
+  const [prevUrl, setPrevUrl] = useState<string | null>(localStorage.getItem("previousUrl"));
 
   const persistLastUrl = (url: string) => {
     const prev = localStorage.getItem("currentUrl");
@@ -157,9 +132,7 @@ export const AuthProvider = (props: { children: any }) => {
     setLastUrl(url || "/");
   };
 
-  const [lastNonLoginUrl, setLastNonLoginUrl] = useState(
-    localStorage.getItem("lastNonLoginUrl")
-  );
+  const [lastNonLoginUrl, setLastNonLoginUrl] = useState(localStorage.getItem("lastNonLoginUrl"));
   const persistLastNonLoginUrl = (url: string) => {
     if (!url) {
       // eslint-disable-next-line no-param-reassign
@@ -201,20 +174,24 @@ export const AuthProvider = (props: { children: any }) => {
 
   const logOutToken = async () => {
     if (isAuthenticated() && !logoutLoading) {
-      await logout();
-      // Clear user-related cookies
-      Cookies.remove(".BPOR.Session.Expiry");
+      try {
+        await logout();
+        // Clear user-related cookies
+        Cookies.remove(".BPOR.Session.Expiry");
 
-      setToken(null);
-      setAuthenticatedUserId(null);
-      setAuthenticatedEmail(null);
-      setAuthenticatedEmailVerified(null);
-      setAuthenticatedFirstname(null);
-      setAuthenticatedLastname(null);
-      setLastNonLoginUrl(null);
-      setPrevUrl(null);
-      setLastUrl(null);
-      setIsNhsLinkedAccount(false);
+        setToken(null);
+        setAuthenticatedUserId(null);
+        setAuthenticatedEmail(null);
+        setAuthenticatedEmailVerified(null);
+        setAuthenticatedFirstname(null);
+        setAuthenticatedLastname(null);
+        setLastNonLoginUrl(null);
+        setPrevUrl(null);
+        setLastUrl(null);
+        setIsNhsLinkedAccount(false);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 

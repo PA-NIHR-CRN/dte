@@ -40,7 +40,9 @@ const Header = styled.button`
   &:focus,
   &:focus-visible {
     background-color: ${(props) => props.theme.NIHR.Yellow};
-    box-shadow: 0 -2px ${(props) => props.theme.NIHR.Yellow}, 0 4px #0b0c0c;
+    box-shadow:
+      0 -2px ${(props) => props.theme.NIHR.Yellow},
+      0 4px #0b0c0c;
     border-radius: 0;
     color: black;
     text-decoration: none;
@@ -76,9 +78,7 @@ const DropdownChild = styled.div`
 `;
 
 interface DTEDropdownProps {
-  children?:
-    | ReactElement<typeof DropdownChild>[]
-    | ReactElement<typeof DropdownChild>;
+  children?: ReactElement<typeof DropdownChild>[] | ReactElement<typeof DropdownChild>;
   text?: string;
   description?: string;
 }
@@ -93,13 +93,8 @@ const DTEDropdown = forwardRef((props: DTEDropdownProps, ref) => {
 
   return (
     <Container>
-      <Header
-        onClick={() => setIsOpen(!isOpen)}
-        type="button"
-        aria-label={description}
-      >
-        {text || "Actions"}{" "}
-        {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+      <Header onClick={() => setIsOpen(!isOpen)} type="button" aria-label={description}>
+        {text || "Actions"} {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </Header>
       {isOpen && <Content>{children}</Content>}
     </Container>

@@ -1,15 +1,14 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Controller, useForm } from "react-hook-form";
 import DTEInput from "../UI/DTEInput/DTEInput";
-import DTEDetails from "../UI/DTEDetails/DTEDetails";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
-import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
 import Utils from "../../../Helper/Utils";
+import { ContentContext } from "../../../context/ContentContext";
 import Honeypot from "../Honeypot/Honeypot";
 
 export type MobileFormData = {
@@ -22,7 +21,8 @@ interface MobileNumberFormProps extends FormBaseProps {
   onDataChange: (data: MobileFormData) => void;
 }
 
-const MobileNumberForm = (props: MobileNumberFormProps) => {
+function MobileNumberForm(props: MobileNumberFormProps) {
+  const { content } = useContext(ContentContext);
   const {
     onDataChange,
     initialStateData,
@@ -34,9 +34,7 @@ const MobileNumberForm = (props: MobileNumberFormProps) => {
     instructionText,
   } = props;
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const {
     control,
     handleSubmit,
@@ -71,33 +69,24 @@ const MobileNumberForm = (props: MobileNumberFormProps) => {
     <>
       {!hideHeader && (
         <DTEHeader as="h1" $variant={headerVariant}>
-          What is your phone number? (optional)
+          {content["register2-phone-header"]}
         </DTEHeader>
       )}
-      {instructionText || (
-        <>
-          <DTEContent>
-            You may provide either a mobile or a landline number if you choose.
-          </DTEContent>
-        </>
-      )}
+      {instructionText || content["register2-phone-instruction-text"]}
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
       <form onSubmit={handleSubmit(onDataChangePreProcessing)}>
         <Honeypot />
         <Controller
           control={control}
           name="mobileNumber"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
             <DTEInput
               id="mobileNumber"
               value={value}
               onValueChange={onChange}
               onValueBlur={onBlur}
               error={error?.message}
-              label="Mobile number"
+              label={content["register2-phone-input-mobile"]}
               autocomplete="tel"
               spellcheck={false}
               type="tel"
@@ -106,62 +95,44 @@ const MobileNumberForm = (props: MobileNumberFormProps) => {
           rules={{
             pattern: {
               value: phoneNumberRegEx,
-              message:
-                "Enter a valid mobile number, like 07700 900 982 or +44 7700 900 982",
+              message: content["register2-phone-validation-mobile-invalid"],
             },
           }}
         />
         <Controller
           control={control}
           name="landlineNumber"
-          render={({
-            field: { value, onChange, onBlur },
-            fieldState: { error },
-          }) => (
-            <>
-              <DTEInput
-                id="landlineNumber"
-                value={value}
-                onValueChange={onChange}
-                onValueBlur={onBlur}
-                error={error?.message}
-                label="Landline number"
-                autocomplete="tel"
-                spellcheck={false}
-                type="tel"
-              />
-            </>
+          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+            <DTEInput
+              id="landlineNumber"
+              value={value}
+              onValueChange={onChange}
+              onValueBlur={onBlur}
+              error={error?.message}
+              label={content["register2-phone-input-landline"]}
+              autocomplete="tel"
+              spellcheck={false}
+              type="tel"
+            />
           )}
           rules={{
             pattern: {
               value: phoneNumberRegEx,
-              message:
-                "Enter a valid landline number, like 01632 960 001 or +44 1632 960 001",
+              message: content["register2-phone-validation-landline-invalid"],
             },
           }}
         />
 
-        {!hideInfo && (
-          <DTEDetails summary="Why we are asking this question">
-            <DTEContent>
-              Study teams may need to have a contact phone number for
-              volunteers.
-            </DTEContent>
-            <DTEContent>
-              Some studies will offer text messages as a way to contact
-              volunteers, they will need your mobile number if you choose for
-              them to contact you in this way.
-            </DTEContent>
-          </DTEDetails>
-        )}
+        {!hideInfo && content["register2-phone"]}
         <FormNavigationButtons
-          nextButtonText={nextButtonText || "Continue"}
+          nextButtonText={nextButtonText || content["reusable-button-continue"]}
           showCancelButton={showCancelButton || false}
+          cancelButtonText={content["reusable-cancel"]}
           onCancel={onCancel}
         />
       </form>
     </>
   );
-};
+}
 
 export default MobileNumberForm;

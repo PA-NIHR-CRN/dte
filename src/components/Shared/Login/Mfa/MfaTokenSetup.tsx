@@ -16,9 +16,9 @@ import LoadingIndicator from "../../LoadingIndicator/LoadingIndicator";
 import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
-import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 import useInlineServerError from "../../../../hooks/useInlineServerError";
 import Honeypot from "../../Honeypot/Honeypot";
+import { ContentContext } from "../../../../context/ContentContext";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
@@ -29,8 +29,8 @@ const ComponentSpacer = styled.div`
 `;
 
 const MfaTokenSetup = () => {
-  const { mfaDetails, saveToken, setMfaDetails, setUserMfaEmail } =
-    useContext(AuthContext);
+  const { content } = useContext(ContentContext);
+  const { mfaDetails, saveToken, setMfaDetails, setUserMfaEmail } = useContext(AuthContext);
   const history = useHistory();
   const [qrSrc, setQrSrc] = useState("");
   const [sessionId, setSessionId] = useState("");
@@ -51,17 +51,16 @@ const MfaTokenSetup = () => {
       authenticatorAppCode: "",
     },
   });
-  const [{ response: tokenCodeResponse, loading: tokenCodeLoading }] =
-    useAxiosFetch(
-      {
-        url: `${process.env.REACT_APP_BASE_API}/users/setuptokenmfa`,
-        method: "POST",
-        data: {
-          mfaDetails,
-        },
+  const [{ response: tokenCodeResponse, loading: tokenCodeLoading }] = useAxiosFetch(
+    {
+      url: `${process.env.REACT_APP_BASE_API}/users/setuptokenmfa`,
+      method: "POST",
+      data: {
+        mfaDetails,
       },
-      { useCache: false, manual: false }
-    );
+    },
+    { useCache: false, manual: false }
+  );
 
   const generateQR = async (code: string) => QRCode.toDataURL(code);
 
@@ -71,16 +70,18 @@ const MfaTokenSetup = () => {
     const { username, secretCode } = tokenCodeResponse?.data?.content;
     setSecretKey(secretCode);
     const qrCode = `otpauth://totp/BePartOfResearch:${username}?secret=${secretCode}&issuer=Cognito`;
-    generateQR(qrCode).then((res) => {
-      setQrSrc(res as string);
-    });
+    generateQR(qrCode)
+      .then((res) => {
+        setQrSrc(res as string);
+      })
+      .catch(console.error);
   }, [tokenCodeResponse]);
 
-  const [
-    { response: totpMfaResponse, loading: totpMfaLoading, error: totpMfaError },
-    postMfaCode,
-  ] = useAxiosFetch({}, { useCache: false, manual: true });
-  const convertedError = useInlineServerError(totpMfaResponse);
+  const [{ response: totpMfaResponse, loading: totpMfaLoading, error: totpMfaError }, postMfaCode] = useAxiosFetch(
+    {},
+    { useCache: false, manual: true }
+  );
+  const convertedError = useInlineServerError(totpMfaResponse, content);
   const copySecretKey = () => {
     navigator.clipboard.writeText(secretKey);
   };
@@ -97,15 +98,11 @@ const MfaTokenSetup = () => {
       },
     });
     const result = Utils.ConvertResponseToDTEResponse(res);
-    if (
-      result?.errors?.some(
-        (e) => e.customCode === "Software_Token_Mfa_Challenge"
-      )
-    ) {
+    if (result?.errors?.some((e) => e.customCode === "Software_Token_Mfa_Challenge")) {
       setMfaDetails(result?.errors[0]?.detail as string);
       history.push("/MfaTokenChallenge");
     }
-    if (result?.errors?.some((e) => e.customCode === "MFA_Session_Expired")) {
+    if (result?.errors?.some((e) => e.customCode === "Mfa_Session_Expired")) {
       history.push("/MfaSessionExpired");
     }
     if (result?.isSuccess) {
@@ -123,82 +120,23 @@ const MfaTokenSetup = () => {
   }, [isSubmitting, totpMfaResponse, convertedError]);
 
   return (
-    <DocumentTitle title="MFA Setup Token">
+    <DocumentTitle title={content["mfa-token-setup-document-title"]}>
       <StepWrapper>
         <ErrorMessageContainer
           axiosErrors={[totpMfaError]}
-          DTEAxiosErrors={[
-            convertedError
-              ? []
-              : Utils.ConvertResponseToDTEResponse(totpMfaResponse)?.errors,
-          ]}
+          DTEAxiosErrors={[convertedError ? [] : Utils.ConvertResponseToDTEResponse(totpMfaResponse)?.errors]}
         />
         {tokenCodeLoading ? (
           <LoadingIndicator />
         ) : (
           <>
-            <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
-            <DTEHeader as="h1">Set up your authenticator app</DTEHeader>
-            <DTEContent>
-              You can download an authenticator app on any smart device, such as
-              a smart phone or tablet. Examples of authenticator apps are the{" "}
-              <DTERouteLink
-                aria-label="Opens in a new tab"
-                external
-                target="_blank"
-                to="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&pli=1"
-                renderStyle="standard"
-              >
-                Google Authenticator
-              </DTERouteLink>{" "}
-              and{" "}
-              <DTERouteLink
-                aria-label="Opens in a new tab"
-                external
-                target="_blank"
-                to="https://www.microsoft.com/en-us/security/mobile-authenticator-app"
-                renderStyle="standard"
-              >
-                Microsoft Authenticator
-              </DTERouteLink>
-              .
-            </DTEContent>
-            <DTEContent>
-              Alternatively, you can install an authenticator app on a computer.
-              An example of an authenticator app that doesn&apos;t require a
-              smart device is the{" "}
-              <DTERouteLink
-                aria-label="Opens in a new tab"
-                external
-                target="_blank"
-                to="https://authenticator.cc/docs/en/overview"
-                renderStyle="standard"
-              >
-                Authenticator Extension
-              </DTERouteLink>
-              .
-            </DTEContent>
-            <DTEContent>
-              Once your authenticator app is installed, you will then need to
-              open it and manually enter the secret key or scan the QR code.
-              Select a time-based code if you are given the option between
-              time-based or counter-based in your authenticator app.
-            </DTEContent>
-            <DTEContent>
-              If you need support in setting up your authenticator app, please
-              contact us at{" "}
-              <DTERouteLink
-                to="mailto:bepartofresearch@nihr.ac.uk"
-                renderStyle="standard"
-              >
-                bepartofresearch@nihr.ac.uk
-              </DTERouteLink>
-              .
-            </DTEContent>
+            <DTEBackLink onClick={() => history.goBack()} linkText={content["reusable-back-link"]} />
+            <DTEHeader as="h1">{content["mfa-token-setup-header"]}</DTEHeader>
+            {content["mfa-token-setup-instruction-text"]}
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
               <Honeypot />
               <DTEInput
-                label="Secret key"
+                label={content["mfa-token-setup-input-secret-key"]}
                 id="secretKey"
                 type="text"
                 value={secretKey}
@@ -211,16 +149,16 @@ const MfaTokenSetup = () => {
                   onClick={copySecretKey}
                   disabled={tokenCodeLoading || isSubmitting || totpMfaLoading}
                 >
-                  Copy secret key
+                  {content["mfa-token-setup-button-copy-secret-key"]}
                 </DTEButton>
               </ButtonWrapper>
               <ComponentSpacer>
-                <DTEDetails summary="Show QR code">
+                <DTEDetails summary={content["mfa-token-setup-show-qr-code-header"]}>
                   <>
                     <DTEContent>
                       <div>
                         {qrSrc ? (
-                          <img src={qrSrc} alt="qr code" />
+                          <img src={qrSrc} alt={content["mfa-token-setup-qr-code-alt-text"]} />
                         ) : (
                           <LoadingIndicator />
                         )}
@@ -229,19 +167,13 @@ const MfaTokenSetup = () => {
                   </>
                 </DTEDetails>
               </ComponentSpacer>
-              <DTEContent>
-                A 6-digit security code will appear in your authenticator app
-                once it is set up. Enter this security code below.
-              </DTEContent>
+              <DTEContent>{content["mfa-token-setup-hint-security-code"]}</DTEContent>
               <Controller
                 control={control}
                 name="authenticatorAppCode"
-                render={({
-                  field: { value, onChange, onBlur },
-                  fieldState: { error },
-                }) => (
+                render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                   <DTEInput
-                    label="Security code"
+                    label={content["mfa-token-setup-input-security-code"]}
                     id="authenticatorAppCode"
                     type="text"
                     required
@@ -250,28 +182,23 @@ const MfaTokenSetup = () => {
                     onValueBlur={onBlur}
                     error={convertedError || error?.message}
                     spellcheck={false}
-                    disabled={
-                      tokenCodeLoading || isSubmitting || totpMfaLoading
-                    }
+                    disabled={tokenCodeLoading || isSubmitting || totpMfaLoading}
                   />
                 )}
                 rules={{
                   required: {
                     value: true,
-                    message: "Enter a valid security code",
+                    message: content["mfa-token-setup-validation-security-code-required"],
                   },
 
                   pattern: {
                     value: /^\d{6}$/,
-                    message: "The security code must be 6 digits",
+                    message: content["mfa-token-setup-validation-security-code-invalid"],
                   },
                 }}
               />
-              <DTEButton
-                type="submit"
-                disabled={tokenCodeLoading || isSubmitting || totpMfaLoading}
-              >
-                Continue
+              <DTEButton type="submit" disabled={tokenCodeLoading || isSubmitting || totpMfaLoading}>
+                {content["reusable-button-continue"]}
               </DTEButton>
             </form>
           </>

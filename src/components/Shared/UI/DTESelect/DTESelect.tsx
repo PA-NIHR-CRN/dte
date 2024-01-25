@@ -56,37 +56,36 @@ const DTESelect = memo(
       </StyledSelectOption>
     ));
 
-    return error !== "" && error !== undefined ? (
-      <StyledSelect
-        id={id}
-        name={name}
-        label={label}
-        hint={hint}
-        required={required}
-        aria-required={required}
-        aria-describedby={`${id}--error-message`}
-        error={error}
-        aria-invalid
-        onChange={(e: ChangeEvent<HTMLSelectElement>) => onValueChange(e)}
-        defaultValue={defaultValue}
-      >
-        {optionElements}
-      </StyledSelect>
-    ) : (
-      <StyledSelect
-        id={id}
-        name={name}
-        label={label}
-        hint={hint}
-        required={required}
-        aria-required={required}
-        onChange={(e: ChangeEvent<HTMLSelectElement>) => onValueChange(e)}
-        defaultValue={defaultValue}
-      >
-        {optionElements}
-      </StyledSelect>
-    );
-  }
-);
+  return error !== "" && error !== undefined ? (
+    <StyledSelect
+      id={id}
+      name={name}
+      label={label}
+      hint={hint}
+      required={required}
+      aria-required={required}
+      aria-describedby={`${id}--error-message`}
+      error={error}
+      aria-invalid
+      onChange={(e: ChangeEvent<HTMLSelectElement>) => onValueChange(e)}
+      defaultValue={defaultValue}
+    >
+      {optionElements}
+    </StyledSelect>
+  ) : (
+    <StyledSelect
+      id={id}
+      name={name}
+      label={label}
+      hint={hint}
+      required={required}
+      aria-required={required}
+      onChange={(e: ChangeEvent<HTMLSelectElement>) => onValueChange(e)}
+      defaultValue={defaultValue}
+    >
+      {optionElements}
+    </StyledSelect>
+  );
+});
 
 export default DTESelect;

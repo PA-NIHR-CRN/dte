@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTESelect from "../../UI/DTESelect/DTESelect";
-import { Details, ContinueButton } from "./PostcodeLookup";
+import { ContinueButton } from "./PostcodeLookup";
 import Utils from "../../../../Helper/Utils";
+import { ContentContext } from "../../../../context/ContentContext";
 import Honeypot from "../../Honeypot/Honeypot";
 import { Address } from "../../../../types/ParticipantTypes";
 
@@ -25,16 +26,9 @@ interface SelectAddressProps {
   onDataChange: (data: SelectAddressData) => void;
 }
 
-const SelectAddress = (props: SelectAddressProps) => {
-  const {
-    onDataChange,
-    addresses,
-    postcode,
-    nextButtonText,
-    hideInfo,
-    showCancelButton,
-    onCancel,
-  } = props;
+function SelectAddress(props: SelectAddressProps) {
+  const { content } = useContext(ContentContext);
+  const { onDataChange, addresses, postcode, nextButtonText, hideInfo, showCancelButton, onCancel } = props;
   const {
     control,
     handleSubmit,
@@ -48,10 +42,7 @@ const SelectAddress = (props: SelectAddressProps) => {
     },
   });
 
-  const hijackOnDataChange = (data: {
-    postcode?: string;
-    address?: number;
-  }) => {
+  const hijackOnDataChange = (data: { postcode?: string; address?: number }) => {
     if (addresses && data.address) {
       onDataChange({
         address: addresses[data.address],
@@ -67,14 +58,9 @@ const SelectAddress = (props: SelectAddressProps) => {
 
   return (
     <>
-      <Grid
-        container
-        spacing={2}
-        justifyContent="flex-start"
-        alignItems="center"
-      >
+      <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
         <Grid item>
-          <DTEContent>Postcode</DTEContent>
+          <DTEContent>{content["reusable-postcode"]}</DTEContent>
           <DTEContent>
             <b>{postcode}</b>
           </DTEContent>
@@ -98,9 +84,9 @@ const SelectAddress = (props: SelectAddressProps) => {
                 changePostcode: true,
               });
             }}
-            ariaLabel="Change the postcode entered"
+            ariaLabel={content["register2-address-aria-change-postcode"]}
           >
-            Change
+            {content["reusable-change"]}
           </DTELinkButton>
         </Grid>
       </Grid>
@@ -115,7 +101,7 @@ const SelectAddress = (props: SelectAddressProps) => {
               <DTESelect
                 id="select-address"
                 name="select-address"
-                label="Select your address"
+                label={content["register2-address-select-address"]}
                 error={error?.message}
                 required={false}
                 options={[
@@ -134,7 +120,7 @@ const SelectAddress = (props: SelectAddressProps) => {
           rules={{
             validate: (value) => {
               if (addresses[value].addressLine1 === "") {
-                return "Select your address or enter your address manually";
+                return content["register2-address-validation-select-required"];
               }
               return true;
             },
@@ -158,13 +144,13 @@ const SelectAddress = (props: SelectAddressProps) => {
                 })
               }
             >
-              Enter your address manually
+              {content["register2-address-button-enter-manually"]}
             </DTELinkButton>
           </Grid>
-          <Grid item>{!hideInfo && <Details />}</Grid>
+          <Grid item>{!hideInfo && content["register2-address"]}</Grid>
         </Grid>
         <ContinueButton
-          buttonText="Continue"
+          buttonText={content["reusable-button-continue"]}
           altButtonText={nextButtonText}
           showCancelButton={showCancelButton}
           onCancel={onCancel}
@@ -172,6 +158,6 @@ const SelectAddress = (props: SelectAddressProps) => {
       </form>
     </>
   );
-};
+}
 
 export default SelectAddress;

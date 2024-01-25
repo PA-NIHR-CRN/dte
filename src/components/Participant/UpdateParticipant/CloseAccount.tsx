@@ -11,7 +11,6 @@ import { AuthContext } from "../../../context/AuthContext";
 import DTEHeader from "../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEBackLink from "../../Shared/UI/DTEBackLink/DTEBackLink";
 import DTEContent from "../../Shared/UI/DTETypography/DTEContent/DTEContent";
-import DTERouteLink from "../../Shared/UI/DTERouteLink/DTERouteLink";
 import DTEButton from "../../Shared/UI/DTEButton/DTEButton";
 import Container from "../../Shared/Container/Container";
 import DTELinkButton from "../../Shared/UI/DTELinkButton/DTELinkButton";
@@ -19,6 +18,7 @@ import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import Utils from "../../../Helper/Utils";
 import LoadingIndicator from "../../Shared/LoadingIndicator/LoadingIndicator";
 import ErrorMessageContainer from "../../Shared/ErrorMessageContainer/ErrorMessageContainer";
+import { ContentContext } from "../../../context/ContentContext";
 
 const StyledErrorSummary = styled(ErrorSummary)`
   margin-bottom: 1rem;
@@ -35,21 +35,16 @@ const StyledErrorSummary = styled(ErrorSummary)`
   }
 `;
 
-const CloseAccount = () => {
+function CloseAccount() {
+  const { content } = useContext(ContentContext);
   const history = useHistory();
   const { logOutToken, isNhsLinkedAccount } = useContext(AuthContext);
   const [requireConf, setRequireConf] = useState(true);
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
 
   const [
-    {
-      response: closeUserAccountResponse,
-      loading: closeUserAccountLoading,
-      error: closeUserAccountError,
-    },
+    { response: closeUserAccountResponse, loading: closeUserAccountLoading, error: closeUserAccountError },
     closeUserAccount,
   ] = useAxiosFetch(
     {
@@ -68,9 +63,7 @@ const CloseAccount = () => {
   };
 
   useEffect(() => {
-    if (
-      Utils.ConvertResponseToDTEResponse(closeUserAccountResponse)?.isSuccess
-    ) {
+    if (Utils.ConvertResponseToDTEResponse(closeUserAccountResponse)?.isSuccess) {
       logOutToken();
       history.push("/Participants/accountclosed");
     }
@@ -87,94 +80,40 @@ const CloseAccount = () => {
   }, [requireConf]);
 
   return (
-    <DocumentTitle title="Close your account - Volunteer Account - Be Part of Research">
+    <DocumentTitle title={content["closeaccount-document-title"]}>
       <Container>
         <div role="main" id="main">
-          <DTEBackLink href="/" linkText="Back" />
+          <DTEBackLink href="/" linkText={content["reusable-back-link"]} />
           <DTEHeader as="h1" $variant={headerVariant}>
-            Close your account
+            {content["reusable-close-your-account"]}
           </DTEHeader>
-          {isNhsLinkedAccount ? (
-            <DTEContent $marginBottom="medium">
-              If you have changed your mind and wish to withdraw your consent to
-              be contacted, this will have no effect on your NHS login account.
-            </DTEContent>
-          ) : (
-            <DTEContent $marginBottom="medium">
-              {" "}
-              If you have changed your mind and wish to close your account, you
-              are withdrawing your consent for Be Part of Research to process
-              and store your personal information.
-            </DTEContent>
-          )}
-          <DTEContent $marginBottom="medium">
-            Be Part of Research will no longer contact you about areas of
-            research you have expressed an interest in.
-          </DTEContent>
-          <DTEContent $marginBottom="medium">
-            When closing your account Be Part of Research will keep some
-            anonymous data to help improve the service. To find out more please
-            read the{" "}
-            <DTERouteLink
-              external
-              target="_blank"
-              renderStyle="standard"
-              to="https://bepartofresearch.nihr.ac.uk/site-policies/privacy-policy/"
-            >
-              Be Part of Research Privacy Policy
-            </DTERouteLink>
-            .
-          </DTEContent>
-          <DTEContent $marginBottom="medium">
-            To take part in the future you can register again.
-          </DTEContent>
+          {isNhsLinkedAccount ? content["closeaccount-page-nhs"] : content["closeaccount-page"]}
+
           {requireConf ? (
-            <DTEButton onClick={() => setRequireConf(false)}>
-              Close your account
-            </DTEButton>
+            <DTEButton onClick={() => setRequireConf(false)}>{content["reusable-close-your-account"]}</DTEButton>
           ) : (
             <>
-              {closeUserAccountLoading && (
-                <LoadingIndicator text="Closing your account..." />
-              )}
-              {(closeUserAccountError ||
-                Utils.ConvertResponseToDTEResponse(closeUserAccountResponse)
-                  ?.errors) && (
+              {closeUserAccountLoading && <LoadingIndicator text={content["closeaccount-loading-close"]} />}
+              {(closeUserAccountError || Utils.ConvertResponseToDTEResponse(closeUserAccountResponse)?.errors) && (
                 <ErrorMessageContainer
                   axiosErrors={[closeUserAccountError]}
-                  DTEAxiosErrors={[
-                    Utils.ConvertResponseToDTEResponse(closeUserAccountResponse)
-                      ?.errors,
-                  ]}
+                  DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(closeUserAccountResponse)?.errors]}
                 />
               )}
 
               <StyledErrorSummary>
                 <DTEContent as="b" $marginBottom="small">
-                  Confirm if you want to close your account
+                  {content["closeaccount-button-close-confirm"]}
                 </DTEContent>
-                <Grid
-                  container
-                  direction="row"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  spacing={1}
-                >
+                <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
                   <Grid item>
-                    <DTEButton
-                      $danger
-                      onClick={() => handleConfirmCloseAccount()}
-                    >
-                      Confirm
+                    <DTEButton $danger onClick={() => handleConfirmCloseAccount()}>
+                      {content["reusable-confirm"]}
                     </DTEButton>
                   </Grid>
                   <Grid item>
-                    <DTELinkButton
-                      type="button"
-                      padded
-                      onClick={() => setRequireConf(true)}
-                    >
-                      Cancel
+                    <DTELinkButton type="button" padded onClick={() => setRequireConf(true)}>
+                      {content["reusable-cancel"]}
                     </DTELinkButton>
                   </Grid>
                 </Grid>
@@ -185,6 +124,6 @@ const CloseAccount = () => {
       </Container>
     </DocumentTitle>
   );
-};
+}
 
 export default CloseAccount;

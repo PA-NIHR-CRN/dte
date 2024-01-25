@@ -54,7 +54,7 @@ export interface DTEAxiosResponse {
 
 export interface DTEAxiosError {
   code?: string;
-  detail?: string;
+  detail: string | JSX.Element;
   customCode?: string;
   service?: string;
   component?: string;
@@ -97,19 +97,11 @@ export class SessionExpiryInfo {
     if (this.expiresAt && this.issuedAt) {
       this.isLoggedIn = true;
 
-      this.duration = Math.ceil(
-        (this.expiresAt.getTime() - this.issuedAt.getTime()) / 1000
-      );
+      this.duration = Math.ceil((this.expiresAt.getTime() - this.issuedAt.getTime()) / 1000);
 
-      this.remaining = Math.ceil(
-        Math.abs(now.getTime() - (this.expiresAt.getTime() ?? now.getTime())) /
-          1000
-      );
+      this.remaining = Math.ceil(Math.abs(now.getTime() - (this.expiresAt.getTime() ?? now.getTime())) / 1000);
 
-      this.used = Math.ceil(
-        Math.abs(now.getTime() - (this.issuedAt.getTime() ?? now.getTime())) /
-          1000
-      );
+      this.used = Math.ceil(Math.abs(now.getTime() - (this.issuedAt.getTime() ?? now.getTime())) / 1000);
     }
   }
 

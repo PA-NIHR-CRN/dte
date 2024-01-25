@@ -12,12 +12,7 @@ function ErrorSummary<T extends FieldValues>({ errors }: ErrorSummaryProps<T>) {
   return (
     <div className="error-summary">
       {Object.keys(errors).map((fieldName) => (
-        <ErrorMessage
-          errors={errors}
-          name={fieldName as any}
-          as="div"
-          key={fieldName}
-        />
+        <ErrorMessage errors={errors} name={fieldName as any} as="div" key={fieldName} />
       ))}
     </div>
   );

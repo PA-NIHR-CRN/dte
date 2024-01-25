@@ -39,10 +39,7 @@ describe("DTERichTextValidators minCharacterLength", () => {
   });
 
   it("minCharacterLength must return true for populated html string above minimum length", async () => {
-    const results = DTERichTextValidators.minCharacterLength(
-      "<p>123456</p>",
-      5
-    );
+    const results = DTERichTextValidators.minCharacterLength("<p>123456</p>", 5);
     expect(results).toBeTruthy();
   });
 });
@@ -76,29 +73,17 @@ describe("DTERichTextValidators maxCharacterLength", () => {
 
 describe("DTERichTextValidators characterLengthRange", () => {
   it("characterLengthRange must return false where html string is below range", async () => {
-    const results = DTERichTextValidators.characterLengthRange(
-      "<p>1</p>",
-      4,
-      6
-    );
+    const results = DTERichTextValidators.characterLengthRange("<p>1</p>", 4, 6);
     expect(results).toBeFalsy();
   });
 
   it("characterLengthRange must return false where html string is beyond range", async () => {
-    const results = DTERichTextValidators.characterLengthRange(
-      "<p>1234567</p>",
-      4,
-      6
-    );
+    const results = DTERichTextValidators.characterLengthRange("<p>1234567</p>", 4, 6);
     expect(results).toBeFalsy();
   });
 
   it("characterLengthRange must return true where html string is within range", async () => {
-    const results = DTERichTextValidators.characterLengthRange(
-      "<p>12345</p>",
-      4,
-      6
-    );
+    const results = DTERichTextValidators.characterLengthRange("<p>12345</p>", 4, 6);
     expect(results).toBeTruthy();
   });
 });

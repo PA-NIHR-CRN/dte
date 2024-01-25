@@ -27,10 +27,7 @@ interface ExternalLinkProps extends BaseLinkProps {
   href: string;
 }
 
-const determineClassName = (
-  renderStyle: "standard" | undefined,
-  inverted: boolean
-) => {
+const determineClassName = (renderStyle: "standard" | undefined, inverted: boolean) => {
   switch (renderStyle) {
     case "standard":
       return inverted ? "standard-route inverted" : "standard-route";
@@ -51,7 +48,9 @@ const CommonLinkStyle = css<BaseLinkProps>`
         color: ${(props) => props.theme.NIHR.Blue};
         text-decoration: none;
         background-color: ${(props) => props.theme.NIHR.Yellow};
-        box-shadow: 0 -2px ${(props) => props.theme.NIHR.Yellow}, 0 4px #212b32;
+        box-shadow:
+          0 -2px ${(props) => props.theme.NIHR.Yellow},
+          0 4px #212b32;
       }
       &:hover {
         color: ${(props) => props.theme.NIHR.Blue};
@@ -79,7 +78,8 @@ const CommonLinkStyle = css<BaseLinkProps>`
           color: ${(props) => props.theme.NIHR.Blue};
           text-decoration: none;
           background-color: ${(props) => props.theme.NIHR.Yellow};
-          box-shadow: 0 -2px ${(props) => props.theme.NIHR.Yellow},
+          box-shadow:
+            0 -2px ${(props) => props.theme.NIHR.Yellow},
             0 4px #212b32;
         }
         &:hover {
@@ -112,7 +112,7 @@ const StyledExternalLink = styled.a<ExternalLinkProps>`
   }
 `;
 
-const DTERouteLink = ({
+function DTERouteLink({
   to,
   children,
   $outlined,
@@ -126,7 +126,7 @@ const DTERouteLink = ({
   inverted,
   ariaLabel,
   role,
-}: RouteLinkProps & React.HTMLProps<HTMLLinkElement>) => {
+}: RouteLinkProps & React.HTMLProps<HTMLLinkElement>) {
   if (external) {
     return (
       <StyledExternalLink
@@ -160,6 +160,6 @@ const DTERouteLink = ({
       {children}
     </StyledRouteLink>
   );
-};
+}
 
 export default DTERouteLink;

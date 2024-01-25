@@ -15,14 +15,30 @@ import AccountClosed from "../components/Participant/UpdateParticipant/AccountCl
 import Newsletter from "../components/Participant/UpdateParticipant/Newsletter";
 import NhsPreRegistration from "../pages/NHS/NhsPreRegistration";
 
+type VanityRoute = {
+  campaign: string;
+  source: string;
+  medium: string;
+};
+
+const getVanityRoutes = (routeConfig: VanityRoute[]) =>
+  routeConfig.map(({ campaign, source, medium }) => (
+    <Route
+      path={`/${campaign}`}
+      render={() => {
+        ReactGA.pageview(
+          `/participants/introduction?utm_source=${source}&utm_medium=${medium}&utm_campaign=${campaign}`
+        );
+        return <NhsPreRegistration />;
+      }}
+      strict
+      exact
+      key={`${campaign}`}
+    />
+  ));
+
 export default [
-  <ProtectedRoute
-    path="/Participants/MyDetails"
-    component={UpdateParticipant}
-    strict
-    exact
-    key="updateparticipant"
-  />,
+  <ProtectedRoute path="/Participants/MyDetails" component={UpdateParticipant} strict exact key="updateparticipant" />,
   <ProtectedRoute
     path="/Participants/AccountSettings"
     render={() => {
@@ -63,6 +79,15 @@ export default [
     exact
     key="nhspreregistration"
   />,
+  ...getVanityRoutes([
+    { campaign: "nhsgp1", source: "sms", medium: "referral" },
+    { campaign: "nhsgp2", source: "sms", medium: "referral" },
+    { campaign: "nhsgp3", source: "sms", medium: "referral" },
+    { campaign: "nhsgp4", source: "sms", medium: "referral" },
+    { campaign: "nhsgp5", source: "leaflet", medium: "referral" },
+    { campaign: "nhsren1", source: "leaflet", medium: "referral" },
+    { campaign: "nhsren2", source: "leaflet", medium: "referral" },
+  ]),
   <Route
     path="/Participants/PasswordUpdated"
     render={() => {
@@ -83,13 +108,7 @@ export default [
     exact
     key="home"
   />,
-  <ProtectedRoute
-    path="/Participants/CloseAccount"
-    component={CloseAccount}
-    strict
-    exact
-    key="closeaccount"
-  />,
+  <ProtectedRoute path="/Participants/CloseAccount" component={CloseAccount} strict exact key="closeaccount" />,
   <Route
     path="/Participants/AccountClosed"
     render={() => {
@@ -101,7 +120,7 @@ export default [
     key="accountclosed"
   />,
   <Route
-    path="/Participants/Register/Questions"
+    path={["/Participants/Register/Questions", "/Cyfranogwyr/Cofrestru/Cwestiynau"]}
     component={RegsitrationProcess}
     strict
     exact
@@ -115,7 +134,7 @@ export default [
     key="continueregistration"
   />,
   <Route
-    path="/Participants/Register"
+    path={["/Participants/Register", "/Cyfranogwyr/Cofrestrwch"]}
     render={() => {
       ReactGA.pageview("/register");
       return <StartRegistrationProcess />;
