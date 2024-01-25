@@ -7,6 +7,8 @@ test.describe("Successful user registration journey", () => {
     dateOfBirthPage,
     emailPage,
     passwordPolicyPage,
+    consentPage,
+    emailVerificationPage,
   }) => {
     await test.step("Given I have navigated to the name page", async () => {
       await namePage.goTo();
@@ -61,7 +63,7 @@ test.describe("Successful user registration journey", () => {
       await emailPage.assertErrorsHidden();
     });
     await test.step("Then I will correctly fill out the email input field", async () => {
-      await emailPage.assertFillEmailField("example@example.com");
+      await emailPage.assertFillEmailField("example@gmail.com");
     });
     await test.step("Then I will click to open the summary text and see it correctly rendered", async () => {
       await emailPage.toggleSummaryText();
@@ -71,6 +73,38 @@ test.describe("Successful user registration journey", () => {
     });
     await test.step("Then I will see the password policy page load", async () => {
       await passwordPolicyPage.waitForPageLoad();
+    });
+    await test.step("Then I will see the componenets correctly rendered on the page", async () => {
+      await passwordPolicyPage.assertButtonsVisible();
+      await passwordPolicyPage.assertTextVisible();
+      await passwordPolicyPage.assertFormVisible();
+      await passwordPolicyPage.assertErrorsHidden();
+    });
+    await test.step("Then I will correctly fill out the password fields", async () => {
+      await passwordPolicyPage.assertFillCreatePasswordField(
+        "TestPassword123!"
+      );
+      await passwordPolicyPage.assertFillConfirmPasswordField(
+        "TestPassword123!"
+      );
+    });
+    await test.step("I will then click the continue button to move to the next page", async () => {
+      await passwordPolicyPage.clickContinue();
+    });
+    await test.step("I will then see the consent page load", async () => {
+      await consentPage.waitForPageLoad();
+    });
+    await test.step("I will then see the components render correctly", async () => {
+      await consentPage.assertButtonsVisible();
+      await consentPage.assertTextVisible();
+      await consentPage.assertFormVisible();
+      await consentPage.assertErrorsHidden();
+    });
+    await test.step("Then I will click the checkbox", async () => {
+      await consentPage.assertClickCheckbox();
+    });
+    await test.step("I will then click the register button", async () => {
+      await consentPage.clickRegister();
     });
   });
 });

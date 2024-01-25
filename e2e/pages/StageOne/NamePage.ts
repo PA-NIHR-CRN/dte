@@ -1,4 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
+import { assertErrorUtil } from "../../utils/errorUtils";
 
 export default class NamePage {
   // variables
@@ -59,12 +60,6 @@ export default class NamePage {
     await expect(this.lastNameInput).toBeVisible();
   }
 
-  // Check no error messages visible before continue button pressed
-  async assertErrorsHidden() {
-    await expect(this.firstNameError).toBeHidden();
-    await expect(this.lastNameError).toBeHidden();
-  }
-
   // --- CORRECT CONTENT METHODS --- //
   // check components have the correct text content
   async assertCorrectContent() {
@@ -102,25 +97,22 @@ export default class NamePage {
   // --- ERROR CHECKING FORM --- //
 
   async assertBothErrorMessages() {
-    await expect(this.firstNameError).toBeVisible();
-    await expect(this.firstNameError).toHaveText(/Enter your first name/);
-    await expect(this.lastNameError).toBeVisible();
-    await expect(this.lastNameError).toHaveText(/Enter your last name/);
+    await assertErrorUtil(this.firstNameError, "Error: Enter your first name");
+    await assertErrorUtil(this.lastNameError, "Error: Enter your last name");
   }
 
   async assetFirstNameError() {
     await expect(this.lastNameError).toBeHidden();
-    await expect(this.firstNameError).toBeVisible();
-    await expect(this.firstNameError).toHaveText(/Enter your first name/);
+    await assertErrorUtil(this.firstNameError, "Error: Enter your first name");
   }
 
   async assertLastNameError() {
     await expect(this.firstNameError).toBeHidden();
-    await expect(this.lastNameError).toBeVisible();
-    await expect(this.lastNameError).toHaveText(/Enter your last name/);
+    await assertErrorUtil(this.lastNameError, "Error: Enter your last name");
   }
 
-  async assertHideErrorMessages() {
+  // Check no error messages visible before continue button pressed
+  async assertErrorsHidden() {
     await expect(this.firstNameError).toBeHidden();
     await expect(this.lastNameError).toBeHidden();
   }

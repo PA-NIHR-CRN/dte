@@ -1,11 +1,14 @@
 import { Locator, Page, expect } from "@playwright/test";
+import { assertErrorUtil, assertErrorsHidden } from "../../utils/errorUtils";
+import { assertComponentsVisible } from "../../utils/visibilityUtils";
 
 export default class EmailPage {
-  // variables
   readonly page: Page;
+  // variables
   readonly backButton: Locator;
   readonly progressDisplay: Locator;
   readonly emailPageHeading: Locator;
+  readonly errorMessage: Locator;
   readonly emailLabel: Locator;
   readonly emailInput: Locator;
   readonly emptyFieldError: Locator;
@@ -27,16 +30,10 @@ export default class EmailPage {
     );
 
     // --- FORM --- //
-    this.emailLabel = page.getByText("Email address");
     this.emailLabel = page.locator("label#emailAddress--label");
     this.emailInput = page.locator("input#emailAddress");
     // form errors
-    this.invalidEmailError = page.locator(
-      '#emailAddress--error-message span:text("Enter an email address in the correct format, like name@example.com")'
-    );
-    this.emptyFieldError = page.locator(
-      '#emailAddress--error-message span:text("Enter your email address")'
-    );
+    this.errorMessage = page.locator("span#emailAddress--error-message");
     // --- BUTTONS --- //
     this.backButton = page.getByTitle("Return to previous page");
     this.continueButton = page.getByRole("button", { name: "continue" });
@@ -51,25 +48,20 @@ export default class EmailPage {
 
   // --- ON LOAD METHODS --- //
   async assertButtonsVisible() {
-    await expect(this.backButton).toBeVisible();
-    await expect(this.continueButton).toBeVisible();
+    assertComponentsVisible([this.backButton, this.continueButton]);
   }
 
   async assertTextVisible() {
-    await expect(this.progressDisplay).toBeVisible();
-    await expect(this.emailPageHeading).toBeVisible();
-    await expect(this.summaryTextPreview).toBeVisible();
     await expect(this.summaryText).toBeHidden();
+    assertComponentsVisible([
+      this.progressDisplay,
+      this.emailPageHeading,
+      this.summaryTextPreview,
+    ]);
   }
 
   async assertFormVisible() {
-    await expect(this.emailLabel).toBeVisible();
-    await expect(this.emailInput).toBeVisible();
-  }
-
-  async assertErrorsHidden() {
-    await expect(this.invalidEmailError).toBeHidden();
-    await expect(this.emptyFieldError).toBeHidden();
+    assertComponentsVisible([this.emailLabel, this.emailInput]);
   }
 
   // --- CLICK METHODS --- //
@@ -91,29 +83,12 @@ export default class EmailPage {
     await this.emailInput.fill(email);
   }
 
-  // --- ERROR CHECKING METHODS --- //
-  async checkEmptyEmailError(email: string) {
-    const isEmailInputEmpty = email.trim() === "";
-
-    if (isEmailInputEmpty) {
-      await expect(this.emptyFieldError).toHaveText("Enter your email address");
-    } else {
-      expect(this.emptyFieldError).toBeHidden();
-    }
+  // --- ERRORS LOGIC --- //
+  async assertError(message: string) {
+    await assertErrorUtil(this.errorMessage, message);
   }
 
-  async checkInvalidEmailError(email: string) {
-    const regex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-    const validEmail = regex.test(email);
-    //   const validEmail = email.includes("@");
-
-    if (validEmail) {
-      await expect(this.invalidEmailError).toHaveText(
-        "Enter an email address in the correct format, like name@example.com"
-      );
-    } else {
-      await expect(this.invalidEmailError).toBeHidden();
-    }
+  async assertErrorsHidden() {
+    await assertErrorsHidden(this.errorMessage);
   }
 }

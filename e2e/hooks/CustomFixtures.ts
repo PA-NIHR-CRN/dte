@@ -12,6 +12,8 @@ import NamePage from "../pages/StageOne/NamePage";
 import DateOfBirthPage from "../pages/StageOne/DateOfBirthPage";
 import EmailPage from "../pages/StageOne/EmailPage";
 import PasswordPolicyPage from "../pages/StageOne/PasswordPolicyPage";
+import ConsentPage from "../pages/StageOne/ConsentPage";
+import EmailVerificationPage from "../pages/StageOne/EmailVerificationPage";
 
 type CustomFixtures = {
   cookieBanner: CookieBanner;
@@ -26,6 +28,8 @@ type CustomFixtures = {
   dateOfBirthPage: DateOfBirthPage;
   emailPage: EmailPage;
   passwordPolicyPage: PasswordPolicyPage;
+  consentPage: ConsentPage;
+  emailVerificationPage: EmailVerificationPage;
 };
 
 export const test = base.extend<CustomFixtures>({
@@ -66,6 +70,12 @@ export const test = base.extend<CustomFixtures>({
   },
   passwordPolicyPage: async ({ page }, use) => {
     await use(new PasswordPolicyPage(page));
+  },
+  consentPage: async ({ page }, use) => {
+    await use(new ConsentPage(page));
+  },
+  emailVerificationPage: async ({ page }, use) => {
+    await use(new EmailVerificationPage(page));
   },
 });
 
