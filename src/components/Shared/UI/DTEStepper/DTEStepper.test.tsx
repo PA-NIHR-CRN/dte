@@ -10,12 +10,7 @@ describe("DTEStepper", () => {
       "aria-label": "Registration",
     };
     const { container } = render(
-      <DTEStepper
-        backButton={<></>}
-        nextButton={<></>}
-        steps={5}
-        LinearProgressProps={LinearProps}
-      />
+      <DTEStepper backButton={<></>} nextButton={<></>} steps={5} LinearProgressProps={LinearProps} />
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();

@@ -1,10 +1,4 @@
-import React, {
-  HTMLProps,
-  ReactNode,
-  useState,
-  MouseEvent,
-  useEffect,
-} from "react";
+import React, { HTMLProps, ReactNode, useState, MouseEvent, useEffect } from "react";
 
 export interface SectionProps extends HTMLProps<HTMLDetailsElement> {
   heading: ReactNode;
@@ -41,9 +35,7 @@ const DTEAccordionSection: React.FC<SectionProps> = ({
   tabIndex,
   ...rest
 }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(
-    open === undefined ? Boolean(defaultOpen) : open
-  );
+  const [isOpen, setIsOpen] = useState<boolean>(open === undefined ? Boolean(defaultOpen) : open);
 
   const onSummaryClick = (event: MouseEvent<HTMLDetailsElement>) => {
     event.preventDefault();
@@ -65,17 +57,17 @@ const DTEAccordionSection: React.FC<SectionProps> = ({
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...rest}
     >
-      <summary
-        className="nhsuk-accordion-menu__section-summary"
-        tabIndex={tabIndex !== 0 ? tabIndex : 0}
-        onClick={onSummaryClick}
-      >
-        <span className="nhsuk-accordion-menu__section-summary-text">
-          {heading}
-        </span>
-        <ToggleIcon open={isOpen} />
-      </summary>
-      {children}
+      <>
+        <summary
+          className="nhsuk-accordion-menu__section-summary"
+          tabIndex={tabIndex !== 0 ? tabIndex : 0}
+          onClick={onSummaryClick}
+        >
+          <span className="nhsuk-accordion-menu__section-summary-text">{heading}</span>
+          <ToggleIcon open={isOpen} />
+        </summary>
+        {children}
+      </>
     </details>
   );
 };

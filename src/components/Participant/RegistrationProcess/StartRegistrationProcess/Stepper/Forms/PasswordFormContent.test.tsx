@@ -1,5 +1,5 @@
 import { createServer, Response, Server } from "miragejs";
-import { render, screen } from "../../../../../../Helper/test-utils";
+import { render, screen, waitFor } from "../../../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import PasswordForm from "./PasswordForm";
 import weakPasswords from "../../../../../../data/weakPasswords";
@@ -138,52 +138,51 @@ describe.each([
     true,
     "Your password must be 20 or more characters. You can use a mix of letters, numbers or symbols which must include at least 1 capital letter, 1 lowercase letter, 1 number and 1 symbol.",
   ],
-])(
-  "Password policy text must be correct",
-  (minLength, lowercase, numbers, symbols, uppercase, expectedContent) => {
-    let server: Server;
-    beforeEach(() => {
-      server = createServer({});
+])("Password policy text must be correct", (minLength, lowercase, numbers, symbols, uppercase, expectedContent) => {
+  let server: Server;
+  beforeEach(() => {
+    server = createServer({});
+  });
+
+  afterEach(() => {
+    server.shutdown();
+  });
+
+  test(`constructs ${expectedContent}`, async () => {
+    const mockOnDataChange = jest.fn();
+    const mockSetLoading = jest.fn();
+    const mockSetLoadingText = jest.fn();
+
+    server.get(
+      `${process.env.REACT_APP_BASE_API}/users/passwordpolicy`,
+      () =>
+        new Response(
+          200,
+          { "Content-Type": "application/json" },
+          {
+            minimumLength: minLength,
+            requireLowercase: lowercase,
+            requireNumbers: numbers,
+            requireSymbols: symbols,
+            requireUppercase: uppercase,
+            allowedPasswordSymbols: "^ $ * . , [ ] { } ( ) ? \" ! @ # % & / \\ , > < ' : ; | _ ~ `",
+            weakPasswords,
+          }
+        )
+    );
+
+    render(
+      <PasswordForm
+        initialStateData={data}
+        onDataChange={mockOnDataChange}
+        setLoading={mockSetLoading}
+        setLoadingText={mockSetLoadingText}
+      />
+    );
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
     });
-
-    afterEach(() => {
-      server.shutdown();
-    });
-
-    test(`constructs ${expectedContent}`, async () => {
-      const mockOnDataChange = jest.fn();
-      const mockSetLoading = jest.fn();
-      const mockSetLoadingText = jest.fn();
-
-      server.get(
-        `${process.env.REACT_APP_BASE_API}/users/passwordpolicy`,
-        () =>
-          new Response(
-            200,
-            { "Content-Type": "application/json" },
-            {
-              minimumLength: minLength,
-              requireLowercase: lowercase,
-              requireNumbers: numbers,
-              requireSymbols: symbols,
-              requireUppercase: uppercase,
-              allowedPasswordSymbols:
-                "^ $ * . , [ ] { } ( ) ? \" ! @ # % & / \\ , > < ' : ; | _ ~ `",
-              weakPasswords,
-            }
-          )
-      );
-
-      render(
-        <PasswordForm
-          initialStateData={data}
-          onDataChange={mockOnDataChange}
-          setLoading={mockSetLoading}
-          setLoadingText={mockSetLoadingText}
-        />
-      );
-      const policy = await screen.findByText(expectedContent);
-      expect(policy).toBeInTheDocument();
-    });
-  }
-);
+    const policy = await screen.findByText(expectedContent);
+    expect(policy).toBeInTheDocument();
+  });
+});

@@ -25,18 +25,15 @@ beforeEach(() => {
           version: 1,
         };
       });
-      this.post(
-        `${process.env.REACT_APP_BASE_API}/users/resendverificationemail`,
-        () => {
-          return {
-            content: null,
-            isSuccess: true,
-            errors: [],
-            conversationId: null,
-            version: 1,
-          };
-        }
-      );
+      this.post(`${process.env.REACT_APP_BASE_API}/users/resendverificationemail`, () => {
+        return {
+          content: null,
+          isSuccess: true,
+          errors: [],
+          conversationId: null,
+          version: 1,
+        };
+      });
     },
   });
 });
@@ -48,16 +45,16 @@ afterEach(() => {
 describe("User Login must render correctly", () => {
   it("should not fail any accessibility tests", async () => {
     const { container } = render(<UserLogin />);
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
   it("renders correctly", async () => {
     render(<UserLogin />);
+
     const loginButton = screen.getAllByRole("button")[1];
     const links = screen.getAllByRole("link");
-    expect(
-      screen.getByText("Sign in to Be Part of Research")
-    ).toBeInTheDocument();
+    expect(screen.getByText("Sign in to Be Part of Research")).toBeInTheDocument();
     const email = screen.getByLabelText("Email address");
     expect(email).toBeInTheDocument();
     expect(email).toHaveValue("");
@@ -72,19 +69,21 @@ describe("User Login must render correctly", () => {
     expect(links[0]).toHaveTextContent("Back");
     expect(links[1]).toHaveAttribute("href", "/ForgottenPassword");
     expect(links[1]).toHaveTextContent("reset it here.");
-    expect(links[2]).toHaveAttribute("href", "/Participants/register");
-    expect(links[2]).toHaveTextContent("Register with Be Part of Research");
+    expect(links[2]).toHaveAttribute("href", "/participants/register");
+    expect(links[2]).toHaveTextContent("Register here");
   });
 });
 
 describe("Email input must have correct attributes", () => {
   it("must have a required attribute", async () => {
     render(<UserLogin />);
+
     const emailInput = await screen.findByLabelText("Email address");
     expect(emailInput).toHaveAttribute("required");
   });
   it("must have a aria-required attribute of true", async () => {
     render(<UserLogin />);
+
     const emailInput = await screen.findByLabelText("Email address");
     const ariaRequiredValue = emailInput.getAttribute("aria-required");
     expect(emailInput).toHaveAttribute("aria-required");
@@ -92,6 +91,7 @@ describe("Email input must have correct attributes", () => {
   });
   it("must have a type attribute of email", async () => {
     render(<UserLogin />);
+
     const emailInput = await screen.findByLabelText("Email address");
     const typeValue = emailInput.getAttribute("type");
     expect(emailInput).toHaveAttribute("type");
@@ -99,6 +99,7 @@ describe("Email input must have correct attributes", () => {
   });
   it("must have a autocomplete attribute of email", async () => {
     render(<UserLogin />);
+
     const emailInput = await screen.findByLabelText("Email address");
     const autocompleteValue = emailInput.getAttribute("autocomplete");
     expect(emailInput).toHaveAttribute("autocomplete");
@@ -106,6 +107,7 @@ describe("Email input must have correct attributes", () => {
   });
   it("must have a spellcheck attribute set to false", async () => {
     render(<UserLogin />);
+
     const emailInput = await screen.findByLabelText("Email address");
     const spellcheckValue = emailInput.getAttribute("spellcheck");
     expect(emailInput).toHaveAttribute("spellcheck");
@@ -116,11 +118,13 @@ describe("Email input must have correct attributes", () => {
 describe("Password input must have correct attributes", () => {
   it("must have a required attribute", async () => {
     render(<UserLogin />);
+
     const passwordInput = await screen.findByLabelText("Password");
     expect(passwordInput).toHaveAttribute("required");
   });
   it("must have a aria-required attribute of true", async () => {
     render(<UserLogin />);
+
     const passwordInput = await screen.findByLabelText("Password");
     const ariaRequiredValue = passwordInput.getAttribute("aria-required");
     expect(passwordInput).toHaveAttribute("aria-required");
@@ -128,6 +132,7 @@ describe("Password input must have correct attributes", () => {
   });
   it("must have a type attribute of email", async () => {
     render(<UserLogin />);
+
     const passwordInput = await screen.findByLabelText("Password");
     const typeValue = passwordInput.getAttribute("type");
     expect(passwordInput).toHaveAttribute("type");
@@ -135,6 +140,7 @@ describe("Password input must have correct attributes", () => {
   });
   it("must have a autocomplete attribute of password", async () => {
     render(<UserLogin />);
+
     const passwordInput = await screen.findByLabelText("Password");
     const autocompleteValue = passwordInput.getAttribute("autocomplete");
     expect(passwordInput).toHaveAttribute("autocomplete");
@@ -142,6 +148,7 @@ describe("Password input must have correct attributes", () => {
   });
   it("must have a spellcheck attribute set to false", async () => {
     render(<UserLogin />);
+
     const passwordInput = await screen.findByLabelText("Password");
     const spellcheckValue = passwordInput.getAttribute("spellcheck");
     expect(passwordInput).toHaveAttribute("spellcheck");
@@ -152,112 +159,47 @@ describe("Password input must have correct attributes", () => {
 describe.each([
   ["", "Enter an email address"],
   ["     ", "Enter an email address"],
-  [
-    "firstname.o\\'lastname@domain.com",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
+  ["firstname.o\\'lastname@domain.com", "Enter an email address in the correct format, like name@example.com"],
   [
     "info@german-financial-services.vermögensberatung",
     "Enter an email address in the correct format, like name@example.com",
   ],
-  [
-    "japanese-info@例え.テスト",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    "technically..valid@domain.com",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    "email@123.123.123.123",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    "plainaddress",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    "@no-local-part.com",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
+  ["japanese-info@例え.テスト", "Enter an email address in the correct format, like name@example.com"],
+  ["technically..valid@domain.com", "Enter an email address in the correct format, like name@example.com"],
+  ["email@123.123.123.123", "Enter an email address in the correct format, like name@example.com"],
+  ["plainaddress", "Enter an email address in the correct format, like name@example.com"],
+  ["@no-local-part.com", "Enter an email address in the correct format, like name@example.com"],
   [
     "Outlook Contact <outlook-contact@domain.com>",
     "Enter an email address in the correct format, like name@example.com",
   ],
-  [
-    "no-at.domain.com",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    "no-tld@domain",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    ";beginning-semicolon@domain.co.uk",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    "middle-semicolon@domain.co;uk",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    "trailing-semicolon@domain.com;",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    '"email+leading-quotes@domain.com',
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    'email+middle"-quotes@domain.com',
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    '"quoted@domain.com"',
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    "lots-of-dots@domain..gov..uk",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    "multiple@domains@domain.com",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    "underscores-in-domain@dom_ain.com",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    "pipe-in-domain@example.com|gov.uk",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    "comma,in-local@gov.uk",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    "comma-in-domain@domain,gov.uk",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-  [
-    "domain-starts-with-a-dot@.domain.com",
-    "Enter an email address in the correct format, like name@example.com",
-  ],
-])(
-  "Email validation must be correct for invalid email addresses",
-  (emailAddress, validationError) => {
-    test(`validates ${emailAddress} correctly`, async () => {
-      render(<UserLogin />);
-      const emailInput = screen.getByLabelText("Email address");
-      userEvent.type(emailInput, emailAddress);
-      userEvent.click(screen.getByText("Sign in"));
-      await waitFor(async () => {
-        expect(await screen.findByText(validationError)).toBeInTheDocument();
-      });
+  ["no-at.domain.com", "Enter an email address in the correct format, like name@example.com"],
+  ["no-tld@domain", "Enter an email address in the correct format, like name@example.com"],
+  [";beginning-semicolon@domain.co.uk", "Enter an email address in the correct format, like name@example.com"],
+  ["middle-semicolon@domain.co;uk", "Enter an email address in the correct format, like name@example.com"],
+  ["trailing-semicolon@domain.com;", "Enter an email address in the correct format, like name@example.com"],
+  ['"email+leading-quotes@domain.com', "Enter an email address in the correct format, like name@example.com"],
+  ['email+middle"-quotes@domain.com', "Enter an email address in the correct format, like name@example.com"],
+  ['"quoted@domain.com"', "Enter an email address in the correct format, like name@example.com"],
+  ["lots-of-dots@domain..gov..uk", "Enter an email address in the correct format, like name@example.com"],
+  ["multiple@domains@domain.com", "Enter an email address in the correct format, like name@example.com"],
+  ["underscores-in-domain@dom_ain.com", "Enter an email address in the correct format, like name@example.com"],
+  ["pipe-in-domain@example.com|gov.uk", "Enter an email address in the correct format, like name@example.com"],
+  ["comma,in-local@gov.uk", "Enter an email address in the correct format, like name@example.com"],
+  ["comma-in-domain@domain,gov.uk", "Enter an email address in the correct format, like name@example.com"],
+  ["domain-starts-with-a-dot@.domain.com", "Enter an email address in the correct format, like name@example.com"],
+])("Email validation must be correct for invalid email addresses", (emailAddress, validationError) => {
+  test(`validates ${emailAddress} correctly`, async () => {
+    render(<UserLogin />);
+
+    const emailInput = screen.getByLabelText("Email address");
+    userEvent.type(emailInput, emailAddress);
+    userEvent.click(screen.getByText("Sign in"));
+    await waitFor(async () => {
+      expect(await screen.findByText(validationError)).toBeInTheDocument();
     });
-  }
-);
+  });
+});
 
 describe.each([
   ["email@domain.com"],
@@ -273,48 +215,40 @@ describe.each([
   ["email@domain.superlongtld"],
   ["email@domain.co.jp"],
   ["firstname-lastname@domain.com"],
-  [
-    "info@german-financial-services.reallylongarbitrarytldthatiswaytoohugejustincase",
-  ],
+  ["info@german-financial-services.reallylongarbitrarytldthatiswaytoohugejustincase"],
   ["email@[123.123.123.123]"],
   ['"quoted-local-part"@domain.com'],
   ["pound-sign-in-local£@domain.com"],
   ["local-with-'-apostrophe@domain.com"],
   ['local-with-"-quotes@domain.com'],
-])(
-  "Email validation must be correct for valid email addresses",
-  (emailAddress) => {
-    test(`validates ${emailAddress} correctly`, async () => {
-      render(<UserLogin />);
-      const emailInput = screen.getByLabelText("Email address");
-      userEvent.type(emailInput, emailAddress);
-      userEvent.click(screen.getByText("Sign in"));
-      await waitFor(async () => {
-        expect(
-          screen.queryByText("Enter your email address")
-        ).not.toBeInTheDocument();
-        expect(
-          screen.queryByText(
-            "Enter an email address in the correct format, like name@example.com"
-          )
-        ).not.toBeInTheDocument();
-      });
+])("Email validation must be correct for valid email addresses", (emailAddress) => {
+  test(`validates ${emailAddress} correctly`, async () => {
+    render(<UserLogin />);
+
+    const emailInput = screen.getByLabelText("Email address");
+    userEvent.type(emailInput, emailAddress);
+    userEvent.click(screen.getByText("Sign in"));
+    await waitFor(async () => {
+      expect(screen.queryByText("Enter your email address")).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("Enter an email address in the correct format, like name@example.com")
+      ).not.toBeInTheDocument();
     });
-  }
-);
+  });
+});
 
 describe("User Login functions correctly", () => {
   it("validates required fields when both are blank", async () => {
     render(<UserLogin />);
+
     userEvent.click(screen.getByText("Sign in"));
-    expect(
-      await screen.findByText("Enter an email address")
-    ).toBeInTheDocument();
+    expect(await screen.findByText("Enter an email address")).toBeInTheDocument();
     expect(await screen.findByText("Enter a password")).toBeInTheDocument();
   });
 
   it("send a login request for a valididated request", async () => {
     render(<UserLogin />);
+
     const emailInput = screen.getByLabelText("Email address");
     userEvent.type(emailInput, "valid@example.com");
     const passwordInput = screen.getByLabelText("Password");
@@ -360,6 +294,7 @@ describe("Non Validated Account processes correctly", () => {
       };
     });
     render(<UserLogin />);
+
     const emailInput = screen.getByLabelText("Email address");
     userEvent.type(emailInput, "valid@example.com");
     const passwordInput = screen.getByLabelText("Password");
@@ -368,9 +303,7 @@ describe("Non Validated Account processes correctly", () => {
 
     expect(await screen.findByText("There is a problem")).toBeInTheDocument();
     expect(
-      await screen.findByText(
-        "Enter the email address and password for a registered user account. If you registered using NHS login use the back button above and select NHS login to sign in."
-      )
+      await screen.findByText(/Enter the email address and password for a registered user account./)
     ).toBeInTheDocument();
     const buttons = await screen.findAllByRole("button");
     expect(buttons).toHaveLength(2);
@@ -381,6 +314,7 @@ describe("Non Validated Account processes correctly", () => {
 describe("User Login must display error summary header on invalid submission", () => {
   it("renders correctly", async () => {
     render(<UserLogin />);
+
     userEvent.click(screen.getByText("Sign in"));
 
     const errors = await screen.findAllByRole("alert");
@@ -412,6 +346,7 @@ describe("Unknown Account processes correctly", () => {
       };
     });
     render(<UserLogin />);
+
     const emailInput = screen.getByLabelText("Email address");
     userEvent.type(emailInput, "valid@example.com");
     const passwordInput = screen.getByLabelText("Password");
@@ -420,9 +355,7 @@ describe("Unknown Account processes correctly", () => {
 
     expect(await screen.findByText("There is a problem")).toBeInTheDocument();
     expect(
-      await screen.findByText(
-        "Enter the email address and password for a registered user account. If you registered using NHS login use the back button above and select NHS login to sign in."
-      )
+      await screen.findByText(/Enter the email address and password for a registered user account./)
     ).toBeInTheDocument();
     const buttons = await screen.findAllByRole("button");
     const links = screen.getAllByRole("link");
@@ -433,7 +366,7 @@ describe("Unknown Account processes correctly", () => {
     expect(links[0]).toHaveTextContent("Back");
     expect(links[1]).toHaveAttribute("href", "/ForgottenPassword");
     expect(links[1]).toHaveTextContent("reset it here.");
-    expect(links[2]).toHaveAttribute("href", "/Participants/register");
-    expect(links[2]).toHaveTextContent("Register with Be Part of Research");
+    expect(links[2]).toHaveAttribute("href", "/participants/register");
+    expect(links[2]).toHaveTextContent("Register here");
   });
 });

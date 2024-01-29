@@ -1,10 +1,13 @@
-import { Fragment, ReactNode } from "react";
+import { Fragment, ReactNode, useContext } from "react";
 import styled from "styled-components";
 import { ContinueRegistrationState } from "../../../../../types/ParticipantTypes";
 import DTEHeader from "../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEButton from "../../../../Shared/UI/DTEButton/DTEButton";
 import DTELinkButton from "../../../../Shared/UI/DTELinkButton/DTELinkButton";
+import { ContentContext } from "../../../../../context/ContentContext";
+import mapParticipantBackgrounds from "../../../../../Helper/mapParticipantBackgrounds/mapParticipantBackgrounds";
+import mapParticipantDisabilityDesc from "../../../../../Helper/mapParticipantDisabilityDesc/mapParticipantDisabilityDesc";
 
 interface CheckAnswersFormProps {
   initialStateData: ContinueRegistrationState;
@@ -24,7 +27,8 @@ const StyledCheckHiddenText = styled.span`
   white-space: nowrap;
 `;
 
-const CheckAnswersForm = (props: CheckAnswersFormProps) => {
+function CheckAnswersForm(props: CheckAnswersFormProps) {
+  const { content } = useContext(ContentContext);
   const { initialStateData, changeStep } = props;
 
   const formatCheckDisplayAddress = (address: any) => {
@@ -44,194 +48,159 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
       formattedCheckAddress = address.address.addressLine1;
     }
     if (address.address.addressLine2) {
-      formattedCheckAddress = lineManagement(
-        formattedCheckAddress,
-        address.address.addressLine2
-      );
+      formattedCheckAddress = lineManagement(formattedCheckAddress, address.address.addressLine2);
     }
     if (address.address.addressLine3) {
-      formattedCheckAddress = lineManagement(
-        formattedCheckAddress,
-        address.address.addressLine3
-      );
+      formattedCheckAddress = lineManagement(formattedCheckAddress, address.address.addressLine3);
     }
     if (address.address.addressLine4) {
-      formattedCheckAddress = lineManagement(
-        formattedCheckAddress,
-        address.address.addressLine4
-      );
+      formattedCheckAddress = lineManagement(formattedCheckAddress, address.address.addressLine4);
     }
     if (address.address.town) {
-      formattedCheckAddress = lineManagement(
-        formattedCheckAddress,
-        address.address.town
-      );
+      formattedCheckAddress = lineManagement(formattedCheckAddress, address.address.town);
     }
     if (address.postcode) {
-      formattedCheckAddress = lineManagement(
-        formattedCheckAddress,
-        address.postcode
-      );
+      formattedCheckAddress = lineManagement(formattedCheckAddress, address.postcode);
     }
     return (<DTEContent>{formattedCheckAddress}</DTEContent>) as ReactNode;
   };
 
   return (
     <>
-      <DTEHeader as="h1">
-        Check your answers before completing your registration
-      </DTEHeader>
+      <DTEHeader as="h1">{content["register2-check-answers-header"]}</DTEHeader>
       <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
-            <DTEContent>Home address</DTEContent>
+            <DTEContent>{content["reusable-home-address"]}</DTEContent>
           </dt>
-          <dd className="govuk-summary-list__value">
-            {formatCheckDisplayAddress(initialStateData.addressFormData)}
-          </dd>
+          <dd className="govuk-summary-list__value">{formatCheckDisplayAddress(initialStateData.addressFormData)}</dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(0)}>
-              Change <StyledCheckHiddenText>home address</StyledCheckHiddenText>
+              {content["reusable-change"]}{" "}
+              <StyledCheckHiddenText>{content["reusable-home-address"].toLowerCase()}</StyledCheckHiddenText>
             </DTELinkButton>
           </dd>
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
-            <DTEContent>Phone number</DTEContent>
+            <DTEContent>{content["reusable-phone-number"]}</DTEContent>
           </dt>
           <dd className="govuk-summary-list__value">
             {" "}
             {initialStateData.mobileFormData.mobileNumber && (
-              <>
-                <DTEContent>
-                  Mobile
-                  <br />
-                  {initialStateData.mobileFormData.mobileNumber}
-                </DTEContent>
-              </>
+              <DTEContent>
+                {content["reusable-mobile"]}
+                <br />
+                {initialStateData.mobileFormData.mobileNumber}
+              </DTEContent>
             )}
             {initialStateData.mobileFormData.landlineNumber && (
-              <>
-                <DTEContent>
-                  Landline
-                  <br />
-                  {initialStateData.mobileFormData.landlineNumber}
-                </DTEContent>
-              </>
+              <DTEContent>
+                {content["reusable-landline"]}
+                <br />
+                {initialStateData.mobileFormData.landlineNumber}
+              </DTEContent>
             )}
-            {!initialStateData.mobileFormData.landlineNumber &&
-              !initialStateData.mobileFormData.mobileNumber && (
-                <>
-                  <DTEContent>Not provided</DTEContent>
-                </>
-              )}
+            {!initialStateData.mobileFormData.landlineNumber && !initialStateData.mobileFormData.mobileNumber && (
+              <DTEContent>{content["reusable-not-provided"]}</DTEContent>
+            )}
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(1)}>
-              Change <StyledCheckHiddenText>phone number</StyledCheckHiddenText>
+              {content["reusable-change"]}{" "}
+              <StyledCheckHiddenText>{content["reusable-phone-number"].toLowerCase()}</StyledCheckHiddenText>
             </DTELinkButton>
           </dd>
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
-            <DTEContent>Sex registered at birth</DTEContent>
+            <DTEContent>{content["reusable-sex-registered-at-birth"]}</DTEContent>
           </dt>
           <dd className="govuk-summary-list__value">
             <DTEContent>
-              {initialStateData.sexFormData.sexAtBirth === "female" && "Female"}
-              {initialStateData.sexFormData.sexAtBirth === "male" && "Male"}
+              {initialStateData.sexFormData.sexAtBirth === "female" && content["reusable-female"]}
+              {initialStateData.sexFormData.sexAtBirth === "male" && content["reusable-male"]}
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(2)}>
-              Change{" "}
+              {content["reusable-change"]}{" "}
+              <StyledCheckHiddenText>{content["reusable-sex-registered-at-birth"].toLowerCase()}</StyledCheckHiddenText>
+            </DTELinkButton>
+          </dd>
+        </div>
+        <div className="govuk-summary-list__row">
+          <dt className="govuk-summary-list__key">
+            <DTEContent>{content["reusable-gender-identity-same-as-sex-registered-at-birth"]}</DTEContent>
+          </dt>
+          <dd className="govuk-summary-list__value">
+            <DTEContent>
+              {initialStateData.sexFormData.genderAtBirth === "no" && content["reusable-no"]}
+              {initialStateData.sexFormData.genderAtBirth === "yes" && content["reusable-yes"]}
+              {initialStateData.sexFormData.genderAtBirth === "noSay" && content["reusable-prefer-not-to-say"]}
+            </DTEContent>
+          </dd>
+          <dd className="govuk-summary-list__actions">
+            <DTELinkButton onClick={() => changeStep(2)}>
+              {content["reusable-change"]}{" "}
               <StyledCheckHiddenText>
-                sex registered at birth
+                {content["reusable-gender-identity-same-as-sex-registered-at-birth"].toLowerCase()}
               </StyledCheckHiddenText>
             </DTELinkButton>
           </dd>
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
-            <DTEContent>
-              Gender identity same as sex registered at birth
-            </DTEContent>
+            <DTEContent>{content["reusable-ethnic-group"]}</DTEContent>
           </dt>
           <dd className="govuk-summary-list__value">
             <DTEContent>
-              {initialStateData.sexFormData.genderAtBirth === "no" && "No"}
-              {initialStateData.sexFormData.genderAtBirth === "yes" && "Yes"}
-              {initialStateData.sexFormData.genderAtBirth === "noSay" &&
-                "Prefer not to say"}
-            </DTEContent>
-          </dd>
-          <dd className="govuk-summary-list__actions">
-            <DTELinkButton onClick={() => changeStep(2)}>
-              Change{" "}
-              <StyledCheckHiddenText>
-                gender identity same as sex registered at birth
-              </StyledCheckHiddenText>
-            </DTELinkButton>
-          </dd>
-        </div>
-        <div className="govuk-summary-list__row">
-          <dt className="govuk-summary-list__key">
-            <DTEContent>Ethnic group</DTEContent>
-          </dt>
-          <dd className="govuk-summary-list__value">
-            <DTEContent>
-              {initialStateData.ethnicity1FormData.ethnicity === "asian" &&
-                "Asian or Asian British"}
-              {initialStateData.ethnicity1FormData.ethnicity === "black" &&
-                "Black, African, Caribbean or Black British"}
-              {initialStateData.ethnicity1FormData.ethnicity === "mixed" &&
-                "Mixed or multiple ethnic groups"}
-              {initialStateData.ethnicity1FormData.ethnicity === "white" &&
-                "White"}
-              {initialStateData.ethnicity1FormData.ethnicity === "other" &&
-                "Other ethnic group"}
+              {initialStateData.ethnicity1FormData.ethnicity === "asian" && content["reusable-asian"]}
+              {initialStateData.ethnicity1FormData.ethnicity === "black" && content["reusable-black"]}
+              {initialStateData.ethnicity1FormData.ethnicity === "mixed" && content["reusable-mixed"]}
+              {initialStateData.ethnicity1FormData.ethnicity === "white" && content["reusable-white"]}
+              {initialStateData.ethnicity1FormData.ethnicity === "other" && content["reusable-other"]}
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(3)}>
-              Change <StyledCheckHiddenText>ethnic group</StyledCheckHiddenText>
+              {content["reusable-change"]}{" "}
+              <StyledCheckHiddenText>{content["reusable-ethnic-group"].toLowerCase()}</StyledCheckHiddenText>
             </DTELinkButton>
           </dd>
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
-            <DTEContent>Ethnic background</DTEContent>
+            <DTEContent>{content["reusable-ethnic-background"]}</DTEContent>
           </dt>
           <dd className="govuk-summary-list__value">
             <DTEContent>
-              {initialStateData.ethnicity2FormData.background}
+              {mapParticipantBackgrounds(initialStateData.ethnicity2FormData.background, content)}
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(4)}>
-              Change{" "}
-              <StyledCheckHiddenText>ethnic background</StyledCheckHiddenText>
+              {content["reusable-change"]}{" "}
+              <StyledCheckHiddenText>{content["reusable-ethnic-background"].toLowerCase()}</StyledCheckHiddenText>
             </DTELinkButton>
           </dd>
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
-            <DTEContent>Long-term conditions or illness</DTEContent>
+            <DTEContent>{content["reusable-long-term-conditions-or-illness"]}</DTEContent>
           </dt>
           <dd className="govuk-summary-list__value">
             <DTEContent>
-              {initialStateData.disabilityFormData.disability === "no" && "No"}
-              {initialStateData.disabilityFormData.disability === "yes" &&
-                "Yes"}
-              {initialStateData.disabilityFormData.disability === "notSaying" &&
-                "Prefer not to say"}
+              {initialStateData.disabilityFormData.disability === "no" && content["reusable-no"]}
+              {initialStateData.disabilityFormData.disability === "yes" && content["reusable-yes"]}
+              {initialStateData.disabilityFormData.disability === "notSaying" && content["reusable-prefer-not-to-say"]}
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(5)}>
-              Change{" "}
+              {content["reusable-change"]}{" "}
               <StyledCheckHiddenText>
-                long-term conditions or illness
+                {content["reusable-long-term-conditions-or-illness"].toLowerCase()}
               </StyledCheckHiddenText>
             </DTELinkButton>
           </dd>
@@ -239,20 +208,21 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
         {initialStateData.disabilityFormData.disability === "yes" && (
           <div className="govuk-summary-list__row">
             <dt className="govuk-summary-list__key">
-              <DTEContent>
-                Reduced ability to carry out daily activities
-              </DTEContent>
+              <DTEContent>{content["reusable-reduced-ability-to-carry-out-daily-activities"]}</DTEContent>
             </dt>
             <dd className="govuk-summary-list__value">
               <DTEContent>
-                {initialStateData.disability2FormData.disabilityDescription}
+                {mapParticipantDisabilityDesc(
+                  initialStateData.disability2FormData.disabilityDescription as string,
+                  content
+                )}
               </DTEContent>
             </dd>
             <dd className="govuk-summary-list__actions">
               <DTELinkButton onClick={() => changeStep(6)}>
-                Change{" "}
+                {content["reusable-change"]}{" "}
                 <StyledCheckHiddenText>
-                  reduced ability to carry out daily activities
+                  {content["reusable-reduced-ability-to-carry-out-daily-activities"].toLowerCase()}
                 </StyledCheckHiddenText>
               </DTELinkButton>
             </dd>
@@ -260,42 +230,36 @@ const CheckAnswersForm = (props: CheckAnswersFormProps) => {
         )}
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">
-            <DTEContent>Areas of research</DTEContent>
+            <DTEContent>{content["reusable-areas-of-research"]}</DTEContent>
           </dt>
           <dd className="govuk-summary-list__value">
             <DTEContent>
-              {initialStateData.healthConditionFormData.conditions.length >
-              0 ? (
-                initialStateData.healthConditionFormData.conditions.map(
-                  (condition) => (
-                    <Fragment key={condition}>
-                      {condition}
-                      <br />
-                    </Fragment>
-                  )
-                )
+              {initialStateData.healthConditionFormData.conditions.length > 0 ? (
+                initialStateData.healthConditionFormData.conditions.map((condition) => (
+                  <Fragment key={condition}>
+                    {condition}
+                    <br />
+                  </Fragment>
+                ))
               ) : (
-                <>Not provided</>
+                <>{content["reusable-not-provided"]}</>
               )}
             </DTEContent>
           </dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(7)}>
-              Change{" "}
-              <StyledCheckHiddenText>areas of research</StyledCheckHiddenText>
+              {content["reusable-change"]}{" "}
+              <StyledCheckHiddenText>{content["reusable-areas-of-research"]}</StyledCheckHiddenText>
             </DTELinkButton>
           </dd>
         </div>
       </dl>
 
-      <DTEContent>
-        If you need to change any of your answers later, you can do this in your
-        Be Part of Research account.
-      </DTEContent>
+      {content["register2-check-answers-body"]}
 
-      <DTEButton onClick={() => changeStep(9)}>Complete registration</DTEButton>
+      <DTEButton onClick={() => changeStep(9)}>{content["register2-check-answers-button-complete-reg"]}</DTEButton>
     </>
   );
-};
+}
 
 export default CheckAnswersForm;

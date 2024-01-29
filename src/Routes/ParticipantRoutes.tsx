@@ -39,13 +39,7 @@ const getVanityRoutes = (routeConfig: VanityRoute[]) =>
   ));
 
 export default [
-  <ProtectedRoute
-    path="/Participants/MyDetails"
-    component={UpdateParticipant}
-    strict
-    exact
-    key="updateparticipant"
-  />,
+  <ProtectedRoute path="/Participants/MyDetails" component={UpdateParticipant} strict exact key="updateparticipant" />,
   <ProtectedRoute
     path="/Participants/AccountSettings"
     render={() => {
@@ -114,13 +108,7 @@ export default [
     exact
     key="home"
   />,
-  <ProtectedRoute
-    path="/Participants/CloseAccount"
-    component={CloseAccount}
-    strict
-    exact
-    key="closeaccount"
-  />,
+  <ProtectedRoute path="/Participants/CloseAccount" component={CloseAccount} strict exact key="closeaccount" />,
   <Route
     path="/Participants/AccountClosed"
     render={() => {
@@ -132,10 +120,14 @@ export default [
     key="accountclosed"
   />,
   <Route
+<<<<<<< HEAD
     path={[
       "/Participants/Register/Questions",
       "/Cyfranogwyr/Cofrestru/Cwestiynau",
     ]}
+=======
+    path={["/Participants/Register/Questions", "/Cyfranogwyr/Cofrestru/Cwestiynau"]}
+>>>>>>> ac01bd9979f2872eacf5838ec410192a0126077d
     component={RegsitrationProcess}
     strict
     exact

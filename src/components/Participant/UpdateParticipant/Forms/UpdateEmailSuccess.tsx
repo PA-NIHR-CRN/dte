@@ -1,19 +1,19 @@
 import DocumentTitle from "react-document-title";
 import StepWrapper from "../../../Shared/StepWrapper/StepWrapper";
-import DTERouteLink from "../../../Shared/UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
-import DTEContent from "../../../Shared/UI/DTETypography/DTEContent/DTEContent";
+import { useContext } from "react";
+import { ContentContext } from "../../../../context/ContentContext";
 
-const UpdateEmailSuccess = () => {
+function UpdateEmailSuccess() {
+  const { content } = useContext(ContentContext);
   return (
-    <DocumentTitle title="Your email address has been updated - Volunteer Account - Be Part of Research">
+    <DocumentTitle title={content["update-email-success-document-title"]}>
       <StepWrapper>
-        <DTEHeader as="h1">Your email address has been updated</DTEHeader>
-        <DTEContent>You need to sign back in to your account.</DTEContent>
-        <DTERouteLink to="/">Sign in</DTERouteLink>
+        <DTEHeader as="h1">{content["update-email-success-header"]}</DTEHeader>
+        {content["update-email-success-page"]}
       </StepWrapper>
     </DocumentTitle>
   );
-};
+}
 
 export default UpdateEmailSuccess;

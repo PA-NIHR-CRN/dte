@@ -42,77 +42,46 @@ const StyledRadio = styled(Radios)`
   }
 `;
 
-const DTERadio = memo(
-  ({
-    id,
-    name,
-    label,
-    hint,
-    error,
-    infoText,
-    children,
-    onChange,
-    onBlur,
-  }: Props) => {
-    let ariaDescribedElement: string;
-    if (error !== "" && error !== undefined) {
-      ariaDescribedElement = `${id}--error-message ${id}-legend`;
-    } else {
-      ariaDescribedElement = `${id}-legend`;
-    }
-    if (infoText !== "" && infoText !== undefined) {
-      ariaDescribedElement += ` ${id}-info`;
-    }
-
-    return error !== "" && error !== undefined ? (
-      <StyledFieldset
-        data-testid={`${id}-fieldset`}
-        aria-describedby={ariaDescribedElement}
-      >
-        <StyledFieldsetLegend data-testid={`${id}-legend`} id={`${id}-legend`}>
-          {label}
-        </StyledFieldsetLegend>
-        {infoText && (
-          <StyledHiddenInfoText data-testid={`${id}-info`} id={`${id}-info`}>
-            {infoText}
-          </StyledHiddenInfoText>
-        )}
-        <StyledRadio
-          id={id}
-          name={name}
-          error={error}
-          hint={hint}
-          onChange={onChange}
-          onBlur={onBlur}
-        >
-          {children}
-        </StyledRadio>
-      </StyledFieldset>
-    ) : (
-      <StyledFieldset
-        data-testid={`${id}-fieldset`}
-        aria-describedby={ariaDescribedElement}
-      >
-        <StyledFieldsetLegend data-testid={`${id}-legend`} id={`${id}-legend`}>
-          {label}
-        </StyledFieldsetLegend>
-        {infoText && (
-          <StyledHiddenInfoText data-testid={`${id}-info`} id={`${id}-info`}>
-            {infoText}
-          </StyledHiddenInfoText>
-        )}
-        <StyledRadio
-          id={id}
-          name={name}
-          hint={hint}
-          onChange={onChange}
-          onBlur={onBlur}
-        >
-          {children}
-        </StyledRadio>
-      </StyledFieldset>
-    );
+const DTERadio = memo(({ id, name, label, hint, error, infoText, children, onChange, onBlur }: Props) => {
+  let ariaDescribedElement: string;
+  if (error !== "" && error !== undefined) {
+    ariaDescribedElement = `${id}--error-message ${id}-legend`;
+  } else {
+    ariaDescribedElement = `${id}-legend`;
   }
-);
+  if (infoText !== "" && infoText !== undefined) {
+    ariaDescribedElement += ` ${id}-info`;
+  }
+
+  return error !== "" && error !== undefined ? (
+    <StyledFieldset data-testid={`${id}-fieldset`} aria-describedby={ariaDescribedElement}>
+      <StyledFieldsetLegend data-testid={`${id}-legend`} id={`${id}-legend`}>
+        {label}
+      </StyledFieldsetLegend>
+      {infoText && (
+        <StyledHiddenInfoText data-testid={`${id}-info`} id={`${id}-info`}>
+          {infoText}
+        </StyledHiddenInfoText>
+      )}
+      <StyledRadio id={id} name={name} error={error} hint={hint} onChange={onChange} onBlur={onBlur}>
+        {children}
+      </StyledRadio>
+    </StyledFieldset>
+  ) : (
+    <StyledFieldset data-testid={`${id}-fieldset`} aria-describedby={ariaDescribedElement}>
+      <StyledFieldsetLegend data-testid={`${id}-legend`} id={`${id}-legend`}>
+        {label}
+      </StyledFieldsetLegend>
+      {infoText && (
+        <StyledHiddenInfoText data-testid={`${id}-info`} id={`${id}-info`}>
+          {infoText}
+        </StyledHiddenInfoText>
+      )}
+      <StyledRadio id={id} name={name} hint={hint} onChange={onChange} onBlur={onBlur}>
+        {children}
+      </StyledRadio>
+    </StyledFieldset>
+  );
+});
 
 export default DTERadio;

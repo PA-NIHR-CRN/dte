@@ -30,59 +30,43 @@ const StyledSelect = styled(Select)`
 `;
 const StyledSelectOption = styled(Select.Option)``;
 
-const DTESelect = memo(
-  ({
-    id,
-    name,
-    label,
-    hint,
-    required,
-    error,
-    defaultValue,
-    options,
-    onValueChange,
-  }: Props) => {
-    const optionElements = options.map((option) => (
-      <StyledSelectOption
-        value={option.value}
-        key={option.value}
-        data-testid={option?.testID}
-      >
-        {option.text}
-      </StyledSelectOption>
-    ));
+const DTESelect = memo(({ id, name, label, hint, required, error, defaultValue, options, onValueChange }: Props) => {
+  const optionElements = options.map((option) => (
+    <StyledSelectOption value={option.value} key={option.value} data-testid={option?.testID}>
+      {option.text}
+    </StyledSelectOption>
+  ));
 
-    return error !== "" && error !== undefined ? (
-      <StyledSelect
-        id={id}
-        name={name}
-        label={label}
-        hint={hint}
-        required={required}
-        aria-required={required}
-        aria-describedby={`${id}--error-message`}
-        error={error}
-        aria-invalid
-        onChange={(e: ChangeEvent<HTMLSelectElement>) => onValueChange(e)}
-        defaultValue={defaultValue}
-      >
-        {optionElements}
-      </StyledSelect>
-    ) : (
-      <StyledSelect
-        id={id}
-        name={name}
-        label={label}
-        hint={hint}
-        required={required}
-        aria-required={required}
-        onChange={(e: ChangeEvent<HTMLSelectElement>) => onValueChange(e)}
-        defaultValue={defaultValue}
-      >
-        {optionElements}
-      </StyledSelect>
-    );
-  }
-);
+  return error !== "" && error !== undefined ? (
+    <StyledSelect
+      id={id}
+      name={name}
+      label={label}
+      hint={hint}
+      required={required}
+      aria-required={required}
+      aria-describedby={`${id}--error-message`}
+      error={error}
+      aria-invalid
+      onChange={(e: ChangeEvent<HTMLSelectElement>) => onValueChange(e)}
+      defaultValue={defaultValue}
+    >
+      {optionElements}
+    </StyledSelect>
+  ) : (
+    <StyledSelect
+      id={id}
+      name={name}
+      label={label}
+      hint={hint}
+      required={required}
+      aria-required={required}
+      onChange={(e: ChangeEvent<HTMLSelectElement>) => onValueChange(e)}
+      defaultValue={defaultValue}
+    >
+      {optionElements}
+    </StyledSelect>
+  );
+});
 
 export default DTESelect;

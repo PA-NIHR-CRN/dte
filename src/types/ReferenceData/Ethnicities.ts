@@ -3,6 +3,7 @@ export interface Ethnicity {
   shortName: string;
   description: string;
   backgrounds: string[];
+  additionalDesc: string;
 }
 
 export interface Ethnicities extends Record<string, Ethnicity> {

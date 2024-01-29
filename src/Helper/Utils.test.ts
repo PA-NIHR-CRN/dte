@@ -2,9 +2,7 @@ import Utils from "./Utils";
 
 describe("Utils Tests", () => {
   test("Invalid DTE status is recognised.", () => {
-    expect(
-      Utils.IsCPMSStatusDTEReady("This is an incorrect Status")
-    ).toBeFalsy();
+    expect(Utils.IsCPMSStatusDTEReady("This is an incorrect Status")).toBeFalsy();
   });
   test("Valid DTE status are recognised.", () => {
     const statuses = process.env?.REACT_APP_DTE_READY_STATUS_LIST?.split("#");

@@ -1,28 +1,66 @@
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import ReactGA from "react-ga";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import DTEContent from "../../../components/Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEDetails from "../../../components/Shared/UI/DTEDetails/DTEDetails";
 import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTERouteLink from "../../../components/Shared/UI/DTERouteLink/DTERouteLink";
 import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
-import DTEButton from "../../../components/Shared/UI/DTEButton/DTEButton";
+import React, { useContext } from "react";
+import { ContentContext } from "../../../context/ContentContext";
+import { baseButton } from "../../../components/Shared/UI/DTEButton/DTEButton";
 
-const ButtonWrapper = styled.div`
-  margin: 1rem 0;
+interface WrapperProps {
+  margin?: string;
+}
+
+const StyledLink = styled(Link)`
+  text-underline-offset: 2.5px;
+  background-color: ${(props) => props.theme.NIHR.LinkBlue};
+  text-decoration-color: ${(props) => props.theme.NIHR.LinkBlue};
+  &:focus {
+    color: ${(props) => props.theme.NIHR.Blue};
+    text-decoration: none;
+    background-color: ${(props) => props.theme.NIHR.Yellow} !important;
+    box-shadow:
+      0 -2px ${(props) => props.theme.NIHR.Yellow},
+      0 4px ${(props) => props.theme.NIHR.Blue} !important;
+    border: 0.25rem solid ${(props) => props.theme.NIHR.Yellow} !important;
+  }
+  &:hover {
+    color: ${(props) => props.theme.NIHR.Blue};
+    text-decoration-color: ${(props) => props.theme.NIHR.Blue};
+    text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
+    &:focus {
+      text-decoration-line: none;
+      text-decoration-thickness: none;
+    }
+  }
+  &:visited {
+    color: ${(props) => props.theme.NIHR.LinkBlue};
+    &:focus {
+      color: ${(props) => props.theme.NIHR.Blue};
+    }
+    &:hover {
+      color: ${(props) => props.theme.NIHR.Blue};
+    }
+  }
+  &.button-route {
+    ${baseButton};
+  }
 `;
 
-const AccordionWrapper = styled.div`
-  margin: 2rem 0;
+const Wrapper = styled.div<WrapperProps>`
+  margin: ${({ margin }) => margin || "1rem 0"};
 `;
 
-const NhsPreRegistration = () => {
-  const history = useHistory();
+function NhsPreRegistration() {
+  const { content } = useContext(ContentContext);
   return (
     <>
       <Helmet
-        title="Be Part of Research"
+        title={content["introduction-document-title"]}
         meta={[
           {
             name: `robots`,
@@ -31,30 +69,12 @@ const NhsPreRegistration = () => {
         ]}
       />
       <StepWrapper>
-        <DTEHeader as="h1">Welcome to Be Part of Research</DTEHeader>
-        <DTEContent>
-          Be Part of Research enables you to find and take part in a range of
-          health and care research.
-        </DTEContent>
-        <DTEContent>
-          Health research helps to discover new and better ways to treat
-          diseases, improve the NHS and the quality of care across the country.
-        </DTEContent>
-        <DTEContent>
-          Anyone can take part in research whether you have a health condition
-          or not. You could take part in research at a local hospital, GP
-          practice – or even at home.
-        </DTEContent>
-        <DTEContent>
-          It&apos;s easy to get involved. Simply sign up online and choose the
-          health conditions you are interested in. You will be sent details of
-          approved studies that match your interests to decide if you want to
-          take part.
-        </DTEContent>
-        <AccordionWrapper>
-          <DTEDetails summary="More information about registering with Be Part of Research">
+        <DTEHeader as="h1">{content["introduction-header"]}</DTEHeader>
+        {content["introduction-body"]}
+        <Wrapper margin="2rem 0">
+          <DTEDetails summary={content["introduction-accordion-header"]}>
             <DTEContent>
-              Find out more information about registering your account with{" "}
+              {content["introduction-accordion-body1"]}{" "}
               <DTERouteLink
                 external
                 target="_blank"
@@ -70,49 +90,45 @@ const NhsPreRegistration = () => {
                   )
                 }
               >
-                Be Part of Research
+                {content["introduction-accordion-link"]}
               </DTERouteLink>
-              . Please use the back button on your device to return to this
-              page.
+              {content["introduction-accordion-body2"]}
             </DTEContent>
           </DTEDetails>
-        </AccordionWrapper>
-        <ButtonWrapper>
-          <DTEButton
+        </Wrapper>
+        <Wrapper>
+          <StyledLink
+            to="/Participants/Register"
+            role="button"
+            draggable="false"
+            className="govuk-button govuk-button--start button-route"
+            data-module="govuk-button"
             onClick={() => {
-              history.push("/Participants/Register");
               ReactGA.event({
                 category: "Internal Link Clicks",
-                action:
-                  "https://volunteer.bepartofresearch.nihr.ac.uk/Participants/Register",
+                action: "https://volunteer.bepartofresearch.nihr.ac.uk/Participants/Register",
                 label: "Register",
               });
             }}
-            ariaLabel="Continue to register for an account"
           >
-            Register
-          </DTEButton>
-        </ButtonWrapper>
-        <DTEContent>Already have an account?</DTEContent>
-        <ButtonWrapper>
-          <DTEButton
-            $outlined
-            onClick={() => {
-              history.push("/Participants/Options");
-              ReactGA.event({
-                category: "Internal Link Clicks",
-                action:
-                  "https://volunteer.bepartofresearch.nihr.ac.uk/Participants/Options",
-                label: "Sign in",
-              });
-            }}
-          >
-            Sign in
-          </DTEButton>
-        </ButtonWrapper>
+            {content["introduction-button-start-now"]}
+            <svg
+              className="govuk-button__start-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="17.5"
+              height="19"
+              viewBox="0 0 33 40"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+            </svg>
+          </StyledLink>
+        </Wrapper>
+        <Wrapper>{content["introduction-text-sign-in"]}</Wrapper>
       </StepWrapper>
     </>
   );
-};
+}
 
 export default NhsPreRegistration;

@@ -14,6 +14,10 @@ env:
   REACT_APP_NHS_LOGIN_RESPONSE_TYPE: ${{secrets.REACT_APP_NHS_LOGIN_RESPONSE_TYPE}}
   REACT_APP_NHS_LOGIN_SCOPE: ${{secrets.REACT_APP_NHS_LOGIN_SCOPE}}
   REACT_APP_COOKIE_DOMAIN: ".test.volunteer.bepartofresearch.nihr.ac.uk"
+  REACT_APP_CONTENTFUL_SPACE_ID: ${{secrets.REACT_APP_CONTENTFUL_SPACE_ID}}
+  REACT_APP_CONTENTFUL_DELIVERY_TOKEN: ${{secrets.REACT_APP_CONTENTFUL_DELIVERY_TOKEN}}
+  REACT_APP_CONTENTFUL_ENVIRONMENT: ${{secrets.REACT_APP_CONTENTFUL_ENVIRONMENT}}
+
 
 jobs:
   build:
@@ -22,7 +26,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
           cache: 'yarn'
           cache-dependency-path: "yarn.lock"
       - name: Configure AWS credentials - All
@@ -33,13 +37,12 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Yarn Install
         run: yarn install
-      - name: Runing  ESLint
+      - name: Running  ESLint
         run: yarn lintnofix
       - name: Build Files
         run: yarn build
       - name: Running Unit Tests
         run: yarn test
-
       - name: Deploy to S3 - QA
         shell: bash
         run: |

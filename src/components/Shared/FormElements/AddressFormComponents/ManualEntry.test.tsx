@@ -1,10 +1,5 @@
 import { axe, toHaveNoViolations } from "jest-axe";
-import {
-  render,
-  fireEvent,
-  screen,
-  waitFor,
-} from "../../../../Helper/test-utils";
+import { render, fireEvent, screen, waitFor } from "../../../../Helper/test-utils";
 import "@testing-library/jest-dom";
 import ManualEntry from "./ManualEntry";
 
@@ -49,22 +44,12 @@ const invalidPostcodeData = {
 describe("ManualEntry", () => {
   it("renders", () => {
     const mockOnDataChange = jest.fn();
-    render(
-      <ManualEntry
-        initialStateData={testData}
-        onDataChange={mockOnDataChange}
-      />
-    );
+    render(<ManualEntry initialStateData={testData} onDataChange={mockOnDataChange} />);
   });
 
   it("must render all of the input fields", async () => {
     const mockOnDataChange = jest.fn();
-    render(
-      <ManualEntry
-        initialStateData={testData}
-        onDataChange={mockOnDataChange}
-      />
-    );
+    render(<ManualEntry initialStateData={testData} onDataChange={mockOnDataChange} />);
 
     await waitFor(() => {
       expect(screen.getByText("Address line 1")).toBeInTheDocument();
@@ -78,12 +63,7 @@ describe("ManualEntry", () => {
 
   it("must allow submit after required fields are entered", async () => {
     const mockOnDataChange = jest.fn();
-    render(
-      <ManualEntry
-        initialStateData={emptyData}
-        onDataChange={mockOnDataChange}
-      />
-    );
+    render(<ManualEntry initialStateData={emptyData} onDataChange={mockOnDataChange} />);
 
     await waitFor(() => {
       fireEvent.input(screen.getByLabelText("Address line 1"), {
@@ -109,12 +89,7 @@ describe("ManualEntry", () => {
 
   it("must show an error message if required fields are not entered", async () => {
     const mockOnDataChange = jest.fn();
-    render(
-      <ManualEntry
-        initialStateData={emptyData}
-        onDataChange={mockOnDataChange}
-      />
-    );
+    render(<ManualEntry initialStateData={emptyData} onDataChange={mockOnDataChange} />);
 
     await waitFor(() => {
       fireEvent.click(screen.getByText("Continue"));
@@ -132,16 +107,12 @@ describe("ManualEntry", () => {
 
   it("must show an error message if required fields contain only whitespace", async () => {
     const mockOnDataChange = jest.fn();
-    render(
-      <ManualEntry
-        initialStateData={whitespaceData}
-        onDataChange={mockOnDataChange}
-      />
-    );
+    render(<ManualEntry initialStateData={whitespaceData} onDataChange={mockOnDataChange} />);
 
     await waitFor(() => {
       fireEvent.click(screen.getByText("Continue"));
       expect(mockOnDataChange).not.toHaveBeenCalled();
+
 
       expect(
         screen.getByText("Enter the first line of your address")
@@ -168,6 +139,7 @@ describe("ManualEntry", () => {
       expect(mockOnDataChange).not.toHaveBeenCalled();
 
       expect(screen.getByText("Enter a real postcode")).toBeInTheDocument();
+
     });
   });
 });
@@ -175,12 +147,8 @@ describe("ManualEntry", () => {
 describe("Accessibility test", () => {
   it("should not fail any accessibility tests", async () => {
     const mockOnDataChange = jest.fn();
-    const { container } = render(
-      <ManualEntry
-        initialStateData={testData}
-        onDataChange={mockOnDataChange}
-      />
-    );
+    const { container } = render(<ManualEntry initialStateData={testData} onDataChange={mockOnDataChange} />);
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -189,12 +157,7 @@ describe("Accessibility test", () => {
 describe("Manual Entry must display error summary header on invalid submission", () => {
   it("renders correctly", async () => {
     const mockOnDataChange = jest.fn();
-    render(
-      <ManualEntry
-        initialStateData={emptyData}
-        onDataChange={mockOnDataChange}
-      />
-    );
+    render(<ManualEntry initialStateData={emptyData} onDataChange={mockOnDataChange} />);
 
     await waitFor(() => {
       fireEvent.click(screen.getByText("Continue"));
