@@ -37,6 +37,15 @@ const whitespaceData = {
   postcode: "    ",
 };
 
+const invalidPostcodeData = {
+  addressLine1: "1, Test Street",
+  addressLine2: "Borough",
+  addressLine3: "",
+  addressLine4: "",
+  town: "Greater London",
+  postcode: "invalid postcode",
+};
+
 describe("ManualEntry", () => {
   it("renders", () => {
     const mockOnDataChange = jest.fn();
@@ -141,6 +150,24 @@ describe("ManualEntry", () => {
         screen.getByText("Enter the town of your address")
       ).toBeInTheDocument();
       expect(screen.getByText("Enter your postcode")).toBeInTheDocument();
+    });
+  });
+
+  it("must show an invalid postcode error message on invalid postcode submission", async () => {
+    const mockOnDataChange = jest.fn();
+
+    render(
+      <ManualEntry
+        initialStateData={invalidPostcodeData}
+        onDataChange={mockOnDataChange}
+      />
+    );
+
+    await waitFor(() => {
+      fireEvent.click(screen.getByText("Continue"));
+      expect(mockOnDataChange).not.toHaveBeenCalled();
+
+      expect(screen.getByText("Enter a real postcode")).toBeInTheDocument();
     });
   });
 });

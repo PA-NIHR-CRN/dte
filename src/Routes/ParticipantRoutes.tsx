@@ -15,6 +15,29 @@ import AccountClosed from "../components/Participant/UpdateParticipant/AccountCl
 import Newsletter from "../components/Participant/UpdateParticipant/Newsletter";
 import NhsPreRegistration from "../pages/NHS/NhsPreRegistration";
 
+type VanityRoute = {
+  campaign: string;
+  source: string;
+};
+
+const getVanityRoutes = (routeConfig: VanityRoute[]) =>
+  routeConfig.map(({ campaign, source }) => (
+    <Route
+      path={`/${campaign}`}
+      render={() => {
+        ReactGA.pageview(
+          `/participants/introduction?utm_source=${source}&utm_medium=${
+            source === "poster" ? "print" : "referral"
+          }&utm_campaign=${campaign}`
+        );
+        return <NhsPreRegistration />;
+      }}
+      strict
+      exact
+      key={`${campaign}`}
+    />
+  ));
+
 export default [
   <ProtectedRoute
     path="/Participants/MyDetails"
@@ -63,6 +86,14 @@ export default [
     exact
     key="nhspreregistration"
   />,
+  ...getVanityRoutes([
+    { campaign: "nhsenwl", source: "poster" },
+    { campaign: "nhseswl", source: "poster" },
+    { campaign: "nhsegp", source: "poster" },
+    { campaign: "nhsegptext1", source: "sms" },
+    { campaign: "nhsegptext2", source: "sms" },
+    { campaign: "nhsegptext3", source: "sms" },
+  ]),
   <Route
     path="/Participants/PasswordUpdated"
     render={() => {
@@ -101,7 +132,10 @@ export default [
     key="accountclosed"
   />,
   <Route
-    path="/Participants/Register/Questions"
+    path={[
+      "/Participants/Register/Questions",
+      "/Cyfranogwyr/Cofrestru/Cwestiynau",
+    ]}
     component={RegsitrationProcess}
     strict
     exact
@@ -115,7 +149,7 @@ export default [
     key="continueregistration"
   />,
   <Route
-    path="/Participants/Register"
+    path={["/Participants/Register", "/Cyfranogwyr/Cofrestrwch"]}
     render={() => {
       ReactGA.pageview("/register");
       return <StartRegistrationProcess />;
