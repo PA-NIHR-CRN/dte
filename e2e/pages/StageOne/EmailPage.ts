@@ -64,25 +64,6 @@ export default class EmailPage {
     assertComponentsVisible([this.emailLabel, this.emailInput]);
   }
 
-  // --- CLICK METHODS --- //
-  async clickBack() {
-    await this.backButton.click();
-  }
-
-  async clickContinue() {
-    await this.continueButton.click();
-  }
-
-  async toggleSummaryText() {
-    await this.summaryTextPreview.click();
-  }
-
-  // --- FILLING IN FORM METHODS --- //
-  async assertFillEmailField(email: string) {
-    await this.emailInput.click();
-    await this.emailInput.fill(email);
-  }
-
   // --- ERRORS LOGIC --- //
   async assertError(message: string) {
     await assertErrorUtil(this.errorMessage, message);

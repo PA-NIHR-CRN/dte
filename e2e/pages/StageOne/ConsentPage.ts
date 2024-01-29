@@ -116,19 +116,6 @@ export default class ConsentPage {
   }
 
   // --- CLICK METHODS --- //
-
-  async clickBack() {
-    await this.backButton.click();
-  }
-
-  async clickRegister() {
-    await this.registerButton.click();
-  }
-
-  async clickCancel() {
-    await this.cancelButton.click();
-  }
-
   async clickBePartOfResearchLink1() {
     await this.bePartOfResearchLink1.click();
   }
@@ -137,11 +124,6 @@ export default class ConsentPage {
   }
   async clickBePartOfResearchLink3() {
     await this.bePartOfResearchLink3.click();
-  }
-
-  // --- FILLING IN FORM METHODS --- //
-  async assertClickCheckbox() {
-    await this.confirmCheckbox.click();
   }
 
   // --- ERROR LOGIC --- //

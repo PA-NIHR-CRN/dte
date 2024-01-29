@@ -55,9 +55,7 @@ export default class DateOfBirthPage {
 
   // --- LOAD PAGE METHODS --- //
   async waitForPageLoad() {
-    await this.page.waitForSelector('h1:text("What is your date of birth?")', {
-      state: "visible",
-    });
+    await expect(this.DoBPageHeading).toBeVisible();
   }
 
   // --- ON LOAD METHODS --- //
@@ -88,36 +86,6 @@ export default class DateOfBirthPage {
       this.yearLabel,
       this.yearInput,
     ]);
-  }
-
-  // --- CLICK METHODS --- //
-  // check for back button click
-  async clickBack() {
-    await this.backButton.click();
-  }
-
-  async clickContinue() {
-    await this.continueButton.click();
-  }
-
-  async toggleSummaryText() {
-    await this.summaryTextPreview.click();
-  }
-
-  // --- FILLING IN FORM METHODS --- //
-  async fillDayField(day: string) {
-    await this.dayInput.click();
-    await this.dayInput.fill(day);
-  }
-
-  async fillMonthField(month: string) {
-    await this.monthInput.click();
-    await this.monthInput.fill(month);
-  }
-
-  async fillYearField(year: string) {
-    await this.yearInput.click();
-    await this.yearInput.fill(year);
   }
 
   // --- ERROR CHECKING METHODS --- //

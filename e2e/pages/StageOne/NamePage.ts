@@ -1,6 +1,6 @@
 import { Locator, Page, expect } from "@playwright/test";
 import { assertErrorUtil } from "../../utils/errorUtils";
-
+import { assertComponentsVisible } from "../../utils/visibilityUtils";
 export default class NamePage {
   // variables
   readonly page: Page;
@@ -42,22 +42,22 @@ export default class NamePage {
   // --- ON LOAD METHODS --- //
   // check button components are visible on load
   async assertButtonsVisible() {
-    await expect(this.backButton).toBeVisible();
-    await expect(this.continueButton).toBeVisible();
+    await assertComponentsVisible([this.backButton, this.continueButton]);
   }
 
   // check all text components are visible on load
   async assertTextVisible() {
-    await expect(this.progressDisplay).toBeVisible();
-    await expect(this.namePageHeading).toBeVisible();
+    await assertComponentsVisible([this.progressDisplay, this.namePageHeading]);
   }
 
   // check form components are visible on load
   async assertFormVisible() {
-    await expect(this.firstNameLabel).toBeVisible();
-    await expect(this.firstNameInput).toBeVisible();
-    await expect(this.lastNameLabel).toBeVisible();
-    await expect(this.lastNameInput).toBeVisible();
+    await assertComponentsVisible([
+      this.firstNameLabel,
+      this.firstNameInput,
+      this.lastNameLabel,
+      this.lastNameInput,
+    ]);
   }
 
   // --- CORRECT CONTENT METHODS --- //
@@ -69,46 +69,6 @@ export default class NamePage {
     await expect(this.firstNameLabel).toHaveText("First name");
     await expect(this.lastNameLabel).toHaveText("Last name");
     await expect(this.continueButton).toHaveText("Continue");
-  }
-
-  // --- CLICK METHODS --- //
-  // check for back button click
-  async clickBack() {
-    await this.backButton.click();
-  }
-
-  async clickContinue() {
-    await this.continueButton.click();
-  }
-
-  // --- FILLING IN FORM METHODS --- //
-  // filling the first name input field
-  async fillFirstName(firstName: string) {
-    await this.firstNameInput.click();
-    await this.firstNameInput.fill(firstName);
-  }
-
-  // filling the last name input field
-  async fillLastName(lastName: string) {
-    await this.lastNameInput.click();
-    await this.lastNameInput.fill(lastName);
-  }
-
-  // --- ERROR CHECKING FORM --- //
-
-  async assertBothErrorMessages() {
-    await assertErrorUtil(this.firstNameError, "Error: Enter your first name");
-    await assertErrorUtil(this.lastNameError, "Error: Enter your last name");
-  }
-
-  async assetFirstNameError() {
-    await expect(this.lastNameError).toBeHidden();
-    await assertErrorUtil(this.firstNameError, "Error: Enter your first name");
-  }
-
-  async assertLastNameError() {
-    await expect(this.firstNameError).toBeHidden();
-    await assertErrorUtil(this.lastNameError, "Error: Enter your last name");
   }
 
   // Check no error messages visible before continue button pressed

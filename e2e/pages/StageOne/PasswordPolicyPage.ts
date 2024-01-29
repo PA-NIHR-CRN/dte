@@ -88,16 +88,6 @@ export default class PasswordPolicyPage {
     await assertErrorsHidden(this.confirmPasswordError);
   }
 
-  // --- CLICK METHODS --- //
-
-  async clickBack() {
-    await this.backButton.click();
-  }
-
-  async clickContinue() {
-    await this.continueButton.click();
-  }
-
   // --- FILLING IN FORM METHODS --- //
   async assertFillCreatePasswordField(password1: string) {
     await this.createPasswordInput.click();
