@@ -1,4 +1,4 @@
-import { Fragment, ReactNode, useContext } from "react";
+import { Fragment, useContext } from "react";
 import styled from "styled-components";
 import { ContinueRegistrationState } from "../../../../../types/ParticipantTypes";
 import DTEHeader from "../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
@@ -40,9 +40,7 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
           <dt className="govuk-summary-list__key">
             <DTEContent>{content["reusable-home-address"]}</DTEContent>
           </dt>
-          <dd className="govuk-summary-list__value">
-            {formatDisplayAddress(initialStateData.addressFormData)}
-          </dd>
+          <dd className="govuk-summary-list__value">{formatDisplayAddress(initialStateData.addressFormData)}</dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(0)}>
               {content["reusable-change"]}{" "}

@@ -107,11 +107,7 @@ export const capitaliseWords = (input: string) =>
   input
     .toLowerCase()
     .split(" ")
-    .map((word) =>
-      /\d/.test(word)
-        ? word.toUpperCase()
-        : word.charAt(0).toUpperCase() + word.slice(1)
-    )
+    .map((word) => (/\d/.test(word) ? word.toUpperCase() : word.charAt(0).toUpperCase() + word.slice(1)))
     .join(" ");
 
 export const formatDisplayAddress = (address: any) => {
@@ -131,34 +127,19 @@ export const formatDisplayAddress = (address: any) => {
     formattedCheckAddress = capitaliseWords(address.address.addressLine1);
   }
   if (address.address.addressLine2) {
-    formattedCheckAddress = lineManagement(
-      formattedCheckAddress,
-      capitaliseWords(address.address.addressLine2)
-    );
+    formattedCheckAddress = lineManagement(formattedCheckAddress, capitaliseWords(address.address.addressLine2));
   }
   if (address.address.addressLine3) {
-    formattedCheckAddress = lineManagement(
-      formattedCheckAddress,
-      capitaliseWords(address.address.addressLine3)
-    );
+    formattedCheckAddress = lineManagement(formattedCheckAddress, capitaliseWords(address.address.addressLine3));
   }
   if (address.address.addressLine4) {
-    formattedCheckAddress = lineManagement(
-      formattedCheckAddress,
-      capitaliseWords(address.address.addressLine4)
-    );
+    formattedCheckAddress = lineManagement(formattedCheckAddress, capitaliseWords(address.address.addressLine4));
   }
   if (address.address.town) {
-    formattedCheckAddress = lineManagement(
-      formattedCheckAddress,
-      capitaliseWords(address.address.town)
-    );
+    formattedCheckAddress = lineManagement(formattedCheckAddress, capitaliseWords(address.address.town));
   }
   if (address.postcode) {
-    formattedCheckAddress = lineManagement(
-      formattedCheckAddress,
-      address.postcode
-    );
+    formattedCheckAddress = lineManagement(formattedCheckAddress, address.postcode);
   }
 
   return (<DTEContent>{formattedCheckAddress}</DTEContent>) as ReactNode;

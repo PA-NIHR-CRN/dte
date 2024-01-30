@@ -4,17 +4,10 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useContext, useEffect, useState } from "react";
 import { ContentContext } from "../../../context/ContentContext";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
-import ManualEntry, { ManualEntryData } from "./AddressFormComponents/ManualEntry";
 import FormBaseProps from "./FormBaseProps";
-import PostcodeLookup, {
-  PostcodeLookupData,
-} from "./AddressFormComponents/PostcodeLookup";
-import ManualEntry, {
-  ManualEntryData,
-} from "./AddressFormComponents/ManualEntry";
-import SelectAddress, {
-  SelectAddressData,
-} from "./AddressFormComponents/SelectAddress";
+import PostcodeLookup, { PostcodeLookupData } from "./AddressFormComponents/PostcodeLookup";
+import ManualEntry, { ManualEntryData } from "./AddressFormComponents/ManualEntry";
+import SelectAddress, { SelectAddressData } from "./AddressFormComponents/SelectAddress";
 import { Address } from "../../../types/ParticipantTypes";
 
 export type AddressFormData = {

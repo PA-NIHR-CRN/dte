@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState, useRef, useContext } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import ReactGA from "react-ga";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
@@ -22,11 +22,8 @@ import MobileNumberForm, { MobileFormData } from "../../Shared/FormElements/Mobi
 import SexForm, { SexFormData } from "../../Shared/FormElements/SexForm";
 import NameForm, { NameFormData } from "../../Shared/FormElements/NameForm";
 import Utils, { formatDisplayAddress } from "../../../Helper/Utils";
-import Disability2Form, {
-  Disability2FormData,
-} from "../../Shared/FormElements/Disability2Form";
+import Disability2Form, { Disability2FormData } from "../../Shared/FormElements/Disability2Form";
 import { AuthContext } from "../../../context/AuthContext";
-import { capitaliseWords } from "../../../Helper/Utils";
 import { ContentContext } from "../../../context/ContentContext";
 import { UserContext } from "../../../context/UserContext";
 import getEthnicities from "../../../data/ethnicityData";
