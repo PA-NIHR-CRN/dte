@@ -37,7 +37,7 @@ const DTESelect = memo(
   ({ id, name, label, hint, required, error, defaultValue, options, onValueChange, isCapitalised = false }: Props) => {
     const optionElements = options.map((option) => (
       <StyledSelectOption value={option.value} key={option.value} data-testid={option?.testID}>
-        {isCapitalised ? capitaliseWords(option.text) : option.text}
+        {isCapitalised ? capitaliseWords(option.text || "") : option.text || ""}
       </StyledSelectOption>
     ));
 
