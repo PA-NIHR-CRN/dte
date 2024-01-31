@@ -115,7 +115,7 @@ function PostcodeLookup(props: PostcodeLookupProps) {
           }`,
           postcode: "",
         },
-        ...content.map((addressFromApi: Address) => {
+        ...addresses.map((addressFromApi: Address) => {
           return {
             addressLine1: addressFromApi.addressLine1,
             addressLine2: addressFromApi.addressLine2,

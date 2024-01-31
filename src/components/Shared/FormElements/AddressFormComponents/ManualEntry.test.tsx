@@ -48,7 +48,7 @@ describe("ManualEntry", () => {
       expect(screen.getByText("Address line 3 (optional)")).toBeInTheDocument();
       expect(screen.getByText("Address line 4 (optional)")).toBeInTheDocument();
       expect(screen.getByText("Town")).toBeInTheDocument();
-      expect(screen.getByText("Postcode (optional)")).toBeInTheDocument();
+      expect(screen.getByText("Postcode")).toBeInTheDocument();
     });
   });
 

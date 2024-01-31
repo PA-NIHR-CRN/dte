@@ -1279,9 +1279,7 @@ describe("Update participant address", () => {
     act(() => {
       fireEvent.click(addressLookupButtons[2]);
     });
-    const updatedAddress = await screen.findByText(
-      /Royal Mail Swansea Mail Centre/
-    );
+    const updatedAddress = await screen.findByText(/Royal Mail Swansea Mail Centre/);
     expect(updatedAddress).toBeInTheDocument();
   });
 
@@ -1303,7 +1301,7 @@ describe("Update participant address", () => {
     const addressEditor3 = await screen.findByLabelText("Address line 3 (optional)");
     const addressEditor4 = await screen.findByLabelText("Address line 4 (optional)");
     const townEditor = await screen.findByLabelText("Town");
-    const postCodeEditor = await screen.findByLabelText("Postcode (optional)");
+    const postCodeEditor = await screen.findByLabelText("Postcode");
     const manualAddressButtons = await screen.findAllByRole("button");
 
     expect(manualAddressButtons).toHaveLength(3);
