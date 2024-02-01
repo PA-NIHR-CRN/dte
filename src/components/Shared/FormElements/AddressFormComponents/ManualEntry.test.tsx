@@ -95,13 +95,9 @@ describe("ManualEntry", () => {
       fireEvent.click(screen.getByText("Continue"));
       expect(mockOnDataChange).not.toHaveBeenCalled();
 
-      expect(
-        screen.getByText("Enter the first line of your address")
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText("Enter the town of your address")
-      ).toBeInTheDocument();
-      expect(screen.getByText("Enter your postcode")).toBeInTheDocument();
+      expect(screen.getByText("Enter the first line of your address")).toBeInTheDocument();
+      expect(screen.getByText("Enter the town of your address")).toBeInTheDocument();
+      expect(screen.getByText("Enter a postcode")).toBeInTheDocument();
     });
   });
 
@@ -113,33 +109,22 @@ describe("ManualEntry", () => {
       fireEvent.click(screen.getByText("Continue"));
       expect(mockOnDataChange).not.toHaveBeenCalled();
 
-
-      expect(
-        screen.getByText("Enter the first line of your address")
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText("Enter the town of your address")
-      ).toBeInTheDocument();
-      expect(screen.getByText("Enter your postcode")).toBeInTheDocument();
+      expect(screen.getByText("Enter the first line of your address")).toBeInTheDocument();
+      expect(screen.getByText("Enter the town of your address")).toBeInTheDocument();
+      expect(screen.getByText("Enter a real postcode")).toBeInTheDocument();
     });
   });
 
   it("must show an invalid postcode error message on invalid postcode submission", async () => {
     const mockOnDataChange = jest.fn();
 
-    render(
-      <ManualEntry
-        initialStateData={invalidPostcodeData}
-        onDataChange={mockOnDataChange}
-      />
-    );
+    render(<ManualEntry initialStateData={invalidPostcodeData} onDataChange={mockOnDataChange} />);
 
     await waitFor(() => {
       fireEvent.click(screen.getByText("Continue"));
       expect(mockOnDataChange).not.toHaveBeenCalled();
 
       expect(screen.getByText("Enter a real postcode")).toBeInTheDocument();
-
     });
   });
 });
