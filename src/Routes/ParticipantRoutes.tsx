@@ -80,13 +80,15 @@ export default [
     key="nhspreregistration"
   />,
   ...getVanityRoutes([
-    { campaign: "nhsgp1", source: "sms", medium: "referral" },
-    { campaign: "nhsgp2", source: "sms", medium: "referral" },
-    { campaign: "nhsgp3", source: "sms", medium: "referral" },
+    { campaign: "nhsgp1", source: "sms", medium: "sms" },
+    { campaign: "nhsgp2", source: "sms", medium: "sms" },
+    { campaign: "nhsgp3", source: "sms", medium: "sms" },
     { campaign: "nhsgp4", source: "sms", medium: "referral" },
-    { campaign: "nhsgp5", source: "leaflet", medium: "referral" },
-    { campaign: "nhsren1", source: "leaflet", medium: "referral" },
-    { campaign: "nhsren2", source: "leaflet", medium: "referral" },
+    { campaign: "nhsgp5", source: "leaflet", medium: "print" },
+    { campaign: "nhsren1", source: "leaflet", medium: "print" },
+    { campaign: "nhsren2", source: "leaflet", medium: "print" },
+    { campaign: "nhsren3", source: "leaflet", medium: "print" },
+    { campaign: "nhsren4", source: "leaflet", medium: "print" },
   ]),
   <Route
     path="/Participants/PasswordUpdated"
