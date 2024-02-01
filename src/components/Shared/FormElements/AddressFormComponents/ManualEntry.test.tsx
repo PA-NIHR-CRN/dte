@@ -29,7 +29,16 @@ const whitespaceData = {
   addressLine3: "",
   addressLine4: "    ",
   town: "",
-  postcode: "",
+  postcode: "    ",
+};
+
+const invalidPostcodeData = {
+  addressLine1: "1, Test Street",
+  addressLine2: "Borough",
+  addressLine3: "",
+  addressLine4: "",
+  town: "Greater London",
+  postcode: "invalid postcode",
 };
 
 describe("ManualEntry", () => {
@@ -65,8 +74,13 @@ describe("ManualEntry", () => {
         target: { value: "test town" },
       });
 
+      fireEvent.input(screen.getByLabelText("Postcode"), {
+        target: { value: "SW1E 5DN" },
+      });
+
       expect(screen.getByDisplayValue("test address 1")).toBeInTheDocument();
       expect(screen.getByDisplayValue("test town")).toBeInTheDocument();
+      expect(screen.getByDisplayValue("SW1E 5DN")).toBeInTheDocument();
 
       fireEvent.click(screen.getByText("Continue"));
       expect(mockOnDataChange).toHaveBeenCalled();
@@ -83,6 +97,7 @@ describe("ManualEntry", () => {
 
       expect(screen.getByText("Enter the first line of your address")).toBeInTheDocument();
       expect(screen.getByText("Enter the town of your address")).toBeInTheDocument();
+      expect(screen.getByText("Enter a postcode")).toBeInTheDocument();
     });
   });
 
@@ -96,6 +111,20 @@ describe("ManualEntry", () => {
 
       expect(screen.getByText("Enter the first line of your address")).toBeInTheDocument();
       expect(screen.getByText("Enter the town of your address")).toBeInTheDocument();
+      expect(screen.getByText("Enter a real postcode")).toBeInTheDocument();
+    });
+  });
+
+  it("must show an invalid postcode error message on invalid postcode submission", async () => {
+    const mockOnDataChange = jest.fn();
+
+    render(<ManualEntry initialStateData={invalidPostcodeData} onDataChange={mockOnDataChange} />);
+
+    await waitFor(() => {
+      fireEvent.click(screen.getByText("Continue"));
+      expect(mockOnDataChange).not.toHaveBeenCalled();
+
+      expect(screen.getByText("Enter a real postcode")).toBeInTheDocument();
     });
   });
 });
