@@ -8,25 +8,16 @@ import { ContinueButton } from "./PostcodeLookup";
 import Utils from "../../../../Helper/Utils";
 import { ContentContext } from "../../../../context/ContentContext";
 import Honeypot from "../../Honeypot/Honeypot";
-
-type address = {
-  addressLine1: string;
-  addressLine2: string;
-  addressLine3: string;
-  addressLine4: string;
-  town: string;
-  postcode?: string;
-  fullAddress: string;
-};
+import { Address } from "../../../../types/ParticipantTypes";
 
 export type SelectAddressData = {
-  address: address;
+  address: Address;
   manualEntry?: boolean;
   changePostcode?: boolean;
 };
 
 interface SelectAddressProps {
-  addresses: address[];
+  addresses: Address[];
   postcode: string;
   nextButtonText?: string;
   hideInfo?: boolean;
@@ -106,22 +97,25 @@ function SelectAddress(props: SelectAddressProps) {
           name="address"
           defaultValue={0}
           render={({ field: { onChange }, fieldState: { error } }) => (
-            <DTESelect
-              id="select-address"
-              name="select-address"
-              label={content["register2-address-select-address"]}
-              error={error?.message}
-              required={false}
-              options={[
-                ...addresses.map((data: address, index: number) => {
-                  return {
-                    value: index,
-                    text: data.fullAddress,
-                  };
-                }),
-              ]}
-              onValueChange={onChange}
-            />
+            <>
+              <DTESelect
+                id="select-address"
+                name="select-address"
+                label={content["register2-address-select-address"]}
+                error={error?.message}
+                required={false}
+                options={[
+                  ...addresses.map((data: Address, index: number) => {
+                    return {
+                      value: index,
+                      text: data.fullAddress,
+                    };
+                  }),
+                ]}
+                onValueChange={onChange}
+                isCapitalised
+              />
+            </>
           )}
           rules={{
             validate: (value) => {

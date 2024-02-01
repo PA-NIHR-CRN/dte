@@ -10,21 +10,12 @@ import DTEInput from "../../UI/DTEInput/DTEInput";
 import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import ErrorMessageSummary from "../../ErrorMessageSummary/ErrorMessageSummary";
 import Honeypot from "../../Honeypot/Honeypot";
+import { Address } from "../../../../types/ParticipantTypes";
 import { ContentContext } from "../../../../context/ContentContext";
-
-type address = {
-  addressLine1: string;
-  addressLine2: string;
-  addressLine3: string;
-  addressLine4: string;
-  town: string;
-  postcode: string;
-  fullAddress: string;
-};
 
 export type PostcodeLookupData = {
   postcode: string;
-  addresses: address[];
+  addresses: Address[];
   manualEntry?: boolean;
 };
 
@@ -82,7 +73,7 @@ function PostcodeLookup(props: PostcodeLookupProps) {
     },
   });
 
-  const [addresses, setAddresses] = useState<address[]>();
+  const [addresses, setAddresses] = useState<Address[]>();
   const [postcode, setPostcode] = useState("");
 
   const [{ response, loading }, getAddresses] = useAxiosFetch({});
@@ -124,7 +115,7 @@ function PostcodeLookup(props: PostcodeLookupProps) {
           }`,
           postcode: "",
         },
-        ...addresses.map((addressFromApi: address) => {
+        ...addresses.map((addressFromApi: Address) => {
           return {
             addressLine1: addressFromApi.addressLine1,
             addressLine2: addressFromApi.addressLine2,

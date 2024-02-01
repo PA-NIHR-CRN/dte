@@ -56,9 +56,9 @@ describe("SelectAddress", () => {
       const addressSelect = screen.getByLabelText("Select your address");
       expect(addressSelect).toBeInTheDocument();
       fireEvent.click(addressSelect);
-      expect(screen.getByText("9, TRAPS LANE, NEW MALDEN, KT3 4RS")).toBeInTheDocument();
-      expect(screen.getByText("FIVE STONES, TRAPS LANE, NEW MALDEN, KT3 4RS")).toBeInTheDocument();
-      expect(screen.getByText("MALDEN GOLF CLUB, TRAPS LANE, NEW MALDEN, KT3 4RS")).toBeInTheDocument();
+      expect(screen.getByText("9, Traps Lane, New Malden, KT3 4RS")).toBeInTheDocument();
+      expect(screen.getByText("Five Stones, Traps Lane, New Malden, KT3 4RS")).toBeInTheDocument();
+      expect(screen.getByText("Malden Golf Club, Traps Lane, New Malden, KT3 4RS")).toBeInTheDocument();
     });
   });
 

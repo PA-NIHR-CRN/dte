@@ -1,10 +1,11 @@
-import { Fragment, ReactNode, useContext } from "react";
+import { Fragment, useContext } from "react";
 import styled from "styled-components";
 import { ContinueRegistrationState } from "../../../../../types/ParticipantTypes";
 import DTEHeader from "../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEContent from "../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEButton from "../../../../Shared/UI/DTEButton/DTEButton";
 import DTELinkButton from "../../../../Shared/UI/DTELinkButton/DTELinkButton";
+import { formatDisplayAddress } from "../../../../../Helper/Utils";
 import { ContentContext } from "../../../../../context/ContentContext";
 import mapParticipantBackgrounds from "../../../../../Helper/mapParticipantBackgrounds/mapParticipantBackgrounds";
 import mapParticipantDisabilityDesc from "../../../../../Helper/mapParticipantDisabilityDesc/mapParticipantDisabilityDesc";
@@ -31,40 +32,6 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
   const { content } = useContext(ContentContext);
   const { initialStateData, changeStep } = props;
 
-  const formatCheckDisplayAddress = (address: any) => {
-    let formattedCheckAddress: ReactNode = <></>;
-
-    const lineManagement = (builder: ReactNode, newElement: string) => {
-      const intialBuilder: ReactNode = `<>{newElement}</>`;
-      const newLineBuilder: ReactNode = (
-        <>
-          {builder} <br /> {newElement}
-        </>
-      );
-      return builder !== <></> ? newLineBuilder : intialBuilder;
-    };
-
-    if (address.address.addressLine1) {
-      formattedCheckAddress = address.address.addressLine1;
-    }
-    if (address.address.addressLine2) {
-      formattedCheckAddress = lineManagement(formattedCheckAddress, address.address.addressLine2);
-    }
-    if (address.address.addressLine3) {
-      formattedCheckAddress = lineManagement(formattedCheckAddress, address.address.addressLine3);
-    }
-    if (address.address.addressLine4) {
-      formattedCheckAddress = lineManagement(formattedCheckAddress, address.address.addressLine4);
-    }
-    if (address.address.town) {
-      formattedCheckAddress = lineManagement(formattedCheckAddress, address.address.town);
-    }
-    if (address.postcode) {
-      formattedCheckAddress = lineManagement(formattedCheckAddress, address.postcode);
-    }
-    return (<DTEContent>{formattedCheckAddress}</DTEContent>) as ReactNode;
-  };
-
   return (
     <>
       <DTEHeader as="h1">{content["register2-check-answers-header"]}</DTEHeader>
@@ -73,7 +40,7 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
           <dt className="govuk-summary-list__key">
             <DTEContent>{content["reusable-home-address"]}</DTEContent>
           </dt>
-          <dd className="govuk-summary-list__value">{formatCheckDisplayAddress(initialStateData.addressFormData)}</dd>
+          <dd className="govuk-summary-list__value">{formatDisplayAddress(initialStateData.addressFormData)}</dd>
           <dd className="govuk-summary-list__actions">
             <DTELinkButton onClick={() => changeStep(0)}>
               {content["reusable-change"]}{" "}

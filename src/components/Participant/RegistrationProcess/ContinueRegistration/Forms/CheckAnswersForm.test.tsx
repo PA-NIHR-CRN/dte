@@ -52,10 +52,10 @@ const blankTestData: ContinueRegistrationState = {
 const populatedTestData: ContinueRegistrationState = {
   addressFormData: {
     address: {
-      addressLine1: "address line 1",
-      addressLine2: "address line 2",
-      addressLine3: "address line 3",
-      addressLine4: "address line 4",
+      addressLine1: "Address Line 1",
+      addressLine2: "Address Line 2",
+      addressLine3: "Address Line 3",
+      addressLine4: "Address Line 4",
       town: "town",
     },
     postcode: "postcode",
@@ -90,11 +90,11 @@ describe("Check Answers Form displays data correctly", () => {
     const mockChangeStep = jest.fn();
     render(<CheckAnswersForm initialStateData={populatedTestData} changeStep={mockChangeStep} />);
 
-    expect(screen.getByText(/address line 1/)).toBeInTheDocument();
-    expect(screen.getByText(/address line 2/)).toBeInTheDocument();
-    expect(screen.getByText(/address line 3/)).toBeInTheDocument();
-    expect(screen.getByText(/address line 4/)).toBeInTheDocument();
-    expect(screen.getByText(/town/)).toBeInTheDocument();
+    expect(screen.getByText(/Address Line 1/)).toBeInTheDocument();
+    expect(screen.getByText(/Address Line 2/)).toBeInTheDocument();
+    expect(screen.getByText(/Address Line 3/)).toBeInTheDocument();
+    expect(screen.getByText(/Address Line 4/)).toBeInTheDocument();
+    expect(screen.getByText(/Town/)).toBeInTheDocument();
     expect(screen.getByText(/postcode/)).toBeInTheDocument();
   });
 
