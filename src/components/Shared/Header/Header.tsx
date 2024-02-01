@@ -12,6 +12,7 @@ import DTELinkButton from "../UI/DTELinkButton/DTELinkButton";
 import usePathname from "../../../hooks/usePathname";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { Stack } from "@mui/material";
 
 const StyledHeader = styled.header`
   margin-top: 0.5em;
@@ -20,7 +21,6 @@ const StyledHeader = styled.header`
 `;
 
 const LanguageSelector = styled(Grid)`
-  // float right
   float: right;
   margin-right: 1em;
 `;
@@ -142,10 +142,19 @@ export default function Header() {
   const shouldShowLanguageSelector = !pathsNotToShow.includes(pathname);
 
   const LanguageComponent = () => (
-    <DTEContent>
-      {language !== "en-GB" ? <DTELinkButton onClick={() => setLanguage("en-GB")}>English</DTELinkButton> : "English"} |{" "}
-      {language !== "cy-GB" ? <DTELinkButton onClick={() => setLanguage("cy-GB")}>Cymraeg</DTELinkButton> : "Cymraeg"}
-    </DTEContent>
+    <Stack direction="row" spacing={1} alignItems="center">
+      {language !== "en-GB" ? (
+        <DTELinkButton onClick={() => setLanguage("en-GB")}>English</DTELinkButton>
+      ) : (
+        <DTEContent>English</DTEContent>
+      )}
+      <DTEContent>|</DTEContent>
+      {language !== "cy-GB" ? (
+        <DTELinkButton onClick={() => setLanguage("cy-GB")}>Cymraeg</DTELinkButton>
+      ) : (
+        <DTEContent>Cymraeg</DTEContent>
+      )}
+    </Stack>
   );
 
   return (
