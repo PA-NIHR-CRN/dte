@@ -89,6 +89,7 @@ export default [
     { campaign: "nhsren2", source: "leaflet", medium: "print" },
     { campaign: "nhsren3", source: "leaflet", medium: "print" },
     { campaign: "nhsren4", source: "leaflet", medium: "print" },
+    { campaign: "nhsren5", source: "leaflet", medium: "print" },
     { campaign: "nwl", source: "poster", medium: "print" },
     { campaign: "swl", source: "poster", medium: "print" },
   ]),
