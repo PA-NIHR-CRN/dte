@@ -30,3 +30,13 @@ export type ContinueRegistrationState = {
   disability2FormData: Disability2FormData;
   healthConditionFormData: HealthConditionFormData;
 };
+
+export type Address = {
+  addressLine1: string;
+  addressLine2: string;
+  addressLine3: string;
+  addressLine4: string;
+  town: string;
+  postcode?: string;
+  fullAddress?: string;
+};

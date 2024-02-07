@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState, useRef, useContext } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import ReactGA from "react-ga";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
@@ -21,7 +21,7 @@ import { HealthConditionFormData } from "../../Shared/FormElements/HealthConditi
 import MobileNumberForm, { MobileFormData } from "../../Shared/FormElements/MobileNumberForm";
 import SexForm, { SexFormData } from "../../Shared/FormElements/SexForm";
 import NameForm, { NameFormData } from "../../Shared/FormElements/NameForm";
-import Utils from "../../../Helper/Utils";
+import Utils, { formatDisplayAddress } from "../../../Helper/Utils";
 import Disability2Form, { Disability2FormData } from "../../Shared/FormElements/Disability2Form";
 import { AuthContext } from "../../../context/AuthContext";
 import { ContentContext } from "../../../context/ContentContext";
@@ -158,40 +158,6 @@ function UpdateParticipant() {
   useEffect(() => {
     handlePageTitle(currentPage);
   }, [currentPage]);
-
-  const formatDisplayAddress = (address: any) => {
-    let formattedAddress: ReactNode = <></>;
-
-    const lineManagement = (builder: ReactNode, newElement: string) => {
-      const intialBuilder: ReactNode = `<>{newElement}</>`;
-      const newLineBuilder: ReactNode = (
-        <>
-          {builder} <br /> {newElement}
-        </>
-      );
-      return builder !== <></> ? newLineBuilder : intialBuilder;
-    };
-
-    if (address.address.addressLine1) {
-      formattedAddress = address.address.addressLine1;
-    }
-    if (address.address.addressLine2) {
-      formattedAddress = lineManagement(formattedAddress, address.address.addressLine2);
-    }
-    if (address.address.addressLine3) {
-      formattedAddress = lineManagement(formattedAddress, address.address.addressLine3);
-    }
-    if (address.address.addressLine4) {
-      formattedAddress = lineManagement(formattedAddress, address.address.addressLine4);
-    }
-    if (address.address.town) {
-      formattedAddress = lineManagement(formattedAddress, address.address.town);
-    }
-    if (address.postcode) {
-      formattedAddress = lineManagement(formattedAddress, address.postcode);
-    }
-    return (<DTEContent>{formattedAddress}</DTEContent>) as ReactNode;
-  };
 
   const parseTriStateBoolean = (value: boolean, nullValue: string) => {
     if (value === null) {

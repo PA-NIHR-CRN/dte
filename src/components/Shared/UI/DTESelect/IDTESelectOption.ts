@@ -1,5 +1,5 @@
 export default interface IDTESelectOption {
   value: string | number;
-  text: string;
+  text: string | undefined;
   testID?: string;
 }

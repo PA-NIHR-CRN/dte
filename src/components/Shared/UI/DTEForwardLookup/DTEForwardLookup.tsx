@@ -64,6 +64,7 @@ const StyledSelectedButton = styled(Button)<baseButtonProps>`
   && {
     ${baseButton};
     margin: 0.5em 0.5em 0 0;
+    text-transform: none;
   }
 `;
 
@@ -180,7 +181,6 @@ function DTEForwardLookup({ id, label, hint, values, error, data, onSelectedValu
         .filter((v, i, a) => a.findIndex((t) => t === v) === i)
         .sort((a, b) => (a > b && 1) || -1)
     );
-
     setCheckBoxDataList(e);
   };
 
