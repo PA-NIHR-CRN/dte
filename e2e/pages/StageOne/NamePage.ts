@@ -1,5 +1,4 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { assertErrorUtil } from "../../utils/errorUtils";
 import { assertComponentsVisible } from "../../utils/visibilityUtils";
 export default class NamePage {
   // variables
@@ -69,11 +68,5 @@ export default class NamePage {
     await expect(this.firstNameLabel).toHaveText("First name");
     await expect(this.lastNameLabel).toHaveText("Last name");
     await expect(this.continueButton).toHaveText("Continue");
-  }
-
-  // Check no error messages visible before continue button pressed
-  async assertErrorsHidden() {
-    await expect(this.firstNameError).toBeHidden();
-    await expect(this.lastNameError).toBeHidden();
   }
 }

@@ -1,5 +1,8 @@
 import { test } from "../../../../hooks/CustomFixtures";
-import { assertErrorUtil } from "../../../../utils/errorUtils";
+import {
+  assertErrorUtil,
+  assertComponentsHidden,
+} from "../../../../utils/visibilityUtils";
 
 // --- Success TESTS --- //
 test.describe("Successful user registration journey", () => {
@@ -21,7 +24,10 @@ test.describe("Successful user registration journey", () => {
       await namePage.assertCorrectContent();
     });
     await test.step("Then I will not see any error messages rendered", async () => {
-      await namePage.assertErrorsHidden();
+      await assertComponentsHidden([
+        namePage.firstNameError,
+        namePage.lastNameError,
+      ]);
     });
     await test.step("When I fill only the first name input", async () => {
       await namePage.firstNameInput.fill("firstName");
@@ -41,16 +47,13 @@ test.describe("Successful user registration journey", () => {
     await test.step("Then I will press the continue button to move to the next page", async () => {
       await namePage.continueButton.click();
     });
-    await test.step("When I successfully navigate to the DoB page", async () => {
-      await dateOfBirthPage.waitForPageLoad();
-    });
     await test.step("When I see the DoB page components correctly rendered", async () => {
       await dateOfBirthPage.assertButtonsVisible();
       await dateOfBirthPage.assertTextVisible();
       await dateOfBirthPage.assertFormVisible();
     });
     await test.step("And there are no errors rendered", async () => {
-      await dateOfBirthPage.assertErrorsHidden();
+      await assertComponentsHidden([dateOfBirthPage.errorMessage]);
     });
     await test.step("When I fill in the form fields with an invalid month", async () => {
       await dateOfBirthPage.dayInput.fill("15");
@@ -75,16 +78,13 @@ test.describe("Successful user registration journey", () => {
     await test.step("Then I will click continue", async () => {
       await dateOfBirthPage.continueButton.click();
     });
-    await test.step("When I successfully navigate to the email page", async () => {
-      await emailPage.waitForPageLoad();
-    });
     await test.step("When I see the email page components correctly rendered", async () => {
       await emailPage.assertButtonsVisible();
       await emailPage.assertTextVisible();
       await emailPage.assertFormVisible();
     });
     await test.step("And there are no errors rendered", async () => {
-      await emailPage.assertErrorsHidden();
+      await assertComponentsHidden([emailPage.errorMessage]);
     });
     await test.step("When I incorrectly fill out the email input field", async () => {
       await emailPage.emailInput.fill("example");
@@ -107,8 +107,8 @@ test.describe("Successful user registration journey", () => {
     await test.step("And I click to continue", async () => {
       await emailPage.continueButton.click();
     });
-    await test.step("When I see the password policy page load", async () => {
-      await passwordPolicyPage.waitForPageLoad();
+    await test.step("I will wait for password policy page to load", async () => {
+      await passwordPolicyPage.waitForLoad();
     });
     await test.step("When I see the componenets correctly rendered on the page", async () => {
       await passwordPolicyPage.assertButtonsVisible();
@@ -116,7 +116,10 @@ test.describe("Successful user registration journey", () => {
       await passwordPolicyPage.assertFormVisible();
     });
     await test.step("And there are no errors rendered", async () => {
-      await passwordPolicyPage.assertErrorsHidden();
+      await assertComponentsHidden([
+        passwordPolicyPage.createPasswordError,
+        passwordPolicyPage.confirmPasswordError,
+      ]);
     });
     await test.step("When I incorrectly fill out the password fields", async () => {
       await passwordPolicyPage.createPasswordInput.fill("TestPassword123!");
@@ -137,16 +140,13 @@ test.describe("Successful user registration journey", () => {
     await test.step("I will click to continue", async () => {
       await passwordPolicyPage.continueButton.click();
     });
-    await test.step("When I see the consent page load", async () => {
-      await consentPage.waitForPageLoad();
-    });
     await test.step("When I see the components render correctly", async () => {
       await consentPage.assertButtonsVisible();
       await consentPage.assertTextVisible();
       await consentPage.assertFormVisible();
     });
     await test.step("And there are no error messages rendered", async () => {
-      await consentPage.assertErrorsHidden();
+      await assertComponentsHidden([consentPage.checkboxErrorMessage]);
     });
     await test.step("When I click the checkbox", async () => {
       await consentPage.confirmCheckbox.click();

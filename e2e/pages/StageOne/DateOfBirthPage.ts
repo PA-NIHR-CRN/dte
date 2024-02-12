@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { assertErrorsHidden, assertErrorUtil } from "../../utils/errorUtils";
+import { assertErrorUtil } from "../../utils/visibilityUtils";
 import { assertComponentsVisible } from "../../utils/visibilityUtils";
 
 export default class DateOfBirthPage {
@@ -53,11 +53,6 @@ export default class DateOfBirthPage {
     this.backButton = page.getByTitle("Return to previous page");
   }
 
-  // --- LOAD PAGE METHODS --- //
-  async waitForPageLoad() {
-    await expect(this.DoBPageHeading).toBeVisible();
-  }
-
   // --- ON LOAD METHODS --- //
   // check button components are visible on load
   async assertButtonsVisible() {
@@ -91,10 +86,5 @@ export default class DateOfBirthPage {
   // --- ERROR CHECKING METHODS --- //
   async assertError(message: string) {
     await assertErrorUtil(this.errorMessage, message);
-  }
-
-  // Check no error messages visible before continue button pressed
-  async assertErrorsHidden() {
-    await assertErrorsHidden(this.errorMessage);
   }
 }

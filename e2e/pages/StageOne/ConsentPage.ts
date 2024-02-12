@@ -1,17 +1,17 @@
 import { Locator, Page } from "@playwright/test";
 import { assertComponentsVisible } from "../../utils/visibilityUtils";
-import { assertErrorUtil, assertErrorsHidden } from "../../utils/errorUtils";
+import { assertErrorUtil } from "../../utils/visibilityUtils";
 
 export default class ConsentPage {
   readonly page: Page;
   // text
   readonly progressDisplay: Locator;
   readonly consentPageHeading: Locator;
-  readonly consentParagraph1: Locator;
-  readonly consentParagraph2: Locator;
-  readonly consentParagraph3: Locator;
-  readonly consentParagraph4: Locator;
-  readonly consentParagraph5: Locator;
+  readonly consentParagraphFirst: Locator;
+  readonly consentParagraphSecond: Locator;
+  readonly consentParagraphThird: Locator;
+  readonly consentParagraphFourth: Locator;
+  readonly consentParagraphFifth: Locator;
   // links
   readonly bePartOfResearchLink1: Locator;
   readonly bePartOfResearchLink2: Locator;
@@ -33,19 +33,19 @@ export default class ConsentPage {
     this.consentPageHeading = page.getByRole("heading", {
       name: "Consent to process your data and be contacted by Be Part of Research",
     });
-    this.consentParagraph1 = page.getByText(
+    this.consentParagraphFirst = page.getByText(
       "By consenting and registering for the service, you are giving permission for any information you share to be processed by Be Part of Research, a service that is managed and operated by the National Institute for Health and Care Research Clinical Research Network Coordinating Centre (NIHR CRNCC). This will allow Be Part of Research to contact you with information about areas of research you have expressed an interest in, as well as research opportunities of national interest."
     );
-    this.consentParagraph2 = page.getByText(
+    this.consentParagraphSecond = page.getByText(
       "To find out more about how the NIHR CRNCC will process and store your information and your rights as a data subject, please read the Be Part of Research Privacy Policy. The Data Controller for this service is the Department of Health and Social Care (DHSC)."
     );
-    this.consentParagraph3 = page.getByText(
+    this.consentParagraphThird = page.getByText(
       "You can withdraw your consent at any time - to do this please see the Be Part of Research Privacy Policy."
     );
-    this.consentParagraph4 = page.getByText(
+    this.consentParagraphFourth = page.getByText(
       "If you do not consent to sharing your information, you will not be able to use this service to register your interest and be contacted about research opportunities."
     );
-    this.consentParagraph5 = page.getByText(
+    this.consentParagraphFifth = page.getByText(
       "Do you give consent for your information to be processed by the Be Part of Research service provided by NIHR CRNCC on behalf of the DHSC for the purposes outlined above?"
     );
     // links
@@ -76,16 +76,6 @@ export default class ConsentPage {
     this.checkboxErrorMessage = page.locator("span#checkbox--error-message");
   }
 
-  // LOAD METHODS
-  async waitForPageLoad() {
-    await this.page.waitForSelector(
-      'h1:text("Consent to process your data and be contacted by Be Part of Research")',
-      {
-        state: "visible",
-      }
-    );
-  }
-
   // --- ON LOAD METHODS --- //
 
   async assertButtonsVisible() {
@@ -99,20 +89,16 @@ export default class ConsentPage {
   async assertTextVisible() {
     assertComponentsVisible([
       this.consentPageHeading,
-      this.consentParagraph1,
-      this.consentParagraph2,
-      this.consentParagraph3,
-      this.consentParagraph4,
-      this.consentParagraph5,
+      this.consentParagraphFirst,
+      this.consentParagraphSecond,
+      this.consentParagraphThird,
+      this.consentParagraphFourth,
+      this.consentParagraphFifth,
     ]);
   }
 
   async assertFormVisible() {
     assertComponentsVisible([this.confirmCheckbox, this.confirmMessage]);
-  }
-
-  async assertErrorsHidden() {
-    await assertErrorsHidden(this.checkboxErrorMessage);
   }
 
   // --- CLICK METHODS --- //

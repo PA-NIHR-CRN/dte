@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { assertErrorUtil, assertErrorsHidden } from "../../utils/errorUtils";
+import { assertErrorUtil } from "../../utils/visibilityUtils";
 import { assertComponentsVisible } from "../../utils/visibilityUtils";
 
 export default class EmailPage {
@@ -39,13 +39,6 @@ export default class EmailPage {
     this.continueButton = page.getByRole("button", { name: "continue" });
   }
 
-  // --- LOAD PAGE METHODS --- //
-  async waitForPageLoad() {
-    await this.page.waitForSelector('h1:text("What is your email address?")', {
-      state: "visible",
-    });
-  }
-
   // --- ON LOAD METHODS --- //
   async assertButtonsVisible() {
     assertComponentsVisible([this.backButton, this.continueButton]);
@@ -64,12 +57,19 @@ export default class EmailPage {
     assertComponentsVisible([this.emailLabel, this.emailInput]);
   }
 
+  async generateRandomEmail() {
+    const domain = "@nihr.ac.uk";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let random = "";
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      random += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return `${random + domain}`;
+  }
   // --- ERRORS LOGIC --- //
   async assertError(message: string) {
     await assertErrorUtil(this.errorMessage, message);
-  }
-
-  async assertErrorsHidden() {
-    await assertErrorsHidden(this.errorMessage);
   }
 }

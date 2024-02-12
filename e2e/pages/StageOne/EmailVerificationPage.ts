@@ -42,16 +42,6 @@ export default class EmailVerificationPage {
     });
   }
 
-  // LOAD METHODS
-  async waitForPageLoad() {
-    await this.page.waitForSelector(
-      `p:text("You'll need to click on the link to validate it within 24 hours.")`,
-      {
-        state: "visible",
-      }
-    );
-  }
-
   // ON LOAD
   async assertTextVisible() {
     await assertComponentsVisible([
