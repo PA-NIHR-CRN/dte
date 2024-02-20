@@ -139,7 +139,7 @@ export const formatDisplayAddress = (address: any) => {
     formattedCheckAddress = lineManagement(formattedCheckAddress, capitaliseWords(address.address.town));
   }
   if (address.postcode) {
-    formattedCheckAddress = lineManagement(formattedCheckAddress, address.postcode);
+    formattedCheckAddress = lineManagement(formattedCheckAddress, capitaliseWords(address.postcode));
   }
 
   return (<DTEContent>{formattedCheckAddress}</DTEContent>) as ReactNode;
