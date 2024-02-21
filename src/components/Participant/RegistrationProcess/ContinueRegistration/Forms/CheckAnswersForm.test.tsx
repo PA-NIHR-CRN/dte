@@ -58,7 +58,7 @@ const populatedTestData: ContinueRegistrationState = {
       addressLine4: "Address Line 4",
       town: "town",
     },
-    postcode: "postcode",
+    postcode: "Postcode",
   },
   mobileFormData: {
     mobileNumber: "07666666666",
@@ -95,7 +95,7 @@ describe("Check Answers Form displays data correctly", () => {
     expect(screen.getByText(/Address Line 3/)).toBeInTheDocument();
     expect(screen.getByText(/Address Line 4/)).toBeInTheDocument();
     expect(screen.getByText(/Town/)).toBeInTheDocument();
-    expect(screen.getByText(/postcode/)).toBeInTheDocument();
+    expect(screen.getByText(/Postcode/)).toBeInTheDocument();
   });
 
   it("Phone number must be rendered correctly", async () => {
