@@ -64,36 +64,38 @@ describe("Footer Component Tests", () => {
     expect(links[12]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/taking-part/Consent/");
     expect(links[12]).toHaveTextContent("Consenting to a study");
 
-    expect(links[13]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/site-policies/accessibility");
-    expect(links[13]).toHaveTextContent("Accessibility");
-    expect(links[14]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/site-policies/complaints");
-    expect(links[14]).toHaveTextContent("Complaints");
-    expect(links[15]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/site-policies/cookie-policy");
-    expect(links[15]).toHaveTextContent("Cookie policy");
-    expect(links[16]).toHaveAttribute(
+    expect(links[13]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/site-policies/");
+    expect(links[13]).toHaveTextContent("All site policies");
+    expect(links[14]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/site-policies/accessibility");
+    expect(links[14]).toHaveTextContent("Accessibility");
+    expect(links[15]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/site-policies/complaints");
+    expect(links[15]).toHaveTextContent("Complaints");
+    expect(links[16]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/site-policies/cookie-policy");
+    expect(links[16]).toHaveTextContent("Cookie policy");
+    expect(links[17]).toHaveAttribute(
       "href",
       "https://bepartofresearch.nihr.ac.uk/site-policies/freedom-of-information"
     );
-    expect(links[16]).toHaveTextContent("Freedom of information");
-    expect(links[17]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/site-policies/privacy-policy");
-    expect(links[17]).toHaveTextContent("Privacy policy");
-    expect(links[18]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/site-policies/terms-and-conditions");
-    expect(links[18]).toHaveTextContent("Terms and conditions");
+    expect(links[17]).toHaveTextContent("Freedom of information");
+    expect(links[18]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/site-policies/privacy-policy");
+    expect(links[18]).toHaveTextContent("Privacy policy");
+    expect(links[19]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/site-policies/terms-and-conditions");
+    expect(links[19]).toHaveTextContent("Terms and conditions");
 
-    expect(links[19]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/Articles/index");
-    expect(links[19]).toHaveTextContent("Blogs");
-    expect(links[20]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/about/#contact-form");
-    expect(links[20]).toHaveTextContent("Contact us");
-    expect(links[21]).toHaveAttribute(
+    expect(links[20]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/Articles/index");
+    expect(links[20]).toHaveTextContent("Blogs");
+    expect(links[21]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/about/#contact-form");
+    expect(links[21]).toHaveTextContent("Contact us");
+    expect(links[22]).toHaveAttribute(
       "href",
       "https://nihr.us14.list-manage.com/subscribe?u=299dc02111e8a68172029095f&id=3b030a1027"
     );
-    expect(links[21]).toHaveTextContent("Newsletter");
+    expect(links[22]).toHaveTextContent("Newsletter");
 
-    expect(links[22]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/");
-    expect(links[23]).toHaveAttribute("href", "https://www.nihr.ac.uk/");
-    expect(links[24]).toHaveAttribute("href", "https://www.research.hscni.net/");
-    expect(links[25]).toHaveAttribute("href", "https://www.nhsresearchscotland.org.uk/");
-    expect(links[26]).toHaveAttribute("href", "https://healthandcareresearchwales.org/");
+    expect(links[23]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/");
+    expect(links[24]).toHaveAttribute("href", "https://www.nihr.ac.uk/");
+    expect(links[25]).toHaveAttribute("href", "https://www.research.hscni.net/");
+    expect(links[26]).toHaveAttribute("href", "https://www.nhsresearchscotland.org.uk/");
+    expect(links[27]).toHaveAttribute("href", "https://healthandcareresearchwales.org/");
   });
 });
