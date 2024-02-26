@@ -216,6 +216,10 @@ export default function Footer() {
 
   const sitePolicyLinks = [
     {
+      name: content["footer-item-all-site-policies"],
+      url: "https://bepartofresearch.nihr.ac.uk/site-policies/",
+    },
+    {
       name: content["footer-item-accessibility"],
       url: "https://bepartofresearch.nihr.ac.uk/site-policies/accessibility",
     },
