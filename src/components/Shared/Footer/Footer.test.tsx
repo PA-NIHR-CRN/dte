@@ -30,7 +30,7 @@ describe("Footer Component Tests", () => {
     expect(subHeaders[2]).toHaveTextContent("Site policies");
     expect(subHeaders[3]).toHaveTextContent("Stay connected");
 
-    expect(links).toHaveLength(27);
+    expect(links).toHaveLength(28);
     expect(links[0]).toHaveAttribute("href", "https://www.facebook.com/OfficialNIHR/");
     expect(links[1]).toHaveAttribute("href", "https://twitter.com/NIHRtakepart");
     expect(links[2]).toHaveAttribute("href", "https://www.youtube.com/user/NIHRtv");
