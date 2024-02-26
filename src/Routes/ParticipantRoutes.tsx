@@ -79,16 +79,6 @@ export default [
     exact
     key="nhspreregistration"
   />,
-  <Route
-  path="/nottsmsk"
-  render={() => {
-    ReactGA.pageview("/participants/introduction");
-    return <NhsPreRegistration />;
-  }}
-  strict
-  exact
-  key="nhspreregistration"
-/>,
   ...getVanityRoutes([
     { campaign: "nhsgp1", source: "sms", medium: "sms" },
     { campaign: "nhsgp2", source: "sms", medium: "sms" },
