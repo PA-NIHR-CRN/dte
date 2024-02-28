@@ -26,6 +26,20 @@ import HealthConditionsPage from "../pages/StageTwo/HealthConditionsPage";
 import AreasOfResearchPage from "../pages/StageTwo/AreasOfResearchPage";
 import CompleteRegistrationPage from "../pages/StageTwo/CompleteRegistrationPage";
 import ThankYouPage from "../pages/StageTwo/ThankYouPage";
+// Login pages
+import LoginPage from "../pages/LoginPages/LoginPage";
+import AccountSettingsPage from "../pages/LoginPages/AccountSettingsPage";
+import AreasOfResearchAccountPage from "../pages/LoginPages/AreasOfResearchAccountPage";
+import ChangeAddressPage from "../pages/LoginPages/ChangeAddressPage";
+import ChangeDateOfBirthPage from "../pages/LoginPages/ChangeDateOfBirthPage";
+import ChangeEmailPage from "../pages/LoginPages/ChangeEmailPage";
+import ChangeNamePage from "../pages/LoginPages/ChangeNamePage";
+import ChangeOptionalPhoneNumberPage from "../pages/LoginPages/ChangeOptionalPhoneNumberPage";
+import ChangePasswordPage from "../pages/LoginPages/ChangePasswordPage";
+import ChangeSexGenderPage from "../pages/LoginPages/ChangeSexGenderPage";
+import CloseAccountPage from "../pages/LoginPages/ChangeSexGenderPage";
+import NewsletterPage from "../pages/LoginPages/NewsletterPage";
+import PersonalDetailsAccountPage from "../pages/LoginPages/PersonalDetailsAccountPage";
 
 type CustomFixtures = {
   cookieBanner: CookieBanner;
@@ -54,6 +68,20 @@ type CustomFixtures = {
   areasOfResearchPage: AreasOfResearchPage;
   completeRegistrationPage: CompleteRegistrationPage;
   thankYouPage: ThankYouPage;
+  // login pages
+  loginPage: LoginPage;
+  accountSettingsPage: AccountSettingsPage;
+  areasOfResearchAccountPage: AreasOfResearchAccountPage;
+  changeAddressPage: ChangeAddressPage;
+  changeDateOfBirthPage: ChangeDateOfBirthPage;
+  changeEmailPage: ChangeEmailPage;
+  changeNamePage: ChangeNamePage;
+  changeOptionalPhoneNumberPage: ChangeOptionalPhoneNumberPage;
+  changePasswordPage: ChangePasswordPage;
+  changeSexGenderPage: ChangeSexGenderPage;
+  closeAccountPage: CloseAccountPage;
+  newsletterPage: NewsletterPage;
+  personalDetailsAccountPage: PersonalDetailsAccountPage;
 };
 
 export const test = base.extend<CustomFixtures>({
@@ -136,6 +164,30 @@ export const test = base.extend<CustomFixtures>({
   },
   thankYouPage: async ({ page }, use) => {
     await use(new ThankYouPage(page));
+  },
+  loginPage: async ({ page }, use) => {
+    await use(new LoginPage(page));
+  },
+  accountSettingsPage: async ({ page }, use) => {
+    await use(new AccountSettingsPage(page));
+  },
+  areasOfResearchAccountPage: async ({ page }, use) => {
+    await use(new AreasOfResearchAccountPage(page));
+  },
+  changeAddressPage: async ({ page }, use) => {
+    await use(new ChangeAddressPage(page));
+  },
+  changeDateOfBirthPage: async ({ page }, use) => {
+    await use(new ChangeDateOfBirthPage(page));
+  },
+  changeEmailPage: async ({ page }, use) => {
+    await use(new ChangeEmailPage(page));
+  },
+  changeNamePage: async ({ page }, use) => {
+    await use(new ChangeNamePage(page));
+  },
+  changeOptionalPhoneNumberPage: async ({ page }, use) => {
+    await use(new ChangeOptionalPhoneNumberPage(page));
   },
 });
 
