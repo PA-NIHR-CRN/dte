@@ -27,7 +27,7 @@ function SessionExpired() {
       <>
         <Grid container justifyContent="center" alignItems="center" role="main">
           <StyledWrapper>
-          <DTEHeaderCaption contentKey="session-expired-header-caption" />
+            <DTEHeaderCaption contentKey="session-expired-header-caption" />
             <DTEHeader as="h1">{content["session-expired-header"]}</DTEHeader>
             {content["session-expired-body"]}
             <DTEButton

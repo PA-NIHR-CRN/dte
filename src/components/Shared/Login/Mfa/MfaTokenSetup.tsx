@@ -155,7 +155,7 @@ const MfaTokenSetup = () => {
                 </DTEButton>
               </ButtonWrapper>
               <ComponentSpacer>
-              <DTEHeaderCaption contentKey="mfa-token-setup-show-qr-code-header-caption" />
+                <DTEHeaderCaption contentKey="mfa-token-setup-show-qr-code-header-caption" />
                 <DTEDetails summary={content["mfa-token-setup-show-qr-code-header"]}>
                   <>
                     <DTEContent>

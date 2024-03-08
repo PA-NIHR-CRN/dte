@@ -96,7 +96,7 @@ const MfaTotpChallenge = () => {
   return (
     <DocumentTitle title={content["mfa-token-challenge-document-title"]}>
       <StepWrapper>
-      <DTEHeaderCaption contentKey="mfa-token-challenge-header-caption" />
+        <DTEHeaderCaption contentKey="mfa-token-challenge-header-caption" />
         <DTEHeader as="h1">{content["mfa-token-challenge-header"]}</DTEHeader>
         <ErrorMessageContainer
           axiosErrors={[setupMfaError]}

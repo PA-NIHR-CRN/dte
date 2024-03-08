@@ -57,8 +57,8 @@ function SexForm(props: SexFormProps) {
   const sexHeader = <DTEHeader as="h2">{content["register2-sexgender-input-sex"]}</DTEHeader>;
   const genderHeader = <DTEHeader as="h2">{content["register2-sexgender-input-gender"]}</DTEHeader>;
   if (!hideHeader) {
-    <DTEHeaderCaption contentKey="register2-sexgender-header-caption" />
-    questionHeader = (      
+    <DTEHeaderCaption contentKey="register2-sexgender-header-caption" />;
+    questionHeader = (
       <DTEHeader as="h1" $variant={headerVariant}>
         {content["register2-sexgender-header"]}
       </DTEHeader>

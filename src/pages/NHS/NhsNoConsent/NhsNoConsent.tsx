@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
-import DTEHeaderCaption from "../../../components/Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";  
+import DTEHeaderCaption from "../../../components/Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../../../components/Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTERouteLink from "../../../components/Shared/UI/DTERouteLink/DTERouteLink";
 import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";

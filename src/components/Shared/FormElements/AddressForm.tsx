@@ -154,8 +154,8 @@ function AddressForm(props: AddressFormProps) {
 
   return (
     <>
-    <DTEHeaderCaption contentKey="register2-address-header-caption" />
-      {!hideHeader && (        
+      <DTEHeaderCaption contentKey="register2-address-header-caption" />
+      {!hideHeader && (
         <DTEHeader as="h1" $variant={headerVariant}>
           {content["register2-address-header"]}
         </DTEHeader>

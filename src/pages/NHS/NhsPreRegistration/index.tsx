@@ -74,7 +74,7 @@ function NhsPreRegistration() {
         <DTEHeader as="h1">{content["introduction-header"]}</DTEHeader>
         {content["introduction-body"]}
         <Wrapper margin="2rem 0">
-        <DTEHeaderCaption contentKey="introduction-accordion-header-caption" />
+          <DTEHeaderCaption contentKey="introduction-accordion-header-caption" />
           <DTEDetails summary={content["introduction-accordion-header"]}>
             <DTEContent>
               {content["introduction-accordion-body1"]}{" "}

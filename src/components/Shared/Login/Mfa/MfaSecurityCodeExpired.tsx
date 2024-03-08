@@ -26,7 +26,7 @@ const MfaSecurityCodeExpired = () => {
   return (
     <DocumentTitle title={content["mfa-security-code-expired-document-title"]}>
       <StepWrapper>
-      <DTEHeaderCaption contentKey="mfa-security-code-expired-header-caption" />
+        <DTEHeaderCaption contentKey="mfa-security-code-expired-header-caption" />
         <DTEHeader as="h1">{content["mfa-security-code-expired-header"]}</DTEHeader>
         <DTEContent>{content["mfa-security-code-expired-body"]}</DTEContent>
         <LinkWrapper>

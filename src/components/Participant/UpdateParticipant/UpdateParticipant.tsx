@@ -480,7 +480,7 @@ function UpdateParticipant() {
               {currentPage === "main" && <DTEBackLink href="/" linkText={content["reusable-back-link"]} />}
               {currentPage === "main" && (
                 <>
-                <DTEHeaderCaption contentKey="reusable-personal-details-header-caption" />
+                  <DTEHeaderCaption contentKey="reusable-personal-details-header-caption" />
                   <DTEHeader as="h1" $variant={headerVariant}>
                     {content["reusable-personal-details-header"]}
                   </DTEHeader>
@@ -812,7 +812,7 @@ function UpdateParticipant() {
                   showCancelButton
                   instructionText={
                     <>
-                    <DTEHeaderCaption contentKey="egister2-disability1-header-caption" />
+                      <DTEHeaderCaption contentKey="egister2-disability1-header-caption" />
                       <DTEHeader as="h1" $variant={headerVariant}>
                         {content["register2-disability1-header"]}
                       </DTEHeader>
@@ -869,7 +869,7 @@ function UpdateParticipant() {
                   hideHeader
                   instructionText={
                     <>
-                    <DTEHeaderCaption contentKey="register2-ethnicity1-header-caption" />
+                      <DTEHeaderCaption contentKey="register2-ethnicity1-header-caption" />
                       <DTEHeader as="h1" $variant={headerVariant}>
                         {content["register2-ethnicity1-header"]}
                       </DTEHeader>

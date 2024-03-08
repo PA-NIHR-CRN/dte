@@ -94,7 +94,7 @@ const MfaSmsSetup = () => {
           <LoadingIndicator />
         ) : (
           <>
-          <DTEHeaderCaption contentKey="mfa-sms-setup-header-caption" />
+            <DTEHeaderCaption contentKey="mfa-sms-setup-header-caption" />
             <DTEHeader as="h1">{content["mfa-sms-setup-header"]}</DTEHeader>
             {content["mfa-sms-setup-instruction-text"]}
             <form noValidate onSubmit={handleSubmit(onSubmit)}>

@@ -68,7 +68,7 @@ function Verify() {
           {Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
             <DocumentTitle title={content["verify-email-success-document-title"]}>
               <>
-              <DTEHeaderCaption contentKey="verify-email-success-header-caption" />
+                <DTEHeaderCaption contentKey="verify-email-success-header-caption" />
                 <DTEHeader as="h1" $variant={headerVariant}>
                   {content["verify-email-success-header"]}
                 </DTEHeader>

@@ -48,8 +48,7 @@ const DisabilityForm = (props: DisabilityFormProps) => {
       disability: initialStateData.disability,
     },
   });
-
-  <DTEHeaderCaption contentKey="register2-disability1-header-caption" />
+  <DTEHeaderCaption contentKey="register2-disability1-header-caption" />;
   if (!hideHeader) {
     labelElement = (
       <DTEHeader as="h1" $variant={headerVariant}>

@@ -66,7 +66,7 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
   };
 
   if (!hideHeader) {
-    <DTEHeaderCaption contentKey="register2-ethnicity1-header-caption" />
+    <DTEHeaderCaption contentKey="register2-ethnicity1-header-caption" />;
     labelElement = (
       <DTEHeader as="h1" $variant={headerVariant}>
         {content["register2-ethnicity1-header"]}

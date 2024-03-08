@@ -45,7 +45,7 @@ function HealthConditionForm(props: HealthConditionFormProps) {
 
   return (
     <>
-    <DTEHeaderCaption contentKey="register2-health-conditions-header-caption" />
+      <DTEHeaderCaption contentKey="register2-health-conditions-header-caption" />
       {!hideHeader && (
         <DTEHeader as="h1" $variant={headerVariant}>
           {content["register2-health-conditions-header"]}
