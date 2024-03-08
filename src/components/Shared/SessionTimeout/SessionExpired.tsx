@@ -4,6 +4,7 @@ import DocumentTitle from "react-document-title";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEButton from "../UI/DTEButton/DTEButton";
 import { AuthContext } from "../../../context/AuthContext";
 import { ContentContext } from "../../../context/ContentContext";
@@ -26,6 +27,7 @@ function SessionExpired() {
       <>
         <Grid container justifyContent="center" alignItems="center" role="main">
           <StyledWrapper>
+          <DTEHeaderCaption contentKey="session-expired-header-caption" />
             <DTEHeader as="h1">{content["session-expired-header"]}</DTEHeader>
             {content["session-expired-body"]}
             <DTEButton

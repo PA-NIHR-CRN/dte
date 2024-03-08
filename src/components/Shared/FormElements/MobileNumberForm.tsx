@@ -4,6 +4,7 @@ import { useTheme } from "@material-ui/core/styles";
 import { Controller, useForm } from "react-hook-form";
 import DTEInput from "../UI/DTEInput/DTEInput";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../ErrorMessageSummary/ErrorMessageSummary";
@@ -67,6 +68,7 @@ function MobileNumberForm(props: MobileNumberFormProps) {
 
   return (
     <>
+    <DTEHeaderCaption contentKey="register2-phone-header-caption" />
       {!hideHeader && (
         <DTEHeader as="h1" $variant={headerVariant}>
           {content["register2-phone-header"]}

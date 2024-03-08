@@ -10,6 +10,7 @@ import StepWrapper from "../StepWrapper/StepWrapper";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContainer";
 import Utils from "../../../Helper/Utils";
 import UserLogin from "./UserLogin";
@@ -67,6 +68,7 @@ function Verify() {
           {Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
             <DocumentTitle title={content["verify-email-success-document-title"]}>
               <>
+              <DTEHeaderCaption contentKey="verify-email-success-header-caption" />
                 <DTEHeader as="h1" $variant={headerVariant}>
                   {content["verify-email-success-header"]}
                 </DTEHeader>
@@ -78,6 +80,7 @@ function Verify() {
           {!Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
             <DocumentTitle title={content["verify-email-failure-document-title"]}>
               <>
+                <DTEHeaderCaption contentKey="verify-email-failure-header-caption" />
                 <DTEHeader as="h1" $variant={headerVariant}>
                   {content["verify-email-failure-header"]}
                 </DTEHeader>

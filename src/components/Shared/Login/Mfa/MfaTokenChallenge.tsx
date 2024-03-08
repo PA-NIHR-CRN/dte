@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import DocumentTitle from "react-document-title";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import DTEInput from "../../UI/DTEInput/DTEInput";
@@ -95,6 +96,7 @@ const MfaTotpChallenge = () => {
   return (
     <DocumentTitle title={content["mfa-token-challenge-document-title"]}>
       <StepWrapper>
+      <DTEHeaderCaption contentKey="mfa-token-challenge-header-caption" />
         <DTEHeader as="h1">{content["mfa-token-challenge-header"]}</DTEHeader>
         <ErrorMessageContainer
           axiosErrors={[setupMfaError]}

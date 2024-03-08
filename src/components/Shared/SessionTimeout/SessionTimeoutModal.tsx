@@ -4,6 +4,7 @@ import * as moment from "moment";
 import { AuthContext } from "../../../context/AuthContext";
 import DTEButton from "../UI/DTEButton/DTEButton";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import { SessionExpiryInfo } from "../../../types/AuthTypes";
 import { ContentContext } from "../../../context/ContentContext";
 
@@ -161,6 +162,7 @@ function SessionTimeoutModal() {
       aria-describedby="at-timer"
       ref={timeoutDialogRef}
     >
+      <DTEHeaderCaption contentKey="session-warning-modal-header-caption" />
       {sessionState.expiryInfo.duration - sessionState.secondsSinceLastActivity > 0 && (
         <DTEHeader as="h1" id="dialog-title">
           {content["session-warning-modal-header"]} <br />

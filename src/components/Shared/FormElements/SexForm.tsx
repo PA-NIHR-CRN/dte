@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { ReactNode, useContext, useEffect } from "react";
 import DTERadio from "../UI/DTERadio/DTERadio";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
@@ -56,7 +57,8 @@ function SexForm(props: SexFormProps) {
   const sexHeader = <DTEHeader as="h2">{content["register2-sexgender-input-sex"]}</DTEHeader>;
   const genderHeader = <DTEHeader as="h2">{content["register2-sexgender-input-gender"]}</DTEHeader>;
   if (!hideHeader) {
-    questionHeader = (
+    <DTEHeaderCaption contentKey="register2-sexgender-header-caption" />
+    questionHeader = (      
       <DTEHeader as="h1" $variant={headerVariant}>
         {content["register2-sexgender-header"]}
       </DTEHeader>

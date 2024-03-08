@@ -6,6 +6,7 @@ import DTEContent from "../../../components/Shared/UI/DTETypography/DTEContent/D
 import DTEDetails from "../../../components/Shared/UI/DTEDetails/DTEDetails";
 import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTERouteLink from "../../../components/Shared/UI/DTERouteLink/DTERouteLink";
+import DTEHeaderCaption from "../../../../src/components/Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
 import React, { useContext } from "react";
 import { ContentContext } from "../../../context/ContentContext";
@@ -69,9 +70,11 @@ function NhsPreRegistration() {
         ]}
       />
       <StepWrapper>
+        <DTEHeaderCaption contentKey="introduction-header-caption" />
         <DTEHeader as="h1">{content["introduction-header"]}</DTEHeader>
         {content["introduction-body"]}
         <Wrapper margin="2rem 0">
+        <DTEHeaderCaption contentKey="introduction-accordion-header-caption" />
           <DTEDetails summary={content["introduction-accordion-header"]}>
             <DTEContent>
               {content["introduction-accordion-body1"]}{" "}

@@ -5,6 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import DTECheckList from "../../../../../Shared/UI/DTECheckList/DTECheckList";
 import DTEButton from "../../../../../Shared/UI/DTEButton/DTEButton";
 import DTEHeader from "../../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../../../../Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTELinkButton from "../../../../../Shared/UI/DTELinkButton/DTELinkButton";
 import Utils from "../../../../../../Helper/Utils";
 import { ContentContext } from "../../../../../../context/ContentContext";
@@ -45,6 +46,7 @@ function ConsentForm(props: ConsentFormProps) {
 
   return (
     <>
+      <DTEHeaderCaption contentKey="register-consent-header-caption" />
       <DTEHeader as="h1">{content["register-consent-header"]}</DTEHeader>
       {content["register-consent-body"]}
       <form onSubmit={handleSubmit(onDataChange)}>

@@ -11,6 +11,7 @@ import ErrorMessageContainer from "../../../Shared/ErrorMessageContainer/ErrorMe
 import LoadingIndicator from "../../../Shared/LoadingIndicator/LoadingIndicator";
 import DTEInput from "../../../Shared/UI/DTEInput/DTEInput";
 import DTEHeader from "../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../../Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import FormBaseProps from "../../../Shared/FormElements/FormBaseProps";
 import FormNavigationButtons from "../../../Shared/FormElements/CommonElements/FormNavigationButtons";
 import ErrorMessageSummary from "../../../Shared/ErrorMessageSummary/ErrorMessageSummary";
@@ -73,6 +74,7 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
 
   return (
     <>
+      <DTEHeaderCaption contentKey="update-email-header-caption" />
       <DTEHeader as="h1" $variant={headerVariant}>
         {content["update-email-header"]}
       </DTEHeader>

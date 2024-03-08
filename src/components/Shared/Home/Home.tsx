@@ -6,6 +6,7 @@ import ArrowForwardRoundedIcon from "@material-ui/icons/ArrowForwardRounded";
 import { useHistory } from "react-router-dom";
 import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEHR from "../UI/DTEHR/DTEHR";
 import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
@@ -88,7 +89,9 @@ function Home() {
         <Grid item xs={12} sm={8} md={7} lg={6} xl={5}>
           {Utils.ConvertResponseToDTEResponse(response)?.isSuccess && !isInNHSApp && (
             <>
+              <DTEHeaderCaption contentKey="account-header-caption" />
               <DTEHeader as="h1">{content["account-header"]}</DTEHeader>
+              <DTEHeaderCaption contentKey="reusable-account-settings-header-caption" />
               <DTEHR />
               <StyledDTEHeader as="h2" $variant="h3">
                 <DTERouteLink
@@ -116,6 +119,7 @@ function Home() {
                 </DTERouteLink>
               </StyledDTEHeader>
               <StyledDTEContent>{content["account-areas-of-research-body"]}</StyledDTEContent>
+              <DTEHeaderCaption contentKey="account-search-studieseusable-personal-details-header-caption" />
               <DTEHR />
               <StyledDTEHeader as="h2" $variant="h3">
                 <DTERouteLink to="/Participants/MyDetails" renderStyle="standard">
@@ -128,6 +132,7 @@ function Home() {
                 {isNhsLinkedAccount ? "" : content["account-personal-details-body-nhs"]}
                 {content["reusable-home-address"].toLowerCase()}.
               </StyledDTEContent>
+              <DTEHeaderCaption contentKey="account-search-studies-header-caption" />
               <DTEHR />
               <StyledDTEHeader as="h2" $variant="h3">
                 <DTERouteLink
@@ -141,6 +146,7 @@ function Home() {
                 </DTERouteLink>
               </StyledDTEHeader>
               <StyledDTEContent>{content["account-search-studies-body"]}</StyledDTEContent>
+              <DTEHeaderCaption contentKey="reusable-newsletter-header-caption" />
               <DTEHR />
               <StyledDTEHeader as="h2" $variant="h3">
                 <DTERouteLink to="/Participants/BePartOfResearchNewsletter" renderStyle="standard">

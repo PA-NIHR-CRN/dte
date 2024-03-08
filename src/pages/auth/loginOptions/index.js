@@ -6,6 +6,7 @@ import DocumentTitle from "react-document-title";
 import { AuthContext } from "../../../context/AuthContext";
 import { ContentContext } from "../../../context/ContentContext";
 import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../../components/Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEBackLink from "../../../components/Shared/UI/DTEBackLink/DTEBackLink";
 
 export const LoginWrapper = styled(Grid)`
@@ -44,6 +45,7 @@ function LoginOptions() {
         </Grid>
         <Grid container justifyContent="center" alignItems="center" role="main" id="main">
           <LoginWrapper item xs={12} sm={8} md={6} lg={5} xl={4}>
+            <DTEHeaderCaption contentKey="signin-options-header-caption" />
             <DTEHeader as="h1">{content["signin-options-header"]}</DTEHeader>
             {content["signin-options"]}
           </LoginWrapper>

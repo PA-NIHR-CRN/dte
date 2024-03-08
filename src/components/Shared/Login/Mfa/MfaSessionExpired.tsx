@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import DocumentTitle from "react-document-title";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import { AuthContext } from "../../../../context/AuthContext";
 import { ContentContext } from "../../../../context/ContentContext";
@@ -18,6 +19,7 @@ const MfaSessionExpired = () => {
   return (
     <DocumentTitle title={content["mfa-session-expired-document-title"]}>
       <StepWrapper>
+        <DTEHeaderCaption contentKey="-header-caption" />
         <DTEHeader as="h1">{content["mfa-session-expired-header"]}</DTEHeader>
         {content["mfa-session-expired-page"]}
       </StepWrapper>

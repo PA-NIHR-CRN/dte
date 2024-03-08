@@ -122,7 +122,9 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
   }, [ethnicity, ethnicities]);
 
   if (!hideHeader && ethnicityLongName) {
+    <DTEHeaderCaption contentKey="register2-ethnicity2-header-caption" />
     labelElement = (
+      //can't insert
       <DTEHeader as="h1" $variant={headerVariant}>
         {(content["register2-ethnicity2-header"] as string).replace("{{ethnicity}}", ethnicityLongName)}
       </DTEHeader>

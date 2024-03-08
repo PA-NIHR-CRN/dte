@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import DocumentTitle from "react-document-title";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import { AuthContext } from "../../../../context/AuthContext";
@@ -25,6 +26,7 @@ const MfaSecurityCodeExpired = () => {
   return (
     <DocumentTitle title={content["mfa-security-code-expired-document-title"]}>
       <StepWrapper>
+      <DTEHeaderCaption contentKey="mfa-security-code-expired-header-caption" />
         <DTEHeader as="h1">{content["mfa-security-code-expired-header"]}</DTEHeader>
         <DTEContent>{content["mfa-security-code-expired-body"]}</DTEContent>
         <LinkWrapper>

@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import DocumentTitle from "react-document-title";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import DTEInput from "../../UI/DTEInput/DTEInput";
 import DTEButton from "../../UI/DTEButton/DTEButton";
@@ -93,6 +94,7 @@ const MfaSmsSetup = () => {
           <LoadingIndicator />
         ) : (
           <>
+          <DTEHeaderCaption contentKey="mfa-sms-setup-header-caption" />
             <DTEHeader as="h1">{content["mfa-sms-setup-header"]}</DTEHeader>
             {content["mfa-sms-setup-instruction-text"]}
             <form noValidate onSubmit={handleSubmit(onSubmit)}>

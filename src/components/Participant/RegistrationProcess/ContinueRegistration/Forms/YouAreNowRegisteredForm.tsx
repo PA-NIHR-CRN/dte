@@ -4,6 +4,7 @@ import useAxiosFetch from "../../../../../hooks/useAxiosFetch";
 import ErrorMessageContainer from "../../../../Shared/ErrorMessageContainer/ErrorMessageContainer";
 import Utils from "../../../../../Helper/Utils";
 import DTEHeader from "../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../../../Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import { AuthContext } from "../../../../../context/AuthContext";
 import { ContentContext } from "../../../../../context/ContentContext";
 
@@ -83,6 +84,7 @@ function YouAreNowRegisteredForm(props: YouAreNowRegisteredFormProps) {
       )}
       {Utils.ConvertResponseToDTEResponse(response)?.isSuccess && (
         <>
+          <DTEHeaderCaption contentKey="registered-thanks-header-caption" />
           <DTEHeader as="h1">{content["registered-thanks-header"]}</DTEHeader>
           {isInNHSApp ? content["registered-thanks-page-nhs"] : content["registered-thanks-page"]}
         </>

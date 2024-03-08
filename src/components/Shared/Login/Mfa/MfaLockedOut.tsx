@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import DocumentTitle from "react-document-title";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import { AuthContext } from "../../../../context/AuthContext";
 import { ContentContext } from "../../../../context/ContentContext";
@@ -18,6 +19,7 @@ const MfaLockedOut = () => {
   return (
     <DocumentTitle title={content["mfa-locked-out-document-title"]}>
       <StepWrapper>
+        <DTEHeaderCaption contentKey="mfa-locked-out-header-caption" />
         <DTEHeader as="h1">{content["mfa-locked-out-header"]}</DTEHeader>
         {content["mfa-locked-out-page"]}
       </StepWrapper>

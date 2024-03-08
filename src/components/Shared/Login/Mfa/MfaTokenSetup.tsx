@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import DocumentTitle from "react-document-title";
 import QRCode from "qrcode";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import DTEInput from "../../UI/DTEInput/DTEInput";
@@ -131,6 +132,7 @@ const MfaTokenSetup = () => {
         ) : (
           <>
             <DTEBackLink onClick={() => history.goBack()} linkText={content["reusable-back-link"]} />
+            <DTEHeaderCaption contentKey="fa-token-setup-caption" />
             <DTEHeader as="h1">{content["mfa-token-setup-header"]}</DTEHeader>
             {content["mfa-token-setup-instruction-text"]}
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -153,6 +155,7 @@ const MfaTokenSetup = () => {
                 </DTEButton>
               </ButtonWrapper>
               <ComponentSpacer>
+              <DTEHeaderCaption contentKey="mfa-token-setup-show-qr-code-header-caption" />
                 <DTEDetails summary={content["mfa-token-setup-show-qr-code-header"]}>
                   <>
                     <DTEContent>

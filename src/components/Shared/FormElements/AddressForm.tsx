@@ -4,6 +4,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useContext, useEffect, useState } from "react";
 import { ContentContext } from "../../../context/ContentContext";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import FormBaseProps from "./FormBaseProps";
 import PostcodeLookup, { PostcodeLookupData } from "./AddressFormComponents/PostcodeLookup";
 import ManualEntry, { ManualEntryData } from "./AddressFormComponents/ManualEntry";
@@ -153,7 +154,8 @@ function AddressForm(props: AddressFormProps) {
 
   return (
     <>
-      {!hideHeader && (
+    <DTEHeaderCaption contentKey="register2-address-header-caption" />
+      {!hideHeader && (        
         <DTEHeader as="h1" $variant={headerVariant}>
           {content["register2-address-header"]}
         </DTEHeader>

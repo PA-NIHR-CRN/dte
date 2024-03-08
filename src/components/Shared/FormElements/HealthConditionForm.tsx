@@ -3,6 +3,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Controller, useForm } from "react-hook-form";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import FormBaseProps from "./FormBaseProps";
 import DTEForwardLookup from "../UI/DTEForwardLookup/DTEForwardLookup";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
@@ -44,6 +45,7 @@ function HealthConditionForm(props: HealthConditionFormProps) {
 
   return (
     <>
+    <DTEHeaderCaption contentKey="register2-health-conditions-header-caption" />
       {!hideHeader && (
         <DTEHeader as="h1" $variant={headerVariant}>
           {content["register2-health-conditions-header"]}

@@ -12,6 +12,7 @@ import DTEBackLink from "../../Shared/UI/DTEBackLink/DTEBackLink";
 import DTELinkButton from "../../Shared/UI/DTELinkButton/DTELinkButton";
 import DTEContent from "../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEHeader from "../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import AddressForm, { AddressFormData } from "../../Shared/FormElements/AddressForm";
 import DisabilityForm, { DisabilityFormData } from "../../Shared/FormElements/DisabilityForm";
 import DOBForm, { DOBFormData } from "../../Shared/FormElements/DOBForm";
@@ -479,6 +480,7 @@ function UpdateParticipant() {
               {currentPage === "main" && <DTEBackLink href="/" linkText={content["reusable-back-link"]} />}
               {currentPage === "main" && (
                 <>
+                <DTEHeaderCaption contentKey="reusable-personal-details-header-caption" />
                   <DTEHeader as="h1" $variant={headerVariant}>
                     {content["reusable-personal-details-header"]}
                   </DTEHeader>
@@ -810,6 +812,7 @@ function UpdateParticipant() {
                   showCancelButton
                   instructionText={
                     <>
+                    <DTEHeaderCaption contentKey="egister2-disability1-header-caption" />
                       <DTEHeader as="h1" $variant={headerVariant}>
                         {content["register2-disability1-header"]}
                       </DTEHeader>
@@ -866,6 +869,7 @@ function UpdateParticipant() {
                   hideHeader
                   instructionText={
                     <>
+                    <DTEHeaderCaption contentKey="register2-ethnicity1-header-caption" />
                       <DTEHeader as="h1" $variant={headerVariant}>
                         {content["register2-ethnicity1-header"]}
                       </DTEHeader>

@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import DocumentTitle from "react-document-title";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import DTEInput from "../../UI/DTEInput/DTEInput";
@@ -136,6 +137,7 @@ const MfaChangeNumberConfirmEmail = () => {
             {prevUrl !== "/MfaSecurityCodeExpired" && (
               <DTEBackLink onClick={() => history.goBack()} linkText={content["reusable-back-link"]} />
             )}
+            <DTEHeaderCaption contentKey="mfa-change-phone-confirm-header-caption" />
             <DTEHeader as="h1">{content["mfa-change-phone-confirm-header"]}</DTEHeader>
             <ErrorMessageContainer
               axiosErrors={[validateEmailOtpError]}
@@ -191,6 +193,7 @@ const MfaChangeNumberConfirmEmail = () => {
                   },
                 }}
               />
+              <DTEHeaderCaption contentKey="mfa-change-phone-confirm-not-received-header-caption" />
               <DTEDetails summary={content["mfa-change-phone-confirm-not-received-header"]}>
                 <>
                   {content["mfa-change-phone-not-received-body"]}

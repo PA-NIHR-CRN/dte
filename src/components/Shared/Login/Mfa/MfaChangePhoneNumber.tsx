@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import DocumentTitle from "react-document-title";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import DTEInput from "../../UI/DTEInput/DTEInput";
@@ -66,6 +67,7 @@ const MfaChangePhoneNumber = () => {
     <DocumentTitle title={content["mfa-change-phone-document-title"]}>
       <StepWrapper>
         <DTEBackLink onClick={() => history.goBack()} linkText={content["reusable-back-link"]} />
+        <DTEHeaderCaption contentKey="mfa-change-phone-header-caption" />
         <DTEHeader as="h1">{content["mfa-change-phone-header"]}</DTEHeader>
         <DTEContent>{content["mfa-change-phone-instruction-text"]}</DTEContent>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>

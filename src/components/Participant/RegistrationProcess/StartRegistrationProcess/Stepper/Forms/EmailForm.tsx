@@ -7,6 +7,7 @@ import Utils, { EmailRegex } from "../../../../../../Helper/Utils";
 import DTEInput from "../../../../../Shared/UI/DTEInput/DTEInput";
 import DTEButton from "../../../../../Shared/UI/DTEButton/DTEButton";
 import DTEHeader from "../../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../../../../Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import ErrorMessageSummary from "../../../../../Shared/ErrorMessageSummary/ErrorMessageSummary";
 import { ContentContext } from "../../../../../../context/ContentContext";
 import Honeypot from "../../../../../Shared/Honeypot/Honeypot";
@@ -47,6 +48,7 @@ function EmailForm(props: EmailFormProps) {
 
   return (
     <>
+      <DTEHeaderCaption contentKey="register-email-header-caption" />
       <DTEHeader as="h1" $variant={headerVariant}>
         {content["register-email-header"]}
       </DTEHeader>

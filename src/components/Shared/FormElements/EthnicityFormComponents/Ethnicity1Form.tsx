@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { ReactNode, useContext, useEffect } from "react";
 import DTERadio from "../../UI/DTERadio/DTERadio";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import FormBaseProps from "../FormBaseProps";
 import FormNavigationButtons from "../CommonElements/FormNavigationButtons";
 import Utils from "../../../../Helper/Utils";
@@ -65,6 +66,7 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
   };
 
   if (!hideHeader) {
+    <DTEHeaderCaption contentKey="register2-ethnicity1-header-caption" />
     labelElement = (
       <DTEHeader as="h1" $variant={headerVariant}>
         {content["register2-ethnicity1-header"]}

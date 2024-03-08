@@ -10,6 +10,7 @@ import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContaine
 import DTEInput from "../UI/DTEInput/DTEInput";
 import DTEButton from "../UI/DTEButton/DTEButton";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import { DTEAxiosResponse } from "../../../types/AuthTypes";
 import Utils, { EmailRegex } from "../../../Helper/Utils";
@@ -68,6 +69,7 @@ function ForgottenPassword() {
               <Grid item xs={12}>
                 {!(submitResponse?.isSuccess || submitResponse?.errors[0].exceptionName === "UserNotFoundException") ? (
                   <>
+                    <DTEHeaderCaption contentKey="resetpassword-header-caption" />
                     <DTEHeader as="h1">{content["resetpassword-header"]}</DTEHeader>
                     <DTEContent>{content["resetpassword-body"]}</DTEContent>
                     <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
@@ -112,6 +114,7 @@ function ForgottenPassword() {
                 ) : (
                   <Grid container direction="column" spacing={2}>
                     <Grid item>
+                      <DTEHeaderCaption contentKey="reusable-check-your-email-header-caption" />
                       <DTEHeader as="h1">{content["reusable-check-your-email-header"]}</DTEHeader>
                       <DTEContent as="b" $marginBottom="large">
                         {content["reusable-check-email-bold-text"]} {watch("email")}

@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useTheme } from "@material-ui/core/styles";
 import { Controller, useForm } from "react-hook-form";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEDateInput from "../UI/DTEDateInput/DTEDateInput";
 import FormBaseProps from "./FormBaseProps";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
@@ -82,6 +83,7 @@ const DOBForm = (props: DOBFormProps) => {
             <Honeypot />
             <StyledFieldset aria-describedby="date-of-birth-legend date-of-birth-hint">
               <StyledFieldsetLegend id="date-of-birth-legend">
+              <DTEHeaderCaption contentKey="register-date-of-birth-header-caption" />
                 {!hideHeader && (
                   <DTEHeader as="h1" $variant={headerVariant}>
                     {content["register-date-of-birth-header"]}
