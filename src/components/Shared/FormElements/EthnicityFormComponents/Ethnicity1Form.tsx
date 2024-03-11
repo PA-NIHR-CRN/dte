@@ -66,11 +66,13 @@ const Ethnicity1Form = (props: Ethnicity1FormProps) => {
   };
 
   if (!hideHeader) {
-    <DTEHeaderCaption contentKey="register2-ethnicity1-header-caption" />;
     labelElement = (
-      <DTEHeader as="h1" $variant={headerVariant}>
-        {content["register2-ethnicity1-header"]}
-      </DTEHeader>
+      <>
+        <DTEHeaderCaption contentKey="register2-ethnicity1-header-caption" />;
+        <DTEHeader as="h1" $variant={headerVariant}>
+          {content["register2-ethnicity1-header"]}
+        </DTEHeader>
+      </>
     );
   } else {
     labelElement = instructionText;
