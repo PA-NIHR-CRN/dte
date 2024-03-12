@@ -2,6 +2,7 @@ import { Fragment, useContext } from "react";
 import styled from "styled-components";
 import { ContinueRegistrationState } from "../../../../../types/ParticipantTypes";
 import DTEHeader from "../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../../../Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEButton from "../../../../Shared/UI/DTEButton/DTEButton";
 import DTELinkButton from "../../../../Shared/UI/DTELinkButton/DTELinkButton";
@@ -34,6 +35,7 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
 
   return (
     <>
+      <DTEHeaderCaption contentKey="register2-check-answers-header-caption" />
       <DTEHeader as="h1">{content["register2-check-answers-header"]}</DTEHeader>
       <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">

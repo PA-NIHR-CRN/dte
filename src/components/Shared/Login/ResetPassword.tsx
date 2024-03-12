@@ -12,6 +12,7 @@ import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import ErrorMessageContainer from "../ErrorMessageContainer/ErrorMessageContainer";
 import DTEButton from "../UI/DTEButton/DTEButton";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import { DTEAxiosResponse } from "../../../types/AuthTypes";
 import Utils from "../../../Helper/Utils";
@@ -171,6 +172,7 @@ function ResetPassword() {
                             axiosErrors={[policyError]}
                             DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(policyResponse)?.errors]}
                           />
+                          <DTEHeaderCaption contentKey="resetpassword-header-choose-password-caption" />
                           <DTEHeader as="h1">{content["resetpassword-header-choose-password"]}</DTEHeader>
                           <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
                           <DTEContent>{policyBuilder}</DTEContent>
@@ -250,6 +252,7 @@ function ResetPassword() {
                         </>
                       ) : (
                         <>
+                          <DTEHeaderCaption contentKey="resetpassword-header-failed-caption" />
                           <DTEHeader as="h2">{content["resetpassword-header-failed"]}</DTEHeader>
                           {content["resetpassword-failed-page"]}
                         </>
@@ -258,6 +261,7 @@ function ResetPassword() {
                   )}
                   {submitResponse?.isSuccess && (
                     <>
+                      <DTEHeaderCaption contentKey="resetpassword-header-updated-caption" />
                       <DTEHeader as="h2">{content["resetpassword-header-updated"]}</DTEHeader>
                       <DTERouteLink to="/">{content["reusable-button-signin"]}</DTERouteLink>
                     </>

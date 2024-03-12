@@ -3,6 +3,7 @@ import styled from "styled-components";
 import DocumentTitle from "react-document-title";
 import Container from "../../Shared/Container/Container";
 import DTEHeader from "../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEBackLink from "../../Shared/UI/DTEBackLink/DTEBackLink";
 import { ContentContext } from "../../../context/ContentContext";
 
@@ -19,6 +20,7 @@ function Newsletter() {
       <StyledWrapper role="main" id="main" ref={containerRef}>
         <Container>
           <DTEBackLink href="/" linkText={content["reusable-back-link"]} />
+          <DTEHeaderCaption contentKey="reusable-newsletter-header-caption" />
           <DTEHeader as="h1">{content["reusable-newsletter-header"]}</DTEHeader>
           {content["newsletter"]}
         </Container>

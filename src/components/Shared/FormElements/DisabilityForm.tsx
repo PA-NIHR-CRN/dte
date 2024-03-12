@@ -5,6 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import { ReactNode, useContext, useEffect } from "react";
 import DTERadio from "../UI/DTERadio/DTERadio";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import FormNavigationButtons from "./CommonElements/FormNavigationButtons";
 import FormBaseProps from "./FormBaseProps";
@@ -47,12 +48,14 @@ const DisabilityForm = (props: DisabilityFormProps) => {
       disability: initialStateData.disability,
     },
   });
-
   if (!hideHeader) {
     labelElement = (
-      <DTEHeader as="h1" $variant={headerVariant}>
-        {content["register2-disability1-header"]}
-      </DTEHeader>
+      <>
+        <DTEHeaderCaption contentKey="register2-disability1-header-caption" />;
+        <DTEHeader as="h1" $variant={headerVariant}>
+          {content["register2-disability1-header"]}
+        </DTEHeader>
+      </>
     );
   } else {
     labelElement = instructionText;

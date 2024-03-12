@@ -11,6 +11,7 @@ import LoadingIndicator from "../../Shared/LoadingIndicator/LoadingIndicator";
 import Container from "../../Shared/Container/Container";
 import DTEBackLink from "../../Shared/UI/DTEBackLink/DTEBackLink";
 import DTEHeader from "../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTELinkButton from "../../Shared/UI/DTELinkButton/DTELinkButton";
 import UpdateEmailForm from "./Forms/UpdateEmailForm";
 import UpdatePasswordForm from "./Forms/UpdatePasswordForm";
@@ -108,6 +109,7 @@ function AccountSettings() {
           {currentPage === "main" && <DTEBackLink href="/" linkText={content["reusable-back-link"]} />}
           {currentPage === "main" && (
             <>
+              <DTEHeaderCaption contentKey="reusable-account-settings-header-caption" />
               <DTEHeader as="h1" $variant={headerVariant}>
                 {content["reusable-account-settings-header"]}
               </DTEHeader>

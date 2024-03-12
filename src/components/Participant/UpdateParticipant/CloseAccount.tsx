@@ -9,6 +9,7 @@ import { Grid } from "@material-ui/core";
 import ReactGA from "react-ga";
 import { AuthContext } from "../../../context/AuthContext";
 import DTEHeader from "../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEBackLink from "../../Shared/UI/DTEBackLink/DTEBackLink";
 import DTEContent from "../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import DTEButton from "../../Shared/UI/DTEButton/DTEButton";
@@ -84,6 +85,7 @@ function CloseAccount() {
       <Container>
         <div role="main" id="main">
           <DTEBackLink href="/" linkText={content["reusable-back-link"]} />
+          <DTEHeaderCaption contentKey="reusable-close-your-account-caption" />
           <DTEHeader as="h1" $variant={headerVariant}>
             {content["reusable-close-your-account"]}
           </DTEHeader>

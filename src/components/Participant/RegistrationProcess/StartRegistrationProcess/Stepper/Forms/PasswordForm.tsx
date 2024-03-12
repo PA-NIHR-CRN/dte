@@ -7,6 +7,7 @@ import useAxiosFetch from "../../../../../../hooks/useAxiosFetch";
 import Utils from "../../../../../../Helper/Utils";
 import DTEButton from "../../../../../Shared/UI/DTEButton/DTEButton";
 import DTEHeader from "../../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../../../../Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import ErrorMessageContainer from "../../../../../Shared/ErrorMessageContainer/ErrorMessageContainer";
 import ErrorMessageSummary from "../../../../../Shared/ErrorMessageSummary/ErrorMessageSummary";
@@ -137,6 +138,7 @@ function PasswordForm(props: PasswordFormProps) {
       />
       {passwordPolicy && (
         <>
+          <DTEHeaderCaption contentKey="register-password-header-caption" />
           <DTEHeader as="h1" $variant={headerVariant}>
             {content["register-password-header"]}
           </DTEHeader>

@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { ReactNode, useState, ChangeEvent, useEffect, useContext } from "react";
 import DTERadio from "../../UI/DTERadio/DTERadio";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import DTEInput from "../../UI/DTEInput/DTEInput";
 import FormBaseProps from "../FormBaseProps";
@@ -123,9 +124,12 @@ const Ethnicity2Form = (props: Ethnicity2FormProps) => {
 
   if (!hideHeader && ethnicityLongName) {
     labelElement = (
-      <DTEHeader as="h1" $variant={headerVariant}>
-        {(content["register2-ethnicity2-header"] as string).replace("{{ethnicity}}", ethnicityLongName)}
-      </DTEHeader>
+      <>
+        <DTEHeaderCaption contentKey="register2-ethnicity2-header-caption" />;
+        <DTEHeader as="h1" $variant={headerVariant}>
+          {(content["register2-ethnicity2-header"] as string).replace("{{ethnicity}}", ethnicityLongName)}
+        </DTEHeader>
+      </>
     );
   } else if (instructionText) {
     labelElement = instructionText;

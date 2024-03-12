@@ -1,6 +1,7 @@
 import { useHistory } from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
 import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../../components/Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
 import useAxiosFetch from "../../../hooks/useAxiosFetch";
 import Utils from "../../../Helper/Utils";
@@ -56,8 +57,10 @@ function NhsAppLanding() {
         )}
         {!loading && completedDemographics && (
           <>
+            <DTEHeaderCaption contentKey="reusable-registered-with-bpo-caption" />
             <DTEHeader as="h1">{content["reusable-registered-with-bpor"]}</DTEHeader>
             {content["reusable-nhs-confirmation"]}
+            <DTEHeaderCaption contentKey="reusable-hear-from-us-caption" />
             <DTEHeader as="h2">{content["reusable-hear-from-us"]}</DTEHeader>
             {content["nhsapp-landing-hear-from-us"]}
           </>

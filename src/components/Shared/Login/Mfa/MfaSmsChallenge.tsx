@@ -3,6 +3,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import DocumentTitle from "react-document-title";
 import DTEHeader from "../../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import StepWrapper from "../../StepWrapper/StepWrapper";
 import DTEInput from "../../UI/DTEInput/DTEInput";
@@ -179,6 +180,7 @@ const MfaSmsChallenge = () => {
         {urlList.includes(prevUrl as string) && (
           <DTEBackLink onClick={() => history.goBack()} linkText={content["reusable-back-link"]} />
         )}
+        <DTEHeaderCaption contentKey="mfa-sms-challenge-header-caption" />
         <DTEHeader as="h1">{content["mfa-sms-challenge-header"]}</DTEHeader>
         {setupMfaError || SMSMfaResponse ? handleErrors(setupMfaError, SMSMfaResponse) : null}
         <DTEContent>
@@ -225,6 +227,7 @@ const MfaSmsChallenge = () => {
               },
             }}
           />
+          <DTEHeaderCaption contentKey="mfa-sms-challenge-not-received-header-caption" />
           <DTEDetails summary={content["mfa-sms-challenge-not-received-header"]}>
             <>
               {content["mfa-sms-challenge-not-received-body"]}
@@ -264,6 +267,7 @@ const MfaSmsChallenge = () => {
               )}
             </>
           </DTEDetails>
+          <DTEHeaderCaption contentKey="mfa-sms-challenge-no-mobile-access-header-caption" />
           {!urlList.includes(prevUrl as string) && (
             <DTEDetails summary={content["mfa-sms-challenge-no-mobile-access-header"]}>
               {content["mfa-sms-challenge-no-mobile-access-body"]}

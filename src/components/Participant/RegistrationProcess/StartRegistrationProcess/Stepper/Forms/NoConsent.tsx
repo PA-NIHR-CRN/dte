@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import DTEHeader from "../../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../../../../Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTERouteLink from "../../../../../Shared/UI/DTERouteLink/DTERouteLink";
 import { AuthContext } from "../../../../../../context/AuthContext";
 import DTEButton from "../../../../../Shared/UI/DTEButton/DTEButton";
@@ -14,6 +15,7 @@ function NoConsent() {
 
   return (
     <>
+      <DTEHeaderCaption contentKey="register-no-consent-header-caption" />
       <DTEHeader as="h1" $variant="h2">
         {content["register-no-consent-header"]}
       </DTEHeader>

@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import DTEButton from "../UI/DTEButton/DTEButton";
 import DTERouteLink from "../UI/DTERouteLink/DTERouteLink";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import { ContentContext } from "../../../context/ContentContext";
 import Honeypot from "../Honeypot/Honeypot";
 
@@ -70,6 +71,7 @@ function CookieBanner() {
         <div className="govuk-cookie-banner__message govuk-width-container">
           <div className="govuk-grid-row">
             <div className="govuk-grid-column-two-thirds cookiesHeader">
+              <DTEHeaderCaption contentKey="cookiebanner-header-caption" />
               <DTEHeader as="h3" $variant="h3">
                 {content["cookiebanner-header"]}
               </DTEHeader>

@@ -7,6 +7,7 @@ import { Controller, useForm } from "react-hook-form";
 import useAxiosFetch from "../../../../hooks/useAxiosFetch";
 import Utils from "../../../../Helper/Utils";
 import DTEHeader from "../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
+import DTEHeaderCaption from "../../../Shared/UI/DTETypography/DTEHeaderCaption/DTEHeaderCaption";
 import DTEContent from "../../../Shared/UI/DTETypography/DTEContent/DTEContent";
 import ErrorMessageContainer from "../../../Shared/ErrorMessageContainer/ErrorMessageContainer";
 import LoadingIndicator from "../../../Shared/LoadingIndicator/LoadingIndicator";
@@ -154,6 +155,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
       {policyLoading && <LoadingIndicator text={content["reusable-password-policy-loading"]} />}
       {passwordPolicy && (
         <>
+          <DTEHeaderCaption contentKey="update-password-header-caption" />
           <DTEHeader as="h1" $variant={headerVariant}>
             {content["update-password-header"]}
           </DTEHeader>
