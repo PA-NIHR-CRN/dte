@@ -111,6 +111,7 @@ function Home() {
               <StyledDTEContent>
                 {isNhsLinkedAccount ? content["account-settings-nhs-text"] : content["account-settings-native-text"]}
               </StyledDTEContent>
+              <DTEHeaderCaption contentKey="reusable-areas-of-research-caption" />
               <DTEHR />
               <StyledDTEHeader as="h2" $variant="h3">
                 <DTERouteLink to="/Participants/ResearchAreas" renderStyle="standard">
@@ -155,6 +156,7 @@ function Home() {
                 </DTERouteLink>
               </StyledDTEHeader>
               <StyledDTEContent>{content["account-newsletter-body"]}</StyledDTEContent>
+              <DTEHeaderCaption contentKey="reusable-close-your-account-caption" />
               <DTEHR />
               <StyledDTEHeader as="h2" $variant="h3">
                 <DTERouteLink to="/Participants/CloseAccount" renderStyle="standard">
@@ -169,8 +171,10 @@ function Home() {
           )}
           {Utils.ConvertResponseToDTEResponse(response)?.isSuccess && isInNHSApp && (
             <>
+              <DTEHeaderCaption contentKey="reusable-registered-with-bpo-caption" />
               <DTEHeader as="h1">{content["reusable-registered-with-bpor"]}</DTEHeader>
               {content["reusable-nhs-confirmation"]}
+              <DTEHeaderCaption contentKey="rreusable-hear-from-us-caption" />
               <DTEHeader as="h2">{content["reusable-hear-from-us"]}</DTEHeader>
               {content["reusable-hear-about-study-timescale"]}
             </>
