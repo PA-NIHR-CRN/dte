@@ -79,6 +79,7 @@ function NhsPreRegistration() {
                 external
                 target="_blank"
                 to="https://bepartofresearch.nihr.ac.uk/volunteer-service/"
+                ariaLabel="Opens in new tab"
                 renderStyle="standard"
                 onClick={() =>
                   ReactGA.outboundLink(

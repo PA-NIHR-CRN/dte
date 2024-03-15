@@ -57,6 +57,8 @@ describe("NhsPreRegistration functionality tests", () => {
     const links = await screen.findAllByRole("link");
     expect(links).toHaveLength(2);
     expect(links[0]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/volunteer-service/");
+    expect(links[0]).toHaveAttribute("target", "_blank");
+    expect(links[0]).toHaveAttribute("aria-label", "Opens in new tab");
     expect(links[0]).toHaveTextContent("Be Part of Research");
   });
 });

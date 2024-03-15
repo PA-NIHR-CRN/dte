@@ -274,7 +274,7 @@ export default function Footer() {
           <SocialIconContainer
             to={{ pathname: "https://www.facebook.com/OfficialNIHR/" }}
             target="_blank"
-            aria-label="Facebook"
+            aria-label="Facebook Opens in new tab"
           >
             <SocialIconWrapper>
               <SocialIcon aria-label="Facebook" icon={faFacebookF as IconProp} size="xs" />
@@ -283,7 +283,7 @@ export default function Footer() {
           <SocialIconContainer
             to={{ pathname: "https://twitter.com/NIHRtakepart" }}
             target="_blank"
-            aria-label="Twitter"
+            aria-label="Twitter Opens in new tab"
           >
             <SocialIconWrapper>
               <SocialIcon aria-label="Twitter" icon={faTwitter as IconProp} size="xs" />
@@ -292,7 +292,7 @@ export default function Footer() {
           <SocialIconContainer
             to={{ pathname: "https://www.youtube.com/user/NIHRtv" }}
             target="_blank"
-            aria-label="You Tube"
+            aria-label="You Tube Opens in new tab"
           >
             <SocialIconWrapper>
               <SocialIcon aria-label="You Tube" icon={faYoutube as IconProp} size="xs" />
@@ -301,7 +301,7 @@ export default function Footer() {
           <SocialIconContainer
             to={{ pathname: "https://www.linkedin.com/company/nihr-research" }}
             target="_blank"
-            aria-label="Linked In"
+            aria-label="Linked In Opens in new tab"
           >
             <SocialIconWrapper>
               <SocialIcon aria-label="Linked In" icon={faLinkedin as IconProp} size="xs" />
@@ -326,7 +326,7 @@ export default function Footer() {
               heading={content["footer-heading-services"]}
               links={servicesLinks}
               isMobile={isMobile}
-              ariaLabel={content["footer-heading-services-aria"]}
+              ariaLabel={content["footer-heading-services-aria"] + "Opens in new tab"}
               isAccordion={isMobile}
             />
           </Grid>
@@ -335,7 +335,7 @@ export default function Footer() {
               heading={content["footer-heading-learn"]}
               links={learnLinks}
               isMobile={isMobile}
-              ariaLabel={content["footer-heading-learn-aria"]}
+              ariaLabel={content["footer-heading-learn-aria"] + "Opens in new tab"}
               isAccordion={isMobile}
             />
           </Grid>
@@ -344,7 +344,7 @@ export default function Footer() {
               heading={content["footer-heading-site-policies"]}
               links={sitePolicyLinks}
               isMobile={isMobile}
-              ariaLabel={content["footer-heading-site-policies-aria"]}
+              ariaLabel={content["footer-heading-site-policies-aria"] + "Opens in new tab"}
               isAccordion={isMobile}
             />
           </Grid>
@@ -353,13 +353,14 @@ export default function Footer() {
               heading={content["footer-heading-stay-connected"]}
               links={stayConnectedLinks}
               isMobile={isMobile}
-              ariaLabel={content["footer-heading-stay-connected-aria"]}
+              ariaLabel={content["footer-heading-stay-connected-aria"] + "Opens in new tab"}
               isAccordion={isMobile}
             />
           </Grid>
           <Grid item>
             <BPORLink
               href="https://bepartofresearch.nihr.ac.uk/"
+              
               target="_blank"
               rel="noopener noreferrer"
               isMobile={isMobile}

@@ -176,13 +176,20 @@ export default function Header() {
                 href="https://bepartofresearch.nihr.ac.uk/"
                 rel="noreferrer"
                 id="styledLogoLink"
+                aria-label="Opens in new tab"
               >
                 <BPORLogo />
               </StyledLink>
             )}
           </StyledGridElementLeft>
           <StyledGridElementRight item xs={4} sm={3} md={3}>
-            <StyledLogoLink rel="noreferrer" id="styledLogoLink" target="_blank" href=" https://nhs.uk/">
+            <StyledLogoLink
+              rel="noreferrer"
+              id="styledLogoLink"
+              target="_blank"
+              aria-label="Opens in new tab"
+              href=" https://nhs.uk/"
+            >
               <NHSLogo id="NHSLogo" />
             </StyledLogoLink>
           </StyledGridElementRight>
