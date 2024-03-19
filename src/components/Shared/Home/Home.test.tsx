@@ -1,7 +1,6 @@
 import { axe, toHaveNoViolations } from "jest-axe";
 import { createServer, Server } from "miragejs";
-import { AuthContext } from "../../../context/AuthContext";
-import { render, screen, waitFor, waitForElementToBeRemoved } from "../../../Helper/test-utils";
+import { render, screen, waitForElementToBeRemoved } from "../../../Helper/test-utils";
 import Home from "./Home";
 
 expect.extend(toHaveNoViolations);
