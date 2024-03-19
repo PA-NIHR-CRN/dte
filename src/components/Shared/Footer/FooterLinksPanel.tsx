@@ -105,7 +105,15 @@ export default function FooterLinksPanel(props: FooterLinksPanelProps) {
           <NavStyled isMobile={isMobile}>
             {links.map((link, i) => (
               <li className={seperators && linkCount !== i + 1 && !isMobile ? "seperator" : ""} key={link.name}>
-                <DTERouteLink to={link.url} renderStyle="standard" target="_blank" external inverted>
+                <DTERouteLink
+                  to={link.url}
+                  renderStyle="standard"
+                  target="_blank"
+                  external
+                  inverted
+                  ariaLabel={`${link.name} (Opens in a new tab)`}
+                  rel="noopener noreferrer"
+                >
                   {link.name}
                 </DTERouteLink>
               </li>
@@ -128,7 +136,16 @@ export default function FooterLinksPanel(props: FooterLinksPanelProps) {
             <AccordionElementStyled>
               {links.map((link) => (
                 <li key={link.name}>
-                  <DTERouteLink to={link.url} renderStyle="standard" target="_blank" key={link.name} inverted external>
+                  <DTERouteLink
+                    to={link.url}
+                    renderStyle="standard"
+                    target="_blank"
+                    key={link.name}
+                    inverted
+                    external
+                    rel="noopener noreferrer"
+                    ariaLabel={`${link.name} (Opens in a new tab)`}
+                  >
                     {link.name}
                     <br />
                   </DTERouteLink>

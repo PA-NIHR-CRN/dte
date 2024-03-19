@@ -21,6 +21,7 @@ interface RouteLinkProps extends BaseLinkProps {
   renderStyle?: "standard" | undefined;
   ariaLabel?: string;
   role?: string;
+  rel?: string;
 }
 
 interface ExternalLinkProps extends BaseLinkProps {
@@ -126,6 +127,7 @@ function DTERouteLink({
   inverted,
   ariaLabel,
   role,
+  rel,
 }: RouteLinkProps & React.HTMLProps<HTMLLinkElement>) {
   if (external) {
     return (
@@ -139,6 +141,7 @@ function DTERouteLink({
         disabled={disabled}
         target={target}
         aria-label={ariaLabel}
+        rel={rel}
       >
         {children}
       </StyledExternalLink>
@@ -156,6 +159,7 @@ function DTERouteLink({
       target={target}
       aria-label={ariaLabel}
       role={role}
+      rel={rel}
     >
       {children}
     </StyledRouteLink>

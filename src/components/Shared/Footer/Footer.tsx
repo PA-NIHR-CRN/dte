@@ -274,7 +274,8 @@ export default function Footer() {
           <SocialIconContainer
             to={{ pathname: "https://www.facebook.com/OfficialNIHR/" }}
             target="_blank"
-            aria-label="Facebook"
+            rel="noopener noreferrer"
+            aria-label="Facebook (Opens in a new tab)"
           >
             <SocialIconWrapper>
               <SocialIcon aria-label="Facebook" icon={faFacebookF as IconProp} size="xs" />
@@ -283,7 +284,8 @@ export default function Footer() {
           <SocialIconContainer
             to={{ pathname: "https://twitter.com/NIHRtakepart" }}
             target="_blank"
-            aria-label="Twitter"
+            rel="noopener noreferrer"
+            aria-label="Twitter (Opens in a new tab)"
           >
             <SocialIconWrapper>
               <SocialIcon aria-label="Twitter" icon={faTwitter as IconProp} size="xs" />
@@ -292,7 +294,8 @@ export default function Footer() {
           <SocialIconContainer
             to={{ pathname: "https://www.youtube.com/user/NIHRtv" }}
             target="_blank"
-            aria-label="You Tube"
+            rel="noopener noreferrer"
+            aria-label="YouTube (Opens in a new tab)"
           >
             <SocialIconWrapper>
               <SocialIcon aria-label="You Tube" icon={faYoutube as IconProp} size="xs" />
@@ -301,10 +304,11 @@ export default function Footer() {
           <SocialIconContainer
             to={{ pathname: "https://www.linkedin.com/company/nihr-research" }}
             target="_blank"
-            aria-label="Linked In"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn (Opens in a new tab)"
           >
             <SocialIconWrapper>
-              <SocialIcon aria-label="Linked In" icon={faLinkedin as IconProp} size="xs" />
+              <SocialIcon aria-label="LinkedIn" icon={faLinkedin as IconProp} size="xs" />
             </SocialIconWrapper>
           </SocialIconContainer>
         </Grid>
@@ -359,9 +363,10 @@ export default function Footer() {
           </Grid>
           <Grid item>
             <BPORLink
-              href="https://bepartofresearch.nihr.ac.uk/"
+              href="https://bepartofresearch.nihr.ac.uk"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Be Part of Research (Opens in a new tab)"
               isMobile={isMobile}
             >
               <BPORLogo />
@@ -388,8 +393,8 @@ export default function Footer() {
           <a
             href="https://www.research.hscni.net/"
             target="_blank"
-            rel="noreferrer"
-            aria-label="Public Health Agency Northern Ireland"
+            rel="noopener noreferrer"
+            aria-label="Public Health Agency Northern Ireland (Opens in a new tab)"
             className="footerImage NI-logo-link"
           >
             <img
@@ -403,8 +408,8 @@ export default function Footer() {
           <a
             href="https://www.nhsresearchscotland.org.uk/"
             target="_blank"
-            rel="noreferrer"
-            aria-label="NHS Scotland"
+            rel="noopener noreferrer"
+            aria-label="NHS Scotland (Opens in a new tab)"
             className="footerImage scot-logo-img"
           >
             <img src={nhsScotlandlogo} className="regional-logos img-responsive" alt="NHS Scotland" />
@@ -414,8 +419,8 @@ export default function Footer() {
           <a
             href="https://healthandcareresearchwales.org/"
             target="_blank"
-            rel="noreferrer"
-            aria-label="Health and Care Research Wales"
+            rel="noopener noreferrer"
+            aria-label="Health and Care Research Wales (Opens in a new tab)"
             className="footerImage HCWLogoContainer"
           >
             <img src={HCRwaleslogo} className="regional-logos img-responsive" alt="Health and Care Research Wales" />

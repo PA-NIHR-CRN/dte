@@ -24,9 +24,11 @@ const StyledDTEHeader = styled(DTEHeader)`
     display: block;
     width: 100%;
     margin-bottom: 1em;
+
     a {
       display: block;
       width: 100%;
+
       svg {
         float: right;
       }
@@ -100,6 +102,11 @@ function Home() {
                   renderStyle="standard"
                   external={isNhsLinkedAccount || false}
                   target={isNhsLinkedAccount ? "_blank" : undefined}
+                  ariaLabel={
+                    isNhsLinkedAccount
+                      ? `${content["reusable-account-settings-header"]} (Opens in a new tab)`
+                      : content["reusable-account-settings-header"]
+                  }
                 >
                   {content["reusable-account-settings-header"]}
                   <ArrowForwardRoundedIcon />
@@ -135,6 +142,8 @@ function Home() {
                   renderStyle="standard"
                   external
                   target="_blank"
+                  rel="noopener noreferrer"
+                  ariaLabel={`${content["account-search-studies-header"]} (Opens in a new tab)`}
                 >
                   {content["account-search-studies-header"]}
                   <ArrowForwardRoundedIcon />
