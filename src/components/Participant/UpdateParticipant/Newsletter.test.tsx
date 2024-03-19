@@ -46,7 +46,7 @@ describe("Areas Of Research display tests", () => {
     expect(links[0].textContent).toBe("Back");
     expect(links[0]).toHaveAttribute("href", "/");
     expect(links[1].textContent).toBe("Sign up to the Be Part of Research newsletter");
-    expect(links[1]).toHaveAttribute("aria-label", "Opens in new tab");
+    expect(links[1]).toHaveAttribute("aria-label", "Opens in a new tab");
     expect(links[1]).toHaveAttribute(
       "href",
       "https://nihr.us14.list-manage.com/subscribe?u=299dc02111e8a68172029095f&id=3b030a1027&utm_source=bpor-vs-website&utm_medium=referral&utm_campaign=bpor-newsletter"

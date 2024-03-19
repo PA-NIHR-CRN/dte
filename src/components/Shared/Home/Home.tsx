@@ -24,9 +24,11 @@ const StyledDTEHeader = styled(DTEHeader)`
     display: block;
     width: 100%;
     margin-bottom: 1em;
+
     a {
       display: block;
       width: 100%;
+
       svg {
         float: right;
       }
@@ -100,7 +102,11 @@ function Home() {
                   renderStyle="standard"
                   external={isNhsLinkedAccount || false}
                   target={isNhsLinkedAccount ? "_blank" : undefined}
-                  ariaLabel="Opens in new tab"
+                  ariaLabel={
+                    isNhsLinkedAccount
+                      ? `${content["reusable-account-settings-header"]} (Opens in a new tab)`
+                      : content["reusable-account-settings-header"]
+                  }
                 >
                   {content["reusable-account-settings-header"]}
                   <ArrowForwardRoundedIcon />
@@ -111,7 +117,7 @@ function Home() {
               </StyledDTEContent>
               <DTEHR />
               <StyledDTEHeader as="h2" $variant="h3">
-                <DTERouteLink to="/Participants/ResearchAreas" renderStyle="standard" ariaLabel="Opens in new tab">
+                <DTERouteLink to="/Participants/ResearchAreas" renderStyle="standard">
                   {content["reusable-areas-of-research"]}
                   <ArrowForwardRoundedIcon />
                 </DTERouteLink>
@@ -119,7 +125,7 @@ function Home() {
               <StyledDTEContent>{content["account-areas-of-research-body"]}</StyledDTEContent>
               <DTEHR />
               <StyledDTEHeader as="h2" $variant="h3">
-                <DTERouteLink to="/Participants/MyDetails" renderStyle="standard" ariaLabel="Opens in new tab">
+                <DTERouteLink to="/Participants/MyDetails" renderStyle="standard">
                   {content["reusable-personal-details-header"]}
                   <ArrowForwardRoundedIcon />
                 </DTERouteLink>
@@ -136,7 +142,8 @@ function Home() {
                   renderStyle="standard"
                   external
                   target="_blank"
-                  ariaLabel="Opens in new tab"
+                  rel="noopener noreferrer"
+                  ariaLabel={`${content["account-search-studies-header"]} (Opens in a new tab)`}
                 >
                   {content["account-search-studies-header"]}
                   <ArrowForwardRoundedIcon />
@@ -145,11 +152,7 @@ function Home() {
               <StyledDTEContent>{content["account-search-studies-body"]}</StyledDTEContent>
               <DTEHR />
               <StyledDTEHeader as="h2" $variant="h3">
-                <DTERouteLink
-                  to="/Participants/BePartOfResearchNewsletter"
-                  renderStyle="standard"
-                  ariaLabel="Opens in new tab"
-                >
+                <DTERouteLink to="/Participants/BePartOfResearchNewsletter" renderStyle="standard">
                   {content["reusable-newsletter-header"]}
                   <ArrowForwardRoundedIcon />
                 </DTERouteLink>
@@ -157,16 +160,14 @@ function Home() {
               <StyledDTEContent>{content["account-newsletter-body"]}</StyledDTEContent>
               <DTEHR />
               <StyledDTEHeader as="h2" $variant="h3">
-                <DTERouteLink to="/Participants/CloseAccount" renderStyle="standard" ariaLabel="Opens in new tab">
+                <DTERouteLink to="/Participants/CloseAccount" renderStyle="standard">
                   {content["reusable-close-your-account"]}
                   <ArrowForwardRoundedIcon />
                 </DTERouteLink>
               </StyledDTEHeader>
               <StyledDTEContent>{content["account-close-account-body"]}</StyledDTEContent>
               <StyledDTEHR />
-              <DTERouteLink ariaLabel="Opens in new tab" to="/logout">
-                {content["account-button-sign-out"]}
-              </DTERouteLink>
+              <DTERouteLink to="/logout">{content["account-button-sign-out"]}</DTERouteLink>
             </>
           )}
           {Utils.ConvertResponseToDTEResponse(response)?.isSuccess && isInNHSApp && (

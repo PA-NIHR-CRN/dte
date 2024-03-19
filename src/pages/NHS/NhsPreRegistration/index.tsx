@@ -78,8 +78,9 @@ function NhsPreRegistration() {
               <DTERouteLink
                 external
                 target="_blank"
+                rel="noopener noreferrer"
                 to="https://bepartofresearch.nihr.ac.uk/volunteer-service/"
-                ariaLabel="Opens in new tab"
+                ariaLabel={`${content["introduction-accordion-link"]} (Opens in a new tab)`}
                 renderStyle="standard"
                 onClick={() =>
                   ReactGA.outboundLink(

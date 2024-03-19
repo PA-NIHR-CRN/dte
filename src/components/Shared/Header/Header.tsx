@@ -176,7 +176,7 @@ export default function Header() {
                 href="https://bepartofresearch.nihr.ac.uk/"
                 rel="noreferrer"
                 id="styledLogoLink"
-                aria-label="Opens in new tab"
+                aria-label="Opens in a new tab"
               >
                 <BPORLogo />
               </StyledLink>
@@ -187,7 +187,7 @@ export default function Header() {
               rel="noreferrer"
               id="styledLogoLink"
               target="_blank"
-              aria-label="Opens in new tab"
+              aria-label="Opens in a new tab"
               href=" https://nhs.uk/"
             >
               <NHSLogo id="NHSLogo" />
