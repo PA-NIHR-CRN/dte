@@ -34,7 +34,9 @@ function CheckAnswersForm(props: CheckAnswersFormProps) {
 
   return (
     <>
-      <DTEHeader as="h1">{content["register2-check-answers-header"]}</DTEHeader>
+      <DTEHeader as="h1" captionKey="register2-check-answers-header">
+        {content["register2-check-answers-header"]}
+      </DTEHeader>
       <dl className="govuk-summary-list">
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">

@@ -54,7 +54,7 @@ function NameForm(props: NameFormProps) {
   return (
     <>
       {!hideHeader && (
-        <DTEHeader as="h1" $variant={headerVariant}>
+        <DTEHeader as="h1" $variant={headerVariant} captionKey="register-name-header">
           {content["register-name-header"]}
         </DTEHeader>
       )}

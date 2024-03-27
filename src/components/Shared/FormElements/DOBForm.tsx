@@ -83,7 +83,7 @@ const DOBForm = (props: DOBFormProps) => {
             <StyledFieldset aria-describedby="date-of-birth-legend date-of-birth-hint">
               <StyledFieldsetLegend id="date-of-birth-legend">
                 {!hideHeader && (
-                  <DTEHeader as="h1" $variant={headerVariant}>
+                  <DTEHeader as="h1" $variant={headerVariant} captionKey="register-date-of-birth-header">
                     {content["register-date-of-birth-header"]}
                   </DTEHeader>
                 )}

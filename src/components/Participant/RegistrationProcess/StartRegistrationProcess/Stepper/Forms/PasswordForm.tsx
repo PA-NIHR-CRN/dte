@@ -137,7 +137,7 @@ function PasswordForm(props: PasswordFormProps) {
       />
       {passwordPolicy && (
         <>
-          <DTEHeader as="h1" $variant={headerVariant}>
+          <DTEHeader as="h1" $variant={headerVariant} captionKey="register-password-header">
             {content["register-password-header"]}
           </DTEHeader>
           <DTEContent>{policyBuilder}</DTEContent>

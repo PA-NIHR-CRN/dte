@@ -68,7 +68,7 @@ function MobileNumberForm(props: MobileNumberFormProps) {
   return (
     <>
       {!hideHeader && (
-        <DTEHeader as="h1" $variant={headerVariant}>
+        <DTEHeader as="h1" $variant={headerVariant} captionKey="register2-phone-header">
           {content["register2-phone-header"]}
         </DTEHeader>
       )}

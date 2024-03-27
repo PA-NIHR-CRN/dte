@@ -70,7 +70,7 @@ function CookieBanner() {
         <div className="govuk-cookie-banner__message govuk-width-container">
           <div className="govuk-grid-row">
             <div className="govuk-grid-column-two-thirds cookiesHeader">
-              <DTEHeader as="h3" $variant="h3">
+              <DTEHeader as="h3" $variant="h3" captionKey="cookiebanner-header">
                 {content["cookiebanner-header"]}
               </DTEHeader>
               <div className="govuk-cookie-banner__content">{content["cookiebanner-body"]}</div>

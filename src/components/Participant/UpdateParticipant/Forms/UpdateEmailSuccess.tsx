@@ -9,7 +9,9 @@ function UpdateEmailSuccess() {
   return (
     <DocumentTitle title={content["update-email-success-document-title"]}>
       <StepWrapper>
-        <DTEHeader as="h1">{content["update-email-success-header"]}</DTEHeader>
+        <DTEHeader as="h1" captionKey="update-email-success-header">
+          {content["update-email-success-header"]}
+        </DTEHeader>
         {content["update-email-success-page"]}
       </StepWrapper>
     </DocumentTitle>

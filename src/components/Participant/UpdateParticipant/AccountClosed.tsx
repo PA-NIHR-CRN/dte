@@ -9,7 +9,9 @@ function AccountClosed() {
   return (
     <DocumentTitle title={content["accountclosed-document-title"]}>
       <Container>
-        <DTEHeader as="h1">{content["accountclosed-header"]}</DTEHeader>
+        <DTEHeader as="h1" captionKey="accountclosed-header">
+          {content["accountclosed-header"]}
+        </DTEHeader>
         {content["accountclosed-page"]}
       </Container>
     </DocumentTitle>

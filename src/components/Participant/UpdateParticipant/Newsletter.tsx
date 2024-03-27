@@ -19,7 +19,9 @@ function Newsletter() {
       <StyledWrapper role="main" id="main" ref={containerRef}>
         <Container>
           <DTEBackLink href="/" linkText={content["reusable-back-link"]} />
-          <DTEHeader as="h1">{content["reusable-newsletter-header"]}</DTEHeader>
+          <DTEHeader as="h1" captionKey="reusable-newsletter-header">
+            {content["reusable-newsletter-header"]}
+          </DTEHeader>
           {content["newsletter"]}
         </Container>
       </StyledWrapper>

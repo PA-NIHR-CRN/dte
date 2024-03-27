@@ -108,7 +108,7 @@ function AccountSettings() {
           {currentPage === "main" && <DTEBackLink href="/" linkText={content["reusable-back-link"]} />}
           {currentPage === "main" && (
             <>
-              <DTEHeader as="h1" $variant={headerVariant}>
+              <DTEHeader as="h1" $variant={headerVariant} captionKey="reusable-account-settings-header">
                 {content["reusable-account-settings-header"]}
               </DTEHeader>
               {userData && (
