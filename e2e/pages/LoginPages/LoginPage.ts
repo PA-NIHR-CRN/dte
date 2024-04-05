@@ -26,7 +26,10 @@ export default class LoginPage {
 
   async assertPage() {
     await this.page.goto(
-      "https://volunteer.bepartofresearch.nihr.ac.uk/UserLogin"
+      "https://test.volunteer.bepartofresearch.nihr.ac.uk/UserLogin"
     );
+  }
+  async assertFormVisible() {
+    await assertComponentsVisible([this.emailInput, this.passwordInput]);
   }
 }

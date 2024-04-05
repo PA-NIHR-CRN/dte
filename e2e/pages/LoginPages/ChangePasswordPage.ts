@@ -1,7 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { assertComponentsVisible } from "../../utils/visibilityUtils";
 
-export default class ChangeEmailPage {
+export default class changePasswordPage {
   readonly page: Page;
   // text
   readonly changePasswordPageHeading: Locator;

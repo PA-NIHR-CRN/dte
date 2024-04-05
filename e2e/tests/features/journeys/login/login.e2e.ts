@@ -1,84 +1,64 @@
-import { test } from "../../../../hooks/CustomFixtures";
+import { test } from '../../../../hooks/CustomFixtures'
+import { chromium } from '@playwright/test'
+import LoginOptionsPage from '../../../../pages/LoginPages/LoginOptionsPage'
 
-test.describe("Successful user journey", async () => {
-  test("Successful user journey", async ({
-    loginPage,
-    myAccountPage,
-    accountSettingsPage,
-    areasOfResearchAccountPage,
-    changeAddressPage,
-    changeDateOfBirthPage,
-    changeEmailPage,
-    changeOptionalPhoneNumberPage,
-    changePasswordPage,
-    changeSexGenderPage,
-  }) => {
-    test.step("Given I am on the login page", async () => {
-      await loginPage.assertPage();
-    });
-    test.step("I will fill in the inputs to sign in", async () => {
-      await loginPage.emailInput.fill("example@gmail.com");
-      await loginPage.passwordInput.fill("TestPassword123!");
-    });
-    test.step("Then click to sign in", async () => {
-      await loginPage.loginButton.click();
-    });
-    test.step("Given I can see my account page correctly rendered", async () => {
-      await myAccountPage.assertPageElementsVisible();
-      await myAccountPage.assertAllLinksVisible();
-      await myAccountPage.assertMainContentText();
-    });
-    test.step("I will then click the account the account settings link", async () => {
-      await myAccountPage.clickLink("Account settings");
-    });
-    test.step("I will then see the account settings page correctly rendered", async () => {
-      await accountSettingsPage.assertButtonsVisible();
-      await accountSettingsPage.assertTextVisible();
-    });
-    test.step("Then click to change my email address", async () => {
-      await accountSettingsPage.changeEmailButton.click();
-    });
-    test.step("I will then see the change email page components rendered", async () => {
-      await changeEmailPage.assertButtonsVisible();
-      await changeEmailPage.assertFormVisible();
-      await changeEmailPage.assertTextVisible();
-    });
-    test.step("and fill the email inputs with a new email", async () => {
-      await changeEmailPage.newEmailInput.fill("newEmail@gmail.com");
-      await changeEmailPage.confirmEmailInput.fill("newEmail@gmail.com");
-    });
-    test.step("I will then click cancel", async () => {
-      await changeEmailPage.cancelButton.click();
-    });
-    test.step("I will then see the account settings page rendered again", async () => {
-      await accountSettingsPage.assertButtonsVisible();
-      await accountSettingsPage.assertTextVisible();
-    });
-    test.step("I will then click back to return to the my account page", async () => {
-      await accountSettingsPage.backButton.click();
-    });
-    test.step("I will then see the my account page rendered again", async () => {
-      await myAccountPage.assertPageElementsVisible();
-      await myAccountPage.assertAllLinksVisible();
-      await myAccountPage.assertMainContentText();
-    });
-    test.step("I will then click to go to the areas of research page", async () => {
-      await myAccountPage.clickLink("Areas of research");
-    });
-    test.step("Given I have seen the components rendered correctly", async () => {
-      areasOfResearchAccountPage.assertButtonsVisible();
-      areasOfResearchAccountPage.assertFormVisible();
-      areasOfResearchAccountPage.assertLinksVisible();
-      areasOfResearchAccountPage.assertTextVisible();
-    });
-    await test.step("I will add an area of research I'm interested in", async () => {
-      areasOfResearchAccountPage.formInput.fill("Cancer");
-    });
-    await test.step("And then select bone cancer from the dropdown list", async () => {
-      areasOfResearchAccountPage.boneCancerSelect.click();
-    });
-    await test.step("Then click the save button to save my change", async () => {
-      areasOfResearchAccountPage.saveButton.click();
-    });
-  });
-});
+test.describe('login options test', () => {
+    test('Successful journey', async ({ loginOptionsPage, loginPage, enterMobilePage, verifyMobilePage, myAccountPage, closeAccountPage }) => {
+        await test.step('Once I have navigated to the login options page', async () => {
+            await loginOptionsPage.assertPage()
+        })
+
+        await test.step('I will see the components are rendered correctly', async () => {
+            await loginOptionsPage.assertButtonsVisible()
+        })
+
+        await test.step('I will then click the sign in button', async () => {
+            await loginOptionsPage.signInButton.click()
+        })
+
+        await test.step('I will then see the login page correctly rendered', async () => {
+            await loginPage.assertFormVisible()
+        })
+
+        await test.step('And then fill in the form correctly', async () => {
+            await loginPage.emailInput.fill('e2e.test@nihr.ac.uk')
+            await loginPage.passwordInput.fill('P@ssword123*')
+        })
+
+        await test.step('Then click the login button', async () => {
+            await loginPage.loginButton.click()
+        })
+
+        await test.step('And see the verify mobile page correctly rendered', async () => {
+            await verifyMobilePage.assertButtonsVisible()
+            await verifyMobilePage.assertFormVisible()
+            await verifyMobilePage.assertTextVisible()
+        })
+
+        await test.step('I will verify my mobile number', async () => {
+            await verifyMobilePage.mobileInput.fill('123456')
+        })
+
+        await test.step('I will click the continue button', async () => {
+            await verifyMobilePage.continueButton.click()
+        })
+        await test.step('Given I can see my account page correctly rendered', async () => {
+            await myAccountPage.assertPageElementsVisible()
+            await myAccountPage.assertAllLinksVisible()
+        })
+        await test.step('I will click the close my account link', async () => {
+            await myAccountPage.clickLink('closeAccount')
+        })
+        await test.step('Given I have navigated to the close account page', async () => {
+            await closeAccountPage.assertButtonsVisible()
+            await closeAccountPage.assertTextVisible()
+            await closeAccountPage.assertMainContent()
+        })
+        await test.step('I will click to close my account', async () => {
+            await closeAccountPage.closeAccountButton.click()
+        })
+        await test.step('And confirm the closing of my account', async () => {
+            await closeAccountPage.confirmCloseAccountButton.click()
+        })
+    })
+})

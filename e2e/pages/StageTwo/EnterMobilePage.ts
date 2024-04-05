@@ -1,77 +1,38 @@
-import { Locator, Page } from "@playwright/test";
-import {
-  assertComponentsVisible,
-  assertErrorUtil,
-  assertComponentsHidden,
-} from "../../utils/visibilityUtils";
+import { Locator, Page } from '@playwright/test'
+import { assertComponentsVisible } from '../../utils/visibilityUtils'
 
 export default class EnterMobilePage {
-  readonly page: Page;
-  // text
-  readonly enterMobilePageHeading: Locator;
-  readonly enterMobilePageText: Locator;
-  readonly summaryTextPreview: Locator;
-  readonly summaryText: Locator;
-  // links
-  readonly authenticatorLink: Locator;
-  // form
-  readonly mobileInput: Locator;
-  readonly mobileLabel: Locator;
-  // buttons
-  readonly continueButton: Locator;
-  // errors
-  readonly mobileError: Locator;
-
-  constructor(page: Page) {
-    this.page = page;
+    readonly page: Page
     // text
-    this.enterMobilePageHeading = page.getByRole("heading", {
-      name: "Enter your mobile phone number",
-    });
-    this.enterMobilePageText = page.getByText(
-      "We will send you a 6 digit security code to your phone to confirm your mobile number."
-    );
-    this.summaryTextPreview = page.getByText(
-      "Use another way to secure my account"
-    );
-    this.summaryText = page.getByText(
-      "If you do not have a UK mobile phone number or do not want to use this method, you can use an authenticator app to secure your account."
-    );
-    // links
-    this.authenticatorLink = page.locator(
-      `span:text("use an authenticator app to secure your account")`
-    );
+    readonly pageHeading: Locator
     // form
-    this.mobileInput = page.getByLabel("UK mobile phone number");
-    this.mobileLabel = page.locator("label#mobilePhoneNumber--label");
+    readonly enterMobileInput: Locator
     // buttons
-    this.continueButton = page.getByRole("button", { name: "Continue" });
-    // errors
-    this.mobileError = page.locator("span#mobilePhoneNumber--error-message");
-  }
+    readonly continueButton: Locator
 
-  // --- LOAD METHODS --- //
-  async goTo() {
-    await this.page.goto(
-      "https://volunteer.bepartofresearch.nihr.ac.uk/MfaSmsSetup"
-    );
-  }
+    constructor(page: Page) {
+        this.page = page
+        // text
+        this.pageHeading = page.locator(`h1:text("Enter your mobile phone number")`)
+        // form
+        this.enterMobileInput = page.locator(`input#mobilePhoneNumber`)
+        // buttons
+        this.continueButton = page.getByRole('button', {
+            name: 'Continue',
+            exact: true,
+        })
+    }
 
-  // --- VISIBILITY METHODS --- //
-  async assertButtonsVisible() {
-    await assertComponentsVisible([this.continueButton]);
-  }
-  async assertFormVisible() {
-    await assertComponentsVisible([this.mobileInput, this.mobileLabel]);
-  }
-  async assertTextVisible() {
-    await assertComponentsVisible([
-      this.enterMobilePageHeading,
-      this.enterMobilePageText,
-      this.summaryTextPreview,
-    ]);
-  }
-  async assertErrorsHidden() {
-    await expect(this.mobileError).toBeHidden();
-  }
+    // --- VISIBILITY METHODS --- //
+    async assertButtonsVisible() {
+        await assertComponentsVisible([this.continueButton])
+    }
+
+    async assertTextVisible() {
+        await assertComponentsVisible([this.pageHeading])
+    }
+
+    async assertFormVisible() {
+        await assertComponentsVisible([this.enterMobileInput])
+    }
 }
