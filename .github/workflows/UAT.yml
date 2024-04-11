@@ -18,7 +18,6 @@ env:
   REACT_APP_CONTENTFUL_DELIVERY_TOKEN: ${{secrets.REACT_APP_CONTENTFUL_DELIVERY_TOKEN}}
   REACT_APP_CONTENTFUL_ENVIRONMENT: ${{secrets.REACT_APP_CONTENTFUL_ENVIRONMENT}}
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,8 +25,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v2
         with:
-          node-version: '16'
-          cache: 'yarn'
+          node-version: "16"
+          cache: "yarn"
           cache-dependency-path: "yarn.lock"
       - name: Configure AWS credentials - All
         # if: github.ref == 'refs/heads/master'
@@ -46,7 +45,6 @@ jobs:
       - name: Running Unit Tests
         run: yarn test
 
-
       - name: Deploy to S3 - UAT
         shell: bash
         run: |
@@ -54,4 +52,3 @@ jobs:
           aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == '${{ secrets.VS_NIHR_URL_UAT }}'].Id" --output text) --paths '/*'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_UAT_BUCKET_NAME }}
-

@@ -34,8 +34,8 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - uses: actions/setup-node@v2
         with:
-          node-version: '16'
-          cache: 'yarn'
+          node-version: "16"
+          cache: "yarn"
           cache-dependency-path: "yarn.lock"
       - name: Yarn Install
         run: yarn install
@@ -46,7 +46,6 @@ jobs:
       - name: Running Unit Tests
         run: yarn test
 
-
       - name: Deploy to S3 - PROD
         shell: bash
         run: |
@@ -54,4 +53,3 @@ jobs:
           aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == '${{ secrets.VS_NIHR_URL_PROD }}'].Id" --output text) --paths '/*'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_PROD_BUCKET_NAME }}
-

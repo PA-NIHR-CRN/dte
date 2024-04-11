@@ -13,8 +13,11 @@ import HCRwaleslogo from "../../../images/Health-and-Care-Research-Wales-full-co
 import nhsScotlandlogo from "../../../images/nhs-research-scotland-logo.svg";
 import FooterLinksPanel from "./FooterLinksPanel";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+<<<<<<< HEAD
+=======
 import { useContext } from "react";
 import { ContentContext } from "../../../context/ContentContext";
+>>>>>>> main
 
 interface IsMobileProps {
   isMobile?: boolean;
@@ -277,7 +280,15 @@ export default function Footer() {
             aria-label="Facebook"
           >
             <SocialIconWrapper>
+<<<<<<< HEAD
+              <SocialIcon
+                aria-label="Facebook"
+                icon={faFacebookF as IconProp}
+                size="xs"
+              />
+=======
               <SocialIcon aria-label="Facebook" icon={faFacebookF as IconProp} size="xs" />
+>>>>>>> main
             </SocialIconWrapper>
           </SocialIconContainer>
           <SocialIconContainer
@@ -286,7 +297,15 @@ export default function Footer() {
             aria-label="Twitter"
           >
             <SocialIconWrapper>
+<<<<<<< HEAD
+              <SocialIcon
+                aria-label="Twitter"
+                icon={faTwitter as IconProp}
+                size="xs"
+              />
+=======
               <SocialIcon aria-label="Twitter" icon={faTwitter as IconProp} size="xs" />
+>>>>>>> main
             </SocialIconWrapper>
           </SocialIconContainer>
           <SocialIconContainer
@@ -295,7 +314,15 @@ export default function Footer() {
             aria-label="You Tube"
           >
             <SocialIconWrapper>
+<<<<<<< HEAD
+              <SocialIcon
+                aria-label="You Tube"
+                icon={faYoutube as IconProp}
+                size="xs"
+              />
+=======
               <SocialIcon aria-label="You Tube" icon={faYoutube as IconProp} size="xs" />
+>>>>>>> main
             </SocialIconWrapper>
           </SocialIconContainer>
           <SocialIconContainer
@@ -304,7 +331,15 @@ export default function Footer() {
             aria-label="Linked In"
           >
             <SocialIconWrapper>
+<<<<<<< HEAD
+              <SocialIcon
+                aria-label="Linked In"
+                icon={faLinkedin as IconProp}
+                size="xs"
+              />
+=======
               <SocialIcon aria-label="Linked In" icon={faLinkedin as IconProp} size="xs" />
+>>>>>>> main
             </SocialIconWrapper>
           </SocialIconContainer>
         </Grid>

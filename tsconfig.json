@@ -19,5 +19,8 @@
   "include": [
     "src"
   ],
-  "types": ["node", "jest"]
+  "types": ["node", "jest"],
+  "paths": {
+    "react": [ "./node_modules/@types/react" ]
+  }
 }

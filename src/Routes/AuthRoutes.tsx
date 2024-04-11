@@ -1,8 +1,7 @@
 import { Route } from "react-router-dom";
-import React, { useContext } from "react";
+import React from "react";
 import ReactGA from "react-ga";
 import Logout from "../components/Shared/Login/Logout";
-import { AuthContext } from "../context/AuthContext";
 import UserLogin from "../components/Shared/Login/UserLogin";
 import Verify from "../components/Shared/Login/Verify";
 import ForgottenPassword from "../components/Shared/Login/ForgottenPassword";
@@ -27,13 +26,6 @@ import MfaSecurityCodeExpired from "../components/Shared/Login/Mfa/MfaSecurityCo
 import MfaSessionExpired from "../components/Shared/Login/Mfa/MfaSessionExpired";
 import MfaLockedOut from "../components/Shared/Login/Mfa/MfaLockedOut";
 
-const redirect = (pathOrigin: string) => {
-  const { persistLastNonLoginUrl, prevUrl, lastUrl } = useContext(AuthContext);
-  persistLastNonLoginUrl(prevUrl || lastUrl || "");
-  window.location.href = pathOrigin;
-  return null;
-};
-
 export default [
   /* Auth Routes */
   <Route
@@ -51,21 +43,6 @@ export default [
       return <LoginOptions />;
     }}
     key="options"
-  />,
-  <Route
-    path="/ResearchLogin"
-    component={() => {
-      return redirect(process.env.REACT_APP_RESEARCHER_AUTH_URL || "");
-    }}
-    key="researchlogin"
-  />,
-  <Route
-    path="/LogoutRedirect"
-    component={() => {
-      return redirect(process.env.REACT_APP_LOGOUT_URL || "");
-    }}
-    strict
-    key="logoutredirect"
   />,
   <Route
     path="/Logout"

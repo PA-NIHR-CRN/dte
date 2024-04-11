@@ -1,10 +1,14 @@
-// import { v5 as uuidv5, v4 as uuidv4 } from "uuid";
 import { AxiosResponse } from "axios";
 import { DTEAxiosResponse } from "../types/AuthTypes";
 import { ReactNode } from "react";
 import DTEContent from "../components/Shared/UI/DTETypography/DTEContent/DTEContent";
 
 export default class Utils {
+<<<<<<< HEAD
+  static ConvertResponseToDTEResponse = (
+    resp?: AxiosResponse<any> | void
+  ): DTEAxiosResponse | undefined => {
+=======
   static IsCPMSStatusDTEReady(statusName: string) {
     if (statusName) {
       const supportedStatuses = process.env.REACT_APP_DTE_READY_STATUS_LIST?.split("#");
@@ -51,6 +55,7 @@ export default class Utils {
   };
 
   static ConvertResponseToDTEResponse = (resp?: AxiosResponse<any> | void): DTEAxiosResponse | undefined => {
+>>>>>>> main
     if (!resp) {
       return undefined;
     }

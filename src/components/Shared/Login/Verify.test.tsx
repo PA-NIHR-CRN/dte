@@ -1,6 +1,6 @@
 import { createServer, Response, Server } from "miragejs";
 import { Router } from "react-router-dom";
-import { createMemoryHistory } from "history";
+import { createBrowserHistory } from "history";
 import Verify from "./Verify";
 import { render, screen, waitFor } from "../../../Helper/test-utils";
 import App from "../../../App";
@@ -161,7 +161,7 @@ describe.each([
   });
 
   test(`must handle loading of ${redirectUrl} for ${urlParams}`, async () => {
-    const history = createMemoryHistory();
+    const history = createBrowserHistory();
     history.push(`/verify${urlParams}`);
     render(
       <Router history={history}>
