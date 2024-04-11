@@ -3,11 +3,23 @@ import styled from "styled-components";
 import bporlogo from "../../../images/BPoR_NIHR_colour-RGB.svg";
 import nhslogo from "../../../images/NHS_logo.svg";
 import DTEPhaseBanner from "../UI/DTEPhaseBanner/DTEPhaseBanner";
+import { ContentContext } from "../../../context/ContentContext";
+import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
+import DTELinkButton from "../UI/DTELinkButton/DTELinkButton";
+import usePathname from "../../../hooks/usePathname";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { Stack } from "@mui/material";
 
 const StyledHeader = styled.header`
   margin-top: 0.5em;
   padding-left: 1em;
   padding-right: 1em;
+`;
+
+const LanguageSelector = styled(Grid)`
+  float: right;
+  margin-right: 1em;
 `;
 
 const StyledGridElementLeft = styled(Grid)`
@@ -105,16 +117,51 @@ const NHSLogo = styled.img.attrs({
 })``;
 
 export default function Header() {
+<<<<<<< HEAD
+=======
+  const { showBacklink } = useContext(AppContext);
+  const { setLanguage, language, content } = useContext(ContentContext);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const pathname = usePathname();
+  const pathsNotToShow = [
+    "/ForgottenPassword",
+    "/MfaLockedOut",
+    "/MfaSessionExpired",
+    "/MfaSecurityCodeExpired",
+    "/MfaChangePhoneNumber",
+    "/MfaChangeNumberConfirmEmail",
+    "/MfaTokenChallenge",
+    "/MfaTokenSetup",
+    "/MfaSmsChallenge",
+    "/MfaSmsSetup",
+  ];
+  const shouldShowLanguageSelector = !pathsNotToShow.includes(pathname);
+
+  const LanguageComponent = () => (
+    <Stack direction="row" spacing={1} alignItems="center">
+      {language !== "en-GB" ? (
+        <DTELinkButton onClick={() => setLanguage("en-GB")}>English</DTELinkButton>
+      ) : (
+        <DTEContent>English</DTEContent>
+      )}
+      <DTEContent>|</DTEContent>
+      {language !== "cy-GB" ? (
+        <DTELinkButton onClick={() => setLanguage("cy-GB")}>Cymraeg</DTELinkButton>
+      ) : (
+        <DTEContent>Cymraeg</DTEContent>
+      )}
+    </Stack>
+  );
+
+>>>>>>> main
   return (
     <>
       <StyledHeader>
-        <StyledSkipToMain href="#main"> Skip to Main Content</StyledSkipToMain>
-        <Grid
-          container
-          alignItems="center"
-          direction="row"
-          justifyContent="flex-start"
-        >
+        <StyledSkipToMain href="#main">{content["accessibility-hidden-skip-to-main"]}</StyledSkipToMain>
+        <Grid container alignItems="center" direction="row" justifyContent="flex-start">
           <Grid item sm={2} md={1} />
           <StyledGridElementLeft item xs={8} sm={6} md={7}>
             <StyledLink
@@ -127,23 +174,32 @@ export default function Header() {
             </StyledLink>
           </StyledGridElementLeft>
           <StyledGridElementRight item xs={4} sm={3} md={3}>
-            <StyledLogoLink
-              rel="noreferrer"
-              id="styledLogoLink"
-              target="_blank"
-              href=" https://nhs.uk/"
-            >
+            <StyledLogoLink rel="noreferrer" id="styledLogoLink" target="_blank" href=" https://nhs.uk/">
               <NHSLogo id="NHSLogo" />
             </StyledLogoLink>
           </StyledGridElementRight>
           <Grid item sm={1} md={1} />
           <Grid item sm={2} md={1} />
-          <StyledGridElementLeft item xs={12} sm={10} md={11}>
-            <DTEPhaseBanner
-              phase="BETA"
-              url="https://bepartofresearch.nihr.ac.uk/about/#contact-form"
-            />
+        </Grid>
+        <Grid container alignItems="center" direction="row" justifyContent="flex-start">
+          <Grid item sm={2} md={1} />
+          <StyledGridElementLeft item xs={8} sm={6} md={7}>
+            <DTEPhaseBanner phase="BETA" url="https://bepartofresearch.nihr.ac.uk/about/#contact-form" />
           </StyledGridElementLeft>
+          {isMobile ? (
+            <Grid container alignItems="center" direction="row" justifyContent="flex-start">
+              <Grid item sm={2} md={1} />
+              <StyledGridElementLeft item xs={12} sm={6} md={7}>
+                {shouldShowLanguageSelector && <LanguageComponent />}
+              </StyledGridElementLeft>
+            </Grid>
+          ) : (
+            <StyledGridElementRight item xs={4} sm={3} md={3}>
+              <LanguageSelector>{shouldShowLanguageSelector && <LanguageComponent />}</LanguageSelector>
+            </StyledGridElementRight>
+          )}
+
+          <Grid item sm={2} md={1} />
         </Grid>
       </StyledHeader>
     </>

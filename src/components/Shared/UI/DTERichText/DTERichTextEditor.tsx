@@ -1,13 +1,8 @@
 import { useState } from "react";
-import {
-  convertToRaw,
-  convertFromHTML,
-  EditorState,
-  ContentState,
-} from "draft-js";
+import { convertToRaw, convertFromHTML, EditorState, ContentState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
-import "../../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import styled from "styled-components";
 import DTERichTextValidators from "./DTERichTextValidators";
 
@@ -67,7 +62,8 @@ const StyledEditor = styled.div`
             color: ${(props) => props.theme.NIHR.Blue};
             text-decoration: none;
             background-color: ${(props) => props.theme.NIHR.Yellow};
-            box-shadow: 0 -2px ${(props) => props.theme.NIHR.Yellow},
+            box-shadow:
+              0 -2px ${(props) => props.theme.NIHR.Yellow},
               0 4px #212b32;
           }
           &:hover {
@@ -103,10 +99,8 @@ const StyledEditor = styled.div`
           margin-bottom: 0;
         }
 
-        .public-DraftStyleDefault-unorderedListItem
-          .public-DraftStyleDefault-block,
-        .public-DraftStyleDefault-unorderedListItem
-          .public-DraftStyleDefault-block {
+        .public-DraftStyleDefault-unorderedListItem .public-DraftStyleDefault-block,
+        .public-DraftStyleDefault-unorderedListItem .public-DraftStyleDefault-block {
           margin-bottom: 0;
         }
 
@@ -119,22 +113,10 @@ const StyledEditor = styled.div`
   }
 `;
 
-const DTERichTextEditor = ({
-  id,
-  label,
-  hint,
-  onValueChange,
-  error,
-  value,
-  disabled,
-}: Props) => {
+function DTERichTextEditor({ id, label, hint, onValueChange, error, value, disabled }: Props) {
   const [editorState, setEditorState] = useState<EditorState>(() =>
     DTERichTextValidators.isHtml(value || "")
-      ? EditorState.createWithContent(
-          ContentState.createFromBlockArray(
-            convertFromHTML(value || "").contentBlocks
-          )
-        )
+      ? EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(value || "").contentBlocks))
       : EditorState.createWithContent(ContentState.createFromText(value || ""))
   );
   const inValidState = error !== "" && error !== undefined;
@@ -145,65 +127,55 @@ const DTERichTextEditor = ({
   };
 
   return (
-    <>
-      <div
-        className={`nhsuk-form-group ${
-          inValidState ? "nhsuk-form-group--error" : ""
-        }`}
-      >
-        <label className="nhsuk-label" id={`${id}--label`}>
-          {label}
-          {hint && (
-            <span className="nhsuk-hint" id={`${id}--hint`}>
-              {hint}
-            </span>
-          )}
-          {inValidState && (
-            <span
-              className="nhsuk-error-message"
-              id={`${id}--error-message`}
-              role="alert"
-            >
-              <span className="nhsuk-u-visually-hidden">Error: </span>
-              {error}
-            </span>
-          )}
-          <StyledEditor>
-            <Editor
-              webDriverTestID={`${id}-editor-element`}
-              handlePastedText={() => false}
-              readOnly={disabled}
-              editorClassName="editor--override"
-              onEditorStateChange={onEditorStateChange}
-              editorState={editorState}
-              toolbar={{
-                options: ["inline", "list", "link", "history"],
-                inline: {
-                  inDropdown: false,
-                  options: ["bold"],
-                },
-                list: {
-                  inDropdown: false,
-                  options: ["unordered", "ordered"],
-                },
-                link: {
-                  inDropdown: false,
-                  showOpenOptionOnHover: true,
-                  defaultTargetOption: "_self",
-                  options: ["link", "unlink"],
-                  linkCallback: undefined,
-                },
-                history: {
-                  inDropdown: false,
-                  options: ["undo", "redo"],
-                },
-              }}
-            />
-          </StyledEditor>
-        </label>
-      </div>
-    </>
+    <div className={`nhsuk-form-group ${inValidState ? "nhsuk-form-group--error" : ""}`}>
+      <label className="nhsuk-label" id={`${id}--label`}>
+        {label}
+        {hint && (
+          <span className="nhsuk-hint" id={`${id}--hint`}>
+            {hint}
+          </span>
+        )}
+        {inValidState && (
+          <span className="nhsuk-error-message" id={`${id}--error-message`} role="alert">
+            <span className="nhsuk-u-visually-hidden">Error: </span>
+            {error}
+          </span>
+        )}
+        <StyledEditor>
+          <Editor
+            webDriverTestID={`${id}-editor-element`}
+            handlePastedText={() => false}
+            readOnly={disabled}
+            editorClassName="editor--override"
+            onEditorStateChange={onEditorStateChange}
+            editorState={editorState}
+            toolbar={{
+              options: ["inline", "list", "link", "history"],
+              inline: {
+                inDropdown: false,
+                options: ["bold"],
+              },
+              list: {
+                inDropdown: false,
+                options: ["unordered", "ordered"],
+              },
+              link: {
+                inDropdown: false,
+                showOpenOptionOnHover: true,
+                defaultTargetOption: "_self",
+                options: ["link", "unlink"],
+                linkCallback: undefined,
+              },
+              history: {
+                inDropdown: false,
+                options: ["undo", "redo"],
+              },
+            }}
+          />
+        </StyledEditor>
+      </label>
+    </div>
   );
-};
+}
 
 export default DTERichTextEditor;

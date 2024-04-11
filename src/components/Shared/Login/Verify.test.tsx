@@ -2,7 +2,7 @@ import { createServer, Response, Server } from "miragejs";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import Verify from "./Verify";
-import { render, screen } from "../../../Helper/test-utils";
+import { render, screen, waitFor } from "../../../Helper/test-utils";
 import App from "../../../App";
 
 describe.each([
@@ -95,45 +95,40 @@ describe.each([
     "Sign in",
     "/UserLogin",
   ],
-])(
-  "Landing screen for verification link",
-  (email, response, headerText, contentText, linkText, linkUrl) => {
-    let server: Server;
-    beforeEach(() => {
-      server = createServer({});
-    });
+])("Landing screen for verification link", (email, response, headerText, contentText, linkText, linkUrl) => {
+  let server: Server;
+  beforeEach(() => {
+    server = createServer({});
+  });
 
-    afterEach(() => {
-      server.shutdown();
-    });
+  afterEach(() => {
+    server.shutdown();
+  });
 
-    test(`must validate ${email} link correctly`, async () => {
-      server.post(
-        `${process.env.REACT_APP_BASE_API}/users/confirmsignup`,
-        () =>
-          new Response(200, { "Content-Type": "application/json" }, response)
-      );
+  test(`must validate ${email} link correctly`, async () => {
+    server.post(
+      `${process.env.REACT_APP_BASE_API}/users/confirmsignup`,
+      () => new Response(200, { "Content-Type": "application/json" }, response)
+    );
 
-      render(<Verify />, {}, [
-        { pathname: "/verify", search: `?code=123456&userId=${email}` },
-      ]);
-      server.pretender.handledRequest = async (path) => {
-        expect(path).toBe(
-          `${process.env.REACT_APP_BASE_API}/users/confirmsignup`
-        );
-        const header = await screen.findByRole("heading", { level: 1 });
-        expect(header).toBeInTheDocument();
-        expect(header).toHaveTextContent(headerText);
-        const content = await screen.findByText(contentText);
-        expect(content).toBeInTheDocument();
-        const link = await screen.findByRole("link");
-        expect(link).toBeInTheDocument();
-        expect(link).toHaveAttribute("href", linkUrl);
-        expect(link).toHaveTextContent(linkText);
-      };
+    render(<Verify />, {}, [{ pathname: "/verify", search: `?code=123456&userId=${email}` }]);
+    await waitFor(() => {
+      expect(screen.queryByTestId("loadingContent")).not.toBeInTheDocument();
     });
-  }
-);
+    server.pretender.handledRequest = async (path) => {
+      expect(path).toBe(`${process.env.REACT_APP_BASE_API}/users/confirmsignup`);
+      const header = await screen.findByRole("heading", { level: 1 });
+      expect(header).toBeInTheDocument();
+      expect(header).toHaveTextContent(headerText);
+      const content = await screen.findByText(contentText);
+      expect(content).toBeInTheDocument();
+      const link = await screen.findByRole("link");
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveAttribute("href", linkUrl);
+      expect(link).toHaveTextContent(linkText);
+    };
+  });
+});
 
 describe.each([
   ["", "/Participants/Register/Continue/Questions"],
@@ -148,18 +143,15 @@ describe.each([
   beforeEach(() => {
     server = createServer({
       routes() {
-        this.get(
-          `${process.env.REACT_APP_BASE_API}/users/confirmsignup`,
-          () => {
-            return {
-              content: null,
-              isSuccess: true,
-              errors: [],
-              conversationId: null,
-              version: 1,
-            };
-          }
-        );
+        this.get(`${process.env.REACT_APP_BASE_API}/users/confirmsignup`, () => {
+          return {
+            content: null,
+            isSuccess: true,
+            errors: [],
+            conversationId: null,
+            version: 1,
+          };
+        });
       },
     });
   });

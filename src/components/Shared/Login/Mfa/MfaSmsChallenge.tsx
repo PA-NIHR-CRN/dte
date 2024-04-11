@@ -15,20 +15,14 @@ import DTEDetails from "../../UI/DTEDetails/DTEDetails";
 import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 import useInlineServerError from "../../../../hooks/useInlineServerError";
-import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 import Honeypot from "../../Honeypot/Honeypot";
+import { ContentContext } from "../../../../context/ContentContext";
 
 const MfaSmsChallenge = () => {
+  const { content } = useContext(ContentContext);
   const [isCodeResent, setIsCodeResent] = useState<boolean>(false);
-  const {
-    mfaDetails,
-    saveToken,
-    setMfaDetails,
-    enteredMfaMobile,
-    prevUrl,
-    setEnteredMfaMobile,
-    setUserMfaEmail,
-  } = useContext(AuthContext);
+  const { mfaDetails, saveToken, setMfaDetails, enteredMfaMobile, prevUrl, setEnteredMfaMobile, setUserMfaEmail } =
+    useContext(AuthContext);
   const history = useHistory();
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -42,12 +36,7 @@ const MfaSmsChallenge = () => {
     }
   }, [setCodeResent]);
 
-  if (!mfaDetails) {
-    history.push("/");
-  }
-
-  const [mobilePhoneNumber, setMobilePhoneNumber] =
-    useState<string>("your mobile phone");
+  const [mobilePhoneNumber, setMobilePhoneNumber] = useState<string>("your mobile phone");
 
   const {
     control,
@@ -60,13 +49,13 @@ const MfaSmsChallenge = () => {
       mfaCode: "",
     },
   });
-  const [
-    { response: SMSMfaResponse, loading: SMSMfaLoading, error: setupMfaError },
-    postMfaCode,
-  ] = useAxiosFetch({}, { useCache: false, manual: true });
+  const [{ response: SMSMfaResponse, loading: SMSMfaLoading, error: setupMfaError }, postMfaCode] = useAxiosFetch(
+    {},
+    { useCache: false, manual: true }
+  );
 
   const [convertedError, setConvertedError] = useState<any>(null);
-  const serverError = useInlineServerError(SMSMfaResponse);
+  const serverError = useInlineServerError(SMSMfaResponse, content);
 
   useEffect(() => {
     if (serverError) {
@@ -96,7 +85,7 @@ const MfaSmsChallenge = () => {
       },
     });
     const result = Utils.ConvertResponseToDTEResponse(res);
-    if (result?.errors?.some((e) => e.customCode === "MFA_Session_Expired")) {
+    if (result?.errors?.some((e) => e.customCode === "Mfa_Session_Expired")) {
       history.push("/MfaSecurityCodeExpired");
     }
     if (
@@ -161,17 +150,10 @@ const MfaSmsChallenge = () => {
 
   const handleErrors = (error: any, responseError: any) => {
     const response = Utils.ConvertResponseToDTEResponse(responseError);
-    if (
-      response?.errors?.some((e: any) => e?.customCode === "Sms_Mfa_Challenge")
-    ) {
+    if (response?.errors?.some((e: any) => e?.customCode === "Sms_Mfa_Challenge")) {
       return null;
     }
-    return (
-      <ErrorMessageContainer
-        axiosErrors={[error]}
-        DTEAxiosErrors={[serverError ? [] : response?.errors]}
-      />
-    );
+    return <ErrorMessageContainer axiosErrors={[error]} DTEAxiosErrors={[serverError ? [] : response?.errors]} />;
   };
   const urlList = ["/MfaSmsSetup", "/MfaChangePhoneNumber"];
 
@@ -181,30 +163,33 @@ const MfaSmsChallenge = () => {
     handleSubmit(onSubmit)();
   };
 
+  const phoneNumber = enteredMfaMobile || removePlus(mobilePhoneNumber);
+
+  const codeInstructionText = enteredMfaMobile
+    ? content["mfa-sms-challenge-code-instruction-text-mobile"]
+    : content["mfa-sms-challenge-code-instruction-text"];
+
+  if (!mfaDetails) {
+    history.push("/");
+  }
+
   return (
-    <DocumentTitle title="MFA Challenge SMS">
+    <DocumentTitle title={content["mfa-sms-challenge-document-title"]}>
       <StepWrapper>
         {urlList.includes(prevUrl as string) && (
-          <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
+          <DTEBackLink onClick={() => history.goBack()} linkText={content["reusable-back-link"]} />
         )}
-        <DTEHeader as="h1">Check your mobile phone</DTEHeader>
-        {setupMfaError || SMSMfaResponse
-          ? handleErrors(setupMfaError, SMSMfaResponse)
-          : null}
+        <DTEHeader as="h1">{content["mfa-sms-challenge-header"]}</DTEHeader>
+        {setupMfaError || SMSMfaResponse ? handleErrors(setupMfaError, SMSMfaResponse) : null}
         <DTEContent>
-          Enter the 6 digit security code we&apos;ve sent to{" "}
-          {enteredMfaMobile || removePlus(mobilePhoneNumber)}
-          {enteredMfaMobile && " to confirm this is your mobile phone number"}.
+          {codeInstructionText.replace("{{phoneNumber}}", phoneNumber)}
           <br />
           <br />
-          You need to use this code within <strong>5 minutes</strong> or it will
-          expire.
+          {content["mfa-sms-challenge-code-expiry-text"]}
         </DTEContent>
         {isCodeResent && (
           <div className="govuk-details__text">
-            <DTEContent role="alert">
-              You have been sent a new security code.
-            </DTEContent>
+            <DTEContent role="alert">{content["mfa-sms-challenge-alert-code-resent"]}</DTEContent>
           </div>
         )}
         <form onSubmit={interceptSubmit} noValidate>
@@ -212,12 +197,9 @@ const MfaSmsChallenge = () => {
           <Controller
             control={control}
             name="mfaCode"
-            render={({
-              field: { value, onChange, onBlur },
-              fieldState: { error },
-            }) => (
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
               <DTEInput
-                label="Security code"
+                label={content["mfa-sms-challenge-input-code"]}
                 id="mfaCode"
                 type="text"
                 required
@@ -228,88 +210,67 @@ const MfaSmsChallenge = () => {
                 spellcheck={false}
                 autocomplete="off"
                 disabled={SMSMfaLoading || isSubmitting}
-                hint="The code is 6 digits. Entering the code incorrectly too many times will temporarily prevent you from signing in."
+                hint={content["mfa-sms-challenge-hint-code"]}
               />
             )}
             rules={{
               required: {
                 value: true,
-                message: "Enter a valid security code",
+                message: content["mfa-sms-challenge-validation-code-required"],
               },
 
               pattern: {
                 value: /^\d{6}$/,
-                message: "The security code must be 6 digits",
+                message: content["mfa-sms-challenge-validation-code-invalid"],
               },
             }}
           />
-          <DTEDetails summary="Not received your security code?">
+          <DTEDetails summary={content["mfa-sms-challenge-not-received-header"]}>
             <>
-              <DTEContent>
-                When we are really busy, it may take a bit longer for your code
-                to arrive.
-              </DTEContent>
+              {content["mfa-sms-challenge-not-received-body"]}
 
               {urlList.includes(prevUrl as string) ? (
                 <>
-                  <DTEContent>
-                    If you still did not get a security code:
-                  </DTEContent>
+                  <DTEContent>{content["mfa-sms-challenge-still-not-received"]}</DTEContent>
                   <ul>
                     <li>
                       <DTELinkButton
                         onClick={handleResendCode}
                         disabled={SMSMfaLoading || isSubmitting}
-                        customStyles={{ textAlign: "left" }}
+                        customStyles={{ textAlign: "left", textTransform: "lowercase" }}
                       >
-                        send your security code again
+                        {content["mfa-sms-challenge-link-resend-code"]}
                       </DTELinkButton>
                     </li>
                     <li>
                       <DTELinkButton
                         disabled={SMSMfaLoading || isSubmitting}
                         onClick={() => {
-                          history.push(
-                            prevUrl === "/MfaChangePhoneNumber"
-                              ? "/MfaChangePhoneNumber"
-                              : "/MfaSmsSetup"
-                          );
+                          history.push(prevUrl === "/MfaChangePhoneNumber" ? "/MfaChangePhoneNumber" : "/MfaSmsSetup");
                         }}
                         customStyles={{ textAlign: "left" }}
                       >
-                        enter your{" "}
-                        {prevUrl === "/MfaChangePhoneNumber" && "new"} mobile
-                        phone number again
+                        {prevUrl === "/MfaChangePhoneNumber"
+                          ? content["mfa-sms-challenge-enter-new-mobile-again"]
+                          : content["mfa-sms-challenge-enter-mobile-again"]}
                       </DTELinkButton>
                     </li>
                   </ul>
                 </>
               ) : (
-                <DTELinkButton
-                  onClick={handleResendCode}
-                  disabled={SMSMfaLoading || isSubmitting}
-                >
-                  Send your security code again
+                <DTELinkButton onClick={handleResendCode} disabled={SMSMfaLoading || isSubmitting}>
+                  {content["mfa-sms-challenge-link-resend-code"]}
                 </DTELinkButton>
               )}
             </>
           </DTEDetails>
           {!urlList.includes(prevUrl as string) && (
-            <DTEDetails summary="I do not have access to my mobile phone">
-              <DTEContent>
-                If you do not have access to your mobile phone, you can{" "}
-                <DTERouteLink
-                  disabled={SMSMfaLoading || isSubmitting}
-                  to="/MfaChangeNumberConfirmEmail"
-                  renderStyle="standard"
-                >
-                  change your mobile phone number securely.
-                </DTERouteLink>
-              </DTEContent>
+            <DTEDetails summary={content["mfa-sms-challenge-no-mobile-access-header"]}>
+              {content["mfa-sms-challenge-no-mobile-access-body"]}
             </DTEDetails>
           )}
           <DTEButton type="submit" disabled={SMSMfaLoading || isSubmitting}>
-            Continue
+            {content["reusable-button-continue"]}
           </DTEButton>
         </form>
       </StepWrapper>

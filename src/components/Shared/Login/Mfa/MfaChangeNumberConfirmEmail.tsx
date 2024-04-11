@@ -18,14 +18,15 @@ import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageConta
 import useInlineServerError from "../../../../hooks/useInlineServerError";
 import LoadingIndicator from "../../LoadingIndicator/LoadingIndicator";
 import Honeypot from "../../Honeypot/Honeypot";
+import { ContentContext } from "../../../../context/ContentContext";
 
 const ButtonWrapper = styled.div`
   margin: 1rem 0;
 `;
 
 const MfaChangeNumberConfirmEmail = () => {
-  const { mfaDetails, prevUrl, userMfaEmail, setUserMfaEmail } =
-    useContext(AuthContext);
+  const { content } = useContext(ContentContext);
+  const { mfaDetails, prevUrl, userMfaEmail, setUserMfaEmail } = useContext(AuthContext);
   const [isCodeResent, setIsCodeResent] = useState<boolean>(false);
   const history = useHistory();
   const [userEmail, setUserEmail] = useState<string>(userMfaEmail);
@@ -56,10 +57,7 @@ const MfaChangeNumberConfirmEmail = () => {
       mfaCode: "",
     },
   });
-  const [
-    { response: userEmailRespose, loading: getEmailOtpLoading },
-    resendCode,
-  ] = useAxiosFetch(
+  const [{ response: userEmailRespose, loading: getEmailOtpLoading }, resendCode] = useAxiosFetch(
     {
       url: `${process.env.REACT_APP_BASE_API}/users/sendmfaotpemail`,
       method: "POST",
@@ -77,15 +75,11 @@ const MfaChangeNumberConfirmEmail = () => {
   };
 
   const [
-    {
-      response: validateEmailOtpRespose,
-      loading: validateEmailOtpLoading,
-      error: validateEmailOtpError,
-    },
+    { response: validateEmailOtpRespose, loading: validateEmailOtpLoading, error: validateEmailOtpError },
     validateEmailOtp,
   ] = useAxiosFetch({}, { useCache: false, manual: true });
   const [convertedError, setConvertedError] = useState<any>(null);
-  const serverError = useInlineServerError(validateEmailOtpRespose);
+  const serverError = useInlineServerError(validateEmailOtpRespose, content);
 
   useEffect(() => {
     if (serverError) {
@@ -104,7 +98,7 @@ const MfaChangeNumberConfirmEmail = () => {
       },
     });
     const response = Utils.ConvertResponseToDTEResponse(res);
-    if (response?.errors?.some((e) => e.customCode === "MFA_Code_Expired")) {
+    if (response?.errors?.some((e) => e.customCode === "Mfa_Code_Expired")) {
       history.push("/MfaSecurityCodeExpired");
     }
     if (response?.isSuccess) {
@@ -133,38 +127,27 @@ const MfaChangeNumberConfirmEmail = () => {
   };
 
   return (
-    <DocumentTitle title="Email OTP">
+    <DocumentTitle title={content["mfa-change-phone-confirm-document-title"]}>
       <StepWrapper>
         {getEmailOtpLoading ? (
           <LoadingIndicator />
         ) : (
           <>
             {prevUrl !== "/MfaSecurityCodeExpired" && (
-              <DTEBackLink onClick={() => history.goBack()} linkText="Back" />
+              <DTEBackLink onClick={() => history.goBack()} linkText={content["reusable-back-link"]} />
             )}
-            <DTEHeader as="h1">Check your email</DTEHeader>
+            <DTEHeader as="h1">{content["mfa-change-phone-confirm-header"]}</DTEHeader>
             <ErrorMessageContainer
               axiosErrors={[validateEmailOtpError]}
-              DTEAxiosErrors={[
-                serverError
-                  ? []
-                  : Utils.ConvertResponseToDTEResponse(validateEmailOtpRespose)
-                      ?.errors,
-              ]}
+              DTEAxiosErrors={[serverError ? [] : Utils.ConvertResponseToDTEResponse(validateEmailOtpRespose)?.errors]}
             />
             <DTEContent>
-              Enter the 6 digit security code we’ve sent to {userEmail} to
-              confirm this is your email address.
+              {(content["mfa-change-phone-confirm-instruction-text"] as string).replace("{{userEmail}}", userEmail)}
             </DTEContent>
-            <DTEContent>
-              You need to use this code within <strong>5 minutes</strong> or it
-              will expire.
-            </DTEContent>
+            <DTEContent>{content["mfa-change-phone-confirm-expiry-text"]}</DTEContent>
             {isCodeResent && (
               <div className="govuk-details__text">
-                <DTEContent role="alert">
-                  You have been sent a new security code.
-                </DTEContent>
+                <DTEContent role="alert">{content["mfa-change-phone-alert-code-sent"]}</DTEContent>
               </div>
             )}
             <form noValidate onSubmit={interceptSubmit}>
@@ -172,12 +155,9 @@ const MfaChangeNumberConfirmEmail = () => {
               <Controller
                 control={control}
                 name="mfaCode"
-                render={({
-                  field: { value, onChange, onBlur },
-                  fieldState: { error },
-                }) => (
+                render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                   <DTEInput
-                    label="Security code"
+                    label={content["mfa-change-phone-confirm-input-code"]}
                     id="mfaCode"
                     required
                     value={value}
@@ -189,49 +169,39 @@ const MfaChangeNumberConfirmEmail = () => {
                     error={convertedError || error?.message}
                     spellcheck={false}
                     disabled={getEmailOtpLoading || isSubmitting}
-                    hint="The code is 6 digits."
+                    hint={content["mfa-change-phone-confirm-hint-code"]}
                   />
                 )}
                 rules={{
                   required: {
                     value: true,
-                    message: "Enter a valid security code",
+                    message: content["mfa-change-phone-confirm-validation-code-required"],
                   },
                   minLength: {
                     value: 6,
-                    message: "The security code must be 6 digits",
+                    message: content["mfa-change-phone-confirm-validation-code-invalid"],
                   },
                   maxLength: {
                     value: 6,
-                    message: "The security code must be 6 digits",
+                    message: content["mfa-change-phone-confirm-validation-code-invalid"],
                   },
                   pattern: {
                     value: /^\d{6}$/,
-                    message: "The security code must be 6 digits",
+                    message: content["mfa-change-phone-confirm-validation-code-invalid"],
                   },
                 }}
               />
-              <DTEDetails summary="Not received your security code?">
+              <DTEDetails summary={content["mfa-change-phone-confirm-not-received-header"]}>
                 <>
-                  <DTEContent>
-                    When we are really busy, it may take a bit longer for your
-                    code to arrive.
-                  </DTEContent>
-                  <DTEContent>
-                    If you still did not get a security code:
-                  </DTEContent>
-
+                  {content["mfa-change-phone-not-received-body"]}
                   <ul className="govuk-list govuk-list--bullet">
                     <li>
-                      <DTEContent>check your spam folder</DTEContent>
+                      <DTEContent>{content["mfa-change-phone-confirm-check-spam"]}</DTEContent>
                     </li>
                     <li>
                       <DTEContent>
-                        <DTELinkButton
-                          onClick={handleResendCode}
-                          disabled={validateEmailOtpLoading || isSubmitting}
-                        >
-                          send your security code again
+                        <DTELinkButton onClick={handleResendCode} disabled={validateEmailOtpLoading || isSubmitting}>
+                          {content["mfa-change-phone-confirm-link-resend-code"]}
                         </DTELinkButton>
                       </DTEContent>
                     </li>
@@ -240,7 +210,7 @@ const MfaChangeNumberConfirmEmail = () => {
               </DTEDetails>
               <ButtonWrapper>
                 <DTEButton disabled={getEmailOtpLoading || isSubmitting}>
-                  Continue
+                  {content["reusable-button-continue"]}
                 </DTEButton>
               </ButtonWrapper>
             </form>

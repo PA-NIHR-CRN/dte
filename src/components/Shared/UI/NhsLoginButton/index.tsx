@@ -1,11 +1,15 @@
 import styled from "styled-components";
 import React, { useEffect, useState } from "react";
-import DTEContent from "../DTETypography/DTEContent/DTEContent";
 
 const ButtonWrapper = styled.div`
   margin-top: 1rem;
+  margin-right: 2em;
 `;
-const NhsLoginButton = () => {
+
+interface NhsLoginButtonProps {
+  buttonText: string;
+}
+function NhsLoginButton({ buttonText }: NhsLoginButtonProps) {
   const [nhsLoginUrl, setNhsLoginUrl] = useState("");
 
   useEffect(() => {
@@ -21,20 +25,13 @@ const NhsLoginButton = () => {
 
   return (
     <>
-      <div className="govuk-details__text">
-        <DTEContent>
-          You can only use NHS login if you live in England or Wales. If you use
-          NHS login you will need to use this option on each occasion to access
-          your account and update your details.
-        </DTEContent>
-      </div>
       <ButtonWrapper>
         <a href={nhsLoginUrl} className="nhslogin-button" type="submit">
-          Continue to NHS login
+          {buttonText}
         </a>
       </ButtonWrapper>
     </>
   );
-};
+}
 
 export default NhsLoginButton;

@@ -1,10 +1,5 @@
 import { axe, toHaveNoViolations } from "jest-axe";
-import {
-  render,
-  screen,
-  fireEvent,
-  userEvent,
-} from "../../../../Helper/test-utils";
+import { render, screen, fireEvent, userEvent } from "../../../../Helper/test-utils";
 import DTEForwardLookup from "./DTEForwardLookup";
 
 expect.extend(toHaveNoViolations);
@@ -13,13 +8,7 @@ describe("Test suite for DTEForwardLookup component accessibility", () => {
   it("should not fail any accessibility tests with minimum configuration - empty data", async () => {
     const mockOnSelectedChange = jest.fn();
     const { container } = render(
-      <DTEForwardLookup
-        id="test"
-        label="test"
-        data={[]}
-        values={[]}
-        onSelectedValuesChange={mockOnSelectedChange}
-      />
+      <DTEForwardLookup id="test" label="test" data={[]} values={[]} onSelectedValuesChange={mockOnSelectedChange} />
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -58,13 +47,7 @@ describe("Test suite for DTEForwardLookup component accessibility", () => {
   it("search input must have correct attributes", async () => {
     const mockOnSelectedChange = jest.fn();
     render(
-      <DTEForwardLookup
-        id="test"
-        label="test"
-        data={[]}
-        values={[]}
-        onSelectedValuesChange={mockOnSelectedChange}
-      />
+      <DTEForwardLookup id="test" label="test" data={[]} values={[]} onSelectedValuesChange={mockOnSelectedChange} />
     );
 
     const inputBox = await screen.findByLabelText("test");
@@ -142,9 +125,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
       />
     );
 
-    const selectedCount = await screen.findByTestId(
-      "test2-selected-area-count"
-    );
+    const selectedCount = await screen.findByTestId("test2-selected-area-count");
     expect(selectedCount).toBeInTheDocument();
     expect(selectedCount.innerHTML).toBe("You have 1 area selected");
   });
@@ -161,9 +142,7 @@ describe("Test suite for DTEForwardLookup component functionality", () => {
       />
     );
 
-    const selectedCount = await screen.findByTestId(
-      "test3-selected-area-count"
-    );
+    const selectedCount = await screen.findByTestId("test3-selected-area-count");
     expect(selectedCount).toBeInTheDocument();
     expect(selectedCount.innerHTML).toBe("You have 2 areas selected");
   });

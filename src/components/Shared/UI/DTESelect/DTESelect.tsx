@@ -2,6 +2,7 @@ import { Select } from "nhsuk-react-components";
 import { memo, ChangeEvent } from "react";
 import styled from "styled-components";
 import IDTESelectOption from "./IDTESelectOption";
+import { capitaliseWords } from "../../../../Helper/Utils";
 
 type Props = {
   id: string;
@@ -13,42 +14,30 @@ type Props = {
   defaultValue?: string;
   options: IDTESelectOption[];
   onValueChange: (value: ChangeEvent<HTMLSelectElement>) => void;
+  isCapitalised?: boolean;
 };
 
 const StyledSelect = styled(Select)`
   // && Overrides the NHS default styling
   && {
     border-radius: 0.3rem;
-    border-color: ${(Props) => Props.theme.NIHR.Grey};
+    border-color: ${(props) => props.theme.NIHR.Grey};
 
     &:focus {
-      border: 0.2rem solid ${(Props) => Props.theme.NIHR.Blue};
+      border: 0.2rem solid ${(props) => props.theme.NIHR.Blue};
       box-shadow: none;
-      outline: 0.2rem solid ${(Props) => Props.theme.NIHR.Yellow};
+      outline: 0.2rem solid ${(props) => props.theme.NIHR.Yellow};
     }
   }
 `;
+
 const StyledSelectOption = styled(Select.Option)``;
 
 const DTESelect = memo(
-  ({
-    id,
-    name,
-    label,
-    hint,
-    required,
-    error,
-    defaultValue,
-    options,
-    onValueChange,
-  }: Props) => {
+  ({ id, name, label, hint, required, error, defaultValue, options, onValueChange, isCapitalised = false }: Props) => {
     const optionElements = options.map((option) => (
-      <StyledSelectOption
-        value={option.value}
-        key={option.value}
-        data-testid={option?.testID}
-      >
-        {option.text}
+      <StyledSelectOption value={option.value} key={option.value} data-testid={option?.testID}>
+        {isCapitalised ? capitaliseWords(option.text || "") : option.text || ""}
       </StyledSelectOption>
     ));
 

@@ -5,6 +5,8 @@ on:
 
 env:
   REACT_APP_BASE_API: ${{secrets.REACT_APP_BASE_API_QA}}
+  REACT_APP_LOGOUT_URL: ${{secrets.LOGOUT_URL_QA}}
+  REACT_APP_RESEARCHER_AUTH_URL: ${{secrets.RESEARCHER_AUTH_URL_QA}}
   REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL_QA}}
   REACT_APP_NHS_SETTINGS_URL: ${{secrets.REACT_APP_NHS_SETTINGS_URL_SANDPIT}}
   REACT_APP_NHS_LOGIN_URL: ${{secrets.REACT_APP_NHS_LOGIN_URL_SANDPIT}}
@@ -12,16 +14,19 @@ env:
   REACT_APP_NHS_LOGIN_RESPONSE_TYPE: ${{secrets.REACT_APP_NHS_LOGIN_RESPONSE_TYPE}}
   REACT_APP_NHS_LOGIN_SCOPE: ${{secrets.REACT_APP_NHS_LOGIN_SCOPE}}
   REACT_APP_COOKIE_DOMAIN: ".test.volunteer.bepartofresearch.nihr.ac.uk"
+  REACT_APP_CONTENTFUL_SPACE_ID: ${{secrets.REACT_APP_CONTENTFUL_SPACE_ID}}
+  REACT_APP_CONTENTFUL_DELIVERY_TOKEN: ${{secrets.REACT_APP_CONTENTFUL_DELIVERY_TOKEN}}
+  REACT_APP_CONTENTFUL_ENVIRONMENT: ${{secrets.REACT_APP_CONTENTFUL_ENVIRONMENT}}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v2
         with:
-          node-version: '20'
-          cache: 'yarn'
+          node-version: "16"
+          cache: "yarn"
           cache-dependency-path: "yarn.lock"
       - name: Configure AWS credentials - All
         uses: aws-actions/configure-aws-credentials@v1
@@ -31,13 +36,12 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Yarn Install
         run: yarn install
-      - name: Runing  ESLint
+      - name: Running  ESLint
         run: yarn lintnofix
       - name: Build Files
         run: yarn build
       - name: Running Unit Tests
         run: yarn test
-
       - name: Deploy to S3 - QA
         shell: bash
         run: |

@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  AxiosError,
-  AxiosResponse,
-  AxiosRequestConfig,
-  AxiosPromise,
-} from "axios";
+import { AxiosError, AxiosResponse, AxiosRequestConfig, AxiosPromise } from "axios";
 import useAxios, { Options } from "axios-hooks";
 
 export interface AxiosFetchResponseValues {
@@ -15,23 +10,15 @@ export interface AxiosFetchResponseValues {
 }
 export type UseAxiosFetchResult = [
   AxiosFetchResponseValues,
-  (
-    refetchConfig?: AxiosRequestConfig | undefined,
-    refetchOptions?: Options | undefined
-  ) => AxiosPromise<any>,
-  () => void
+  (refetchConfig?: AxiosRequestConfig | undefined, refetchOptions?: Options | undefined) => AxiosPromise<any>,
+  () => void,
 ];
 
-const useAxiosFetch = (
-  config: AxiosRequestConfig,
-  options?: Options | undefined
-): UseAxiosFetchResult => {
+const useAxiosFetch = (config: AxiosRequestConfig, options?: Options | undefined): UseAxiosFetchResult => {
   const [data, setData] = useState<any>(undefined);
   const [error, setError] = useState<AxiosError<any> | undefined>(undefined);
   const [loading, setLoading] = useState<undefined | boolean>(false);
-  const [response, setResponse] = useState<AxiosResponse<any> | undefined>(
-    undefined
-  );
+  const [response, setResponse] = useState<AxiosResponse<any> | undefined>(undefined);
 
   let configSpread: AxiosRequestConfig = config;
 
@@ -40,15 +27,10 @@ const useAxiosFetch = (
     withCredentials: true,
   };
 
-  const [
-    {
-      data: axiosData,
-      error: axiosError,
-      loading: axiosLoading,
-      response: axiosResponse,
-    },
-    refetch,
-  ] = useAxios(configSpread, options);
+  const [{ data: axiosData, error: axiosError, loading: axiosLoading, response: axiosResponse }, refetch] = useAxios(
+    configSpread,
+    options
+  );
 
   // When axiosData changes update data
   useEffect(() => {
@@ -77,10 +59,7 @@ const useAxiosFetch = (
     setResponse(undefined);
   };
 
-  const clearAndRefetch = (
-    refetchConfig?: AxiosRequestConfig | undefined,
-    refetchOptions?: Options | undefined
-  ) => {
+  const clearAndRefetch = (refetchConfig?: AxiosRequestConfig | undefined, refetchOptions?: Options | undefined) => {
     clear();
     return refetch(refetchConfig, refetchOptions).catch();
   };

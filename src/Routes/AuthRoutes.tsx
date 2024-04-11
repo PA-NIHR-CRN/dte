@@ -20,7 +20,6 @@ import MfaSmsSetup from "../components/Shared/Login/Mfa/MfaSmsSetup";
 import MfaSmsChallenge from "../components/Shared/Login/Mfa/MfaSmsChallenge";
 import MfaTokenSetup from "../components/Shared/Login/Mfa/MfaTokenSetup";
 import MfaTokenChallenge from "../components/Shared/Login/Mfa/MfaTokenChallenge";
-import MfaNoUkMobileOptions from "../components/Shared/Login/Mfa/MfaNoUkMobileOptions";
 import MfaChangeNumberConfirmEmail from "../components/Shared/Login/Mfa/MfaChangeNumberConfirmEmail";
 import MfaChangePhoneNumber from "../components/Shared/Login/Mfa/MfaChangePhoneNumber";
 import MfaSecurityCodeExpired from "../components/Shared/Login/Mfa/MfaSecurityCodeExpired";
@@ -30,7 +29,7 @@ import MfaLockedOut from "../components/Shared/Login/Mfa/MfaLockedOut";
 export default [
   /* Auth Routes */
   <Route
-    path="/UserLogin"
+    path={["/UserLogin", "/MewngofnodiDefnyddiwr"]}
     render={(props) => {
       ReactGA.pageview(props.location.pathname);
       return <UserLogin />;
@@ -38,7 +37,7 @@ export default [
     key="userlogin"
   />,
   <Route
-    path="/Participants/Options"
+    path={["/Participants/Options", "/Cyfranogwyr/Dewisiadau"]}
     render={() => {
       ReactGA.pageview("/Participants/Options");
       return <LoginOptions />;
@@ -179,15 +178,6 @@ export default [
     }}
     strict
     key="MfaTokenChallenge"
-  />,
-  <Route
-    path="/MfaNoUkMobileOptions"
-    render={() => {
-      ReactGA.pageview("MfaNoUkMobileOptions");
-      return <MfaNoUkMobileOptions />;
-    }}
-    strict
-    key="MfaNoUkMobileOptions"
   />,
   <Route
     path="/MfaChangeNumberConfirmEmail"

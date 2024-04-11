@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { Control, Controller, UseFormSetValue } from "react-hook-form";
-import React from "react";
+import React, { useContext } from "react";
 import DTEContent from "../../UI/DTETypography/DTEContent/DTEContent";
 import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
-import DTEButton from "../../UI/DTEButton/DTEButton";
 import DTEInput from "../../UI/DTEInput/DTEInput";
 import { EmailRegex } from "../../../../Helper/Utils";
 import PasswordShowHide from "../../Password/showHide";
+import { ContentContext } from "../../../../context/ContentContext";
+import DTEButton from "../../UI/DTEButton/DTEButton";
 
 const ButtonWrapper = styled.div`
   margin-top: 1rem;
@@ -16,31 +17,23 @@ type UserLoginFormProps = {
   loadingLogin: boolean | undefined;
   control: Control<{ email: string; password: string }>;
   setValue: UseFormSetValue<{ email: string; password: string }>;
-  nested?: boolean;
 };
 
-const UserLoginForm: React.FC<UserLoginFormProps> = ({
-  loadingLogin,
-  control,
-  setValue,
-  nested,
-}) => {
+const UserLoginForm: React.FC<UserLoginFormProps> = ({ loadingLogin, control, setValue }) => {
+  const { content } = useContext(ContentContext);
   return (
     <>
       <Controller
         control={control}
         name="email"
-        render={({
-          field: { value, onChange, onBlur },
-          fieldState: { error },
-        }) => (
+        render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
           <DTEInput
             id="email"
             value={value}
             onValueChange={onChange}
             onValueBlur={onBlur}
             error={error?.message}
-            label="Email address"
+            label={content["reusable-text-email-address"]}
             required
             disabled={loadingLogin}
             type="email"
@@ -51,66 +44,47 @@ const UserLoginForm: React.FC<UserLoginFormProps> = ({
         rules={{
           required: {
             value: true,
-            message: "Enter an email address",
+            message: content["reusable-email-validation-required"],
           },
 
           pattern: {
             value: EmailRegex,
-            message:
-              "Enter an email address in the correct format, like name@example.com",
+            message: content["reusable-email-validation-invalid-format"],
           },
         }}
       />
       <Controller
         control={control}
         name="password"
-        render={({ fieldState: { error }, field: { value } }) => (
+        render={({ fieldState: { error } }) => (
           <PasswordShowHide
             id="password"
-            value={value}
             onValueChange={(e) => setValue("password", e.target.value)}
             error={error?.message}
-            label="Password"
+            label={content["reusable-text-password"]}
             required
             disabled={loadingLogin}
             spellcheck={false}
             autocomplete="current-password"
-            buttonAriaLabelHide="Hide the entered password on screen"
-            buttonAriaLabelShow="Show the entered password on screen"
+            buttonAriaLabelHide={content["reusable-aria-hide-password"]}
+            buttonAriaLabelShow={content["reusable-aria-show-password"]}
           />
         )}
         rules={{
           required: {
             value: true,
-            message: "Enter a password",
+            message: content["reusable-password-validation-required"],
           },
         }}
       />
       <DTEContent>
-        If you cannot remember your password, you can{" "}
-        <DTERouteLink
-          to="/ForgottenPassword"
-          renderStyle="standard"
-          ariaLabel="reset your password here"
-        >
-          reset it here.
+        {content["reusable-text-forgotten-password"]}
+        <DTERouteLink to="/ForgottenPassword" renderStyle="standard" ariaLabel={content["signin-aria-reset-password"]}>
+          {content["reusable-link-forgotten-password"]}
         </DTERouteLink>
       </DTEContent>
-      {nested && (
-        <DTEContent>
-          If you registered using NHS login, you can{" "}
-          <DTERouteLink
-            to="/Participants/Options"
-            renderStyle="standard"
-            ariaLabel="visit the sign in options page"
-          >
-            sign in here
-          </DTERouteLink>
-          .
-        </DTEContent>
-      )}
       <ButtonWrapper>
-        <DTEButton disabled={loadingLogin}>Sign in</DTEButton>
+        <DTEButton disabled={loadingLogin}>{content["reusable-button-signin"]}</DTEButton>
       </ButtonWrapper>
     </>
   );

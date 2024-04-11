@@ -5,6 +5,8 @@ on:
 
 env:
   REACT_APP_BASE_API: ${{secrets.REACT_APP_BASE_API_PROD}}
+  REACT_APP_LOGOUT_URL: ${{secrets.LOGOUT_URL_PROD}}
+  REACT_APP_RESEARCHER_AUTH_URL: ${{secrets.RESEARCHER_AUTH_URL_PROD}}
   REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL_PROD}}
   REACT_APP_NHS_SETTINGS_URL: ${{secrets.REACT_APP_NHS_SETTINGS_URL_PROD}}
   REACT_APP_NHS_LOGIN_URL: ${{secrets.REACT_APP_NHS_LOGIN_URL_PROD}}
@@ -12,6 +14,9 @@ env:
   REACT_APP_NHS_LOGIN_RESPONSE_TYPE: ${{secrets.REACT_APP_NHS_LOGIN_RESPONSE_TYPE}}
   REACT_APP_NHS_LOGIN_SCOPE: ${{secrets.REACT_APP_NHS_LOGIN_SCOPE}}
   REACT_APP_COOKIE_DOMAIN: ".bepartofresearch.nihr.ac.uk"
+  REACT_APP_CONTENTFUL_SPACE_ID: ${{secrets.REACT_APP_CONTENTFUL_SPACE_ID}}
+  REACT_APP_CONTENTFUL_DELIVERY_TOKEN: ${{secrets.REACT_APP_CONTENTFUL_DELIVERY_TOKEN}}
+  REACT_APP_CONTENTFUL_ENVIRONMENT: ${{secrets.REACT_APP_CONTENTFUL_ENVIRONMENT}}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,7 +25,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Configure AWS credentials - All
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -29,8 +34,8 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - uses: actions/setup-node@v2
         with:
-          node-version: '20'
-          cache: 'yarn'
+          node-version: "16"
+          cache: "yarn"
           cache-dependency-path: "yarn.lock"
       - name: Yarn Install
         run: yarn install
@@ -41,7 +46,6 @@ jobs:
       - name: Running Unit Tests
         run: yarn test
 
-
       - name: Deploy to S3 - PROD
         shell: bash
         run: |
@@ -49,4 +53,3 @@ jobs:
           aws cloudfront create-invalidation --distribution-id $(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[0] == '${{ secrets.VS_NIHR_URL_PROD }}'].Id" --output text) --paths '/*'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_PROD_BUCKET_NAME }}
-

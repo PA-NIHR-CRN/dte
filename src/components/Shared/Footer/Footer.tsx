@@ -4,12 +4,7 @@ import styled from "styled-components";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebookF,
-  faTwitter,
-  faYoutube,
-  faLinkedin,
-} from "@fortawesome/free-brands-svg-icons";
+import { faFacebookF, faTwitter, faYoutube, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
 import bporlogo from "../../../images/BPoR_logo_WO.svg";
 import HSClogo from "../../../images/HSCLogo.svg";
@@ -18,6 +13,11 @@ import HCRwaleslogo from "../../../images/Health-and-Care-Research-Wales-full-co
 import nhsScotlandlogo from "../../../images/nhs-research-scotland-logo.svg";
 import FooterLinksPanel from "./FooterLinksPanel";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+<<<<<<< HEAD
+=======
+import { useContext } from "react";
+import { ContentContext } from "../../../context/ContentContext";
+>>>>>>> main
 
 interface IsMobileProps {
   isMobile?: boolean;
@@ -166,97 +166,99 @@ const SocialIconWrapper = styled.span`
   border-radius: 50%;
 `;
 
-const SocialIcon = styled(FontAwesomeIcon).attrs({})`
-  &&& {
-    color: ${(Props) => Props.theme.NIHR.Blue};
-    background-color: ${(Props) =>
-      Props.color ?? Props.theme.NIHR.PrimaryWhite};
-    width: 1.4em;
-    height: 1.4em;
-  }
+const SocialIcon = styled(FontAwesomeIcon)`
+  color: ${(props) => props.theme.NIHR.Blue};
+  background-color: ${(props) => props.color ?? props.theme.NIHR.PrimaryWhite};
+  width: 1.4em;
+  height: 1.4em;
 `;
 
 export default function Footer() {
+  const { content } = useContext(ContentContext);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const servicesLinks = [
-    { name: "Find a study", url: "https://bepartofresearch.nihr.ac.uk/" },
+    { name: content["footer-item-find-study"], url: "https://bepartofresearch.nihr.ac.uk/" },
     {
-      name: "Add my study",
+      name: content["footer-item-add-study"],
       url: "https://bepartofresearch.nihr.ac.uk/promote-research/information-for-researchers/",
     },
     {
-      name: "A-Z conditions",
+      name: content["footer-item-a-z"],
       url: "https://bepartofresearch.nihr.ac.uk/results/a-z-conditions",
     },
     {
-      name: "Glossary",
+      name: content["footer-item-glossary"],
       url: "https://bepartofresearch.nihr.ac.uk/about/glossary/",
     },
     {
-      name: "FAQs",
+      name: content["footer-item-faqs"],
       url: "https://bepartofresearch.nihr.ac.uk/about/frequently-asked-questions/",
     },
   ];
 
   const learnLinks = [
     {
-      name: "What is research?",
+      name: content["footer-item-what-is-health-and-care-research"],
       url: "https://bepartofresearch.nihr.ac.uk/about/What-is-health-and-care-research/",
     },
     {
-      name: "Why take part?",
+      name: content["footer-item-why-take-part"],
       url: "https://bepartofresearch.nihr.ac.uk/taking-part/why-take-part/",
     },
     {
-      name: "What happens next?",
+      name: content["footer-item-what-happens-on-a-study"],
       url: "https://bepartofresearch.nihr.ac.uk/taking-part/what-happens-on-a-study/",
     },
     {
-      name: "Consenting to a study",
+      name: content["footer-item-consent-study"],
       url: "https://bepartofresearch.nihr.ac.uk/taking-part/Consent/",
     },
   ];
 
   const sitePolicyLinks = [
     {
-      name: "Accessibility",
+      name: content["footer-item-all-site-policies"],
+      url: "https://bepartofresearch.nihr.ac.uk/site-policies/",
+    },
+    {
+      name: content["footer-item-accessibility"],
       url: "https://bepartofresearch.nihr.ac.uk/site-policies/accessibility",
     },
     {
-      name: "Complaints",
+      name: content["footer-item-complaints"],
       url: "https://bepartofresearch.nihr.ac.uk/site-policies/complaints",
     },
     {
-      name: "Cookie policy",
+      name: content["footer-item-cookie-policy"],
       url: "https://bepartofresearch.nihr.ac.uk/site-policies/cookie-policy",
     },
     {
-      name: "Freedom of information",
+      name: content["footer-item-freedom-information"],
       url: "https://bepartofresearch.nihr.ac.uk/site-policies/freedom-of-information",
     },
     {
-      name: "Privacy policy",
+      name: content["footer-item-privacy-policy"],
       url: "https://bepartofresearch.nihr.ac.uk/site-policies/privacy-policy",
     },
     {
-      name: "Terms and conditions",
+      name: content["footer-item-terms-conditions"],
       url: "https://bepartofresearch.nihr.ac.uk/site-policies/terms-and-conditions",
     },
   ];
 
   const stayConnectedLinks = [
     {
-      name: "Blogs",
+      name: content["footer-item-blogs"],
       url: "https://bepartofresearch.nihr.ac.uk/Articles/index",
     },
     {
-      name: "Contact us",
+      name: content["footer-item-contact-us"],
       url: "https://bepartofresearch.nihr.ac.uk/about/#contact-form",
     },
     {
-      name: "Newsletter",
+      name: content["footer-item-newsletter"],
       url: "https://nihr.us14.list-manage.com/subscribe?u=299dc02111e8a68172029095f&id=3b030a1027",
     },
   ];
@@ -271,18 +273,22 @@ export default function Footer() {
         alignItems="center"
       >
         <Grid item xs={12} md={5} lg={4}>
-          <FollowUsText>Follow us </FollowUsText>
+          <FollowUsText>{content["footer-follow-us"]} </FollowUsText>
           <SocialIconContainer
             to={{ pathname: "https://www.facebook.com/OfficialNIHR/" }}
             target="_blank"
             aria-label="Facebook"
           >
             <SocialIconWrapper>
+<<<<<<< HEAD
               <SocialIcon
                 aria-label="Facebook"
                 icon={faFacebookF as IconProp}
                 size="xs"
               />
+=======
+              <SocialIcon aria-label="Facebook" icon={faFacebookF as IconProp} size="xs" />
+>>>>>>> main
             </SocialIconWrapper>
           </SocialIconContainer>
           <SocialIconContainer
@@ -291,11 +297,15 @@ export default function Footer() {
             aria-label="Twitter"
           >
             <SocialIconWrapper>
+<<<<<<< HEAD
               <SocialIcon
                 aria-label="Twitter"
                 icon={faTwitter as IconProp}
                 size="xs"
               />
+=======
+              <SocialIcon aria-label="Twitter" icon={faTwitter as IconProp} size="xs" />
+>>>>>>> main
             </SocialIconWrapper>
           </SocialIconContainer>
           <SocialIconContainer
@@ -304,11 +314,15 @@ export default function Footer() {
             aria-label="You Tube"
           >
             <SocialIconWrapper>
+<<<<<<< HEAD
               <SocialIcon
                 aria-label="You Tube"
                 icon={faYoutube as IconProp}
                 size="xs"
               />
+=======
+              <SocialIcon aria-label="You Tube" icon={faYoutube as IconProp} size="xs" />
+>>>>>>> main
             </SocialIconWrapper>
           </SocialIconContainer>
           <SocialIconContainer
@@ -317,21 +331,20 @@ export default function Footer() {
             aria-label="Linked In"
           >
             <SocialIconWrapper>
+<<<<<<< HEAD
               <SocialIcon
                 aria-label="Linked In"
                 icon={faLinkedin as IconProp}
                 size="xs"
               />
+=======
+              <SocialIcon aria-label="Linked In" icon={faLinkedin as IconProp} size="xs" />
+>>>>>>> main
             </SocialIconWrapper>
           </SocialIconContainer>
         </Grid>
       </SocialPanel>
-      <FooterPanel
-        container
-        direction="row"
-        justifyContent="center"
-        alignContent="center"
-      >
+      <FooterPanel container direction="row" justifyContent="center" alignContent="center">
         <Grid
           item
           container
@@ -345,37 +358,37 @@ export default function Footer() {
           <NavHeading>Site Links</NavHeading>
           <Grid item xs={12} md={2}>
             <FooterLinksPanel
-              heading="Services"
+              heading={content["footer-heading-services"]}
               links={servicesLinks}
               isMobile={isMobile}
-              ariaLabel="Services pages on this website"
+              ariaLabel={content["footer-heading-services-aria"]}
               isAccordion={isMobile}
             />
           </Grid>
           <Grid item xs={12} md={2}>
             <FooterLinksPanel
-              heading="Learn"
+              heading={content["footer-heading-learn"]}
               links={learnLinks}
               isMobile={isMobile}
-              ariaLabel="Learn pages on this website"
+              ariaLabel={content["footer-heading-learn-aria"]}
               isAccordion={isMobile}
             />
           </Grid>
           <Grid item xs={12} md={2}>
             <FooterLinksPanel
-              heading="Site policies"
+              heading={content["footer-heading-site-policies"]}
               links={sitePolicyLinks}
               isMobile={isMobile}
-              ariaLabel="Site policy pages on this website"
+              ariaLabel={content["footer-heading-site-policies-aria"]}
               isAccordion={isMobile}
             />
           </Grid>
           <Grid item xs={12} md={2}>
             <FooterLinksPanel
-              heading="Stay connected"
+              heading={content["footer-heading-stay-connected"]}
               links={stayConnectedLinks}
               isMobile={isMobile}
-              ariaLabel="Stay Connected pages on this website"
+              ariaLabel={content["footer-heading-stay-connected-aria"]}
               isAccordion={isMobile}
             />
           </Grid>
@@ -429,11 +442,7 @@ export default function Footer() {
             aria-label="NHS Scotland"
             className="footerImage scot-logo-img"
           >
-            <img
-              src={nhsScotlandlogo}
-              className="regional-logos img-responsive"
-              alt="NHS Scotland"
-            />
+            <img src={nhsScotlandlogo} className="regional-logos img-responsive" alt="NHS Scotland" />
           </a>
         </div>
         <div className="regional-logos HCW-logo">
@@ -444,11 +453,7 @@ export default function Footer() {
             aria-label="Health and Care Research Wales"
             className="footerImage HCWLogoContainer"
           >
-            <img
-              src={HCRwaleslogo}
-              className="regional-logos img-responsive"
-              alt="Health and Care Research Wales"
-            />
+            <img src={HCRwaleslogo} className="regional-logos img-responsive" alt="Health and Care Research Wales" />
           </a>
         </div>
       </div>

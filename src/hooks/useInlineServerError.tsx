@@ -3,9 +3,7 @@ import { AxiosResponse } from "axios";
 import Utils from "../Helper/Utils";
 import customCodeLookup from "../components/Shared/ErrorMessageContainer/customCodeLookup";
 
-const useInlineServerError = (
-  serverResponse: void | AxiosResponse<any> | undefined
-) => {
+const useInlineServerError = (serverResponse: void | AxiosResponse<any> | undefined, content: any) => {
   const [convertedError, setConvertedError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -14,14 +12,10 @@ const useInlineServerError = (
       const { customCode, detail } = result.errors[0];
 
       // Ignore certain errors
-      const ignoreErrors = [
-        "Sms_Mfa_Challenge",
-        "Software_Token_Mfa_Challenge",
-        "Setup_Mfa_Challenge",
-      ];
+      const ignoreErrors = ["Sms_Mfa_Challenge", "Software_Token_Mfa_Challenge", "Setup_Mfa_Challenge"];
 
       if (customCode && !ignoreErrors.includes(customCode)) {
-        const converted = customCodeLookup(customCode || "", detail || "");
+        const converted = customCodeLookup(customCode || "", content, detail || "");
         setConvertedError(converted);
       }
     } else {

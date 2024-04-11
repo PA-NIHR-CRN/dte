@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import Utils, { EmailRegex, MobileRegex, LandlineRegex } from "../Helper/Utils";
 
 describe("Utils Tests", () => {
+<<<<<<< HEAD
   describe("ConvertResponseToDTEResponse", () => {
     it("returns undefined when response is undefined", () => {
       expect(Utils.ConvertResponseToDTEResponse(undefined)).toBeUndefined();
@@ -19,6 +20,16 @@ describe("Utils Tests", () => {
       } as AxiosResponse;
       expect(Utils.ConvertResponseToDTEResponse(resp)).toEqual({
         message: "Success",
+=======
+  test("Invalid DTE status is recognised.", () => {
+    expect(Utils.IsCPMSStatusDTEReady("This is an incorrect Status")).toBeFalsy();
+  });
+  test("Valid DTE status are recognised.", () => {
+    const statuses = process.env?.REACT_APP_DTE_READY_STATUS_LIST?.split("#");
+    if (statuses) {
+      statuses.forEach((status) => {
+        expect(Utils.IsCPMSStatusDTEReady(status)).toBeTruthy();
+>>>>>>> main
       });
     });
   });

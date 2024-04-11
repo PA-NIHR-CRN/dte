@@ -1,29 +1,17 @@
 import { Grid } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import { useEffect, useState } from "react";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useContext, useEffect, useState } from "react";
+import { ContentContext } from "../../../context/ContentContext";
 import DTEHeader from "../UI/DTETypography/DTEHeader/DTEHeader";
 import FormBaseProps from "./FormBaseProps";
-import PostcodeLookup, {
-  PostcodeLookupData,
-} from "./AddressFormComponents/PostcodeLookup";
-import ManualEntry, {
-  ManualEntryData,
-} from "./AddressFormComponents/ManualEntry";
-import SelectAddress, {
-  SelectAddressData,
-} from "./AddressFormComponents/SelectAddress";
-
-type address = {
-  addressLine1: string;
-  addressLine2: string;
-  addressLine3: string;
-  addressLine4: string;
-  town: string;
-};
+import PostcodeLookup, { PostcodeLookupData } from "./AddressFormComponents/PostcodeLookup";
+import ManualEntry, { ManualEntryData } from "./AddressFormComponents/ManualEntry";
+import SelectAddress, { SelectAddressData } from "./AddressFormComponents/SelectAddress";
+import { Address } from "../../../types/ParticipantTypes";
 
 export type AddressFormData = {
-  address: address;
+  address: Address;
   postcode: string;
   manualEntry?: boolean;
 };
@@ -39,7 +27,8 @@ interface AddressFormProps extends FormBaseProps {
   onDataChange: (data: AddressFormData) => void;
 }
 
-const AddressForm = (props: AddressFormProps) => {
+function AddressForm(props: AddressFormProps) {
+  const { content } = useContext(ContentContext);
   const {
     onDataChange,
     initialStateData,
@@ -51,9 +40,7 @@ const AddressForm = (props: AddressFormProps) => {
     hideInfo,
   } = props;
   const theme = useTheme();
-  const headerVariant = useMediaQuery(theme.breakpoints.down("xs"))
-    ? "h2"
-    : "h1";
+  const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
   const [formStage, setFormStage] = useState("postcodeLookup");
 
   const [addressData, setAddressData] = useState<AddressFormState>({
@@ -91,10 +78,7 @@ const AddressForm = (props: AddressFormProps) => {
     },
   });
 
-  const handleDataChange = (
-    data: PostcodeLookupData | ManualEntryData | SelectAddressData,
-    stage: string
-  ) => {
+  const handleDataChange = (data: PostcodeLookupData | ManualEntryData | SelectAddressData, stage: string) => {
     setAddressData((oldData: AddressFormState) => {
       switch (stage) {
         case "postcodeLookupData":
@@ -148,10 +132,7 @@ const AddressForm = (props: AddressFormProps) => {
         postcode: (data as ManualEntryData).postcode,
         manualEntry: true,
       });
-    } else if (
-      stage === "selectAddressData" &&
-      (data as SelectAddressData).address.addressLine1
-    ) {
+    } else if (stage === "selectAddressData" && (data as SelectAddressData).address.addressLine1) {
       onDataChange({
         address: {
           addressLine1: (data as SelectAddressData).address.addressLine1,
@@ -174,7 +155,7 @@ const AddressForm = (props: AddressFormProps) => {
     <>
       {!hideHeader && (
         <DTEHeader as="h1" $variant={headerVariant}>
-          What is your home address?
+          {content["register2-address-header"]}
         </DTEHeader>
       )}
       {instructionText}
@@ -182,9 +163,7 @@ const AddressForm = (props: AddressFormProps) => {
         <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>
           {formStage === "postcodeLookup" && (
             <PostcodeLookup
-              onDataChange={(data: PostcodeLookupData) =>
-                handleDataChange(data, "postcodeLookupData")
-              }
+              onDataChange={(data: PostcodeLookupData) => handleDataChange(data, "postcodeLookupData")}
               initialStateData={addressData.postcodeLookupData}
               showCancelButton={showCancelButton}
               onCancel={onCancel}
@@ -193,9 +172,7 @@ const AddressForm = (props: AddressFormProps) => {
           )}
           {formStage === "selectAddress" && (
             <SelectAddress
-              onDataChange={(data: SelectAddressData) =>
-                handleDataChange(data, "selectAddressData")
-              }
+              onDataChange={(data: SelectAddressData) => handleDataChange(data, "selectAddressData")}
               addresses={addressData.postcodeLookupData.addresses}
               postcode={addressData.postcodeLookupData.postcode}
               nextButtonText={nextButtonText}
@@ -206,9 +183,7 @@ const AddressForm = (props: AddressFormProps) => {
           )}
           {formStage === "manualEntry" && (
             <ManualEntry
-              onDataChange={(data: ManualEntryData) =>
-                handleDataChange(data, "manualEntryData")
-              }
+              onDataChange={(data: ManualEntryData) => handleDataChange(data, "manualEntryData")}
               initialStateData={addressData.manualEntryData}
               nextButtonText={nextButtonText}
               showCancelButton={showCancelButton}
@@ -220,6 +195,6 @@ const AddressForm = (props: AddressFormProps) => {
       </Grid>
     </>
   );
-};
+}
 
 export default AddressForm;
