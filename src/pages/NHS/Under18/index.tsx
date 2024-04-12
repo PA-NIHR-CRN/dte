@@ -7,7 +7,9 @@ function Under18ErrorPage() {
   const { content } = useContext(ContentContext);
   return (
     <StepWrapper>
-      <DTEHeader as="h1">{content["error-summary-title-problem"]}</DTEHeader>
+      <DTEHeader as="h1" captionKey="error-summary-title-problem">
+        {content["error-summary-title-problem"]}
+      </DTEHeader>
       {content["nhs-under-18"]}
     </StepWrapper>
   );

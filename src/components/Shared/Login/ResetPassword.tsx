@@ -171,7 +171,9 @@ function ResetPassword() {
                             axiosErrors={[policyError]}
                             DTEAxiosErrors={[Utils.ConvertResponseToDTEResponse(policyResponse)?.errors]}
                           />
-                          <DTEHeader as="h1">{content["resetpassword-header-choose-password"]}</DTEHeader>
+                          <DTEHeader as="h1" captionKey="resetpassword-header-choose-password">
+                            {content["resetpassword-header-choose-password"]}
+                          </DTEHeader>
                           <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
                           <DTEContent>{policyBuilder}</DTEContent>
                           <ThreeWords />
@@ -250,7 +252,9 @@ function ResetPassword() {
                         </>
                       ) : (
                         <>
-                          <DTEHeader as="h2">{content["resetpassword-header-failed"]}</DTEHeader>
+                          <DTEHeader as="h2" captionKey="resetpassword-header-failed">
+                            {content["resetpassword-header-failed"]}
+                          </DTEHeader>
                           {content["resetpassword-failed-page"]}
                         </>
                       )}
@@ -258,7 +262,9 @@ function ResetPassword() {
                   )}
                   {submitResponse?.isSuccess && (
                     <>
-                      <DTEHeader as="h2">{content["resetpassword-header-updated"]}</DTEHeader>
+                      <DTEHeader as="h2" captionKey="resetpassword-header-updated">
+                        {content["resetpassword-header-updated"]}
+                      </DTEHeader>
                       <DTERouteLink to="/">{content["reusable-button-signin"]}</DTERouteLink>
                     </>
                   )}

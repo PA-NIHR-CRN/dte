@@ -154,7 +154,7 @@ function UpdatePasswordForm(props: FormBaseProps) {
       {policyLoading && <LoadingIndicator text={content["reusable-password-policy-loading"]} />}
       {passwordPolicy && (
         <>
-          <DTEHeader as="h1" $variant={headerVariant}>
+          <DTEHeader as="h1" $variant={headerVariant} captionKey="update-password-header">
             {content["update-password-header"]}
           </DTEHeader>
           <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />

@@ -29,7 +29,7 @@ function NhsNoConsent() {
             onClick={() => window.history.go(state === "ssointegration" ? -2 : -3)}
           />
         )}
-        <DTEHeader as="h1" $variant="h2">
+        <DTEHeader as="h1" $variant="h2" captionKey="register-no-consent-header">
           {content["register-no-consent-header"]}
         </DTEHeader>
         <DTEContent>

@@ -68,7 +68,9 @@ function ForgottenPassword() {
               <Grid item xs={12}>
                 {!(submitResponse?.isSuccess || submitResponse?.errors[0].exceptionName === "UserNotFoundException") ? (
                   <>
-                    <DTEHeader as="h1">{content["resetpassword-header"]}</DTEHeader>
+                    <DTEHeader as="h1" captionKey="resetpassword-header">
+                      {content["resetpassword-header"]}
+                    </DTEHeader>
                     <DTEContent>{content["resetpassword-body"]}</DTEContent>
                     <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
                     <form onSubmit={handleSubmit(onSubmit)} noValidate onInvalid={() => {}}>
@@ -112,7 +114,9 @@ function ForgottenPassword() {
                 ) : (
                   <Grid container direction="column" spacing={2}>
                     <Grid item>
-                      <DTEHeader as="h1">{content["reusable-check-your-email-header"]}</DTEHeader>
+                      <DTEHeader as="h1" captionKey="reusable-check-your-email-header">
+                        {content["reusable-check-your-email-header"]}
+                      </DTEHeader>
                       <DTEContent as="b" $marginBottom="large">
                         {content["reusable-check-email-bold-text"]} {watch("email")}
                       </DTEContent>

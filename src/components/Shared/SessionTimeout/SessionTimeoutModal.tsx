@@ -162,7 +162,7 @@ function SessionTimeoutModal() {
       ref={timeoutDialogRef}
     >
       {sessionState.expiryInfo.duration - sessionState.secondsSinceLastActivity > 0 && (
-        <DTEHeader as="h1" id="dialog-title">
+        <DTEHeader as="h1" id="dialog-title" captionKey="session-warning-modal-header">
           {content["session-warning-modal-header"]} <br />
           {moment
             .duration(sessionState.expiryInfo.duration - sessionState.secondsSinceLastActivity, "seconds")
@@ -170,7 +170,7 @@ function SessionTimeoutModal() {
         </DTEHeader>
       )}
       {sessionState.expiryInfo.duration - sessionState.secondsSinceLastActivity <= 0 && (
-        <DTEHeader as="h1" id="dialog-title">
+        <DTEHeader as="h1" id="dialog-title" captionKey="session-warning-modal-header">
           {content["session-warning-modal-header"]} {content["reusable-text-soon"]}
         </DTEHeader>
       )}

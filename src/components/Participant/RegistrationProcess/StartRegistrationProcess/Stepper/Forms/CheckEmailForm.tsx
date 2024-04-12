@@ -94,7 +94,7 @@ function CheckEmailForm(props: CheckEmailFormProps) {
             ) && (
               <DocumentTitle title={content["register-check-email-fail-document-title"]}>
                 <>
-                  <DTEHeader as="h1" $variant="h2">
+                  <DTEHeader as="h1" $variant="h2" captionKey="register-check-email-fail-header">
                     {content["register-check-email-fail-header"]}
                   </DTEHeader>
                   {content["register-check-email-fail-body"]}

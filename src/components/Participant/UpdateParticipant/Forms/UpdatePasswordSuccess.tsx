@@ -10,7 +10,9 @@ function UpdatePasswordSuccess() {
   return (
     <DocumentTitle title={content["updatepassword-success-document-title"]}>
       <StepWrapper>
-        <DTEHeader as="h1">{content["resetpassword-header-updated"]}</DTEHeader>
+        <DTEHeader as="h1" captionKey="resetpassword-header-updated">
+          {content["resetpassword-header-updated"]}
+        </DTEHeader>
         <DTERouteLink to="/">{content["updatepassword-success-return-to-account"]}</DTERouteLink>
       </StepWrapper>
     </DocumentTitle>

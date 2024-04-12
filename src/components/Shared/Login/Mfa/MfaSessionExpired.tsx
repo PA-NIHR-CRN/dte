@@ -18,7 +18,9 @@ const MfaSessionExpired = () => {
   return (
     <DocumentTitle title={content["mfa-session-expired-document-title"]}>
       <StepWrapper>
-        <DTEHeader as="h1">{content["mfa-session-expired-header"]}</DTEHeader>
+        <DTEHeader as="h1" captionKey="mfa-session-expired-header">
+          {content["mfa-session-expired-header"]}
+        </DTEHeader>
         {content["mfa-session-expired-page"]}
       </StepWrapper>
     </DocumentTitle>

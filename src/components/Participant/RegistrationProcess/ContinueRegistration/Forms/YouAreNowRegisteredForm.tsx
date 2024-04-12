@@ -83,7 +83,9 @@ function YouAreNowRegisteredForm(props: YouAreNowRegisteredFormProps) {
       )}
       {Utils.ConvertResponseToDTEResponse(response)?.isSuccess && (
         <>
-          <DTEHeader as="h1">{content["registered-thanks-header"]}</DTEHeader>
+          <DTEHeader as="h1" captionKey="registered-thanks-header">
+            {content["registered-thanks-header"]}
+          </DTEHeader>
           {isInNHSApp ? content["registered-thanks-page-nhs"] : content["registered-thanks-page"]}
         </>
       )}

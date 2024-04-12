@@ -1,12 +1,16 @@
+import { FC, HTMLAttributes } from "react";
 import styled from "styled-components";
+import DTEHeaderCaption from "../DTEHeaderCaption/DTEHeaderCaption";
 
-interface DTEHeaderProps {
+interface DTEHeaderProps extends HTMLAttributes<HTMLHeadingElement> {
   as: "h1" | "h2" | "h3" | "h4";
   $variant?: "h1" | "h2" | "h3" | "h4";
   $color?: "blue" | "grey" | "black";
   $weight?: "normal" | "bold" | "lighter";
   $align?: "center" | "right";
   $platform?: "mobile" | "desktop";
+  captionKey?: string;
+  children?: string | React.ReactNode | number;
 }
 
 const getStyleData = (
@@ -80,7 +84,7 @@ const getColour = (
   }
 };
 
-const DTEHeader = styled.h1<DTEHeaderProps>`
+const StyledHeader = styled.h1<DTEHeaderProps>`
   font-weight: ${(props) => (props.$weight ? props.$weight : "bold")};
   font-stretch: normal;
   font-style: normal;
@@ -104,5 +108,19 @@ const DTEHeader = styled.h1<DTEHeaderProps>`
        line-height: ${getStyleData(props, "height", "mobile")};`}
   }
 `;
+
+const DTEHeader: FC<DTEHeaderProps> = (props) => {
+  const { captionKey, children } = props;
+
+  return (
+    <>
+      <DTEHeaderCaption contentKey={`${captionKey}-caption`} />
+      <StyledHeader {...props}>{children}</StyledHeader>
+      {/* //conditionally render {moment
+            .duration(sessionState.expiryInfo.duration - sessionState.secondsSinceLastActivity, "seconds")
+            .humanize(true)} */}
+    </>
+  );
+};
 
 export default DTEHeader;

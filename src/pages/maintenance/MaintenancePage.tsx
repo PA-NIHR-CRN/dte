@@ -5,7 +5,9 @@ const MaintenancePage = () => {
   return (
     <div role="main" id="main">
       <div className="inset-text">
-        <DTEHeader as="h1">Sorry, the service is unavailable</DTEHeader>
+        <DTEHeader as="h1" captionKey="Sorry, the service is unavailable">
+          Sorry, the service is unavailable
+        </DTEHeader>
 
         <DTEContent>You will be able to use the service later.</DTEContent>
         <DTEContent>

@@ -69,7 +69,9 @@ function NhsPreRegistration() {
         ]}
       />
       <StepWrapper>
-        <DTEHeader as="h1">{content["introduction-header"]}</DTEHeader>
+        <DTEHeader as="h1" captionKey="introduction-header">
+          {content["introduction-header"]}
+        </DTEHeader>
         {content["introduction-body"]}
         <Wrapper margin="2rem 0">
           <DTEDetails summary={content["introduction-accordion-header"]}>
