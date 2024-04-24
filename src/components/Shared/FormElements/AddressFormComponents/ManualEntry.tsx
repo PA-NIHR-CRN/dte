@@ -178,7 +178,7 @@ function ManualEntry(props: ManualEntryProps) {
               }
               if (
                 cleaned.match(
-                  /^[A-Za-z]{1,4}[0-9]{1,2}\s?[0-9]{1,2}[A-Za-z]{1,2}$|^[A-Za-z]{1,4}[0-9]{1,2}[A-Za-z]{1,2}\s?[0-9]{1,2}[A-Za-z]{1,2}/
+                  /^[A-Za-z]{1,2}[0-9]{1,2}\s?[0-9]{1,2}[A-Za-z]{1,2}$|^[A-Za-z]{1,2}[0-9]{1,2}[A-Za-z]{1,2}\s?[0-9]{1,2}[A-Za-z]{1,2}/
                 )
               ) {
                 return true;
