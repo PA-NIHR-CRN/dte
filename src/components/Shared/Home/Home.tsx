@@ -24,9 +24,11 @@ const StyledDTERouteLink = styled(DTERouteLink)`
     display: block;
     width: 100%;
     margin-bottom: 1em;
+
     a {
       display: block;
       width: 100%;
+
       svg {
         float: right;
       }
@@ -92,17 +94,22 @@ function Home() {
                 {content["account-header"]}
               </DTEHeader>
               <DTEHR />
-              <StyledDTERouteLink
-                to={
-                  isNhsLinkedAccount
-                    ? (process.env.REACT_APP_NHS_SETTINGS_URL as string)
-                    : "/Participants/AccountSettings"
-                }
-                renderStyle="standard"
-                external={isNhsLinkedAccount || false}
-                target={isNhsLinkedAccount ? "_blank" : undefined}
-              >
-                <DTEHeader as="h2" $variant="h3" captionKey="reusable-account-settings-header">
+              <StyledDTEHeader as="h2" $variant="h3" captionKey="reusable-account-settings-header">
+                <DTERouteLink
+                  to={
+                    isNhsLinkedAccount
+                      ? (process.env.REACT_APP_NHS_SETTINGS_URL as string)
+                      : "/Participants/AccountSettings"
+                  }
+                  renderStyle="standard"
+                  external={isNhsLinkedAccount || false}
+                  target={isNhsLinkedAccount ? "_blank" : undefined}
+                  ariaLabel={
+                    isNhsLinkedAccount
+                      ? `${content["reusable-account-settings-header"]} (Opens in a new tab)`
+                      : content["reusable-account-settings-header"]
+                  }
+                >
                   {content["reusable-account-settings-header"]}
                 </DTEHeader>
 
@@ -132,13 +139,15 @@ function Home() {
                 {content["reusable-home-address"].toLowerCase()}.
               </StyledDTEContent>
               <DTEHR />
-              <StyledDTERouteLink
-                to="https://bepartofresearch.nihr.ac.uk/results/search-results?query=&location="
-                renderStyle="standard"
-                external
-                target="_blank"
-              >
-                <DTEHeader as="h2" $variant="h3" captionKey="account-search-studies-header">
+              <StyledDTEHeader as="h2" $variant="h3" captionKey="account-search-studies-header">
+                <DTERouteLink
+                  to="https://bepartofresearch.nihr.ac.uk/results/search-results?query=&location="
+                  renderStyle="standard"
+                  external
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  ariaLabel={`${content["account-search-studies-header"]} (Opens in a new tab)`}
+                >
                   {content["account-search-studies-header"]}
                 </DTEHeader>
                 <ArrowForwardRoundedIcon />
