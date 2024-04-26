@@ -95,14 +95,14 @@ describe("Areas Of Research display tests", () => {
 
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
-    expect(header.textContent).toBe("Which areas of research are you interested in?");
+    expect(header.textContent).toBe("Which health conditions can we contact you about?");
   });
 
   it("must display the data retrieved from the server correctly", async () => {
     render(<AreasOfResearch />);
 
     const intro1 = await screen.findByText(
-      "Start entering details below to see different areas of research. You can select as many options as you like."
+      "The health conditions you choose in this section will be used to match you to suitable research studies using our service."
     );
     expect(intro1).toBeInTheDocument();
 
