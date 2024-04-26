@@ -143,6 +143,11 @@ function Home() {
                 renderStyle="standard"
                 external
                 target="_blank"
+                ariaLabel={
+                  isNhsLinkedAccount
+                    ? `${content["account-search-studies-heade"]} (Opens in a new tab)`
+                    : content["account-search-studies-heade"]
+                }
               >
                 <DTEHeader as="h2" $variant="h3" captionKey="account-search-studies-header">
                   {content["account-search-studies-header"]}
