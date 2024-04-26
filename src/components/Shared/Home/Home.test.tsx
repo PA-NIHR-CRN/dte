@@ -1,6 +1,6 @@
 import { axe, toHaveNoViolations } from "jest-axe";
 import { createServer, Server } from "miragejs";
-import { render, screen, waitFor, waitForElementToBeRemoved } from "../../../Helper/test-utils";
+import { render, screen, waitForElementToBeRemoved } from "../../../Helper/test-utils";
 import Home from "./Home";
 
 expect.extend(toHaveNoViolations);
@@ -78,6 +78,8 @@ describe("Home screen render tests", () => {
       "href",
       "https://bepartofresearch.nihr.ac.uk/results/search-results?query=&location="
     );
+    expect(links[3]).toHaveAttribute("aria-label", "Search for studies on Be Part of Research (Opens in a new tab)");
+    expect(links[3]).toHaveAttribute("target", "_blank");
     expect(links[3]).toHaveTextContent("Search for studies on Be Part of Research");
     expect(links[4]).toHaveAttribute("href", "/Participants/BePartOfResearchNewsletter");
     expect(links[4]).toHaveTextContent("Be Part of Research Newsletter");

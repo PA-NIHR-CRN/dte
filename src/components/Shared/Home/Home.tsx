@@ -24,9 +24,11 @@ const StyledDTERouteLink = styled(DTERouteLink)`
     display: block;
     width: 100%;
     margin-bottom: 1em;
+
     a {
       display: block;
       width: 100%;
+
       svg {
         float: right;
       }
@@ -101,11 +103,15 @@ function Home() {
                 renderStyle="standard"
                 external={isNhsLinkedAccount || false}
                 target={isNhsLinkedAccount ? "_blank" : undefined}
+                ariaLabel={
+                  isNhsLinkedAccount
+                    ? `${content["reusable-account-settings-header"]} (Opens in a new tab)`
+                    : content["reusable-account-settings-header"]
+                }
               >
                 <DTEHeader as="h2" $variant="h3" captionKey="reusable-account-settings-header">
                   {content["reusable-account-settings-header"]}
                 </DTEHeader>
-
                 <ArrowForwardRoundedIcon />
               </StyledDTERouteLink>
               <StyledDTEContent>
@@ -137,6 +143,11 @@ function Home() {
                 renderStyle="standard"
                 external
                 target="_blank"
+                ariaLabel={
+                  isNhsLinkedAccount
+                    ? `${content["account-search-studies-heade"]} (Opens in a new tab)`
+                    : content["account-search-studies-heade"]
+                }
               >
                 <DTEHeader as="h2" $variant="h3" captionKey="account-search-studies-header">
                   {content["account-search-studies-header"]}
