@@ -9,7 +9,9 @@ function NhsUnableToMatch() {
   const { isInNHSApp } = useContext(AuthContext);
   return (
     <StepWrapper>
-      <DTEHeader as="h1">{content["error-summary-title-problem"]}</DTEHeader>
+      <DTEHeader as="h1" captionKey="error-summary-title-problem">
+        {content["error-summary-title-problem"]}
+      </DTEHeader>
       {isInNHSApp ? content["nhs-unable-to-match-app"] : content["nhs-unable-to-match"]}
     </StepWrapper>
   );

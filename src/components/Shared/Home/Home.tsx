@@ -19,7 +19,7 @@ const StyledGrid = styled(Grid)`
   padding: 1rem;
 `;
 
-const StyledDTEHeader = styled(DTEHeader)`
+const StyledDTERouteLink = styled(DTERouteLink)`
   && {
     display: block;
     width: 100%;
@@ -90,9 +90,11 @@ function Home() {
         <Grid item xs={12} sm={8} md={7} lg={6} xl={5}>
           {Utils.ConvertResponseToDTEResponse(response)?.isSuccess && !isInNHSApp && (
             <>
-              <DTEHeader as="h1">{content["account-header"]}</DTEHeader>
+              <DTEHeader as="h1" captionKey="account-header">
+                {content["account-header"]}
+              </DTEHeader>
               <DTEHR />
-              <StyledDTEHeader as="h2" $variant="h3">
+              <StyledDTEHeader as="h2" $variant="h3" captionKey="reusable-account-settings-header">
                 <DTERouteLink
                   to={
                     isNhsLinkedAccount
@@ -109,34 +111,35 @@ function Home() {
                   }
                 >
                   {content["reusable-account-settings-header"]}
-                  <ArrowForwardRoundedIcon />
-                </DTERouteLink>
-              </StyledDTEHeader>
+                </DTEHeader>
+
+                <ArrowForwardRoundedIcon />
+              </StyledDTERouteLink>
               <StyledDTEContent>
                 {isNhsLinkedAccount ? content["account-settings-nhs-text"] : content["account-settings-native-text"]}
               </StyledDTEContent>
               <DTEHR />
-              <StyledDTEHeader as="h2" $variant="h3">
-                <DTERouteLink to="/Participants/ResearchAreas" renderStyle="standard">
+              <StyledDTERouteLink to="/Participants/ResearchAreas" renderStyle="standard">
+                <DTEHeader as="h2" $variant="h3" captionKey="reusable-areas-of-research">
                   {content["reusable-areas-of-research"]}
-                  <ArrowForwardRoundedIcon />
-                </DTERouteLink>
-              </StyledDTEHeader>
+                </DTEHeader>
+                <ArrowForwardRoundedIcon />
+              </StyledDTERouteLink>
               <StyledDTEContent>{content["account-areas-of-research-body"]}</StyledDTEContent>
               <DTEHR />
-              <StyledDTEHeader as="h2" $variant="h3">
-                <DTERouteLink to="/Participants/MyDetails" renderStyle="standard">
+              <StyledDTERouteLink to="/Participants/MyDetails" renderStyle="standard">
+                <DTEHeader as="h2" $variant="h3" captionKey="reusable-personal-details-header">
                   {content["reusable-personal-details-header"]}
-                  <ArrowForwardRoundedIcon />
-                </DTERouteLink>
-              </StyledDTEHeader>
+                </DTEHeader>
+                <ArrowForwardRoundedIcon />
+              </StyledDTERouteLink>
               <StyledDTEContent>
                 {content["account-personal-details-body"]}{" "}
                 {isNhsLinkedAccount ? "" : content["account-personal-details-body-nhs"]}
                 {content["reusable-home-address"].toLowerCase()}.
               </StyledDTEContent>
               <DTEHR />
-              <StyledDTEHeader as="h2" $variant="h3">
+              <StyledDTEHeader as="h2" $variant="h3" captionKey="account-search-studies-header">
                 <DTERouteLink
                   to="https://bepartofresearch.nihr.ac.uk/results/search-results?query=&location="
                   renderStyle="standard"
@@ -146,25 +149,25 @@ function Home() {
                   ariaLabel={`${content["account-search-studies-header"]} (Opens in a new tab)`}
                 >
                   {content["account-search-studies-header"]}
-                  <ArrowForwardRoundedIcon />
-                </DTERouteLink>
-              </StyledDTEHeader>
+                </DTEHeader>
+                <ArrowForwardRoundedIcon />
+              </StyledDTERouteLink>
               <StyledDTEContent>{content["account-search-studies-body"]}</StyledDTEContent>
               <DTEHR />
-              <StyledDTEHeader as="h2" $variant="h3">
-                <DTERouteLink to="/Participants/BePartOfResearchNewsletter" renderStyle="standard">
+              <StyledDTERouteLink to="/Participants/BePartOfResearchNewsletter" renderStyle="standard">
+                <DTEHeader as="h2" $variant="h3" captionKey="reusable-newsletter-header">
                   {content["reusable-newsletter-header"]}
-                  <ArrowForwardRoundedIcon />
-                </DTERouteLink>
-              </StyledDTEHeader>
+                </DTEHeader>
+                <ArrowForwardRoundedIcon />
+              </StyledDTERouteLink>
               <StyledDTEContent>{content["account-newsletter-body"]}</StyledDTEContent>
               <DTEHR />
-              <StyledDTEHeader as="h2" $variant="h3">
-                <DTERouteLink to="/Participants/CloseAccount" renderStyle="standard">
+              <StyledDTERouteLink to="/Participants/CloseAccount" renderStyle="standard">
+                <DTEHeader as="h2" $variant="h3" captionKey="reusable-close-your-account">
                   {content["reusable-close-your-account"]}
-                  <ArrowForwardRoundedIcon />
-                </DTERouteLink>
-              </StyledDTEHeader>
+                </DTEHeader>
+                <ArrowForwardRoundedIcon />
+              </StyledDTERouteLink>
               <StyledDTEContent>{content["account-close-account-body"]}</StyledDTEContent>
               <StyledDTEHR />
               <DTERouteLink to="/logout">{content["account-button-sign-out"]}</DTERouteLink>
@@ -172,9 +175,13 @@ function Home() {
           )}
           {Utils.ConvertResponseToDTEResponse(response)?.isSuccess && isInNHSApp && (
             <>
-              <DTEHeader as="h1">{content["reusable-registered-with-bpor"]}</DTEHeader>
+              <DTEHeader as="h1" captionKey="reusable-registered-with-bpor">
+                {content["reusable-registered-with-bpor"]}
+              </DTEHeader>
               {content["reusable-nhs-confirmation"]}
-              <DTEHeader as="h2">{content["reusable-hear-from-us"]}</DTEHeader>
+              <DTEHeader as="h2" captionKey="reusable-hear-from-us">
+                {content["reusable-hear-from-us"]}
+              </DTEHeader>
               {content["reusable-hear-about-study-timescale"]}
             </>
           )}

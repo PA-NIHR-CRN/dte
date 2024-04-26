@@ -66,7 +66,9 @@ const MfaChangePhoneNumber = () => {
     <DocumentTitle title={content["mfa-change-phone-document-title"]}>
       <StepWrapper>
         <DTEBackLink onClick={() => history.goBack()} linkText={content["reusable-back-link"]} />
-        <DTEHeader as="h1">{content["mfa-change-phone-header"]}</DTEHeader>
+        <DTEHeader as="h1" captionKey="mfa-change-phone-header">
+          {content["mfa-change-phone-header"]}
+        </DTEHeader>
         <DTEContent>{content["mfa-change-phone-instruction-text"]}</DTEContent>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Honeypot />

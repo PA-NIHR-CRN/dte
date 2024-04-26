@@ -45,7 +45,9 @@ function ConsentForm(props: ConsentFormProps) {
 
   return (
     <>
-      <DTEHeader as="h1">{content["register-consent-header"]}</DTEHeader>
+      <DTEHeader as="h1" captionKey="register-consent-header">
+        {content["register-consent-header"]}
+      </DTEHeader>
       {content["register-consent-body"]}
       <form onSubmit={handleSubmit(onDataChange)}>
         <Honeypot />

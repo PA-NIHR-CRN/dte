@@ -93,7 +93,9 @@ const MfaSmsSetup = () => {
           <LoadingIndicator />
         ) : (
           <>
-            <DTEHeader as="h1">{content["mfa-sms-setup-header"]}</DTEHeader>
+            <DTEHeader as="h1" captionKey="mfa-sms-setup-header">
+              {content["mfa-sms-setup-header"]}
+            </DTEHeader>
             {content["mfa-sms-setup-instruction-text"]}
             <form noValidate onSubmit={handleSubmit(onSubmit)}>
               <Honeypot />

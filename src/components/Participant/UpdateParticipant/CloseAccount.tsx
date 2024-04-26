@@ -84,7 +84,7 @@ function CloseAccount() {
       <Container>
         <div role="main" id="main">
           <DTEBackLink href="/" linkText={content["reusable-back-link"]} />
-          <DTEHeader as="h1" $variant={headerVariant}>
+          <DTEHeader as="h1" $variant={headerVariant} captionKey="reusable-close-your-account">
             {content["reusable-close-your-account"]}
           </DTEHeader>
           {isNhsLinkedAccount ? content["closeaccount-page-nhs"] : content["closeaccount-page"]}

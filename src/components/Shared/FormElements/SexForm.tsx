@@ -53,11 +53,19 @@ function SexForm(props: SexFormProps) {
     },
   });
 
-  const sexHeader = <DTEHeader as="h2">{content["register2-sexgender-input-sex"]}</DTEHeader>;
-  const genderHeader = <DTEHeader as="h2">{content["register2-sexgender-input-gender"]}</DTEHeader>;
+  const sexHeader = (
+    <DTEHeader as="h2" captionKey="register2-sexgender-input-sex">
+      {content["register2-sexgender-input-sex"]}
+    </DTEHeader>
+  );
+  const genderHeader = (
+    <DTEHeader as="h2" captionKey="register2-sexgender-input-gender">
+      {content["register2-sexgender-input-gender"]}
+    </DTEHeader>
+  );
   if (!hideHeader) {
     questionHeader = (
-      <DTEHeader as="h1" $variant={headerVariant}>
+      <DTEHeader as="h1" $variant={headerVariant} captionKey="register2-sexgender-header">
         {content["register2-sexgender-header"]}
       </DTEHeader>
     );

@@ -47,7 +47,7 @@ function EmailForm(props: EmailFormProps) {
 
   return (
     <>
-      <DTEHeader as="h1" $variant={headerVariant}>
+      <DTEHeader as="h1" $variant={headerVariant} captionKey="register-email-header">
         {content["register-email-header"]}
       </DTEHeader>
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />

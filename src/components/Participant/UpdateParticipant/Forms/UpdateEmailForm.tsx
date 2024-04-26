@@ -73,7 +73,7 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
 
   return (
     <>
-      <DTEHeader as="h1" $variant={headerVariant}>
+      <DTEHeader as="h1" $variant={headerVariant} captionKey="update-email-header">
         {content["update-email-header"]}
       </DTEHeader>
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />

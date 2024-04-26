@@ -67,7 +67,7 @@ function Verify() {
           {Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
             <DocumentTitle title={content["verify-email-success-document-title"]}>
               <>
-                <DTEHeader as="h1" $variant={headerVariant}>
+                <DTEHeader as="h1" $variant={headerVariant} captionKey="verify-email-success-header">
                   {content["verify-email-success-header"]}
                 </DTEHeader>
                 {content["verify-email-continue-registration"]}
@@ -78,7 +78,7 @@ function Verify() {
           {!Utils.ConvertResponseToDTEResponse(confirmationResponse)?.isSuccess && (
             <DocumentTitle title={content["verify-email-failure-document-title"]}>
               <>
-                <DTEHeader as="h1" $variant={headerVariant}>
+                <DTEHeader as="h1" $variant={headerVariant} captionKey="verify-email-failure-header">
                   {content["verify-email-failure-header"]}
                 </DTEHeader>
                 <DTEContent>{content["verify-email-error-technical"]}</DTEContent>

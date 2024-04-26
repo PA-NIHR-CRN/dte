@@ -14,7 +14,7 @@ function NoConsent() {
 
   return (
     <>
-      <DTEHeader as="h1" $variant="h2">
+      <DTEHeader as="h1" $variant="h2" captionKey="register-no-consent-header">
         {content["register-no-consent-header"]}
       </DTEHeader>
       {content["register-no-consent-body"]}

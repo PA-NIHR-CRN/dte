@@ -60,7 +60,7 @@ function Disability2Form(props: Disability2FormProps) {
   if (!hideHeader) {
     labelElement = (
       <>
-        <DTEHeader as="h1" $variant={headerVariant}>
+        <DTEHeader as="h1" $variant={headerVariant} captionKey="register2-disability2-header">
           {content["register2-disability2-header"]}
         </DTEHeader>
         {content["register2-disability2-instruction-text"]}
