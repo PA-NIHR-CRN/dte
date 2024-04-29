@@ -102,21 +102,27 @@ describe("Areas Of Research display tests", () => {
     render(<AreasOfResearch />);
 
     const intro1 = await screen.findByText(
-      "The health conditions you choose in this section will be used to match you to suitable research studies using our service."
+      "The health conditions you choose in this section will be used to match you to suitable research studies using our service. We will then send you information on how you can take part."
     );
     expect(intro1).toBeInTheDocument();
 
-    const intro2 = await screen.findByText(
-      /For example, you can enter a health condition like 'diabetes', 'heart disease' or 'COVID-19'. You can take part whether you have a health condition or not by entering '/
-    );
-    expect(intro2).toBeInTheDocument();
-    const links = screen.getAllByRole("link");
-    expect(links).toHaveLength(1);
-    expect(links[0]).toHaveAttribute(
-      "href",
-      "https://bepartofresearch.nihr.ac.uk/taking-part/volunteering-without-a-condition/"
-    );
-    expect(links[0]).toHaveTextContent("healthy volunteer");
+    const heading = await screen.findByText("How to get started");
+    expect(heading).toBeInTheDocument();
+    expect(heading.tagName).toBe("H2");
+
+    expect(
+      await screen.findByText("Use the search tool to look for conditions you’re interested in.")
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByText(
+        "You might select a health condition you already have like diabetes, or heart disease. Or you might have a family member or friend who has a condition, so you could choose those. Many studies do not require you to have a specific condition to take part, so we need people without conditions too."
+      )
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByText(
+        "If there aren’t any health conditions you’re interested in but would still like to take part, then select ‘healthy volunteer’. If you do not select anything, you will not be contacted about any studies."
+      )
+    ).toBeInTheDocument();
 
     const areaEditor = await screen.findByLabelText("Areas of research");
     expect(areaEditor).toBeInTheDocument();
