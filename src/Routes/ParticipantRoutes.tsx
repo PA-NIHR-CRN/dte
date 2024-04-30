@@ -93,6 +93,7 @@ export default [
     { campaign: "nottsmsk", source: "leaflet", medium: "print" },
     { campaign: "nwl", source: "poster", medium: "print" },
     { campaign: "swl", source: "poster", medium: "print" },
+    { campaign: "essex", source: "leaflet", medium: "referral" },
   ]),
   <Route
     path="/Participants/PasswordUpdated"
