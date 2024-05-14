@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 html {
-  background-color: #ffffff;
+  background-color: #ffffff !important;
 }
 
 body {
@@ -21,6 +21,13 @@ body {
   --space: 2em 0;
 }
 
+.noscript-header {
+  margin-top: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  border-bottom: 1px solid #acbcc3;
+}
+
 .Site {
   display: flex;
   flex-direction: column;
@@ -34,7 +41,7 @@ body {
 }
 
 .Site-content:after {
-  content: '\00a0';
+  content: "\00a0";
   display: block;
   margin-top: var(--space);
   height: 0;
@@ -58,21 +65,23 @@ header div.beta-section {
   margin-right: 5%;
 }
 
-@media(min-width: 40.0625em) {
+@media (min-width: 40.0625em) {
   header div.logo-section,
   header div.beta-section {
-      margin-left: 10%;
-      margin-right: 10%;
+    margin-left: 10%;
+    margin-right: 10%;
   }
 }
 
 div.logo-section {
-  justify-content: space-between;
-  height: 100px;
+  align-items: center;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
 div.logo-section a {
-  height: 95px;
   display: block;
   border: 3px solid transparent;
   margin: -8px;
@@ -87,25 +96,51 @@ div.logo-section a:focus {
 }
 
 div.logo-section .bpor {
+  flex-grow: 0;
+  max-width: 58.333333%;
+  flex-basis: 58.333333%;
   display: block;
   padding: 8px;
-  height: 92px;
-  line-height: 92px;
+  line-height: 1.5;
+}
+.noscript-bporlogo-a {
+  margin: -6px;
+  padding: 3px;
+  border: 3px solid transparent;
+  text-decoration: none;
+  display: inline-block;
 }
 
 div.logo-section .bpor img {
-  height: 70px;
+  width: 411px;
 }
 
 div.logo-section .nhs {
+  flex-grow: 0;
+  max-width: 25%;
+  flex-basis: 25%;
+  text-align: right;
   display: block;
   padding: 8px;
   height: 92px;
   line-height: 92px;
 }
 
+.nhs a {
+  display: inline-block;
+  margin: 0px;
+  padding: 0px;
+  border: 3px solid transparent;
+  left: 20px;
+  position: relative;
+  text-decoration: none;
+}
+
 div.logo-section .nhs img {
-  height: 36px;
+  height: 45px;
+  width: 112.5px;
+  margin: 30px;
+  position: relative;
 }
 
 div.beta-section {
@@ -114,8 +149,8 @@ div.beta-section {
 }
 
 div.beta-section .chip {
-  background-color: #1D70B8;
-  color: #FFFFFF;
+  background-color: #1d70b8;
+  color: #ffffff;
   padding: 0.2em 0.5em;
   margin-right: 0.5em;
 }
@@ -128,23 +163,24 @@ div.beta-section .chip {
   margin-top: 20px;
   margin-bottom: 20px;
   clear: both;
-  border-left: 10px solid #ACBCC3
+  border-left: 10px solid #acbcc3;
 }
 
-@media(min-width: 40.0625em) {
+@media (min-width: 40.0625em) {
   .inset-text {
-      margin-left: 10%;
-      margin-right: 10%;
-      margin-top:30px;
-      margin-bottom:30px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 30px;
+    margin-bottom: 30px;
   }
 }
 
-.inset-text>:first-child {
+.inset-text > :first-child {
   margin-top: 0;
 }
 
-.inset-text>:only-child,.inset-text>:last-child {
+.inset-text > :only-child,
+.inset-text > :last-child {
   margin-bottom: 0;
 }
 
@@ -157,10 +193,12 @@ div.beta-section a,
 
 div.beta-section a:focus,
 .inset-text a:focus {
-color: #193e72;
-text-decoration: none;
-background-color: #fed47a;
-box-shadow: 0 -2px #fed47a, 0 4px #212b32;
+  color: #193e72;
+  text-decoration: none;
+  background-color: #fed47a;
+  box-shadow:
+    0 -2px #fed47a,
+    0 4px #212b32;
 }
 
 div.beta-section a:focus-visible,
@@ -178,21 +216,21 @@ div.beta-section a:hover,
 
 div.beta-section a:hover:focus,
 .inset-text a:hover:focus {
-text-decoration-line: none;
-text-decoration-thickness: none;
+  text-decoration-line: none;
+  text-decoration-thickness: none;
 }
 
 div.beta-section a:visited,
 .inset-text a:visited {
-color: #1d70b8;
+  color: #1d70b8;
 }
 
 div.beta-section a:visited:focus,
 .inset-text a:visited:focus {
-color: #193e72;
+  color: #193e72;
 }
 
 div.beta-section a:visited:hover,
 .inset-text a:visited:hover {
-color: #193e72;
+  color: #193e72;
 }
