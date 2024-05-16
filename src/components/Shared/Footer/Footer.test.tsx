@@ -60,16 +60,21 @@ describe("Test suite for Footer element", () => {
       ["https://bepartofresearch.nihr.ac.uk/about/glossary/", "Glossary", true, false],
       ["https://bepartofresearch.nihr.ac.uk/about/frequently-asked-questions/", "FAQs", true, false],
       [
-        "https://bepartofresearch.nihr.ac.uk/about/What-is-health-and-care-research/",
+        "https://bepartofresearch.nihr.ac.uk/what-is-health-and-care-research/",
         "What is health and care research?",
 
         true,
         false,
       ],
-      ["https://bepartofresearch.nihr.ac.uk/taking-part/why-take-part/", "Why take part?", true, false],
       [
-        "https://bepartofresearch.nihr.ac.uk/taking-part/what-happens-on-a-study/",
-        "What happens on a study?",
+        "https://bepartofresearch.nihr.ac.uk/take-part-in-research/why-taking-part-matters/",
+        "Why taking part matters",
+        true,
+        false,
+      ],
+      [
+        "https://bepartofresearch.nihr.ac.uk/take-part-in-research/what-to-expect-on-a-study/",
+        "What to expect on a study",
         true,
         false,
       ],
@@ -87,7 +92,7 @@ describe("Test suite for Footer element", () => {
       ["https://bepartofresearch.nihr.ac.uk/site-policies/privacy-policy", "Privacy policy", true, false],
       ["https://bepartofresearch.nihr.ac.uk/site-policies/terms-and-conditions", "Terms and conditions", true, false],
       ["https://bepartofresearch.nihr.ac.uk/Articles/index", "Blogs", true, false],
-      ["https://bepartofresearch.nihr.ac.uk/about/#contact-form", "Contact us", true, false],
+      ["https://bepartofresearch.nihr.ac.uk/get-in-touch/", "Get in touch", true, false],
       [
         "https://nihr.us14.list-manage.com/subscribe?u=299dc02111e8a68172029095f&id=3b030a1027",
         "Newsletter",
