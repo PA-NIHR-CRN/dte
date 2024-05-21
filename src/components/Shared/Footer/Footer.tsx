@@ -198,15 +198,15 @@ export default function Footer() {
   const learnLinks = [
     {
       name: content["footer-item-what-is-health-and-care-research"],
-      url: "https://bepartofresearch.nihr.ac.uk/about/What-is-health-and-care-research/",
+      url: "https://bepartofresearch.nihr.ac.uk/what-is-health-and-care-research/",
     },
     {
       name: content["footer-item-why-take-part"],
-      url: "https://bepartofresearch.nihr.ac.uk/taking-part/why-take-part/",
+      url: "https://bepartofresearch.nihr.ac.uk/take-part-in-research/why-taking-part-matters/",
     },
     {
       name: content["footer-item-what-happens-on-a-study"],
-      url: "https://bepartofresearch.nihr.ac.uk/taking-part/what-happens-on-a-study/",
+      url: "https://bepartofresearch.nihr.ac.uk/take-part-in-research/what-to-expect-on-a-study/",
     },
     {
       name: content["footer-item-consent-study"],
@@ -252,7 +252,7 @@ export default function Footer() {
     },
     {
       name: content["footer-item-contact-us"],
-      url: "https://bepartofresearch.nihr.ac.uk/about/#contact-form",
+      url: "https://bepartofresearch.nihr.ac.uk/get-in-touch/",
     },
     {
       name: content["footer-item-newsletter"],

@@ -199,7 +199,7 @@ export default function Header() {
         <Grid container alignItems="center" direction="row" justifyContent="flex-start">
           <Grid item sm={2} md={1} />
           <StyledGridElementLeft item xs={8} sm={6} md={7}>
-            <DTEPhaseBanner phase="BETA" url="https://bepartofresearch.nihr.ac.uk/about/#contact-form" />
+            <DTEPhaseBanner phase="BETA" url="https://bepartofresearch.nihr.ac.uk/get-in-touch/" />
           </StyledGridElementLeft>
           {isMobile ? (
             <Grid container alignItems="center" direction="row" justifyContent="flex-start">
