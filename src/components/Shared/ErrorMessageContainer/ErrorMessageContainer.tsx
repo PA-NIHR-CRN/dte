@@ -98,8 +98,8 @@ function ErrorMessageContainer({
       DTEAxiosErrors.length > 0 &&
       DTEAxiosErrors.some((item) => item !== undefined && item !== null && item.length > 0)
     ) {
-      mapErrorCodeToSummary(DTEAxiosErrors, content).forEach(
-        (mappedErrors: any) => mappedErrors?.forEach((error: any) => errors.push(error.detail))
+      mapErrorCodeToSummary(DTEAxiosErrors, content).forEach((mappedErrors: any) =>
+        mappedErrors?.forEach((error: any) => errors.push(error.detail))
       );
     }
     if (simpleErrors && simpleErrors.length > 0) {
