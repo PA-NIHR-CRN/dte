@@ -62,7 +62,7 @@ const BPORLink = styled.a<IsMobileProps>`
   }
 `;
 
-const ShawTrusLink = styled.a.attrs(() => {
+const ShawTrustLink = styled.a.attrs(() => {
   return {
     "aria-label": "Shaw Trust Accessible, Be Part of Research Accreditation, opens in a new tab",
     href: "https://www.accessibility-services.co.uk/certificates/nihr-be-part-of-research/",
@@ -78,7 +78,7 @@ const ShawTrusLink = styled.a.attrs(() => {
     box-shadow: none;
   }
 `;
-const ShawTrusLogo = styled.img.attrs(() => {
+const ShawTrustLogo = styled.img.attrs(() => {
   return {
     src: `${shawTrustLogo}`,
     alt: "Shaw trust Logo",
@@ -289,11 +289,11 @@ export default function Footer() {
 
   return (
     <footer>
-      <SocialPanel container direction="row" alignContent="center" alignItems="center">
+      <SocialPanel container direction="row" alignContent="center" alignItems="center" justifyContent="center">
         <Grid xs={10} direction="row" container justifyContent={isMobile ? "flex-start" : "space-between"}>
-          <ShawTrusLink>
-            <ShawTrusLogo />
-          </ShawTrusLink>
+          <ShawTrustLink>
+            <ShawTrustLogo />
+          </ShawTrustLink>
           <Grid item xs={12} md={5} lg={4}>
             <FollowUsText>{content["footer-follow-us"]} </FollowUsText>
             <SocialIconContainer
