@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import bporlogo from "../../../images/BPoR_logo_WO.svg";
 import HSClogo from "../../../images/HSCLogo.svg";
 import nihrlogo from "../../../images/NIHR-Logo.svg";
+import shawTrustLogo from "../../../images/Shaw_Trust_logo.svg";
 import HCRwaleslogo from "../../../images/Health-and-Care-Research-Wales-full-colour-logo-CMYK.svg";
 import nhsScotlandlogo from "../../../images/nhs-research-scotland-logo.svg";
 import FooterLinksPanel from "./FooterLinksPanel";
@@ -59,6 +60,34 @@ const BPORLink = styled.a<IsMobileProps>`
     border-color: ${(Props) => Props.theme.NIHR.Yellow};
     box-shadow: none;
   }
+`;
+
+const ShawTrustLink = styled.a.attrs(() => {
+  return {
+    "aria-label": "Shaw Trust Accessible, Be Part of Research Accreditation (Opens in a new tab)",
+    href: "https://www.accessibility-services.co.uk/certificates/nihr-be-part-of-research/",
+    target: "_blank",
+    rel: "noopener noreferrer",
+  };
+})<IsMobileProps>`
+  border: 3px solid ${(Props) => Props.theme.NIHR.DarkestBlue};
+  display: block;
+  &:focus,
+  :hover {
+    background-color: ${(Props) => Props.theme.NIHR.Blue};
+    border-color: ${(Props) => Props.theme.NIHR.Yellow};
+    box-shadow: none;
+  }
+`;
+const ShawTrustLogo = styled.img.attrs(() => {
+  return {
+    src: `${shawTrustLogo}`,
+    alt: "Shaw trust Logo",
+  };
+})`
+  max-height: 200px;
+  max-width: 100%;
+  width: 100%;
 `;
 
 // eslint-disable-next-line
@@ -121,7 +150,6 @@ const FollowUsText = styled.span<IsMobileProps>`
     font-family: Lato;
     margin-right: 1.2em;
     font-weight: 900;
-    margin-left: ${(Props) => (Props.isMobile ? "0.1em" : "4em")};
   }
 `;
 
@@ -262,55 +290,54 @@ export default function Footer() {
 
   return (
     <footer>
-      <SocialPanel
-        container
-        direction="row"
-        justifyContent={isMobile ? "flex-start" : "flex-end"}
-        alignContent="center"
-        alignItems="center"
-      >
-        <Grid item xs={12} md={5} lg={4}>
-          <FollowUsText>{content["footer-follow-us"]} </FollowUsText>
-          <SocialIconContainer
-            to={{ pathname: "https://www.facebook.com/OfficialNIHR/" }}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Facebook (Opens in a new tab)"
-          >
-            <SocialIconWrapper>
-              <SocialIcon aria-label="Facebook" icon={faFacebookF as IconProp} size="xs" />
-            </SocialIconWrapper>
-          </SocialIconContainer>
-          <SocialIconContainer
-            to={{ pathname: "https://twitter.com/NIHRtakepart" }}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Twitter (Opens in a new tab)"
-          >
-            <SocialIconWrapper>
-              <SocialIcon aria-label="Twitter" icon={faTwitter as IconProp} size="xs" />
-            </SocialIconWrapper>
-          </SocialIconContainer>
-          <SocialIconContainer
-            to={{ pathname: "https://www.youtube.com/user/NIHRtv" }}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="YouTube (Opens in a new tab)"
-          >
-            <SocialIconWrapper>
-              <SocialIcon aria-label="You Tube" icon={faYoutube as IconProp} size="xs" />
-            </SocialIconWrapper>
-          </SocialIconContainer>
-          <SocialIconContainer
-            to={{ pathname: "https://www.linkedin.com/company/nihr-research" }}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn (Opens in a new tab)"
-          >
-            <SocialIconWrapper>
-              <SocialIcon aria-label="LinkedIn" icon={faLinkedin as IconProp} size="xs" />
-            </SocialIconWrapper>
-          </SocialIconContainer>
+      <SocialPanel container direction="row" alignContent="center" alignItems="center" justifyContent="center">
+        <Grid xs={10} direction="row" container justifyContent={isMobile ? "flex-start" : "space-between"}>
+          <ShawTrustLink>
+            <ShawTrustLogo />
+          </ShawTrustLink>
+          <Grid item xs={12} md={5} lg={4}>
+            <FollowUsText>{content["footer-follow-us"]} </FollowUsText>
+            <SocialIconContainer
+              to={{ pathname: "https://www.facebook.com/OfficialNIHR/" }}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook (Opens in a new tab)"
+            >
+              <SocialIconWrapper>
+                <SocialIcon aria-label="Facebook" icon={faFacebookF as IconProp} size="xs" />
+              </SocialIconWrapper>
+            </SocialIconContainer>
+            <SocialIconContainer
+              to={{ pathname: "https://twitter.com/NIHRtakepart" }}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter (Opens in a new tab)"
+            >
+              <SocialIconWrapper>
+                <SocialIcon aria-label="Twitter" icon={faTwitter as IconProp} size="xs" />
+              </SocialIconWrapper>
+            </SocialIconContainer>
+            <SocialIconContainer
+              to={{ pathname: "https://www.youtube.com/user/NIHRtv" }}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube (Opens in a new tab)"
+            >
+              <SocialIconWrapper>
+                <SocialIcon aria-label="You Tube" icon={faYoutube as IconProp} size="xs" />
+              </SocialIconWrapper>
+            </SocialIconContainer>
+            <SocialIconContainer
+              to={{ pathname: "https://www.linkedin.com/company/nihr-research" }}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn (Opens in a new tab)"
+            >
+              <SocialIconWrapper>
+                <SocialIcon aria-label="LinkedIn" icon={faLinkedin as IconProp} size="xs" />
+              </SocialIconWrapper>
+            </SocialIconContainer>
+          </Grid>
         </Grid>
       </SocialPanel>
       <FooterPanel container direction="row" justifyContent="center" alignContent="center">
