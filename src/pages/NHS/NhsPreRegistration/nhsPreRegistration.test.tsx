@@ -24,17 +24,17 @@ describe("NhsPreRegistration functionality tests", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Health research helps to discover new and better ways to treat diseases, improve the NHS and the quality of care across the country."
+        "Health and care research helps to discover new and better ways to treat diseases, improve the NHS and the quality of care across the country."
       )
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Anyone can take part in research whether you have a health condition or not. You could take part in research at a local hospital, GP practice – or even at home."
+        "Anyone can take part in research whether you have a health condition or not. You could take part in research at a local hospital, GP practice, in a care setting – or even at home."
       )
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        "It's easy to get involved. Simply sign up online and choose the health conditions you are interested in. You will be sent details of approved studies that match your interests to decide if you want to take part."
+        "It's easy to get involved. Simply sign up online and choose the health and care research that matters to you. You will be sent details of approved studies that match your interests to decide if you want to take part."
       )
     ).toBeInTheDocument();
     expect(screen.getByText("More information about registering with Be Part of Research")).toBeInTheDocument();
