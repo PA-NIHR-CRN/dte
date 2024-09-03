@@ -64,12 +64,13 @@ const BPORLink = styled.a<IsMobileProps>`
 
 const ShawTrustLink = styled.a.attrs(() => {
   return {
-    "aria-label": "Shaw Trust Accessible, Be Part of Research Accreditation, opens in a new tab",
+    "aria-label": "Shaw Trust Accessible, Be Part of Research Accreditation (Opens in a new tab)",
     href: "https://www.accessibility-services.co.uk/certificates/nihr-be-part-of-research/",
     target: "_blank",
+    rel: "noopener noreferrer",
   };
 })<IsMobileProps>`
-  border: 3px solid ${(Props) => Props.theme.NIHR.Blue};
+  border: 3px solid ${(Props) => Props.theme.NIHR.DarkestBlue};
   display: block;
   &:focus,
   :hover {

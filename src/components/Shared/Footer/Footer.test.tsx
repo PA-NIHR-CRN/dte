@@ -36,10 +36,11 @@ describe("Test suite for Footer element", () => {
       expect(subHeaders[2]).toHaveTextContent("Site policies");
       expect(subHeaders[3]).toHaveTextContent("Stay connected");
 
-      expect(links).toHaveLength(28);
+      expect(links).toHaveLength(29);
     });
 
     describe.each([
+      ["https://www.accessibility-services.co.uk/certificates/nihr-be-part-of-research/", "Shaw Trust Accessible, Be Part of Research Accreditation", true, true],
       ["https://www.facebook.com/OfficialNIHR/", "Facebook", true, true],
       ["https://twitter.com/NIHRtakepart", "Twitter", true, true],
       ["https://www.youtube.com/user/NIHRtv", "YouTube", true, true],
