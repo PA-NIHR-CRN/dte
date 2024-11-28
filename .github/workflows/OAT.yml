@@ -39,7 +39,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - uses: actions/setup-node@v2
       - name: Yarn Install
-        run: yarn install
+        run: yarn install --immutable --immutable-cache --check-cache
       - name: Runing  ESLint
         run: yarn lintnofix
       - name: Build Files
