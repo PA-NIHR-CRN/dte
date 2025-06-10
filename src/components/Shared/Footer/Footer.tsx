@@ -217,10 +217,6 @@ export default function Footer() {
       name: content["footer-item-glossary"],
       url: "https://bepartofresearch.nihr.ac.uk/about/glossary/",
     },
-    {
-      name: content["footer-item-faqs"],
-      url: "https://bepartofresearch.nihr.ac.uk/about/frequently-asked-questions/",
-    },
   ];
 
   const learnLinks = [
