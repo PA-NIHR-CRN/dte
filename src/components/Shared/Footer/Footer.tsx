@@ -4,7 +4,7 @@ import styled from "styled-components";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebookF, faTwitter, faYoutube, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { faFacebookF, faXTwitter, faYoutube, faLinkedin, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
 import bporlogo from "../../../images/BPoR_logo_WO.svg";
 import HSClogo from "../../../images/HSCLogo.svg";
@@ -304,13 +304,13 @@ export default function Footer() {
               </SocialIconWrapper>
             </SocialIconContainer>
             <SocialIconContainer
-              to={{ pathname: "https://twitter.com/NIHRtakepart" }}
+              to={{ pathname: "https://x.com/nihrresearch" }}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Twitter (Opens in a new tab)"
+              aria-label="X (Formerly Twitter) (Opens in a new tab)"
             >
               <SocialIconWrapper>
-                <SocialIcon aria-label="Twitter" icon={faTwitter as IconProp} size="xs" />
+                <SocialIcon aria-label="X" icon={faXTwitter as IconProp} size="xs" />
               </SocialIconWrapper>
             </SocialIconContainer>
             <SocialIconContainer
@@ -320,7 +320,7 @@ export default function Footer() {
               aria-label="YouTube (Opens in a new tab)"
             >
               <SocialIconWrapper>
-                <SocialIcon aria-label="You Tube" icon={faYoutube as IconProp} size="xs" />
+                <SocialIcon aria-label="YouTube" icon={faYoutube as IconProp} size="xs" />
               </SocialIconWrapper>
             </SocialIconContainer>
             <SocialIconContainer
@@ -331,6 +331,16 @@ export default function Footer() {
             >
               <SocialIconWrapper>
                 <SocialIcon aria-label="LinkedIn" icon={faLinkedin as IconProp} size="xs" />
+              </SocialIconWrapper>
+            </SocialIconContainer>
+            <SocialIconContainer
+              to={{ pathname: "https://www.instagram.com/nihr_research/" }}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram (Opens in a new tab)"
+            >
+              <SocialIconWrapper>
+                <SocialIcon aria-label="Instagram" icon={faInstagram as IconProp} size="xs" />
               </SocialIconWrapper>
             </SocialIconContainer>
           </Grid>
