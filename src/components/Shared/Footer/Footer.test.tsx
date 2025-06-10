@@ -59,7 +59,6 @@ describe("Test suite for Footer element", () => {
       ],
       ["https://bepartofresearch.nihr.ac.uk/results/a-z-conditions", "A-Z conditions", true, false],
       ["https://bepartofresearch.nihr.ac.uk/about/glossary/", "Glossary", true, false],
-      ["https://bepartofresearch.nihr.ac.uk/about/frequently-asked-questions/", "FAQs", true, false],
       [
         "https://bepartofresearch.nihr.ac.uk/what-is-health-and-care-research/",
         "What is health and care research?",
