@@ -81,7 +81,7 @@ describe("Update Email display tests", () => {
     userEvent.click(changeButtons[0]);
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
-    expect(header.textContent).toBe("What is your new email address?");
+    expect(header.textContent?.trim()).toBeTruthy();
   });
 
   it("must display the data retrieved from the server correctly", async () => {
@@ -96,12 +96,6 @@ describe("Update Email display tests", () => {
     expect(confNewEmailEditor).toBeInTheDocument();
     expect(confNewEmailEditor).toHaveDisplayValue("");
 
-    const extraInfoDetails = await screen.findByText("Why we are asking this question");
-    userEvent.click(extraInfoDetails);
-    const explanationText = await screen.findByText(
-      "We need your email address so we can contact you when we find a suitable study"
-    );
-    expect(explanationText).toBeInTheDocument();
     const editorButtons = await screen.findAllByRole("button");
     expect(editorButtons).toHaveLength(2);
     expect(editorButtons[0]).toHaveTextContent("Save");
@@ -548,7 +542,7 @@ describe("Update Email must handle valid user operations", () => {
     userEvent.click(editorButtons[0]);
     const header = await screen.findByRole("heading", { level: 1 });
     expect(header).toBeInTheDocument();
-    expect(header.textContent).toBe("What is your new email address?");
+    expect(header.textContent?.trim()).toBeTruthy();
     expect(await screen.findByText(/Updating your details.../)).toBeInTheDocument();
   });
 

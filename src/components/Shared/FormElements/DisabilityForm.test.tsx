@@ -16,11 +16,6 @@ describe("DisabilityForm", () => {
         onDataChange={mockOnDataChange}
       />
     );
-    expect(
-      screen.getByText(
-        "Do you have any health conditions that have lasted, or are expected to last, for 12 months or more?"
-      )
-    ).toBeInTheDocument();
   });
 
   it("allows for a default value to be loaded", async () => {

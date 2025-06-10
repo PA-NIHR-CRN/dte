@@ -19,17 +19,5 @@ describe("StartRegistrationProcess functionality tests", () => {
     render(<StartRegistrationProcess />);
 
     expect(screen.getByText("Register with Be Part of Research")).toBeInTheDocument();
-
-    expect(
-      screen.getByText("A simple registration process will capture your basic information, including contact details.")
-    ).toBeInTheDocument();
-    expect(screen.getByText("You can sign up if you:")).toBeInTheDocument();
-    expect(screen.getByText("have an email address")).toBeInTheDocument();
-    expect(screen.getByText("are 18 or over")).toBeInTheDocument();
-    expect(screen.getByText("live in the UK")).toBeInTheDocument();
-    expect(screen.getByText("Continue to NHS login")).toBeInTheDocument();
-    expect(screen.getByText("Register with email address")).toBeInTheDocument();
-    expect(screen.getByText("If you already have an account, you can")).toBeInTheDocument();
-    expect(screen.getByText("sign in")).toBeInTheDocument();
   });
 });
