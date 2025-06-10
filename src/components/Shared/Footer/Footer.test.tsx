@@ -36,7 +36,7 @@ describe("Test suite for Footer element", () => {
       expect(subHeaders[2]).toHaveTextContent("Site policies");
       expect(subHeaders[3]).toHaveTextContent("Stay connected");
 
-      expect(links).toHaveLength(28);
+      expect(links).toHaveLength(29);
     });
 
     describe.each([
