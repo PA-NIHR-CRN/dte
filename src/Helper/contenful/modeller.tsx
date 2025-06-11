@@ -13,6 +13,11 @@ const ButtonWrapper = styled.div`
   margin: 1rem 0;
 `;
 
+const ButtonsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 const StyledDTEHR = styled(DTEHR)`
   margin-top: 2.5em;
 `;
@@ -22,6 +27,10 @@ interface NodeType {
   nodeType: string;
 }
 
+const isButtonNode = (node: any) => {
+  const contentTypeID = node?.data?.target?.sys?.contentType?.sys?.id;
+  return contentTypeID === "button" || contentTypeID === "nhsLoginButton";
+};
 type HeaderType = "h1" | "h2" | "h3" | "h4";
 
 const HeaderMap: Record<string, HeaderType> = {
@@ -63,13 +72,40 @@ const extractValueFromNode = (node: any) => {
 const renderedIndexes = new Set<number>();
 const renderContent = (node: any, parentNodeType?: string, currentIndex?: number, totalContent?: any[]) => {
   if (!node || !node.nodeType) {
-    return null; // or some other default value
+    return null;
   }
   switch (node.nodeType) {
     case "document":
-      return node.content.map((childNode: any, index: number) => (
-        <React.Fragment key={index}>{renderContent(childNode, node.nodeType, index, node.content)}</React.Fragment>
-      ));
+      const elements = [];
+
+      for (let i = 0; i < node.content.length; i++) {
+        const currentNode = node.content[i];
+
+        if (isButtonNode(currentNode)) {
+          const buttonNodes: any[] = [];
+
+          while (i < node.content.length && isButtonNode(node.content[i])) {
+            buttonNodes.push(node.content[i]);
+            i++;
+          }
+          i--;
+
+          elements.push(
+            <ButtonsContainer key={`buttons-${i}`}>
+              {buttonNodes.map((btnNode, idx) => (
+                <React.Fragment key={idx}>{renderContent(btnNode, node.nodeType, idx, buttonNodes)}</React.Fragment>
+              ))}
+            </ButtonsContainer>
+          );
+        } else {
+          elements.push(
+            <React.Fragment key={i}>{renderContent(currentNode, node.nodeType, i, node.content)}</React.Fragment>
+          );
+        }
+      }
+
+      return elements;
+
     case "heading-1":
     case "heading-2":
     case "heading-3":
@@ -159,20 +195,8 @@ const renderContent = (node: any, parentNodeType?: string, currentIndex?: number
             </Stack>
           </>
         );
-      } else if (contentTypeID === "vsAccordion") {
-        const summary = fields.summary;
-        const contentNode = fields.content;
-
-        return (
-          <DTEDetails summary={summary}>
-            {contentNode.content.map((childNode: any, index: number) => (
-              <React.Fragment key={index}>{renderContent(childNode, contentNode.nodeType)}</React.Fragment>
-            ))}
-          </DTEDetails>
-        );
       }
       break;
-
     case "unordered-list":
       return (
         <ul>
