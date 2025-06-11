@@ -118,6 +118,7 @@ const renderContent = (node: any, parentNodeType?: string, currentIndex?: number
       const contentTypeID = node?.data?.target?.sys?.contentType?.sys?.id;
 
       const validButtonTexts = [
+        "Continue with email address",
         "Register with email address",
         "Sign in with email address",
         "Cofrestru gyda chyfeiriad e-bost",
