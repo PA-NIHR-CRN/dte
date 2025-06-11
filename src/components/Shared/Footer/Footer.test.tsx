@@ -42,7 +42,7 @@ describe("Test suite for Footer element", () => {
     describe.each([
       ["https://www.accessibility-services.co.uk/certificates/nihr-be-part-of-research/", "Shaw Trust Accessible, Be Part of Research Accreditation", true, true],
       ["https://www.facebook.com/OfficialNIHR/", "Facebook", true, true],
-      ["https://x.com/nihrresearch", "X", true, true],
+      ["https://x.com/nihrresearch", "X (Formerly Twitter)", true, true],
       ["https://www.youtube.com/user/NIHRtv", "YouTube", true, true],
       ["https://www.linkedin.com/company/nihr-research", "LinkedIn", true, true],
       ["https://bepartofresearch.nihr.ac.uk", "Be Part of Research", true, true],
