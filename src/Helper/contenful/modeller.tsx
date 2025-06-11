@@ -147,11 +147,6 @@ const renderContent = (node: any, parentNodeType?: string, currentIndex?: number
           </ButtonWrapper>
         );
       } else if (contentTypeID === "nhsLoginButton") {
-        let nextNodeComponent = null;
-        if (totalContent && currentIndex !== undefined && totalContent[currentIndex + 1]) {
-          nextNodeComponent = totalContent[currentIndex + 1];
-          renderedIndexes.add(currentIndex + 1);
-        }
         return (
           <>
             {fields.showHelperText && (
@@ -161,7 +156,6 @@ const renderContent = (node: any, parentNodeType?: string, currentIndex?: number
             )}
             <Stack flexDirection="row">
               <NhsLoginButton buttonText={fields.buttonText} />
-              {nextNodeComponent && renderContent(nextNodeComponent)}
             </Stack>
           </>
         );
