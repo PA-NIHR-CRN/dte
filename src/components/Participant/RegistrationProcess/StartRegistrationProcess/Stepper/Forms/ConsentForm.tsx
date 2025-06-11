@@ -9,6 +9,8 @@ import DTELinkButton from "../../../../../Shared/UI/DTELinkButton/DTELinkButton"
 import Utils from "../../../../../../Helper/Utils";
 import { ContentContext } from "../../../../../../context/ContentContext";
 import Honeypot from "../../../../../Shared/Honeypot/Honeypot";
+import DTEContent from "../../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
+import DTERouteLink from "../../../../../Shared/UI/DTERouteLink/DTERouteLink";
 
 export type ConsentFormData = {
   consent: boolean;
@@ -77,7 +79,6 @@ function ConsentForm(props: ConsentFormProps) {
             },
           }}
         />
-        {content["register-consent-confirmation-body"]}
         <Controller
           control={control}
           name="consent"
@@ -92,21 +93,26 @@ function ConsentForm(props: ConsentFormProps) {
                       }
                     }}
                   >
-                    {content["register-consent-button-yes"]}
+                    <span>{content["register-consent-button-yes"]}</span>
                   </DTEButton>
                 </Grid>
                 <Grid item>
-                  <DTELinkButton
-                    onClick={(e: any) => {
-                      if (e) {
-                        e.preventDefault();
-                        onChange(false);
-                      }
-                      handleNoConsent();
-                    }}
-                  >
-                    {content["register-consent-button-no"]}
-                  </DTELinkButton>
+                  <DTEContent>
+                    {content["register-consent-no-text"]}
+                    <DTERouteLink
+                      to="/"
+                      onClick={(e: any) => {
+                        if (e) {
+                          e.preventDefault();
+                          onChange(false);
+                        }
+                        handleNoConsent();
+                      }}
+                      renderStyle="standard"
+                    >
+                      {content["register-consent-no-link-text"]}
+                    </DTERouteLink>{" "}
+                  </DTEContent>
                 </Grid>
               </Grid>
               {error && <ErrorMessage>{error.message}</ErrorMessage>}
