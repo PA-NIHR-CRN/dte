@@ -310,7 +310,7 @@ export default function Footer() {
               aria-label="X (Formerly Twitter) (Opens in a new tab)"
             >
               <SocialIconWrapper>
-                <SocialIcon aria-label="X" icon={faXTwitter as IconProp} size="xs" />
+                <SocialIcon aria-label="X (Formerly Twitter)" icon={faXTwitter as IconProp} size="xs" />
               </SocialIconWrapper>
             </SocialIconContainer>
             <SocialIconContainer
