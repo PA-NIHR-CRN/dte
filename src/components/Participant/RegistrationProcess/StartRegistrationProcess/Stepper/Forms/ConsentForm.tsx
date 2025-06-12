@@ -99,6 +99,7 @@ function ConsentForm(props: ConsentFormProps) {
                   <DTEContent>
                     {content["register-consent-no-text"]}
                     <DTELinkButton
+                      customStyles={{ verticalAlign: "unset" }}
                       onClick={(e: any) => {
                         if (e) {
                           e.preventDefault();
