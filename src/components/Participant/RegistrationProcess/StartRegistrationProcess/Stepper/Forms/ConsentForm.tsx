@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import { ErrorMessage } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
@@ -9,7 +9,7 @@ import Utils from "../../../../../../Helper/Utils";
 import { ContentContext } from "../../../../../../context/ContentContext";
 import Honeypot from "../../../../../Shared/Honeypot/Honeypot";
 import DTEContent from "../../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
-import DTERouteLink from "../../../../../Shared/UI/DTERouteLink/DTERouteLink";
+import DTELinkButton from "../../../../../Shared/UI/DTELinkButton/DTELinkButton";
 
 export type ConsentFormData = {
   consent: boolean;
@@ -98,8 +98,7 @@ function ConsentForm(props: ConsentFormProps) {
                 <Grid item>
                   <DTEContent>
                     {content["register-consent-no-text"]}
-                    <DTERouteLink
-                      to="#"
+                    <DTELinkButton
                       onClick={(e: any) => {
                         if (e) {
                           e.preventDefault();
@@ -107,10 +106,9 @@ function ConsentForm(props: ConsentFormProps) {
                         }
                         handleNoConsent();
                       }}
-                      renderStyle="standard"
                     >
                       {content["register-consent-no-link-text"]}
-                    </DTERouteLink>{" "}
+                    </DTELinkButton>{" "}
                   </DTEContent>
                 </Grid>
               </Grid>
