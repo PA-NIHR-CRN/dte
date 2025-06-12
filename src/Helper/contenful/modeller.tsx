@@ -123,6 +123,7 @@ const renderContent = (node: any, parentNodeType?: string, currentIndex?: number
         "Sign in with email address",
         "Cofrestru gyda chyfeiriad e-bost",
         "Mewngofnodwch gyda chyfeiriad e-bost",
+        "Parhau gyda chyfeiriad e-bost",
       ];
       const buttonText = fields.buttonText;
 
