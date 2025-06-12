@@ -22,15 +22,8 @@ interface HealthConditionFormProps extends FormBaseProps {
 
 function HealthConditionForm(props: HealthConditionFormProps) {
   const { content } = useContext(ContentContext);
-  const {
-    onDataChange,
-    initialStateData,
-    nextButtonText,
-    hideHeader,
-    showCancelButton,
-    onCancel,
-    instructionText,
-  } = props;
+  const { onDataChange, initialStateData, nextButtonText, hideHeader, showCancelButton, onCancel, instructionText } =
+    props;
   const theme = useTheme();
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
 
