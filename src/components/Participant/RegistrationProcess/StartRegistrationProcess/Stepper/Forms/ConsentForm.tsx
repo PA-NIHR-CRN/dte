@@ -5,7 +5,6 @@ import { Controller, useForm } from "react-hook-form";
 import DTECheckList from "../../../../../Shared/UI/DTECheckList/DTECheckList";
 import DTEButton from "../../../../../Shared/UI/DTEButton/DTEButton";
 import DTEHeader from "../../../../../Shared/UI/DTETypography/DTEHeader/DTEHeader";
-import DTELinkButton from "../../../../../Shared/UI/DTELinkButton/DTELinkButton";
 import Utils from "../../../../../../Helper/Utils";
 import { ContentContext } from "../../../../../../context/ContentContext";
 import Honeypot from "../../../../../Shared/Honeypot/Honeypot";

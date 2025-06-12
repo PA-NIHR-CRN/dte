@@ -2,12 +2,9 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import ReactGA from "react-ga";
 import { Link } from "react-router-dom";
-import DTEContent from "../../../components/Shared/UI/DTETypography/DTEContent/DTEContent";
-import DTEDetails from "../../../components/Shared/UI/DTEDetails/DTEDetails";
 import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
-import DTERouteLink from "../../../components/Shared/UI/DTERouteLink/DTERouteLink";
 import StepWrapper from "../../../components/Shared/StepWrapper/StepWrapper";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { ContentContext } from "../../../context/ContentContext";
 import { baseButton } from "../../../components/Shared/UI/DTEButton/DTEButton";
 
