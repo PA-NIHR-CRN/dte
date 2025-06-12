@@ -18,7 +18,7 @@ describe("ConsentForm", () => {
     );
 
     expect(screen.getByText("Yes, I consent and wish to register now")).toBeInTheDocument();
-    expect(screen.getByText("If you do not consent, you can cancel this registration")).toBeInTheDocument();
+    expect(screen.getByText("If you do not consent, you can ")).toBeInTheDocument();
   });
 
   it("continues when the user clicks I consent", async () => {
@@ -72,7 +72,7 @@ describe("ConsentForm", () => {
       />
     );
 
-    fireEvent.click(screen.getByText("No, I do not consent and wish to cancel this registration"));
+    fireEvent.click(screen.getByText("cancel this registration."));
     await waitFor(() => {
       expect(mockHandleNoConsent).toHaveBeenCalledTimes(1);
     });
