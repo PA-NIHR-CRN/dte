@@ -99,7 +99,7 @@ function ConsentForm(props: ConsentFormProps) {
                   <DTEContent>
                     {content["register-consent-no-text"]}
                     <DTERouteLink
-                      to="/"
+                      to="#"
                       onClick={(e: any) => {
                         if (e) {
                           e.preventDefault();
