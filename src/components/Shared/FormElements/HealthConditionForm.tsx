@@ -67,7 +67,6 @@ function HealthConditionForm(props: HealthConditionFormProps) {
                 />
               )}
             />
-            {!hideInfo && content["register2-health-conditions"]}
             <FormNavigationButtons
               nextButtonText={nextButtonText || content["reusable-button-continue"]}
               showCancelButton={showCancelButton || false}
