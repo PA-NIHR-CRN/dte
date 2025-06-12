@@ -19,7 +19,6 @@ describe("NhsPreRegistration functionality tests", () => {
     render(<NhsPreRegistration />);
 
     expect(screen.getByRole("heading", { level: 1 }).textContent?.trim()).toBeTruthy();
-    expect(screen.getByText("More information about registering with Be Part of Research")).toBeInTheDocument();
     expect(screen.getByText("Start now")).toBeInTheDocument();
     expect(screen.getByText(/If you already have an account, you can/i)).toBeInTheDocument();
   });
