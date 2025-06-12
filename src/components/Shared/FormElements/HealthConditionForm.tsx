@@ -26,7 +26,6 @@ function HealthConditionForm(props: HealthConditionFormProps) {
     onDataChange,
     initialStateData,
     nextButtonText,
-    hideInfo,
     hideHeader,
     showCancelButton,
     onCancel,
