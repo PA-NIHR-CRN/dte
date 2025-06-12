@@ -23,25 +23,4 @@ describe("NhsPreRegistration functionality tests", () => {
     expect(screen.getByText("Start now")).toBeInTheDocument();
     expect(screen.getByText(/If you already have an account, you can/i)).toBeInTheDocument();
   });
-
-  it("should open the accordion with text Find out more about Be Part of Research", async () => {
-    render(<NhsPreRegistration />);
-
-    expect(screen.getByText(/Find out more information about registering your account with/)).not.toBeVisible();
-
-    expect(screen.getByText(/. Please use the back button on your device to return to this page./)).not.toBeVisible();
-
-    screen.getByText("More information about registering with Be Part of Research").click();
-
-    expect(screen.getByText(/Find out more information about registering your account with/)).toBeVisible();
-
-    expect(screen.getByText(/. Please use the back button on your device to return to this page./)).toBeVisible();
-    const links = await screen.findAllByRole("link");
-    expect(links).toHaveLength(2);
-    expect(links[0]).toHaveAttribute("href", "https://bepartofresearch.nihr.ac.uk/volunteer-service/");
-    expect(links[0]).toHaveAttribute("target", "_blank");
-    expect(links[0]).toHaveAttribute("rel", "noopener noreferrer");
-    expect(links[0]).toHaveAttribute("aria-label", "Be Part of Research (Opens in a new tab)");
-    expect(links[0]).toHaveTextContent("Be Part of Research");
-  });
 });

@@ -73,33 +73,6 @@ function NhsPreRegistration() {
           {content["introduction-header"]}
         </DTEHeader>
         {content["introduction-body"]}
-        <Wrapper margin="2rem 0">
-          <DTEDetails summary={content["introduction-accordion-header"]}>
-            <DTEContent>
-              {content["introduction-accordion-body1"]}{" "}
-              <DTERouteLink
-                external
-                target="_blank"
-                rel="noopener noreferrer"
-                to="https://bepartofresearch.nihr.ac.uk/volunteer-service/"
-                ariaLabel={`${content["introduction-accordion-link"]} (Opens in a new tab)`}
-                renderStyle="standard"
-                onClick={() =>
-                  ReactGA.outboundLink(
-                    {
-                      label: "Be Part of Research",
-                    },
-                    () => {},
-                    ["https://bepartofresearch.nihr.ac.uk/volunteer-service/"]
-                  )
-                }
-              >
-                {content["introduction-accordion-link"]}
-              </DTERouteLink>
-              {content["introduction-accordion-body2"]}
-            </DTEContent>
-          </DTEDetails>
-        </Wrapper>
         <Wrapper>
           <StyledLink
             to="/Participants/Register"
