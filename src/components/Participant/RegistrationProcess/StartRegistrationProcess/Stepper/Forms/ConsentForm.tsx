@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import { ErrorMessage } from "nhsuk-react-components";
 import { Controller, useForm } from "react-hook-form";
@@ -9,7 +9,6 @@ import Utils from "../../../../../../Helper/Utils";
 import { ContentContext } from "../../../../../../context/ContentContext";
 import Honeypot from "../../../../../Shared/Honeypot/Honeypot";
 import DTEContent from "../../../../../Shared/UI/DTETypography/DTEContent/DTEContent";
-import DTERouteLink from "../../../../../Shared/UI/DTERouteLink/DTERouteLink";
 import DTELinkButton from "../../../../../Shared/UI/DTELinkButton/DTELinkButton";
 
 export type ConsentFormData = {
