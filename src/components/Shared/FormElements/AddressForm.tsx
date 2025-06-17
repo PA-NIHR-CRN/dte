@@ -1,4 +1,3 @@
-import { Grid } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useContext, useEffect, useState } from "react";
@@ -159,40 +158,36 @@ function AddressForm(props: AddressFormProps) {
         </DTEHeader>
       )}
       {instructionText}
-      <Grid container>
-        <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>
-          {formStage === "postcodeLookup" && (
-            <PostcodeLookup
-              onDataChange={(data: PostcodeLookupData) => handleDataChange(data, "postcodeLookupData")}
-              initialStateData={addressData.postcodeLookupData}
-              showCancelButton={showCancelButton}
-              onCancel={onCancel}
-              hideInfo={hideInfo}
-            />
-          )}
-          {formStage === "selectAddress" && (
-            <SelectAddress
-              onDataChange={(data: SelectAddressData) => handleDataChange(data, "selectAddressData")}
-              addresses={addressData.postcodeLookupData.addresses}
-              postcode={addressData.postcodeLookupData.postcode}
-              nextButtonText={nextButtonText}
-              showCancelButton={showCancelButton}
-              onCancel={onCancel}
-              hideInfo={hideInfo}
-            />
-          )}
-          {formStage === "manualEntry" && (
-            <ManualEntry
-              onDataChange={(data: ManualEntryData) => handleDataChange(data, "manualEntryData")}
-              initialStateData={addressData.manualEntryData}
-              nextButtonText={nextButtonText}
-              showCancelButton={showCancelButton}
-              onCancel={onCancel}
-              hideInfo={hideInfo}
-            />
-          )}
-        </Grid>
-      </Grid>
+      {formStage === "postcodeLookup" && (
+        <PostcodeLookup
+          onDataChange={(data: PostcodeLookupData) => handleDataChange(data, "postcodeLookupData")}
+          initialStateData={addressData.postcodeLookupData}
+          showCancelButton={showCancelButton}
+          onCancel={onCancel}
+          hideInfo={hideInfo}
+        />
+      )}
+      {formStage === "selectAddress" && (
+        <SelectAddress
+          onDataChange={(data: SelectAddressData) => handleDataChange(data, "selectAddressData")}
+          addresses={addressData.postcodeLookupData.addresses}
+          postcode={addressData.postcodeLookupData.postcode}
+          nextButtonText={nextButtonText}
+          showCancelButton={showCancelButton}
+          onCancel={onCancel}
+          hideInfo={hideInfo}
+        />
+      )}
+      {formStage === "manualEntry" && (
+        <ManualEntry
+          onDataChange={(data: ManualEntryData) => handleDataChange(data, "manualEntryData")}
+          initialStateData={addressData.manualEntryData}
+          nextButtonText={nextButtonText}
+          showCancelButton={showCancelButton}
+          onCancel={onCancel}
+          hideInfo={hideInfo}
+        />
+      )}
     </>
   );
 }

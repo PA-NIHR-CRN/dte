@@ -64,129 +64,131 @@ function ManualEntry(props: ManualEntryProps) {
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />{" "}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Honeypot />
-        <Controller
-          control={control}
-          name="addressLine1"
-          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
-            <DTEInput
-              id="addressLine1"
-              label={content["register2-address-input-address1"]}
-              onValueChange={onChange}
-              onValueBlur={onBlur}
-              error={error?.message}
-              value={value}
-              autocomplete="address-line1"
-            />
-          )}
-          rules={{
-            validate: (value) => {
-              if (value && value.trim()) {
-                return true;
-              }
-              setValue("addressLine1", "");
-              return content["register2-address-validation-address1-required"];
-            },
-          }}
-        />
-        <Controller
-          control={control}
-          name="addressLine2"
-          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
-            <DTEInput
-              id="addressLine2"
-              label={content["register2-address-input-address2"]}
-              onValueChange={onChange}
-              onValueBlur={onBlur}
-              error={error?.message}
-              value={value}
-              autocomplete="address-line2"
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name="addressLine3"
-          render={({ field: { value, onChange, onBlur } }) => (
-            <DTEInput
-              id="addressLine3"
-              label={content["register2-address-input-address3"]}
-              onValueChange={onChange}
-              onValueBlur={onBlur}
-              value={value}
-              autocomplete="address-line3"
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name="addressLine4"
-          render={({ field: { value, onChange, onBlur } }) => (
-            <DTEInput
-              id="addressLine4"
-              label={content["register2-address-input-address4"]}
-              onValueChange={onChange}
-              onValueBlur={onBlur}
-              value={value}
-              autocomplete="address-level4"
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name="town"
-          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
-            <DTEInput
-              id="town"
-              label={content["register2-address-input-town"]}
-              onValueChange={onChange}
-              onValueBlur={onBlur}
-              error={error?.message}
-              value={value}
-              autocomplete="address-level1"
-            />
-          )}
-          rules={{
-            validate: (value) => {
-              if (value && value.trim()) {
-                return true;
-              }
-              setValue("town", "");
-              return content["register2-address-validation-town-required"];
-            },
-          }}
-        />
-        <Controller
-          control={control}
-          name="postcode"
-          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
-            <DTEInput
-              id="postcode"
-              value={value}
-              onValueChange={onChange}
-              onValueBlur={onBlur}
-              error={error?.message}
-              label={content["register2-address-input-postcode"]}
-              autocomplete="postal-code"
-            />
-          )}
-          rules={{
-            required: { value: true, message: content["register2-address-validation-postcode-required"] },
-            validate: (value) => {
-              const cleaned = value.replace(/[^A-Za-z0-9]/g, "");
-              if (value.trim() === "") {
+        <Grid xs={12} sm={10} md={8} lg={7} xl={6}>
+          <Controller
+            control={control}
+            name="addressLine1"
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+              <DTEInput
+                id="addressLine1"
+                label={content["register2-address-input-address1"]}
+                onValueChange={onChange}
+                onValueBlur={onBlur}
+                error={error?.message}
+                value={value}
+                autocomplete="address-line1"
+              />
+            )}
+            rules={{
+              validate: (value) => {
+                if (value && value.trim()) {
+                  return true;
+                }
+                setValue("addressLine1", "");
+                return content["register2-address-validation-address1-required"];
+              },
+            }}
+          />
+          <Controller
+            control={control}
+            name="addressLine2"
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+              <DTEInput
+                id="addressLine2"
+                label={content["register2-address-input-address2"]}
+                onValueChange={onChange}
+                onValueBlur={onBlur}
+                error={error?.message}
+                value={value}
+                autocomplete="address-line2"
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="addressLine3"
+            render={({ field: { value, onChange, onBlur } }) => (
+              <DTEInput
+                id="addressLine3"
+                label={content["register2-address-input-address3"]}
+                onValueChange={onChange}
+                onValueBlur={onBlur}
+                value={value}
+                autocomplete="address-line3"
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="addressLine4"
+            render={({ field: { value, onChange, onBlur } }) => (
+              <DTEInput
+                id="addressLine4"
+                label={content["register2-address-input-address4"]}
+                onValueChange={onChange}
+                onValueBlur={onBlur}
+                value={value}
+                autocomplete="address-level4"
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="town"
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+              <DTEInput
+                id="town"
+                label={content["register2-address-input-town"]}
+                onValueChange={onChange}
+                onValueBlur={onBlur}
+                error={error?.message}
+                value={value}
+                autocomplete="address-level1"
+              />
+            )}
+            rules={{
+              validate: (value) => {
+                if (value && value.trim()) {
+                  return true;
+                }
+                setValue("town", "");
+                return content["register2-address-validation-town-required"];
+              },
+            }}
+          />
+          <Controller
+            control={control}
+            name="postcode"
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+              <DTEInput
+                id="postcode"
+                value={value}
+                onValueChange={onChange}
+                onValueBlur={onBlur}
+                error={error?.message}
+                label={content["register2-address-input-postcode"]}
+                autocomplete="postal-code"
+              />
+            )}
+            rules={{
+              required: { value: true, message: content["register2-address-validation-postcode-required"] },
+              validate: (value) => {
+                const cleaned = value.replace(/[^A-Za-z0-9]/g, "");
+                if (value.trim() === "") {
+                  return content["register2-address-validation-postcode-invalid"];
+                }
+                if (
+                  cleaned.match(
+                    /^[A-Za-z]{1,2}[0-9]{1,2}\s?[0-9]{1,2}[A-Za-z]{1,2}$|^[A-Za-z]{1,2}[0-9]{1,2}[A-Za-z]{1,2}\s?[0-9]{1,2}[A-Za-z]{1,2}|^[A-Za-z]{4}\s?[0-9]{1,2}[A-Za-z]{1,2}/
+                  )
+                ) {
+                  return true;
+                }
                 return content["register2-address-validation-postcode-invalid"];
-              }
-              if (
-                cleaned.match(
-                  /^[A-Za-z]{1,2}[0-9]{1,2}\s?[0-9]{1,2}[A-Za-z]{1,2}$|^[A-Za-z]{1,2}[0-9]{1,2}[A-Za-z]{1,2}\s?[0-9]{1,2}[A-Za-z]{1,2}|^[A-Za-z]{4}\s?[0-9]{1,2}[A-Za-z]{1,2}/
-                )
-              ) {
-                return true;
-              }
-              return content["register2-address-validation-postcode-invalid"];
-            },
-          }}
-        />
+              },
+            }}
+          />
+        </Grid>
         <Grid container direction="column" spacing={3}>
           <Grid item>
             <DTELinkButton

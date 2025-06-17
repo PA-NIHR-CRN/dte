@@ -83,82 +83,82 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
         </ErrorMessageContainer>
       )}
       {updateUserEmailPostLoading && <LoadingIndicator text={content["reusable-loading-updating-details"]} />}
-      <Grid container>
-        <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>
-          <form onSubmit={handleSubmit(handleChangeEmail)} noValidate>
-            <Honeypot />
-            <Controller
-              control={control}
-              name="emailAddress"
-              render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
-                <DTEInput
-                  id="emailAddress"
-                  value={value}
-                  onValueChange={onChange}
-                  onValueBlur={onBlur}
-                  error={error?.message}
-                  label={content["update-email-label-email-address"]}
-                  required
-                  type="email"
-                  autocomplete="email"
-                  spellcheck={false}
-                />
-              )}
-              rules={{
-                required: {
-                  value: true,
-                  message: content["update-email-validation-required"],
-                },
-                pattern: {
-                  value: EmailRegex,
-                  message: content["reusable-email-validation-invalid-format"],
-                },
-              }}
-            />
-            <Controller
-              control={control}
-              name="confirmEmailAddress"
-              render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
-                <DTEInput
-                  id="confirmEmailAddress"
-                  value={value}
-                  onValueChange={onChange}
-                  onValueBlur={onBlur}
-                  error={error?.message}
-                  label={content["update-email-label-confirm-email"]}
-                  required
-                  type="email"
-                  autocomplete="email"
-                  spellcheck={false}
-                />
-              )}
-              rules={{
-                required: {
-                  value: true,
-                  message: content["update-email-label-confirm-email"],
-                },
-                pattern: {
-                  value: EmailRegex,
-                  message: content["reusable-email-validation-invalid-format"],
-                },
-                validate: (value) => {
-                  if (value === getValues().emailAddress) {
-                    return true;
-                  }
-                  return content["update-email-validation-match"];
-                },
-              }}
-            />
-            {content["update-email-page"]}
-            <FormNavigationButtons
-              nextButtonText={content["reusable-save"]}
-              cancelButtonText={content["reusable-cancel"]}
-              showCancelButton
-              onCancel={onCancel}
-            />
-          </form>
+      <form onSubmit={handleSubmit(handleChangeEmail)} noValidate>
+        <Honeypot />
+        <Grid xs={12} sm={10} md={8} lg={7} xl={6}>
+          <Controller
+            control={control}
+            name="emailAddress"
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+              <DTEInput
+                id="emailAddress"
+                value={value}
+                onValueChange={onChange}
+                onValueBlur={onBlur}
+                error={error?.message}
+                label={content["update-email-label-email-address"]}
+                required
+                type="email"
+                autocomplete="email"
+                spellcheck={false}
+              />
+            )}
+            rules={{
+              required: {
+                value: true,
+                message: content["update-email-validation-required"],
+              },
+              pattern: {
+                value: EmailRegex,
+                message: content["reusable-email-validation-invalid-format"],
+              },
+            }}
+          />
+          <Controller
+            control={control}
+            name="confirmEmailAddress"
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+              <DTEInput
+                id="confirmEmailAddress"
+                value={value}
+                onValueChange={onChange}
+                onValueBlur={onBlur}
+                error={error?.message}
+                label={content["update-email-label-confirm-email"]}
+                required
+                type="email"
+                autocomplete="email"
+                spellcheck={false}
+              />
+            )}
+            rules={{
+              required: {
+                value: true,
+                message: content["update-email-label-confirm-email"],
+              },
+              pattern: {
+                value: EmailRegex,
+                message: content["reusable-email-validation-invalid-format"],
+              },
+              validate: (value) => {
+                if (value === getValues().emailAddress) {
+                  return true;
+                }
+                return content["update-email-validation-match"];
+              },
+            }}
+          />
         </Grid>
-      </Grid>
+        <Grid container direction="column" spacing={3}>
+          <Grid item>{content["update-email-page"]}</Grid>
+        </Grid>
+        <FormNavigationButtons
+          nextButtonText={content["reusable-save"]}
+          cancelButtonText={content["reusable-cancel"]}
+          showCancelButton
+          onCancel={onCancel}
+        />
+      </form>
     </>
   );
 }
