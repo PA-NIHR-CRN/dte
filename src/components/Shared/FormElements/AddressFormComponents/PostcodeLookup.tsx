@@ -155,35 +155,37 @@ function PostcodeLookup(props: PostcodeLookupProps) {
       {loading && <LoadingIndicator text={content["register2-address-loading-addresses"]} />}
       <form onSubmit={handleSubmit(onPostcodeSubmit)}>
         <Honeypot />
-        <Controller
-          control={control}
-          name="postcode"
-          render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
-            <DTEInput
-              id="postcode"
-              value={value}
-              onValueChange={onChange}
-              onValueBlur={onBlur}
-              error={error?.message}
-              label={content["reusable-postcode"]}
-              autocomplete="postal-code"
-            />
-          )}
-          rules={{
-            required: { value: true, message: content["register2-address-validation-postcode-required"] },
-            validate: (value) => {
-              const cleaned = value.replace(/[^A-Za-z0-9]/g, "");
-              if (
-                cleaned.match(
-                  /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})$/
-                )
-              ) {
-                return true;
-              }
-              return content["register2-address-validation-postcode-invalid"];
-            },
-          }}
-        />
+        <Grid xs={12} sm={10} md={8} lg={7} xl={6}>
+          <Controller
+            control={control}
+            name="postcode"
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+              <DTEInput
+                id="postcode"
+                value={value}
+                onValueChange={onChange}
+                onValueBlur={onBlur}
+                error={error?.message}
+                label={content["reusable-postcode"]}
+                autocomplete="postal-code"
+              />
+            )}
+            rules={{
+              required: { value: true, message: content["register2-address-validation-postcode-required"] },
+              validate: (value) => {
+                const cleaned = value.replace(/[^A-Za-z0-9]/g, "");
+                if (
+                  cleaned.match(
+                    /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})$/
+                  )
+                ) {
+                  return true;
+                }
+                return content["register2-address-validation-postcode-invalid"];
+              },
+            }}
+          />
+        </Grid>
         <Grid container direction="column" spacing={3}>
           <Grid item>
             <ContinueButton

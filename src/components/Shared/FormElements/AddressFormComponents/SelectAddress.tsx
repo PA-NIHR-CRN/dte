@@ -92,40 +92,42 @@ function SelectAddress(props: SelectAddressProps) {
       </Grid>
       <form onSubmit={handleSubmit(hijackOnDataChange)}>
         <Honeypot />
-        <Controller
-          control={control}
-          name="address"
-          defaultValue={0}
-          render={({ field: { onChange }, fieldState: { error } }) => (
-            <>
-              <DTESelect
-                id="select-address"
-                name="select-address"
-                label={content["register2-address-select-address"]}
-                error={error?.message}
-                required={false}
-                options={[
-                  ...addresses.map((data: Address, index: number) => {
-                    return {
-                      value: index,
-                      text: data.fullAddress,
-                    };
-                  }),
-                ]}
-                onValueChange={onChange}
-                isCapitalised
-              />
-            </>
-          )}
-          rules={{
-            validate: (value) => {
-              if (addresses[value].addressLine1 === "") {
-                return content["register2-address-validation-select-required"];
-              }
-              return true;
-            },
-          }}
-        />
+        <Grid xs={12} sm={10} md={8} lg={7} xl={6}>
+          <Controller
+            control={control}
+            name="address"
+            defaultValue={0}
+            render={({ field: { onChange }, fieldState: { error } }) => (
+              <>
+                <DTESelect
+                  id="select-address"
+                  name="select-address"
+                  label={content["register2-address-select-address"]}
+                  error={error?.message}
+                  required={false}
+                  options={[
+                    ...addresses.map((data: Address, index: number) => {
+                      return {
+                        value: index,
+                        text: data.fullAddress,
+                      };
+                    }),
+                  ]}
+                  onValueChange={onChange}
+                  isCapitalised
+                />
+              </>
+            )}
+            rules={{
+              validate: (value) => {
+                if (addresses[value].addressLine1 === "") {
+                  return content["register2-address-validation-select-required"];
+                }
+                return true;
+              },
+            }}
+          />
+        </Grid>
         <Grid container direction="column" spacing={3}>
           <Grid item>
             <DTELinkButton
