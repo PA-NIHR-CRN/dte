@@ -11,7 +11,6 @@ import DTEContent from "../../../../../Shared/UI/DTETypography/DTEContent/DTECon
 import ErrorMessageContainer from "../../../../../Shared/ErrorMessageContainer/ErrorMessageContainer";
 import ErrorMessageSummary from "../../../../../Shared/ErrorMessageSummary/ErrorMessageSummary";
 import PasswordShowHide from "../../../../../Shared/Password/showHide";
-import ThreeWords from "../../../../../Shared/Password/threeWords";
 import { ContentContext } from "../../../../../../context/ContentContext";
 import Honeypot from "../../../../../Shared/Honeypot/Honeypot";
 import validatePassword, { PasswordPolicy } from "../../../../../../Helper/passwordValidation/passwordValidation";
@@ -36,7 +35,6 @@ function PasswordForm(props: PasswordFormProps) {
     password: "",
     password2: "",
   });
-  const [policyBuilder, setPolicyBuilder] = useState("");
   const [passwordPolicy, setPasswordPolicy] = useState<PasswordPolicy>();
   const theme = useTheme();
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
@@ -112,7 +110,6 @@ function PasswordForm(props: PasswordFormProps) {
         requirements = requirements.replace(/,([^,]*)$/, ` ${content["reusable-text-and"]}$1`);
       }
       builder += `${requirements}.`;
-      setPolicyBuilder(builder);
       setPasswordPolicy(policy);
     }
   }, [policyResponse]);
@@ -140,12 +137,11 @@ function PasswordForm(props: PasswordFormProps) {
           <DTEHeader as="h1" $variant={headerVariant} captionKey="register-password-header">
             {content["register-password-header"]}
           </DTEHeader>
-          <DTEContent>{policyBuilder}</DTEContent>
-          <ThreeWords />
-          <Grid container>
-            <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>
-              <form onSubmit={handleSubmit(onDataChange)} noValidate>
-                <Honeypot />
+          <DTEContent>{content["register-password-policy"]}</DTEContent>
+          <Grid>
+            <form onSubmit={handleSubmit(onDataChange)} noValidate>
+              <Honeypot />
+              <Grid xs={12} sm={10} md={8} lg={7} xl={6}>
                 <Controller
                   control={control}
                   name="password"
@@ -200,9 +196,12 @@ function PasswordForm(props: PasswordFormProps) {
                     },
                   }}
                 />
-                <DTEButton>{content["reusable-button-continue"]}</DTEButton>
-              </form>
-            </Grid>
+              </Grid>
+              <Grid container direction="column" spacing={3}>
+                <Grid item>{content["create-password-page"]}</Grid>
+              </Grid>
+              <DTEButton>{content["reusable-button-continue"]}</DTEButton>
+            </form>
           </Grid>
         </>
       )}
