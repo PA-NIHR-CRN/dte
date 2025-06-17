@@ -151,9 +151,7 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
             />
           </Grid>
           <Grid container direction="column" spacing={3}>
-            <Grid item>
-              {content["update-email-page"]}
-            </Grid>
+            <Grid item>{content["update-email-page"]}</Grid>
           </Grid>
           <FormNavigationButtons
             nextButtonText={content["reusable-save"]}
