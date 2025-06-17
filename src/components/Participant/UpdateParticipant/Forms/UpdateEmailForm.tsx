@@ -84,9 +84,9 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
       )}
       {updateUserEmailPostLoading && <LoadingIndicator text={content["reusable-loading-updating-details"]} />}
       <Grid container>
-        <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>
-          <form onSubmit={handleSubmit(handleChangeEmail)} noValidate>
-            <Honeypot />
+        <form onSubmit={handleSubmit(handleChangeEmail)} noValidate>
+          <Honeypot />
+          <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>
             <Controller
               control={control}
               name="emailAddress"
@@ -149,15 +149,19 @@ function UpdateEmailForm({ onCancel }: FormBaseProps) {
                 },
               }}
             />
-            {content["update-email-page"]}
-            <FormNavigationButtons
-              nextButtonText={content["reusable-save"]}
-              cancelButtonText={content["reusable-cancel"]}
-              showCancelButton
-              onCancel={onCancel}
-            />
-          </form>
-        </Grid>
+          </Grid>
+          <Grid container direction="column" spacing={3}>
+            <Grid item>
+              {content["update-email-page"]}
+            </Grid>
+          </Grid>
+          <FormNavigationButtons
+            nextButtonText={content["reusable-save"]}
+            cancelButtonText={content["reusable-cancel"]}
+            showCancelButton
+            onCancel={onCancel}
+          />
+        </form>
       </Grid>
     </>
   );
