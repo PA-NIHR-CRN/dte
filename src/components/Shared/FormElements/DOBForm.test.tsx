@@ -190,7 +190,7 @@ describe("DOB Form Functional tests", () => {
       target: { value: yesterday.getFullYear() },
     });
     fireEvent.click(screen.getByRole("button"));
-    // expect(await screen.findByText("You must be 18 or over to use this service")).toBeInTheDocument();
+    expect(await screen.findByText("You must be 18 or over to use this service")).toBeInTheDocument();
   });
 
   test("that the date must be less than today", async () => {
@@ -211,7 +211,7 @@ describe("DOB Form Functional tests", () => {
       target: { value: tomorrow.getFullYear() },
     });
     fireEvent.click(screen.getByRole("button"));
-    // expect(await screen.findByText("You must be 18 or over to use this service")).toBeInTheDocument();
+    expect(await screen.findByText("You must be 18 or over to use this service")).toBeInTheDocument();
   });
 
   it("valid data allows for the form to be submitted", async () => {
