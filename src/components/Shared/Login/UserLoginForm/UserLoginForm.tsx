@@ -78,10 +78,11 @@ const UserLoginForm: React.FC<UserLoginFormProps> = ({ loadingLogin, control, se
         }}
       />
       <DTEContent>
-        {content["reusable-text-forgotten-password"]}
+        {content["forgotten-password-pre-link-text"]}
         <DTERouteLink to="/ForgottenPassword" renderStyle="standard" ariaLabel={content["signin-aria-reset-password"]}>
-          {content["reusable-link-forgotten-password"]}
+          {content["reusable-forgotten-password-link-text"]}
         </DTERouteLink>
+        {content["forgotten-password-post-link-text"]}
       </DTEContent>
       <ButtonWrapper>
         <DTEButton disabled={loadingLogin}>{content["reusable-button-signin"]}</DTEButton>
