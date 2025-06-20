@@ -35,6 +35,7 @@ function PasswordForm(props: PasswordFormProps) {
     password: "",
     password2: "",
   });
+  const [policyBuilder, setPolicyBuilder] = useState("");
   const [passwordPolicy, setPasswordPolicy] = useState<PasswordPolicy>();
   const theme = useTheme();
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
@@ -110,6 +111,7 @@ function PasswordForm(props: PasswordFormProps) {
         requirements = requirements.replace(/,([^,]*)$/, ` ${content["reusable-text-and"]}$1`);
       }
       builder += `${requirements}.`;
+      setPolicyBuilder(builder);
       setPasswordPolicy(policy);
     }
   }, [policyResponse]);
