@@ -35,7 +35,7 @@ function PasswordForm(props: PasswordFormProps) {
     password: "",
     password2: "",
   });
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [policyBuilder, setPolicyBuilder] = useState("");
   const [passwordPolicy, setPasswordPolicy] = useState<PasswordPolicy>();
   const theme = useTheme();
@@ -83,6 +83,7 @@ function PasswordForm(props: PasswordFormProps) {
   useEffect(() => {
     if (policyResponse) {
       const policy = Utils.ConvertResponseToDTEResponse(policyResponse) as unknown as PasswordPolicy;
+      let builder = `${content["register-password-policy-builder-char1"]} ${policy.minimumLength} ${content["register-password-policy-builder-char2"]}`;
       let requirements = "";
       if (policy.requireUppercase || policy.requireLowercase || policy.requireNumbers || policy.requireSymbols) {
         requirements += content["register-password-policy-builder-include"];
