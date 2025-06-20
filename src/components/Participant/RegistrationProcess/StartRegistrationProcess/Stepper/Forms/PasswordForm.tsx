@@ -35,6 +35,8 @@ function PasswordForm(props: PasswordFormProps) {
     password: "",
     password2: "",
   });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [policyBuilder, setPolicyBuilder] = useState("");
   const [passwordPolicy, setPasswordPolicy] = useState<PasswordPolicy>();
   const theme = useTheme();
   const headerVariant = useMediaQuery(theme.breakpoints.down("xs")) ? "h2" : "h1";
@@ -81,6 +83,7 @@ function PasswordForm(props: PasswordFormProps) {
   useEffect(() => {
     if (policyResponse) {
       const policy = Utils.ConvertResponseToDTEResponse(policyResponse) as unknown as PasswordPolicy;
+      let builder = `${content["register-password-policy-builder-char1"]} ${policy.minimumLength} ${content["register-password-policy-builder-char2"]}`;
       let requirements = "";
       if (policy.requireUppercase || policy.requireLowercase || policy.requireNumbers || policy.requireSymbols) {
         requirements += content["register-password-policy-builder-include"];
@@ -108,6 +111,8 @@ function PasswordForm(props: PasswordFormProps) {
       if (policy.requireUppercase || policy.requireLowercase || policy.requireNumbers || policy.requireSymbols) {
         requirements = requirements.replace(/,([^,]*)$/, ` ${content["reusable-text-and"]}$1`);
       }
+      builder += `${requirements}.`;
+      setPolicyBuilder(builder);
       setPasswordPolicy(policy);
     }
   }, [policyResponse]);
