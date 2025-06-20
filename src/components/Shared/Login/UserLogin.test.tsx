@@ -68,7 +68,7 @@ describe("User Login must render correctly", () => {
     expect(links[0]).toHaveAttribute("href", "/Participants/Options");
     expect(links[0]).toHaveTextContent("Back");
     expect(links[1]).toHaveAttribute("href", "/ForgottenPassword");
-    expect(links[1]).toHaveTextContent("reset your password");
+    expect(links[1].textContent).toContain("reset your password");
     expect(links[2]).toHaveAttribute("href", "/participants/register");
     expect(links[2]).toHaveTextContent("Register here");
   });
@@ -365,7 +365,7 @@ describe("Unknown Account processes correctly", () => {
     expect(links[0]).toHaveAttribute("href", "/Participants/Options");
     expect(links[0]).toHaveTextContent("Back");
     expect(links[1]).toHaveAttribute("href", "/ForgottenPassword");
-    expect(links[1]).toHaveTextContent("reset your password");
+    expect(links[1].textContent).toContain("reset your password");
     expect(links[2]).toHaveAttribute("href", "/participants/register");
     expect(links[2]).toHaveTextContent("Register here");
   });
