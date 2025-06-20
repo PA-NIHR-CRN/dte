@@ -35,6 +35,7 @@ function PasswordForm(props: PasswordFormProps) {
     password: "",
     password2: "",
   });
+  // eslint-disable-next-line no-unused-vars
   const [policyBuilder, setPolicyBuilder] = useState("");
   const [passwordPolicy, setPasswordPolicy] = useState<PasswordPolicy>();
   const theme = useTheme();
