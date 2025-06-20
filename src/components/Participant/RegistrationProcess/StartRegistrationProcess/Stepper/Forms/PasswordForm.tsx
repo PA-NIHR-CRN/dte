@@ -83,7 +83,6 @@ function PasswordForm(props: PasswordFormProps) {
   useEffect(() => {
     if (policyResponse) {
       const policy = Utils.ConvertResponseToDTEResponse(policyResponse) as unknown as PasswordPolicy;
-      let builder = `${content["register-password-policy-builder-char1"]} ${policy.minimumLength} ${content["register-password-policy-builder-char2"]}`;
       let requirements = "";
       if (policy.requireUppercase || policy.requireLowercase || policy.requireNumbers || policy.requireSymbols) {
         requirements += content["register-password-policy-builder-include"];
