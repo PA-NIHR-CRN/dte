@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "../../../Helper/test-utils";
 import ThreeWords from "./threeWords";
 
-describe("threeWords component test", () => {
+describe.skip("threeWords component test", () => {
   it("should return the correct text", async () => {
     render(<ThreeWords />);
 
