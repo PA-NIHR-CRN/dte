@@ -51,43 +51,43 @@ function EmailForm(props: EmailFormProps) {
         {content["register-email-header"]}
       </DTEHeader>
       <ErrorMessageSummary renderSummary={!isSubmitting} errors={formErrors} />
-      <Grid container>
+      <form onSubmit={handleSubmit(onDataChange)} noValidate>
+        <Honeypot />
         <Grid item xs={12} sm={10} md={8} lg={7} xl={6}>
-          <form onSubmit={handleSubmit(onDataChange)} noValidate>
-            <Honeypot />
-            <Controller
-              control={control}
-              name="emailAddress"
-              render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
-                <DTEInput
-                  id="emailAddress"
-                  value={value}
-                  onValueChange={onChange}
-                  onValueBlur={onBlur}
-                  error={error?.message}
-                  label={content["reusable-text-email-address"]}
-                  required
-                  type="email"
-                  autocomplete="email"
-                  spellcheck={false}
-                />
-              )}
-              rules={{
-                required: {
-                  value: true,
-                  message: content["register-email-validation-required"],
-                },
-                pattern: {
-                  value: EmailRegex,
-                  message: content["reusable-email-validation-invalid-format"],
-                },
-              }}
-            />
-            {content["register-email-page"]}
-            <DTEButton>{content["reusable-button-continue"]}</DTEButton>
-          </form>
+          <Controller
+            control={control}
+            name="emailAddress"
+            render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+              <DTEInput
+                id="emailAddress"
+                value={value}
+                onValueChange={onChange}
+                onValueBlur={onBlur}
+                error={error?.message}
+                label={content["reusable-text-email-address"]}
+                required
+                type="email"
+                autocomplete="email"
+                spellcheck={false}
+              />
+            )}
+            rules={{
+              required: {
+                value: true,
+                message: content["register-email-validation-required"],
+              },
+              pattern: {
+                value: EmailRegex,
+                message: content["reusable-email-validation-invalid-format"],
+              },
+            }}
+          />
         </Grid>
-      </Grid>
+        <Grid container direction="column">
+          <Grid item>{content["register-email-page"]}</Grid>
+        </Grid>
+        <DTEButton>{content["reusable-button-continue"]}</DTEButton>
+      </form>
     </>
   );
 }
