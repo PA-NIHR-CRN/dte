@@ -12,11 +12,11 @@ import { AuthContext } from "../../../../context/AuthContext";
 import Utils from "../../../../Helper/Utils";
 import ErrorMessageContainer from "../../ErrorMessageContainer/ErrorMessageContainer";
 import DTEDetails from "../../UI/DTEDetails/DTEDetails";
-import DTELinkButton from "../../UI/DTELinkButton/DTELinkButton";
 import DTEBackLink from "../../UI/DTEBackLink/DTEBackLink";
 import useInlineServerError from "../../../../hooks/useInlineServerError";
 import Honeypot from "../../Honeypot/Honeypot";
 import { ContentContext } from "../../../../context/ContentContext";
+import DTERouteLink from "../../UI/DTERouteLink/DTERouteLink";
 
 const MfaSmsChallenge = () => {
   const { content } = useContext(ContentContext);
@@ -181,12 +181,9 @@ const MfaSmsChallenge = () => {
         )}
         <DTEHeader as="h1">{content["mfa-sms-challenge-header"]}</DTEHeader>
         {setupMfaError || SMSMfaResponse ? handleErrors(setupMfaError, SMSMfaResponse) : null}
-        <DTEContent>
-          {codeInstructionText.replace("{{phoneNumber}}", phoneNumber)}
-          <br />
-          <br />
-          {content["mfa-sms-challenge-code-expiry-text"]}
-        </DTEContent>
+        <DTEContent>{codeInstructionText.replace("{{phoneNumber}}", phoneNumber)}</DTEContent>
+        <DTEContent>{content["mfa-sms-challenge-code-expiry-text"]}</DTEContent>
+        <DTEContent>{content["mfa-sms-challenge-code-enter-mobile-again"]}</DTEContent>
         {isCodeResent && (
           <div className="govuk-details__text">
             <DTEContent role="alert">{content["mfa-sms-challenge-alert-code-resent"]}</DTEContent>
@@ -210,7 +207,6 @@ const MfaSmsChallenge = () => {
                 spellcheck={false}
                 autocomplete="off"
                 disabled={SMSMfaLoading || isSubmitting}
-                hint={content["mfa-sms-challenge-hint-code"]}
               />
             )}
             rules={{
@@ -227,48 +223,32 @@ const MfaSmsChallenge = () => {
           />
           <DTEDetails summary={content["mfa-sms-challenge-not-received-header"]}>
             <>
-              {content["mfa-sms-challenge-not-received-body"]}
-
-              {urlList.includes(prevUrl as string) ? (
-                <>
-                  <DTEContent>{content["mfa-sms-challenge-still-not-received"]}</DTEContent>
-                  <ul>
-                    <li>
-                      <DTELinkButton
-                        onClick={handleResendCode}
-                        disabled={SMSMfaLoading || isSubmitting}
-                        customStyles={{ textAlign: "left", textTransform: "lowercase" }}
-                      >
-                        {content["mfa-sms-challenge-link-resend-code"]}
-                      </DTELinkButton>
-                    </li>
-                    <li>
-                      <DTELinkButton
-                        disabled={SMSMfaLoading || isSubmitting}
-                        onClick={() => {
-                          history.push(prevUrl === "/MfaChangePhoneNumber" ? "/MfaChangePhoneNumber" : "/MfaSmsSetup");
-                        }}
-                        customStyles={{ textAlign: "left" }}
-                      >
-                        {prevUrl === "/MfaChangePhoneNumber"
-                          ? content["mfa-sms-challenge-enter-new-mobile-again"]
-                          : content["mfa-sms-challenge-enter-mobile-again"]}
-                      </DTELinkButton>
-                    </li>
-                  </ul>
-                </>
-              ) : (
-                <DTELinkButton onClick={handleResendCode} disabled={SMSMfaLoading || isSubmitting}>
-                  {content["mfa-sms-challenge-link-resend-code"]}
-                </DTELinkButton>
-              )}
+              <DTEContent>{content["mfa-change-phone-confirm-not-received-busy-text"]}</DTEContent>
+              {content["mfa-change-phone-confirm-not-received-pre-links-text"]}{" "}
+              <DTERouteLink
+                to={prevUrl === "/MfaChangePhoneNumber" ? "/MfaChangePhoneNumber" : "/MfaSmsSetup"}
+                renderStyle="standard"
+                disabled={SMSMfaLoading || isSubmitting}
+              >
+                {prevUrl === "/MfaChangePhoneNumber"
+                  ? content["mfa-sms-challenge-enter-new-mobile-again"]
+                  : content["mfa-sms-challenge-enter-mobile-again"]}
+              </DTERouteLink>
+              {" or "}
+              <DTERouteLink
+                renderStyle="standard"
+                disabled={SMSMfaLoading || isSubmitting}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleResendCode();
+                }}
+                to={"#"}
+              >
+                {content["mfa-sms-challenge-link-resend-code"]}
+              </DTERouteLink>
+              {"."}
             </>
           </DTEDetails>
-          {!urlList.includes(prevUrl as string) && (
-            <DTEDetails summary={content["mfa-sms-challenge-no-mobile-access-header"]}>
-              {content["mfa-sms-challenge-no-mobile-access-body"]}
-            </DTEDetails>
-          )}
           <DTEButton type="submit" disabled={SMSMfaLoading || isSubmitting}>
             {content["reusable-button-continue"]}
           </DTEButton>
