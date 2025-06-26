@@ -22,6 +22,7 @@ interface RouteLinkProps extends BaseLinkProps {
   ariaLabel?: string;
   role?: string;
   rel?: string;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 interface ExternalLinkProps extends BaseLinkProps {
@@ -128,11 +129,13 @@ function DTERouteLink({
   ariaLabel,
   role,
   rel,
+  onClick,
 }: RouteLinkProps & React.HTMLProps<HTMLLinkElement>) {
   if (external) {
     return (
       <StyledExternalLink
         href={to}
+        onClick={onClick}
         className={determineClassName(renderStyle, inverted || false)}
         $outlined={$outlined}
         $fullwidth={$fullwidth}
@@ -147,9 +150,11 @@ function DTERouteLink({
       </StyledExternalLink>
     );
   }
+
   return (
     <StyledRouteLink
       to={to}
+      onClick={onClick}
       className={determineClassName(renderStyle, inverted || false)}
       $outlined={$outlined}
       $fullwidth={$fullwidth}
