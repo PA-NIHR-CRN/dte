@@ -182,8 +182,8 @@ const MfaSmsChallenge = () => {
         <DTEHeader as="h1">{content["mfa-sms-challenge-header"]}</DTEHeader>
         {setupMfaError || SMSMfaResponse ? handleErrors(setupMfaError, SMSMfaResponse) : null}
         <DTEContent>{codeInstructionText.replace("{{phoneNumber}}", phoneNumber)}</DTEContent>
-        <DTEContent>{content["mfa-sms-challenge-code-expiry-text"]}</DTEContent>
-        <DTEContent>{content["mfa-sms-challenge-code-enter-mobile-again"]}</DTEContent>
+        <>{content["mfa-sms-challenge-code-expiry-text"]}</>
+        <>{content["mfa-sms-challenge-code-enter-mobile-again"]}</>
         {isCodeResent && (
           <div className="govuk-details__text">
             <DTEContent role="alert">{content["mfa-sms-challenge-alert-code-resent"]}</DTEContent>
