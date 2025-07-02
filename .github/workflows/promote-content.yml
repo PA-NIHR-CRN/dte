@@ -24,6 +24,10 @@ jobs:
   promote-contentful-tagged:
     runs-on: ubuntu-latest
 
+    env:
+      CONTENTFUL_SPACE_ID: ${{ secrets.REACT_APP_CONTENTFUL_SPACE_ID }}
+      CONTENTFUL_MANAGEMENT_TOKEN: ${{ secrets.REACT_APP_CONTENTFUL_MANAGEMENT_TOKEN }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -37,9 +41,7 @@ jobs:
         run: yarn install
 
       - name: Run promotion script
-        env:
-          CONTENTFUL_SPACE_ID: ${{ secrets.REACT_APP_CONTENTFUL_SPACE_ID }}
-          CONTENTFUL_MANAGEMENT_TOKEN: ${{ secrets.REACT_APP_CONTENTFUL_MANAGEMENT_TOKEN }}
+
         run: |
           node .contentful/workflows/promote-content.js \
             --source=${{ github.event.inputs.source }} \
