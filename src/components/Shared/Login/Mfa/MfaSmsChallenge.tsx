@@ -182,8 +182,21 @@ const MfaSmsChallenge = () => {
         <DTEHeader as="h1">{content["mfa-sms-challenge-header"]}</DTEHeader>
         {setupMfaError || SMSMfaResponse ? handleErrors(setupMfaError, SMSMfaResponse) : null}
         <DTEContent>{codeInstructionText.replace("{{phoneNumber}}", phoneNumber)}</DTEContent>
-        <>{content["mfa-sms-challenge-code-expiry-text"]}</>
-        <>{content["mfa-sms-challenge-code-enter-mobile-again"]}</>
+        {content["mfa-sms-challenge-code-expiry-text"]}
+        <DTEContent>
+          {content["mfa-sms-challenge-code-enter-mobile-again"]}{" "}
+          <DTERouteLink
+            to={prevUrl === "/MfaChangePhoneNumber" ? "/MfaChangePhoneNumber" : "/MfaSmsSetup"}
+            renderStyle="standard"
+            disabled={SMSMfaLoading || isSubmitting}
+          >
+            {prevUrl === "/MfaChangePhoneNumber"
+              ? content["mfa-sms-challenge-enter-new-mobile-again"]
+              : content["mfa-sms-challenge-enter-mobile-again"]}
+          </DTERouteLink>
+          {"."}
+        </DTEContent>
+
         {isCodeResent && (
           <div className="govuk-details__text">
             <DTEContent role="alert">{content["mfa-sms-challenge-alert-code-resent"]}</DTEContent>
