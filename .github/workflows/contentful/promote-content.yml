@@ -1,0 +1,48 @@
+name: Promote Contentful Content
+
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: 'Source environment (e.g. dev)'
+        required: true
+        default: 'dev'
+      target:
+        description: 'Target environment (e.g. test, uat, master)'
+        required: true
+        default: 'test'
+      tag:
+        description: 'Contentful tag ID to filter by (e.g. signedOff)'
+        required: true
+        default: 'signedOff'
+      dry_run:
+        description: 'Dry run only? (true/false)'
+        required: true
+        default: 'true'
+
+jobs:
+  promote-contentful-tagged:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run promotion script
+        env:
+          CONTENTFUL_SPACE_ID: ${{ secrets.REACT_APP_CONTENTFUL_SPACE_ID }}
+          CONTENTFUL_MANAGEMENT_TOKEN: ${{ secrets.REACT_APP_CONTENTFUL_MANAGEMENT_TOKEN }}
+        run: |
+          node .contentful/workflows/promote-content.js \
+            --source=${{ github.event.inputs.source }} \
+            --target=${{ github.event.inputs.target }} \
+            --tag=${{ github.event.inputs.tag }} \
+            $([[ "${{ github.event.inputs.dry_run }}" == "true" ]] && echo "--dry-run")
