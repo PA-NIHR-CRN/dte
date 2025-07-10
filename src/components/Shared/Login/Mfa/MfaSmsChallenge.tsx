@@ -224,29 +224,31 @@ const MfaSmsChallenge = () => {
           <DTEDetails summary={content["mfa-sms-challenge-not-received-header"]}>
             <>
               <DTEContent>{content["mfa-change-phone-confirm-not-received-busy-text"]}</DTEContent>
-              {content["mfa-change-phone-confirm-not-received-pre-links-text"]}{" "}
-              <DTERouteLink
-                to={prevUrl === "/MfaChangePhoneNumber" ? "/MfaChangePhoneNumber" : "/MfaSmsSetup"}
-                renderStyle="standard"
-                disabled={SMSMfaLoading || isSubmitting}
-              >
-                {prevUrl === "/MfaChangePhoneNumber"
-                  ? content["mfa-sms-challenge-enter-new-mobile-again"]
-                  : content["mfa-sms-challenge-enter-mobile-again"]}
-              </DTERouteLink>
-              {" or "}
-              <DTERouteLink
-                renderStyle="standard"
-                disabled={SMSMfaLoading || isSubmitting}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleResendCode();
-                }}
-                to={"#"}
-              >
-                {content["mfa-sms-challenge-link-resend-code"]}
-              </DTERouteLink>
-              {"."}
+              <DTEContent>
+                {content["mfa-change-phone-confirm-not-received-pre-links-text"]}{" "}
+                <DTERouteLink
+                  to={prevUrl === "/MfaChangePhoneNumber" ? "/MfaChangePhoneNumber" : "/MfaSmsSetup"}
+                  renderStyle="standard"
+                  disabled={SMSMfaLoading || isSubmitting}
+                >
+                  {prevUrl === "/MfaChangePhoneNumber"
+                    ? content["mfa-sms-challenge-enter-new-mobile-again"]
+                    : content["mfa-sms-challenge-enter-mobile-again"]}
+                </DTERouteLink>
+                {" or "}
+                <DTERouteLink
+                  renderStyle="standard"
+                  disabled={SMSMfaLoading || isSubmitting}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleResendCode();
+                  }}
+                  to={"#"}
+                >
+                  {content["mfa-sms-challenge-link-resend-code"]}
+                </DTERouteLink>
+                {"."}
+              </DTEContent>
             </>
           </DTEDetails>
           <DTEButton type="submit" disabled={SMSMfaLoading || isSubmitting}>
