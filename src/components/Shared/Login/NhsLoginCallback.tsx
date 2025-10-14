@@ -6,9 +6,11 @@ import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import { AuthContext } from "../../../context/AuthContext";
 import { ContentContext } from "../../../context/ContentContext";
 import Cookies from "js-cookie";
+import { ErrorSsoLoginRequired } from "../../../pages/NHS/NhsAppIntegration";
 
 const userIsUnderageErrorCode = "User_Is_Underage";
 const unableToMatchAccounts = "Unable_To_Match_Accounts";
+
 function NhsLoginCallback() {
   const { content } = useContext(ContentContext);
 
@@ -18,7 +20,7 @@ function NhsLoginCallback() {
   const errorDescription = new URLSearchParams(search).get("error_description");
   const state = new URLSearchParams(search).get("state");
   const history = useHistory();
-  const { saveToken } = useContext(AuthContext);
+  const { saveToken, isInNHSApp } = useContext(AuthContext);
 
   // check the auth code is valid and get the token from the API
   const [{ response, loading }, checkCode] = useAxiosFetch(
@@ -48,6 +50,8 @@ function NhsLoginCallback() {
     if (error === "access_denied" && errorDescription === "ConsentNotGiven") {
       const path = state === "ssointegration" ? `/nhsnoconsent?state=${state}` : "/nhsnoconsent";
       history.push(path);
+    } else if (error === ErrorSsoLoginRequired && isInNHSApp) {
+      history.push(`/nhsappintegration?error=${error}`);
     }
   }, [error, errorDescription]);
 
