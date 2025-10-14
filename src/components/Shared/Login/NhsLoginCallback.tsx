@@ -51,7 +51,7 @@ function NhsLoginCallback() {
       const path = state === "ssointegration" ? `/nhsnoconsent?state=${state}` : "/nhsnoconsent";
       history.push(path);
     } else if (error === errorSsoLoginRequired && isInNHSApp) {
-      history.push(`${process.env.REACT_APP_BASE_URL}/nhsappintegration?error=${error}`);
+      history.push(`/nhsappintegration?error=${error}`);
     }
   }, [error, errorDescription]);
 
