@@ -3,8 +3,6 @@ import { useLocation } from "react-router-dom";
 import LoadingIndicator from "../../../components/Shared/LoadingIndicator/LoadingIndicator";
 import { ContentContext } from "../../../context/ContentContext";
 
-const errorSsoLoginRequired = "sso_login_required";
-
 function NhsAppIntegration() {
   const { content } = useContext(ContentContext);
   const { search } = useLocation();
@@ -30,7 +28,7 @@ function NhsAppIntegration() {
       redirect_uri: `${redirectUri}/callback`,
     };
 
-    if (error === errorSsoLoginRequired) {
+    if (error === ErrorSsoLoginRequired) {
       params.prompt = "login";
     }
 
@@ -44,3 +42,4 @@ function NhsAppIntegration() {
 }
 
 export default NhsAppIntegration;
+export const ErrorSsoLoginRequired = "sso_login_required";

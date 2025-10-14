@@ -6,10 +6,10 @@ import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import { AuthContext } from "../../../context/AuthContext";
 import { ContentContext } from "../../../context/ContentContext";
 import Cookies from "js-cookie";
+import { ErrorSsoLoginRequired } from "../../../pages/NHS/NhsAppIntegration";
 
 const userIsUnderageErrorCode = "User_Is_Underage";
 const unableToMatchAccounts = "Unable_To_Match_Accounts";
-const errorSsoLoginRequired = "sso_login_required";
 
 function NhsLoginCallback() {
   const { content } = useContext(ContentContext);
@@ -50,7 +50,7 @@ function NhsLoginCallback() {
     if (error === "access_denied" && errorDescription === "ConsentNotGiven") {
       const path = state === "ssointegration" ? `/nhsnoconsent?state=${state}` : "/nhsnoconsent";
       history.push(path);
-    } else if (error === errorSsoLoginRequired && isInNHSApp) {
+    } else if (error === ErrorSsoLoginRequired && isInNHSApp) {
       history.push(`/nhsappintegration?error=${error}`);
     }
   }, [error, errorDescription]);
