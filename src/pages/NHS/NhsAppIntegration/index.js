@@ -21,7 +21,9 @@ function NhsAppIntegration() {
     const params = {
       prompt: "none",
       client_id: clientId,
-      scope: scope,
+      // The scope configuration value is already URI encoded.
+      // Decode first to prevent double encoding.
+      scope: decodeURIComponent(scope),
       asserted_login_identity: assertedLoginIdentity,
       response_type: "code",
       state: "ssointegration",
