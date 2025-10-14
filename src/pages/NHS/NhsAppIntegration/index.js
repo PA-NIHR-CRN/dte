@@ -11,7 +11,6 @@ function NhsAppIntegration() {
   const assertedLoginIdentity = new URLSearchParams(search).get("assertedLoginIdentity");
 
   useEffect(() => {
-    const { search } = useLocation();
     const error = new URLSearchParams(search).get("error");
 
     const redirectUri = process.env.REACT_APP_BASE_URL;
@@ -33,7 +32,7 @@ function NhsAppIntegration() {
       params.prompt = "login";
     }
 
-    var url = new URL(`${nhsBaseDomain}/authorize`);
+    const url = new URL(`${nhsBaseDomain}/authorize`);
     url.search = new URLSearchParams(params);
 
     window.location.href = url.toString();
