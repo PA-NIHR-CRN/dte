@@ -17,6 +17,7 @@ if (!fs.existsSync(sbomPath)) {
 
 const sbom = JSON.parse(fs.readFileSync(sbomPath, 'utf8'));
 
+// ---- Load outdated.json (from yarn outdated parsing) ----
 let outdated = {};
 if (fs.existsSync(outdatedPath)) {
     try {
@@ -50,67 +51,73 @@ function normalizeName(name) {
     return name;
 }
 
-// Build a PURL → component map
-const componentsByPurl = {};
+// ---- Build component maps ----
+
+// Map by bom-ref (primary key in CycloneDX dependency graph)
+const componentsByRef = {};
 (sbom.components || []).forEach(c => {
-    if (c.purl) componentsByPurl[c.purl] = c;
+    const ref = c['bom-ref'] || c.purl || c.name;
+    componentsByRef[ref] = c;
 });
 
-// Extract components as dependency list
+// Extract only library components we care about
 const sbomDeps = (sbom.components || [])
     .filter(c => c.type === 'library' && c.name && c.version)
-    .map(c => ({
-        purl: c.purl,
-        name: normalizeName(c.name),
-        rawName: c.name,
-        version: c.version,
-        license: (c.licenses?.[0]?.license?.id) || null
-    }));
+    .map(c => {
+        const ref = c['bom-ref'] || c.purl || c.name;
+        return {
+            ref,
+            purl: c.purl || null,
+            name: normalizeName(c.name),
+            rawName: c.name,
+            version: c.version,
+            license: (c.licenses?.[0]?.license?.id) || null
+        };
+    });
 
-// ---- Dependency Graph (forward + reverse) ----
-const forwardDeps = {}; // purl -> [purl...]
-const reverseDeps = {}; // purl -> [purl...]
+// ---- Dependency Graph (forward + reverse) using bom-ref ----
+const forwardDeps = {}; // ref -> [ref...]
+const reverseDeps = {}; // ref -> [ref...]
 
 (sbom.dependencies || []).forEach(dep => {
-    const parent = dep.ref;
+    const parentRef = dep.ref;
     const children = dep.dependsOn || [];
 
-    if (!forwardDeps[parent]) forwardDeps[parent] = [];
-    forwardDeps[parent].push(...children);
+    if (!forwardDeps[parentRef]) forwardDeps[parentRef] = [];
+    forwardDeps[parentRef].push(...children);
 
-    children.forEach(child => {
-        if (!reverseDeps[child]) reverseDeps[child] = [];
-        reverseDeps[child].push(parent);
+    children.forEach(childRef => {
+        if (!reverseDeps[childRef]) reverseDeps[childRef] = [];
+        reverseDeps[childRef].push(parentRef);
     });
 });
 
-// ---- Resolve top-level ancestry for each component ----
-function findTopLevelAncestors(purl) {
+// ---- Resolve top-level ancestry for each component (by bom-ref) ----
+function findTopLevelAncestors(startRef) {
     const result = new Set();
     const visited = new Set();
 
-    function walk(node) {
-        if (!node || visited.has(node)) return;
-        visited.add(node);
+    function walk(ref) {
+        if (!ref || visited.has(ref)) return;
+        visited.add(ref);
 
-        const comp = componentsByPurl[node];
+        const comp = componentsByRef[ref];
         if (!comp) return;
 
         const name = normalizeName(comp.name);
-
         if (topLevelNames.has(name)) {
             result.add(name);
         }
 
-        const parents = reverseDeps[node] || [];
+        const parents = reverseDeps[ref] || [];
         parents.forEach(walk);
     }
 
-    walk(purl);
-    return Array.from(result);
+    walk(startRef);
+    return Array.from(result).sort();
 }
 
-// ---- Vulnerability aggregation ----
+// ---- Vulnerability aggregation (still keyed by purl, from Grype) ----
 let vulnByPurl = {};
 if (fs.existsSync(grypePath)) {
     const grype = JSON.parse(fs.readFileSync(grypePath, 'utf8'));
@@ -148,19 +155,21 @@ function getLatest(name, currentVersion) {
     return entry.latest || currentVersion;
 }
 
-// ---- Build final results ----
+// ---- Build final result sets ----
 let topLevel = [];
 let transitive = [];
 
 for (const d of sbomDeps) {
-    const vul = vulnByPurl[d.purl] || { count: 0, maxSeverity: null, vulns: [] };
-    const ancestors = findTopLevelAncestors(d.purl);
+    const vul = d.purl ? (vulnByPurl[d.purl] || { count: 0, maxSeverity: null, vulns: [] })
+        : { count: 0, maxSeverity: null, vulns: [] };
+
+    const ancestors = findTopLevelAncestors(d.ref);
 
     const record = {
         name: d.name,
         version: d.version,
         latest: null,
-        requiredBy: ancestors,   // NEW!
+        requiredBy: ancestors,   // filled for transitive, empty for true roots
         license: d.license,
         vulnCount: vul.count,
         maxSeverity: vul.maxSeverity,
