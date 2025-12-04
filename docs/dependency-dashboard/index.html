@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Dependency & Security Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            margin: 2rem;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 0.4rem 0.6rem;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: #f2f2f2;
+            text-align: left;
+        }
+
+        .severity-CRITICAL {
+            background: #ffe0e0;
+        }
+
+        .severity-HIGH {
+            background: #ffe8d5;
+        }
+
+        .severity-MEDIUM {
+            background: #fff5d5;
+        }
+
+        .severity-LOW {
+            background: #eaf7ff;
+        }
+
+        .badge {
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.4rem;
+            font-size: 0.75rem;
+            background: #444;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Dependency & Security Dashboard</h1>
+    <p id="meta"></p>
+
+    <table id="deps-table">
+        <thead>
+            <tr>
+                <th>Package</th>
+                <th>Current Version</th>
+                <th>Latest Version</th>
+                <th>Vulnerabilities</th>
+                <th>Max Severity</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

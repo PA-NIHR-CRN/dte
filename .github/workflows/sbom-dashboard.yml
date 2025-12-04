@@ -1,0 +1,48 @@
+name: SBOM Dashboard
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+
+jobs:
+  sbom-and-dashboard:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate SBOM (Syft)
+        uses: anchore/syft-action@v0
+        with:
+          output-file: sbom.json
+          format: cyclonedx-json
+
+      - name: Scan vulnerabilities (Grype)
+        uses: anchore/grype-action@v0
+        with:
+          sbom: sbom.json
+          output: grype-output.json
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate dashboard summary
+        run: node scripts/build-dashboard-summary.mjs
+
+      - name: Commit updated dashboard
+        run: |
+          if [ -n "$(git status --porcelain docs/dependency-dashboard/data)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add docs/dependency-dashboard/data
+            git commit -m "Update dependency dashboard [skip ci]"
+            git push
+          else
+            echo "No changes to commit."
+          fi
