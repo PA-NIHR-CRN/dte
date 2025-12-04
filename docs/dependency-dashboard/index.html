@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Dependency Dashboard</title>
+    <title>Dependency & Security Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <style>
@@ -17,7 +17,16 @@
         }
 
         h2 {
+            cursor: pointer;
             margin-top: 2rem;
+            user-select: none;
+            font-size: 1.3rem;
+        }
+
+        /* Collapsible container */
+        .collapsible {
+            overflow: hidden;
+            transition: max-height 0.3s ease;
         }
 
         table {
@@ -36,6 +45,7 @@
         th {
             background: #f2f2f2;
             text-align: left;
+            cursor: pointer;
         }
 
         .severity-CRITICAL {
@@ -59,42 +69,54 @@
             border-radius: 0.4rem;
             font-size: 0.75rem;
             background: #444;
-            color: white;
+            color: #fff;
+        }
+
+        #meta {
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            color: #444;
         }
     </style>
 </head>
 
 <body>
-    <h1>Dependency Dashboard</h1>
+    <h1>Dependency & Security Dashboard</h1>
     <p id="meta"></p>
 
-    <h2>Top-Level Dependencies</h2>
-    <table id="top-table">
-        <thead>
-            <tr>
-                <th>Package</th>
-                <th>Current</th>
-                <th>Latest</th>
-                <th>Vulnerabilities</th>
-                <th>Severity</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <!-- TOP LEVEL DEPENDENCIES -->
+    <h2 data-target="top-section">Top-Level Dependencies ▼</h2>
+    <div id="top-section" class="collapsible">
+        <table id="top-table">
+            <thead>
+                <tr>
+                    <th data-sort="name">Package</th>
+                    <th data-sort="version">Current</th>
+                    <th>Latest</th>
+                    <th data-sort="vulnCount">Vulns</th>
+                    <th data-sort="severity">Severity</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
-    <h2>Transitive Dependencies</h2>
-    <table id="trans-table">
-        <thead>
-            <tr>
-                <th>Package</th>
-                <th>Current</th>
-                <th>Vulnerabilities</th>
-                <th>Severity</th>
-                <th>Required By</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <!-- TRANSITIVE DEPENDENCIES -->
+    <h2 data-target="trans-section">Transitive Dependencies ▼</h2>
+    <div id="trans-section" class="collapsible">
+        <table id="trans-table">
+            <thead>
+                <tr>
+                    <th data-sort="name">Package</th>
+                    <th data-sort="version">Current</th>
+                    <th data-sort="vulnCount">Vulns</th>
+                    <th data-sort="severity">Severity</th>
+                    <th>Required By</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
     <script src="dashboard.js"></script>
 </body>
