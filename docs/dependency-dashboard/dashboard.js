@@ -129,21 +129,4 @@
             }
         });
     });
-
-    // ---- Collapsible Sections ----
-    document.querySelectorAll("h2[data-target]").forEach(h2 => {
-        const targetId = h2.dataset.target;
-        const section = document.getElementById(targetId);
-
-        section.style.maxHeight = "0px"; // start collapsed
-
-        h2.addEventListener("click", () => {
-            const collapsed = section.style.maxHeight === "0px";
-
-            h2.textContent = h2.textContent.replace("▼", "").replace("▲", "") +
-                (collapsed ? " ▲" : " ▼");
-
-            section.style.maxHeight = collapsed ? "2000px" : "0px";
-        });
-    });
 })();
