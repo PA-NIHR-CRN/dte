@@ -45,25 +45,25 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'yarn'
 
-      # ---- Install dependencies (required for npm outdated)
+      # ---- Install dependencies
       - name: Install deps
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
-      # ---- Collect latest available versions from registry
+      # ---- Collect latest available versions
       - name: Collect latest versions
         run: |
-          # npm outdated exits with code 1 when outdated packages exist.
-          # We suppress that because we want the output regardless.
-          npm outdated --json > outdated.json || true
-          
-          # Guarantee the file exists even if all packages are up-to-date.
+          # Yarn outdated returns exit code 1 when outdated packages exist.
+          # We suppress it because we need the output.
+          yarn outdated --json > outdated.json || true
+
+          # Guarantee file exists
           if [ ! -s outdated.json ]; then echo "{}" > outdated.json; fi
 
           echo "Latest version metadata saved to outdated.json"
 
-      # ---- Generate dashboard (your script must read sbom.json, grype-output.json, outdated.json)
+      # ---- Generate dashboard summary
       - name: Generate dashboard summary
         run: node scripts/build-dashboard-summary.mjs
 
