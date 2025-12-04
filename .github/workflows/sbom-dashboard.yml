@@ -18,18 +18,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate SBOM (Syft)
-        uses: anchore/syft-action@v0
-        with:
-          output-file: sbom.json
-          format: cyclonedx-json
+      # ---- Install Syft (manual, enterprise-safe)
+      - name: Install Syft
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh \
+            | sh -s -- -b /usr/local/bin
 
-      - name: Scan vulnerabilities (Grype)
-        uses: anchore/grype-action@v0
-        with:
-          sbom: sbom.json
-          output: grype-output.json
+      - name: Generate SBOM (CycloneDX JSON)
+        run: |
+          syft dir:. -o cyclonedx-json > sbom.json
+          echo "SBOM generated: sbom.json"
 
+      # ---- Install Grype (manual, enterprise-safe)
+      - name: Install Grype
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh \
+            | sh -s -- -b /usr/local/bin
+
+      - name: Scan vulnerabilities with Grype
+        run: |
+          grype sbom:sbom.json -o json > grype-output.json
+          echo "Vulnerability report generated: grype-output.json"
+
+      # ---- Node setup
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -38,6 +49,7 @@ jobs:
       - name: Generate dashboard summary
         run: node scripts/build-dashboard-summary.mjs
 
+      # ---- Commit updated dashboard
       - name: Commit updated dashboard
         run: |
           if [ -n "$(git status --porcelain docs/dependency-dashboard/data)" ]; then
