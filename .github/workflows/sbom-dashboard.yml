@@ -45,7 +45,25 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
+      # ---- Install dependencies (required for npm outdated)
+      - name: Install deps
+        run: npm ci
+
+      # ---- Collect latest available versions from registry
+      - name: Collect latest versions
+        run: |
+          # npm outdated exits with code 1 when outdated packages exist.
+          # We suppress that because we want the output regardless.
+          npm outdated --json > outdated.json || true
+          
+          # Guarantee the file exists even if all packages are up-to-date.
+          if [ ! -s outdated.json ]; then echo "{}" > outdated.json; fi
+
+          echo "Latest version metadata saved to outdated.json"
+
+      # ---- Generate dashboard (your script must read sbom.json, grype-output.json, outdated.json)
       - name: Generate dashboard summary
         run: node scripts/build-dashboard-summary.mjs
 

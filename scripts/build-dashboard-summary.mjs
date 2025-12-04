@@ -4,6 +4,8 @@ import path from 'node:path';
 const root = process.cwd();
 const sbomPath = path.join(root, 'sbom.json');
 const grypePath = path.join(root, 'grype-output.json');
+const outdatedPath = path.join(root, 'outdated.json');
+
 const outputDir = path.join(root, 'docs', 'dependency-dashboard', 'data');
 const outputPath = path.join(outputDir, 'summary.json');
 
@@ -13,6 +15,17 @@ if (!fs.existsSync(sbomPath)) {
 }
 
 const sbom = JSON.parse(fs.readFileSync(sbomPath, 'utf8'));
+
+// Read outdated.json (may be empty "{}")
+let outdated = {};
+if (fs.existsSync(outdatedPath)) {
+    try {
+        outdated = JSON.parse(fs.readFileSync(outdatedPath, 'utf8'));
+    } catch (e) {
+        console.warn('Could not parse outdated.json, using empty data');
+        outdated = {};
+    }
+}
 
 // Extract dependencies that have version + purl
 const deps = (sbom.components || [])
@@ -46,13 +59,19 @@ if (fs.existsSync(grypePath)) {
     }
 }
 
+// Helper: get latest version from outdated.json
+function getLatest(name) {
+    if (!outdated[name]) return null;
+    return outdated[name].latest || null;
+}
+
 // Build final array
 const dependencies = deps.map(d => {
     const v = vulnByPurl[d.purl] || { count: 0, maxSeverity: null };
     return {
         name: d.name,
         version: d.version,
-        latest: null,  // You can fill this later using npm registry lookup
+        latest: getLatest(d.name),
         license: d.license,
         vulnCount: v.count,
         maxSeverity: v.maxSeverity
