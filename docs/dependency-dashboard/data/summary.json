@@ -1,6 +1,6 @@
 {
   "application": "dte",
-  "generated": "2025-12-04T15:08:13.409Z",
+  "generated": "2025-12-04T15:13:19.859Z",
   "topLevel": [
     {
       "name": "@accessible/use-id",
@@ -1159,7 +1159,7 @@
     {
       "name": "react-router-dom",
       "version": "5.3.4",
-      "latest": "7.10.0",
+      "latest": "7.10.1",
       "requiredBy": [
         "react-router-dom"
       ],
