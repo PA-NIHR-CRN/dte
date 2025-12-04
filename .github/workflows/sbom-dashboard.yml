@@ -1,6 +1,9 @@
 name: SBOM Dashboard
 
 on:
+  push:
+    branches:
+      - i/3rd-party-dashboard
   schedule:
     - cron: "0 8 * * *"
   workflow_dispatch:
