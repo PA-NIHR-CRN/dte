@@ -1,6 +1,6 @@
 {
   "application": "dte",
-  "generated": "2025-12-04T13:08:46.428Z",
+  "generated": "2025-12-04T13:13:46.337Z",
   "dependencies": [
     {
       "name": "@aashutoshrathi/word-wrap",
@@ -1101,7 +1101,7 @@
     {
       "name": "@contentful/rich-text-react-renderer",
       "version": "15.18.0",
-      "latest": null,
+      "latest": "16.1.6",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -1301,7 +1301,7 @@
     {
       "name": "@emotion/react",
       "version": "11.11.1",
-      "latest": null,
+      "latest": "11.14.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -1325,7 +1325,7 @@
     {
       "name": "@emotion/styled",
       "version": "11.11.0",
-      "latest": null,
+      "latest": "11.14.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -1461,7 +1461,7 @@
     {
       "name": "@fortawesome/fontawesome-svg-core",
       "version": "1.3.0",
-      "latest": null,
+      "latest": "7.1.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -1469,7 +1469,7 @@
     {
       "name": "@fortawesome/free-brands-svg-icons",
       "version": "6.7.2",
-      "latest": null,
+      "latest": "7.1.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -1477,7 +1477,7 @@
     {
       "name": "@fortawesome/react-fontawesome",
       "version": "0.1.19",
-      "latest": null,
+      "latest": "3.1.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -1837,7 +1837,7 @@
     {
       "name": "@mui/material",
       "version": "5.14.14",
-      "latest": null,
+      "latest": "7.3.6",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2317,7 +2317,7 @@
     {
       "name": "@testing-library/jest-dom",
       "version": "5.17.0",
-      "latest": null,
+      "latest": "6.9.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2325,7 +2325,7 @@
     {
       "name": "@testing-library/react",
       "version": "14.0.0",
-      "latest": null,
+      "latest": "16.3.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2333,7 +2333,7 @@
     {
       "name": "@testing-library/user-event",
       "version": "12.8.3",
-      "latest": null,
+      "latest": "14.6.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2445,7 +2445,7 @@
     {
       "name": "@types/draftjs-to-html",
       "version": "0.8.3",
-      "latest": null,
+      "latest": "0.8.4",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2573,7 +2573,7 @@
     {
       "name": "@types/jest",
       "version": "27.5.2",
-      "latest": null,
+      "latest": "30.0.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2581,7 +2581,7 @@
     {
       "name": "@types/jest",
       "version": "29.5.6",
-      "latest": null,
+      "latest": "30.0.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2589,7 +2589,7 @@
     {
       "name": "@types/jest-axe",
       "version": "3.5.7",
-      "latest": null,
+      "latest": "3.5.9",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2597,7 +2597,7 @@
     {
       "name": "@types/js-cookie",
       "version": "3.0.5",
-      "latest": null,
+      "latest": "3.0.6",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2621,7 +2621,7 @@
     {
       "name": "@types/markdown-draft-js",
       "version": "2.2.6",
-      "latest": null,
+      "latest": "2.2.7",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2645,7 +2645,7 @@
     {
       "name": "@types/node",
       "version": "16.18.59",
-      "latest": null,
+      "latest": "24.10.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2653,7 +2653,7 @@
     {
       "name": "@types/node",
       "version": "20.8.7",
-      "latest": null,
+      "latest": "24.10.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2693,7 +2693,7 @@
     {
       "name": "@types/qrcode",
       "version": "1.5.4",
-      "latest": null,
+      "latest": "1.5.6",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2717,7 +2717,7 @@
     {
       "name": "@types/react",
       "version": "18.2.29",
-      "latest": null,
+      "latest": "19.2.7",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2725,7 +2725,7 @@
     {
       "name": "@types/react-document-title",
       "version": "2.0.7",
-      "latest": null,
+      "latest": "2.0.10",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2733,7 +2733,7 @@
     {
       "name": "@types/react-dom",
       "version": "18.2.14",
-      "latest": null,
+      "latest": "19.2.3",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2741,7 +2741,7 @@
     {
       "name": "@types/react-draft-wysiwyg",
       "version": "1.13.6",
-      "latest": null,
+      "latest": "1.13.9",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2749,7 +2749,7 @@
     {
       "name": "@types/react-helmet",
       "version": "6.1.8",
-      "latest": null,
+      "latest": "6.1.11",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2773,7 +2773,7 @@
     {
       "name": "@types/react-spinkit",
       "version": "3.0.9",
-      "latest": null,
+      "latest": "3.0.10",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2805,7 +2805,7 @@
     {
       "name": "@types/sanitize-html",
       "version": "2.9.3",
-      "latest": null,
+      "latest": "2.16.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2869,7 +2869,7 @@
     {
       "name": "@types/styled-components",
       "version": "5.1.29",
-      "latest": null,
+      "latest": "5.1.36",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2893,7 +2893,7 @@
     {
       "name": "@types/uuid",
       "version": "8.3.4",
-      "latest": null,
+      "latest": "11.0.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2933,7 +2933,7 @@
     {
       "name": "@typescript-eslint/eslint-plugin",
       "version": "5.62.0",
-      "latest": null,
+      "latest": "8.48.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -2949,7 +2949,7 @@
     {
       "name": "@typescript-eslint/parser",
       "version": "5.62.0",
-      "latest": null,
+      "latest": "8.48.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -3853,7 +3853,7 @@
     {
       "name": "axios",
       "version": "0.21.4",
-      "latest": null,
+      "latest": "1.13.2",
       "license": null,
       "vulnCount": 3,
       "maxSeverity": "High"
@@ -3861,7 +3861,7 @@
     {
       "name": "axios",
       "version": "1.10.0",
-      "latest": null,
+      "latest": "1.13.2",
       "license": null,
       "vulnCount": 1,
       "maxSeverity": "High"
@@ -3869,7 +3869,7 @@
     {
       "name": "axios",
       "version": "1.5.1",
-      "latest": null,
+      "latest": "1.13.2",
       "license": null,
       "vulnCount": 4,
       "maxSeverity": "High"
@@ -3877,7 +3877,7 @@
     {
       "name": "axios-hooks",
       "version": "2.7.0",
-      "latest": null,
+      "latest": "5.1.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -4813,7 +4813,7 @@
     {
       "name": "contentful",
       "version": "10.6.4",
-      "latest": null,
+      "latest": "11.9.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -4821,7 +4821,7 @@
     {
       "name": "contentful-management",
       "version": "11.54.1",
-      "latest": null,
+      "latest": "11.63.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -5701,7 +5701,7 @@
     {
       "name": "dotenv",
       "version": "10.0.0",
-      "latest": null,
+      "latest": "17.2.3",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -5709,7 +5709,7 @@
     {
       "name": "dotenv",
       "version": "16.3.1",
-      "latest": null,
+      "latest": "17.2.3",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -5917,7 +5917,7 @@
     {
       "name": "enzyme-adapter-react-16",
       "version": "1.15.7",
-      "latest": null,
+      "latest": "1.15.8",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -6125,7 +6125,7 @@
     {
       "name": "eslint",
       "version": "8.51.0",
-      "latest": null,
+      "latest": "9.39.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -6149,7 +6149,7 @@
     {
       "name": "eslint-config-prettier",
       "version": "8.10.0",
-      "latest": null,
+      "latest": "10.1.8",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -6189,7 +6189,7 @@
     {
       "name": "eslint-plugin-import",
       "version": "2.28.1",
-      "latest": null,
+      "latest": "2.32.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -6197,7 +6197,7 @@
     {
       "name": "eslint-plugin-jest",
       "version": "25.7.0",
-      "latest": null,
+      "latest": "29.2.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -6205,7 +6205,7 @@
     {
       "name": "eslint-plugin-jest",
       "version": "27.4.2",
-      "latest": null,
+      "latest": "29.2.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -6213,7 +6213,7 @@
     {
       "name": "eslint-plugin-jsx-a11y",
       "version": "6.7.1",
-      "latest": null,
+      "latest": "6.10.2",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -6221,7 +6221,7 @@
     {
       "name": "eslint-plugin-prettier",
       "version": "5.0.1",
-      "latest": null,
+      "latest": "5.5.4",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -6229,7 +6229,7 @@
     {
       "name": "eslint-plugin-react",
       "version": "7.33.2",
-      "latest": null,
+      "latest": "7.37.5",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -6237,7 +6237,7 @@
     {
       "name": "eslint-plugin-react-hooks",
       "version": "4.6.0",
-      "latest": null,
+      "latest": "7.0.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -7309,7 +7309,7 @@
     {
       "name": "html-tags",
       "version": "3.3.1",
-      "latest": null,
+      "latest": "5.1.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -7453,7 +7453,7 @@
     {
       "name": "husky",
       "version": "7.0.4",
-      "latest": null,
+      "latest": "9.1.7",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -7469,7 +7469,7 @@
     {
       "name": "i18next",
       "version": "23.6.0",
-      "latest": null,
+      "latest": "25.7.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -8253,7 +8253,7 @@
     {
       "name": "jest-axe",
       "version": "5.0.1",
-      "latest": null,
+      "latest": "10.0.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -8717,7 +8717,7 @@
     {
       "name": "json-server",
       "version": "0.16.3",
-      "latest": null,
+      "latest": "1.0.0-beta.3",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -8885,7 +8885,7 @@
     {
       "name": "jwt-decode",
       "version": "3.1.2",
-      "latest": null,
+      "latest": "4.0.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -9821,7 +9821,7 @@
     {
       "name": "miragejs",
       "version": "0.1.47",
-      "latest": null,
+      "latest": "0.1.48",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -9853,7 +9853,7 @@
     {
       "name": "moment",
       "version": "2.29.4",
-      "latest": null,
+      "latest": "2.30.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -9973,7 +9973,7 @@
     {
       "name": "nhsuk-frontend",
       "version": "5.2.1",
-      "latest": null,
+      "latest": "10.2.2",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -9981,7 +9981,7 @@
     {
       "name": "nhsuk-react-components",
       "version": "2.2.2",
-      "latest": null,
+      "latest": "5.0.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -9989,7 +9989,7 @@
     {
       "name": "nhsuk-react-components-extensions",
       "version": "1.5.4",
-      "latest": null,
+      "latest": "2.3.0-beta",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -10093,7 +10093,7 @@
     {
       "name": "notistack",
       "version": "1.0.10",
-      "latest": null,
+      "latest": "3.0.2",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -10101,7 +10101,7 @@
     {
       "name": "npm",
       "version": "8.19.4",
-      "latest": null,
+      "latest": "11.6.4",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -11429,7 +11429,7 @@
     {
       "name": "prettier",
       "version": "3.0.3",
-      "latest": null,
+      "latest": "3.7.4",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -11645,7 +11645,7 @@
     {
       "name": "qrcode",
       "version": "1.5.3",
-      "latest": null,
+      "latest": "1.5.4",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -11757,7 +11757,7 @@
     {
       "name": "react",
       "version": "18.2.0",
-      "latest": null,
+      "latest": "19.2.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -11789,7 +11789,7 @@
     {
       "name": "react-dom",
       "version": "18.2.0",
-      "latest": null,
+      "latest": "19.2.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -11845,7 +11845,7 @@
     {
       "name": "react-hook-form",
       "version": "7.47.0",
-      "latest": null,
+      "latest": "7.68.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -11853,7 +11853,7 @@
     {
       "name": "react-hotjar",
       "version": "5.5.0",
-      "latest": null,
+      "latest": "6.3.1",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -11861,7 +11861,7 @@
     {
       "name": "react-i18next",
       "version": "13.3.1",
-      "latest": null,
+      "latest": "16.3.5",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -11917,7 +11917,7 @@
     {
       "name": "react-router-dom",
       "version": "5.3.4",
-      "latest": null,
+      "latest": "7.10.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -12413,7 +12413,7 @@
     {
       "name": "sanitize-html",
       "version": "2.11.0",
-      "latest": null,
+      "latest": "2.17.0",
       "license": null,
       "vulnCount": 1,
       "maxSeverity": "Medium"
@@ -12429,7 +12429,7 @@
     {
       "name": "sass",
       "version": "1.69.4",
-      "latest": null,
+      "latest": "1.94.2",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -13189,7 +13189,7 @@
     {
       "name": "styled-components",
       "version": "5.3.11",
-      "latest": null,
+      "latest": "6.1.19",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -13685,7 +13685,7 @@
     {
       "name": "typescript",
       "version": "4.9.5",
-      "latest": null,
+      "latest": "5.9.3",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -13925,7 +13925,7 @@
     {
       "name": "uuid",
       "version": "8.3.2",
-      "latest": null,
+      "latest": "13.0.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
@@ -14045,7 +14045,7 @@
     {
       "name": "web-vitals",
       "version": "1.1.2",
-      "latest": null,
+      "latest": "5.1.0",
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null
