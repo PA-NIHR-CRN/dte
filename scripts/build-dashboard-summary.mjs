@@ -26,7 +26,7 @@ if (fs.existsSync(outdatedPath)) {
     }
 }
 
-// Load top-level deps from package.json
+// ---- Determine top-level dependencies from package.json ----
 let topLevelNames = new Set();
 if (fs.existsSync(pkgJsonPath)) {
     const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
@@ -42,7 +42,7 @@ if (fs.existsSync(pkgJsonPath)) {
 }
 
 // Normalize scoped names "scope__pkg" → "@scope/pkg"
-function normalizeForOutdated(name) {
+function normalizeName(name) {
     if (name.includes('__')) {
         const [scope, pkg] = name.split('__');
         return `@${scope}/${pkg}`;
@@ -50,23 +50,72 @@ function normalizeForOutdated(name) {
     return name;
 }
 
-// Extract SBOM libraries
+// Build a PURL → component map
+const componentsByPurl = {};
+(sbom.components || []).forEach(c => {
+    if (c.purl) componentsByPurl[c.purl] = c;
+});
+
+// Extract components as dependency list
 const sbomDeps = (sbom.components || [])
     .filter(c => c.type === 'library' && c.name && c.version)
     .map(c => ({
-        name: c.name,
-        normalizedName: normalizeForOutdated(c.name),
-        version: c.version,
         purl: c.purl,
+        name: normalizeName(c.name),
+        rawName: c.name,
+        version: c.version,
         license: (c.licenses?.[0]?.license?.id) || null
     }));
 
-// Vulnerability aggregation (from Grype)
+// ---- Dependency Graph (forward + reverse) ----
+const forwardDeps = {}; // purl -> [purl...]
+const reverseDeps = {}; // purl -> [purl...]
+
+(sbom.dependencies || []).forEach(dep => {
+    const parent = dep.ref;
+    const children = dep.dependsOn || [];
+
+    if (!forwardDeps[parent]) forwardDeps[parent] = [];
+    forwardDeps[parent].push(...children);
+
+    children.forEach(child => {
+        if (!reverseDeps[child]) reverseDeps[child] = [];
+        reverseDeps[child].push(parent);
+    });
+});
+
+// ---- Resolve top-level ancestry for each component ----
+function findTopLevelAncestors(purl) {
+    const result = new Set();
+    const visited = new Set();
+
+    function walk(node) {
+        if (!node || visited.has(node)) return;
+        visited.add(node);
+
+        const comp = componentsByPurl[node];
+        if (!comp) return;
+
+        const name = normalizeName(comp.name);
+
+        if (topLevelNames.has(name)) {
+            result.add(name);
+        }
+
+        const parents = reverseDeps[node] || [];
+        parents.forEach(walk);
+    }
+
+    walk(purl);
+    return Array.from(result);
+}
+
+// ---- Vulnerability aggregation ----
 let vulnByPurl = {};
 if (fs.existsSync(grypePath)) {
     const grype = JSON.parse(fs.readFileSync(grypePath, 'utf8'));
     const matches = grype.matches || [];
-    const severityOrder = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
+    const order = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
 
     for (const m of matches) {
         const purl = m.artifact?.purl;
@@ -80,7 +129,7 @@ if (fs.existsSync(grypePath)) {
         vulnByPurl[purl].count++;
 
         const current = vulnByPurl[purl].maxSeverity;
-        if (!current || severityOrder.indexOf(sev) > severityOrder.indexOf(current)) {
+        if (!current || order.indexOf(sev) > order.indexOf(current)) {
             vulnByPurl[purl].maxSeverity = sev;
         }
 
@@ -92,31 +141,34 @@ if (fs.existsSync(grypePath)) {
     }
 }
 
-// Latest version only applies to top-level packages
+// ---- Latest version only for top-level deps ----
 function getLatest(name, currentVersion) {
     const entry = outdated[name];
     if (!entry) return null;
     return entry.latest || currentVersion;
 }
 
+// ---- Build final results ----
 let topLevel = [];
 let transitive = [];
 
 for (const d of sbomDeps) {
     const vul = vulnByPurl[d.purl] || { count: 0, maxSeverity: null, vulns: [] };
+    const ancestors = findTopLevelAncestors(d.purl);
 
     const record = {
-        name: d.normalizedName,
+        name: d.name,
         version: d.version,
         latest: null,
+        requiredBy: ancestors,   // NEW!
         license: d.license,
         vulnCount: vul.count,
         maxSeverity: vul.maxSeverity,
         vulnerabilities: vul.vulns
     };
 
-    if (topLevelNames.has(d.normalizedName)) {
-        record.latest = getLatest(d.normalizedName, d.version);
+    if (topLevelNames.has(d.name)) {
+        record.latest = getLatest(d.name, d.version);
         topLevel.push(record);
     } else {
         transitive.push(record);
