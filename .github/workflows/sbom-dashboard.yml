@@ -54,7 +54,6 @@ jobs:
       # ---- Collect & Normalize latest versions
       - name: Collect latest versions
         run: |
-          # Capture Yarn’s JSON event stream
           yarn outdated --json > raw-outdated.log || true
 
           node << 'EOF'
@@ -73,7 +72,7 @@ jobs:
               const rows = entry.data.body;
               for (const row of rows) {
                 const pkg = row[0];     // package name
-                const current = row[1]; // current installed
+                const current = row[1]; // installed version
                 const latest = row[3];  // latest available
                 map[pkg] = { current, latest };
               }
@@ -81,7 +80,7 @@ jobs:
           }
 
           fs.writeFileSync('outdated.json', JSON.stringify(map, null, 2));
-          console.log("Created normalized outdated.json:", Object.keys(map).length, "entries");
+          console.log("Created normalized outdated.json with", Object.keys(map).length, "entries");
           EOF
 
       # ---- Generate dashboard summary

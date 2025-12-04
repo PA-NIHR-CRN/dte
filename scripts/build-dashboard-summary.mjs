@@ -20,13 +20,22 @@ let outdated = {};
 if (fs.existsSync(outdatedPath)) {
     try {
         outdated = JSON.parse(fs.readFileSync(outdatedPath, 'utf8'));
-    } catch (e) {
+    } catch {
         console.warn('Could not parse outdated.json, using empty data');
         outdated = {};
     }
 }
 
-// Extract dependencies
+// Convert CycloneDX "scope__pkg" → "@scope/pkg"
+function normalizeForOutdated(name) {
+    if (name.includes('__')) {
+        const [scope, pkg] = name.split('__');
+        return `@${scope}/${pkg}`;
+    }
+    return name;
+}
+
+// Extract dependencies from SBOM
 const deps = (sbom.components || [])
     .filter(c => c.type === 'library' && c.purl && c.version)
     .map(c => ({
@@ -36,7 +45,7 @@ const deps = (sbom.components || [])
         license: (c.licenses?.[0]?.license?.id) || null
     }));
 
-// Vulnerability aggregation
+// Process vulnerability data
 let vulnByPurl = {};
 if (fs.existsSync(grypePath)) {
     const grype = JSON.parse(fs.readFileSync(grypePath, 'utf8'));
@@ -48,31 +57,45 @@ if (fs.existsSync(grypePath)) {
         const sev = m.vulnerability?.severity;
         if (!purl || !sev) continue;
 
-        if (!vulnByPurl[purl]) vulnByPurl[purl] = { count: 0, maxSeverity: null };
+        if (!vulnByPurl[purl]) {
+            vulnByPurl[purl] = { count: 0, maxSeverity: null, vulns: [] };
+        }
 
         vulnByPurl[purl].count++;
-        const current = vulnByPurl[purl].maxSeverity;
 
+        // Keep highest severity
+        const current = vulnByPurl[purl].maxSeverity;
         if (!current || order.indexOf(sev) > order.indexOf(current)) {
             vulnByPurl[purl].maxSeverity = sev;
         }
+
+        // Add linked vulnerability info
+        vulnByPurl[purl].vulns.push({
+            id: m.vulnerability?.id || null,
+            severity: sev,
+            link: m.vulnerability?.dataSource || null
+        });
     }
 }
 
-// helper
-function getLatest(name) {
-    return outdated[name]?.latest || null;
+// Get latest version (fallback = current version)
+function getLatest(name, currentVersion) {
+    const npmName = normalizeForOutdated(name);
+    const entry = outdated[npmName];
+    return entry?.latest || currentVersion; // fallback ensures no blanks
 }
 
 const dependencies = deps.map(d => {
-    const v = vulnByPurl[d.purl] || { count: 0, maxSeverity: null };
+    const v = vulnByPurl[d.purl] || { count: 0, maxSeverity: null, vulns: [] };
+
     return {
         name: d.name,
         version: d.version,
-        latest: getLatest(d.name),
+        latest: getLatest(d.name, d.version),
         license: d.license,
         vulnCount: v.count,
-        maxSeverity: v.maxSeverity
+        maxSeverity: v.maxSeverity,
+        vulnerabilities: v.vulns // array of {id, severity, link}
     };
 });
 
