@@ -5,6 +5,7 @@ const root = process.cwd();
 const sbomPath = path.join(root, 'sbom.json');
 const grypePath = path.join(root, 'grype-output.json');
 const outdatedPath = path.join(root, 'outdated.json');
+const pkgJsonPath = path.join(root, 'package.json');
 
 const outputDir = path.join(root, 'docs', 'dependency-dashboard', 'data');
 const outputPath = path.join(outputDir, 'summary.json');
@@ -21,12 +22,26 @@ if (fs.existsSync(outdatedPath)) {
     try {
         outdated = JSON.parse(fs.readFileSync(outdatedPath, 'utf8'));
     } catch {
-        console.warn('Could not parse outdated.json, using empty data');
         outdated = {};
     }
 }
 
-// Convert CycloneDX "scope__pkg" → "@scope/pkg"
+// Load top-level deps from package.json
+let topLevelNames = new Set();
+if (fs.existsSync(pkgJsonPath)) {
+    const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
+
+    const add = obj => {
+        if (!obj) return;
+        for (const k of Object.keys(obj)) topLevelNames.add(k);
+    };
+
+    add(pkgJson.dependencies);
+    add(pkgJson.devDependencies);
+    add(pkgJson.peerDependencies);
+}
+
+// Normalize scoped names "scope__pkg" → "@scope/pkg"
 function normalizeForOutdated(name) {
     if (name.includes('__')) {
         const [scope, pkg] = name.split('__');
@@ -35,22 +50,23 @@ function normalizeForOutdated(name) {
     return name;
 }
 
-// Extract dependencies from SBOM
-const deps = (sbom.components || [])
-    .filter(c => c.type === 'library' && c.purl && c.version)
+// Extract SBOM libraries
+const sbomDeps = (sbom.components || [])
+    .filter(c => c.type === 'library' && c.name && c.version)
     .map(c => ({
         name: c.name,
+        normalizedName: normalizeForOutdated(c.name),
         version: c.version,
         purl: c.purl,
         license: (c.licenses?.[0]?.license?.id) || null
     }));
 
-// Process vulnerability data
+// Vulnerability aggregation (from Grype)
 let vulnByPurl = {};
 if (fs.existsSync(grypePath)) {
     const grype = JSON.parse(fs.readFileSync(grypePath, 'utf8'));
     const matches = grype.matches || [];
-    const order = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
+    const severityOrder = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
 
     for (const m of matches) {
         const purl = m.artifact?.purl;
@@ -63,13 +79,11 @@ if (fs.existsSync(grypePath)) {
 
         vulnByPurl[purl].count++;
 
-        // Keep highest severity
         const current = vulnByPurl[purl].maxSeverity;
-        if (!current || order.indexOf(sev) > order.indexOf(current)) {
+        if (!current || severityOrder.indexOf(sev) > severityOrder.indexOf(current)) {
             vulnByPurl[purl].maxSeverity = sev;
         }
 
-        // Add linked vulnerability info
         vulnByPurl[purl].vulns.push({
             id: m.vulnerability?.id || null,
             severity: sev,
@@ -78,33 +92,44 @@ if (fs.existsSync(grypePath)) {
     }
 }
 
-// Get latest version (fallback = current version)
+// Latest version only applies to top-level packages
 function getLatest(name, currentVersion) {
-    const npmName = normalizeForOutdated(name);
-    const entry = outdated[npmName];
-    return entry?.latest || currentVersion; // fallback ensures no blanks
+    const entry = outdated[name];
+    if (!entry) return null;
+    return entry.latest || currentVersion;
 }
 
-const dependencies = deps.map(d => {
-    const v = vulnByPurl[d.purl] || { count: 0, maxSeverity: null, vulns: [] };
+let topLevel = [];
+let transitive = [];
 
-    return {
-        name: d.name,
+for (const d of sbomDeps) {
+    const vul = vulnByPurl[d.purl] || { count: 0, maxSeverity: null, vulns: [] };
+
+    const record = {
+        name: d.normalizedName,
         version: d.version,
-        latest: getLatest(d.name, d.version),
+        latest: null,
         license: d.license,
-        vulnCount: v.count,
-        maxSeverity: v.maxSeverity,
-        vulnerabilities: v.vulns // array of {id, severity, link}
+        vulnCount: vul.count,
+        maxSeverity: vul.maxSeverity,
+        vulnerabilities: vul.vulns
     };
-});
+
+    if (topLevelNames.has(d.normalizedName)) {
+        record.latest = getLatest(d.normalizedName, d.version);
+        topLevel.push(record);
+    } else {
+        transitive.push(record);
+    }
+}
 
 fs.mkdirSync(outputDir, { recursive: true });
 
 const summary = {
     application: path.basename(root),
     generated: new Date().toISOString(),
-    dependencies
+    topLevel,
+    transitive
 };
 
 fs.writeFileSync(outputPath, JSON.stringify(summary, null, 2));

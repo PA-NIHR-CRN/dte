@@ -27,9 +27,8 @@ jobs:
       - name: Generate SBOM (CycloneDX JSON)
         run: |
           syft dir:. -o cyclonedx-json > sbom.json
-          echo "SBOM generated: sbom.json"
 
-      # ---- Install Grype (manual, enterprise-safe)
+      # ---- Install Grype
       - name: Install Grype
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh \
@@ -38,7 +37,6 @@ jobs:
       - name: Scan vulnerabilities with Grype
         run: |
           grype sbom:sbom.json -o json > grype-output.json
-          echo "Vulnerability report generated: grype-output.json"
 
       # ---- Node setup
       - name: Setup Node
@@ -47,11 +45,10 @@ jobs:
           node-version: '20'
           cache: 'yarn'
 
-      # ---- Install dependencies
       - name: Install deps
         run: yarn install --frozen-lockfile
 
-      # ---- Collect & Normalize latest versions
+      # ---- Collect latest versions from registry
       - name: Collect latest versions
         run: |
           yarn outdated --json > raw-outdated.log || true
@@ -71,23 +68,22 @@ jobs:
             if (entry.type === 'table') {
               const rows = entry.data.body;
               for (const row of rows) {
-                const pkg = row[0];     // package name
-                const current = row[1]; // installed version
-                const latest = row[3];  // latest available
+                const pkg = row[0];
+                const current = row[1];
+                const latest = row[3];
                 map[pkg] = { current, latest };
               }
             }
           }
 
           fs.writeFileSync('outdated.json', JSON.stringify(map, null, 2));
-          console.log("Created normalized outdated.json with", Object.keys(map).length, "entries");
           EOF
 
-      # ---- Generate dashboard summary
+      # ---- Build dashboard data
       - name: Generate dashboard summary
         run: node scripts/build-dashboard-summary.mjs
 
-      # ---- Commit updated dashboard
+      # ---- Commit dashboard
       - name: Commit updated dashboard
         run: |
           if [ -n "$(git status --porcelain docs/dependency-dashboard/data)" ]; then
