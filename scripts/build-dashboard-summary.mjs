@@ -16,7 +16,6 @@ if (!fs.existsSync(sbomPath)) {
 
 const sbom = JSON.parse(fs.readFileSync(sbomPath, 'utf8'));
 
-// Read outdated.json (may be empty "{}")
 let outdated = {};
 if (fs.existsSync(outdatedPath)) {
     try {
@@ -27,7 +26,7 @@ if (fs.existsSync(outdatedPath)) {
     }
 }
 
-// Extract dependencies that have version + purl
+// Extract dependencies
 const deps = (sbom.components || [])
     .filter(c => c.type === 'library' && c.purl && c.version)
     .map(c => ({
@@ -53,19 +52,18 @@ if (fs.existsSync(grypePath)) {
 
         vulnByPurl[purl].count++;
         const current = vulnByPurl[purl].maxSeverity;
+
         if (!current || order.indexOf(sev) > order.indexOf(current)) {
             vulnByPurl[purl].maxSeverity = sev;
         }
     }
 }
 
-// Helper: get latest version from outdated.json
+// helper
 function getLatest(name) {
-    if (!outdated[name]) return null;
-    return outdated[name].latest || null;
+    return outdated[name]?.latest || null;
 }
 
-// Build final array
 const dependencies = deps.map(d => {
     const v = vulnByPurl[d.purl] || { count: 0, maxSeverity: null };
     return {

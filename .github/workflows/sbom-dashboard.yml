@@ -51,17 +51,38 @@ jobs:
       - name: Install deps
         run: yarn install --frozen-lockfile
 
-      # ---- Collect latest available versions
+      # ---- Collect & Normalize latest versions
       - name: Collect latest versions
         run: |
-          # Yarn outdated returns exit code 1 when outdated packages exist.
-          # We suppress it because we need the output.
-          yarn outdated --json > outdated.json || true
+          # Capture Yarn’s JSON event stream
+          yarn outdated --json > raw-outdated.log || true
 
-          # Guarantee file exists
-          if [ ! -s outdated.json ]; then echo "{}" > outdated.json; fi
+          node << 'EOF'
+          const fs = require('fs');
 
-          echo "Latest version metadata saved to outdated.json"
+          const lines = fs.readFileSync('raw-outdated.log', 'utf8')
+            .trim()
+            .split('\n')
+            .map(l => { try { return JSON.parse(l); } catch { return null; }})
+            .filter(Boolean);
+
+          const map = {};
+
+          for (const entry of lines) {
+            if (entry.type === 'table') {
+              const rows = entry.data.body;
+              for (const row of rows) {
+                const pkg = row[0];     // package name
+                const current = row[1]; // current installed
+                const latest = row[3];  // latest available
+                map[pkg] = { current, latest };
+              }
+            }
+          }
+
+          fs.writeFileSync('outdated.json', JSON.stringify(map, null, 2));
+          console.log("Created normalized outdated.json:", Object.keys(map).length, "entries");
+          EOF
 
       # ---- Generate dashboard summary
       - name: Generate dashboard summary
