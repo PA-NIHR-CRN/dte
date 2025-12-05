@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write   # allow pushing to central dashboard repo
+      contents: write
 
     steps:
       # ------------------------
@@ -82,7 +82,7 @@ jobs:
           EOF
 
       # ------------------------
-      # Download shared builder script (AUTH REQUIRED)
+      # Download builder script (private repo)
       # ------------------------
       - name: Download build-summary.mjs from dashboard repo
         run: |
@@ -91,7 +91,7 @@ jobs:
             -o build-summary.mjs
 
           if grep -q "404: Not Found" build-summary.mjs; then
-            echo "ERROR: build-summary.mjs not accessible (private repo RAW requires auth)"
+            echo "ERROR: build-summary.mjs not accessible"
             exit 1
           fi
 
@@ -111,15 +111,15 @@ jobs:
           token: ${{ secrets.DEPENDENCY_DASHBOARD_TOKEN }}
           path: dashboard
 
-      - name: Save report into dashboard/data
+      - name: Save report into dashboard/docs/data
         run: |
-          mkdir -p dashboard/docs/dashboard/data
-          cp summary.json dashboard/docs/dashboard/data/dte.json
+          mkdir -p dashboard/docs/data
+          cp summary.json dashboard/docs/data/dte.json
 
           cd dashboard
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add docs/dashboard/data/dte.json
+          git add docs/data/dte.json
           git commit -m "Update dependency report for dte" || echo "No changes"
           git push
