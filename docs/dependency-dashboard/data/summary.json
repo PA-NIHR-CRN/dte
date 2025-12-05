@@ -1,6 +1,6 @@
 {
   "application": "dte",
-  "generated": "2025-12-04T15:19:54.488Z",
+  "generated": "2025-12-05T12:24:28.585Z",
   "topLevel": [
     {
       "name": "@accessible/use-id",
@@ -488,17 +488,17 @@
       ],
       "license": null,
       "vulnCount": 3,
-      "maxSeverity": "High",
+      "maxSeverity": "Medium",
       "vulnerabilities": [
-        {
-          "id": "GHSA-jr5f-v2jv-69x6",
-          "severity": "High",
-          "link": "https://github.com/advisories/GHSA-jr5f-v2jv-69x6"
-        },
         {
           "id": "GHSA-wf5p-g6vw-rhxx",
           "severity": "Medium",
           "link": "https://github.com/advisories/GHSA-wf5p-g6vw-rhxx"
+        },
+        {
+          "id": "GHSA-jr5f-v2jv-69x6",
+          "severity": "High",
+          "link": "https://github.com/advisories/GHSA-jr5f-v2jv-69x6"
         },
         {
           "id": "GHSA-4hjh-wcwx-xvwj",
@@ -546,14 +546,14 @@
           "link": "https://github.com/advisories/GHSA-8hc4-vh64-cxmj"
         },
         {
-          "id": "GHSA-jr5f-v2jv-69x6",
-          "severity": "High",
-          "link": "https://github.com/advisories/GHSA-jr5f-v2jv-69x6"
-        },
-        {
           "id": "GHSA-wf5p-g6vw-rhxx",
           "severity": "Medium",
           "link": "https://github.com/advisories/GHSA-wf5p-g6vw-rhxx"
+        },
+        {
+          "id": "GHSA-jr5f-v2jv-69x6",
+          "severity": "High",
+          "link": "https://github.com/advisories/GHSA-jr5f-v2jv-69x6"
         },
         {
           "id": "GHSA-4hjh-wcwx-xvwj",
@@ -5800,6 +5800,16 @@
       "vulnerabilities": []
     },
     {
+      "name": "PA-NIHR-CRN/dependency-dashboard",
+      "version": "v1",
+      "latest": null,
+      "requiredBy": [],
+      "license": null,
+      "vulnCount": 0,
+      "maxSeverity": null,
+      "vulnerabilities": []
+    },
+    {
       "name": "abab",
       "version": "2.0.6",
       "latest": null,
@@ -6002,6 +6012,16 @@
       "vulnerabilities": []
     },
     {
+      "name": "actions/checkout",
+      "version": "v4",
+      "latest": null,
+      "requiredBy": [],
+      "license": null,
+      "vulnCount": 0,
+      "maxSeverity": null,
+      "vulnerabilities": []
+    },
+    {
       "name": "actions/download-artifact",
       "version": "v2",
       "latest": null,
@@ -6074,6 +6094,16 @@
     {
       "name": "actions/setup-node",
       "version": "v2",
+      "latest": null,
+      "requiredBy": [],
+      "license": null,
+      "vulnCount": 0,
+      "maxSeverity": null,
+      "vulnerabilities": []
+    },
+    {
+      "name": "actions/setup-node",
+      "version": "v4",
       "latest": null,
       "requiredBy": [],
       "license": null,
