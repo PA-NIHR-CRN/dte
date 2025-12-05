@@ -1,0 +1,91 @@
+name: Dependency Report
+
+on:
+  schedule:
+    - cron: "0 7 * * *"   # runs daily
+  workflow_dispatch:       # allow manual runs
+  push:
+    branches:
+      - main               # or your default branch
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read       # read this repo
+      id-token: write
+
+    steps:
+      - name: Checkout app repo
+        uses: actions/checkout@v4
+
+      # -----------------------------
+      # Generate SBOM + vulnerabilities
+      # -----------------------------
+      - name: Install Syft
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh \
+            | sh -s -- -b /usr/local/bin
+
+      - name: Create SBOM
+        run: syft dir:. -o cyclonedx-json > sbom.json
+
+      - name: Install Grype
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh \
+            | sh -s -- -b /usr/local/bin
+
+      - name: Scan vulnerabilities
+        run: grype sbom:sbom.json -o json > grype-output.json
+
+      # -----------------------------
+      # Generate version information
+      # -----------------------------
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      - name: Enable Corepack (for Yarn 3+ projects)
+        run: corepack enable
+
+      - name: Activate Yarn version
+        run: corepack prepare --activate
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Collect registry latest versions
+        run: |
+          yarn outdated --json > raw-outdated.log || true
+
+          node << 'EOF'
+          const fs = require('fs');
+          const lines = fs.readFileSync('raw-outdated.log','utf8')
+            .trim().split('\n')
+            .map(l => { try { return JSON.parse(l) } catch { return null }})
+            .filter(Boolean);
+
+          const map = {};
+          for (const entry of lines) {
+            if (entry.type === 'table') {
+              for (const row of entry.data.body) {
+                const pkg = row[0];
+                const current = row[1];
+                const latest = row[3];
+                map[pkg] = { current, latest };
+              }
+            }
+          }
+          fs.writeFileSync('outdated.json', JSON.stringify(map, null, 2));
+          EOF
+
+      # -----------------------------
+      # Use reusable action to publish report
+      # -----------------------------
+      - name: Upload dependency summary to central dashboard
+        uses: PA-NIHR-CRN/dependency-dashboard@v1
+        with:
+          app-name: dte
+          github-token: ${{ secrets.DEPENDENCY_DASHBOARD_TOKEN }}
