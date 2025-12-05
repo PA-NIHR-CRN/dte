@@ -1,6 +1,6 @@
 {
   "application": "dte",
-  "generated": "2025-12-05T12:29:54.433Z",
+  "generated": "2025-12-05T14:28:51.677Z",
   "topLevel": [
     {
       "name": "@accessible/use-id",
@@ -5794,16 +5794,6 @@
       "requiredBy": [
         "react-scripts"
       ],
-      "license": null,
-      "vulnCount": 0,
-      "maxSeverity": null,
-      "vulnerabilities": []
-    },
-    {
-      "name": "PA-NIHR-CRN/dependency-dashboard",
-      "version": "v1",
-      "latest": null,
-      "requiredBy": [],
       "license": null,
       "vulnCount": 0,
       "maxSeverity": null,
