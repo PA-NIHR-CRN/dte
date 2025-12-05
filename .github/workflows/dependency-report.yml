@@ -73,11 +73,17 @@ jobs:
           EOF
 
       # --- DOWNLOAD SHARED SCRIPT FROM CENTRAL DASHBOARD ---
-      - name: Download shared build-summary script
+      - name: Download build-summary.mjs from dashboard repo
         run: |
           curl -L \
-            https://raw.githubusercontent.com/PA-NIHR-CRN/dependency-dashboard/main/scripts/build-summary.mjs \
+            https://raw.githubusercontent.com/PA-NIHR-CRN/dependency-dashboard/main/docs/dashboard/scripts/build-summary.mjs \
             -o build-summary.mjs
+
+          # Confirm file downloaded correctly (should NOT contain 404)
+          if grep -q "404: Not Found" build-summary.mjs; then
+            echo "ERROR: build-summary.mjs not found in dashboard repo"
+            exit 1
+          fi
 
       # --- Run summary builder ---
       - name: Build summary JSON
