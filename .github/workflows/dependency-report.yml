@@ -76,7 +76,7 @@ jobs:
       - name: Download build-summary.mjs from dashboard repo
         run: |
           curl -L \
-            https://raw.githubusercontent.com/PA-NIHR-CRN/dependency-dashboard/main/docs/dashboard/scripts/build-summary.mjs \
+            https://raw.githubusercontent.com/PA-NIHR-CRN/dependency-dashboard/main/scripts/build-summary.mjs \
             -o build-summary.mjs
 
           # Confirm file downloaded correctly (should NOT contain 404)
