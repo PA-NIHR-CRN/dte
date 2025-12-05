@@ -1,4 +1,4 @@
-name: SBOM Dashboard
+name: Dependency Report
 
 on:
   push:
