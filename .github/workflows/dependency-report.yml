@@ -11,14 +11,20 @@ on:
 jobs:
   sbom-and-dashboard:
     runs-on: ubuntu-latest
+
     permissions:
       contents: write   # allow pushing to central dashboard repo
 
     steps:
+      # ------------------------
+      # Checkout this application
+      # ------------------------
       - name: Checkout app repo
         uses: actions/checkout@v4
 
-      # --- SBOM ---
+      # ------------------------
+      # SBOM (Syft)
+      # ------------------------
       - name: Install Syft
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh \
@@ -27,7 +33,9 @@ jobs:
       - name: Generate SBOM
         run: syft dir:. -o cyclonedx-json > sbom.json
 
-      # --- Vulnerabilities ---
+      # ------------------------
+      # Vulnerabilities (Grype)
+      # ------------------------
       - name: Install Grype
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh \
@@ -36,7 +44,9 @@ jobs:
       - name: Scan vulnerabilities
         run: grype sbom:sbom.json -o json > grype-output.json
 
-      # --- Install Node + project deps ---
+      # ------------------------
+      # Collect version information
+      # ------------------------
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -49,7 +59,6 @@ jobs:
       - name: Install deps
         run: yarn install --immutable
 
-      # --- Generate outdated.json ---
       - name: Collect latest versions
         run: |
           yarn outdated --json > raw.log || true
@@ -72,24 +81,29 @@ jobs:
           fs.writeFileSync("outdated.json", JSON.stringify(out,null,2));
           EOF
 
-      # --- DOWNLOAD SHARED SCRIPT FROM CENTRAL DASHBOARD ---
+      # ------------------------
+      # Download shared builder script (AUTH REQUIRED)
+      # ------------------------
       - name: Download build-summary.mjs from dashboard repo
         run: |
-          curl -L \
-            https://raw.githubusercontent.com/PA-NIHR-CRN/dependency-dashboard/main/scripts/build-summary.mjs \
+          curl -H "Authorization: token ${{ secrets.DEPENDENCY_DASHBOARD_TOKEN }}" \
+            -L "https://raw.githubusercontent.com/PA-NIHR-CRN/dependency-dashboard/main/scripts/build-summary.mjs" \
             -o build-summary.mjs
 
-          # Confirm file downloaded correctly (should NOT contain 404)
           if grep -q "404: Not Found" build-summary.mjs; then
-            echo "ERROR: build-summary.mjs not found in dashboard repo"
+            echo "ERROR: build-summary.mjs not accessible (private repo RAW requires auth)"
             exit 1
           fi
 
-      # --- Run summary builder ---
+      # ------------------------
+      # Build summary.json
+      # ------------------------
       - name: Build summary JSON
         run: node build-summary.mjs
 
-      # --- Push filename: dte.json ---
+      # ------------------------
+      # Push dte.json → central dashboard repository
+      # ------------------------
       - name: Checkout dashboard repo
         uses: actions/checkout@v4
         with:
@@ -97,7 +111,7 @@ jobs:
           token: ${{ secrets.DEPENDENCY_DASHBOARD_TOKEN }}
           path: dashboard
 
-      - name: Save file into dashboard/data
+      - name: Save report into dashboard/data
         run: |
           mkdir -p dashboard/docs/dashboard/data
           cp summary.json dashboard/docs/dashboard/data/dte.json
@@ -105,6 +119,7 @@ jobs:
           cd dashboard
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/dashboard/data
-          git commit -m "Update report for dte" || echo "No changes"
+
+          git add docs/dashboard/data/dte.json
+          git commit -m "Update dependency report for dte" || echo "No changes"
           git push
