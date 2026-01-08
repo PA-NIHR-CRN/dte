@@ -181,10 +181,10 @@ describe("DOB Form Functional tests", () => {
     render(<DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />);
 
     fireEvent.change(screen.getByLabelText(/Day/), {
-      target: { value: yesterday.getDay() },
+      target: { value: yesterday.getDay() + 1 },
     });
     fireEvent.change(screen.getByLabelText(/Month/), {
-      target: { value: yesterday.getMonth() },
+      target: { value: yesterday.getMonth() + 1  },
     });
     fireEvent.change(screen.getByLabelText(/Year/), {
       target: { value: yesterday.getFullYear() },
@@ -202,10 +202,10 @@ describe("DOB Form Functional tests", () => {
     render(<DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />);
 
     fireEvent.change(screen.getByLabelText(/Day/), {
-      target: { value: tomorrow.getDay() },
+      target: { value: tomorrow.getDay() + 1 },
     });
     fireEvent.change(screen.getByLabelText(/Month/), {
-      target: { value: tomorrow.getMonth() },
+      target: { value: tomorrow.getMonth() + 1 },
     });
     fireEvent.change(screen.getByLabelText(/Year/), {
       target: { value: tomorrow.getFullYear() },
@@ -223,10 +223,10 @@ describe("DOB Form Functional tests", () => {
     render(<DOBForm onDataChange={mockOnDataChange} initialStateData={testData} />);
 
     fireEvent.change(screen.getByLabelText(/Day/), {
-      target: { value: validDate.getDay() },
+      target: { value: validDate.getDay() + 1 },
     });
     fireEvent.change(screen.getByLabelText(/Month/), {
-      target: { value: validDate.getMonth() },
+      target: { value: validDate.getMonth() + 1 },
     });
     fireEvent.change(screen.getByLabelText(/Year/), {
       target: { value: validDate.getFullYear() },
