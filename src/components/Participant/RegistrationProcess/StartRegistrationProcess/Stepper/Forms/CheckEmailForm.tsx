@@ -25,13 +25,15 @@ function CheckEmailForm(props: CheckEmailFormProps) {
   const history = useHistory();
 
   const dob = new Date(
-    parseInt(initialStateData.dobFormData.year, 10),
-    parseInt(initialStateData.dobFormData.month, 10) - 1,
-    parseInt(initialStateData.dobFormData.day, 10),
-    0,
-    0,
-    0,
-    0
+    Date.UTC(
+      parseInt(initialStateData.dobFormData.year, 10),
+      parseInt(initialStateData.dobFormData.month, 10) - 1,
+      parseInt(initialStateData.dobFormData.day, 10),
+      0,
+      0,
+      0,
+      0
+    )
   ).toISOString();
 
   const [{ response, loading, error }] = useAxiosFetch(
