@@ -89,21 +89,16 @@ const renderContent = (node: any, parentNodeType?: string, currentIndex?: number
       }
       return <span style={getTextStyles(node, parentNodeType)}>{node.value}</span>;
     case "hyperlink":
-      const uri = node.data.uri;
-      const isHttpLink = /^https?:/i.test(uri);
-      const isSpecialScheme = /^(mailto:|tel:)/i.test(uri);
-
       return (
         <DTERouteLink
-          to={uri}
-          external={isHttpLink || isSpecialScheme}
-          target={isHttpLink ? "_blank" : undefined}
-          rel={isHttpLink ? "noopener noreferrer" : undefined}
+          to={node.data.uri}
           renderStyle="standard"
-          ariaLabel={`${node.content[0].value}${isHttpLink ? " (opens in a new tab)" : ""}`}
+          ariaLabel={node.content[0].value}
         >
           {node.content.map((childNode: any, index: number) => (
-            <React.Fragment key={index}>{renderContent(childNode)}</React.Fragment>
+            <React.Fragment key={index}>
+              {renderContent(childNode)}
+            </React.Fragment>
           ))}
         </DTERouteLink>
       );
