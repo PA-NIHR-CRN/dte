@@ -29,6 +29,7 @@ function NhsLoginCallback() {
       method: "POST",
       data: {
         code: authCode,
+        state: state,
         redirectUrl: `${process.env.REACT_APP_BASE_URL}/callback`,
         selectedLocale: Cookies.get("selectedLanguage") || "en-GB",
       },
