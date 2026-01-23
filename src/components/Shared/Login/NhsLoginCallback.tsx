@@ -10,6 +10,7 @@ import { ErrorSsoLoginRequired } from "../../../pages/NHS/NhsAppIntegration";
 
 const userIsUnderageErrorCode = "User_Is_Underage";
 const unableToMatchAccounts = "Unable_To_Match_Accounts";
+const authenticationError = "Authentication_Error";
 
 function NhsLoginCallback() {
   const { content } = useContext(ContentContext);
@@ -62,6 +63,8 @@ function NhsLoginCallback() {
       history.push(`/under18`);
     } else if (result?.errors?.some((e) => e.detail === unableToMatchAccounts)) {
       history.push(`/unabletomatch`);
+    } else if (result?.errors?.some((e) => e.detail === authenticationError)) {
+      history.push("/Participants/Options", { authError: true });
     } else if (result?.isSuccess) {
       saveToken(result?.content);
       const path = state === "ssointegration" ? "/nhsapplanding" : "/";

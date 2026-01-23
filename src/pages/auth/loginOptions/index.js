@@ -1,5 +1,5 @@
-import { useHistory } from "react-router-dom";
-import React, { useContext } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { useContext } from "react";
 import { Grid } from "@material-ui/core";
 import styled from "styled-components";
 import DocumentTitle from "react-document-title";
@@ -7,6 +7,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import { ContentContext } from "../../../context/ContentContext";
 import DTEHeader from "../../../components/Shared/UI/DTETypography/DTEHeader/DTEHeader";
 import DTEBackLink from "../../../components/Shared/UI/DTEBackLink/DTEBackLink";
+import ErrorMessageContainer from "../../../components/Shared/ErrorMessageContainer/ErrorMessageContainer";
 
 export const LoginWrapper = styled(Grid)`
   margin: 20px 10px 40px 10px;
@@ -25,6 +26,8 @@ function LoginOptions() {
   const { isAuthenticated } = useContext(AuthContext);
   const history = useHistory();
   const { content } = useContext(ContentContext);
+  const location = useLocation();
+  const hasAuthError = location.state?.authError === true;
 
   if (isAuthenticated()) {
     history.push("/");
@@ -44,6 +47,7 @@ function LoginOptions() {
         </Grid>
         <Grid container justifyContent="center" alignItems="center" role="main" id="main">
           <LoginWrapper item xs={12} sm={8} md={6} lg={5} xl={4}>
+            {hasAuthError && <ErrorMessageContainer nhsError={content["nhs-login-expired"]}></ErrorMessageContainer>}
             <DTEHeader as="h1">{content["signin-options-header"]}</DTEHeader>
             {content["signin-options"]}
           </LoginWrapper>
