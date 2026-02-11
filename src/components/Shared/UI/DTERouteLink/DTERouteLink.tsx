@@ -95,22 +95,30 @@ function classifyHref(to: string): LinkType {
   if (isSpecialScheme) return { type: "special" };
 
   if (isHttp) {
-    try {
-      const base = typeof window === "undefined" ? "http://localhost" : window.location.origin;
+    const url = new URL(to);
 
-      const url = new URL(to, base);
-
-      if (typeof window !== "undefined" && url.origin === window.location.origin) {
-        return { type: "internal", path: url.pathname + url.search + url.hash };
-      }
-
-      return { type: "external" };
-    } catch {
-      return { type: "external" };
+    if (url.origin === window.location.origin) {
+      return { type: "internal", path: url.pathname + url.search + url.hash };
     }
+
+    return { type: "external" };
   }
 
   return { type: "internal", path: to };
+}
+
+function normalizeAriaLabel(label?: string, isExternal?: boolean) {
+  if (!label) return label;
+  if (!isExternal) return label;
+
+  const trimmed = label.trim();
+
+  const cleaned = trimmed.replace(
+    /\s*[\(\-–—]?\s*opens?\s+in\s+(a\s+)?new\s+(tab|window)\.?\s*\)?\s*$/i,
+    ""
+  );
+
+  return `${cleaned.trim()} (opens in new tab)`;
 }
 
 function DTERouteLink({
@@ -136,10 +144,7 @@ function DTERouteLink({
   const finalTarget = target ?? (isExternal ? "_blank" : undefined);
   const finalRel = rel ?? (finalTarget === "_blank" ? "noopener noreferrer" : undefined);
 
-  const computedAriaLabel =
-    isExternal && ariaLabel && !ariaLabel.toLowerCase().includes("open")
-      ? `${ariaLabel} (opens in a new tab)`
-      : ariaLabel;
+  const computedAriaLabel = normalizeAriaLabel(ariaLabel, finalTarget === "_blank");
 
   if (isExternal || link.type === "special") {
     return (
