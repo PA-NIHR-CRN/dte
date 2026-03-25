@@ -65,13 +65,7 @@ function DTEPhaseBanner({ phase, url }: DTEPhaseBannerProps) {
         <StyledStrong>{phase}</StyledStrong>
         <StyledSpan>
           {content["phase-banner-body1"]}
-          <DTERouteLink
-            to={url}
-            external
-            target="_blank"
-            renderStyle="standard"
-            ariaLabel="feedback"
-          >
+          <DTERouteLink to={url} external target="_blank" renderStyle="standard" ariaLabel="feedback">
             {content["phase-banner-link"]}
           </DTERouteLink>{" "}
           {content["phase-banner-body2"]}
