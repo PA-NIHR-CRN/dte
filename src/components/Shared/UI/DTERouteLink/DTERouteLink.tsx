@@ -108,17 +108,9 @@ function classifyHref(to: string): LinkType {
 }
 
 function normalizeAriaLabel(label?: string, isExternal?: boolean) {
-  if (!label) return label;
-  if (!isExternal) return label;
+  if (!label || !isExternal) return label;
 
-  const trimmed = label.trim();
-
-  const cleaned = trimmed.replace(
-    /\s*[\(\-–—]?\s*opens?\s+in\s+(a\s+)?new\s+(tab|window)\.?\s*\)?\s*$/i,
-    ""
-  );
-
-  return `${cleaned.trim()} (opens in new tab)`;
+  return `${label.trim()} (opens in new tab)`;
 }
 
 function DTERouteLink({

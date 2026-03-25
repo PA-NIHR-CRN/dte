@@ -70,7 +70,7 @@ function DTEPhaseBanner({ phase, url }: DTEPhaseBannerProps) {
             external
             target="_blank"
             renderStyle="standard"
-            ariaLabel="feedback, opens in a new tab"
+            ariaLabel="feedback"
           >
             {content["phase-banner-link"]}
           </DTERouteLink>{" "}

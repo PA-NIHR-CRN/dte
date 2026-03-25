@@ -111,7 +111,7 @@ export default function FooterLinksPanel(props: FooterLinksPanelProps) {
                   target="_blank"
                   external
                   inverted
-                  ariaLabel={`${link.name} (Opens in a new tab)`}
+                  ariaLabel={`${link.name}`}
                   rel="noopener noreferrer"
                 >
                   {link.name}
