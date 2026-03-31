@@ -64,7 +64,7 @@ const BPORLink = styled.a<IsMobileProps>`
 
 const ShawTrustLink = styled.a.attrs(() => {
   return {
-    "aria-label": "Shaw Trust Accessible, Be Part of Research Accreditation (Opens in a new tab)",
+    "aria-label": "Shaw Trust Accessible, Be Part of Research Accreditation (opens in new tab)",
     href: "https://www.accessibility-services.co.uk/certificates/nihr-be-part-of-research/",
     target: "_blank",
     rel: "noopener noreferrer",
@@ -297,7 +297,7 @@ export default function Footer() {
               to={{ pathname: "https://www.facebook.com/OfficialNIHR/" }}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Facebook (Opens in a new tab)"
+              aria-label="Facebook (opens in new tab)"
             >
               <SocialIconWrapper>
                 <SocialIcon aria-label="Facebook" icon={faFacebookF as IconProp} size="xs" />
@@ -307,7 +307,7 @@ export default function Footer() {
               to={{ pathname: "https://x.com/nihrresearch" }}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="X (Formerly Twitter) (Opens in a new tab)"
+              aria-label="X (Formerly Twitter) (opens in new tab)"
             >
               <SocialIconWrapper>
                 <SocialIcon aria-label="X (Formerly Twitter)" icon={faXTwitter as IconProp} size="xs" />
@@ -317,7 +317,7 @@ export default function Footer() {
               to={{ pathname: "https://www.youtube.com/user/NIHRtv" }}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="YouTube (Opens in a new tab)"
+              aria-label="YouTube (opens in new tab)"
             >
               <SocialIconWrapper>
                 <SocialIcon aria-label="YouTube" icon={faYoutube as IconProp} size="xs" />
@@ -327,7 +327,7 @@ export default function Footer() {
               to={{ pathname: "https://www.linkedin.com/company/nihr-research" }}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="LinkedIn (Opens in a new tab)"
+              aria-label="LinkedIn (opens in new tab)"
             >
               <SocialIconWrapper>
                 <SocialIcon aria-label="LinkedIn" icon={faLinkedin as IconProp} size="xs" />
@@ -337,7 +337,7 @@ export default function Footer() {
               to={{ pathname: "https://www.instagram.com/nihr_research/" }}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Instagram (Opens in a new tab)"
+              aria-label="Instagram (opens in new tab)"
             >
               <SocialIconWrapper>
                 <SocialIcon aria-label="Instagram" icon={faInstagram as IconProp} size="xs" />
@@ -399,7 +399,7 @@ export default function Footer() {
               href="https://bepartofresearch.nihr.ac.uk"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Be Part of Research (Opens in a new tab)"
+              aria-label="Be Part of Research (opens in new tab)"
               isMobile={isMobile}
             >
               <BPORLogo />
@@ -427,7 +427,7 @@ export default function Footer() {
             href="https://www.research.hscni.net/"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Public Health Agency Northern Ireland (Opens in a new tab)"
+            aria-label="Public Health Agency Northern Ireland (opens in new tab)"
             className="footerImage NI-logo-link"
           >
             <img
@@ -442,7 +442,7 @@ export default function Footer() {
             href="https://www.nhsresearchscotland.org.uk/"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="NHS Scotland (Opens in a new tab)"
+            aria-label="NHS Scotland (opens in new tab)"
             className="footerImage scot-logo-img"
           >
             <img src={nhsScotlandlogo} className="regional-logos img-responsive" alt="NHS Scotland" />
@@ -453,7 +453,7 @@ export default function Footer() {
             href="https://healthandcareresearchwales.org/"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Health and Care Research Wales (Opens in a new tab)"
+            aria-label="Health and Care Research Wales (opens in new tab)"
             className="footerImage HCWLogoContainer"
           >
             <img src={HCRwaleslogo} className="regional-logos img-responsive" alt="Health and Care Research Wales" />

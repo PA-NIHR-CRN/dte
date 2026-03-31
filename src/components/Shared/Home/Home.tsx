@@ -105,7 +105,7 @@ function Home() {
                 target={isNhsLinkedAccount ? "_blank" : undefined}
                 ariaLabel={
                   isNhsLinkedAccount
-                    ? `${content["reusable-account-settings-header"]} (Opens in a new tab)`
+                    ? `${content["reusable-account-settings-header"]} (opens in new tab)`
                     : content["reusable-account-settings-header"]
                 }
               >
@@ -143,7 +143,7 @@ function Home() {
                 renderStyle="standard"
                 external
                 target="_blank"
-                ariaLabel={`${content["account-search-studies-header"]} (Opens in a new tab)`}
+                ariaLabel={`${content["account-search-studies-header"]} (opens in new tab)`}
               >
                 <DTEHeader as="h2" $variant="h3" captionKey="account-search-studies-header">
                   {content["account-search-studies-header"]}

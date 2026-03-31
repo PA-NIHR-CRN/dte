@@ -128,7 +128,7 @@ function DTERouteLink({
   target,
   rel,
   ...rest
-}: DTERouteLinkProps) {
+}: Readonly<DTERouteLinkProps>) {
   const link = classifyHref(to);
   const isExternal = external ?? link.type === "external";
   const className = determineClassName(renderStyle, inverted || false);
@@ -167,7 +167,7 @@ function DTERouteLink({
       $small={$small}
       $padded={$padded}
       disabled={disabled}
-      aria-label={ariaLabel}
+      aria-label={computedAriaLabel}
       {...rest}
     >
       {children}

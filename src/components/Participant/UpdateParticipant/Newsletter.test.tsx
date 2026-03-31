@@ -48,7 +48,7 @@ describe("Areas Of Research display tests", () => {
     expect(links[1].textContent).toBe("Sign up to the Be Part of Research newsletter");
     expect(links[1]).toHaveAttribute(
       "aria-label",
-      "Sign up to the Be Part of Research newsletter (Opens in a new tab)"
+      "Sign up to the Be Part of Research newsletter (opens in new tab)"
     );
     expect(links[1]).toHaveAttribute(
       "href",

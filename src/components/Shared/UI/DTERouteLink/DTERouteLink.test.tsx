@@ -47,7 +47,7 @@ describe("DTERouteLink target", () => {
 
   it("link must have target attribute when assigned", async () => {
     render(
-      <DTERouteLink target="_blank" to="/">
+      <DTERouteLink to="https://bepartofresearch-beta.nihr.ac.uk/">
         Link text
       </DTERouteLink>
     );
@@ -57,7 +57,7 @@ describe("DTERouteLink target", () => {
 
   it("link must have target attribute of _blank", async () => {
     render(
-      <DTERouteLink target="_blank" to="/">
+      <DTERouteLink to="https://bepartofresearch-beta.nihr.ac.uk/">
         Link text
       </DTERouteLink>
     );

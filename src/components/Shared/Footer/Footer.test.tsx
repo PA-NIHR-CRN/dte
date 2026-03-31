@@ -104,7 +104,7 @@ describe("Test suite for Footer element", () => {
         const linkElement = links.find((l) => l.getAttribute("href") === link);
         expect(linkElement).toBeInTheDocument();
         if (isExternal) {
-          expect(linkElement).toHaveAttribute("aria-label", `${text} (Opens in a new tab)`);
+          expect(linkElement).toHaveAttribute("aria-label", `${text} (opens in new tab)`);
           expect(linkElement).toHaveAttribute("target", "_blank");
           expect(linkElement).toHaveAttribute("rel", "noopener noreferrer");
           if (!isImage) {
