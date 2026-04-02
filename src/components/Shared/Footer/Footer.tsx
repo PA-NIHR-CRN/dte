@@ -90,7 +90,6 @@ const ShawTrustLogo = styled.img.attrs(() => {
   width: 100%;
 `;
 
-// eslint-disable-next-line
 const NIHRLogo = styled.img.attrs(() => {
   return {
     src: `${nihrlogo}`,
@@ -100,7 +99,6 @@ const NIHRLogo = styled.img.attrs(() => {
   width: 100%;
 `;
 
-// eslint-disable-next-line
 const FooterImageLink = styled.a`
   border: 3px solid transparent;
   display: block;
@@ -113,7 +111,6 @@ const FooterImageLink = styled.a`
   }
 `;
 
-// eslint-disable-next-line
 const HSCLogo = styled.img.attrs(() => {
   return {
     src: `${HSClogo}`,
@@ -123,7 +120,6 @@ const HSCLogo = styled.img.attrs(() => {
   width: 100%;
 `;
 
-// eslint-disable-next-line
 const NHSScotlandLogo = styled.img.attrs(() => {
   return {
     src: `${nhsScotlandlogo}`,
@@ -133,7 +129,6 @@ const NHSScotlandLogo = styled.img.attrs(() => {
   width: 80%;
 `;
 
-// eslint-disable-next-line
 const HCRWales = styled.img.attrs(() => {
   return {
     src: `${HCRwaleslogo}`,
@@ -157,7 +152,6 @@ const FooterPanel = styled(Grid)<FooterPanelProps>`
   background-color: ${(Props) => Props.color ?? Props.theme.NIHR.Blue};
 `;
 
-// eslint-disable-next-line
 const StyledFooterPanel = styled(FooterPanel)`
   background-color: ${(Props) => Props.theme.NIHR.PrimaryWhite};
 `;

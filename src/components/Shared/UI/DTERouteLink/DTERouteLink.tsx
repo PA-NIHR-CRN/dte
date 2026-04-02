@@ -97,7 +97,7 @@ function classifyHref(to: string): LinkType {
   if (isHttp) {
     const url = new URL(to);
 
-    if (url.origin === window.location.origin) {
+    if (url.origin === globalThis.location.origin) {
       return { type: "internal", path: url.pathname + url.search + url.hash };
     }
 
