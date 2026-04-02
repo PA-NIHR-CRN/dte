@@ -90,54 +90,6 @@ const ShawTrustLogo = styled.img.attrs(() => {
   width: 100%;
 `;
 
-const NIHRLogo = styled.img.attrs(() => {
-  return {
-    src: `${nihrlogo}`,
-    alt: "National Institute for Health Research Logo",
-  };
-})<IsMobileProps>`
-  width: 100%;
-`;
-
-const FooterImageLink = styled.a`
-  border: 3px solid transparent;
-  display: block;
-  text-align: center;
-  :focus,
-  :hover {
-    background-color: transparent;
-    border-color: ${(Props) => Props.theme.NIHR.Yellow};
-    box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.75);
-  }
-`;
-
-const HSCLogo = styled.img.attrs(() => {
-  return {
-    src: `${HSClogo}`,
-    alt: "Public Heath Agency Research and Development Logo",
-  };
-})<IsMobileProps>`
-  width: 100%;
-`;
-
-const NHSScotlandLogo = styled.img.attrs(() => {
-  return {
-    src: `${nhsScotlandlogo}`,
-    alt: "NHS Scotland Logo",
-  };
-})<IsMobileProps>`
-  width: 80%;
-`;
-
-const HCRWales = styled.img.attrs(() => {
-  return {
-    src: `${HCRwaleslogo}`,
-    alt: "Health and Care Research Wales Logo",
-  };
-})<IsMobileProps>`
-  width: 100%;
-`;
-
 const FollowUsText = styled.span<IsMobileProps>`
   && {
     color: ${(Props) => Props.color ?? Props.theme.NIHR.PrimaryWhite};
@@ -150,10 +102,6 @@ const FollowUsText = styled.span<IsMobileProps>`
 
 const FooterPanel = styled(Grid)<FooterPanelProps>`
   background-color: ${(Props) => Props.color ?? Props.theme.NIHR.Blue};
-`;
-
-const StyledFooterPanel = styled(FooterPanel)`
-  background-color: ${(Props) => Props.theme.NIHR.PrimaryWhite};
 `;
 
 const SocialPanel = styled(Grid)`
