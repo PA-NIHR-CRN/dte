@@ -5,28 +5,19 @@ import "../NHS.scss";
 import { baseButton } from "../DTEButton/DTEButton";
 
 interface BaseLinkProps {
-  children?: React.ReactNode;
   $outlined?: boolean;
   $fullwidth?: boolean;
   $small?: boolean;
   $padded?: boolean;
   disabled?: boolean;
-  target?: "_blank";
 }
 
-interface RouteLinkProps extends BaseLinkProps {
+interface DTERouteLinkProps extends BaseLinkProps, React.AnchorHTMLAttributes<HTMLAnchorElement> {
   to: string;
-  external?: boolean;
   inverted?: boolean;
-  renderStyle?: "standard" | undefined;
+  renderStyle?: "standard";
+  external?: boolean;
   ariaLabel?: string;
-  role?: string;
-  rel?: string;
-  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
-}
-
-interface ExternalLinkProps extends BaseLinkProps {
-  href: string;
 }
 
 const determineClassName = (renderStyle: "standard" | undefined, inverted: boolean) => {
@@ -76,25 +67,6 @@ const CommonLinkStyle = css<BaseLinkProps>`
       &.inverted {
         text-decoration-color: ${(props) => props.theme.NIHR.PrimaryWhite};
         color: ${(props) => props.theme.NIHR.PrimaryWhite};
-        &:focus {
-          color: ${(props) => props.theme.NIHR.Blue};
-          text-decoration: none;
-          background-color: ${(props) => props.theme.NIHR.Yellow};
-          box-shadow:
-            0 -2px ${(props) => props.theme.NIHR.Yellow},
-            0 4px #212b32;
-        }
-        &:hover {
-          color: ${(props) => props.theme.NIHR.PrimaryWhite};
-          text-decoration-color: ${(props) => props.theme.NIHR.PrimaryWhite};
-          text-decoration-line: underline;
-          text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
-          &:focus {
-            color: ${(props) => props.theme.NIHR.Blue};
-            text-decoration-line: none;
-            text-decoration-thickness: none;
-          }
-        }
       }
     }
     &.button-route {
@@ -103,16 +75,43 @@ const CommonLinkStyle = css<BaseLinkProps>`
   }
 `;
 
-const StyledRouteLink = styled(Link)<RouteLinkProps>`
+const StyledRouteLink = styled(Link)<BaseLinkProps>`
   ${CommonLinkStyle}
 `;
 
-const StyledExternalLink = styled.a<ExternalLinkProps>`
+const StyledExternalLink = styled.a<BaseLinkProps>`
   ${CommonLinkStyle}
   && {
     cursor: pointer;
   }
 `;
+
+type LinkType = { type: "internal"; path: string } | { type: "external" } | { type: "special" };
+
+function classifyHref(to: string): LinkType {
+  const isSpecialScheme = /^(mailto:|tel:)/i.test(to);
+  const isHttp = /^https?:/i.test(to);
+
+  if (isSpecialScheme) return { type: "special" };
+
+  if (isHttp) {
+    const url = new URL(to);
+
+    if (url.origin === globalThis.location.origin) {
+      return { type: "internal", path: url.pathname + url.search + url.hash };
+    }
+
+    return { type: "external" };
+  }
+
+  return { type: "internal", path: to };
+}
+
+function normalizeAriaLabel(label?: string, isExternal?: boolean) {
+  if (!label || !isExternal) return label;
+
+  return `${label.trim()} (opens in new tab)`;
+}
 
 function DTERouteLink({
   to,
@@ -122,29 +121,37 @@ function DTERouteLink({
   $small,
   $padded,
   disabled,
-  target,
-  external,
   renderStyle,
   inverted,
+  external,
   ariaLabel,
-  role,
+  target,
   rel,
-  onClick,
-}: RouteLinkProps & React.HTMLProps<HTMLLinkElement>) {
-  if (external) {
+  ...rest
+}: Readonly<DTERouteLinkProps>) {
+  const link = classifyHref(to);
+  const isExternal = external ?? link.type === "external";
+  const className = determineClassName(renderStyle, inverted || false);
+
+  const finalTarget = target ?? (isExternal ? "_blank" : undefined);
+  const finalRel = rel ?? (finalTarget === "_blank" ? "noopener noreferrer" : undefined);
+
+  const computedAriaLabel = normalizeAriaLabel(ariaLabel, finalTarget === "_blank");
+
+  if (isExternal || link.type === "special") {
     return (
       <StyledExternalLink
         href={to}
-        onClick={onClick}
-        className={determineClassName(renderStyle, inverted || false)}
+        className={className}
         $outlined={$outlined}
         $fullwidth={$fullwidth}
         $small={$small}
         $padded={$padded}
         disabled={disabled}
-        target={target}
-        aria-label={ariaLabel}
-        rel={rel}
+        target={finalTarget}
+        rel={finalRel}
+        aria-label={computedAriaLabel}
+        {...rest}
       >
         {children}
       </StyledExternalLink>
@@ -153,18 +160,15 @@ function DTERouteLink({
 
   return (
     <StyledRouteLink
-      to={to}
-      onClick={onClick}
-      className={determineClassName(renderStyle, inverted || false)}
+      to={link.type === "internal" ? link.path : to}
+      className={className}
       $outlined={$outlined}
       $fullwidth={$fullwidth}
       $small={$small}
       $padded={$padded}
       disabled={disabled}
-      target={target}
-      aria-label={ariaLabel}
-      role={role}
-      rel={rel}
+      aria-label={computedAriaLabel}
+      {...rest}
     >
       {children}
     </StyledRouteLink>
