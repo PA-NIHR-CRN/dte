@@ -90,7 +90,7 @@ const renderContent = (node: any, parentNodeType?: string, currentIndex?: number
       return <span style={getTextStyles(node, parentNodeType)}>{node.value}</span>;
     case "hyperlink":
       return (
-        <DTERouteLink to={node.data.uri} ariaLabel={node.content[0].value}>
+        <DTERouteLink to={node.data.uri} ariaLabel={node.content[0].value} renderStyle="standard">
           {node.content.map((childNode: any, index: number) => (
             <React.Fragment key={index}>{renderContent(childNode)}</React.Fragment>
           ))}
