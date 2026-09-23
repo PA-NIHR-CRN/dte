@@ -178,92 +178,90 @@
 }
 
 .GDSCookieBanner {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 9999;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 9999;
 }
 
-.govuk-cookie-banner__content > p{
-line-height: 30px;
+.govuk-cookie-banner__content > p {
+  line-height: 30px;
 }
 
-#acceptCookies, #rejectCookies, #hideCookieButton {
-    font-size: 17px !important;
-    border-radius: 8px !important;
-    margin: 0 15px 0 0;
-    border: 1px solid #193e72;
-    padding: 5px;
-    font-weight: 600;
+#acceptCookies,
+#rejectCookies,
+#hideCookieButton {
+  font-size: 17px !important;
+  border-radius: 8px !important;
+  margin: 0 15px 0 0;
+  border: 1px solid #193e72;
+  padding: 5px;
+  font-weight: 600;
 
-    &:hover, &:active,&:focus {
-        box-shadow: 0px 4px 0px #002D18;
-    }
+  &:hover,
+  &:active,
+  &:focus {
+    box-shadow: 0px 4px 0px #002d18;
+  }
 }
 
 .govuk-button-group {
-    margin-bottom: 20px;
-    font-size: 18px !important;
+  margin-bottom: 20px;
+  font-size: 18px !important;
 }
 
 .govuk-button-group > a {
-    font-size: 19px;
+  font-size: 19px;
 }
 
-
-
-@media(max-width: 640px)
-{
-    #acceptCookies, #rejectCookies, #hideCookieButton {
-        margin-bottom: 15px !important;
-    }
-
-    .govuk-cookie-banner__content > p{
-        line-height: 26px;
-        }
-
-        .govuk-button-group > a {
-            font-size: 16px;
-        }
-
-        .cookiesHeader > h3 {
-            font-size: 24px;
-        }
-
-        .hideCookieButtonGroup {
-            margin-bottom: 5px;
-          }
+@media (max-width: 640px) {
+  #acceptCookies,
+  #rejectCookies,
+  #hideCookieButton {
+    margin-bottom: 15px !important;
   }
 
+  .govuk-cookie-banner__content > p {
+    line-height: 26px;
+  }
 
-  .hideCookieMessage {
-    line-height: 25px;
+  .govuk-button-group > a {
+    font-size: 16px;
+  }
+
+  .cookiesHeader > h3 {
+    font-size: 24px;
   }
 
   .hideCookieButtonGroup {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
   }
+}
 
-  #styledLogoLink {
-    display: inline-block;
+.hideCookieMessage {
+  line-height: 25px;
+}
 
-  }
+.hideCookieButtonGroup {
+  margin-bottom: 15px;
+}
 
+#styledLogoLink {
+  display: inline-block;
+}
 
-  #NHSLogo {
-    height: 45px;
-    width: 112.5px;
-    margin: 30px;
-    position: relative;
+#NHSLogo {
+  height: 45px;
+  width: 112.5px;
+  margin: 30px;
+  position: relative;
+}
 
-  }
-
-  @media(max-width: 650px){
+@media (max-width: 650px) {
   #NHSLogo {
     height: 36px;
     margin: 15px;
     width: 90px;
-
   }
 }
 
@@ -271,112 +269,108 @@ line-height: 30px;
   #NHSLogo {
     height: 30px;
     margin: 15px;
-
   }
 }
 
-  .Scot-logo{
-    flex: 0 0 20%;
-    display: flex;
-    justify-content: center;
-    left:4%;
+.Scot-logo {
+  flex: 0 0 20%;
+  display: flex;
+  justify-content: center;
+  left: 4%;
 }
-.scot-logo-img{
-    width:65%;
+.scot-logo-img {
+  width: 65%;
 }
-.NI-logo{
-    left:2%;
-    flex: 0 0 18%;
+.NI-logo {
+  left: 2%;
+  flex: 0 0 18%;
 }
-.NI-logo-link{
-    width: 78%;
+.NI-logo-link {
+  width: 78%;
 }
-.NI-logo-img{
+.NI-logo-img {
+  width: 100%;
+}
+.nihr-image {
+  flex: 0 0 35%;
+}
+.HCW-logo {
+  flex: 0 0 20%;
+}
+.HCWLogoContainer {
+  width: 90%;
+}
+#footerLogos {
+  width: 100%;
+  max-width: 75%;
+}
+
+.footerImage {
+  border: 3px solid #ffffff;
+  display: block;
+}
+
+.footerImage:hover,
+.footerImage:focus {
+  border-color: #fed47a;
+  box-shadow: none;
+  box-shadow: 0px 0px 3px 3px rgb(0 0 0 / 75%);
+  background-color: #ffffff;
+}
+
+@media only screen and (max-width: 1550px) {
+  #footerLogos {
     width: 100%;
+    max-width: 85%;
+  }
 }
-.nihr-image{
-    flex: 0 0 35%;
-}
-.HCW-logo{
-    flex: 0 0 20%;
-}
-.HCWLogoContainer{
-    width: 90%;
-}
-#footerLogos{
+@media only screen and (max-width: 1081px) {
+  #footerLogos {
     width: 100%;
-    max-width: 75%;
+    max-width: 95%;
+  }
 }
-
-.footerImage{
-    border: 3px solid #FFFFFF;
-    display: block;
-}
-
-.footerImage:hover,.footerImage:focus{
-    border-color: #fed47a;
-    box-shadow: none;
-    box-shadow: 0px 0px 3px 3px rgb(0 0 0 / 75%);
-    background-color: #ffffff;
-}
-
- @media only screen and (max-width: 1550px){
-    #footerLogos{
-        width: 100%;
-        max-width: 85%;
-    }
-
- }
-  @media only screen and (max-width: 1081px){
-    #footerLogos{
-        width: 100%;
-        max-width: 95%;
-    }
- }
-  @media only screen and (max-width: 900px){
-    #footerLogos{
-        width: 100%;
-        max-width: 95%;
-    }
-    .Scot-logo{
+@media only screen and (max-width: 900px) {
+  #footerLogos {
+    width: 100%;
+    max-width: 95%;
+  }
+  .Scot-logo {
     flex: 0 0 40%;
     display: flex;
     justify-content: center;
-    left:4%;
-    }
-    .NI-logo{
-        flex: 0 0 30%;
-    }
-    .nihr-image{
-        padding-right: 5px;
-        flex: 0 0 55%;
-    }
-    .HCW-logo{
-        flex: 0 0 40%;
-    }
-    #NihrLogo{
-        width: 90%;
-    }
+    left: 4%;
+  }
+  .NI-logo {
+    flex: 0 0 30%;
+  }
+  .nihr-image {
+    padding-right: 5px;
+    flex: 0 0 55%;
+  }
+  .HCW-logo {
+    flex: 0 0 40%;
+  }
+  #NihrLogo {
+    width: 90%;
+  }
 }
 
- .FooterImageWrapper {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 90%;
-    margin: auto;
-    padding: 5px;
+.FooterImageWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  padding: 5px;
+}
 
- }
+.regional-logos {
+  margin: auto;
+  max-width: 100%;
+}
 
- .regional-logos {
-    margin: auto;
-    max-width: 100%;
- }
-
-
-  @media only screen and (max-width: 767px){
-    .regional-logos {
-        width: 65%;
-        display: block;
-    }
+@media only screen and (max-width: 767px) {
+  .regional-logos {
+    width: 65%;
+    display: block;
+  }
 }

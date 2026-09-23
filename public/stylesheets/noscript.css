@@ -6,7 +6,6 @@ html {
 
 body {
   margin: 0;
-  font-family: Lato, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 18px;
@@ -48,9 +47,13 @@ body {
   visibility: hidden;
 }
 
-header {
-  border-bottom: 1px solid #acbcc3;
+.header-wrapper {
+  margin-bottom: 1em;
 }
+
+/* header {
+  border-bottom: 1px solid #acbcc3;
+} */
 
 header div.logo-section,
 header div.beta-section {

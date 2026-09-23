@@ -1,0 +1,422 @@
+﻿@font-face {
+  font-family: Archia;
+  src: url("../webfonts/Archia/archia-bold-webfont.woff");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Archia;
+  src: url("../webfonts/Archia/archia-semibold-webfont.woff");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: Archia;
+  src: url("../webfonts/Archia/archia-regular-webfont.woff");
+  font-weight: normal;
+}
+
+#webpack-dev-server-client-overlay {
+  display: none;
+}
+
+:root {
+  --nihr-body-font: "Inclusive Sans", Arial, sans-serif;
+  --nihr-heading-font: "Archia", var(--nihr-body-font);
+
+  /*Primary*/
+  --nihr-coral: #fc5d5d;
+  --nihr-white: #ffffff;
+  --nihr-black: #000000;
+  --nihr-navy: #1c285e;
+  --nihr-off-black: #3c3c3c;
+  /*Secondary*/
+  --nihr-glove-blue: #c7e9ff;
+  --nihr-uniform-lilac: #c4c5ff;
+  --nihr-pink-quartz: #ffd1e0;
+  --nihr-sunshine-yellow: #ffe626;
+  --nihr-blue-flame: #0051c2;
+  --nihr-twilight: #3e439c;
+  --nihr-berry: #804055;
+  --nihr-teal: #0a5766;
+  --nihr-bpor-coral-tint: #fd7d7d;
+  /*Neutral*/
+  --nihr-putty: #faf4eb;
+  --nihr-steel: #c5dce5;
+  --nihr-navy--alt: var(--nihr-navy);
+  --link-colour: var(--nihr-navy);
+}
+
+@media (min-width: 1400px) {
+  .nihr.bpor {
+    .container {
+      max-width: 1320px;
+    }
+  }
+}
+
+.nihr.bpor {
+  body,
+  .nhsuk-body {
+    font-family: var(--nihr-body-font);
+    color: var(--nihr-navy);
+    font-size: 20px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6,
+  .heading {
+    font-family: var(--nihr-heading-font);
+    color: var(--nihr-navy);
+  }
+
+  footer {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .h1,
+    .h2,
+    .h3,
+    .h4,
+    .h5,
+    .h6,
+    .heading {
+      color: var(--nihr-white);
+    }
+  }
+
+  div.hero {
+    background: linear-gradient(90deg, var(--nihr-sunshine-yellow) 50%, var(--nihr-coral) 50%);
+    color: var(--nihr-navy);
+  }
+
+  .hero .container {
+    background: url("../img/layout/2026/NIHR_BPOR_graphic_assets_spiral_YELLOW_RGB.svg") no-repeat right top;
+    background-position: 112%;
+    background-size: 61%;
+  }
+
+  .display-1.hero {
+    color: var(--nihr-navy);
+  }
+
+  .carousel h3 {
+    background: url("../img/layout/2026/NIHR_BPOR_graphic_assets_holding_shape_YELLOW_RGB.svg") no-repeat left bottom;
+    background-size: cover;
+    padding: 0.75em;
+    padding-top: 1.5em;
+    position: relative;
+    left: -2em;
+    display: inline-block;
+  }
+
+  .card,
+  .info-card {
+    background-color: var(--nihr-glove-blue);
+  }
+
+  a:link:not(.link-footer):not(.nhslogin-button):not(.nhsuk-button) {
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 0.125rem;
+    text-underline-offset: 0.28125rem;
+    color: var(--nihr-navy);
+  }
+
+  a:link:hover:not(.link-footer):not(.nhslogin-button):not(.nhsuk-button) {
+    text-decoration-color: var(--nihr-coral);
+    font-weight: 700;
+    text-decoration-thickness: 0.125rem;
+    text-underline-offset: 0.28125rem;
+  }
+
+  ol li::before {
+    color: var(--nihr-navy);
+  }
+
+  .what-is-bpor-section {
+    background: url("../img/layout/2026/NIHR_BPOR_graphic_assets_radial_LILAC_RGB.svg") no-repeat right top;
+    background-color: var(--nihr-glove-blue);
+    background-position: 175%;
+    background-size: 61%;
+  }
+
+  .video-section {
+    background: url("../img/layout/2026/NIHR_BPOR_graphic_assets_spiral_YELLOW_RGB.svg") no-repeat right top;
+    background-position: 5%;
+    background-size: 30%;
+    background-position-y: 333px;
+  }
+
+  .how-does-bpor-work-section img {
+    position: relative;
+    width: 700px;
+    max-width: unset !important;
+    left: -475px;
+    top: 0;
+  }
+
+  .who-can-take-part-section {
+    background: url("../img/layout/2026/NIHR_BPOR_graphic_assets_radial_PINK_RGB.svg") no-repeat right top;
+    background-color: var(--nihr-uniform-lilac);
+    background-position: 178%;
+    background-position-y: 3%;
+    background-size: 61%;
+  }
+
+  .who-runs-bpor-section {
+    background: url("../img/layout/2026/NIHR_BPOR_graphic_assets_spiral_80percentCORAL_RGB.svg") no-repeat right top;
+    background-color: var(--nihr-pink-quartz);
+    background-position: 178%;
+    background-position-y: 3%;
+    background-size: 61%;
+  }
+
+  .langSelectionBar {
+    font-size: 1em;
+  }
+
+  .languageSelection {
+    padding-top: unset;
+    font-size: 16px;
+  }
+
+  a.nav-link {
+    text-decoration: none;
+  }
+
+  a.btn.register {
+    border-radius: 50px;
+    background-color: var(--nihr-coral);
+    color: var(--nihr-white);
+    text-decoration: none;
+  }
+
+  a.btn.register:after {
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12H19" stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 5L19 12L12 19" stroke="%23fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+      right center no-repeat;
+    content: "";
+    display: inline-block;
+    height: 1.5rem;
+    margin-left: 0.5rem;
+    position: relative;
+    top: 0.3125rem;
+    width: 1.5rem;
+  }
+
+  .carousel {
+    a:before {
+      background-image: url('data:image/svg+xml,%3Csvg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cg clip-path="url(%23clip0_5047_7713)"%3E%3Cpath d="M1 8H15" stroke="%23fc5d5d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/%3E%3Cpath d="M8 1L15 8L8 15" stroke="%23fc5d5d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id="clip0_5047_7713"%3E%3Crect width="16" height="16" fill="white"/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A');
+      content: "";
+      display: inline-block;
+      height: 1rem;
+      position: relative;
+      top: 0.125rem;
+      width: 1rem;
+      min-width: 1rem;
+      margin-right: 0.5rem;
+    }
+  }
+
+  .BPoRLogo {
+    max-height: 100px;
+  }
+
+  #NhsHeaderLogo {
+    height: 50px;
+    margin-top: 0;
+    margin-right: 0;
+  }
+
+  .navbar .nav-level-0 > .menu-item a.nav-link {
+    text-decoration: none;
+  }
+
+  .regional-logos {
+    padding: 0;
+  }
+
+  .Scot-logo {
+    flex: 0 0 20%;
+    display: flex;
+    justify-content: center;
+    left: 4%;
+  }
+
+  .scot-logo-img {
+    width: 70%;
+  }
+
+  .NI-logo {
+    left: 2%;
+    flex: 0 0 15%;
+  }
+
+  .NI-logo-link {
+    width: 90%;
+  }
+
+  .NI-logo-img {
+    width: 100%;
+  }
+
+  .nihr-image {
+    flex: 0 0 35%;
+  }
+
+  .HCW-logo {
+    flex: 0 0 20%;
+  }
+
+  #footerLogos {
+    width: 100%;
+    max-width: 75%;
+  }
+
+  @media only screen and (max-width: 1550px) {
+    #footerLogos {
+      width: 100%;
+      max-width: 85%;
+    }
+  }
+
+  @media only screen and (max-width: 1081px) {
+    #footerLogos {
+      width: 100%;
+      max-width: 95%;
+    }
+  }
+
+  @media only screen and (max-width: 900px) {
+    #footerLogos {
+      width: 100%;
+      max-width: 95%;
+    }
+
+    .Scot-logo {
+      flex: 0 0 40%;
+      display: flex;
+      justify-content: center;
+      left: 4%;
+    }
+
+    .NI-logo {
+      flex: 0 0 30%;
+    }
+
+    .nihr-image {
+      padding-right: 5px;
+      flex: 0 0 55%;
+    }
+
+    .HCW-logo {
+      flex: 0 0 40%;
+    }
+
+    #NihrLogo {
+      width: 90%;
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    #footerimage {
+      margin-left: 5%;
+      padding-top: 3%;
+    }
+  }
+
+  .nhsuk-link,
+  .app-step-nav__button-text {
+    color: var(--nihr-navy);
+    font-weight: 700;
+  }
+
+  .govuk-width-container {
+    max-width: 1320px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  a:link:not(.link-footer).btn-dark {
+    text-decoration: none;
+  }
+
+  .app-step-nav__button--title {
+    font-family: var(--nihr-heading-font);
+    color: var(--nihr-navy);
+  }
+
+  .nhsuk-link.app-step-nav__button-text.js-toggle-link-text {
+    font-family: var(--nihr-heading-font);
+  }
+
+  .app-step-nav__panel {
+    font-family: var(--nihr-body-font);
+  }
+
+  .page-title {
+    padding-top: 1em;
+    background: url("../img/layout/2026/NIHR_BPOR_graphic_assets_radial_PINK_RGB.svg") no-repeat;
+    background-color: var(--nihr-uniform-lilac);
+    padding-bottom: 2em;
+    background-size: 50%;
+    background-position-x: 150%;
+    background-position-y: -50%;
+
+    h2 {
+      background: url("../img/layout/2026/NIHR_BPOR_graphic_assets_holding_shape_PINK_RGB.svg") no-repeat;
+      /*background-color: var(--nihr-bpor-coral-tint);*/
+      background-size: cover;
+      padding: 2em;
+      margin-left: -2em;
+      margin-right: -2em;
+      padding-top: 1.95em;
+      padding-bottom: 0.5em;
+      display: inline-block;
+      position: relative;
+      top: -0.75em;
+      margin-bottom: 0.5em;
+      font-size: 2.5em;
+      /*max-width: 30ch;*/
+    }
+  }
+
+  .app-step-nav--large .app-step-nav__button--controls {
+    font-size: 1rem !important;
+  }
+
+  .app-step-nav {
+    margin-top: 1em;
+  }
+
+  .nhsuk-list {
+    color: var(--nihr-navy);
+  }
+
+  .app-step-nav__title.nhsuk-heading-s {
+    margin-bottom: 0;
+  }
+
+  .app-step-nav__header {
+    padding-bottom: 0.5em;
+  }
+
+  .app-step-nav__button-text {
+    font-family: Archia;
+  }
+}

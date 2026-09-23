@@ -231,7 +231,12 @@ function RegsitrationProcess() {
               }}
               ref={stepperRef}
             />
-            <PercentageGrid justifyContent="space-between" alignItems="center" container>
+            <PercentageGrid
+              justifyContent="space-between"
+              alignItems="center"
+              container
+              className="govuk-width-container"
+            >
               <Grid item>
                 {activeStep !== 6 && (
                   <DTEBackLink

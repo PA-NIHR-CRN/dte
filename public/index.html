@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" class="nihr bpor">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -23,32 +23,30 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Flow+Rounded&family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" type="text/css" href="/stylesheets/noscript.css" />
-    <link rel="stylesheet" type="text/css" href="/stylesheets/application.css" />
-    <!--[if lte IE 8
-      ]><link
-        href="%PUBLIC_URL%/stylesheets/govuk-frontend-ie8-4.8.0.min.css"
-        rel="stylesheet"
-        type="text/css"
-    /><![endif]-->
-    <!--[if gt IE 8]><!-->
+
     <link
-      href="%PUBLIC_URL%/stylesheets/govuk-frontend-4.8.0.min.css"
-      media="all"
       rel="stylesheet"
-      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/noscript.css" />
+    <link href="%PUBLIC_URL%/stylesheets/govuk-frontend-6.5.0.min.css" media="all" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/application.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/nihr.corp.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/nihr-bpor-2026.css" />
     <!--<![endif]-->
-    <script
-      type="text/javascript"
-      src="https://www.nhsapp.service.nhs.uk/js/v1/nhsapp.js"
-    ></script>
+    <script type="text/javascript" src="https://www.nhsapp.service.nhs.uk/js/v1/nhsapp.js"></script>
     <title>Volunteer Registration - Be Part of Research</title>
   </head>
   <body>
@@ -56,30 +54,21 @@
       <header class="noscript-header">
         <div class="logo-section">
           <div class="bpor">
-            <a
-              href="https://bepartofresearch.nihr.ac.uk/"
-              target="_blank"
-              rel="noreferrer"
-              class="noscript-bporlogo-a"
-              ><img alt="Be Part Of Research Logo" src="/static/media/BPoR_NIHR_colour-RGB.bd9f5b0e9f37a887c21a0e4922f49735.svg"
+            <a href="https://bepartofresearch.nihr.ac.uk/" target="_blank" rel="noreferrer" class="noscript-bporlogo-a"
+              ><img
+                alt="Be Part Of Research Logo"
+                src="/static/media/BPoR_NIHR_colour-RGB.bd9f5b0e9f37a887c21a0e4922f49735.svg"
             /></a>
           </div>
           <div class="nhs">
-            <a href="https://nhs.uk/" target="_blank" rel="noreferrer"
-              ><img alt="NHS Logo" src="/NHS_logo.svg"
-            /></a>
+            <a href="https://nhs.uk/" target="_blank" rel="noreferrer"><img alt="NHS Logo" src="/NHS_logo.svg" /></a>
           </div>
         </div>
         <div class="beta-section">
           <div class="chip">BETA</div>
           <div class="feedback">
             This is a new service - your
-            <a
-              href="https://leeds.onlinesurveys.ac.uk/bpor-beta-feedback"
-              target="_blank"
-              rel="noreferrer"
-              >feedback</a
-            >
+            <a href="https://leeds.onlinesurveys.ac.uk/bpor-beta-feedback" target="_blank" rel="noreferrer">feedback</a>
             will help us to improve it.
           </div>
         </div>
@@ -87,15 +76,12 @@
       <div role="main" id="main">
         <div class="inset-text">
           <p>
-            Be Part of Research uses JavaScript and some of the features of the
-            service may not work correctly without it. Please enable Javascript
-            in your browser settings.
+            Be Part of Research uses JavaScript and some of the features of the service may not work correctly without
+            it. Please enable Javascript in your browser settings.
           </p>
           <p>
             If you need to contact the Be Part of Research team please email
-            <a href="mailto:bepartofresearch@nihr.ac.uk"
-              >bepartofresearch@nihr.ac.uk</a
-            >
+            <a href="mailto:bepartofresearch@nihr.ac.uk">bepartofresearch@nihr.ac.uk</a>
           </p>
         </div>
       </div></noscript

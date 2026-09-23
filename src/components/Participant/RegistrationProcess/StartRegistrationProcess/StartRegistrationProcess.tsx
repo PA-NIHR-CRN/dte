@@ -8,7 +8,6 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
 const StyledGridElementLeft = styled(Grid)`
-  padding-left: 1em;
   && {
     text-align: left;
   }
@@ -23,8 +22,7 @@ function StartRegistrationProcess() {
   return (
     <DocumentTitle title={content["register-page-document-title"]}>
       <>
-        <Grid container alignItems="center" justifyContent="flex-start">
-          <Grid item sm={2} md={1} />
+        <Grid container alignItems="center" justifyContent="flex-start" className="govuk-width-container">
           <StyledGridElementLeft item xs={12} sm={10} md={11}>
             <DTEBackLink
               linkText={content["reusable-back-link"]}

@@ -1,7 +1,7 @@
 import { Grid } from "@material-ui/core";
 import { useContext } from "react";
 import styled from "styled-components";
-import bporlogo from "../../../images/BPoR_NIHR_colour-RGB.svg";
+import bporlogo from "../../../images/NIHR-BPoR-Logo-Linear.svg";
 import nhslogo from "../../../images/NHS_logo.svg";
 import { AppContext } from "../../../context/AppContext";
 import DTEBackLink from "../UI/DTEBackLink/DTEBackLink";
@@ -21,7 +21,7 @@ const StyledHeader = styled.header`
 `;
 
 const LanguageSelector = styled(Grid)`
-  float: right;
+  // float: right;
   margin-right: 1em;
 `;
 
@@ -142,7 +142,7 @@ export default function Header() {
   const shouldShowLanguageSelector = !pathsNotToShow.includes(pathname);
 
   const LanguageComponent = () => (
-    <Stack direction="row" spacing={1} alignItems="center">
+    <Stack direction="row" spacing={1} alignItems="center" className="language-selector">
       {language !== "en-GB" ? (
         <DTELinkButton onClick={() => setLanguage("en-GB")}>English</DTELinkButton>
       ) : (
@@ -159,64 +159,62 @@ export default function Header() {
 
   return (
     <>
-      <StyledHeader>
-        <StyledSkipToMain href="#main">{content["accessibility-hidden-skip-to-main"]}</StyledSkipToMain>
-        <Grid container alignItems="center" direction="row" justifyContent="flex-start">
-          <Grid item sm={2} md={1} />
-          <StyledGridElementLeft item xs={8} sm={6} md={7}>
-            {showBacklink ? (
-              <DTEBackLink
-                linkText="Be Part of Research"
-                title="Be Part of Research"
-                href="https://bepartofresearch.nihr.ac.uk/"
-              />
-            ) : (
-              <StyledLink
-                target="_blank"
-                href="https://bepartofresearch.nihr.ac.uk/"
+      <div className="header-wrapper">
+        <StyledHeader className="govuk-width-container">
+          <StyledSkipToMain href="#main">{content["accessibility-hidden-skip-to-main"]}</StyledSkipToMain>
+          <Grid container alignItems="center" direction="row" justifyContent="flex-start">
+            <StyledGridElementLeft item xs={8} sm={6} md={9}>
+              {showBacklink ? (
+                <DTEBackLink
+                  linkText="Be Part of Research"
+                  title="Be Part of Research"
+                  href="https://bepartofresearch.nihr.ac.uk/"
+                />
+              ) : (
+                <StyledLink
+                  target="_blank"
+                  href="https://bepartofresearch.nihr.ac.uk/"
+                  rel="noreferrer"
+                  id="styledLogoLink"
+                  aria-label="Be Part of Research, opens in new tab"
+                >
+                  <BPORLogo />
+                </StyledLink>
+              )}
+            </StyledGridElementLeft>
+            <StyledGridElementRight item xs={4} sm={3} md={3}>
+              <StyledLogoLink
                 rel="noreferrer"
                 id="styledLogoLink"
-                aria-label="Be Part of Research, opens in new tab"
+                target="_blank"
+                aria-label="NHS, opens in new tab"
+                href=" https://nhs.uk/"
               >
-                <BPORLogo />
-              </StyledLink>
-            )}
-          </StyledGridElementLeft>
-          <StyledGridElementRight item xs={4} sm={3} md={3}>
-            <StyledLogoLink
-              rel="noreferrer"
-              id="styledLogoLink"
-              target="_blank"
-              aria-label="NHS, opens in new tab"
-              href=" https://nhs.uk/"
-            >
-              <NHSLogo id="NHSLogo" />
-            </StyledLogoLink>
-          </StyledGridElementRight>
-          <Grid item sm={1} md={1} />
-          <Grid item sm={2} md={1} />
-        </Grid>
-        <Grid container alignItems="center" direction="row" justifyContent="flex-start">
-          <Grid item sm={2} md={1} />
-          <StyledGridElementLeft item xs={8} sm={6} md={7}>
-            <DTEPhaseBanner phase="BETA" url="https://bepartofresearch.nihr.ac.uk/get-in-touch/" />
-          </StyledGridElementLeft>
-          {isMobile ? (
-            <Grid container alignItems="center" direction="row" justifyContent="flex-start">
-              <Grid item sm={2} md={1} />
-              <StyledGridElementLeft item xs={12} sm={6} md={7}>
-                {shouldShowLanguageSelector && <LanguageComponent />}
-              </StyledGridElementLeft>
-            </Grid>
-          ) : (
-            <StyledGridElementRight item xs={4} sm={3} md={3}>
-              <LanguageSelector>{shouldShowLanguageSelector && <LanguageComponent />}</LanguageSelector>
+                <NHSLogo id="NHSLogo" />
+              </StyledLogoLink>
             </StyledGridElementRight>
-          )}
-
-          <Grid item sm={2} md={1} />
-        </Grid>
-      </StyledHeader>
+          </Grid>
+          <Grid container alignItems="center" direction="row" justifyContent="flex-start">
+            {isMobile ? (
+              <Grid container alignItems="center" direction="row" justifyContent="flex-start">
+                <Grid item sm={2} md={1} />
+                <StyledGridElementLeft item xs={12} sm={6} md={7}>
+                  {shouldShowLanguageSelector && <LanguageComponent />}
+                </StyledGridElementLeft>
+              </Grid>
+            ) : (
+              <StyledGridElementRight item xs={4} sm={3} md={3}>
+                <LanguageSelector>{shouldShowLanguageSelector && <LanguageComponent />}</LanguageSelector>
+              </StyledGridElementRight>
+            )}
+          </Grid>
+          <Grid container alignItems="center" direction="row" justifyContent="flex-start">
+            <StyledGridElementLeft item xs={8} sm={6} md={9}>
+              <DTEPhaseBanner phase="BETA" url="https://bepartofresearch.nihr.ac.uk/get-in-touch/" />
+            </StyledGridElementLeft>
+          </Grid>
+        </StyledHeader>
+      </div>
     </>
   );
 }

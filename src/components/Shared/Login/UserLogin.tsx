@@ -152,18 +152,18 @@ const UserLogin = (props: UserLoginProps) => {
             ...e,
             ...(e?.customCode === "Authentication_Not_Authorized"
               ? {
-                  detail: (
-                    <>
-                      <p>{content["signin-error-authentication-not-authorized"]}</p>
-                      <p>{content["signin-error-authentication-not-authorized2"]}</p>
-                    </>
-                  ),
-                  customCode: "NO_CHANGE",
-                }
+                detail: (
+                  <>
+                    <p>{content["signin-error-authentication-not-authorized"]}</p>
+                    <p>{content["signin-error-authentication-not-authorized2"]}</p>
+                  </>
+                ),
+                customCode: "NO_CHANGE",
+              }
               : {
-                  detail: <>{content["signin-error-authentication-generic"] as string}</>,
-                  customCode: "NO_CHANGE",
-                }),
+                detail: <>{content["signin-error-authentication-generic"] as string}</>,
+                customCode: "NO_CHANGE",
+              }),
           };
         });
       }
@@ -196,7 +196,7 @@ const UserLogin = (props: UserLoginProps) => {
             {loadingLogin && <LoadingIndicator text={content["signin-loading-signin"]} />}
             {resendLoading && <LoadingIndicator text={content["signin-loading-resend"]} />}
             {!loadingLogin && !resendLoading && (
-              <Grid container alignItems="center" justifyContent="flex-start">
+              <Grid container alignItems="center" justifyContent="flex-start" className="govuk-width-container">
                 <Grid item sm={2} md={1} />
                 <StyledGridElementLeft item xs={12} sm={10} md={11}>
                   <DTEBackLink href="/Participants/Options" linkText={content["reusable-back-link"]} />
