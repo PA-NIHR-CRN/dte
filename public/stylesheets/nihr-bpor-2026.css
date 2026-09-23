@@ -56,6 +56,10 @@
 }
 
 .nihr.bpor {
+  * {
+    font-family: var(--nihr-body-font);
+  }
+
   body,
   .nhsuk-body {
     font-family: var(--nihr-body-font);
@@ -128,7 +132,7 @@
     background-color: var(--nihr-glove-blue);
   }
 
-  a:link:not(.link-footer):not(.nhslogin-button):not(.nhsuk-button) {
+  a:link:not(.link-footer):not(.nhslogin-button):not(.nhsuk-button):not(.govuk-button) {
     font-weight: 700;
     text-decoration: underline;
     text-decoration-thickness: 0.125rem;
@@ -136,7 +140,7 @@
     color: var(--nihr-navy);
   }
 
-  a:link:hover:not(.link-footer):not(.nhslogin-button):not(.nhsuk-button) {
+  a:link:hover:not(.link-footer):not(.nhslogin-button):not(.nhsuk-button):not(.govuk-button) {
     text-decoration-color: var(--nihr-coral);
     font-weight: 700;
     text-decoration-thickness: 0.125rem;
