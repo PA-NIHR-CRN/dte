@@ -152,18 +152,18 @@ const UserLogin = (props: UserLoginProps) => {
             ...e,
             ...(e?.customCode === "Authentication_Not_Authorized"
               ? {
-                detail: (
-                  <>
-                    <p>{content["signin-error-authentication-not-authorized"]}</p>
-                    <p>{content["signin-error-authentication-not-authorized2"]}</p>
-                  </>
-                ),
-                customCode: "NO_CHANGE",
-              }
+                  detail: (
+                    <>
+                      <p>{content["signin-error-authentication-not-authorized"]}</p>
+                      <p>{content["signin-error-authentication-not-authorized2"]}</p>
+                    </>
+                  ),
+                  customCode: "NO_CHANGE",
+                }
               : {
-                detail: <>{content["signin-error-authentication-generic"] as string}</>,
-                customCode: "NO_CHANGE",
-              }),
+                  detail: <>{content["signin-error-authentication-generic"] as string}</>,
+                  customCode: "NO_CHANGE",
+                }),
           };
         });
       }

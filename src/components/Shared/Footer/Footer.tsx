@@ -57,7 +57,7 @@ const BPORLink = styled.a<IsMobileProps>`
   }
 `;
 
-const FooterPanel = styled(Grid) <FooterPanelProps>`
+const FooterPanel = styled(Grid)<FooterPanelProps>`
   background-color: ${(Props) => Props.color ?? Props.theme.NIHR.Blue};
 `;
 

@@ -75,7 +75,7 @@ const CommonLinkStyle = css<BaseLinkProps>`
   }
 `;
 
-const StyledRouteLink = styled(Link) <BaseLinkProps>`
+const StyledRouteLink = styled(Link)<BaseLinkProps>`
   ${CommonLinkStyle}
 `;
 
