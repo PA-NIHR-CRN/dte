@@ -118,10 +118,14 @@ html:lang(cy-GB) {
     text-decoration-color: var(--nihr-coral);
   }
 
-  a:focus {
+  a:not(.nhslogin-button):focus {
     background-color: unset;
     box-shadow: none;
     text-decoration-line: underline;
+  }
+
+  .nhslogin-button:focus {
+    background-color: var(--nihr-sunshine-yellow);
   }
 
   a:not(.link-image):focus-visible {
@@ -535,8 +539,19 @@ html:lang(cy-GB) {
     }
   }
 
-  .nhsuk-button:visited {
+  .button-route:visited {
     color: var(--nihr-white) !important;
+  }
+
+  .nhsuk-button:not(.button-route):visited,
+  .nhslogin-button:visited {
+    color: var(--nihr-white) !important;
+  }
+
+  .nhslogin-button:focus,
+  .button-route:focus {
+    background-color: var(--nihr-sunshine-yellow);
+    color: var(--nihr-navy) !important;
   }
 
   .nhsuk-contents-list__link:hover,
@@ -708,6 +723,20 @@ button.link__arrow-up:before {
   .Site-content {
     padding-bottom: 2em;
   }
+
+  a:has(h2):has(svg.MuiSvgIcon-root) {
+    h2 {
+      display: contents;
+    }
+
+    .MuiSvgIcon-root {
+      fill: var(--nihr-coral);
+      position: relative;
+      top: 4px;
+      left: 4px;
+    }
+  }
+
   /*!
  * Bootstrap Grid v5.1.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
