@@ -14,7 +14,7 @@ export default function Footer() {
     <>
       <div className="footer-wrapper nihr--corp">
         <footer className="page-footer bg-primary text-white">
-          <div className="container">
+          <div className="container-xl">
             <div className="page-footer__top page-footer__border-bottom">
               <div className="region region-footer">
                 <nav
@@ -158,14 +158,14 @@ export default function Footer() {
                       <a
                         className="link-footer link-level-0 white"
                         data-bs-toggle="collapse"
-                        href="#collapse-298211"
+                        href="#collapse-298212"
                         role="button"
                         aria-expanded="false"
-                        aria-controls="collapse-298211"
+                        aria-controls="collapse-298212"
                       >
                         {content["footer-heading-site-policies"]}
                       </a>
-                      <ul data-block="footer" className="collapse nav-nested" id="collapse-298211">
+                      <ul data-block="footer" className="collapse nav-nested" id="collapse-298212">
                         <li className="nav-item">
                           <a href="https://bepartofresearch.nihr.ac.uk/site-policies/" className="white link-footer">
                             {content["footer-item-all-site-policies"]}
@@ -301,9 +301,9 @@ export default function Footer() {
           </div>
         </footer>
       </div>
-      <div className="govuk-width-container container no-print" id="footerLogos">
-        <div className="row FooterImageWrapper">
-          <div className="col regional-logos nihr-image" id="NIHRFooter">
+      <div className="govuk-width-container container-xl no-print nihr nihr--corp" id="footerLogos">
+        <div className="row">
+          <div className="col-12 col-md-6 col-lg-4 logo-col" id="NIHRFooter">
             <a
               href="https://www.nihr.ac.uk/"
               aria-label="National Institute for Health and Care Research"
@@ -312,41 +312,37 @@ export default function Footer() {
               <img
                 src={nihrlogo}
                 id="NihrLogo"
-                className="regional-logos img-responsive"
+                className="regional-logos"
                 alt="National Institute for Health and Care Research"
               />
             </a>
           </div>
 
-          <div className="col regional-logos NI-logo">
+          <div className="col-12 col-md-6 col-lg-2 logo-col">
             <a
               href="http://www.research.hscni.net/"
               target="_blank"
               aria-label="Public Health Agency Northern Ireland"
-              className="accessability-image NI-logo-link"
+              className="accessability-image"
               rel="noreferrer"
             >
-              <img
-                src={HSClogo}
-                className="regional-logos img-responsive NI-logo-img"
-                alt="Public Health Agency Northern Ireland"
-              />
+              <img src={HSClogo} id="HscLogo" className="regional-logos" alt="Public Health Agency Northern Ireland" />
             </a>
           </div>
 
-          <div className="col regional-logos Scot-logo">
+          <div className="col-12 col-md-6 col-lg-3 logo-col">
             <a
               href="https://www.nhsresearchscotland.org.uk/"
               target="_blank"
               aria-label="NHS Scotland"
-              className="accessability-image scot-logo-img"
+              className="accessability-image"
               rel="noreferrer"
             >
-              <img src={nhsScotlandlogo} className="regional-logos img-responsive" alt="NHS Scotland" />
+              <img src={nhsScotlandlogo} id="NhsScotlandLogo" className="regional-logos" alt="NHS Scotland" />
             </a>
           </div>
 
-          <div className="col regional-logos HCW-logo">
+          <div className="col-12 col-md-6 col-lg-3 logo-col">
             <a
               href="https://healthandcareresearchwales.org/"
               target="_blank"
@@ -354,7 +350,12 @@ export default function Footer() {
               className="accessability-image"
               rel="noreferrer"
             >
-              <img src={HCRwaleslogo} className="regional-logos img-responsive" alt="Health and Care Research Wales" />
+              <img
+                src={HCRwaleslogo}
+                id="HCWalesLogo"
+                className="regional-logos"
+                alt="Health and Care Research Wales"
+              />
             </a>
           </div>
         </div>

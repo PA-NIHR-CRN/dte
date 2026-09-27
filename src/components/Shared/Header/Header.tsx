@@ -21,7 +21,7 @@ const StyledHeader = styled.header`
 `;
 
 const LanguageSelector = styled(Grid)`
-  // float: right;
+  float: right;
   margin-right: 1em;
 `;
 
@@ -59,7 +59,6 @@ const StyledLogoLink = styled.a`
     margin: 0;
     padding: 0;
     border: 3px solid transparent;
-    left: 20px;
     position: relative;
     text-decoration: none;
     &:focus,
@@ -182,7 +181,7 @@ export default function Header() {
                 </StyledLink>
               )}
             </StyledGridElementLeft>
-            <StyledGridElementRight item xs={4} sm={3} md={3}>
+            <StyledGridElementRight item xs={4} sm={6} md={3}>
               <StyledLogoLink
                 rel="noreferrer"
                 id="styledLogoLink"
@@ -195,23 +194,12 @@ export default function Header() {
             </StyledGridElementRight>
           </Grid>
           <Grid container alignItems="center" direction="row" justifyContent="flex-start">
-            {isMobile ? (
-              <Grid container alignItems="center" direction="row" justifyContent="flex-start">
-                <Grid item sm={2} md={1} />
-                <StyledGridElementLeft item xs={12} sm={6} md={7}>
-                  {shouldShowLanguageSelector && <LanguageComponent />}
-                </StyledGridElementLeft>
-              </Grid>
-            ) : (
-              <StyledGridElementRight item xs={4} sm={3} md={3}>
-                <LanguageSelector>{shouldShowLanguageSelector && <LanguageComponent />}</LanguageSelector>
-              </StyledGridElementRight>
-            )}
-          </Grid>
-          <Grid container alignItems="center" direction="row" justifyContent="flex-start">
-            <StyledGridElementLeft item xs={8} sm={6} md={9}>
+            <StyledGridElementLeft item xs={12} sm={8} md={9}>
               <DTEPhaseBanner phase="BETA" url="https://bepartofresearch.nihr.ac.uk/get-in-touch/" />
             </StyledGridElementLeft>
+            <StyledGridElementRight item xs={12} sm={4} md={3}>
+              <LanguageSelector>{shouldShowLanguageSelector && <LanguageComponent />}</LanguageSelector>
+            </StyledGridElementRight>
           </Grid>
         </StyledHeader>
       </div>
