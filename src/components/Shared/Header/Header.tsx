@@ -10,8 +10,6 @@ import { ContentContext } from "../../../context/ContentContext";
 import DTEContent from "../UI/DTETypography/DTEContent/DTEContent";
 import DTELinkButton from "../UI/DTELinkButton/DTELinkButton";
 import usePathname from "../../../hooks/usePathname";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Stack } from "@mui/material";
 
 const StyledHeader = styled.header`
@@ -121,9 +119,6 @@ const NHSLogo = styled.img.attrs({
 export default function Header() {
   const { showBacklink } = useContext(AppContext);
   const { setLanguage, language, content } = useContext(ContentContext);
-
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const pathname = usePathname();
   const pathsNotToShow = [
