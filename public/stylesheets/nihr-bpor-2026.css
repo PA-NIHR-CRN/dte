@@ -128,7 +128,7 @@ html:lang(cy-GB) {
     background-color: var(--nihr-sunshine-yellow);
   }
 
-  a:not(.link-image):focus-visible {
+  a:not(.link-image):not(.button-route):not(.nhslogin-button):focus-visible {
     background-color: var(--nihr-sunshine-yellow);
     box-shadow:
       0 0 var(--nihr-sunshine-yellow),
@@ -539,7 +539,8 @@ html:lang(cy-GB) {
     }
   }
 
-  .button-route:visited {
+  .button-route:visited,
+  .button-route:link {
     color: var(--nihr-white) !important;
   }
 
