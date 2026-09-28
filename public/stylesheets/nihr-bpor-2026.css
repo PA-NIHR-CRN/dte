@@ -74,7 +74,7 @@ html:lang(cy-GB) {
     font-size: 20px;
   }
 
-  .nhsuk-button:not(:focus) {
+  .nhsuk-button:not(:focus):not(:hover) {
     background-color: var(--nihr-navy);
     border-color: var(--nihr-navy);
   }
