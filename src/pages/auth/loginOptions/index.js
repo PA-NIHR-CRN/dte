@@ -13,7 +13,6 @@ export const LoginWrapper = styled(Grid)`
 `;
 
 const StyledGridElementLeft = styled(Grid)`
-  padding-left: 1em;
   && {
     text-align: left;
   }
@@ -32,8 +31,7 @@ function LoginOptions() {
   return (
     <DocumentTitle title={content["signin-options-document-title"]}>
       <>
-        <Grid container alignItems="center" justifyContent="flex-start">
-          <Grid item sm={2} md={1} />
+        <Grid container alignItems="center" justifyContent="flex-start" className="govuk-width-container">
           <StyledGridElementLeft item xs={12} sm={10} md={11}>
             <DTEBackLink
               linkText={content["reusable-back-link"]}
@@ -42,12 +40,14 @@ function LoginOptions() {
             />
           </StyledGridElementLeft>
         </Grid>
-        <Grid container justifyContent="center" alignItems="center" role="main" id="main">
-          <LoginWrapper item xs={12} sm={8} md={6} lg={5} xl={4}>
-            <DTEHeader as="h1">{content["signin-options-header"]}</DTEHeader>
-            {content["signin-options"]}
-          </LoginWrapper>
-        </Grid>
+        <div className="govuk-width-container">
+          <div className="govuk-grid-row">
+            <div className="govuk-grid-column-two-thirds">
+              <DTEHeader as="h1">{content["signin-options-header"]}</DTEHeader>
+              {content["signin-options"]}
+            </div>
+          </div>
+        </div>
       </>
     </DocumentTitle>
   );
